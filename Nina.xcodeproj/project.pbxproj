@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2895003F13D64559009E1BD7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2895003E13D64559009E1BD7 /* UIKit.framework */; };
+		2895004113D64559009E1BD7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2895004013D64559009E1BD7 /* Foundation.framework */; };
+		2895004313D64559009E1BD7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2895004213D64559009E1BD7 /* CoreGraphics.framework */; };
+		2895004913D64559009E1BD7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2895004713D64559009E1BD7 /* InfoPlist.strings */; };
+		2895004C13D64559009E1BD7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2895004B13D64559009E1BD7 /* main.m */; };
+		2895004F13D6455A009E1BD7 /* NinaAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2895004E13D6455A009E1BD7 /* NinaAppDelegate.m */; };
+		2895005213D6455A009E1BD7 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2895005013D6455A009E1BD7 /* MainWindow.xib */; };
+		2895005513D6455A009E1BD7 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2895005413D6455A009E1BD7 /* FirstViewController.m */; };
+		2895005813D6455A009E1BD7 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2895005713D6455A009E1BD7 /* SecondViewController.m */; };
+		2895005B13D6455A009E1BD7 /* FirstView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2895005913D6455A009E1BD7 /* FirstView.xib */; };
+		2895005E13D6455A009E1BD7 /* SecondView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2895005C13D6455A009E1BD7 /* SecondView.xib */; };
+		2895006513D6455A009E1BD7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2895003E13D64559009E1BD7 /* UIKit.framework */; };
+		2895006613D6455A009E1BD7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2895004013D64559009E1BD7 /* Foundation.framework */; };
+		2895006713D6455A009E1BD7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2895004213D64559009E1BD7 /* CoreGraphics.framework */; };
+		2895006F13D6455A009E1BD7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2895006D13D6455A009E1BD7 /* InfoPlist.strings */; };
+		2895007213D6455A009E1BD7 /* NinaTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 2895007113D6455A009E1BD7 /* NinaTests.h */; };
+		2895007413D6455A009E1BD7 /* NinaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2895007313D6455A009E1BD7 /* NinaTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2895006813D6455A009E1BD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2895003113D64559009E1BD7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2895003913D64559009E1BD7;
+			remoteInfo = Nina;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2895003A13D64559009E1BD7 /* Nina.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nina.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2895003E13D64559009E1BD7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2895004013D64559009E1BD7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2895004213D64559009E1BD7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2895004613D64559009E1BD7 /* Nina-Info.plist */ = {isa = PBXFileReference; path = "Nina-Info.plist"; sourceTree = "<group>"; };
+		2895004813D64559009E1BD7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2895004A13D64559009E1BD7 /* Nina-Prefix.pch */ = {isa = PBXFileReference; path = "Nina-Prefix.pch"; sourceTree = "<group>"; };
+		2895004B13D64559009E1BD7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2895004D13D64559009E1BD7 /* NinaAppDelegate.h */ = {isa = PBXFileReference; path = NinaAppDelegate.h; sourceTree = "<group>"; };
+		2895004E13D6455A009E1BD7 /* NinaAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NinaAppDelegate.m; sourceTree = "<group>"; };
+		2895005113D6455A009E1BD7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		2895005313D6455A009E1BD7 /* FirstViewController.h */ = {isa = PBXFileReference; path = FirstViewController.h; sourceTree = "<group>"; };
+		2895005413D6455A009E1BD7 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		2895005613D6455A009E1BD7 /* SecondViewController.h */ = {isa = PBXFileReference; path = SecondViewController.h; sourceTree = "<group>"; };
+		2895005713D6455A009E1BD7 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		2895005A13D6455A009E1BD7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstView.xib; sourceTree = "<group>"; };
+		2895005D13D6455A009E1BD7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondView.xib; sourceTree = "<group>"; };
+		2895006413D6455A009E1BD7 /* NinaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NinaTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2895006C13D6455A009E1BD7 /* NinaTests-Info.plist */ = {isa = PBXFileReference; path = "NinaTests-Info.plist"; sourceTree = "<group>"; };
+		2895006E13D6455A009E1BD7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2895007013D6455A009E1BD7 /* NinaTests-Prefix.pch */ = {isa = PBXFileReference; path = "NinaTests-Prefix.pch"; sourceTree = "<group>"; };
+		2895007113D6455A009E1BD7 /* NinaTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NinaTests.h; sourceTree = "<group>"; };
+		2895007313D6455A009E1BD7 /* NinaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NinaTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2895003713D64559009E1BD7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2895003F13D64559009E1BD7 /* UIKit.framework in Frameworks */,
+				2895004113D64559009E1BD7 /* Foundation.framework in Frameworks */,
+				2895004313D64559009E1BD7 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2895006013D6455A009E1BD7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2895006513D6455A009E1BD7 /* UIKit.framework in Frameworks */,
+				2895006613D6455A009E1BD7 /* Foundation.framework in Frameworks */,
+				2895006713D6455A009E1BD7 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2895002F13D64559009E1BD7 = {
+			isa = PBXGroup;
+			children = (
+				2895004413D64559009E1BD7 /* Nina */,
+				2895006A13D6455A009E1BD7 /* NinaTests */,
+				2895003D13D64559009E1BD7 /* Frameworks */,
+				2895003B13D64559009E1BD7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2895003B13D64559009E1BD7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2895003A13D64559009E1BD7 /* Nina.app */,
+				2895006413D6455A009E1BD7 /* NinaTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2895003D13D64559009E1BD7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2895003E13D64559009E1BD7 /* UIKit.framework */,
+				2895004013D64559009E1BD7 /* Foundation.framework */,
+				2895004213D64559009E1BD7 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2895004413D64559009E1BD7 /* Nina */ = {
+			isa = PBXGroup;
+			children = (
+				2895004D13D64559009E1BD7 /* NinaAppDelegate.h */,
+				2895004E13D6455A009E1BD7 /* NinaAppDelegate.m */,
+				2895005013D6455A009E1BD7 /* MainWindow.xib */,
+				2895005313D6455A009E1BD7 /* FirstViewController.h */,
+				2895005413D6455A009E1BD7 /* FirstViewController.m */,
+				2895005613D6455A009E1BD7 /* SecondViewController.h */,
+				2895005713D6455A009E1BD7 /* SecondViewController.m */,
+				2895005913D6455A009E1BD7 /* FirstView.xib */,
+				2895005C13D6455A009E1BD7 /* SecondView.xib */,
+				2895004513D64559009E1BD7 /* Supporting Files */,
+			);
+			path = Nina;
+			sourceTree = "<group>";
+		};
+		2895004513D64559009E1BD7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2895004613D64559009E1BD7 /* Nina-Info.plist */,
+				2895004713D64559009E1BD7 /* InfoPlist.strings */,
+				2895004A13D64559009E1BD7 /* Nina-Prefix.pch */,
+				2895004B13D64559009E1BD7 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2895006A13D6455A009E1BD7 /* NinaTests */ = {
+			isa = PBXGroup;
+			children = (
+				2895007113D6455A009E1BD7 /* NinaTests.h */,
+				2895007313D6455A009E1BD7 /* NinaTests.m */,
+				2895006B13D6455A009E1BD7 /* Supporting Files */,
+			);
+			path = NinaTests;
+			sourceTree = "<group>";
+		};
+		2895006B13D6455A009E1BD7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2895006C13D6455A009E1BD7 /* NinaTests-Info.plist */,
+				2895006D13D6455A009E1BD7 /* InfoPlist.strings */,
+				2895007013D6455A009E1BD7 /* NinaTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2895003913D64559009E1BD7 /* Nina */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2895007713D6455A009E1BD7 /* Build configuration list for PBXNativeTarget "Nina" */;
+			buildPhases = (
+				2895003613D64559009E1BD7 /* Sources */,
+				2895003713D64559009E1BD7 /* Frameworks */,
+				2895003813D64559009E1BD7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Nina;
+			productName = Nina;
+			productReference = 2895003A13D64559009E1BD7 /* Nina.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2895006313D6455A009E1BD7 /* NinaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2895007A13D6455A009E1BD7 /* Build configuration list for PBXNativeTarget "NinaTests" */;
+			buildPhases = (
+				2895005F13D6455A009E1BD7 /* Sources */,
+				2895006013D6455A009E1BD7 /* Frameworks */,
+				2895006113D6455A009E1BD7 /* Resources */,
+				2895006213D6455A009E1BD7 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2895006913D6455A009E1BD7 /* PBXTargetDependency */,
+			);
+			name = NinaTests;
+			productName = NinaTests;
+			productReference = 2895006413D6455A009E1BD7 /* NinaTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2895003113D64559009E1BD7 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 2895003413D64559009E1BD7 /* Build configuration list for PBXProject "Nina" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2895002F13D64559009E1BD7;
+			productRefGroup = 2895003B13D64559009E1BD7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2895003913D64559009E1BD7 /* Nina */,
+				2895006313D6455A009E1BD7 /* NinaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2895003813D64559009E1BD7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2895004913D64559009E1BD7 /* InfoPlist.strings in Resources */,
+				2895005213D6455A009E1BD7 /* MainWindow.xib in Resources */,
+				2895005B13D6455A009E1BD7 /* FirstView.xib in Resources */,
+				2895005E13D6455A009E1BD7 /* SecondView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2895006113D6455A009E1BD7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2895006F13D6455A009E1BD7 /* InfoPlist.strings in Resources */,
+				2895007213D6455A009E1BD7 /* NinaTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2895006213D6455A009E1BD7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2895003613D64559009E1BD7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2895004C13D64559009E1BD7 /* main.m in Sources */,
+				2895004F13D6455A009E1BD7 /* NinaAppDelegate.m in Sources */,
+				2895005513D6455A009E1BD7 /* FirstViewController.m in Sources */,
+				2895005813D6455A009E1BD7 /* SecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2895005F13D6455A009E1BD7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2895007413D6455A009E1BD7 /* NinaTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2895006913D6455A009E1BD7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2895003913D64559009E1BD7 /* Nina */;
+			targetProxy = 2895006813D6455A009E1BD7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2895004713D64559009E1BD7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2895004813D64559009E1BD7 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2895005013D6455A009E1BD7 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2895005113D6455A009E1BD7 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		2895005913D6455A009E1BD7 /* FirstView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2895005A13D6455A009E1BD7 /* en */,
+			);
+			name = FirstView.xib;
+			sourceTree = "<group>";
+		};
+		2895005C13D6455A009E1BD7 /* SecondView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2895005D13D6455A009E1BD7 /* en */,
+			);
+			name = SecondView.xib;
+			sourceTree = "<group>";
+		};
+		2895006D13D6455A009E1BD7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2895006E13D6455A009E1BD7 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2895007513D6455A009E1BD7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		2895007613D6455A009E1BD7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		2895007813D6455A009E1BD7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Nina/Nina-Prefix.pch";
+				INFOPLIST_FILE = "Nina/Nina-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2895007913D6455A009E1BD7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Nina/Nina-Prefix.pch";
+				INFOPLIST_FILE = "Nina/Nina-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		2895007B13D6455A009E1BD7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Nina.app/Nina";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NinaTests/NinaTests-Prefix.pch";
+				INFOPLIST_FILE = "NinaTests/NinaTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		2895007C13D6455A009E1BD7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Nina.app/Nina";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NinaTests/NinaTests-Prefix.pch";
+				INFOPLIST_FILE = "NinaTests/NinaTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2895003413D64559009E1BD7 /* Build configuration list for PBXProject "Nina" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2895007513D6455A009E1BD7 /* Debug */,
+				2895007613D6455A009E1BD7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2895007713D6455A009E1BD7 /* Build configuration list for PBXNativeTarget "Nina" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2895007813D6455A009E1BD7 /* Debug */,
+				2895007913D6455A009E1BD7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		2895007A13D6455A009E1BD7 /* Build configuration list for PBXNativeTarget "NinaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2895007B13D6455A009E1BD7 /* Debug */,
+				2895007C13D6455A009E1BD7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2895003113D64559009E1BD7 /* Project object */;
+}
