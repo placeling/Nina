@@ -1,2 +1,7 @@
 /* Localized versions of Info.plist keys */
 
+"location_disabled" = "Location Services Disabled";
+"location_disabled_desc" = "You currently have all location services for this device disabled. If you proceed, you will be asked to confirm whether location services should be reenabled.";
+
+
+
