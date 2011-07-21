@@ -7,7 +7,7 @@
 //
 
 //single place to define debugging or not -iMack
-//#define DEBUG 
+#define DEBUG 
 
 #ifdef DEBUG
 #   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
