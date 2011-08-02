@@ -29,7 +29,7 @@
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
 	<key>server_url</key>
-	<string>http://localhost:3000</string>
+	<string>http://localhost:3000/v1</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
