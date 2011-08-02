@@ -55,7 +55,7 @@
 		NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
 		NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
         
-		NSString *urlString = [NSString stringWithFormat:@"%@/%@/perspectives.json", [plistData objectForKey:@"server_url"], self.userName];		
+		NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/perspectives", [plistData objectForKey:@"server_url"], self.userName];		
         
 		NSString* x = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
 		NSString* y = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
@@ -138,11 +138,7 @@
 #pragma mark ASIhttprequest
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
-	//NSError *error = [request error];
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Can't connect to server"
-                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-	[alert show];
-	[alert release];
+    [NinaHelper handleBadRequest:request];
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
