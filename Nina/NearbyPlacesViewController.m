@@ -7,9 +7,10 @@
 //
 
 #import "NearbyPlacesViewController.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
 #import "NSString+SBJSON.h"
+#import "AttachPerspectiveViewController.h"
+#import "ASIHTTPRequest.h"
+#import "NinaHelper.h"
 
 @interface NearbyPlacesViewController (Private)
     -(void)dataSourceDidFinishLoadingNewData;
@@ -20,7 +21,7 @@
 
 @synthesize reloading=_reloading;
 @synthesize locationManager;
-@synthesize tableView;
+@synthesize placesTableView;
 
 -(void)findNearbyPlaces {
 	//NSDate *now = [NSDate date];
@@ -30,7 +31,7 @@
 		NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
 		NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
         
-		NSString *urlString = [NSString stringWithFormat:@"%@/places/nearby_places.json", [plistData objectForKey:@"server_url"]];		
+		NSString *urlString = [NSString stringWithFormat:@"%@/places/nearby_places", [plistData objectForKey:@"server_url"]];		
         
 		NSString* x = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
 		NSString* y = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
@@ -42,9 +43,6 @@
         NSURL *url = [NSURL URLWithString:urlString];
         
 		ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-        //[request setPostValue:x forKey:@"x"];
-		//[request setPostValue:y forKey:@"y"];
-		//[request setPostValue:[NSString stringWithFormat:@"%f", accuracy] forKey:@"radius"];
         
 		[request setDelegate:self];
 		[request startAsynchronous];
@@ -62,7 +60,7 @@
 
 - (void)dealloc{
     [super dealloc];
-    [tableView release];
+    [placesTableView release];
     [locationManager release];
     
 }
@@ -105,7 +103,7 @@
         [refreshHeaderView setState:EGOOPullRefreshLoading];
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.2];
-        self.tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
+        self.placesTableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
         [UIView commitAnimations];
 	}
 }
@@ -116,7 +114,7 @@
     
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:.3];
-	[self.tableView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
+	[self.placesTableView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
 	[UIView commitAnimations];
     
 	[refreshHeaderView setState:EGOOPullRefreshNormal];
@@ -134,13 +132,13 @@
 	self.locationManager.delegate = self; // send loc updates to myself -iMack
 	[self.locationManager startUpdatingLocation];
     
-    self.tableView.delegate = self;
+    self.placesTableView.delegate = self;
     
     if (refreshHeaderView == nil) {
-		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, 320.0f, self.tableView.bounds.size.height)];
+		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.placesTableView.bounds.size.height, 320.0f, self.placesTableView.bounds.size.height)];
 		refreshHeaderView.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
-		[self.tableView addSubview:refreshHeaderView];
-		self.tableView.showsVerticalScrollIndicator = YES;
+		[self.placesTableView addSubview:refreshHeaderView];
+		self.placesTableView.showsVerticalScrollIndicator = YES;
 		[refreshHeaderView release];
 	}
 
@@ -176,11 +174,7 @@
 	// Use when fetching binary data
 	int statusCode = [request responseStatusCode];
 	if (200 != statusCode){
-		NSString *alertMessage = [[NSString stringWithFormat:@"Request returned %i error", statusCode] init];
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
-													   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-		[alert show];
-		[alert release];	
+		[NinaHelper handleBadRequest:request];
 	} else {
 		NSData *data = [request responseData];
         
@@ -192,7 +186,7 @@
 		[nearbyPlaces release];
 		nearbyPlaces = [[jsonString JSONValue] retain];
         
-		[self.tableView  reloadData];
+		[self.placesTableView  reloadData];
 		[jsonString release];
 	}
     
@@ -236,8 +230,12 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-
+    NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
+    AttachPerspectiveViewController *attachPerspectiveViewController = [[AttachPerspectiveViewController alloc] init];
+    attachPerspectiveViewController.rawPlace = place;
+    attachPerspectiveViewController.locationManager = locationManager;
+	[[self navigationController] pushViewController:attachPerspectiveViewController animated:YES];
+	[attachPerspectiveViewController release];
 }
 
 
