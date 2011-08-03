@@ -7,7 +7,9 @@
 //
 
 //single place to define debugging or not -iMack
+#ifndef DEBUG 
 #define DEBUG 
+#endif
 
 #ifdef DEBUG
 #   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
@@ -16,10 +18,15 @@
 #endif
 
 #import <Foundation/Foundation.h>
-
+#import "ASIHTTPRequest.h"
 
 @interface NinaHelper : NSObject {
     
 }
+
++(void) handleBadRequest:(ASIHTTPRequest *)request;
+
++(ASIHTTPRequest*) signOauthRequest:(ASIHTTPRequest *)request;
+
 
 @end
