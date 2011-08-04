@@ -19,14 +19,20 @@
 
 #import <Foundation/Foundation.h>
 #import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
 
-@interface NinaHelper : NSObject {
-    
-}
+@interface NinaHelper : NSObject 
 
-+(void) handleBadRequest:(ASIHTTPRequest *)request;
++(void) handleBadRequest:(ASIHTTPRequest *)request sender:(UIViewController*)sender;
++(void) signRequest:(ASIHTTPRequest *)request; 
 
-+(ASIHTTPRequest*) signOauthRequest:(ASIHTTPRequest *)request;
++(void) setAccessToken:(NSString*)accessToken;
++(void) setAccessTokenSecret:(NSString*)accessTokenSecret;
 
++(NSString*) getAccessToken;
++(NSString*) getAccessTokenSecret;
+
++(NSString*) getConsumerKey;
++(NSString*) getConsumerSecret;
 
 @end

@@ -31,7 +31,7 @@
 		NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
 		NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
         
-		NSString *urlString = [NSString stringWithFormat:@"%@/places/nearby_places", [plistData objectForKey:@"server_url"]];		
+		NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/nearby_places", [plistData objectForKey:@"server_url"]];		
         
 		NSString* x = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
 		NSString* y = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
@@ -174,7 +174,7 @@
 	// Use when fetching binary data
 	int statusCode = [request responseStatusCode];
 	if (200 != statusCode){
-		[NinaHelper handleBadRequest:request];
+		[NinaHelper handleBadRequest:request sender:self];
 	} else {
 		NSData *data = [request responseData];
         

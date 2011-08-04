@@ -6,47 +6,48 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#define CONSUMER_KEY @"CyAy0KjXeqZUCoHjgcfo3qSLCDdCgSFhrcH6S4We"
-#define CONSUMER_SECRET @"W8TfZ3myhkmA7wYb6B62nmcS9nUl7fsY6Tqw4Dxw"
-
 #import "NinaHelper.h"
-#import "OAuthCore.h"
-
-@interface NinaHelper (Private)
-    +(NSString*) getAccessToken;
-    +(NSString*) getAccessTokenSecret;
-    +(void) setAccessTokenSecret:(NSString*)accessToken;
-    +(void) setAccessTokenSecret:(NSString*)accessTokenSecret;
-@end
-
+#import "LoginController.h"
+#import "ASIFormDataRequest+OAuth.h"
+#import "ASIHTTPRequest+OAuth.h"
 
 
 @implementation NinaHelper
 
-+(void) handleBadRequest:(ASIHTTPRequest *)request{
++(void) handleBadRequest:(ASIHTTPRequest *)request sender:(UIViewController*)sender{
     int statusCode = [request responseStatusCode];
-    NSString *alertMessage = [[NSString stringWithFormat:@"Request returned %i error", statusCode] init];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
-                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-    [alert show];
-    [alert release];	
+    NSString *alertMessage;
+    LoginController *loginController;
+    
+    switch (statusCode) {
+        case 401:
+
+            DLog(@"Got a 401, with access_token: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
+            
+            loginController = [[LoginController alloc] init];
+            [sender presentModalViewController:loginController animated:YES];
+            
+            
+            break;
+            
+        default:            
+            alertMessage = [[NSString stringWithFormat:@"Request returned %i error", statusCode] init];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
+                                                           delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alert show];
+            [alert release];	
+            break;
+    }
+
 }
 
++(void) signRequest:(ASIHTTPRequest *)request{
+    [request signRequestWithClientIdentifier:[NinaHelper getConsumerKey] secret:[NinaHelper getConsumerSecret]
+            tokenIdentifier:[NinaHelper getAccessToken] secret:[NinaHelper getAccessTokenSecret]
+                                     usingMethod:ASIOAuthHMAC_SHA1SignatureMethod];    
 
-+(ASIHTTPRequest*) signOauthRequest:(ASIHTTPRequest *)request{
-    [request buildPostBody];
-    NSString *header = OAuthorizationHeader([request url],
-                                            [request requestMethod],                                            
-                                            [request postBody],
-                                            CONSUMER_KEY,
-                                            CONSUMER_SECRET,
-                                            [NinaHelper getAccessToken],
-                                            [NinaHelper getAccessTokenSecret]);
-    
-    [request addRequestHeader:@"Authorization" value:header];
-    
-    return request;
 }
+
 
 +(NSString*) getAccessToken{
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
@@ -80,6 +81,15 @@
         exit(-1);
     }
     [standardUserDefaults synchronize];
+}
+
+
++(NSString*) getConsumerKey{
+    return @"CyAy0KjXeqZUCoHjgcfo3qSLCDdCgSFhrcH6S4We";
+}
+
++(NSString*) getConsumerSecret{
+    return @"W8TfZ3myhkmA7wYb6B62nmcS9nUl7fsY6Tqw4Dxw";
 }
 
 @end

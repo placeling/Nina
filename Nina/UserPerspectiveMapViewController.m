@@ -55,7 +55,7 @@
 		NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
 		NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
         
-		NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/perspectives", [plistData objectForKey:@"server_url"], self.userName];		
+		NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/perspectives", [plistData objectForKey:@"server_url"], self.userName];		
         
 		NSString* x = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
 		NSString* y = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
@@ -70,6 +70,8 @@
 		ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
         
 		[request setDelegate:self];
+        
+        [NinaHelper signRequest:request];
 		[request startAsynchronous];
 	} else {
         needLocationUpdate = true;
@@ -138,14 +140,14 @@
 #pragma mark ASIhttprequest
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
-    [NinaHelper handleBadRequest:request];
+    [NinaHelper handleBadRequest:request sender:self];
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
 	// Use when fetching binary data
 	int statusCode = [request responseStatusCode];
 	if (200 != statusCode){
-        [NinaHelper handleBadRequest:request];
+        [NinaHelper handleBadRequest:request  sender:self];
 	} else {
 		NSData *data = [request responseData];
         
