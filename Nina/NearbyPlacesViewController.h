@@ -20,6 +20,7 @@
     IBOutlet UITableView *placesTableView;
     NSArray  *nearbyPlaces;
     
+    BOOL needLocationUpdate;
     BOOL _reloading;
     
 }

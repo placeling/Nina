@@ -31,22 +31,25 @@
 		NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
 		NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
         
-		NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/nearby_places", [plistData objectForKey:@"server_url"]];		
+		NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/nearby", [plistData objectForKey:@"server_url"]];		
         
-		NSString* x = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-		NSString* y = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+		NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+		NSString* lon = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
 		float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
 		accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
         NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
         
-        urlString = [NSString stringWithFormat:@"%@?x=%@&y=%@&radius=%@", urlString, x, y, radius];
+        urlString = [NSString stringWithFormat:@"%@?lat=%@&long=%@&accuracy=%@", urlString, lat, lon, radius];
         NSURL *url = [NSURL URLWithString:urlString];
         
 		ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
         
+        [NinaHelper signRequest:request];
 		[request setDelegate:self];
 		[request startAsynchronous];
-	}
+	} else {
+        needLocationUpdate = true;
+    }
     
 }
 
@@ -65,8 +68,7 @@
     
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
@@ -127,8 +129,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    self.locationManager = [[CLLocationManager alloc] init];
+    needLocationUpdate = false;
 	self.locationManager.delegate = self; // send loc updates to myself -iMack
 	[self.locationManager startUpdatingLocation];
     
@@ -163,11 +164,7 @@
 #pragma mark ASIhttprequest
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
-	//NSError *error = [request error];
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Can't connect to server"
-                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-	[alert show];
-	[alert release];
+	[NinaHelper handleBadRequest:request sender:self];
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{

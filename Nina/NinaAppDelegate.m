@@ -15,7 +15,7 @@
 
 @synthesize window=_window;
 
-@synthesize tabBarController=_tabBarController;
+@synthesize navigationController=_navigationController;
 @synthesize locationManager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
@@ -33,7 +33,7 @@
     }
     [manager release];         
     
-    self.window.rootViewController = self.tabBarController;
+    self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -80,7 +80,7 @@
 - (void)dealloc
 {
     [_window release];
-    [_tabBarController release];
+    [_navigationController release];
     [locationManager release];
     [super dealloc];
 }
