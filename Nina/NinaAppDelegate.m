@@ -8,6 +8,7 @@
 
 #import "NinaAppDelegate.h"
 #import <CoreLocation/CoreLocation.h>
+#import "LocationManagerManager.h"
 
 
 @implementation NinaAppDelegate
@@ -16,22 +17,19 @@
 @synthesize window=_window;
 
 @synthesize navigationController=_navigationController;
-@synthesize locationManager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     // Override point for customization after application launch.
     // Add the tab bar controller's current view as a subview of the window
     
-    CLLocationManager *manager = [[CLLocationManager alloc] init];
     if (![CLLocationManager locationServicesEnabled]) {
         UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location_disabled", nil) message:NSLocalizedString(@"location_disabled_desc", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [servicesDisabledAlert show];
         [servicesDisabledAlert release];
     } else {
-        self.locationManager = [[CLLocationManager alloc] init];
-        [self.locationManager startUpdatingLocation];
+        CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
+        [manager startUpdatingLocation];
     }
-    [manager release];         
     
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
@@ -77,11 +75,9 @@
      */
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
     [_window release];
     [_navigationController release];
-    [locationManager release];
     [super dealloc];
 }
 

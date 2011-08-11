@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "LocationManagerManager.h"
 
-@interface NinaAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
-    CLLocationManager *locationManager; //not sure if "always" need, but kind of nice for now
-}
+@interface NinaAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> 
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) CLLocationManager *locationManager;
+
 
 @property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
 
