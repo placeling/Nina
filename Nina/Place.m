@@ -11,7 +11,7 @@
 
 @implementation Place
 
-@synthesize name, uid, user;
+@synthesize name, pid, user;
 @synthesize address, mapCount;
 @synthesize lat, lng;
 @synthesize google_id, phone;
@@ -20,14 +20,14 @@
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
     
     if(self = [super init]){
+        self.pid = [jsonDict objectForKey:@"_id"];
         self.name = [jsonDict objectForKey:@"name"];
         self.address = [jsonDict objectForKey:@"street_address"];
         self.phone = [jsonDict objectForKey:@"phone_number"];
         self.google_id = [jsonDict objectForKey:@"google_id"];
         self.lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
-        self.lng = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
+        self.lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1];
         self.mapCount = [jsonDict objectForKey:@"perspective_count"];
-        //uid; 
         //user;
         //categories;
         //icon;
@@ -38,7 +38,7 @@
 
 - (void) dealloc{
     [name release];
-    [uid release];
+    [pid release];
     [user release];
     [address release];
     

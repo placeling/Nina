@@ -11,7 +11,7 @@
 
 @interface Place : NSObject {
     NSString *name;
-    NSString *uid;
+    NSString *pid;
     User *user;
     UIImage *icon;
     
@@ -29,7 +29,7 @@
 }
 
 @property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *uid;
+@property (nonatomic, retain) NSString *pid;
 @property (nonatomic, retain) NSString *google_id;
 @property (nonatomic, retain) User *user;
 
