@@ -7,16 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreLocation/CoreLocation.h>
 #import "EGORefreshTableHeaderView.h"
 #import "ASIHTTPRequest.h"
-#import "AttachPerspectiveViewController.h"
 
 
-@interface NearbyPlacesViewController : UIViewController <CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate> {
+@interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate> {
     EGORefreshTableHeaderView *refreshHeaderView;
     
-    CLLocationManager *locationManager;
     IBOutlet UITableView *placesTableView;
     NSArray  *nearbyPlaces;
     
@@ -30,7 +27,6 @@
 - (void)reloadTableViewDataSource;
 - (void)doneLoadingTableViewData;
 
-@property(nonatomic, retain) CLLocationManager *locationManager; 
 @property(nonatomic, retain) IBOutlet UITableView *placesTableView;
 
 @end

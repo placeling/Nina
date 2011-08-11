@@ -8,7 +8,6 @@
 
 #import "UserPerspectiveMapViewController.h"
 #import "NSString+SBJSON.h"
-#import "NinaHelper.h"
 #import "PerspectivePlaceMark.h"
 
 
@@ -22,7 +21,6 @@
 @synthesize mapView;
 @synthesize userName;
 @synthesize nearbyPlaces;
-@synthesize locationManager;
 
 -(void)updateMapView{
     
@@ -49,13 +47,11 @@
 
 -(void)mapUserPlaces {
 	//NSDate *now = [NSDate date];
+    CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
 	CLLocation *location = locationManager.location;
     
 	if (location != nil){ //[now timeIntervalSinceDate:location.timestamp] < (60 * 5)){
-		NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
-		NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-        
-		NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/perspectives", [plistData objectForKey:@"server_url"], self.userName];		
+		NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/perspectives", [NinaHelper getHostname], self.userName];		
         
 		NSString* x = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
 		NSString* y = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
@@ -92,7 +88,6 @@
     [mapView release];
     [userName release];
     [nearbyPlaces release];
-    [locationManager release];
     [super dealloc];
 }
 
@@ -175,10 +170,6 @@
     if ( userName == nil || [userName isEqualToString:@""]){
         userName = @"tyler";
     }
-    
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    [locationManager startUpdatingLocation];
     // Do any additional setup after loading the view from its nib.
     [self.mapView.userLocation addObserver:self  
                                 forKeyPath:@"location"  

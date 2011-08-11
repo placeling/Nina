@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import <CoreLocation/CoreLocation.h>
+#import "NinaHelper.h"
 #import "ASIHTTPRequest.h"
 
 
@@ -16,13 +16,11 @@
     IBOutlet MKMapView *mapView;
     NSString *userName;
     NSArray *nearbyPlaces;
-    CLLocationManager *locationManager;
     BOOL needLocationUpdate; 
 }
 
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;
 @property(nonatomic, retain) NSString *userName;
 @property(nonatomic, retain) NSArray *nearbyPlaces;
-@property(nonatomic, retain) CLLocationManager *locationManager;
 
 @end

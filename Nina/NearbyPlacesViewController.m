@@ -8,9 +8,11 @@
 
 #import "NearbyPlacesViewController.h"
 #import "NSString+SBJSON.h"
-#import "AttachPerspectiveViewController.h"
+#import "PlacePageViewController.h"
 #import "ASIHTTPRequest.h"
+#import <CoreLocation/CoreLocation.h>
 #import "NinaHelper.h"
+
 
 @interface NearbyPlacesViewController (Private)
     -(void)dataSourceDidFinishLoadingNewData;
@@ -20,12 +22,13 @@
 @implementation NearbyPlacesViewController 
 
 @synthesize reloading=_reloading;
-@synthesize locationManager;
 @synthesize placesTableView;
 
 -(void)findNearbyPlaces {
 	//NSDate *now = [NSDate date];
-	CLLocation *location = locationManager.location;
+	
+    CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
+    CLLocation *location = manager.location;
     
 	if (location != nil){ //[now timeIntervalSinceDate:location.timestamp] < (60 * 5)){
 		NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
@@ -64,7 +67,6 @@
 - (void)dealloc{
     [super dealloc];
     [placesTableView release];
-    [locationManager release];
     
 }
 
@@ -130,8 +132,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     needLocationUpdate = false;
-	self.locationManager.delegate = self; // send loc updates to myself -iMack
-	[self.locationManager startUpdatingLocation];
     
     self.placesTableView.delegate = self;
     
@@ -219,7 +219,14 @@
     if ( [place objectForKey:@"name"] != [NSNull null] ){
 		cell.textLabel.text = [place objectForKey:@"name"];
 	} else {
+        DLog(@"got a place with no-name: %@", [place objectForKey:@"google_id"]);
 		cell.textLabel.text = @"n/a";
+	}
+    
+    if ( [place objectForKey:@"distance"] != [NSNull null] ){
+		cell.detailTextLabel.text = [NSString stringWithFormat:@"%@m", [place objectForKey:@"distance"]];
+	} else {
+		cell.detailTextLabel.text = @"";
 	}
     
     return cell;
@@ -228,11 +235,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
-    AttachPerspectiveViewController *attachPerspectiveViewController = [[AttachPerspectiveViewController alloc] init];
-    attachPerspectiveViewController.rawPlace = place;
-    attachPerspectiveViewController.locationManager = locationManager;
-	[[self navigationController] pushViewController:attachPerspectiveViewController animated:YES];
-	[attachPerspectiveViewController release];
+    PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] init];
+    
+    placePageViewController.google_id = [place objectForKey:@"id"];
+    placePageViewController.google_ref = [place objectForKey:@"reference"];
+	[[self navigationController] pushViewController:placePageViewController animated:YES];
+	[placePageViewController release];
 }
 
 
