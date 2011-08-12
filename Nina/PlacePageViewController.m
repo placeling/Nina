@@ -34,8 +34,7 @@
 @synthesize google_id, google_ref, place, mapImage;
 @synthesize bookmarkButton, phoneButton;
 @synthesize nameLabel, addressLabel;
-@synthesize mapImageView;
-@synthesize table;
+@synthesize mapImageView, quadControl;
 
 
 #pragma mark - View lifecycle
@@ -113,6 +112,24 @@
     self.mapImageView.image = backdrop;
     self.phoneButton.titleLabel.text = @"";
     
+    self.quadControl.delegate = self;
+    [self.quadControl setNumber:0
+                       caption:@"Favorited"
+                        action:@selector(didSelectFollowingQuadrant)
+                   forLocation:TopLeftLocation];
+    
+    [self.quadControl setNumber:0
+                       caption:@"Perspectives"
+                        action:@selector(didSelectTweetsQuadrant)
+                   forLocation:TopRightLocation];
+    
+    [self.quadControl setNumber:0
+                       caption:@"Tags"
+                        action:@selector(didSelectFollowersQuadrant)
+                   forLocation:BottomLeftLocation];
+    
+    [self.quadControl setNeedsDisplay];
+    
 }
 
 -(void) loadData{
@@ -131,6 +148,23 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
     self.phoneButton.titleLabel.text = self.place.phone;
+    
+    self.quadControl.delegate = self;
+    [self.quadControl setNumber:[NSNumber numberWithInt:self.place.mapCount]
+                        caption:@"Favorited"
+                         action:@selector(didSelectFollowingQuadrant)
+                    forLocation:TopLeftLocation];
+    
+    [self.quadControl setNumber:[NSNumber numberWithInt:self.place.mapCount]
+                        caption:@"Perspectives"
+                         action:@selector(didSelectTweetsQuadrant)
+                    forLocation:TopRightLocation];
+    
+    [self.quadControl setNumber:nil
+                        caption:@"Tags"
+                         action:@selector(didSelectFollowersQuadrant)
+                    forLocation:BottomLeftLocation];
+    [self.quadControl setNeedsDisplay];
 }
 
 
@@ -204,7 +238,6 @@
     [nameLabel release];
     [addressLabel release];
     [mapImageView release];
-    [table release];
     
     [super dealloc];
 }

@@ -12,6 +12,7 @@
 #import "User.h"
 #import "ASIHTTPRequestDelegate.h"
 #import "NinaHelper.h"
+#import "TTTQuadrantControl.h"
 
 //#import "EditViewController.h"
 
@@ -27,7 +28,8 @@
     IBOutlet UILabel *nameLabel;
     IBOutlet UILabel *addressLabel;
     IBOutlet UIImageView *mapImageView;
-    IBOutlet UITableView *table;
+    
+    IBOutlet TTTQuadrantControl *quadControl;
 }
 
 @property BOOL dataLoaded;
@@ -42,7 +44,8 @@
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *addressLabel;
 @property (nonatomic, retain) IBOutlet UIImageView *mapImageView;
-@property (nonatomic, retain) IBOutlet UITableView *table;
+ 
+@property (nonatomic, retain) IBOutlet TTTQuadrantControl *quadControl;
 
 -(IBAction) bookmark;
 -(IBAction) phonePlace;

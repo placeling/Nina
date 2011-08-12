@@ -10,6 +10,7 @@
 #import "User.h"
 #import "NinaHelper.h"
 #import "ASIHTTPRequestDelegate.h"
+#import "TTTQuadrantControl.h"
 
 @interface MemberProfileViewController : UIViewController<ASIHTTPRequestDelegate, UITableViewDelegate> {
 	NSString *username;
@@ -20,6 +21,7 @@
     IBOutlet UILabel *userDescriptionLabel;
     IBOutlet UIButton *followButton;
     IBOutlet UITableView *tableView;
+    IBOutlet TTTQuadrantControl *quadControl;
 }
 
 @property (nonatomic, retain) NSString *username;
@@ -29,7 +31,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *userDescriptionLabel;
 @property (nonatomic, retain) IBOutlet UIButton *followButton;
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) IBOutlet TTTQuadrantControl *quadControl;
 
 -(IBAction) followUser;
 

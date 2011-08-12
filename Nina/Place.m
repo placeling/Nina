@@ -27,12 +27,8 @@
         self.google_id = [jsonDict objectForKey:@"google_id"];
         self.lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
         self.lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1];
-        self.mapCount = [jsonDict objectForKey:@"perspective_count"];
+        self.mapCount = [[jsonDict objectForKey:@"perspective_count"] intValue];
         self.bookmarked = [[jsonDict objectForKey:@"bookmarked"] boolValue] ;
-        //user;
-        //categories;
-        //icon;
-        
 	}
 	return self;
 }
@@ -47,7 +43,6 @@
     [lng release];
     [google_id release];
     [phone release];
-    [mapCount release];
 
     [categories release];
     [icon release];

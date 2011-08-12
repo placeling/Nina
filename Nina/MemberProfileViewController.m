@@ -25,7 +25,7 @@
 @synthesize username;
 @synthesize user, profileImageView;
 @synthesize usernameLabel, userDescriptionLabel;
-@synthesize followButton, tableView;
+@synthesize followButton, quadControl;
 
 
 #pragma mark - View lifecycle
@@ -44,6 +44,8 @@
 	[NinaHelper signRequest:request];
 	[request startAsynchronous];
     
+    self.quadControl.delegate = self;
+    
 	[self blankLoad];
 }
 
@@ -52,13 +54,60 @@
     self.profileImageView.image = profileImage;
     self.usernameLabel.text = @"";
     self.userDescriptionLabel.text = @"";
+    
+    
+    [self.quadControl setNumber:0
+                       caption:@"following"
+                        action:@selector(noop)
+                   forLocation:TopLeftLocation];
+    
+    [self.quadControl setNumber:0
+                       caption:@"followers"
+                        action:@selector(noop)
+                   forLocation:TopRightLocation];
+    
+    [self.quadControl setNumber:0
+                       caption:@"bookmarks"
+                        action:@selector(noop)
+                   forLocation:BottomLeftLocation];
+    
+    [self.quadControl setNumber:0
+                       caption:@"favorites"
+                        action:@selector(noop)
+                   forLocation:BottomRightLocation];
+    
+}
+
+-(IBAction) noop{
+    
 }
 
 -(void) loadData{
     self.usernameLabel.text = self.user.username;
-    self.userDescriptionLabel.text = self.user.username;
+    self.userDescriptionLabel.text = self.user.description;
     
-    [self.tableView reloadData];
+    [self.quadControl setNumber:[NSNumber numberWithInt:self.user.followingCount]
+                        caption:@"following"
+                         action:@selector(noop)
+                    forLocation:TopLeftLocation];
+    
+    [self.quadControl setNumber:[NSNumber numberWithInt:self.user.followerCount]
+                        caption:@"followers"
+                         action:@selector(noop)
+                    forLocation:TopRightLocation];
+    
+    [self.quadControl setNumber:[NSNumber numberWithInt:self.user.placeCount]
+                        caption:@"bookmarks"
+                         action:@selector(noop)
+                    forLocation:BottomLeftLocation];
+    
+    [self.quadControl setNumber:0
+                        caption:@""
+                         action:@selector(noop)
+                    forLocation:BottomRightLocation];
+    
+    [self.quadControl setNeedsDisplay];
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
@@ -270,7 +319,7 @@
     [usernameLabel release];
     [userDescriptionLabel release];
     [followButton release];
-    [tableView release];
+    [quadControl release];
     
     [super dealloc];
 }
