@@ -168,9 +168,8 @@
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
-	// Use when fetching binary data
-	int statusCode = [request responseStatusCode];
-	if (200 != statusCode){
+    
+	if (200 != [request responseStatusCode]){
 		[NinaHelper handleBadRequest:request sender:self];
 	} else {
 		NSData *data = [request responseData];
