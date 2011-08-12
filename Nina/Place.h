@@ -25,6 +25,7 @@
     
     NSArray *categories;
     NSNumber *mapCount;
+    BOOL bookmarked;
     
 }
 
@@ -43,6 +44,7 @@
 @property (nonatomic, retain) NSArray *categories;
 @property (nonatomic, retain) NSNumber *mapCount;
 @property (nonatomic, retain) UIImage *icon;
+@property (nonatomic, assign) BOOL bookmarked;
 
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;

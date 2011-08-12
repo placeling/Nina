@@ -12,7 +12,7 @@
 @implementation Place
 
 @synthesize name, pid, user;
-@synthesize address, mapCount;
+@synthesize address, mapCount, bookmarked;
 @synthesize lat, lng;
 @synthesize google_id, phone;
 @synthesize categories, icon;
@@ -28,6 +28,7 @@
         self.lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
         self.lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1];
         self.mapCount = [jsonDict objectForKey:@"perspective_count"];
+        self.bookmarked = [[jsonDict objectForKey:@"bookmarked"] boolValue] ;
         //user;
         //categories;
         //icon;
