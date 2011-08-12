@@ -37,6 +37,16 @@
                                  usingMethod:ASIOAuthHMAC_SHA1SignatureMethod];
     [request startAsynchronous];
     
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    if (standardUserDefaults ){
+        [standardUserDefaults setObject:username.text forKey:@"current_username"];
+    } else {
+        DLog(@"FATAL ERROR, NULL standardUserDefaults");
+        exit(-1);
+    }
+    [standardUserDefaults synchronize];
+    
 }
 
 #pragma mark ASIhttprequest
