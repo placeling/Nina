@@ -9,13 +9,29 @@
 #import "HomeViewController.h"
 #import "UserPerspectiveMapViewController.h"
 #import "NearbyPlacesViewController.h"
+#import "MemberProfileViewController.h"
+#import "SuggestUserViewController.h"
+#import "NinaHelper.h"
 
 @implementation HomeViewController
 
 
+-(IBAction)suggested{
+    SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
+    [self.navigationController pushViewController:suggestUserViewController animated:YES];
+    [suggestUserViewController release]; 
+}
+
+-(IBAction)myProfile{
+    MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
+    memberProfileViewController.username = [[NSUserDefaults standardUserDefaults] objectForKey:@"current_username"];
+    
+    [self.navigationController pushViewController:memberProfileViewController animated:YES];
+    [memberProfileViewController release]; 
+}
+
 -(IBAction) bookmarkSpot{
     NearbyPlacesViewController *nearbyPlacesViewController = [[NearbyPlacesViewController alloc] init];
-    nearbyPlacesViewController.locationManager = manager;
     [self.navigationController pushViewController:nearbyPlacesViewController animated:YES];
     [nearbyPlacesViewController release];
 }
@@ -40,30 +56,11 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    manager = [[CLLocationManager alloc] init];
-    [manager startUpdatingLocation];
-    
-    
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

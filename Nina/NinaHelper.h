@@ -129,6 +129,7 @@
 +(void) decorateRequestWithLocationInformation:(ASIHTTPRequest *)request; 
 
 +(NSString*) getHostname;
++(NSString*) getUsername;
 
 +(void) setAccessToken:(NSString*)accessToken;
 +(void) setAccessTokenSecret:(NSString*)accessTokenSecret;

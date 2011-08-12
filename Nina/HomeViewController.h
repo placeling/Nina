@@ -9,13 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface HomeViewController : UIViewController{
-    CLLocationManager *manager;
-}
+@interface HomeViewController : UIViewController
 
-
+-(IBAction) suggested;
 -(IBAction) logout;
 -(IBAction) perspectives;
 -(IBAction) bookmarkSpot;
+-(IBAction) myProfile;
 
 @end

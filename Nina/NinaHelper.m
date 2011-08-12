@@ -100,6 +100,15 @@
 
 }
 
++(NSString*) getUsername{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    if ([standardUserDefaults objectForKey:@"current_username"]){
+        return [standardUserDefaults objectForKey:@"current_username"];    
+    } else {
+        return nil;
+    }  
+}
+
 +(NSString*) getHostname{
     NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
     NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];

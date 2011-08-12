@@ -17,7 +17,6 @@
 #import "Photo.h"
 #import "Place.h"
 
-#import "MapController.h"
 #import "NSString+SBJSON.h"
 #import <CoreLocation/CoreLocation.h>
 
