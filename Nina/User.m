@@ -14,6 +14,7 @@
 @synthesize iconURLString, description;
 @synthesize username, profilePic, placeCount;
 @synthesize followingCount, followerCount;
+@synthesize following, follows_you;
 
 - (id)initFromJsonDict:(NSDictionary *)jsonDict{    
     if(self = [super init]){
@@ -23,6 +24,9 @@
         self.followerCount =[[jsonDict objectForKey:@"follower_count"] intValue];
         self.followingCount = [[jsonDict objectForKey:@"following_count"] intValue];
         self.description = [jsonDict objectForKey:@"description"];
+        
+        self.following = [[jsonDict objectForKey:@"following"] boolValue];
+        self.follows_you = [[jsonDict objectForKey:@"follows_you"] boolValue];
 	}
 	return self;
 }

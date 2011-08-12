@@ -19,6 +19,8 @@
     NSInteger placeCount;
     NSInteger followingCount;
     NSInteger followerCount;
+    bool following;
+    bool follows_you;
     
 }
 
@@ -31,6 +33,9 @@
 @property (nonatomic, assign) NSInteger placeCount;
 @property (nonatomic, assign) NSInteger followingCount;
 @property (nonatomic, assign) NSInteger followerCount;
+
+@property (nonatomic, assign) bool following;
+@property (nonatomic, assign) bool follows_you;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
 
