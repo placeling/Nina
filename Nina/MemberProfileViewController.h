@@ -35,5 +35,7 @@
 
 -(IBAction) followUser;
 -(IBAction) userPerspectives;
+-(IBAction) userFollowing;
+-(IBAction) userFollowing;
 
 @end

@@ -11,6 +11,7 @@
 #import "JSON.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UserPerspectiveMapViewController.h"
+#import "FollowViewController.h"
 
 
 @interface MemberProfileViewController() 
@@ -89,18 +90,30 @@
     [userPerspectives release];
 }
 
+-(IBAction) userFollowers{
+    FollowViewController *followViewController = [[FollowViewController alloc] initWithUser:user andFollowing:false];
+    [self.navigationController pushViewController:followViewController animated:YES];
+    [followViewController release];
+}
+
+-(IBAction) userFollowing{
+    FollowViewController *followViewController = [[FollowViewController alloc] initWithUser:user andFollowing:true];
+    [self.navigationController pushViewController:followViewController animated:YES];
+    [followViewController release];
+}
+
 -(void) loadData{
     self.usernameLabel.text = self.user.username;
     self.userDescriptionLabel.text = self.user.description;
     
     [self.quadControl setNumber:[NSNumber numberWithInt:self.user.followingCount]
                         caption:@"following"
-                         action:@selector(noop)
+                         action:@selector(userFollowing)
                     forLocation:TopLeftLocation];
     
     [self.quadControl setNumber:[NSNumber numberWithInt:self.user.followerCount]
                         caption:@"followers"
-                         action:@selector(noop)
+                         action:@selector(userFollowers)
                     forLocation:TopRightLocation];
     
     [self.quadControl setNumber:[NSNumber numberWithInt:self.user.placeCount]
