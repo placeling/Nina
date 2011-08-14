@@ -9,36 +9,34 @@
 #import "UserPerspectiveMapViewController.h"
 #import "NSString+SBJSON.h"
 #import "PerspectivePlaceMark.h"
+#import "Perspective.h"
 
 
 @interface UserPerspectiveMapViewController (Private)
 -(void)mapUserPlaces;
 -(void)updateMapView;
+-(Perspective*)closestPoint:(CLLocation*)referenceLocation fromArray:(NSArray*)array;
 @end
 
 @implementation UserPerspectiveMapViewController
 
 @synthesize mapView;
 @synthesize userName;
-@synthesize nearbyPlaces;
+@synthesize nearbyMarks;
+@synthesize locationManager;
 
 -(void)updateMapView{
     
-    for (NSDictionary *place in nearbyPlaces){
+    for (Perspective *perspective in nearbyMarks){
         
         CLLocationCoordinate2D coordinate;
-        DLog(@"putting on point for: %@", place);
+        DLog(@"putting on point for: %@", perspective);
         
-        coordinate.latitude = [[[place objectForKey:@"place_location"] objectAtIndex:0] doubleValue];
-        coordinate.longitude = [[[place objectForKey:@"place_location"] objectAtIndex:1] doubleValue];
-        
+        coordinate = perspective.place.location.coordinate;        
         PerspectivePlaceMark *placemark=[[PerspectivePlaceMark alloc] initWithCoordinate:coordinate];
         
-        NSString *title = [[place objectForKey:@"place"] objectForKey:@"name"];;
-        NSString *subTitle = [place objectForKey:@"memo"];
-        
-        placemark.title = title;
-        placemark.subtitle = subTitle;
+        placemark.title = perspective.place.name;
+        //placemark.subtitle = subTitle;
         [mapView addAnnotation:placemark];
     }
     
@@ -46,48 +44,34 @@
 }
 
 -(void)mapUserPlaces {
-	//NSDate *now = [NSDate date];
-    CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
 	CLLocation *location = locationManager.location;
     
-	if (location != nil){ //[now timeIntervalSinceDate:location.timestamp] < (60 * 5)){
-		NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/perspectives", [NinaHelper getHostname], self.userName];		
-        
-		NSString* x = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-		NSString* y = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
-		float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
-		accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
-        NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
-        
-        urlString = [NSString stringWithFormat:@"%@?x=%@&y=%@&radius=%@", urlString, x, y, radius];
-        NSURL *url = [NSURL URLWithString:urlString];
-        
-        
-		ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-        
-		[request setDelegate:self];
-        
-        [NinaHelper signRequest:request];
-		[request startAsynchronous];
-	} else {
-        needLocationUpdate = true;
-    }
+    NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/perspectives", [NinaHelper getHostname], self.userName];		
     
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    needLocationUpdate = FALSE;
-    return self;
+    NSString* x = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+    NSString* y = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+    float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
+    accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
+    NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
+    
+    urlString = [NSString stringWithFormat:@"%@?x=%@&y=%@&radius=%@", urlString, x, y, radius];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    
+    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
+    
+    [request setDelegate:self];
+    
+    [NinaHelper signRequest:request];
+    [request startAsynchronous];
+    
 }
 
 - (void)dealloc{
     [mapView release];
     [userName release];
-    [nearbyPlaces release];
+    [locationManager release];
+    [nearbyMarks release];
     [super dealloc];
 }
 
@@ -99,33 +83,38 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-#pragma mark location manager
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-
-    CLLocationCoordinate2D coord = newLocation.coordinate;
-    MKCoordinateSpan span = {latitudeDelta: 1, longitudeDelta: 1};
-    MKCoordinateRegion region = {coord, span};
-    [mapView setRegion:region];
+-(Perspective*)closestPoint:(CLLocation*)referenceLocation fromArray:(NSArray*)array{
     
-    if (needLocationUpdate){
-        needLocationUpdate = false;
-        [self mapUserPlaces];
+    NSInteger minDist = NSIntegerMax;
+    Perspective* closest;
+    
+    for (Perspective *perspective in array){
+        if ([perspective.place.location distanceFromLocation:referenceLocation] < minDist){
+            closest = perspective;
+            minDist = [perspective.place.location distanceFromLocation:referenceLocation];
+        }
     }
+    
+    return closest;
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath  
-                     ofObject:(id)object  
-                       change:(NSDictionary *)change  
-                      context:(void *)context {  
-    
-    //if ([self.mapView isUserLocationVisible]) { 
+-(IBAction)recenter{
     MKCoordinateRegion region;
-    region.center = self.mapView.userLocation.coordinate;  
+    
+	CLLocation *location = locationManager.location;
+    region.center = location.coordinate;  
     
     MKCoordinateSpan span; 
-    span.latitudeDelta  = 1; // Change these values to change the zoom
-    span.longitudeDelta = 1; 
+    Perspective* closest = [self closestPoint:location fromArray:nearbyMarks];
+    
+    if (closest){
+        CLLocationDistance distance = [closest.place.location distanceFromLocation:location];
+        span.latitudeDelta = (6 * distance) / 111209;
+    } else {
+        span.latitudeDelta  = 0.1; // default zoom
+    }
+    
+    
     region.span = span;
     
     [self.mapView setRegion:region animated:YES];
@@ -151,12 +140,18 @@
 		DLog(@"Got JSON BACK: %@", jsonString);
 		// Create a dictionary from the JSON string
         
-		[nearbyPlaces release];
-		nearbyPlaces = [[[jsonString JSONValue] objectForKey:@"perspectives"] retain];
-
-		[jsonString release];
+		[nearbyMarks release];
+        NSArray *rawPerspectives = [[jsonString JSONValue] objectForKey:@"perspectives"];
+        nearbyMarks = [[NSMutableArray alloc] initWithCapacity:[rawPerspectives count]];
+        
+        for (NSDictionary* dict in rawPerspectives){
+            Perspective* newPerspective = [[Perspective alloc] initFromJsonDict:dict];
+            [nearbyMarks addObject:newPerspective]; 
+            [newPerspective release];
+        }
         
         [self updateMapView];
+        [self recenter];
 	}
     
 }
@@ -167,22 +162,21 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    if ( userName == nil || [userName isEqualToString:@""]){
-        userName = @"tyler";
-    }
     // Do any additional setup after loading the view from its nib.
-    [self.mapView.userLocation addObserver:self  
-                                forKeyPath:@"location"  
-                                   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)  
-                                   context:NULL];
+    //[self.mapView.userLocation addObserver:self  
+    //                            forKeyPath:@"location"
+     //                              options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)  
+        //                           context:NULL];
         
+    self.mapView.showsUserLocation = TRUE;
+    self.locationManager = [[LocationManagerManager sharedCLLocationManager] retain];
+    
     [self mapUserPlaces];
 }
 
 - (void)viewDidUnload{
+    [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

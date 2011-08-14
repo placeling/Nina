@@ -9,8 +9,8 @@
 #import "MemberProfileViewController.h"
 #import "ASIHTTPRequest.h"
 #import "JSON.h"
-#import "NinaHelper.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UserPerspectiveMapViewController.h"
 
 
 @interface MemberProfileViewController() 
@@ -79,7 +79,14 @@
 }
 
 -(IBAction) noop{
-    
+    DLog(@"NOOP Hit");
+}
+
+-(IBAction) userPerspectives{
+    UserPerspectiveMapViewController *userPerspectives = [[UserPerspectiveMapViewController alloc] init];
+    userPerspectives.userName = self.user.username;
+    [self.navigationController pushViewController:userPerspectives animated:YES];
+    [userPerspectives release];
 }
 
 -(void) loadData{
@@ -98,7 +105,7 @@
     
     [self.quadControl setNumber:[NSNumber numberWithInt:self.user.placeCount]
                         caption:@"bookmarks"
-                         action:@selector(noop)
+                         action:@selector(userPerspectives)
                     forLocation:BottomLeftLocation];
     
     [self.quadControl setNumber:0
@@ -195,121 +202,6 @@
     [NinaHelper handleBadRequest:request sender:self];
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-		return 3;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-
-    switch (indexPath.row) {
-        case 0:
-        {
-            if (self.user.placeCount == 1) {
-                cell.textLabel.text = @"1 Place";
-            } else {
-                cell.textLabel.text = [NSString stringWithFormat:@"%i Places", self.user.placeCount];
-            }
-            break;
-        }
-        case 1:
-        {
-            NSString *followingText = [NSString stringWithFormat:@"%i Following", self.user.followingCount];
-            cell.textLabel.text = followingText;
-            if ( self.user.followingCount == 0 ) {
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            } else {
-                cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-            }
-            
-            break;
-        }
-        case 2:
-        {
-            if (self.user.followerCount == 1) {
-                cell.textLabel.text = @"1 Follower";
-            } else {
-                cell.textLabel.text = [NSString stringWithFormat:@"%i Followers", self.user.followerCount];
-            }
-            if (self.user.followingCount == 0) {
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            } else {
-                cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-            }
-            
-            break;
-        }
-    }
-    return cell;
-}
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    switch (indexPath.row)
-    {
-        case 0:
-        {
-            /*
-            MapController *map = [[MapController alloc] initWithNibName:@"MapController" bundle:nil];
-            map.mapOwner = self.target;
-            map.initialLatitude = [self.targetProfile objectForKey:@"lat"];
-            map.initialLongitude = [self.targetProfile objectForKey:@"lng"];
-            [self.navigationController pushViewController:map animated:YES];
-            [map release];
-            */
-            break;
-        }
-        case 1:
-        {
-            /*
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if (cell.selectionStyle == UITableViewCellSelectionStyleNone) {
-                break;
-            } else {
-                FollowViewController *getFollowing = [[FollowViewController alloc] initWithNibName:@"FollowViewController" bundle:nil];
-                getFollowing.listType = @"following";
-                getFollowing.username = self.username;
-                
-                [self.navigationController pushViewController:getFollowing animated:YES];
-                
-                [getFollowing release];
-            }
-             */
-            break;
-        }
-        case 2:
-        {
-            /*
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if (cell.selectionStyle == UITableViewCellSelectionStyleNone) {
-                break;
-            } else {
-                FollowViewController *getFollowers = [[FollowViewController alloc] initWithNibName:@"FollowViewController" bundle:nil];
-                getFollowers.listType = @"followers";
-                getFollowers.username = self.username;
-                
-                [self.navigationController pushViewController:getFollowers animated:YES];
-                
-                [getFollowers release];
-            }
-             */
-            break;
-        }
-    }
-}
 
 - (void)dealloc{
     [username release];

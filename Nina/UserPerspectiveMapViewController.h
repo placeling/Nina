@@ -12,15 +12,18 @@
 #import "ASIHTTPRequest.h"
 
 
-@interface UserPerspectiveMapViewController : UIViewController<ASIHTTPRequestDelegate, CLLocationManagerDelegate> {
+@interface UserPerspectiveMapViewController : UIViewController<ASIHTTPRequestDelegate> {
     IBOutlet MKMapView *mapView;
     NSString *userName;
-    NSArray *nearbyPlaces;
-    BOOL needLocationUpdate; 
+    NSMutableArray *nearbyMarks;
+    CLLocationManager *locationManager;
 }
 
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;
 @property(nonatomic, retain) NSString *userName;
-@property(nonatomic, retain) NSArray *nearbyPlaces;
+@property(nonatomic, retain) NSMutableArray *nearbyMarks;
+@property(nonatomic, retain) CLLocationManager *locationManager;
+
+-(IBAction)recenter;
 
 @end

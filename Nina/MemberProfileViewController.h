@@ -34,5 +34,6 @@
 @property (nonatomic, retain) IBOutlet TTTQuadrantControl *quadControl;
 
 -(IBAction) followUser;
+-(IBAction) userPerspectives;
 
 @end

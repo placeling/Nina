@@ -27,11 +27,7 @@
     if(self = [super init]){
         self.title = newPerspective.place.name;
         self.subtitle = newPerspective.place.address;
-        CLLocationCoordinate2D placeCoordinate;
-        
-        placeCoordinate.latitude = [newPerspective.place.lat doubleValue];
-        placeCoordinate.longitude = [newPerspective.place.lng doubleValue];
-        coordinate = placeCoordinate;
+        coordinate = newPerspective.place.location.coordinate;
         self.perspective = newPerspective;
     }
     return self;
@@ -41,6 +37,7 @@
 -(void)dealloc{
     [title release];
     [subtitle release];
+    [perspective release];
     [super dealloc];
 }
 

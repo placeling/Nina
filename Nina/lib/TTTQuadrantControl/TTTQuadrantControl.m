@@ -105,13 +105,13 @@ static NSUInteger const kAFTTTQuadrantNullLocation = 0;
 
 - (TTTQuadrantLocation)locationAtPoint:(CGPoint)point {
 	if (point.x < self.center.x) {
-		if (point.y < self.center.y) {
+		if (point.y < self.frame.size.height/2) {
 			return TopLeftLocation;
 		} else {
 			return BottomLeftLocation;
 		}
 	} else {
-		if (point.y < self.center.y) {
+		if (point.y < self.frame.size.height/2) {
 			return TopRightLocation;
 		} else {
 			return BottomRightLocation;

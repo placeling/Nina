@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "User.h"
+#import "NinaHelper.h"
 
 @interface Place : NSObject {
     NSString *name;
@@ -18,8 +19,7 @@
     NSString *address;
     NSString *google_id;
     
-    NSNumber *lat;
-    NSNumber *lng;
+    CLLocation* location;
     
     NSString *phone;
     
@@ -36,9 +36,7 @@
 
 @property (nonatomic, retain) NSString *address;
 
-@property (nonatomic, retain) NSNumber *lat;
-@property (nonatomic, retain) NSNumber *lng;
-
+@property (nonatomic, retain) CLLocation* location;
 @property (nonatomic, retain) NSString *phone;
 
 @property (nonatomic, retain) NSArray *categories;

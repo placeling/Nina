@@ -13,7 +13,7 @@
 
 -(IBAction) suggested;
 -(IBAction) logout;
--(IBAction) perspectives;
+
 -(IBAction) bookmarkSpot;
 -(IBAction) myProfile;
 

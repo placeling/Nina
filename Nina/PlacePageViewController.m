@@ -137,7 +137,7 @@
     self.addressLabel.text = place.address;
     
     // Call asychronously to get image
-    NSString *mapURL = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@,%@&zoom=15&size=260x85&&markers=color:red%%7C%@,%@&sensor=false", self.place.lat, self.place.lng, self.place.lat, self.place.lng];
+    NSString *mapURL = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@,%@&zoom=15&size=260x85&&markers=color:red%%7C%@,%@&sensor=false", self.place.location.coordinate.latitude, self.place.location.coordinate.longitude, self.place.location.coordinate.latitude, self.place.location.coordinate.longitude];
     NSURL *url = [NSURL URLWithString:mapURL];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request setDidFinishSelector:@selector(mapDownloaded:)];

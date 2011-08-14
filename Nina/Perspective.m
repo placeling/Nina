@@ -19,7 +19,7 @@
 
         //self.tags = [jsonDict objectForKey:@"tags"];
         self.notes = [jsonDict objectForKey:@"memo"];
-        self.starred = [jsonDict objectForKey:@"favorite"]; 
+        self.starred = [[jsonDict objectForKey:@"favorite"] boolValue]; 
         
 	}
 	return self;

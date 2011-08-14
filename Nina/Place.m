@@ -13,7 +13,7 @@
 
 @synthesize name, pid, user;
 @synthesize address, mapCount, bookmarked;
-@synthesize lat, lng;
+@synthesize location;
 @synthesize google_id, phone;
 @synthesize categories, icon;
 
@@ -25,8 +25,9 @@
         self.address = [jsonDict objectForKey:@"street_address"];
         self.phone = [jsonDict objectForKey:@"phone_number"];
         self.google_id = [jsonDict objectForKey:@"google_id"];
-        self.lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
-        self.lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1];
+        NSNumber *lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
+        NSNumber *lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1];        
+        self.location = [[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]];
         self.mapCount = [[jsonDict objectForKey:@"perspective_count"] intValue];
         self.bookmarked = [[jsonDict objectForKey:@"bookmarked"] boolValue] ;
 	}
@@ -38,11 +39,9 @@
     [pid release];
     [user release];
     [address release];
-    
-    [lat release];
-    [lng release];
     [google_id release];
     [phone release];
+    [location release];
 
     [categories release];
     [icon release];
