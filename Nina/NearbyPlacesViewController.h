@@ -11,10 +11,11 @@
 #import "ASIHTTPRequest.h"
 
 
-@interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate> {
+@interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate, UISearchBarDelegate> {
     EGORefreshTableHeaderView *refreshHeaderView;
     
     IBOutlet UITableView *placesTableView;
+    IBOutlet UISearchBar *_searchBar;
     NSArray  *nearbyPlaces;
     
     BOOL needLocationUpdate;
@@ -28,5 +29,7 @@
 - (void)doneLoadingTableViewData;
 
 @property(nonatomic, retain) IBOutlet UITableView *placesTableView;
+@property(nonatomic, retain) IBOutlet IBOutlet UISearchBar *searchBar;
+
 
 @end

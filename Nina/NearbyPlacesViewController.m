@@ -17,14 +17,20 @@
 @interface NearbyPlacesViewController (Private)
     -(void)dataSourceDidFinishLoadingNewData;
     -(void)findNearbyPlaces;
+    -(void)findNearbyPlaces:(NSString*)searchTerm;
 @end
 
 @implementation NearbyPlacesViewController 
 
 @synthesize reloading=_reloading;
 @synthesize placesTableView;
+@synthesize searchBar=_searchBar;
 
 -(void)findNearbyPlaces {
+    [self findNearbyPlaces:@""];
+}
+
+-(void)findNearbyPlaces:(NSString*)searchTerm {
 	//NSDate *now = [NSDate date];
 	
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
@@ -42,7 +48,7 @@
 		accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
         NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
         
-        urlString = [NSString stringWithFormat:@"%@?lat=%@&long=%@&accuracy=%@", urlString, lat, lon, radius];
+        urlString = [NSString stringWithFormat:@"%@?lat=%@&long=%@&accuracy=%@&query=%@", urlString, lat, lon, radius, searchTerm];
         NSURL *url = [NSURL URLWithString:urlString];
         
 		ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
@@ -52,6 +58,7 @@
 		[request startAsynchronous];
 	} else {
         needLocationUpdate = true;
+        DLog(@"UNABLE TO GET CURRENT LOCATION FOR NEARBY");
     }
     
 }
@@ -65,8 +72,9 @@
 }
 
 - (void)dealloc{
-    [super dealloc];
     [placesTableView release];
+    [_searchBar release];
+    [super dealloc];
     
 }
 
@@ -143,7 +151,7 @@
 		[refreshHeaderView release];
 	}
 
-
+    self.searchBar.delegate = self;
     [self findNearbyPlaces];
     
 }
@@ -229,6 +237,10 @@
 	}
     
     return cell;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [self findNearbyPlaces:searchBar.text];
 }
 
 
