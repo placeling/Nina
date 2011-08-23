@@ -15,8 +15,10 @@
     NSString *pid;
     User *user;
     UIImage *icon;
+    NSString *googlePlacesUrl;
     
     NSString *address;
+    NSString *city;
     NSString *google_id;
     
     CLLocation* location;
@@ -33,8 +35,10 @@
 @property (nonatomic, retain) NSString *pid;
 @property (nonatomic, retain) NSString *google_id;
 @property (nonatomic, retain) User *user;
+@property (nonatomic, retain) NSString *googlePlacesUrl;
 
 @property (nonatomic, retain) NSString *address;
+@property (nonatomic, retain) NSString *city;
 
 @property (nonatomic, retain) CLLocation* location;
 @property (nonatomic, retain) NSString *phone;

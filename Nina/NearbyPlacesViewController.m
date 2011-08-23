@@ -188,7 +188,7 @@
 		// Create a dictionary from the JSON string
         
 		[nearbyPlaces release];
-		nearbyPlaces = [[jsonString JSONValue] retain];
+		nearbyPlaces = [[[jsonString JSONValue] retain] objectForKey:@"places"];
         
 		[self.placesTableView  reloadData];
 		[jsonString release];

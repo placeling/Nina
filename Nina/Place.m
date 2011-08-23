@@ -12,9 +12,9 @@
 @implementation Place
 
 @synthesize name, pid, user;
-@synthesize address, mapCount, bookmarked;
+@synthesize address, city, mapCount, bookmarked;
 @synthesize location;
-@synthesize google_id, phone;
+@synthesize google_id, phone, googlePlacesUrl;
 @synthesize categories, icon;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
@@ -23,13 +23,17 @@
         self.pid = [jsonDict objectForKey:@"_id"];
         self.name = [jsonDict objectForKey:@"name"];
         self.address = [jsonDict objectForKey:@"street_address"];
+        self.city = [jsonDict objectForKey:@"city_data"];
         self.phone = [jsonDict objectForKey:@"phone_number"];
         self.google_id = [jsonDict objectForKey:@"google_id"];
+        self.googlePlacesUrl = [jsonDict objectForKey:@"google_url"];
         NSNumber *lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
         NSNumber *lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1];        
         self.location = [[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]];
         self.mapCount = [[jsonDict objectForKey:@"perspective_count"] intValue];
         self.bookmarked = [[jsonDict objectForKey:@"bookmarked"] boolValue] ;
+        self.categories = [jsonDict objectForKey:@"venue_types"];
+        
 	}
 	return self;
 }
@@ -39,6 +43,7 @@
     [pid release];
     [user release];
     [address release];
+    [city release];
     [google_id release];
     [phone release];
     [location release];

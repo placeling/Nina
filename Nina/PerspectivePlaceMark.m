@@ -7,7 +7,6 @@
 //
 
 #import "PerspectivePlaceMark.h"
-#import "NinaHelper.h"
 
 
 @implementation PerspectivePlaceMark
@@ -15,7 +14,7 @@
 @synthesize coordinate;
 @synthesize title;
 @synthesize subtitle;
-@synthesize perspective;
+@synthesize perspective=_perspective;
 
 -(id)initWithCoordinate:(CLLocationCoordinate2D) c{
 	coordinate=c;
@@ -23,12 +22,12 @@
 	return self;
 }
 
--(id)initFromPerspective:(Perspective *)newPerspective{
+-(id)initFromPerspective:(Perspective *)perspective{
     if(self = [super init]){
-        self.title = newPerspective.place.name;
-        self.subtitle = newPerspective.place.address;
-        coordinate = newPerspective.place.location.coordinate;
-        self.perspective = newPerspective;
+        self.title = perspective.place.name;
+        self.subtitle = perspective.place.address;
+        coordinate = perspective.place.location.coordinate;
+        self.perspective = perspective;
     }
     return self;
 }
@@ -37,7 +36,7 @@
 -(void)dealloc{
     [title release];
     [subtitle release];
-    [perspective release];
+    [_perspective release];
     [super dealloc];
 }
 

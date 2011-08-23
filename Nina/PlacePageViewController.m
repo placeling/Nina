@@ -31,11 +31,21 @@
 @implementation PlacePageViewController
 
 @synthesize dataLoaded;
-@synthesize google_id, google_ref, place, mapImage;
+@synthesize google_id, google_ref;
+@synthesize place=_place, mapImage;
 @synthesize bookmarkButton, phoneButton;
-@synthesize nameLabel, addressLabel;
-@synthesize mapImageView, quadControl;
+@synthesize nameLabel, addressLabel, cityLabel, categoriesLabel;
+@synthesize segmentedControl;
+@synthesize mapImageView, googlePlacesButton, websiteButton;
 
+- (id) initWithPlace:(Place *)place{
+    if(self = [super init]){
+        self.place = place;
+        self.google_id = place.google_id;
+	}
+	return self;
+    
+}
 
 #pragma mark - View lifecycle
 
@@ -81,7 +91,7 @@
         
         [self loadData];
         
-        if (place.bookmarked){
+        if (self.place.bookmarked){
             [self toggleBookmarked];
         }
 	}
@@ -89,11 +99,16 @@
 
 - (void)mapDownloaded:(ASIHTTPRequest *)request{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
-    NSData *responseData = [request responseData];
-    self.mapImage = [UIImage imageWithData:responseData];
-    
-    self.mapImageView.image = self.mapImage;
+    int statusCode = [request responseStatusCode];
+    NSString *responseBody = [request responseString];
+    if ([request responseStatusCode] != 200){
+        DLog(@"%i - %@", statusCode, responseBody);
+    } else {
+        NSData *responseData = [request responseData];
+        self.mapImage = [UIImage imageWithData:responseData];
+        
+        self.mapImageView.image = self.mapImage;
+    }
 }
 
 
@@ -108,39 +123,24 @@
     //puts empty values to show while data being downloaded
     self.nameLabel.text = @"";
     self.addressLabel.text = @"";
-    UIImage *backdrop = [UIImage imageNamed:@"map_backdrop"];
-    self.mapImageView.image = backdrop;
     self.phoneButton.titleLabel.text = @"";
-    
-    self.quadControl.delegate = self;
-    [self.quadControl setNumber:0
-                       caption:@"Favorited"
-                        action:@selector(didSelectFollowingQuadrant)
-                   forLocation:TopLeftLocation];
-    
-    [self.quadControl setNumber:0
-                       caption:@"Perspectives"
-                        action:@selector(didSelectTweetsQuadrant)
-                   forLocation:TopRightLocation];
-    
-    [self.quadControl setNumber:0
-                       caption:@"Tags"
-                        action:@selector(didSelectFollowersQuadrant)
-                   forLocation:BottomLeftLocation];
-    
-    [self.quadControl setNeedsDisplay];
-    
+    self.googlePlacesButton.titleLabel.textColor = [UIColor grayColor];
+    self.categoriesLabel.text = @"";
+    self.cityLabel.text = @"";
 }
 
 -(void) loadData{
-    self.nameLabel.text = place.name;
-    self.addressLabel.text = place.address;
+    self.nameLabel.text = self.place.name;
+    self.addressLabel.text = self.place.address;
     
     // Call asychronously to get image
     NSString* lat = [NSString stringWithFormat:@"%f",self.place.location.coordinate.latitude];
-    NSString* lng = [NSString stringWithFormat:@"%f",self.place.location.coordinate.longitude];
+    NSString* lng = [NSString stringWithFormat:@"%f",self.place.location.coordinate.longitude];    
     
-    NSString *mapURL = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@,%@&zoom=15&size=260x85&&markers=color:red%%7C%@,%@&sensor=false", lat, lng, lat, lng];
+    NSString* imageMapWidth = [NSString stringWithFormat:@"%i", (int)self.mapImageView.frame.size.width ];
+    NSString* imageMapHeight = [NSString stringWithFormat:@"%i", (int)self.mapImageView.frame.size.height ];
+    
+    NSString *mapURL = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@,%@&zoom=15&size=%@x%@&&markers=color:red%%7C%@,%@&sensor=false", lat, lng, imageMapWidth, imageMapHeight, lat, lng];
     NSURL *url = [NSURL URLWithString:mapURL];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request setDidFinishSelector:@selector(mapDownloaded:)];
@@ -151,27 +151,25 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
     self.phoneButton.titleLabel.text = self.place.phone;
-    
-    self.quadControl.delegate = self;
-    [self.quadControl setNumber:[NSNumber numberWithInt:self.place.mapCount]
-                        caption:@"Favorited"
-                         action:@selector(didSelectFollowingQuadrant)
-                    forLocation:TopLeftLocation];
-    
-    [self.quadControl setNumber:[NSNumber numberWithInt:self.place.mapCount]
-                        caption:@"Perspectives"
-                         action:@selector(didSelectTweetsQuadrant)
-                    forLocation:TopRightLocation];
-    
-    [self.quadControl setNumber:nil
-                        caption:@"Tags"
-                         action:@selector(didSelectFollowersQuadrant)
-                    forLocation:BottomLeftLocation];
-    [self.quadControl setNeedsDisplay];
+    self.cityLabel.text = self.place.city;
+    self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@","];
 }
 
 
-#pragma mark -
+#pragma mark - IBActions
+
+-(IBAction) changedSegment{
+    if(self.segmentedControl.selectedSegmentIndex ==0){
+        
+    }
+}
+
+-(IBAction) googlePlacePage{
+    NSURL *webURL = [NSURL URLWithString:self.place.googlePlacesUrl];
+    [[UIApplication sharedApplication] openURL: webURL];
+    
+}
+
 - (IBAction) phonePlace {    
     UIDevice *device = [UIDevice currentDevice];
     if ([[device model] isEqualToString:@"iPhone"] ) {
@@ -233,14 +231,16 @@
 - (void)dealloc{
     [google_id release];
     [google_ref release];
-    [place release];
+    [_place release];
     [mapImage release];
-    
+    [googlePlacesButton release];
     [bookmarkButton release];
     [phoneButton release];
     [nameLabel release];
     [addressLabel release];
     [mapImageView release];
+    [websiteButton release];
+    [cityLabel release];
     
     [super dealloc];
 }
