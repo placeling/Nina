@@ -20,6 +20,7 @@
 #import "NSString+SBJSON.h"
 #import <CoreLocation/CoreLocation.h>
 
+
 #define kMinCellHeight 60
 
 @interface PlacePageViewController ()
@@ -36,15 +37,16 @@
 @synthesize bookmarkButton, phoneButton;
 @synthesize nameLabel, addressLabel, cityLabel, categoriesLabel;
 @synthesize segmentedControl;
-@synthesize mapImageView, googlePlacesButton, websiteButton;
+@synthesize mapImageView, googlePlacesButton;
+@synthesize perspectivesView, perspectiveType;
+@synthesize homePerspectives, followingPerspectives, everyonePerspectives;
 
 - (id) initWithPlace:(Place *)place{
     if(self = [super init]){
         self.place = place;
         self.google_id = place.google_id;
 	}
-	return self;
-    
+	return self;    
 }
 
 #pragma mark - View lifecycle
@@ -64,6 +66,12 @@
     [request startAsynchronous];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    self.perspectiveType = home;
+    
+    self.homePerspectives = [[NSMutableArray alloc]initWithObjects: nil];
+    perspectives = self.homePerspectives;
+
 }
 
 #pragma mark - Selectors for responding to initial URLs
@@ -120,13 +128,23 @@
 
 #pragma mark - Table view delegate
 -(void) blankLoad{
-    //puts empty values to show while data being downloaded
-    self.nameLabel.text = @"";
-    self.addressLabel.text = @"";
-    self.phoneButton.titleLabel.text = @"";
-    self.googlePlacesButton.titleLabel.textColor = [UIColor grayColor];
-    self.categoriesLabel.text = @"";
-    self.cityLabel.text = @"";
+    if (self.place){
+        //loads what we have before grabbing detailed view
+        self.nameLabel.text = self.place.name;
+        self.addressLabel.text = self.place.address;
+        self.cityLabel.text = self.place.city;
+        self.phoneButton.titleLabel.text = self.place.phone;
+        self.googlePlacesButton.titleLabel.textColor = [UIColor blueColor];
+        self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@","];
+    } else {
+        //puts empty values to show while data being downloaded
+        self.nameLabel.text = @"";
+        self.addressLabel.text = @"";
+        self.phoneButton.titleLabel.text = @"";
+        self.googlePlacesButton.titleLabel.textColor = [UIColor grayColor];
+        self.categoriesLabel.text = @"";
+        self.cityLabel.text = @"";
+    }
 }
 
 -(void) loadData{
@@ -159,9 +177,18 @@
 #pragma mark - IBActions
 
 -(IBAction) changedSegment{
-    if(self.segmentedControl.selectedSegmentIndex ==0){
-        
+    NSUInteger index = self.segmentedControl.selectedSegmentIndex;
+    
+    if (index == 0){
+        self.perspectiveType = home;
+    } else if (index == 1){
+        self.perspectiveType = following;
+    } else if (index == 2){
+        self.perspectiveType = everyone;
     }
+    
+    [self.perspectivesView reloadData];
+    
 }
 
 -(IBAction) googlePlacePage{
@@ -181,35 +208,67 @@
     }
 }
 
+#pragma mark - Table View
 
--(IBAction) bookmark {
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives", [NinaHelper getHostname], self.place.pid];
 
-    NSURL *url = [NSURL URLWithString:urlText];
-    
-    CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
-    CLLocation *location =  locationManager.location;
-    
-    NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-    NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
-    float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
-    accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:lat forKey:@"lat"];
-    [request setPostValue:lng forKey:@"long"];
-    [request setPostValue:[NSString stringWithFormat:@"%f", accuracy] forKey:@"accuracy"];
-    
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFinishSelector:@selector(bookmarkFinished:)];
-    [request setDidFailSelector:@selector(requestFailed:)];
-    
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
-    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 1;
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    if ( self.perspectiveType == home ){
+        return [perspectives count] +1;
+    } else {
+        return [perspectives count];
+    }
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *perspectiveCellIdentifier = @"Cell";
+    static NSString *bookmarkCellIdentifier = @"BookmarkTableViewCell";
+    UITableViewCell *cell;
+    
+    if ( indexPath.row == 0 && self.perspectiveType == home ){
+        cell = [tableView dequeueReusableCellWithIdentifier:bookmarkCellIdentifier];
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
+    }
+    
+    
+    if (cell == nil) {
+        if ( indexPath.row == 0 && self.perspectiveType == home ){
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"BookmarkTableViewCell" owner:self options:nil];
+
+            for(id item in objects)
+            {
+                if ( [item isKindOfClass:[UITableViewCell class]])
+                {
+                    BookmarkTableViewCell *bmcell = (BookmarkTableViewCell *)item;
+                    bmcell.place = self.place;
+                    cell = bmcell;
+                    break;
+                }
+            }
+                        
+        } else {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:perspectiveCellIdentifier] autorelease];
+        }
+        
+    }
+    
+    // Configure the cell...
+    
+    return cell;
+}
+
+
+
 
 - (void)bookmarkFinished:(ASIFormDataRequest *)request{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -239,8 +298,8 @@
     [nameLabel release];
     [addressLabel release];
     [mapImageView release];
-    [websiteButton release];
     [cityLabel release];
+    [perspectivesView release];
     
     [super dealloc];
 }

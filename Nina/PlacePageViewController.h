@@ -12,27 +12,44 @@
 #import "User.h"
 #import "ASIHTTPRequestDelegate.h"
 #import "NinaHelper.h"
+#import "BookmarkTableViewCell.h"
+
+
+typedef enum {
+    home,
+    following,
+    everyone
+} PerspectiveTypes;
+
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : UIViewController <UIActionSheetDelegate, UIScrollViewDelegate> {        
+@interface PlacePageViewController : UIViewController <UIActionSheetDelegate, UIScrollViewDelegate, UITableViewDelegate> {        
     NSString *google_id; 
     NSString *google_ref;
     
     Place *_place;
     UIImage *mapImage; // Static Google Map of Location
+    PerspectiveTypes perspectiveType;
     
     IBOutlet UIButton *bookmarkButton;
     IBOutlet UIButton *phoneButton;
     IBOutlet UIButton *googlePlacesButton;
-    IBOutlet UIButton *websiteButton;
     IBOutlet UILabel *nameLabel;
     IBOutlet UILabel *addressLabel;
     IBOutlet UILabel *cityLabel;
     IBOutlet UILabel *categoriesLabel;
     
     IBOutlet UIImageView *mapImageView;
-    IBOutlet UISegmentedControl *segmentedControl;    
+    IBOutlet UISegmentedControl *segmentedControl;   
+    
+    IBOutlet UITableView *perspectivesView;
+    
+    NSArray *perspectives;
+    NSMutableArray *homePerspectives;
+    NSMutableArray *followingPerspectives;
+    NSMutableArray *everyonePerspectives;
+    
 }
 
 @property BOOL dataLoaded;
@@ -45,15 +62,19 @@
 @property (nonatomic, retain) IBOutlet UIButton *googlePlacesButton;
 @property (nonatomic, retain) IBOutlet UIButton *bookmarkButton;
 @property (nonatomic, retain) IBOutlet UIButton *phoneButton;
-@property (nonatomic, retain) IBOutlet UIButton *websiteButton;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *addressLabel;
 @property (nonatomic, retain) IBOutlet UILabel *cityLabel;
 @property (nonatomic, retain) IBOutlet UILabel *categoriesLabel;
 @property (nonatomic, retain) IBOutlet UIImageView *mapImageView;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *segmentedControl;
+@property (nonatomic, retain) IBOutlet UITableView *perspectivesView;
+@property (nonatomic, assign) IBOutlet PerspectiveTypes perspectiveType;
 
--(IBAction) bookmark;
+@property (nonatomic, assign) NSMutableArray *homePerspectives;
+@property (nonatomic, assign) NSMutableArray *followingPerspectives;
+@property (nonatomic, assign) NSMutableArray *everyonePerspectives;
+
 -(IBAction) phonePlace;
 -(IBAction) googlePlacePage;
 -(IBAction) changedSegment;
