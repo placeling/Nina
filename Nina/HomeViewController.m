@@ -22,6 +22,21 @@
 @implementation HomeViewController
 
 
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark -IBActions
+
 -(IBAction)suggested{
     SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
     [self.navigationController pushViewController:suggestUserViewController animated:YES];
@@ -102,17 +117,6 @@
 
 
 
-#pragma mark - View lifecycle
 
-- (void)viewDidLoad{
-    [super viewDidLoad];
-    
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
 
 @end
