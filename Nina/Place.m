@@ -12,7 +12,7 @@
 @implementation Place
 
 @synthesize name, pid, user;
-@synthesize address, city, mapCount, bookmarked;
+@synthesize address, city, perspectiveCount, bookmarked, followingPerspectiveCount;
 @synthesize location;
 @synthesize google_id, phone, googlePlacesUrl;
 @synthesize categories, icon;
@@ -30,9 +30,12 @@
         NSNumber *lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
         NSNumber *lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1];        
         self.location = [[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]];
-        self.mapCount = [[jsonDict objectForKey:@"perspective_count"] intValue];
+        self.perspectiveCount = [[jsonDict objectForKey:@"perspective_count"] intValue];
         self.bookmarked = [[jsonDict objectForKey:@"bookmarked"] boolValue] ;
         self.categories = [jsonDict objectForKey:@"venue_types"];
+        
+        self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
+
         
 	}
 	return self;

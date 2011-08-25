@@ -26,7 +26,9 @@
     NSString *phone;
     
     NSArray *categories;
-    NSInteger mapCount;
+    NSInteger perspectiveCount;
+    NSInteger followingPerspectiveCount;
+    
     BOOL bookmarked;
     
 }
@@ -44,7 +46,9 @@
 @property (nonatomic, retain) NSString *phone;
 
 @property (nonatomic, retain) NSArray *categories;
-@property (nonatomic, assign) NSInteger mapCount;
+@property (nonatomic, assign) NSInteger perspectiveCount;
+@property (nonatomic, assign) NSInteger followingPerspectiveCount;
+
 @property (nonatomic, retain) UIImage *icon;
 @property (nonatomic, assign) BOOL bookmarked;
 

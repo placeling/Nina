@@ -11,7 +11,13 @@
 #import "NearbyPlacesViewController.h"
 #import "MemberProfileViewController.h"
 #import "SuggestUserViewController.h"
+#import "PerspectivesMapViewController.h"
 #import "NinaHelper.h"
+#import "NSString+SBJSON.h"
+#import "Place.h"
+#import "PlacePageViewController.h"
+
+#import "MBProgressHUD.h"
 
 @implementation HomeViewController
 
@@ -20,6 +26,12 @@
     SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
     [self.navigationController pushViewController:suggestUserViewController animated:YES];
     [suggestUserViewController release]; 
+}
+
+-(IBAction)nearbyPerspectives{
+    PerspectivesMapViewController *perspectivesMapViewController = [[PerspectivesMapViewController alloc] init];
+    [self.navigationController pushViewController:perspectivesMapViewController animated:YES];
+    [perspectivesMapViewController release]; 
 }
 
 -(IBAction)myProfile{
@@ -34,6 +46,53 @@
     NearbyPlacesViewController *nearbyPlacesViewController = [[NearbyPlacesViewController alloc] init];
     [self.navigationController pushViewController:nearbyPlacesViewController animated:YES];
     [nearbyPlacesViewController release];
+}
+
+-(IBAction) random{
+    //MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    //hud.labelText = @"Loading";
+    
+    CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
+    CLLocation *location = manager.location;
+    
+    NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+    NSString* lon = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+    
+    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/random?lat=%@&long=%@", [NinaHelper getHostname], lat, lon];
+    
+    NSURL *url = [NSURL URLWithString:urlText];
+    
+    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
+    
+    [NinaHelper signRequest:request];
+    
+    [request setCompletionBlock:^{
+        //[MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+        NSString *responseString = [request responseString];        
+        DLog(@"%@", responseString);
+        
+        NSDictionary *json_place = [responseString JSONValue];  
+        
+        Place *place = [[Place alloc] initFromJsonDict:json_place];
+        
+        PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:place];
+        
+        
+        [self.navigationController pushViewController:placePageViewController animated:TRUE];
+        
+        [placePageViewController release];
+    }];
+    [request setFailedBlock:^{
+        //[MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+        NSError *error = [request error];
+        DLog(@"%@", error);
+    }];
+    
+    
+	
+    [request startAsynchronous];
+
+    
 }
 
 -(IBAction) logout{

@@ -16,5 +16,8 @@
 
 -(IBAction) bookmarkSpot;
 -(IBAction) myProfile;
+-(IBAction) nearbyPerspectives;
+
+-(IBAction) random;
 
 @end

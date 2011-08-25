@@ -37,10 +37,7 @@
     CLLocation *location = manager.location;
     
 	if (location != nil){ //[now timeIntervalSinceDate:location.timestamp] < (60 * 5)){
-		NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
-		NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-        
-		NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/nearby", [plistData objectForKey:@"server_url"]];		
+		NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/nearby", [NinaHelper getHostname]];		
         
 		NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
 		NSString* lon = [NSString stringWithFormat:@"%f", location.coordinate.longitude];

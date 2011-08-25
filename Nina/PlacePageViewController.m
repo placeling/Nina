@@ -20,6 +20,9 @@
 #import "NSString+SBJSON.h"
 #import <CoreLocation/CoreLocation.h>
 
+#import "MBProgressHUD.h"
+#import "PerspectiveTableViewCell.h"
+
 
 #define kMinCellHeight 60
 
@@ -63,6 +66,7 @@
     [NinaHelper signRequest:request];
     
     [request setDelegate:self];
+    [request setTag:0];
     [request startAsynchronous];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -71,6 +75,7 @@
     
     self.homePerspectives = [[NSMutableArray alloc]initWithObjects: nil];
     perspectives = self.homePerspectives;
+    self.navigationController.title = self.place.name;
 
 }
 
@@ -87,38 +92,73 @@
     if (200 != [request responseStatusCode]){
 		[NinaHelper handleBadRequest:request sender:self];
 	} else {
-        NSString *responseString = [request responseString];        
-        DLog(@"%@", responseString);
-        
-        NSDictionary *json_place = [responseString JSONValue];  
-        
-        Place *newPlace = [[Place alloc] initFromJsonDict:json_place];
-        
-        self.place = newPlace;
-        [newPlace release];
-        
-        [self loadData];
-        
-        if (self.place.bookmarked){
-            [self toggleBookmarked];
+  
+        switch( [request tag] ){
+            case 0:{
+                //place detail
+                NSString *responseString = [request responseString];        
+                DLog(@"%@", responseString);
+                
+                NSDictionary *json_place = [responseString JSONValue];  
+                
+                Place *newPlace = [[Place alloc] initFromJsonDict:json_place];
+                
+                self.place = newPlace;
+                [newPlace release];
+                
+                [self loadData];
+                
+                if (self.place.bookmarked){
+                    [self toggleBookmarked];
+                }  
+                break;
+            }
+            case 1:{
+                //map download
+                NSData *responseData = [request responseData];
+                self.mapImage = [UIImage imageWithData:responseData];
+                
+                self.mapImageView.image = self.mapImage;
+                break;
+            }
+            case 2:{
+                NSString *responseString = [request responseString];        
+                DLog(@"%@", responseString);
+                
+                NSDictionary *jsonDict = [responseString JSONValue];  
+                NSArray *jsonPerspectives = [jsonDict objectForKey:@"perspectives"];
+                [followingPerspectives release];
+                followingPerspectives = [[NSMutableArray alloc] initWithCapacity:[jsonPerspectives count]];
+                for (NSDictionary *rawDict in jsonPerspectives){
+                    Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
+                    [followingPerspectives addObject:perspective];
+                    [perspective release];
+                }
+                perspectives = followingPerspectives;
+                [self.perspectivesView reloadData];
+                break;
+            }
+            case 3:{
+                NSString *responseString = [request responseString];        
+                DLog(@"%@", responseString);
+                
+                NSDictionary *jsonDict = [responseString JSONValue];  
+                NSArray *jsonPerspectives = [jsonDict objectForKey:@"perspectives"];
+                [everyonePerspectives release];
+                everyonePerspectives = [[NSMutableArray alloc] initWithCapacity:[jsonPerspectives count]];
+                for (NSDictionary *rawDict in jsonPerspectives){
+                    Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
+                    [everyonePerspectives addObject:perspective];
+                    [perspective release];
+                }
+                perspectives = everyonePerspectives;
+                [self.perspectivesView reloadData];
+                break;
+            }
         }
+
 	}
 }
-
-- (void)mapDownloaded:(ASIHTTPRequest *)request{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    int statusCode = [request responseStatusCode];
-    NSString *responseBody = [request responseString];
-    if ([request responseStatusCode] != 200){
-        DLog(@"%i - %@", statusCode, responseBody);
-    } else {
-        NSData *responseData = [request responseData];
-        self.mapImage = [UIImage imageWithData:responseData];
-        
-        self.mapImageView.image = self.mapImage;
-    }
-}
-
 
 #pragma mark - Image Lazy Loader Helpers
 
@@ -161,9 +201,8 @@
     NSString *mapURL = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@,%@&zoom=15&size=%@x%@&&markers=color:red%%7C%@,%@&sensor=false", lat, lng, imageMapWidth, imageMapHeight, lat, lng];
     NSURL *url = [NSURL URLWithString:mapURL];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setDidFinishSelector:@selector(mapDownloaded:)];
-    [request setDidFailSelector:@selector(requestWentWrong:)];
     [request setDelegate:self];
+    [request setTag:1];
     [request startAsynchronous];
         
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -171,6 +210,9 @@
     self.phoneButton.titleLabel.text = self.place.phone;
     self.cityLabel.text = self.place.city;
     self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@","];
+    [self.segmentedControl setTitle:[NSString stringWithFormat:@"Following (%i)", self.place.followingPerspectiveCount] forSegmentAtIndex:1];
+    [self.segmentedControl setTitle:[NSString stringWithFormat:@"Everyone (%i)", self.place.perspectiveCount] forSegmentAtIndex:2];
+    
 }
 
 
@@ -183,8 +225,31 @@
         self.perspectiveType = home;
     } else if (index == 1){
         self.perspectiveType = following;
+        if (self.place.followingPerspectiveCount > 0){
+            //only call if we know something there
+            NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/following", [NinaHelper getHostname], self.google_id];
+            
+            ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlText]];
+            [NinaHelper signRequest:request];
+            
+            [request setDelegate:self];
+            [request setTag:2];
+            [request startAsynchronous];
+        }
     } else if (index == 2){
         self.perspectiveType = everyone;
+        if (self.place.perspectiveCount > 0){
+            //only call if we know something there
+            NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/all", [NinaHelper getHostname], self.google_id, self.google_ref];
+            
+            NSURL *url = [NSURL URLWithString:urlText];
+            ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+            [NinaHelper signRequest:request];
+            
+            [request setDelegate:self];
+            [request setTag:3];
+            [request startAsynchronous];
+        }
     }
     
     [self.perspectivesView reloadData];
@@ -257,7 +322,24 @@
             }
                         
         } else {
+            /*
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
+            
+            for(id item in objects)
+            {
+                if ( [item isKindOfClass:[UITableViewCell class]])
+                {
+                    PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;
+                    pcell.perspective = self.place;
+                    cell = pcell;
+                    break;
+                }
+            }
+
+            */
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:perspectiveCellIdentifier] autorelease];
+            Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+            cell.textLabel.text = perspective.notes;
         }
         
     }
