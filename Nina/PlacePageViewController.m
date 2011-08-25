@@ -29,15 +29,13 @@
 @interface PlacePageViewController ()
 -(void) loadData;
 -(void) blankLoad;
--(void) toggleBookmarked;
 @end
 
 @implementation PlacePageViewController
 
 @synthesize dataLoaded;
 @synthesize google_id, google_ref;
-@synthesize place=_place, mapImage;
-@synthesize bookmarkButton, phoneButton;
+@synthesize place=_place, mapImage, phoneButton;
 @synthesize nameLabel, addressLabel, cityLabel, categoriesLabel;
 @synthesize segmentedControl;
 @synthesize mapImageView, googlePlacesButton;
@@ -108,9 +106,6 @@
                 
                 [self loadData];
                 
-                if (self.place.bookmarked){
-                    [self toggleBookmarked];
-                }  
                 break;
             }
             case 1:{
@@ -127,14 +122,15 @@
                 
                 NSDictionary *jsonDict = [responseString JSONValue];  
                 NSArray *jsonPerspectives = [jsonDict objectForKey:@"perspectives"];
-                [followingPerspectives release];
+                
+                //this only called if array was previously nil
                 followingPerspectives = [[NSMutableArray alloc] initWithCapacity:[jsonPerspectives count]];
                 for (NSDictionary *rawDict in jsonPerspectives){
                     Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
                     [followingPerspectives addObject:perspective];
                     [perspective release];
                 }
-                perspectives = followingPerspectives;
+                
                 [self.perspectivesView reloadData];
                 break;
             }
@@ -144,15 +140,24 @@
                 
                 NSDictionary *jsonDict = [responseString JSONValue];  
                 NSArray *jsonPerspectives = [jsonDict objectForKey:@"perspectives"];
-                [everyonePerspectives release];
-                everyonePerspectives = [[NSMutableArray alloc] initWithCapacity:[jsonPerspectives count]];
+                //this only called if array was previously nil
+                
                 for (NSDictionary *rawDict in jsonPerspectives){
                     Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
                     [everyonePerspectives addObject:perspective];
                     [perspective release];
                 }
-                perspectives = everyonePerspectives;
+                
                 [self.perspectivesView reloadData];
+                break;
+            }
+            case 4:{
+                //bookmark return
+                NSString *responseString = [request responseString];        
+                DLog(@"%@", responseString);
+                self.place.bookmarked = true;
+                [self.perspectivesView reloadData];                
+                
                 break;
             }
         }
@@ -223,9 +228,10 @@
     
     if (index == 0){
         self.perspectiveType = home;
+        perspectives = homePerspectives;
     } else if (index == 1){
         self.perspectiveType = following;
-        if (self.place.followingPerspectiveCount > 0){
+        if (self.place.followingPerspectiveCount > 0 && self.followingPerspectives == nil){
             //only call if we know something there
             NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/following", [NinaHelper getHostname], self.google_id];
             
@@ -235,21 +241,24 @@
             [request setDelegate:self];
             [request setTag:2];
             [request startAsynchronous];
-        }
+            followingPerspectives = [[NSMutableArray alloc] init];
+        } 
+        perspectives = followingPerspectives;
     } else if (index == 2){
         self.perspectiveType = everyone;
-        if (self.place.perspectiveCount > 0){
+        if (self.place.perspectiveCount > 0 && self.everyonePerspectives == nil){
             //only call if we know something there
-            NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/all", [NinaHelper getHostname], self.google_id, self.google_ref];
+            NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/all", [NinaHelper getHostname], self.google_id];
             
-            NSURL *url = [NSURL URLWithString:urlText];
-            ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+            ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlText]];
             [NinaHelper signRequest:request];
             
             [request setDelegate:self];
             [request setTag:3];
             [request startAsynchronous];
+            everyonePerspectives = [[NSMutableArray alloc] init];
         }
+        perspectives = everyonePerspectives;
     }
     
     [self.perspectivesView reloadData];
@@ -273,6 +282,36 @@
     }
 }
 
+
+-(IBAction) bookmark {
+    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives", [NinaHelper getHostname], self.place.pid];
+    
+    NSURL *url = [NSURL URLWithString:urlText];
+    
+    CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
+    CLLocation *location =  locationManager.location;
+    
+    NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+    NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+    float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
+    accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
+    
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:lat forKey:@"lat"];
+    [request setPostValue:lng forKey:@"long"];
+    [request setPostValue:[NSString stringWithFormat:@"%f", accuracy] forKey:@"accuracy"];
+    
+    [request setRequestMethod:@"POST"];
+    [request setDelegate:self];
+    [request setTag:4];
+    
+    [NinaHelper signRequest:request];
+    [request startAsynchronous];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+
+
 #pragma mark - Table View
 
 
@@ -282,8 +321,7 @@
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Return the number of rows in the section.
     if ( self.perspectiveType == home ){
         return [perspectives count] +1;
@@ -297,10 +335,15 @@
 {
     static NSString *perspectiveCellIdentifier = @"Cell";
     static NSString *bookmarkCellIdentifier = @"BookmarkTableViewCell";
+    static NSString *editableCellIdentifier = @"CellIdentifier";
     UITableViewCell *cell;
     
     if ( indexPath.row == 0 && self.perspectiveType == home ){
-        cell = [tableView dequeueReusableCellWithIdentifier:bookmarkCellIdentifier];
+        if (self.place.bookmarked){
+            cell = [tableView dequeueReusableCellWithIdentifier:editableCellIdentifier];
+        } else {
+            cell = [tableView dequeueReusableCellWithIdentifier:bookmarkCellIdentifier];
+        }        
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
     }
@@ -308,16 +351,26 @@
     
     if (cell == nil) {
         if ( indexPath.row == 0 && self.perspectiveType == home ){
-            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"BookmarkTableViewCell" owner:self options:nil];
+            
+            if (self.place.bookmarked){
+                EditableTableViewCell *editableCell = [[[EditableTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:editableCellIdentifier] autorelease];
+                
+                editableCell.delegate = self;
+                cell = editableCell;
+                
+            } else {              
+                NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"BookmarkTableViewCell" owner:self options:nil];
 
-            for(id item in objects)
-            {
-                if ( [item isKindOfClass:[UITableViewCell class]])
+                for(id item in objects)
                 {
-                    BookmarkTableViewCell *bmcell = (BookmarkTableViewCell *)item;
-                    bmcell.place = self.place;
-                    cell = bmcell;
-                    break;
+                    if ( [item isKindOfClass:[UITableViewCell class]])
+                    {
+                        BookmarkTableViewCell *bmcell = (BookmarkTableViewCell *)item;
+                        bmcell.place = self.place;
+                        bmcell.delegate = self;
+                        cell = bmcell;
+                        break;
+                    }
                 }
             }
                         
@@ -358,14 +411,6 @@
     NSString *responseString = [request responseString];
     DLog(@"Returned: %@", responseString);
     // NSDictionary *placeOutcome = [responseString JSONValue];  
-    [self toggleBookmarked];
-}
-
--(void) toggleBookmarked{
-    
-    self.bookmarkButton.enabled = false;
-    self.bookmarkButton.titleLabel.textColor = [UIColor grayColor];
-    self.bookmarkButton.titleLabel.text = @"bookmarked";
 }
 
 
@@ -375,7 +420,6 @@
     [_place release];
     [mapImage release];
     [googlePlacesButton release];
-    [bookmarkButton release];
     [phoneButton release];
     [nameLabel release];
     [addressLabel release];

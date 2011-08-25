@@ -13,7 +13,7 @@
 #import "ASIHTTPRequestDelegate.h"
 #import "NinaHelper.h"
 #import "BookmarkTableViewCell.h"
-
+#import "EditableTableViewCell.h"
 
 typedef enum {
     home,
@@ -24,7 +24,7 @@ typedef enum {
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : UIViewController <UIActionSheetDelegate, UIScrollViewDelegate, UITableViewDelegate> {        
+@interface PlacePageViewController : UIViewController <UIActionSheetDelegate, UIScrollViewDelegate, UITableViewDelegate,EditableTableViewCellDelegate,BookmarkTableviewCellDelegate> {        
     NSString *google_id; 
     NSString *google_ref;
     
@@ -32,7 +32,6 @@ typedef enum {
     UIImage *mapImage; // Static Google Map of Location
     PerspectiveTypes perspectiveType;
     
-    IBOutlet UIButton *bookmarkButton;
     IBOutlet UIButton *phoneButton;
     IBOutlet UIButton *googlePlacesButton;
     IBOutlet UILabel *nameLabel;
@@ -60,7 +59,6 @@ typedef enum {
 @property (nonatomic, retain) UIImage *mapImage;
 
 @property (nonatomic, retain) IBOutlet UIButton *googlePlacesButton;
-@property (nonatomic, retain) IBOutlet UIButton *bookmarkButton;
 @property (nonatomic, retain) IBOutlet UIButton *phoneButton;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *addressLabel;
@@ -78,7 +76,7 @@ typedef enum {
 -(IBAction) phonePlace;
 -(IBAction) googlePlacePage;
 -(IBAction) changedSegment;
-
+-(IBAction) bookmark;
 
 - (id) initWithPlace:(Place *)place;
 

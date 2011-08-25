@@ -46,18 +46,17 @@
 					<object class="IBUIImageView" id="311206365">
 						<reference key="NSNextResponder" ref="622740005"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{173, 7}, {140, 86}}</string>
+						<string key="NSFrame">{{173, 26}, {140, 62}}</string>
 						<reference key="NSSuperview" ref="622740005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="724836892"/>
-						<int key="IBUIContentMode">1</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 					<object class="IBUILabel" id="576185726">
 						<reference key="NSNextResponder" ref="622740005"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 7}, {232, 24}}</string>
+						<string key="NSFrame">{{20, 4}, {232, 24}}</string>
 						<reference key="NSSuperview" ref="622740005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="457645571"/>
@@ -76,11 +75,11 @@
 						<float key="IBUIMinimumFontSize">10</float>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">2</int>
-							<double key="pointSize">14</double>
+							<double key="pointSize">15</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica-Bold</string>
-							<double key="NSSize">14</double>
+							<double key="NSSize">15</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
@@ -218,7 +217,7 @@
 					<object class="IBUISegmentedControl" id="942515454">
 						<reference key="NSNextResponder" ref="622740005"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{2, 135}, {318, 30}}</string>
+						<string key="NSFrame">{{2, 131}, {318, 30}}</string>
 						<reference key="NSSuperview" ref="622740005"/>
 						<reference key="NSWindow"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -505,15 +504,15 @@ AAgACAAIAAEAAQABAAE</bytes>
 						<reference key="object" ref="622740005"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="576185726"/>
 							<reference ref="457645571"/>
 							<reference ref="274289135"/>
 							<reference ref="311206365"/>
-							<reference ref="168323988"/>
 							<reference ref="724836892"/>
 							<reference ref="488689133"/>
-							<reference ref="942515454"/>
 							<reference ref="384415735"/>
+							<reference ref="942515454"/>
+							<reference ref="576185726"/>
+							<reference ref="168323988"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -673,6 +672,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 							<string>googlePlacesButton</string>
 							<string>mapImageView</string>
 							<string>nameLabel</string>
+							<string>perspectiveType</string>
 							<string>perspectivesView</string>
 							<string>phoneButton</string>
 							<string>segmentedControl</string>
@@ -686,6 +686,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 							<string>UIButton</string>
 							<string>UIImageView</string>
 							<string>UILabel</string>
+							<string>PerspectiveTypes</string>
 							<string>UITableView</string>
 							<string>UIButton</string>
 							<string>UISegmentedControl</string>
@@ -702,6 +703,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 							<string>googlePlacesButton</string>
 							<string>mapImageView</string>
 							<string>nameLabel</string>
+							<string>perspectiveType</string>
 							<string>perspectivesView</string>
 							<string>phoneButton</string>
 							<string>segmentedControl</string>
@@ -735,6 +737,10 @@ AAgACAAIAAEAAQABAAE</bytes>
 							<object class="IBToOneOutletInfo">
 								<string key="name">nameLabel</string>
 								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">perspectiveType</string>
+								<string key="candidateClassName">PerspectiveTypes</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">perspectivesView</string>
