@@ -27,6 +27,8 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
+    self.navigationItem.title = @"Placeling";
+    
     UIBarButtonItem *accountButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(showAccountSheet)];
     self.navigationItem.leftBarButtonItem = accountButton;
     [accountButton release];
