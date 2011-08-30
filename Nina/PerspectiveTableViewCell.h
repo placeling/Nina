@@ -13,12 +13,12 @@
     Perspective *perspective;
     IBOutlet UIImageView *userImage;
     IBOutlet UIButton *upvoteButton;
-    IBOutlet UILabel *memoLabel;
+    IBOutlet UITextView *memoText;
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
 @property(nonatomic,retain) IBOutlet UIImageView *userImage;
 @property(nonatomic,retain) IBOutlet UIButton *upvoteButton;
-@property(nonatomic,retain) IBOutlet UILabel *memoLabel;
+@property(nonatomic,retain) IBOutlet UITextView *memoText;
 
 @end

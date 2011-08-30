@@ -22,6 +22,8 @@
 
 #import "MBProgressHUD.h"
 #import "PerspectiveTableViewCell.h"
+#import "MyPerspectiveCellViewController.h"
+#import "EditPerspectiveViewController.h"
 
 
 #define kMinCellHeight 60
@@ -29,23 +31,25 @@
 @interface PlacePageViewController ()
 -(void) loadData;
 -(void) blankLoad;
+-(void) loadMap;
 @end
 
 @implementation PlacePageViewController
 
 @synthesize dataLoaded;
 @synthesize google_id, google_ref;
-@synthesize place=_place, mapImage, phoneButton;
+@synthesize place=_place, mapImage;
 @synthesize nameLabel, addressLabel, cityLabel, categoriesLabel;
 @synthesize segmentedControl;
 @synthesize mapImageView, googlePlacesButton;
-@synthesize perspectivesView, perspectiveType;
+@synthesize tableHeaderView, tableFooterView, perspectiveType;
 @synthesize homePerspectives, followingPerspectives, everyonePerspectives;
 
 - (id) initWithPlace:(Place *)place{
     if(self = [super init]){
         self.place = place;
         self.google_id = place.google_id;
+        
 	}
 	return self;    
 }
@@ -53,7 +57,16 @@
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad{
+    
+    //the place header subview - needs this line, no more
+    [[NSBundle mainBundle] loadNibNamed:@"PlaceHeaderView" owner:self options:nil];
+    [[NSBundle mainBundle] loadNibNamed:@"PlaceFooterView" owner:self options:nil];
+    
     [super viewDidLoad];
+    
+    self.tableView.delegate = self;
+    self.tableView.tableHeaderView = self.tableHeaderView;
+    self.tableView.tableFooterView = self.tableFooterView;
     // Initializations
     [self blankLoad];
     
@@ -67,12 +80,17 @@
     [request setTag:0];
     [request startAsynchronous];
     
+    if (self.place){
+        [self loadMap];
+    } else {
+        mapRequested = false;
+    }
+    
+    
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     self.perspectiveType = home;
     
-    self.homePerspectives = [[NSMutableArray alloc]initWithObjects: nil];
-    perspectives = self.homePerspectives;
     self.navigationController.title = self.place.name;
 
 }
@@ -97,14 +115,25 @@
                 NSString *responseString = [request responseString];        
                 DLog(@"%@", responseString);
                 
-                NSDictionary *json_place = [responseString JSONValue];  
+                NSDictionary *jsonDict = [responseString JSONValue];  
                 
-                Place *newPlace = [[Place alloc] initFromJsonDict:json_place];
+                Place *newPlace = [[Place alloc] initFromJsonDict:jsonDict];
                 
                 self.place = newPlace;
                 [newPlace release];
                 
+                NSArray *jsonPerspectives = [jsonDict objectForKey:@"perspectives"];
+                homePerspectives = [[NSMutableArray alloc] initWithCapacity:[jsonPerspectives count]];
+                for (NSDictionary *rawDict in jsonPerspectives){
+                    Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
+                    perspective.place = self.place;
+                    [homePerspectives addObject:perspective];
+                    [perspective release];
+                }
+                perspectives = self.homePerspectives;
+                
                 [self loadData];
+                [self.tableView reloadData];
                 
                 break;
             }
@@ -127,11 +156,12 @@
                 followingPerspectives = [[NSMutableArray alloc] initWithCapacity:[jsonPerspectives count]];
                 for (NSDictionary *rawDict in jsonPerspectives){
                     Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
+                    perspective.place = self.place;
                     [followingPerspectives addObject:perspective];
                     [perspective release];
                 }
                 
-                [self.perspectivesView reloadData];
+                [self.tableView reloadData];
                 break;
             }
             case 3:{
@@ -144,11 +174,12 @@
                 
                 for (NSDictionary *rawDict in jsonPerspectives){
                     Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
+                    perspective.place = self.place;
                     [everyonePerspectives addObject:perspective];
                     [perspective release];
                 }
                 
-                [self.perspectivesView reloadData];
+                [self.tableView reloadData];
                 break;
             }
             case 4:{
@@ -156,7 +187,7 @@
                 NSString *responseString = [request responseString];        
                 DLog(@"%@", responseString);
                 self.place.bookmarked = true;
-                [self.perspectivesView reloadData];                
+                [self.tableView reloadData];                
                 
                 break;
             }
@@ -178,24 +209,19 @@
         self.nameLabel.text = self.place.name;
         self.addressLabel.text = self.place.address;
         self.cityLabel.text = self.place.city;
-        self.phoneButton.titleLabel.text = self.place.phone;
-        self.googlePlacesButton.titleLabel.textColor = [UIColor blueColor];
+
         self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@","];
     } else {
         //puts empty values to show while data being downloaded
         self.nameLabel.text = @"";
         self.addressLabel.text = @"";
-        self.phoneButton.titleLabel.text = @"";
         self.googlePlacesButton.titleLabel.textColor = [UIColor grayColor];
         self.categoriesLabel.text = @"";
         self.cityLabel.text = @"";
     }
 }
 
--(void) loadData{
-    self.nameLabel.text = self.place.name;
-    self.addressLabel.text = self.place.address;
-    
+-(void) loadMap{    
     // Call asychronously to get image
     NSString* lat = [NSString stringWithFormat:@"%f",self.place.location.coordinate.latitude];
     NSString* lng = [NSString stringWithFormat:@"%f",self.place.location.coordinate.longitude];    
@@ -209,10 +235,22 @@
     [request setDelegate:self];
     [request setTag:1];
     [request startAsynchronous];
-        
+    
+    mapRequested = true;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
 
-    self.phoneButton.titleLabel.text = self.place.phone;
+
+-(void) loadData{
+    self.nameLabel.text = self.place.name;
+    self.addressLabel.text = self.place.address;
+    
+    
+    if (!mapRequested){
+        [self loadMap];
+    } 
+   
+
     self.cityLabel.text = self.place.city;
     self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@","];
     [self.segmentedControl setTitle:[NSString stringWithFormat:@"Following (%i)", self.place.followingPerspectiveCount] forSegmentAtIndex:1];
@@ -261,7 +299,7 @@
         perspectives = everyonePerspectives;
     }
     
-    [self.perspectivesView reloadData];
+    [self.tableView reloadData];
     
 }
 
@@ -271,16 +309,6 @@
     
 }
 
-- (IBAction) phonePlace {    
-    UIDevice *device = [UIDevice currentDevice];
-    if ([[device model] isEqualToString:@"iPhone"] ) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", self.place.phone]]];
-    } else {
-        UIAlertView *Notpermitted=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Your device doesn't support this feature." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [Notpermitted show];
-        [Notpermitted release];
-    }
-}
 
 
 -(IBAction) bookmark {
@@ -323,10 +351,24 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Return the number of rows in the section.
-    if ( self.perspectiveType == home ){
+    if ( self.perspectiveType == home && self.place.bookmarked == false){
         return [perspectives count] +1;
     } else {
         return [perspectives count];
+    }
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    if ( indexPath.row == 0 && self.perspectiveType == home ){
+        DLog(@"modifying on perspective on %@", self.place.name);
+        EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:[self.homePerspectives objectAtIndex:0]];
+        
+        [self.navigationController pushViewController:editPerspectiveViewController animated:YES];
+        
+        [editPerspectiveViewController release];        
     }
     
 }
@@ -353,11 +395,29 @@
         if ( indexPath.row == 0 && self.perspectiveType == home ){
             
             if (self.place.bookmarked){
-                EditableTableViewCell *editableCell = [[[EditableTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:editableCellIdentifier] autorelease];
+                Perspective *perspective = [homePerspectives objectAtIndex:0];
+                NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"MyPerspectiveCellViewController" owner:self options:nil];
                 
-                editableCell.delegate = self;
-                cell = editableCell;
-                
+                for(id item in objects)
+                {
+                    if ( [item isKindOfClass:[UITableViewCell class]])
+                    {
+                        MyPerspectiveCellViewController *myPerspectiveCell = (MyPerspectiveCellViewController*) item;
+                        myPerspectiveCell.perspective = perspective;
+                        
+                        if (perspective.notes){
+                            myPerspectiveCell.memoLabel.text = perspective.notes;
+                            myPerspectiveCell.memoLabel.textColor = [UIColor blackColor];
+                        } else {
+                            myPerspectiveCell.memoLabel.text = @"click to add notes to bookmark";
+                            myPerspectiveCell.memoLabel.textColor = [UIColor grayColor];
+                        }
+                        
+                        
+                        cell = myPerspectiveCell;
+                    }
+                }
+
             } else {              
                 NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"BookmarkTableViewCell" owner:self options:nil];
 
@@ -375,7 +435,13 @@
             }
                         
         } else {
-            /*
+            Perspective *perspective;
+            if ( self.perspectiveType == home && self.place.bookmarked ){
+                perspective = [perspectives objectAtIndex:indexPath.row-1];
+            } else {
+                perspective = [perspectives objectAtIndex:indexPath.row];
+            }
+            
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
             
             for(id item in objects)
@@ -383,35 +449,23 @@
                 if ( [item isKindOfClass:[UITableViewCell class]])
                 {
                     PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;
-                    pcell.perspective = self.place;
+                    pcell.perspective = perspective;
+                    pcell.memoText.text = perspective.notes;
                     cell = pcell;
                     break;
                 }
             }
 
-            */
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:perspectiveCellIdentifier] autorelease];
-            Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
-            cell.textLabel.text = perspective.notes;
         }
         
     }
     
     // Configure the cell...
+    [cell setEditing:false];
     
     return cell;
 }
 
-
-
-
-- (void)bookmarkFinished:(ASIFormDataRequest *)request{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
-    NSString *responseString = [request responseString];
-    DLog(@"Returned: %@", responseString);
-    // NSDictionary *placeOutcome = [responseString JSONValue];  
-}
 
 
 - (void)dealloc{
@@ -420,12 +474,11 @@
     [_place release];
     [mapImage release];
     [googlePlacesButton release];
-    [phoneButton release];
     [nameLabel release];
     [addressLabel release];
     [mapImageView release];
     [cityLabel release];
-    [perspectivesView release];
+    [tableHeaderView release];
     
     [super dealloc];
 }

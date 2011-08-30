@@ -10,14 +10,14 @@
 
 @implementation PerspectiveTableViewCell
 
-@synthesize perspective, userImage, upvoteButton, memoLabel;
+@synthesize perspective, userImage, upvoteButton, memoText;
 
 
 -(void) dealloc{
     [perspective release];
     [userImage release];
     [upvoteButton release];
-    [memoLabel release];
+    [memoText release];
     
     [super dealloc];
 }
