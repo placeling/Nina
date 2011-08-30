@@ -12,17 +12,19 @@
 @implementation Perspective
 @synthesize user, place, notes, tags, photos, starred, dateAdded, visited, share;
 
-- (id) initFromJsonDict:(NSDictionary *)jsonDict{
+-(id) initFromJsonDict:(NSDictionary *)jsonDict{
     
     if(self = [super init]){
         self.place = [[Place alloc] initFromJsonDict:[jsonDict objectForKey:@"place"]];
-
-        //self.tags = [jsonDict objectForKey:@"tags"];
-        self.notes = [jsonDict objectForKey:@"memo"];
-        self.starred = [[jsonDict objectForKey:@"favorite"] boolValue]; 
-        
+        [self updateFromJsonDict:jsonDict];
 	}
 	return self;
+}
+
+-(void) updateFromJsonDict:(NSDictionary *)jsonDict{
+    //self.tags = [jsonDict objectForKey:@"tags"];
+    self.notes = [jsonDict objectForKey:@"memo"];
+    self.starred = [[jsonDict objectForKey:@"favorite"] boolValue]; 
 }
 
 - (void) dealloc

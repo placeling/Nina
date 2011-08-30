@@ -34,5 +34,6 @@
 @property BOOL share;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
+- (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
 @end

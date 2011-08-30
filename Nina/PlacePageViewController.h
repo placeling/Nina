@@ -13,6 +13,7 @@
 #import "ASIHTTPRequestDelegate.h"
 #import "NinaHelper.h"
 #import "BookmarkTableViewCell.h"
+#import "EditPerspectiveViewController.h"
 
 typedef enum {
     home,
@@ -23,11 +24,13 @@ typedef enum {
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableviewCellDelegate> {        
+@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableviewCellDelegate, EditPerspectiveDelegate> {        
     NSString *google_id; 
     NSString *google_ref;
     
     Place *_place;
+    Perspective *myPerspective;
+    
     UIImage *mapImage; // Static Google Map of Location
     BOOL mapRequested;
     PerspectiveTypes perspectiveType;
@@ -42,7 +45,6 @@ typedef enum {
     IBOutlet UISegmentedControl *segmentedControl; 
     IBOutlet UIView *tableHeaderView;
     IBOutlet UIView *tableFooterView;
-
     NSArray *perspectives;
     NSMutableArray *homePerspectives;
     NSMutableArray *followingPerspectives;
@@ -75,6 +77,12 @@ typedef enum {
 -(IBAction) googlePlacePage;
 -(IBAction) changedSegment;
 -(IBAction) bookmark;
+
+-(void) showShareSheet;
+-(IBAction) shareTwitter;
+-(IBAction) shareFacebook;
+-(IBAction) checkinFoursquare;
+
 
 - (id) initWithPlace:(Place *)place;
 

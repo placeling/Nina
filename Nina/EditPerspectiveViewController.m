@@ -12,6 +12,7 @@
 @synthesize perspective=_perspective;
 @synthesize memoTextView;
 @synthesize photoButton;
+@synthesize delegate;
 
 - (id) initWithPerspective:(Perspective *)perspective{
     self = [super init];
@@ -47,6 +48,33 @@
 }
 
 -(IBAction)savePerspective{
+    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives", [NinaHelper getHostname], self.perspective.place.pid];
+    
+    NSURL *url = [NSURL URLWithString:urlText];
+    
+    CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
+    CLLocation *location =  locationManager.location;
+    
+    NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+    NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+    float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
+    accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
+    
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:lat forKey:@"lat"];
+    [request setPostValue:lng forKey:@"long"];
+    [request setPostValue:[NSString stringWithFormat:@"%f", accuracy] forKey:@"accuracy"];
+    
+    [request setPostValue:self.memoTextView.text forKey:@"memo"];
+    
+    [request setRequestMethod:@"POST"];
+    [request setDelegate:delegate]; //whatever called this should handle it
+    [request setTag:4]; //this is the bookmark request tag from placepageviewcontroller -iMack
+    
+    [NinaHelper signRequest:request];
+    [request startAsynchronous];
+    
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 
@@ -72,6 +100,7 @@
     [memoTextView release];
     [photoButton release];
     [Perspective release];
+    [delegate release];
     
     [super dealloc];
 }

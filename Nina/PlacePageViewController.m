@@ -23,7 +23,6 @@
 #import "MBProgressHUD.h"
 #import "PerspectiveTableViewCell.h"
 #import "MyPerspectiveCellViewController.h"
-#import "EditPerspectiveViewController.h"
 
 
 #define kMinCellHeight 60
@@ -79,6 +78,7 @@
     [request setDelegate:self];
     [request setTag:0];
     [request startAsynchronous];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     if (self.place){
         [self loadMap];
@@ -86,14 +86,38 @@
         mapRequested = false;
     }
     
-    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
     self.perspectiveType = home;
     
     self.navigationController.title = self.place.name;
-
+    
+    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
+    //self.navigationItem.rightBarButtonItem = shareButton; -disabled until sharing enabled
+    [shareButton release];
+    
 }
+
+#pragma mark - Share Sheet
+
+-(void) showShareSheet{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share on Twitter", @"Share on Facebook", @"Check-in with Foursquare", nil];
+    
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+    
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0){
+        DLog(@"share on twitter");
+    }else if (buttonIndex == 1) {
+        DLog(@"share on facebook");
+    }else if (buttonIndex == 2){
+        DLog(@"check-in with foursquare");
+    } else {
+        DLog(@"WARNING - Invalid actionsheet button pressed: %i", buttonIndex);
+    }    
+}
+
 
 #pragma mark - Selectors for responding to initial URLs
 
@@ -131,6 +155,11 @@
                     [perspective release];
                 }
                 perspectives = self.homePerspectives;
+                
+                if (self.place.bookmarked){
+                    //should be the first one of the home persepectives
+                    myPerspective = [homePerspectives objectAtIndex:0];
+                }
                 
                 [self loadData];
                 [self.tableView reloadData];
@@ -183,9 +212,19 @@
                 break;
             }
             case 4:{
-                //bookmark return
+                //perspective modified return
                 NSString *responseString = [request responseString];        
                 DLog(@"%@", responseString);
+                NSDictionary *jsonString = [responseString JSONValue];
+                
+                if (myPerspective){
+                    [myPerspective updateFromJsonDict:jsonString];
+                } else {
+                    myPerspective = [[Perspective alloc]initFromJsonDict:jsonString];
+                    [homePerspectives insertObject:myPerspective atIndex:0];
+                }
+                
+                
                 self.place.bookmarked = true;
                 [self.tableView reloadData];                
                 
@@ -195,9 +234,6 @@
 
 	}
 }
-
-#pragma mark - Image Lazy Loader Helpers
-
 
 #pragma mark - UIScrollViewDelegate
 
@@ -260,6 +296,21 @@
 
 
 #pragma mark - IBActions
+
+-(IBAction) shareTwitter{
+    
+
+}
+
+
+-(IBAction) shareFacebook{
+    
+
+}
+
+-(IBAction) checkinFoursquare{
+    
+}
 
 -(IBAction) changedSegment{
     NSUInteger index = self.segmentedControl.selectedSegmentIndex;
@@ -364,8 +415,9 @@
 
     if ( indexPath.row == 0 && self.perspectiveType == home ){
         DLog(@"modifying on perspective on %@", self.place.name);
-        EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:[self.homePerspectives objectAtIndex:0]];
+        EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
         
+        editPerspectiveViewController.delegate = self;
         [self.navigationController pushViewController:editPerspectiveViewController animated:YES];
         
         [editPerspectiveViewController release];        
@@ -394,8 +446,7 @@
     if (cell == nil) {
         if ( indexPath.row == 0 && self.perspectiveType == home ){
             
-            if (self.place.bookmarked){
-                Perspective *perspective = [homePerspectives objectAtIndex:0];
+            if (myPerspective){
                 NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"MyPerspectiveCellViewController" owner:self options:nil];
                 
                 for(id item in objects)
@@ -403,10 +454,10 @@
                     if ( [item isKindOfClass:[UITableViewCell class]])
                     {
                         MyPerspectiveCellViewController *myPerspectiveCell = (MyPerspectiveCellViewController*) item;
-                        myPerspectiveCell.perspective = perspective;
+                        myPerspectiveCell.perspective = myPerspective;
                         
-                        if (perspective.notes){
-                            myPerspectiveCell.memoLabel.text = perspective.notes;
+                        if (myPerspective.notes){
+                            myPerspectiveCell.memoLabel.text = myPerspective.notes;
                             myPerspectiveCell.memoLabel.textColor = [UIColor blackColor];
                         } else {
                             myPerspectiveCell.memoLabel.text = @"click to add notes to bookmark";
