@@ -27,6 +27,9 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
+    UIBarButtonItem *accountButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(showAccountSheet)];
+    self.navigationItem.leftBarButtonItem = accountButton;
+    [accountButton release];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -34,6 +37,25 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+#pragma mark -ActionSheet 
+
+-(IBAction)showAccountSheet{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:nil];
+    
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0){
+        [self logout];
+    } else {
+        DLog(@"WARNING - Invalid actionsheet button pressed: %i", buttonIndex);
+    }
+    
+}
+
 
 #pragma mark -IBActions
 

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface HomeViewController : UIViewController
+@interface HomeViewController : UIViewController<UIActionSheetDelegate>
 
 -(IBAction) suggested;
 -(IBAction) logout;
@@ -19,5 +19,6 @@
 -(IBAction) nearbyPerspectives;
 
 -(IBAction) random;
+-(IBAction)showAccountSheet;
 
 @end
