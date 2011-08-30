@@ -34,8 +34,15 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
 	
-	// Call url to get profile details
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@", [NinaHelper getHostname], self.username];
+    NSString *getUsername;
+    if (self.user == nil){
+        getUsername = self.username;
+    } else {
+        getUsername = user.username;
+    }
+	
+    // Call url to get profile details
+    NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@", [NinaHelper getHostname], getUsername];
     
 	NSURL *url = [NSURL URLWithString:urlText];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
