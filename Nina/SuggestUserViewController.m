@@ -13,6 +13,7 @@
 #import "JSON.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MemberProfileViewController.h"
+#import "User.h"
 
 @implementation SuggestUserViewController
 @synthesize members;
@@ -70,11 +71,18 @@
     if ([request error]){
         [NinaHelper handleBadRequest:request sender:self];
     } else {
-		// Check if results valid
 		NSString *responseString = [request responseString];
         DLog(@"%@", responseString);
         [members release];
-		members = [[responseString JSONValue] retain];
+        
+        NSArray *rawUsers = [[responseString JSONValue] objectForKey:@"suggested"];
+        members = [[NSMutableArray alloc]initWithCapacity:[rawUsers count]];
+
+        for (NSDictionary* rawUser in rawUsers){
+            User *user = [[User alloc] initFromJsonDict:rawUser];
+            [members addObject:user];
+            [user release];
+        }
         [self.tableView reloadData];
 	}
 	
@@ -129,29 +137,37 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    
+    User *user = [members objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [button addTarget:self action:@selector(socialAction:) forControlEvents:UIControlEventTouchDown];
-        [button setTitle:@"Follow" forState:UIControlStateNormal];
+        if (user.following){
+            [button setTitle:@"Following" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [button setEnabled:false];
+            button.frame = CGRectMake(0.0, 0.0, 80.0, 25.0);
+        } else {
+            [button addTarget:self action:@selector(socialAction:) forControlEvents:UIControlEventTouchDown];
+            [button setTitle:@"Follow" forState:UIControlStateNormal];
+            
+            button.frame = CGRectMake(0.0, 0.0, 80.0, 25.0);
+        }
         
-        button.frame = CGRectMake(0.0, 0.0, 80.0, 25.0);
+
         
         [cell setAccessoryView:button];
     }
     
-	NSDictionary *entry = [self.members objectAtIndex:indexPath.row];
-    cell.textLabel.text = [entry objectForKey:@"username"];
-    cell.detailTextLabel.text = [entry objectForKey:@"desc"];
+    cell.textLabel.text = user.username;
+    cell.detailTextLabel.text = user.description;
 	
     cell.accessoryView.tag = indexPath.row;
     
-	NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:[entry objectForKey:@"profile_pic"]]];
-	UIImage *myimage = [[UIImage alloc] initWithData:imageData];    
-	cell.imageView.image = myimage;
+	//NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:[entry objectForKey:@"profile_pic"]]];
+	//UIImage *myimage = [[UIImage alloc] initWithData:imageData];    
+	//cell.imageView.image = myimage;
     
     return cell;
 }
@@ -159,10 +175,11 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-     MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
-     [self.navigationController pushViewController:memberProfileViewController animated:YES];
-     [memberProfileViewController release];
+    User *user = [members objectAtIndex:indexPath.row];
+    MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
+    memberProfileViewController.user = user;
+    [self.navigationController pushViewController:memberProfileViewController animated:YES];
+    [memberProfileViewController release];
 }
 
 @end
