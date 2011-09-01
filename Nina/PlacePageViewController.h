@@ -50,6 +50,7 @@ typedef enum {
     NSMutableArray *followingPerspectives;
     NSMutableArray *everyonePerspectives;
     
+    IBOutlet UIScrollView *tagScrollView;
 }
 
 @property BOOL dataLoaded;
@@ -74,11 +75,17 @@ typedef enum {
 @property (nonatomic, assign) NSMutableArray *followingPerspectives;
 @property (nonatomic, assign) NSMutableArray *everyonePerspectives;
 
+@property (nonatomic, retain) IBOutlet UIScrollView *tagScrollView;
+
 -(IBAction) googlePlacePage;
 -(IBAction) changedSegment;
 -(IBAction) bookmark;
 
 -(void) showShareSheet;
+
+-(IBAction)editPerspective;
+-(IBAction)editPerspectivePhotos;
+
 -(IBAction) shareTwitter;
 -(IBAction) shareFacebook;
 -(IBAction) checkinFoursquare;

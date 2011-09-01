@@ -21,4 +21,9 @@
 @property(nonatomic,retain) IBOutlet UIButton *upvoteButton;
 @property(nonatomic,retain) IBOutlet UITextView *memoText;
 
+
+//for calculating heights
++(CGFloat) cellHeightForPerspective:(Perspective*)perspective;
++(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective;
+
 @end

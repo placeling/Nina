@@ -115,7 +115,7 @@
 							</object>
 							<object class="IBUIButton" id="306848248">
 								<reference key="NSNextResponder" ref="287540930"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{212, 1}, {40, 40}}</string>
 								<reference key="NSSuperview" ref="287540930"/>
 								<reference key="NSWindow"/>
@@ -140,7 +140,7 @@
 							</object>
 							<object class="IBUIButton" id="328702472">
 								<reference key="NSNextResponder" ref="287540930"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{260, 1}, {40, 40}}</string>
 								<reference key="NSSuperview" ref="287540930"/>
 								<reference key="NSWindow"/>
@@ -164,7 +164,7 @@
 							</object>
 							<object class="IBUIButton" id="999042793">
 								<reference key="NSNextResponder" ref="287540930"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{72, 1}, {44, 38}}</string>
 								<reference key="NSSuperview" ref="287540930"/>
 								<reference key="NSWindow"/>
@@ -189,7 +189,7 @@
 							</object>
 							<object class="IBUIButton" id="214541261">
 								<reference key="NSNextResponder" ref="287540930"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{140, 1}, {41, 38}}</string>
 								<reference key="NSSuperview" ref="287540930"/>
 								<reference key="NSWindow"/>
@@ -259,7 +259,6 @@
 						<string key="NSFrame">{{15, 352}, {280, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -377,10 +376,10 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="833811198"/>
-							<reference ref="328702472"/>
 							<reference ref="214541261"/>
 							<reference ref="999042793"/>
 							<reference ref="306848248"/>
+							<reference ref="328702472"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
 					</object>
