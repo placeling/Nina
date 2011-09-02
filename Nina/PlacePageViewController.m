@@ -24,6 +24,7 @@
 #import "PerspectiveTableViewCell.h"
 #import "MyPerspectiveCellViewController.h"
 
+#import "SinglePlaceMapView.h"
 
 #define kMinCellHeight 60
 
@@ -40,7 +41,7 @@
 @synthesize place=_place, mapImage;
 @synthesize nameLabel, addressLabel, cityLabel, categoriesLabel;
 @synthesize segmentedControl, tagScrollView;
-@synthesize mapImageView, googlePlacesButton;
+@synthesize mapButtonView, googlePlacesButton;
 @synthesize tableHeaderView, tableFooterView, perspectiveType;
 @synthesize homePerspectives, followingPerspectives, everyonePerspectives;
 
@@ -179,7 +180,7 @@
                 NSData *responseData = [request responseData];
                 self.mapImage = [UIImage imageWithData:responseData];
                 
-                self.mapImageView.image = self.mapImage;
+                [self.mapButtonView setImage:self.mapImage forState:UIControlStateNormal];
                 break;
             }
             case 2:{
@@ -272,8 +273,8 @@
     NSString* lat = [NSString stringWithFormat:@"%f",self.place.location.coordinate.latitude];
     NSString* lng = [NSString stringWithFormat:@"%f",self.place.location.coordinate.longitude];    
     
-    NSString* imageMapWidth = [NSString stringWithFormat:@"%i", (int)self.mapImageView.frame.size.width ];
-    NSString* imageMapHeight = [NSString stringWithFormat:@"%i", (int)self.mapImageView.frame.size.height ];
+    NSString* imageMapWidth = [NSString stringWithFormat:@"%i", (int)self.mapButtonView.frame.size.width ];
+    NSString* imageMapHeight = [NSString stringWithFormat:@"%i", (int)self.mapButtonView.frame.size.height ];
     
     NSString *mapURL = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@,%@&zoom=15&size=%@x%@&&markers=color:red%%7C%@,%@&sensor=false", lat, lng, imageMapWidth, imageMapHeight, lat, lng];
     NSURL *url = [NSURL URLWithString:mapURL];
@@ -328,6 +329,16 @@
 
 
 #pragma mark - IBActions
+
+-(IBAction)showSingleAnnotatedMap{
+    DLog(@"Spawning map for place: %@", self.place.name);
+      
+    SinglePlaceMapView *singlePlaceMapView = [[SinglePlaceMapView alloc] initWithPlace:self.place];
+    
+    [self.navigationController pushViewController:singlePlaceMapView animated:TRUE];
+    [singlePlaceMapView release];
+    
+}
 
 -(IBAction) shareTwitter{
 
@@ -565,7 +576,7 @@
     [googlePlacesButton release];
     [nameLabel release];
     [addressLabel release];
-    [mapImageView release];
+    [mapButtonView release];
     [cityLabel release];
     [tableHeaderView release];
     

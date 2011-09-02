@@ -41,7 +41,7 @@ typedef enum {
     IBOutlet UILabel *cityLabel;
     IBOutlet UILabel *categoriesLabel;
     
-    IBOutlet UIImageView *mapImageView;
+    IBOutlet UIButton *mapButtonView;
     IBOutlet UISegmentedControl *segmentedControl; 
     IBOutlet UIView *tableHeaderView;
     IBOutlet UIView *tableFooterView;
@@ -65,7 +65,8 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet UILabel *addressLabel;
 @property (nonatomic, retain) IBOutlet UILabel *cityLabel;
 @property (nonatomic, retain) IBOutlet UILabel *categoriesLabel;
-@property (nonatomic, retain) IBOutlet UIImageView *mapImageView;
+
+@property (nonatomic, retain) IBOutlet UIButton *mapButtonView;
 @property (nonatomic, retain) IBOutlet UIView *tableHeaderView;
 @property (nonatomic, retain) IBOutlet UIView *tableFooterView;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *segmentedControl;
@@ -85,6 +86,8 @@ typedef enum {
 
 -(IBAction)editPerspective;
 -(IBAction)editPerspectivePhotos;
+
+-(IBAction)showSingleAnnotatedMap;
 
 -(IBAction) shareTwitter;
 -(IBAction) shareFacebook;
