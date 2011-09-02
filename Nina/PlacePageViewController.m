@@ -22,6 +22,7 @@
 
 #import "MBProgressHUD.h"
 #import "PerspectiveTableViewCell.h"
+#import "GenericWebViewController.h"
 #import "MyPerspectiveCellViewController.h"
 
 #import "SinglePlaceMapView.h"
@@ -393,10 +394,12 @@
     
 }
 
--(IBAction) googlePlacePage{
-    NSURL *webURL = [NSURL URLWithString:self.place.googlePlacesUrl];
-    [[UIApplication sharedApplication] openURL: webURL];
+-(IBAction) googlePlacePage{    
+    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:self.place.googlePlacesUrl];
     
+    [self.navigationController pushViewController:genericWebViewController animated:true];
+    
+    [genericWebViewController release];
 }
 
 
