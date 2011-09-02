@@ -99,7 +99,7 @@
     self.navigationController.title = self.place.name;
     
     UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
-    self.navigationItem.rightBarButtonItem = shareButton;
+    //self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
     
 }

@@ -25,6 +25,7 @@
 @synthesize reloading=_reloading;
 @synthesize placesTableView;
 @synthesize searchBar=_searchBar;
+@synthesize tableFooterView;
 
 -(void)findNearbyPlaces {
     [self findNearbyPlaces:@""];
@@ -137,6 +138,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     needLocationUpdate = false;
+    
+    [[NSBundle mainBundle] loadNibNamed:@"NearbyPlacesFooterView" owner:self options:nil];
+    
+    self.placesTableView.tableFooterView = self.tableFooterView;
     
     self.placesTableView.delegate = self;
     

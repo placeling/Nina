@@ -14,6 +14,7 @@
 @interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate, UISearchBarDelegate> {
     EGORefreshTableHeaderView *refreshHeaderView;
     
+    IBOutlet UIView *tableFooterView;
     IBOutlet UITableView *placesTableView;
     IBOutlet UISearchBar *_searchBar;
     NSArray  *nearbyPlaces;
@@ -30,6 +31,7 @@
 
 @property(nonatomic, retain) IBOutlet UITableView *placesTableView;
 @property(nonatomic, retain) IBOutlet IBOutlet UISearchBar *searchBar;
+@property(nonatomic, retain) IBOutlet UIView *tableFooterView;
 
 
 @end
