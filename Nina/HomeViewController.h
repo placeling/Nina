@@ -12,13 +12,14 @@
 @interface HomeViewController : UIViewController<UIActionSheetDelegate>
 
 -(IBAction) suggested;
--(IBAction) logout;
 
 -(IBAction) bookmarkSpot;
--(IBAction) myProfile;
 -(IBAction) nearbyPerspectives;
-
 -(IBAction) random;
 -(IBAction)showAccountSheet;
+
+
+-(IBAction) logout;
+-(IBAction) myProfile;
 
 @end

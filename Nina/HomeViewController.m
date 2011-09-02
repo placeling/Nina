@@ -43,7 +43,7 @@
 #pragma mark -ActionSheet 
 
 -(IBAction)showAccountSheet{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:@"My Profile", nil];
     
     [actionSheet showInView:self.view];
     [actionSheet release];
@@ -52,6 +52,8 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0){
         [self logout];
+    }else if (buttonIndex == 1){
+        [self myProfile];
     } else {
         DLog(@"WARNING - Invalid actionsheet button pressed: %i", buttonIndex);
     }
