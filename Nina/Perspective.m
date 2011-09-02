@@ -10,7 +10,10 @@
 
 
 @implementation Perspective
-@synthesize user, place, notes, tags, photos, starred, dateAdded, visited, share;
+@synthesize user, place, notes, tags, photos;
+@synthesize starred;
+@synthesize dateAdded, visited, share, mine;
+@synthesize perspectiveId;
 
 -(id) initFromJsonDict:(NSDictionary *)jsonDict{
     
@@ -23,18 +26,20 @@
 
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
     //self.tags = [jsonDict objectForKey:@"tags"];
+    self.perspectiveId = [jsonDict objectForKey:@"_id"];
     self.notes = [jsonDict objectForKey:@"memo"];
-    self.starred = [[jsonDict objectForKey:@"favorite"] boolValue]; 
+    self.starred = [[jsonDict objectForKey:@"starred"] boolValue];
+    mine = [[jsonDict objectForKey:@"mine"] boolValue];
 }
 
-- (void) dealloc
-{
+- (void) dealloc {
     [user release];
     [place release];
     [notes release];
     [tags release];
     [photos release];
     [dateAdded release];
+    [perspectiveId release];
     [super dealloc];
 }
 

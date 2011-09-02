@@ -181,13 +181,6 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-    [self mapUserPlaces];
-    
-}
-
 - (void)viewDidLoad{
     [super viewDidLoad];
     
@@ -201,6 +194,7 @@
     self.mapView.showsUserLocation = TRUE;
     self.mapView.delegate = self;
     [self recenter];
+    [self mapUserPlaces];
 }
 
 - (void)viewDidUnload{

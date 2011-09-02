@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Perspective.h"
+#import "NinaHelper.h"
 
 @interface PerspectiveTableViewCell : UITableViewCell{
     Perspective *perspective;
@@ -21,6 +22,7 @@
 @property(nonatomic,retain) IBOutlet UIButton *upvoteButton;
 @property(nonatomic,retain) IBOutlet UITextView *memoText;
 
+-(IBAction)toggleStarred;
 
 //for calculating heights
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective;

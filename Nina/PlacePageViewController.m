@@ -529,7 +529,7 @@
                         
         } else {
             Perspective *perspective;
-            if ( self.perspectiveType == home && self.place.bookmarked ){
+            if ( self.perspectiveType == home && !self.place.bookmarked ){
                 perspective = [perspectives objectAtIndex:indexPath.row-1];
             } else {
                 perspective = [perspectives objectAtIndex:indexPath.row];

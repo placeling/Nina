@@ -14,6 +14,7 @@
     User *user;
     Place *place;
 
+    NSString *perspectiveId;
     NSString *notes;
     NSArray *tags;
     NSMutableArray *photos; // Array of Photo objects
@@ -21,6 +22,7 @@
     NSString *dateAdded;
     BOOL visited;
     BOOL share;
+    BOOL mine;
 }
 
 @property (nonatomic, retain) User *user;
@@ -28,10 +30,12 @@
 @property (nonatomic, retain) NSString *notes;
 @property (nonatomic, retain) NSArray *tags;
 @property (nonatomic, retain) NSMutableArray *photos;
-@property BOOL starred;
+@property (nonatomic, assign) BOOL starred;
 @property (nonatomic, retain) NSString *dateAdded;
-@property BOOL visited;
-@property BOOL share;
+@property (nonatomic, assign) BOOL visited;
+@property (nonatomic, assign) BOOL share;
+@property (nonatomic, readonly) BOOL mine;
+@property (nonatomic, retain) NSString* perspectiveId;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
