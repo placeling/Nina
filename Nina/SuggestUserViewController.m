@@ -125,6 +125,8 @@
 
 #pragma mark - Table view data source
 
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     // Return the number of sections.
     return 1;
@@ -141,23 +143,6 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-        
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        if (user.following){
-            [button setTitle:@"Following" forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [button setEnabled:false];
-            button.frame = CGRectMake(0.0, 0.0, 80.0, 25.0);
-        } else {
-            [button addTarget:self action:@selector(socialAction:) forControlEvents:UIControlEventTouchDown];
-            [button setTitle:@"Follow" forState:UIControlStateNormal];
-            
-            button.frame = CGRectMake(0.0, 0.0, 80.0, 25.0);
-        }
-        
-
-        
-        [cell setAccessoryView:button];
     }
     
     cell.textLabel.text = user.username;
@@ -180,6 +165,7 @@
     memberProfileViewController.user = user;
     [self.navigationController pushViewController:memberProfileViewController animated:YES];
     [memberProfileViewController release];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

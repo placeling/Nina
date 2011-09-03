@@ -28,11 +28,14 @@
 #import "SinglePlaceMapView.h"
 
 #define kMinCellHeight 60
+#define SectionHeaderHeight 44
 
 @interface PlacePageViewController ()
 -(void) loadData;
 -(void) blankLoad;
 -(void) loadMap;
+-(bool) shouldShowSectionView;
+-(int) numberOfSectionBookmarks;
 @end
 
 @implementation PlacePageViewController
@@ -263,7 +266,6 @@
         //puts empty values to show while data being downloaded
         self.nameLabel.text = @"";
         self.addressLabel.text = @"";
-        self.googlePlacesButton.titleLabel.textColor = [UIColor grayColor];
         self.categoriesLabel.text = @"";
         self.cityLabel.text = @"";
     }
@@ -433,6 +435,80 @@
 
 
 #pragma mark - Table View
+
+-(bool)shouldShowSectionView{
+    
+    if (([perspectives count] > 0) && [[perspectives objectAtIndex:0] isKindOfClass:[NSString class]]){
+        return false;
+    }
+    
+    
+    if ( self.perspectiveType == home ){
+        return false;
+    } else if (self.perspectiveType != home && [perspectives count] == 0){
+        return true; //to show "0 bookmarks" text
+    } else if ( self.perspectiveType == following && self.place.followingPerspectiveCount == [followingPerspectives count] ){
+        return false;
+    } else if ( self.perspectiveType == everyone && self.place.perspectiveCount == [everyonePerspectives count] ){
+        return false;
+    }
+    
+    return true;
+}
+
+-(int) numberOfSectionBookmarks{
+    if (self.perspectiveType == following){
+        return self.place.followingPerspectiveCount; 
+    } else if (self.perspectiveType == everyone){
+        return self.place.perspectiveCount;
+    }
+    return  0;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if ([self shouldShowSectionView]) {
+        return SectionHeaderHeight;
+    }
+    else {
+        // If no section header title, no section header needed
+        return 0;
+    }
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (![self shouldShowSectionView]){
+        return nil;
+    }
+
+    
+    // Create label with section title
+    UILabel *label = [[[UILabel alloc] init] autorelease];
+    label.frame = CGRectMake(20, 6, 300, 30);
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont boldSystemFontOfSize:16];
+    
+    
+    if ( [self numberOfSectionBookmarks] == 0 ){
+        label.textColor = [UIColor grayColor];
+        label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
+    } else if ( [self numberOfSectionBookmarks] == 1) {
+        label.text = [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+    } else {
+        label.text = [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];
+    }
+    
+    
+    // Create header view and add label as a subview
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, SectionHeaderHeight)];
+    [view autorelease];
+    [view addSubview:label];
+    
+    return view;
+}
+
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     

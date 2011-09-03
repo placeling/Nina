@@ -254,6 +254,7 @@
     placePageViewController.google_ref = [place objectForKey:@"reference"];
 	[[self navigationController] pushViewController:placePageViewController animated:YES];
 	[placePageViewController release];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

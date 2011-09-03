@@ -165,6 +165,7 @@
     memberProfileViewController.user = [self.users objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:memberProfileViewController animated:YES];
     [memberProfileViewController release]; 
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
