@@ -100,7 +100,6 @@
     [memoTextView release];
     [photoButton release];
     [Perspective release];
-    [delegate release];
     
     [super dealloc];
 }

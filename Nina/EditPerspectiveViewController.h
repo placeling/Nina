@@ -28,7 +28,7 @@
 @property(nonatomic,retain) Perspective *perspective;
 @property(nonatomic,retain) IBOutlet UITextView *memoTextView;
 @property(nonatomic,retain) IBOutlet UIButton *photoButton;
-@property(nonatomic,retain) id<EditPerspectiveDelegate> delegate;
+@property(nonatomic,assign) id<EditPerspectiveDelegate> delegate;
 
 - (id) initWithPerspective:(Perspective *)perspective;
 -(IBAction)savePerspective;
