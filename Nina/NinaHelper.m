@@ -78,8 +78,8 @@
         [alert show];
         [alert release];	
     } else if (statusCode == 401){
-        //[[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token"];
-        //[[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token_secret"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token_secret"];
         DLog(@"Got a 401, with access_token: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
         
         //if ([request.responseString rangeOfString:@"BAD_PASS"].location != NSNotFound){
