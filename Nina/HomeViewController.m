@@ -125,8 +125,7 @@
     }];
     [request setFailedBlock:^{
         //[MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        NSError *error = [request error];
-        DLog(@"%@", error);
+        [NinaHelper handleBadRequest:request sender:self];
     }];
     
     

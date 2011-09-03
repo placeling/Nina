@@ -60,30 +60,38 @@
 
 +(void) handleBadRequest:(ASIHTTPRequest *)request sender:(UIViewController*)sender{
     int statusCode = [request responseStatusCode];
-    NSString *alertMessage;
+    NSError *error = [request error];
+    NSString *errorMessage = [error localizedDescription];
     
-    
-    switch (statusCode) {
-        case 401:
-
-            //[[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token"];
-            //[[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token_secret"];
-            DLog(@"Got a 401, with access_token: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
-            
-            //if ([request.responseString rangeOfString:@"BAD_PASS"].location != NSNotFound){
-                [NinaHelper showLoginController:sender];    
-            //}
-            
-    
-            break;
-            
-        default:            
-            alertMessage = [[NSString stringWithFormat:@"Request returned %i error", statusCode] init];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
-                                                           delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-            [alert show];
-            [alert release];	
-            break;
+    if ([error code] == 0){
+        //can't connect to server
+        NSString *alertMessage = [NSString stringWithFormat:@"Can't Connect to Server"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
+                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        [alert release];	
+    } else if ([error code] == 2){
+        //timed out
+        NSString *alertMessage = [NSString stringWithFormat:@"Request Timed Out"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
+                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        [alert release];	
+    } else if (statusCode == 401){
+        //[[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token"];
+        //[[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token_secret"];
+        DLog(@"Got a 401, with access_token: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
+        
+        //if ([request.responseString rangeOfString:@"BAD_PASS"].location != NSNotFound){
+            [NinaHelper showLoginController:sender];    
+        //}
+    } else {
+        DLog(@"Untested error: %@", errorMessage );
+        NSString *alertMessage = [[NSString stringWithFormat:@"Request returned: %@", errorMessage] init];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
+                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        [alert release];	
     }
 
 }
