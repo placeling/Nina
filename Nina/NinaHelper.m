@@ -168,11 +168,11 @@
 
 
 +(NSString*) getConsumerKey{
-    return @"T10WOo6dbQFeG5WI8hrOq77E16hBmEl0e68RfYno";
+    return @"26ARf2UsYWVZLu5NiRz1FXE64ROFrzfjIqmXQXBF";
 }
 
 +(NSString*) getConsumerSecret{
-    return @"fzRheERxfcuaSZPAeuXI1IB5Q1qbsfWBK6xE1r7t";
+    return @"xzwQi9AR1IWlSJTATBqIb063cYNTzV6CMgvU4Nq0";
 }
 
 @end
