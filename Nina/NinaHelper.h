@@ -126,7 +126,6 @@
 +(void) handleBadRequest:(ASIHTTPRequest *)request sender:(UIViewController*)sender;
 +(void) handleCoreLocationError:(NSError*)error;
 +(void) signRequest:(ASIHTTPRequest *)request; 
-+(void) decorateRequestWithLocationInformation:(ASIHTTPRequest *)request; 
 
 +(NSString*) getHostname;
 +(NSString*) getUsername;

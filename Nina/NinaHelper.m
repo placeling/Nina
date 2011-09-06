@@ -96,10 +96,6 @@
 
 }
 
-+(void) decorateRequestWithLocationInformation:(ASIHTTPRequest *)request{
-    
-    
-}
 
 +(void) signRequest:(ASIHTTPRequest *)request{
     [request signRequestWithClientIdentifier:[NinaHelper getConsumerKey] secret:[NinaHelper getConsumerSecret]
@@ -168,11 +164,11 @@
 
 
 +(NSString*) getConsumerKey{
-    return @"26ARf2UsYWVZLu5NiRz1FXE64ROFrzfjIqmXQXBF";
+    return @"7pAO2eGdlMn6OHpBoAs7SqkNZlEB2uij2CRhtxWu";
 }
 
 +(NSString*) getConsumerSecret{
-    return @"xzwQi9AR1IWlSJTATBqIb063cYNTzV6CMgvU4Nq0";
+    return @"bJERnC21b7toDaC8l6zHGI1geY8EPJhDirNxcmcc";
 }
 
 @end
