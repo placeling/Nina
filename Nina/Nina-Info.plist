@@ -36,7 +36,14 @@
 	</array>
 	<key>server_url</key>
 	<string>http://api.placeling.com</string>
-	<key>facebook_app_id</key>
-	<string>280758755284342</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb280758755284342</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
