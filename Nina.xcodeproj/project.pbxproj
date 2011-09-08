@@ -75,6 +75,8 @@
 		280EA87D14114C300045B296 /* NearbyPlacesFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280EA87C14114C300045B296 /* NearbyPlacesFooterView.xib */; };
 		280EA881141154C80045B296 /* SinglePlaceMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 280EA87F141154C70045B296 /* SinglePlaceMapView.m */; };
 		280EA882141154C80045B296 /* SinglePlaceMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280EA880141154C70045B296 /* SinglePlaceMapView.xib */; };
+		280EA88614117B0B0045B296 /* GenericWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280EA88414117B090045B296 /* GenericWebViewController.m */; };
+		280EA88714117B0B0045B296 /* GenericWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280EA88514117B0A0045B296 /* GenericWebViewController.xib */; };
 		2822BDAA1406E1200077868C /* PlaceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDA91406E11F0077868C /* PlaceHeaderView.xib */; };
 		2822BDAC1406EE720077868C /* PlaceFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDAB1406EE710077868C /* PlaceFooterView.xib */; };
 		2833C099140D66980076A398 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 2833C098140D66980076A398 /* facebook.png */; };
@@ -104,6 +106,7 @@
 		287483C013D764F4005C11EF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 287483BF13D764F4005C11EF /* MobileCoreServices.framework */; };
 		287483C213D764F9005C11EF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 287483C113D764F9005C11EF /* CFNetwork.framework */; };
 		287483C413D7651C005C11EF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 287483C313D7651C005C11EF /* SystemConfiguration.framework */; };
+		2877A09F14183CE400850530 /* EditableTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2877A09E14183CE400850530 /* EditableTableCell.m */; };
 		2878E823140C294500F2A666 /* MyPerspectiveCellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2878E821140C294500F2A666 /* MyPerspectiveCellViewController.m */; };
 		2878E824140C294500F2A666 /* MyPerspectiveCellViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2878E822140C294500F2A666 /* MyPerspectiveCellViewController.xib */; };
 		2878E828140C2A3900F2A666 /* EditPerspectiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2878E826140C2A3900F2A666 /* EditPerspectiveViewController.m */; };
@@ -153,14 +156,22 @@
 		289EAD6F13EAF0950072EAD5 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 289EAD6913EAF0950072EAD5 /* NSString+URLEncode.m */; };
 		289EAD7013EAF0950072EAD5 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 289EAD6A13EAF0950072EAD5 /* README */; };
 		28A2EB941405909600122BBF /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A2EB931405909600122BBF /* MBProgressHUD.m */; };
+		28B38E101416FE0400D4025F /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38DF51416FE0400D4025F /* Facebook.m */; };
+		28B38E111416FE0400D4025F /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 28B38DF81416FE0400D4025F /* FBDialog.bundle */; };
+		28B38E121416FE0400D4025F /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38DFA1416FE0400D4025F /* FBDialog.m */; };
+		28B38E131416FE0400D4025F /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38DFC1416FE0400D4025F /* FBLoginDialog.m */; };
+		28B38E141416FE0400D4025F /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38DFE1416FE0400D4025F /* FBRequest.m */; };
+		28B38E2B14170D5B00D4025F /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38E2914170D5B00D4025F /* SignupController.m */; };
+		28B38E2C14170D5B00D4025F /* SignupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B38E2A14170D5B00D4025F /* SignupController.xib */; };
+		28B38E3D1417D26A00D4025F /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38E321417D26A00D4025F /* NSObject+SBJSON.m */; };
+		28B38E3E1417D26A00D4025F /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38E341417D26A00D4025F /* NSString+SBJSON.m */; };
+		28B38E3F1417D26A00D4025F /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38E361417D26A00D4025F /* SBJSON.m */; };
+		28B38E401417D26A00D4025F /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38E381417D26A00D4025F /* SBJsonBase.m */; };
+		28B38E411417D26A00D4025F /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38E3A1417D26A00D4025F /* SBJsonParser.m */; };
+		28B38E421417D26A00D4025F /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38E3C1417D26A00D4025F /* SBJsonWriter.m */; };
 		28BA237113F0925900463234 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28BA237013F0925900463234 /* MessageUI.framework */; };
 		28E1372213EB12DF00C17A68 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E1372013EB12DF00C17A68 /* HomeViewController.m */; };
 		28E1372313EB12DF00C17A68 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28E1372113EB12DF00C17A68 /* HomeViewController.xib */; };
-		28F4777913D78DA5003477CD /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F4777213D78DA5003477CD /* SBJsonBase.m */; };
-		28F4777A13D78DA5003477CD /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F4777313D78DA5003477CD /* SBJsonParser.m */; };
-		28F4777B13D78DA5003477CD /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F4777413D78DA5003477CD /* SBJsonWriter.m */; };
-		28F4777C13D78DA5003477CD /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F4777713D78DA5003477CD /* NSObject+SBJSON.m */; };
-		28F4777D13D78DA5003477CD /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F4777813D78DA5003477CD /* NSString+SBJSON.m */; };
 		28F4778213D7CEE4003477CD /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F4778013D7CEE4003477CD /* EGORefreshTableHeaderView.m */; };
 		28F4778C13D7D02C003477CD /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F4778413D7D02C003477CD /* blackArrow.png */; };
 		28F4778D13D7D02C003477CD /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F4778513D7D02C003477CD /* blackArrow@2x.png */; };
@@ -263,6 +274,9 @@
 		280EA87E141154C60045B296 /* SinglePlaceMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePlaceMapView.h; sourceTree = "<group>"; };
 		280EA87F141154C70045B296 /* SinglePlaceMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglePlaceMapView.m; sourceTree = "<group>"; };
 		280EA880141154C70045B296 /* SinglePlaceMapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SinglePlaceMapView.xib; sourceTree = "<group>"; };
+		280EA88314117B080045B296 /* GenericWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericWebViewController.h; sourceTree = "<group>"; };
+		280EA88414117B090045B296 /* GenericWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericWebViewController.m; sourceTree = "<group>"; };
+		280EA88514117B0A0045B296 /* GenericWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericWebViewController.xib; sourceTree = "<group>"; };
 		2822BDA91406E11F0077868C /* PlaceHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceHeaderView.xib; sourceTree = "<group>"; };
 		2822BDAB1406EE710077868C /* PlaceFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceFooterView.xib; sourceTree = "<group>"; };
 		2833C098140D66980076A398 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
@@ -302,6 +316,8 @@
 		287483BF13D764F4005C11EF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		287483C113D764F9005C11EF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		287483C313D7651C005C11EF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2877A09D14183CE400850530 /* EditableTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditableTableCell.h; sourceTree = "<group>"; };
+		2877A09E14183CE400850530 /* EditableTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditableTableCell.m; sourceTree = "<group>"; };
 		2878E820140C294500F2A666 /* MyPerspectiveCellViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPerspectiveCellViewController.h; sourceTree = "<group>"; };
 		2878E821140C294500F2A666 /* MyPerspectiveCellViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPerspectiveCellViewController.m; sourceTree = "<group>"; };
 		2878E822140C294500F2A666 /* MyPerspectiveCellViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPerspectiveCellViewController.xib; sourceTree = "<group>"; };
@@ -391,21 +407,37 @@
 		289EAD6A13EAF0950072EAD5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		28A2EB921405909600122BBF /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		28A2EB931405909600122BBF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		28B38DF41416FE0400D4025F /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
+		28B38DF51416FE0400D4025F /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
+		28B38DF61416FE0400D4025F /* facebook_ios_sdk_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = facebook_ios_sdk_Prefix.pch; sourceTree = "<group>"; };
+		28B38DF71416FE0400D4025F /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBConnect.h; sourceTree = "<group>"; };
+		28B38DF81416FE0400D4025F /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBDialog.bundle; sourceTree = "<group>"; };
+		28B38DF91416FE0400D4025F /* FBDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDialog.h; sourceTree = "<group>"; };
+		28B38DFA1416FE0400D4025F /* FBDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBDialog.m; sourceTree = "<group>"; };
+		28B38DFB1416FE0400D4025F /* FBLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLoginDialog.h; sourceTree = "<group>"; };
+		28B38DFC1416FE0400D4025F /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLoginDialog.m; sourceTree = "<group>"; };
+		28B38DFD1416FE0400D4025F /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRequest.h; sourceTree = "<group>"; };
+		28B38DFE1416FE0400D4025F /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRequest.m; sourceTree = "<group>"; };
+		28B38E2814170D5B00D4025F /* SignupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupController.h; sourceTree = "<group>"; };
+		28B38E2914170D5B00D4025F /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupController.m; sourceTree = "<group>"; };
+		28B38E2A14170D5B00D4025F /* SignupController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupController.xib; sourceTree = "<group>"; };
+		28B38E301417D26A00D4025F /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		28B38E311417D26A00D4025F /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		28B38E321417D26A00D4025F /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		28B38E331417D26A00D4025F /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		28B38E341417D26A00D4025F /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		28B38E351417D26A00D4025F /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		28B38E361417D26A00D4025F /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		28B38E371417D26A00D4025F /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		28B38E381417D26A00D4025F /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		28B38E391417D26A00D4025F /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		28B38E3A1417D26A00D4025F /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		28B38E3B1417D26A00D4025F /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		28B38E3C1417D26A00D4025F /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		28BA237013F0925900463234 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		28E1371F13EB12DF00C17A68 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		28E1372013EB12DF00C17A68 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		28E1372113EB12DF00C17A68 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
-		28F4776E13D78DA5003477CD /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
-		28F4776F13D78DA5003477CD /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
-		28F4777013D78DA5003477CD /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
-		28F4777113D78DA5003477CD /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		28F4777213D78DA5003477CD /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
-		28F4777313D78DA5003477CD /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
-		28F4777413D78DA5003477CD /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		28F4777513D78DA5003477CD /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
-		28F4777613D78DA5003477CD /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
-		28F4777713D78DA5003477CD /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
-		28F4777813D78DA5003477CD /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
 		28F4778013D7CEE4003477CD /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		28F4778113D7CEE4003477CD /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		28F4778413D7D02C003477CD /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
@@ -640,6 +672,8 @@
 		2895004413D64559009E1BD7 /* Nina */ = {
 			isa = PBXGroup;
 			children = (
+				28B38E2E14170ED800D4025F /* Util */,
+				28B38E2D14170E6800D4025F /* Authentication */,
 				280EA87A14114BE90045B296 /* NearbyPlaces */,
 				284A354014044DBE009C8C28 /* PlaceController */,
 				28086B4613EC7F8200790404 /* Model */,
@@ -652,9 +686,6 @@
 				28086BF313ECAA0400790404 /* MemberProfileViewController.h */,
 				28086BF413ECAA0400790404 /* MemberProfileViewController.m */,
 				28086BFB13ECAA0400790404 /* MemberProfileViewController.xib */,
-				2893959013E9F8F300B71FA4 /* LoginController.h */,
-				2893959113E9F8F300B71FA4 /* LoginController.m */,
-				2893959213E9F8F300B71FA4 /* LoginController.xib */,
 				287483AE13D698EF005C11EF /* localizations */,
 				2895004D13D64559009E1BD7 /* NinaAppDelegate.h */,
 				2895004E13D6455A009E1BD7 /* NinaAppDelegate.m */,
@@ -676,9 +707,6 @@
 				284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */,
 				284A35351402D3C3009C8C28 /* PlaceMark.h */,
 				284A35361402D3C3009C8C28 /* PlaceMark.m */,
-				280EA87E141154C60045B296 /* SinglePlaceMapView.h */,
-				280EA87F141154C70045B296 /* SinglePlaceMapView.m */,
-				280EA880141154C70045B296 /* SinglePlaceMapView.xib */,
 			);
 			path = Nina;
 			sourceTree = "<group>";
@@ -718,11 +746,12 @@
 		2895017713D67896009E1BD7 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				28B38E2F1417D26A00D4025F /* JSON */,
+				28B38DF01416FE0400D4025F /* Facebook */,
 				28A2EB911405909600122BBF /* MBProgressHUD */,
 				287145CE13F58C180047BDB5 /* TTTQuadrantControl */,
 				289EAD6013EAF0950072EAD5 /* asi-http-request-oauth */,
 				28F4777F13D7CEE4003477CD /* EGORefreshTable */,
-				28F4776D13D78DA5003477CD /* JSON */,
 				2895017A13D67896009E1BD7 /* ASIHttpRequest */,
 				287145C913F4789B0047BDB5 /* LocationManagerManager.h */,
 				287145CA13F4789B0047BDB5 /* LocationManagerManager.m */,
@@ -829,22 +858,71 @@
 			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
-		28F4776D13D78DA5003477CD /* JSON */ = {
+		28B38DF01416FE0400D4025F /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
-				28F4776E13D78DA5003477CD /* JSON.h */,
-				28F4776F13D78DA5003477CD /* SBJsonBase.h */,
-				28F4777013D78DA5003477CD /* SBJsonParser.h */,
-				28F4777113D78DA5003477CD /* SBJsonWriter.h */,
-				28F4777213D78DA5003477CD /* SBJsonBase.m */,
-				28F4777313D78DA5003477CD /* SBJsonParser.m */,
-				28F4777413D78DA5003477CD /* SBJsonWriter.m */,
-				28F4777513D78DA5003477CD /* NSObject+SBJSON.h */,
-				28F4777613D78DA5003477CD /* NSString+SBJSON.h */,
-				28F4777713D78DA5003477CD /* NSObject+SBJSON.m */,
-				28F4777813D78DA5003477CD /* NSString+SBJSON.m */,
+				28B38DF41416FE0400D4025F /* Facebook.h */,
+				28B38DF51416FE0400D4025F /* Facebook.m */,
+				28B38DF61416FE0400D4025F /* facebook_ios_sdk_Prefix.pch */,
+				28B38DF71416FE0400D4025F /* FBConnect.h */,
+				28B38DF81416FE0400D4025F /* FBDialog.bundle */,
+				28B38DF91416FE0400D4025F /* FBDialog.h */,
+				28B38DFA1416FE0400D4025F /* FBDialog.m */,
+				28B38DFB1416FE0400D4025F /* FBLoginDialog.h */,
+				28B38DFC1416FE0400D4025F /* FBLoginDialog.m */,
+				28B38DFD1416FE0400D4025F /* FBRequest.h */,
+				28B38DFE1416FE0400D4025F /* FBRequest.m */,
 			);
-			path = JSON;
+			path = Facebook;
+			sourceTree = "<group>";
+		};
+		28B38E2D14170E6800D4025F /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				28B38E2814170D5B00D4025F /* SignupController.h */,
+				28B38E2914170D5B00D4025F /* SignupController.m */,
+				28B38E2A14170D5B00D4025F /* SignupController.xib */,
+				2893959013E9F8F300B71FA4 /* LoginController.h */,
+				2893959113E9F8F300B71FA4 /* LoginController.m */,
+				2893959213E9F8F300B71FA4 /* LoginController.xib */,
+				2877A09D14183CE400850530 /* EditableTableCell.h */,
+				2877A09E14183CE400850530 /* EditableTableCell.m */,
+			);
+			name = Authentication;
+			sourceTree = "<group>";
+		};
+		28B38E2E14170ED800D4025F /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				280EA87E141154C60045B296 /* SinglePlaceMapView.h */,
+				280EA87F141154C70045B296 /* SinglePlaceMapView.m */,
+				280EA880141154C70045B296 /* SinglePlaceMapView.xib */,
+				280EA88314117B080045B296 /* GenericWebViewController.h */,
+				280EA88414117B090045B296 /* GenericWebViewController.m */,
+				280EA88514117B0A0045B296 /* GenericWebViewController.xib */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		28B38E2F1417D26A00D4025F /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				28B38E301417D26A00D4025F /* JSON.h */,
+				28B38E311417D26A00D4025F /* NSObject+SBJSON.h */,
+				28B38E321417D26A00D4025F /* NSObject+SBJSON.m */,
+				28B38E331417D26A00D4025F /* NSString+SBJSON.h */,
+				28B38E341417D26A00D4025F /* NSString+SBJSON.m */,
+				28B38E351417D26A00D4025F /* SBJSON.h */,
+				28B38E361417D26A00D4025F /* SBJSON.m */,
+				28B38E371417D26A00D4025F /* SBJsonBase.h */,
+				28B38E381417D26A00D4025F /* SBJsonBase.m */,
+				28B38E391417D26A00D4025F /* SBJsonParser.h */,
+				28B38E3A1417D26A00D4025F /* SBJsonParser.m */,
+				28B38E3B1417D26A00D4025F /* SBJsonWriter.h */,
+				28B38E3C1417D26A00D4025F /* SBJsonWriter.m */,
+			);
+			name = JSON;
+			path = Facebook/JSON;
 			sourceTree = "<group>";
 		};
 		28F4777F13D7CEE4003477CD /* EGORefreshTable */ = {
@@ -1032,6 +1110,9 @@
 				286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */,
 				280EA87D14114C300045B296 /* NearbyPlacesFooterView.xib in Resources */,
 				280EA882141154C80045B296 /* SinglePlaceMapView.xib in Resources */,
+				280EA88714117B0B0045B296 /* GenericWebViewController.xib in Resources */,
+				28B38E111416FE0400D4025F /* FBDialog.bundle in Resources */,
+				28B38E2C14170D5B00D4025F /* SignupController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1093,11 +1174,6 @@
 				289501F713D684A0009E1BD7 /* NearbyPlacesViewController.m in Sources */,
 				287483BE13D762FA005C11EF /* Reachability.m in Sources */,
 				280D44E213D770620030E770 /* NinaHelper.m in Sources */,
-				28F4777913D78DA5003477CD /* SBJsonBase.m in Sources */,
-				28F4777A13D78DA5003477CD /* SBJsonParser.m in Sources */,
-				28F4777B13D78DA5003477CD /* SBJsonWriter.m in Sources */,
-				28F4777C13D78DA5003477CD /* NSObject+SBJSON.m in Sources */,
-				28F4777D13D78DA5003477CD /* NSString+SBJSON.m in Sources */,
 				28F4778213D7CEE4003477CD /* EGORefreshTableHeaderView.m in Sources */,
 				28F4779C13D88E65003477CD /* UserPerspectiveMapViewController.m in Sources */,
 				2899261D13D8D0C3004EFF81 /* PerspectivePlaceMark.m in Sources */,
@@ -1125,6 +1201,19 @@
 				2878E823140C294500F2A666 /* MyPerspectiveCellViewController.m in Sources */,
 				2878E828140C2A3900F2A666 /* EditPerspectiveViewController.m in Sources */,
 				280EA881141154C80045B296 /* SinglePlaceMapView.m in Sources */,
+				280EA88614117B0B0045B296 /* GenericWebViewController.m in Sources */,
+				28B38E101416FE0400D4025F /* Facebook.m in Sources */,
+				28B38E121416FE0400D4025F /* FBDialog.m in Sources */,
+				28B38E131416FE0400D4025F /* FBLoginDialog.m in Sources */,
+				28B38E141416FE0400D4025F /* FBRequest.m in Sources */,
+				28B38E2B14170D5B00D4025F /* SignupController.m in Sources */,
+				28B38E3D1417D26A00D4025F /* NSObject+SBJSON.m in Sources */,
+				28B38E3E1417D26A00D4025F /* NSString+SBJSON.m in Sources */,
+				28B38E3F1417D26A00D4025F /* SBJSON.m in Sources */,
+				28B38E401417D26A00D4025F /* SBJsonBase.m in Sources */,
+				28B38E411417D26A00D4025F /* SBJsonParser.m in Sources */,
+				28B38E421417D26A00D4025F /* SBJsonWriter.m in Sources */,
+				2877A09F14183CE400850530 /* EditableTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
