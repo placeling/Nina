@@ -16,6 +16,7 @@
 #import "NSString+SBJSON.h"
 #import "Place.h"
 #import "PlacePageViewController.h"
+#import "LoginController.h"
 
 #import "MBProgressHUD.h"
 
@@ -28,11 +29,31 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"Placeling";
-    
-    UIBarButtonItem *accountButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(showAccountSheet)];
-    self.navigationItem.leftBarButtonItem = accountButton;
-    [accountButton release];
 }
+
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:TRUE];
+    
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    if ([standardUserDefaults objectForKey:@"access_token_secret"]){
+        UIBarButtonItem *accountButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(showAccountSheet)];
+        self.navigationItem.leftBarButtonItem = accountButton;
+        [accountButton release];  
+    } else {
+        UIBarButtonItem *loginButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(showLogin)];
+        self.navigationItem.leftBarButtonItem = loginButton;
+        [loginButton release];
+    } 
+
+}
+
+-(IBAction)showLogin{
+    LoginController *loginController = [[LoginController alloc ] init];    
+    [self.navigationController pushViewController:loginController animated:true];
+    [loginController release];
+    
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -44,7 +65,6 @@
 
 -(IBAction)showAccountSheet{
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:@"My Profile", nil];
-    
     [actionSheet showInView:self.view];
     [actionSheet release];
 }
@@ -138,6 +158,9 @@
 -(IBAction) logout{
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token_secret"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token"];
+
+    [self reloadInputViews];
+    
 }
 
 

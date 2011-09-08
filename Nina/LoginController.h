@@ -10,9 +10,10 @@
 #import "ASIHTTPRequestDelegate.h"
 #import "ASIHTTPRequest.h"
 #import "NinaHelper.h"
+#import "Facebook.h"
 
 
-@interface LoginController : UIViewController<UITextFieldDelegate, ASIHTTPRequestDelegate>{
+@interface LoginController : UIViewController<UITextFieldDelegate, ASIHTTPRequestDelegate, UITextFieldDelegate, FBRequestDelegate>{
     IBOutlet UITextField *username;
     IBOutlet UITextField *password;
     IBOutlet UIButton *submitButton;
@@ -22,7 +23,11 @@
 @property(nonatomic, retain) IBOutlet UITextField *password;
 @property(nonatomic, retain) IBOutlet UIButton *submitButton;
 
+-(IBAction)cancel;
+
 -(IBAction) submitLogin;
+-(IBAction) signupFacebook;
+-(IBAction) signupOldSchool;
 
 
 @end

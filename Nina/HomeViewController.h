@@ -18,6 +18,7 @@
 -(IBAction) random;
 -(IBAction)showAccountSheet;
 
+-(IBAction)showLogin;
 
 -(IBAction) logout;
 -(IBAction) myProfile;

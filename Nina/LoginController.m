@@ -10,6 +10,9 @@
 #import "ASIFormDataRequest+OAuth.h"
 #import "ASIHTTPRequest+OAuth.h"
 #import "NinaHelper.h"
+#import "SignupController.h"
+#import "Facebook.h"
+#import "NinaAppDelegate.h"
 
 @implementation LoginController
 
@@ -49,6 +52,62 @@
     
 }
 
+
+-(IBAction) signupFacebook{
+    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+    Facebook *facebook = appDelegate.facebook;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"] 
+        && [defaults objectForKey:@"FBExpirationDateKey"]) {
+        facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+        facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    }
+
+    if (![facebook isSessionValid]) {
+        NSArray* permissions =  [[NSArray arrayWithObjects:
+                                  @"email", @"publish_stream",@"offline_access", nil] retain];
+
+        [facebook authorize:permissions];
+                                 
+        [permissions release];
+    }
+    
+    
+    [facebook requestWithGraphPath:@"me" andDelegate:self];
+}
+
+
+- (void)request:(FBRequest *)request didLoad:(id)result{
+    DLog(@"got facebook response: %@", result);
+    
+    NSDictionary *fbDict = (NSDictionary*)result;
+    
+    SignupController *signupController = [[SignupController alloc ] initWithStyle:UITableViewStyleGrouped];
+                                          
+    signupController.fbDict = fbDict;
+    
+    [self.navigationController pushViewController:signupController animated:true];
+    
+    [signupController release];
+}
+
+
+
+-(IBAction) signupOldSchool{
+    
+    SignupController *signupController = [[SignupController alloc]initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:signupController animated: true];
+    [signupController release];
+    
+}
+
+-(IBAction)cancel{
+    [username resignFirstResponder];
+    [password resignFirstResponder];
+}
+
+
 #pragma mark ASIhttprequest
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
@@ -71,8 +130,7 @@
         [alert show];
         [alert release];
     }
-    
-	
+    	
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
@@ -133,7 +191,33 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [username becomeFirstResponder];
+    
+    self.navigationItem.title = @"Login";
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    UIBarButtonItem *cancelButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    self.navigationItem.rightBarButtonItem = cancelButton;
+    [cancelButton release];
+
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)viewDidUnload

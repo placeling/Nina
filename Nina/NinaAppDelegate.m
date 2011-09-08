@@ -15,6 +15,7 @@
 
 
 @synthesize window=_window;
+@synthesize facebook;
 
 @synthesize navigationController=_navigationController;
 
@@ -28,13 +29,31 @@
         [servicesDisabledAlert release];
     } else {
         CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
+        [manager setDesiredAccuracy:kCLLocationAccuracyBest];
         [manager startUpdatingLocation];
     }
+    
+    facebook = [[Facebook alloc] initWithAppId:@"280758755284342" andDelegate:self];
+    
     
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     return YES;
 }
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    
+    return [facebook handleOpenURL:url]; 
+}
+
+- (void)fbDidLogin {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
+    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
