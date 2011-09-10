@@ -20,7 +20,7 @@
     if(self = [super init]){
         self.userId = [jsonDict objectForKey:@"id"];
         self.username = [jsonDict objectForKey:@"username"];
-        self.placeCount = [[jsonDict objectForKey:@"perspective_count"] intValue];
+        self.placeCount = [[jsonDict objectForKey:@"perspectives_count"] intValue];
         self.followerCount =[[jsonDict objectForKey:@"follower_count"] intValue];
         self.followingCount = [[jsonDict objectForKey:@"following_count"] intValue];
         self.description = [jsonDict objectForKey:@"description"];
@@ -33,6 +33,14 @@
 
 - (void)dealloc{
     [username release];
+    
+    [userId release];
+    [city release];
+    [iconURLString release];
+    [username release];
+    [description release];
+    [profilePic release];
+    
     [super dealloc];
 }
 

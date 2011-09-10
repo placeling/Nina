@@ -44,14 +44,12 @@
         self.navigationItem.leftBarButtonItem = loginButton;
         [loginButton release];
     } 
-
 }
 
 -(IBAction)showLogin{
     LoginController *loginController = [[LoginController alloc ] init];    
     [self.navigationController pushViewController:loginController animated:true];
     [loginController release];
-    
 }
 
 
@@ -148,18 +146,15 @@
         [NinaHelper handleBadRequest:request sender:self];
     }];
     
-    
-	
     [request startAsynchronous];
 
     
 }
 
 -(IBAction) logout{
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token_secret"];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token"];
-
-    [self reloadInputViews];
+    [NinaHelper setAccessToken:nil];
+    [NinaHelper setAccessTokenSecret:nil];
+    [NinaHelper setUsername:nil];
     
 }
 

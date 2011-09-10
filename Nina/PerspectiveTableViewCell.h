@@ -15,17 +15,19 @@
     IBOutlet UIImageView *userImage;
     IBOutlet UIButton *upvoteButton;
     IBOutlet UITextView *memoText;
+    IBOutlet UILabel *titleLabel;
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
 @property(nonatomic,retain) IBOutlet UIImageView *userImage;
 @property(nonatomic,retain) IBOutlet UIButton *upvoteButton;
 @property(nonatomic,retain) IBOutlet UITextView *memoText;
+@property(nonatomic,retain) IBOutlet UILabel *titleLabel;
 
 -(IBAction)toggleStarred;
 
 //for calculating heights
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective;
-+(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective;
++(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective  userSource:(BOOL)userSource;
 
 @end

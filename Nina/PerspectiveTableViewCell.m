@@ -10,11 +10,11 @@
 
 @implementation PerspectiveTableViewCell
 
-@synthesize perspective, userImage, upvoteButton, memoText;
+@synthesize perspective, userImage, upvoteButton, memoText,titleLabel;
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
-    CGFloat heightCalc = 10;
+    CGFloat heightCalc = 39;
     
     CGSize textAreaSize;
     textAreaSize.height = 130;
@@ -29,10 +29,16 @@
 }
 
 
-+(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective{
++(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective userSource:(BOOL)userSource{
     
     cell.perspective = perspective;
     cell.memoText.text = perspective.notes;
+    
+    if (userSource){
+        cell.titleLabel.text = perspective.place.name;
+    } else {
+        cell.titleLabel.text = perspective.user.username;
+    }
     
     //cell.memoText.backgroundColor = [UIColor grayColor];
     
@@ -99,6 +105,7 @@
     [userImage release];
     [upvoteButton release];
     [memoText release];
+    [titleLabel release];
     
     [super dealloc];
 }

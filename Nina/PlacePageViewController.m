@@ -630,7 +630,7 @@
             for(id item in objects){
                 if ( [item isKindOfClass:[UITableViewCell class]]){
                     PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
-                    [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective];
+                    [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:false];
                     cell = pcell;
                     break;
                 }

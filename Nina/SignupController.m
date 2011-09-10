@@ -111,6 +111,8 @@
             }
         } 
         
+        [NinaHelper setUsername:((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField.text];
+        
         [self.navigationController popToRootViewControllerAnimated:TRUE];        
     } else {
         DLog(@"Login error: %@",[jsonDict objectForKey:@"message"] );

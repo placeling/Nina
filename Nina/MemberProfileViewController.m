@@ -14,7 +14,7 @@
 #import "FollowViewController.h"
 #import "Perspective.h"
 #import "PerspectiveTableViewCell.h"
-
+#import "MyPerspectiveCellViewController.h"
 
 @interface MemberProfileViewController() 
 -(void) loadData;
@@ -26,18 +26,14 @@
 @implementation MemberProfileViewController
 
 @synthesize username;
-@synthesize user, profileImageView, headerView;
+@synthesize user, profileImageView, headerView, mine;
 @synthesize usernameLabel, userDescriptionLabel;
 @synthesize followButton, locationLabel;
 @synthesize followersButton, followingButton, placeMarkButton;
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad{
-    
-    //self.followersButton = [ProfileDetailBadge alloc] initWithFrame:self.followingButton.layer.r
-    //self.followingButton = [ProfileDetailBadge alloc] initWithFrame:self.followingButton.layer
-    //self.placeMarkButton = [ProfileDetailBadge alloc] initWithFrame:CGRectMake(self.followingButton.layer., <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)];
+- (void)viewDidLoad{    
     [[NSBundle mainBundle] loadNibNamed:@"ProfileHeaderView" owner:self options:nil];
     
     [super viewDidLoad];
@@ -47,6 +43,12 @@
         getUsername = self.username;
     } else {
         getUsername = user.username;
+    }
+    
+    if ([getUsername isEqualToString:[NinaHelper getUsername]]){
+        mine = false;
+    } else {
+        mine = false;
     }
 	
     self.tableView.tableHeaderView = self.headerView;
@@ -114,7 +116,7 @@
     self.followersButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.followerCount];
     self.placeMarkButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.placeCount];
     
-    if (false){ //(perspectives == nil && self.user.placeCount != 0){
+    if (perspectives == nil && self.user.placeCount != 0){
         // Call asychronously to get image
         
         NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/perspectives", [NinaHelper getHostname], self.username];		
@@ -217,9 +219,12 @@
             
             for (NSDictionary* dict in rawPerspectives){
                 Perspective* newPerspective = [[Perspective alloc] initFromJsonDict:dict];
+                newPerspective.user = self.user;
                 [perspectives addObject:newPerspective]; 
                 [newPerspective release];
             }
+            
+            [self.tableView reloadData];
             
         }
     }
@@ -228,7 +233,6 @@
 
 -(void) toggleFollow{
     self.followButton.enabled = FALSE;
-    self.followButton.titleLabel.text = @"Following";
     self.followButton.titleLabel.textColor = [UIColor grayColor];
 }
 
@@ -244,7 +248,11 @@
 
     perspective = [perspectives objectAtIndex:indexPath.row];
     
-    return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
+    if (mine){
+        return [MyPerspectiveCellViewController cellHeightForPerspective:perspective];
+    } else {
+        return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -271,16 +279,30 @@
     if (cell == nil) {
         Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
         
-        
-        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
-        
-        for(id item in objects){
-            if ( [item isKindOfClass:[UITableViewCell class]]){
-                PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
-                [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective];
-                cell = pcell;
-                break;
+        if (mine){
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"MyPerspectiveCellViewController" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    MyPerspectiveCellViewController *mcell = (MyPerspectiveCellViewController *)item;                  
+                    [MyPerspectiveCellViewController setupCell:mcell forPerspective:perspective];
+                    cell = mcell;
+                    break;
+                }
             }
+        } else {
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
+                    [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:true];
+                    cell = pcell;
+                    break;
+                }
+            }            
+            
+            
         }
     }
     

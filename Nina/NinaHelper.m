@@ -104,6 +104,19 @@
 
 }
 
++(void) setUsername:(NSString*)username{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    if (standardUserDefaults ){
+        [standardUserDefaults setObject:username forKey:@"current_username"];
+    } else {
+        DLog(@"FATAL ERROR, NULL standardUserDefaults");
+        exit(-1);
+    }
+    [standardUserDefaults synchronize]; 
+}
+
+
 +(NSString*) getUsername{
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     if ([standardUserDefaults objectForKey:@"current_username"]){

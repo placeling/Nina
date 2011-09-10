@@ -132,6 +132,7 @@
 
 +(void) setAccessToken:(NSString*)accessToken;
 +(void) setAccessTokenSecret:(NSString*)accessTokenSecret;
++(void) setUsername:(NSString*)username;
 
 +(NSString*) getAccessToken;
 +(NSString*) getAccessTokenSecret;

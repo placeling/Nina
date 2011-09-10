@@ -10,15 +10,19 @@
 
 
 @implementation Perspective
-@synthesize user, place, notes, tags, photos;
-@synthesize starred;
-@synthesize dateAdded, visited, share, mine;
-@synthesize perspectiveId;
+@synthesize user, place, notes, tags, photos, starred;
+@synthesize dateAdded, visited, share, mine, perspectiveId;
 
 -(id) initFromJsonDict:(NSDictionary *)jsonDict{
-    
     if(self = [super init]){
-        self.place = [[Place alloc] initFromJsonDict:[jsonDict objectForKey:@"place"]];
+        if ([jsonDict objectForKey:@"place"]){
+            self.place = [[Place alloc] initFromJsonDict:[jsonDict objectForKey:@"place"]];
+        }
+        
+        if ([jsonDict objectForKey:@"user"]){
+            self.user = [[User alloc] initFromJsonDict:[jsonDict objectForKey:@"user"]];
+        }
+        
         [self updateFromJsonDict:jsonDict];
 	}
 	return self;
