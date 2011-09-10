@@ -10,28 +10,44 @@
 #import "User.h"
 #import "NinaHelper.h"
 #import "ASIHTTPRequestDelegate.h"
-#import "TTTQuadrantControl.h"
+#import "ProfileDetailBadge.h"
 
-@interface MemberProfileViewController : UIViewController<ASIHTTPRequestDelegate, UITableViewDelegate> {
+@interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate> {
 	NSString *username;
 	User *user;
     
+    NSMutableArray *perspectives;
+    
     IBOutlet UIImageView *profileImageView;
     IBOutlet UILabel *usernameLabel;
+    IBOutlet UILabel *locationLabel;
+    
     IBOutlet UILabel *userDescriptionLabel;
     IBOutlet UIButton *followButton;
-    IBOutlet UITableView *tableView;
-    IBOutlet TTTQuadrantControl *quadControl;
+    
+    IBOutlet ProfileDetailBadge *followersButton;
+    IBOutlet ProfileDetailBadge *followingButton;
+    IBOutlet ProfileDetailBadge *placeMarkButton;
+    
+    IBOutlet UIView *headerView;
 }
 
 @property (nonatomic, retain) NSString *username;
 @property (nonatomic, retain) User *user;
 
 @property (nonatomic, retain) IBOutlet UIImageView *profileImageView;
+
 @property (nonatomic, retain) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *userDescriptionLabel;
+@property (nonatomic, retain) IBOutlet UILabel *locationLabel;
+
 @property (nonatomic, retain) IBOutlet UIButton *followButton;
-@property (nonatomic, retain) IBOutlet TTTQuadrantControl *quadControl;
+@property (nonatomic, retain) IBOutlet UIView *headerView;
+
+@property (nonatomic, retain) IBOutlet ProfileDetailBadge *followersButton;
+@property (nonatomic, retain) IBOutlet ProfileDetailBadge *followingButton;
+@property (nonatomic, retain) IBOutlet ProfileDetailBadge *placeMarkButton;
+
 
 -(IBAction) followUser;
 -(IBAction) userPerspectives;

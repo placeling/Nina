@@ -12,6 +12,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UserPerspectiveMapViewController.h"
 #import "FollowViewController.h"
+#import "Perspective.h"
+#import "PerspectiveTableViewCell.h"
 
 
 @interface MemberProfileViewController() 
@@ -24,14 +26,20 @@
 @implementation MemberProfileViewController
 
 @synthesize username;
-@synthesize user, profileImageView;
+@synthesize user, profileImageView, headerView;
 @synthesize usernameLabel, userDescriptionLabel;
-@synthesize followButton, quadControl;
-
+@synthesize followButton, locationLabel;
+@synthesize followersButton, followingButton, placeMarkButton;
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad{
+    
+    //self.followersButton = [ProfileDetailBadge alloc] initWithFrame:self.followingButton.layer.r
+    //self.followingButton = [ProfileDetailBadge alloc] initWithFrame:self.followingButton.layer
+    //self.placeMarkButton = [ProfileDetailBadge alloc] initWithFrame:CGRectMake(self.followingButton.layer., <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)];
+    [[NSBundle mainBundle] loadNibNamed:@"ProfileHeaderView" owner:self options:nil];
+    
     [super viewDidLoad];
 	
     NSString *getUsername;
@@ -41,18 +49,18 @@
         getUsername = user.username;
     }
 	
+    self.tableView.tableHeaderView = self.headerView;
+    
     // Call url to get profile details
     NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@", [NinaHelper getHostname], getUsername];
     
 	NSURL *url = [NSURL URLWithString:urlText];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request setDelegate:self];
-	[request setTag:0];
+	[request setTag:10];
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 	[NinaHelper signRequest:request];
 	[request startAsynchronous];
-    
-    self.quadControl.delegate = self;
     
 	[self blankLoad];
 }
@@ -61,33 +69,16 @@
     UIImage *profileImage = [UIImage imageNamed:@"default_image.png"];
     self.profileImageView.image = profileImage;
     self.usernameLabel.text = @"";
+    self.locationLabel.text = @"";
     self.userDescriptionLabel.text = @"";
     
+    self.followingButton.detailLabel.text = @"Following";    
+    self.followersButton.detailLabel.text = @"Followers";
+    self.placeMarkButton.detailLabel.text = @"Bookmarks";
     
-    [self.quadControl setNumber:0
-                       caption:@"following"
-                        action:@selector(noop)
-                   forLocation:TopLeftLocation];
-    
-    [self.quadControl setNumber:0
-                       caption:@"followers"
-                        action:@selector(noop)
-                   forLocation:TopRightLocation];
-    
-    [self.quadControl setNumber:0
-                       caption:@"bookmarks"
-                        action:@selector(noop)
-                   forLocation:BottomLeftLocation];
-    
-    [self.quadControl setNumber:0
-                       caption:@"favorites"
-                        action:@selector(noop)
-                   forLocation:BottomRightLocation];
-    
-}
-
--(IBAction) noop{
-    DLog(@"NOOP Hit");
+    self.followingButton.numberLabel.text = @"-";
+    self.followingButton.numberLabel.text = @"-";
+    self.followingButton.numberLabel.text = @"-";
 }
 
 -(IBAction) userPerspectives{
@@ -111,29 +102,33 @@
 
 -(void) loadData{
     self.usernameLabel.text = self.user.username;
+    self.locationLabel.text = self.user.city;
     self.userDescriptionLabel.text = self.user.description;
     
-    [self.quadControl setNumber:[NSNumber numberWithInt:self.user.followingCount]
-                        caption:@"following"
-                         action:@selector(userFollowing)
-                    forLocation:TopLeftLocation];
     
-    [self.quadControl setNumber:[NSNumber numberWithInt:self.user.followerCount]
-                        caption:@"followers"
-                         action:@selector(userFollowers)
-                    forLocation:TopRightLocation];
+    self.followingButton.detailLabel.text = @"Following";    
+    self.followersButton.detailLabel.text = @"Followers";
+    self.placeMarkButton.detailLabel.text = @"Bookmarks";
     
-    [self.quadControl setNumber:[NSNumber numberWithInt:self.user.placeCount]
-                        caption:@"bookmarks"
-                         action:@selector(userPerspectives)
-                    forLocation:BottomLeftLocation];
+    self.followingButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.followingCount];
+    self.followersButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.followerCount];
+    self.placeMarkButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.placeCount];
     
-    [self.quadControl setNumber:0
-                        caption:@""
-                         action:@selector(noop)
-                    forLocation:BottomRightLocation];
-    
-    [self.quadControl setNeedsDisplay];
+    if (false){ //(perspectives == nil && self.user.placeCount != 0){
+        // Call asychronously to get image
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/perspectives", [NinaHelper getHostname], self.username];		
+        
+        NSURL *url = [NSURL URLWithString:urlString];
+        
+        ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
+        
+        [request setDelegate:self];
+        [request setTag:13];
+        [NinaHelper signRequest:request];
+        [request startAsynchronous];
+        
+    }
     
 }
 
@@ -159,7 +154,7 @@
     
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 	[request setDelegate:self];
-    [request setTag:1];
+    [request setTag:11];
 	[request startAsynchronous];
 	
 }
@@ -171,7 +166,7 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     switch (request.tag){
-        case 0:
+        case 10:
         {    
             NSString *responseString = [request responseString];            
             DLog(@"profile get returned: %@", responseString);
@@ -193,13 +188,13 @@
             
             break;
         }
-        case 1:
+        case 11:
         {
             [self toggleFollow];
             break;
         }
             
-        case 2:
+        case 12:
         {
             DLog(@"Image request finished");
             // Get data and convert to image
@@ -207,6 +202,25 @@
             UIImage *newImage = [UIImage imageWithData:responseData];
             
             self.profileImageView.image = newImage;
+        }
+        case 13:
+        {
+            NSData *data = [request responseData];
+            
+            // Store incoming data into a string
+            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            DLog(@"Got JSON BACK: %@", jsonString);
+            // Create a dictionary from the JSON string
+
+            NSMutableArray *rawPerspectives = [[jsonString JSONValue] objectForKey:@"perspectives"];
+            perspectives = [[NSMutableArray alloc] initWithCapacity:[rawPerspectives count]];
+            
+            for (NSDictionary* dict in rawPerspectives){
+                Perspective* newPerspective = [[Perspective alloc] initFromJsonDict:dict];
+                [perspectives addObject:newPerspective]; 
+                [newPerspective release];
+            }
+            
         }
     }
 
@@ -223,15 +237,69 @@
 }
 
 
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
+    //a visible perspective row PerspectiveTableViewCell
+    
+    Perspective *perspective;
+
+    perspective = [perspectives objectAtIndex:indexPath.row];
+    
+    return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (perspectives){
+        return [perspectives count];
+    } else {
+        return 0;
+    }
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *perspectiveCellIdentifier = @"Cell";
+    
+    UITableViewCell *cell;
+    cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
+
+    
+    if (cell == nil) {
+        Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+        
+        
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
+        
+        for(id item in objects){
+            if ( [item isKindOfClass:[UITableViewCell class]]){
+                PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
+                [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective];
+                cell = pcell;
+                break;
+            }
+        }
+    }
+    
+    // Configure the cell...
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
+
+
 - (void)dealloc{
     [username release];
     [user release];
     
+    [locationLabel release];
     [profileImageView release];
     [usernameLabel release];
     [userDescriptionLabel release];
     [followButton release];
-    [quadControl release];
     
     [super dealloc];
 }
