@@ -11,18 +11,18 @@
 #import "LocationManagerManager.h"
 #import "Place.h"
 
-@protocol BookmarkTableviewCellDelegate 
+@protocol BookmarkTableViewDelegate 
 - (IBAction)bookmark;
 @end
 
 
-@interface BookmarkTableViewCell : UITableViewCell{
+@interface BookmarkTableViewCell : UIView{
     Place *place;
     
     IBOutlet UIButton *bookmarkButton;
 }
 
-@property(nonatomic, assign) id<NSObject, BookmarkTableviewCellDelegate> delegate;
+@property(nonatomic, assign) id<NSObject, BookmarkTableViewDelegate> delegate;
 @property(nonatomic, retain) Place *place;
 @property(nonatomic, retain) IBOutlet UIButton *bookmarkButton;
 

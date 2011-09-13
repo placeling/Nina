@@ -24,12 +24,13 @@ typedef enum {
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableviewCellDelegate, EditPerspectiveDelegate> {        
+@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate> {        
     NSString *google_id; 
     NSString *google_ref;
     
     Place *_place;
     Perspective *myPerspective;
+    User *referrer;
     
     UIImage *mapImage; // Static Google Map of Location
     BOOL mapRequested;
@@ -45,6 +46,8 @@ typedef enum {
     IBOutlet UISegmentedControl *segmentedControl; 
     IBOutlet UIView *tableHeaderView;
     IBOutlet UIView *tableFooterView;
+    IBOutlet UIView *bookmarkView;
+    
     NSArray *perspectives;
     NSMutableArray *homePerspectives;
     NSMutableArray *followingPerspectives;
@@ -69,6 +72,8 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet UIButton *mapButtonView;
 @property (nonatomic, retain) IBOutlet UIView *tableHeaderView;
 @property (nonatomic, retain) IBOutlet UIView *tableFooterView;
+@property (nonatomic, retain) IBOutlet UIView *bookmarkView;
+
 @property (nonatomic, retain) IBOutlet UISegmentedControl *segmentedControl;
 @property (nonatomic, assign) PerspectiveTypes perspectiveType;
 
@@ -77,6 +82,8 @@ typedef enum {
 @property (nonatomic, assign) NSMutableArray *everyonePerspectives;
 
 @property (nonatomic, retain) IBOutlet UIScrollView *tagScrollView;
+
+@property(nonatomic, retain) User *referrer;
 
 -(IBAction) googlePlacePage;
 -(IBAction) changedSegment;

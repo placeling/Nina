@@ -42,11 +42,11 @@
 
 @synthesize dataLoaded;
 @synthesize google_id, google_ref;
-@synthesize place=_place, mapImage;
+@synthesize place=_place, mapImage, referrer;
 @synthesize nameLabel, addressLabel, cityLabel, categoriesLabel;
 @synthesize segmentedControl, tagScrollView;
 @synthesize mapButtonView, googlePlacesButton;
-@synthesize tableHeaderView, tableFooterView, perspectiveType;
+@synthesize tableHeaderView, tableFooterView, bookmarkView, perspectiveType;
 @synthesize homePerspectives, followingPerspectives, everyonePerspectives;
 
 - (id) initWithPlace:(Place *)place{
@@ -65,6 +65,7 @@
     //the place header subview - needs this line, no more
     [[NSBundle mainBundle] loadNibNamed:@"PlaceHeaderView" owner:self options:nil];
     [[NSBundle mainBundle] loadNibNamed:@"PlaceFooterView" owner:self options:nil];
+    [[NSBundle mainBundle] loadNibNamed:@"BookmarkTableViewCell" owner:self options:nil];
     
     [super viewDidLoad];
     
@@ -73,10 +74,21 @@
     self.tableView.tableHeaderView = self.tableHeaderView;
     
     self.tableView.tableFooterView = self.tableFooterView;
+    
+    if (self.place){
+        self.google_id = self.place.google_id;
+    }
+    
     // Initializations
     [self blankLoad];
+
+    NSString *urlText;
+    if (self.referrer){
+        urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@&rf=%@", [NinaHelper getHostname], self.google_id, self.google_ref, self.referrer.username];
+    } else {
+        urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@", [NinaHelper getHostname], self.google_id, self.google_ref];
+    }
     
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@", [NinaHelper getHostname], self.google_id, self.google_ref];
     
     NSURL *url = [NSURL URLWithString:urlText];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -87,6 +99,8 @@
     everyonePerspectives = [[NSMutableArray alloc] init];
     perspectives = homePerspectives;
     self.perspectiveType = home;
+    
+
     
     [request setDelegate:self];
     [request setTag:0];
@@ -164,6 +178,26 @@
                 NSArray *jsonPerspectives = [jsonDict objectForKey:@"perspectives"];
                 for (NSDictionary *rawDict in jsonPerspectives){
                     Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
+                    perspective.place = self.place;
+                    [homePerspectives addObject:perspective];
+                    [perspective release];
+                }
+                
+                jsonPerspectives = [jsonDict objectForKey:@"referring_perspectives"];
+                for (NSDictionary *rawDict in jsonPerspectives){
+                    //only add referring perspectives if they aren't already there
+                    BOOL exists = false;
+                    for (Perspective *p in homePerspectives){
+                        if ([p.perspectiveId isEqualToString:[rawDict objectForKey:@"_id"]]){
+                            exists = true;
+                            break;
+                        }
+                    }
+                    
+                    if (exists) break;
+                             
+                    Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
+                    
                     perspective.place = self.place;
                     [homePerspectives addObject:perspective];
                     [perspective release];
@@ -443,17 +477,17 @@
     }
     
     
-    if ( self.perspectiveType == home ){
-        return false;
+    if ( self.perspectiveType == home && self.place.bookmarked == false){
+        return true; //show bookmark bar
     } else if (self.perspectiveType != home && [perspectives count] == 0){
         return true; //to show "0 bookmarks" text
-    } else if ( self.perspectiveType == following && self.place.followingPerspectiveCount == [followingPerspectives count] ){
-        return false;
-    } else if ( self.perspectiveType == everyone && self.place.perspectiveCount == [everyonePerspectives count] ){
-        return false;
-    }
+    } else if ( self.perspectiveType == following && self.place.followingPerspectiveCount != [followingPerspectives count] ){
+        return true;
+    } else if ( self.perspectiveType == everyone && self.place.perspectiveCount != [everyonePerspectives count] ){
+        return true;
+    } 
     
-    return true;
+    return false;
 }
 
 -(int) numberOfSectionBookmarks{
@@ -482,29 +516,34 @@
         return nil;
     }
 
+    UIView *view;
     
-    // Create label with section title
-    UILabel *label = [[[UILabel alloc] init] autorelease];
-    label.frame = CGRectMake(20, 6, 300, 30);
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont boldSystemFontOfSize:16];
-    
-    
-    if ( [self numberOfSectionBookmarks] == 0 ){
-        label.textColor = [UIColor grayColor];
-        label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
-    } else if ( [self numberOfSectionBookmarks] == 1) {
-        label.text = [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+    if (self.perspectiveType == home){
+        view = self.bookmarkView;
+        
     } else {
-        label.text = [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];
+        // Create label with section title
+        UILabel *label = [[[UILabel alloc] init] autorelease];
+        label.frame = CGRectMake(20, 6, 300, 30);
+        label.backgroundColor = [UIColor clearColor];
+        label.textColor = [UIColor blackColor];
+        label.font = [UIFont boldSystemFontOfSize:16];
+        
+        
+        if ( [self numberOfSectionBookmarks] == 0 ){
+            label.textColor = [UIColor grayColor];
+            label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
+        } else if ( [self numberOfSectionBookmarks] == 1) {
+            label.text = [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+        } else {
+            label.text = [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];
+        }
+        
+        // Create header view and add label as a subview
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, SectionHeaderHeight)];
+        [view autorelease];
+        [view addSubview:label];
     }
-    
-    
-    // Create header view and add label as a subview
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, SectionHeaderHeight)];
-    [view autorelease];
-    [view addSubview:label];
     
     return view;
 }
@@ -548,51 +587,49 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Return the number of rows in the section.
-    if (([perspectives count] > 0) && [[perspectives objectAtIndex:0] isKindOfClass:[NSString class]]){
-        //loading case
-        return 1;
-    }else if ( self.perspectiveType == home && self.place.bookmarked == false){
-        return [perspectives count] +1;
-    } else {
+    if (perspectives){ 
         return [perspectives count];
+    } else {
+        return 0; //probably shouldn't actually ever reach here
     }
     
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *perspectiveCellIdentifier = @"Cell";
-    static NSString *bookmarkCellIdentifier = @"BookmarkTableViewCell";
-    static NSString *editableCellIdentifier = @"CellIdentifier";
+    static NSString *perspectiveCellIdentifier = @"PerspectiveCellIdentifier";
+    static NSString *editableCellIdentifier = @"MyPerspectiveCellIdentifier";
     static NSString *spinnerCellIdentifier = @"SpinnerCellIdentifier";
     
     UITableViewCell *cell;
     
-     if (([perspectives count] > 0) && [[perspectives objectAtIndex:indexPath.row] isKindOfClass:[NSString class]]){
+     if ([[perspectives objectAtIndex:indexPath.row] isKindOfClass:[NSString class]]){
         cell = [tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
-    }else if ( indexPath.row == 0 && self.perspectiveType == home ){
-        if (self.place.bookmarked){
+     }else {
+         Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+         
+        if (perspective.mine){
             cell = [tableView dequeueReusableCellWithIdentifier:editableCellIdentifier];
         } else {
-            cell = [tableView dequeueReusableCellWithIdentifier:bookmarkCellIdentifier];
-        }        
-    } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
-    }
+            cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
+        }
+    } 
     
     
     if (cell == nil) {
-        if (([perspectives count] > 0) && [[perspectives objectAtIndex:indexPath.row] isKindOfClass:[NSString class]]){
+        if ([[perspectives objectAtIndex:indexPath.row] isKindOfClass:[NSString class]]){
+            
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
             
             for(id item in objects){
                 if ( [item isKindOfClass:[UITableViewCell class]]){
                     cell = item;
                 }
-            }            
-        } else if ( indexPath.row == 0 && self.perspectiveType == home ){
+            }             
+        }else {
+            Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
             
-            if (myPerspective){
+            if (perspective.mine){
                 NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"MyPerspectiveCellViewController" owner:self options:nil];
                 
                 for(id item in objects){
@@ -602,40 +639,18 @@
                         cell = mCell;
                     }
                 }
-
-            } else {              
-                NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"BookmarkTableViewCell" owner:self options:nil];
-
+            } else {
+                NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
+                
                 for(id item in objects){
                     if ( [item isKindOfClass:[UITableViewCell class]]){
-                        BookmarkTableViewCell *bmcell = (BookmarkTableViewCell *)item;
-                        bmcell.place = self.place;
-                        bmcell.delegate = self;
-                        cell = bmcell;
+                        PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
+                        [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:false];
+                        cell = pcell;
                         break;
                     }
                 }
             }
-                        
-        } else {
-            Perspective *perspective;
-            if ( self.perspectiveType == home && !self.place.bookmarked ){
-                perspective = [perspectives objectAtIndex:indexPath.row-1];
-            } else {
-                perspective = [perspectives objectAtIndex:indexPath.row];
-            }
-            
-            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
-            
-            for(id item in objects){
-                if ( [item isKindOfClass:[UITableViewCell class]]){
-                    PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
-                    [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:false];
-                    cell = pcell;
-                    break;
-                }
-            }
-
         }
         
     }
@@ -648,6 +663,8 @@
 
 
 - (void)dealloc{
+    [NinaHelper clearActiveRequests:0];
+    
     [google_id release];
     [google_ref release];
     [_place release];
@@ -658,6 +675,7 @@
     [mapButtonView release];
     [cityLabel release];
     [tableHeaderView release];
+    [referrer release];
     
     [super dealloc];
 }

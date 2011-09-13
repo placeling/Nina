@@ -14,15 +14,6 @@
 @synthesize delegate;
 
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)identifier
-{
-    self = [super initWithStyle:style reuseIdentifier:identifier];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 
 -(void) dealloc{
     [place release];
