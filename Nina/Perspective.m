@@ -16,11 +16,12 @@
 -(id) initFromJsonDict:(NSDictionary *)jsonDict{
     if(self = [super init]){
         if ([jsonDict objectForKey:@"place"]){
-            self.place = [[Place alloc] initFromJsonDict:[jsonDict objectForKey:@"place"]];
+            self.place = [[[Place alloc] initFromJsonDict:[jsonDict objectForKey:@"place"]]autorelease];
+            
         }
         
         if ([jsonDict objectForKey:@"user"]){
-            self.user = [[User alloc] initFromJsonDict:[jsonDict objectForKey:@"user"]];
+            self.user = [[[User alloc] initFromJsonDict:[jsonDict objectForKey:@"user"]]autorelease];
         }
         
         [self updateFromJsonDict:jsonDict];

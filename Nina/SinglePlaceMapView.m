@@ -42,10 +42,7 @@
     
     // try to dequeue an existing pin view first
     static NSString* AnnotationIdentifier = @"placeAnnotationIdentifier";
-    
-    MKPinAnnotationView* pinView = (MKPinAnnotationView *)        
-    [mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
-            
+
     MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
                                            initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier] autorelease];
     
@@ -62,10 +59,6 @@
         
     }
     return customPinView;
-        
-    
-    return pinView;
-    
 }
 
 -(IBAction) spawnMapApp{
@@ -86,6 +79,7 @@
     placemark.title = self.place.name;
     //placemark.subtitle = subTitle;
     [mapView addAnnotation:placemark];
+    [placemark release];
     
     self.mapView.delegate = self;
     
@@ -97,6 +91,7 @@
     MKCoordinateSpan span; 
     
     span.latitudeDelta  = 0.02; // default zoom
+    span.longitudeDelta = 0.02; // default zoom
     
     region.span = span;
     

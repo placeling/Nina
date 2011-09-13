@@ -16,7 +16,9 @@
 -(IBAction) bookmarkSpot;
 -(IBAction) nearbyPerspectives;
 -(IBAction) random;
--(IBAction)showAccountSheet;
+-(IBAction) showAccountSheet;
+
+-(IBAction) everythingList;
 
 -(IBAction)showLogin;
 

@@ -41,8 +41,8 @@
 
 - (void)commonInit {
     
-    self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 28, 64, 21)];
-    self.numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 64, 28)];
+    self.detailLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 28, 64, 21)]autorelease];
+    self.numberLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 64, 28)] autorelease];
     
     self.detailLabel.font = [UIFont fontWithName:@"Helvetica" size:11];
     self.detailLabel.textAlignment =  UITextAlignmentCenter;

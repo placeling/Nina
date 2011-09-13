@@ -50,7 +50,7 @@
         NSURL *url = [NSURL URLWithString:urlString];
         
 		ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-        
+        request.tag = 20;
         [NinaHelper signRequest:request];
 		[request setDelegate:self];
 		[request startAsynchronous];
@@ -70,6 +70,7 @@
 }
 
 - (void)dealloc{
+    [NinaHelper clearActiveRequests:20];
     [placesTableView release];
     [_searchBar release];
     [super dealloc];
@@ -158,12 +159,6 @@
     
 }
 
-- (void)viewDidUnload{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -190,10 +185,12 @@
 		// Create a dictionary from the JSON string
         
 		[nearbyPlaces release];
-		nearbyPlaces = [[[jsonString JSONValue] retain] objectForKey:@"places"];
+        NSDictionary *jsonDict = [[jsonString JSONValue] retain];
+		nearbyPlaces = [jsonDict objectForKey:@"places"];
         
 		[self.placesTableView  reloadData];
-		[jsonString release];
+		[jsonDict release];
+        [jsonString release];
 	}
     
     [self dataSourceDidFinishLoadingNewData];

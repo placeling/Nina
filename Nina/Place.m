@@ -28,8 +28,9 @@
         self.google_id = [jsonDict objectForKey:@"google_id"];
         self.googlePlacesUrl = [jsonDict objectForKey:@"google_url"];
         NSNumber *lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
-        NSNumber *lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1];        
-        self.location = [[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]];
+        NSNumber *lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1]; 
+        
+        self.location = [[[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]]autorelease];
         self.perspectiveCount = [[jsonDict objectForKey:@"perspective_count"] intValue];
         self.bookmarked = [[jsonDict objectForKey:@"bookmarked"] boolValue] ;
         self.categories = [jsonDict objectForKey:@"venue_types"];

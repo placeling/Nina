@@ -10,11 +10,11 @@
 #import "ASIHTTPRequest.h"
 #import "JSON.h"
 #import <QuartzCore/QuartzCore.h>
-#import "UserPerspectiveMapViewController.h"
 #import "FollowViewController.h"
 #import "Perspective.h"
 #import "PerspectiveTableViewCell.h"
 #import "MyPerspectiveCellViewController.h"
+#import "PlacePageViewController.h"
 
 @interface MemberProfileViewController() 
 -(void) loadData;
@@ -26,7 +26,7 @@
 @implementation MemberProfileViewController
 
 @synthesize username;
-@synthesize user, profileImageView, headerView, mine;
+@synthesize user, profileImageView, headerView;
 @synthesize usernameLabel, userDescriptionLabel;
 @synthesize followButton, locationLabel;
 @synthesize followersButton, followingButton, placeMarkButton;
@@ -43,12 +43,6 @@
         getUsername = self.username;
     } else {
         getUsername = user.username;
-    }
-    
-    if ([getUsername isEqualToString:[NinaHelper getUsername]]){
-        mine = false;
-    } else {
-        mine = false;
     }
 	
     self.tableView.tableHeaderView = self.headerView;
@@ -84,10 +78,10 @@
 }
 
 -(IBAction) userPerspectives{
-    UserPerspectiveMapViewController *userPerspectives = [[UserPerspectiveMapViewController alloc] init];
-    userPerspectives.userName = self.user.username;
-    [self.navigationController pushViewController:userPerspectives animated:YES];
-    [userPerspectives release];
+    //UserPerspectiveMapViewController *userPerspectives = [[UserPerspectiveMapViewController alloc] init];
+    //userPerspectives.userName = self.user.username;
+    //[self.navigationController pushViewController:userPerspectives animated:YES];
+    //[userPerspectives release];
 }
 
 -(IBAction) userFollowers{
@@ -181,7 +175,7 @@
              
              */
             
-            self.user = [[User alloc] initFromJsonDict: [responseString JSONValue]];    
+            self.user = [[[User alloc] initFromJsonDict: [responseString JSONValue]]autorelease];    
             [self loadData];
             
             if (self.user.following || [self.user.username isEqualToString:[NinaHelper getUsername]] ){
@@ -224,6 +218,7 @@
                 [newPerspective release];
             }
             
+            [jsonString release];
             [self.tableView reloadData];
             
         }
@@ -248,11 +243,7 @@
 
     perspective = [perspectives objectAtIndex:indexPath.row];
     
-    if (mine){
-        return [MyPerspectiveCellViewController cellHeightForPerspective:perspective];
-    } else {
-        return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
-    }
+    return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -274,46 +265,45 @@
     
     UITableViewCell *cell;
     cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
-
     
     if (cell == nil) {
         Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
         
-        if (mine){
-            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"MyPerspectiveCellViewController" owner:self options:nil];
-            
-            for(id item in objects){
-                if ( [item isKindOfClass:[UITableViewCell class]]){
-                    MyPerspectiveCellViewController *mcell = (MyPerspectiveCellViewController *)item;                  
-                    [MyPerspectiveCellViewController setupCell:mcell forPerspective:perspective];
-                    cell = mcell;
-                    break;
-                }
+        for(id item in objects){
+            if ( [item isKindOfClass:[UITableViewCell class]]){
+                PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
+                [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:true];
+                cell = pcell;
+                break;
             }
-        } else {
-            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
-            
-            for(id item in objects){
-                if ( [item isKindOfClass:[UITableViewCell class]]){
-                    PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
-                    [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:true];
-                    cell = pcell;
-                    break;
-                }
-            }            
-            
-            
-        }
+        }            
     }
     
     // Configure the cell...
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+    PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:perspective.place];
+    placePageViewController.referrer = self.user;
+    
+	[[self navigationController] pushViewController:placePageViewController animated:YES];
+	[placePageViewController release];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+
+
 
 - (void)dealloc{
+    [NinaHelper clearActiveRequests:10];
+    
     [username release];
     [user release];
     

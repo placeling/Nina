@@ -7,7 +7,6 @@
 //
 
 #import "HomeViewController.h"
-#import "UserPerspectiveMapViewController.h"
 #import "NearbyPlacesViewController.h"
 #import "MemberProfileViewController.h"
 #import "SuggestUserViewController.h"
@@ -17,6 +16,7 @@
 #import "Place.h"
 #import "PlacePageViewController.h"
 #import "LoginController.h"
+#import "PlacesListView.h"
 
 #import "MBProgressHUD.h"
 
@@ -34,8 +34,7 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:TRUE];
     
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    if ([standardUserDefaults objectForKey:@"access_token_secret"]){
+    if ([NinaHelper getAccessTokenSecret]){
         UIBarButtonItem *accountButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(showAccountSheet)];
         self.navigationItem.leftBarButtonItem = accountButton;
         [accountButton release];  
@@ -62,7 +61,7 @@
 #pragma mark -ActionSheet 
 
 -(IBAction)showAccountSheet{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:@"My Profile", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:nil];
     [actionSheet showInView:self.view];
     [actionSheet release];
 }
@@ -70,8 +69,6 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0){
         [self logout];
-    }else if (buttonIndex == 1){
-        [self myProfile];
     } else {
         DLog(@"WARNING - Invalid actionsheet button pressed: %i", buttonIndex);
     }
@@ -80,6 +77,13 @@
 
 
 #pragma mark -IBActions
+
+-(IBAction) everythingList{
+    PlacesListView *placesListView = [[PlacesListView alloc] init];
+    
+    [self.navigationController pushViewController:placesListView animated:YES];
+    [placesListView release]; 
+}
 
 -(IBAction)suggested{
     SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
@@ -136,7 +140,7 @@
         
         PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:place];
         
-        
+        [place release];
         [self.navigationController pushViewController:placePageViewController animated:TRUE];
         
         [placePageViewController release];

@@ -31,12 +31,10 @@
     
     IBOutlet UIView *headerView;
     
-    BOOL mine;
 }
 
 @property (nonatomic, retain) NSString *username;
 @property (nonatomic, retain) User *user;
-@property (nonatomic, readonly) BOOL mine;
 
 @property (nonatomic, retain) IBOutlet UIImageView *profileImageView;
 

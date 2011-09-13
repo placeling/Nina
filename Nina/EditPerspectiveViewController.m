@@ -99,7 +99,7 @@
 -(void)dealloc{
     [memoTextView release];
     [photoButton release];
-    [Perspective release];
+    [_perspective release];
     
     [super dealloc];
 }

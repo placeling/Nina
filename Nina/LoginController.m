@@ -193,6 +193,7 @@
     
     
     self.navigationItem.title = @"Login";
+    self.navigationController.title = @"Login";
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)

@@ -36,16 +36,10 @@
 
 -(IBAction)signup{
     DLog(@"Sending signup info");
-    
-    NSString *passwordConfirm;
-    
+
     NSString *username = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField.text;
     NSString *email = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]).textField.text;
     NSString *password = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]]).textField.text;
-    
-    if (fbDict){
-        passwordConfirm = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]]).textField.text;
-    }
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocation *location = [manager location];
@@ -55,7 +49,7 @@
     NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
     NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:targetURL]];
+    request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:targetURL]];
                 
     [request setPostValue:username forKey:@"username"];
     [request setPostValue:email forKey:@"email"];
@@ -67,6 +61,7 @@
         [request setPostValue:facebook.accessToken forKey:@"facebook_access_token"];
         [request setPostValue:fbDict forKey:@"fbDict"];
     }else{
+        NSString * passwordConfirm = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]]).textField.text;
         [request setPostValue:passwordConfirm forKey:@"password_confirm"];
     }
                                    
@@ -85,14 +80,13 @@
 }
 
 
--(void)requestFailed:(ASIHTTPRequest *)request{
-    [NinaHelper handleBadRequest:request sender:self];
+-(void)requestFailed:(ASIHTTPRequest *)_request{
+    [NinaHelper handleBadRequest:_request sender:self];
 }
 
 
-- (void)requestFinished:(ASIHTTPRequest *)request{    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
+- (void)requestFinished:(ASIHTTPRequest *)_request{    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];    
     
     NSString *responseString = [request responseString];        
     DLog(@"%@", responseString);
@@ -141,8 +135,8 @@
 }
 
 -(void)dealloc{
+    request.delegate = nil;
     [fbDict release];
-
     [super dealloc];
 }
 

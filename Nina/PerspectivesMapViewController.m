@@ -36,6 +36,7 @@
         placemark.title = place.name;
         //placemark.subtitle = subTitle;
         [mapView addAnnotation:placemark];
+        [placemark release];
     }
 }
 
@@ -87,6 +88,7 @@
     MKCoordinateSpan span; 
 
     span.latitudeDelta  = 0.02; // default zoom
+    span.longitudeDelta = 0.02; // default zoom
     
     region.span = span;
     
@@ -94,39 +96,42 @@
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)_annotation{
-    PlaceMark *annotation = _annotation;
     
-    // try to dequeue an existing pin view first
-    static NSString* AnnotationIdentifier = @"placeAnnotationIdentifier";
-    
-    MKPinAnnotationView* pinView = (MKPinAnnotationView *)        
-    [mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
-    
-    if (!pinView) {            
-        // if an existing pin view was not available, create one
-        MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
-                                               initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier] autorelease];
+    if (_annotation == mapView.userLocation){
+        return nil;
+	} else {
+        PlaceMark *annotation = _annotation;
+        // try to dequeue an existing pin view first
+        static NSString* annotationIdentifier = @"placeAnnotationIdentifier";
         
-        customPinView.pinColor = MKPinAnnotationColorPurple;            
-        customPinView.animatesDrop = YES;            
-        customPinView.canShowCallout = YES;
-        
-        if( [annotation isKindOfClass:[PlaceMark class]] ){
-            UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-            rightButton.tag = [nearbyMarks indexOfObjectIdenticalTo:annotation.place];
-            [rightButton addTarget:self action:@selector(showPlaceDetails:) 
-                  forControlEvents:UIControlEventTouchUpInside];
-            
-            customPinView.rightCalloutAccessoryView = rightButton;
+        MKPinAnnotationView* pinView = (MKPinAnnotationView *)        
+        [mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
 
+        if (!pinView) {            
+            // if an existing pin view was not available, create one
+            MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
+                                                   initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
+            
+            customPinView.pinColor = MKPinAnnotationColorPurple;            
+            customPinView.animatesDrop = YES;            
+            customPinView.canShowCallout = YES;
+            
+            if( [annotation isKindOfClass:[PlaceMark class]] ){
+                UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+                rightButton.tag = [nearbyMarks indexOfObjectIdenticalTo:annotation.place];
+                [rightButton addTarget:self action:@selector(showPlaceDetails:) 
+                      forControlEvents:UIControlEventTouchUpInside];
+                
+                customPinView.rightCalloutAccessoryView = rightButton;
+
+            }
+            return customPinView;
+            
+        } else {           
+            pinView.annotation = annotation;            
         }
-        return customPinView;
-        
-    } else {           
-        pinView.annotation = annotation;            
+        return pinView;
     }
-    
-    return pinView;
 
 }
 
@@ -139,6 +144,7 @@
     placePageViewController.place = place;
         
     [self.navigationController pushViewController:placePageViewController animated:YES];
+    [placePageViewController release];
     
 }
 
@@ -174,6 +180,7 @@
         
         [self updateMapView];
         [self recenter];
+        [jsonString release];
 	}
     
 }
@@ -189,7 +196,7 @@
     //                            forKeyPath:@"location"
     //                              options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)  
     //                           context:NULL];
-    self.locationManager = [[LocationManagerManager sharedCLLocationManager] retain];
+    self.locationManager = [LocationManagerManager sharedCLLocationManager];
     
     self.mapView.showsUserLocation = TRUE;
     self.mapView.delegate = self;

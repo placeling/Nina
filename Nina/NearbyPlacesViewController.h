@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EGORefreshTableHeaderView.h"
 #import "ASIHTTPRequest.h"
+#import "User.h"
 
 
 @interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate, UISearchBarDelegate> {
@@ -32,6 +33,5 @@
 @property(nonatomic, retain) IBOutlet UITableView *placesTableView;
 @property(nonatomic, retain) IBOutlet IBOutlet UISearchBar *searchBar;
 @property(nonatomic, retain) IBOutlet UIView *tableFooterView;
-
 
 @end
