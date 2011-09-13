@@ -73,6 +73,7 @@
     [NinaHelper clearActiveRequests:20];
     [placesTableView release];
     [_searchBar release];
+    [nearbyPlaces release];
     [super dealloc];
     
 }
@@ -186,7 +187,7 @@
         
 		[nearbyPlaces release];
         NSDictionary *jsonDict = [[jsonString JSONValue] retain];
-		nearbyPlaces = [jsonDict objectForKey:@"places"];
+		nearbyPlaces = [[jsonDict objectForKey:@"places"] retain];
         
 		[self.placesTableView  reloadData];
 		[jsonDict release];

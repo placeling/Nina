@@ -55,7 +55,8 @@
 
 +(void) showLoginController:(UIViewController*)sender{
     LoginController *loginController = [[LoginController alloc] init];
-    [sender presentModalViewController:loginController animated:YES];; 
+    [sender presentModalViewController:loginController animated:YES];
+    [loginController release];
 }
 
 +(void) handleBadRequest:(ASIHTTPRequest *)request sender:(UIViewController*)sender{
@@ -87,7 +88,7 @@
         //}
     } else {
         DLog(@"Untested error: %@", errorMessage );
-        NSString *alertMessage = [[NSString stringWithFormat:@"Request returned: %@", errorMessage] init];
+        NSString *alertMessage = [NSString stringWithFormat:@"Request returned: %@", errorMessage];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
                                                        delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
