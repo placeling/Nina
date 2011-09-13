@@ -104,6 +104,22 @@
 
 }
 
++(void) clearActiveRequests:(NSInteger) range{
+    //for nil'ing out active asi request to prevent exc_bad_acces on their return
+    
+    
+    for (ASIHTTPRequest *req in ASIHTTPRequest.sharedQueue.operations){
+        NSInteger tag = req.tag;
+        
+        if (range <= tag && tag < range+10){
+            [req cancel];
+            [req setDelegate:nil];
+        }
+    }
+}
+
+
+
 +(void) setUsername:(NSString*)username{
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     

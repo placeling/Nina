@@ -127,6 +127,8 @@
 +(void) handleCoreLocationError:(NSError*)error;
 +(void) signRequest:(ASIHTTPRequest *)request; 
 
++(void) clearActiveRequests:(NSInteger) range;
+
 +(NSString*) getHostname;
 +(NSString*) getUsername;
 
