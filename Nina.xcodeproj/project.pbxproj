@@ -90,7 +90,6 @@
 		284A354F1404574F009C8C28 /* PerspectiveTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A354D1404574F009C8C28 /* PerspectiveTableViewCell.xib */; };
 		284A355F14048DCD009C8C28 /* BookmarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A355D14048DCD009C8C28 /* BookmarkTableViewCell.m */; };
 		284A356014048DCD009C8C28 /* BookmarkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A355E14048DCD009C8C28 /* BookmarkTableViewCell.xib */; };
-		284F392613E876C5004CBFF5 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 284F392513E876C5004CBFF5 /* libz.1.2.5.dylib */; };
 		286B15F4140E9E1800CFED96 /* 152-rolodex.png in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F3140E9E1800CFED96 /* 152-rolodex.png */; };
 		286B15F7140E9E6100CFED96 /* 86-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F6140E9E6100CFED96 /* 86-camera.png */; };
 		286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */; };
@@ -175,6 +174,7 @@
 		28B6191514213E0C00B0A7E5 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28B6191414213E0C00B0A7E5 /* libFlurryAnalytics.a */; };
 		28B6191B1421440200B0A7E5 /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B619181421440200B0A7E5 /* NSString+MD5Addition.m */; };
 		28B6191C1421440200B0A7E5 /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B6191A1421440200B0A7E5 /* UIDevice+IdentifierAddition.m */; };
+		28B619231421723A00B0A7E5 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 28B619221421723A00B0A7E5 /* libz.1.1.3.dylib */; };
 		28BA237113F0925900463234 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28BA237013F0925900463234 /* MessageUI.framework */; };
 		28E1372213EB12DF00C17A68 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E1372013EB12DF00C17A68 /* HomeViewController.m */; };
 		28E1372313EB12DF00C17A68 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28E1372113EB12DF00C17A68 /* HomeViewController.xib */; };
@@ -298,7 +298,6 @@
 		284A355C14048DCC009C8C28 /* BookmarkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkTableViewCell.h; sourceTree = "<group>"; };
 		284A355D14048DCD009C8C28 /* BookmarkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkTableViewCell.m; sourceTree = "<group>"; };
 		284A355E14048DCD009C8C28 /* BookmarkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkTableViewCell.xib; sourceTree = "<group>"; };
-		284F392513E876C5004CBFF5 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		286B15F3140E9E1800CFED96 /* 152-rolodex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "152-rolodex.png"; sourceTree = "<group>"; };
 		286B15F6140E9E6100CFED96 /* 86-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "86-camera.png"; sourceTree = "<group>"; };
 		286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpinnerTableCell.xib; sourceTree = "<group>"; };
@@ -448,6 +447,7 @@
 		28B619181421440200B0A7E5 /* NSString+MD5Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Addition.m"; sourceTree = "<group>"; };
 		28B619191421440200B0A7E5 /* UIDevice+IdentifierAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+IdentifierAddition.h"; sourceTree = "<group>"; };
 		28B6191A1421440200B0A7E5 /* UIDevice+IdentifierAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+IdentifierAddition.m"; sourceTree = "<group>"; };
+		28B619221421723A00B0A7E5 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
 		28BA237013F0925900463234 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		28E1371F13EB12DF00C17A68 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		28E1372013EB12DF00C17A68 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
@@ -470,8 +470,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28B619231421723A00B0A7E5 /* libz.1.1.3.dylib in Frameworks */,
 				28BA237113F0925900463234 /* MessageUI.framework in Frameworks */,
-				284F392613E876C5004CBFF5 /* libz.1.2.5.dylib in Frameworks */,
 				28F4779F13D89060003477CD /* MapKit.framework in Frameworks */,
 				287483C413D7651C005C11EF /* SystemConfiguration.framework in Frameworks */,
 				287483C213D764F9005C11EF /* CFNetwork.framework in Frameworks */,
@@ -664,8 +664,8 @@
 		2895003D13D64559009E1BD7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				28B619221421723A00B0A7E5 /* libz.1.1.3.dylib */,
 				28BA237013F0925900463234 /* MessageUI.framework */,
-				284F392513E876C5004CBFF5 /* libz.1.2.5.dylib */,
 				28F4779E13D89060003477CD /* MapKit.framework */,
 				287483C313D7651C005C11EF /* SystemConfiguration.framework */,
 				287483C113D764F9005C11EF /* CFNetwork.framework */,
