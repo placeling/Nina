@@ -112,8 +112,6 @@
     self.placeMarkButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.placeCount];
     
     if (perspectives == nil && self.user.placeCount != 0){
-        // Call asychronously to get image
-        
         NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/perspectives", [NinaHelper getHostname], self.username];		
         
         NSURL *url = [NSURL URLWithString:urlString];
@@ -125,7 +123,10 @@
         [NinaHelper signRequest:request];
         [request startAsynchronous];
         
+    } else {
+        [self.tableView reloadData];
     }
+    
     
 }
 
@@ -177,13 +178,29 @@
              
              */
             
-            self.user = [[[User alloc] initFromJsonDict: [responseString JSONValue]]autorelease];    
-            [self loadData];
+            NSDictionary *jsonDict =  [responseString JSONValue];
+            
+            self.user = [[[User alloc] initFromJsonDict:jsonDict]autorelease];    
+            
             
             if (self.user.following || [self.user.username isEqualToString:[NinaHelper getUsername]] ){
                 [self toggleFollow];
             }
             
+            if ([jsonDict objectForKey:@"perspectives"]){
+                //has perspectives in call, seed with to make quicker
+                NSMutableArray *rawPerspectives = [jsonDict objectForKey:@"perspectives"];                
+                perspectives = [[NSMutableArray alloc] initWithCapacity:[rawPerspectives count]];
+                
+                for (NSDictionary* dict in rawPerspectives){
+                    Perspective* newPerspective = [[Perspective alloc] initFromJsonDict:dict];
+                    newPerspective.user = self.user;
+                    [perspectives addObject:newPerspective]; 
+                    [newPerspective release];
+                }
+            }
+            
+            [self loadData];
             break;
         }
         case 11:

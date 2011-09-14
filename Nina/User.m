@@ -31,9 +31,7 @@
 	return self;
 }
 
-- (void)dealloc{
-    [username release];
-    
+- (void)dealloc{    
     [userId release];
     [city release];
     [iconURLString release];
