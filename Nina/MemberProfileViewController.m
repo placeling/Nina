@@ -40,9 +40,10 @@
 	
     NSString *getUsername;
     if (self.user == nil){
-        getUsername = self.username;
-    } else {
+        getUsername = self.username; //if this doesn't work, it better break
+    } else if (username == nil)  {
         getUsername = user.username;
+        self.username = user.username;
     }
 	
     self.tableView.tableHeaderView = self.headerView;
@@ -151,6 +152,7 @@
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 	[request setDelegate:self];
     [request setTag:11];
+    [NinaHelper signRequest:request];
 	[request startAsynchronous];
 	
 }
