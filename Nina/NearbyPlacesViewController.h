@@ -18,6 +18,8 @@
     IBOutlet UIView *tableFooterView;
     IBOutlet UITableView *placesTableView;
     IBOutlet UISearchBar *_searchBar;
+    IBOutlet UILabel *gpsLabel;
+    
     NSArray  *nearbyPlaces;
     
     BOOL needLocationUpdate;
@@ -33,5 +35,6 @@
 @property(nonatomic, retain) IBOutlet UITableView *placesTableView;
 @property(nonatomic, retain) IBOutlet IBOutlet UISearchBar *searchBar;
 @property(nonatomic, retain) IBOutlet UIView *tableFooterView;
+@property(nonatomic, retain) IBOutlet UILabel *gpsLabel;
 
 @end

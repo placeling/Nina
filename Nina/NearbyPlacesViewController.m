@@ -25,7 +25,7 @@
 @synthesize reloading=_reloading;
 @synthesize placesTableView;
 @synthesize searchBar=_searchBar;
-@synthesize tableFooterView;
+@synthesize tableFooterView, gpsLabel;
 
 -(void)findNearbyPlaces {
     [self findNearbyPlaces:@""];
@@ -36,14 +36,20 @@
 	
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocation *location = manager.location;
-    
+
 	if (location != nil){ //[now timeIntervalSinceDate:location.timestamp] < (60 * 5)){
+        
+        float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
+        accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
+        
+        self.gpsLabel.text = [NSString stringWithFormat:@"GPS: %im", (int)accuracy];
+        
 		NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/nearby", [NinaHelper getHostname]];		
         
 		NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
 		NSString* lon = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
-		float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
-		accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
+		
+		
         NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
         
         urlString = [NSString stringWithFormat:@"%@?lat=%@&long=%@&accuracy=%@&query=%@", urlString, lat, lon, radius, searchTerm];
@@ -74,6 +80,7 @@
     [placesTableView release];
     [_searchBar release];
     [nearbyPlaces release];
+    [gpsLabel release];
     [super dealloc];
     
 }
