@@ -92,7 +92,7 @@
 }
 
 -(IBAction)nearbyPerspectives{
-    PerspectivesMapViewController *perspectivesMapViewController = [[PerspectivesMapViewController alloc] init];
+    PerspectivesMapViewController *perspectivesMapViewController = [[PerspectivesMapViewController alloc] initForUserName:[NinaHelper getUsername]];
     [self.navigationController pushViewController:perspectivesMapViewController animated:YES];
     [perspectivesMapViewController release]; 
 }

@@ -23,9 +23,16 @@
 @implementation PerspectivesMapViewController
 
 @synthesize mapView;
-@synthesize userName;
+@synthesize username=_username;
 @synthesize nearbyMarks;
 @synthesize locationManager;
+
+- (id) initForUserName:(NSString *)username{
+    if(self = [super init]){
+        self.username = username;
+	}
+	return self;    
+}
 
 -(void)updateMapView{    
     for (Place *place in nearbyMarks){        
@@ -51,6 +58,11 @@
     NSString *span = [NSString stringWithFormat:@"%f", self.mapView.region.span.latitudeDelta];
     
     urlString = [NSString stringWithFormat:@"%@?lat=%@&long=%@&span=%@", urlString, lat, lng, span];
+    
+    if (self.username != nil){
+        urlString = [NSString stringWithFormat:@"%@&username=%@", urlString, self.username]; 
+    }
+    
     NSURL *url = [NSURL URLWithString:urlString];
     
     
@@ -65,7 +77,7 @@
 
 - (void)dealloc{
     [mapView release];
-    [userName release];
+    [_username release];
     [locationManager release];
     [nearbyMarks release];
     [super dealloc];
@@ -197,6 +209,7 @@
     //                              options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)  
     //                           context:NULL];
     self.locationManager = [LocationManagerManager sharedCLLocationManager];
+    self.navigationItem.title = self.username;
     
     self.mapView.showsUserLocation = TRUE;
     self.mapView.delegate = self;

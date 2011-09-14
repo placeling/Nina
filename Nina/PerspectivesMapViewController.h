@@ -14,16 +14,18 @@
 
 @interface PerspectivesMapViewController : UIViewController<ASIHTTPRequestDelegate, MKMapViewDelegate> {
     IBOutlet MKMapView *mapView;
-    NSString *userName;
+    NSString *_username;
     NSMutableArray *nearbyMarks;
     CLLocationManager *locationManager;
 }
 
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;
-@property(nonatomic, retain) NSString *userName;
+@property(nonatomic, retain) NSString *username;
 @property(nonatomic, retain) NSMutableArray *nearbyMarks;
 @property(nonatomic, retain) CLLocationManager *locationManager;
 
 -(IBAction)recenter;
+
+- (id) initForUserName:(NSString *)username;
 
 @end

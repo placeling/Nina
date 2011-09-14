@@ -15,6 +15,7 @@
 #import "PerspectiveTableViewCell.h"
 #import "MyPerspectiveCellViewController.h"
 #import "PlacePageViewController.h"
+#import "PerspectivesMapViewController.h"
 
 @interface MemberProfileViewController() 
 -(void) loadData;
@@ -79,10 +80,10 @@
 }
 
 -(IBAction) userPerspectives{
-    //UserPerspectiveMapViewController *userPerspectives = [[UserPerspectiveMapViewController alloc] init];
-    //userPerspectives.userName = self.user.username;
-    //[self.navigationController pushViewController:userPerspectives animated:YES];
-    //[userPerspectives release];
+    PerspectivesMapViewController *userPerspectives = [[PerspectivesMapViewController alloc] init];
+    userPerspectives.username = self.user.username;
+    [self.navigationController pushViewController:userPerspectives animated:YES];
+    [userPerspectives release];
 }
 
 -(IBAction) userFollowers{
