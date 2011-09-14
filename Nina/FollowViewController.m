@@ -86,7 +86,7 @@
     NSURL *url = [NSURL URLWithString:urlString];
     
     ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-    
+    [request setTag:40];
     [request setDelegate:self];
     
     [NinaHelper signRequest:request];
@@ -166,6 +166,14 @@
     [self.navigationController pushViewController:memberProfileViewController animated:YES];
     [memberProfileViewController release]; 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+-(void) dealloc{
+    [NinaHelper clearActiveRequests:40];
+    [users release];
+    [_user release];
+    [super dealloc];
+    
 }
 
 @end
