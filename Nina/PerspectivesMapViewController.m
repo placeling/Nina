@@ -69,6 +69,7 @@
     ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
     
     [request setDelegate:self];
+    [request setTag:50];
     
     [NinaHelper signRequest:request];
     [request startAsynchronous];
@@ -76,6 +77,7 @@
 }
 
 - (void)dealloc{
+    [NinaHelper clearActiveRequests:50];
     [mapView release];
     [_username release];
     [locationManager release];
