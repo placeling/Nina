@@ -14,6 +14,11 @@
 #import "Facebook.h"
 #import "NinaAppDelegate.h"
 
+@interface LoginController (Private)
+    -(void)close;
+@end
+
+
 @implementation LoginController
 
 
@@ -157,7 +162,7 @@
         } 
         
         
-        [self dismissModalViewControllerAnimated:YES];
+        [self close];
     }
 }
 
