@@ -96,10 +96,14 @@
 #pragma mark -IBActions
 
 -(IBAction) everythingList{
+    PerspectivesMapViewController *userPerspectives = [[PerspectivesMapViewController alloc] init];
+    [self.navigationController pushViewController:userPerspectives animated:YES];
+    [userPerspectives release];
+    /*
     PlacesListView *placesListView = [[PlacesListView alloc] init];
     
     [self.navigationController pushViewController:placesListView animated:YES];
-    [placesListView release]; 
+    [placesListView release]; */
 }
 
 -(IBAction)suggested{
