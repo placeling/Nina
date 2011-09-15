@@ -165,6 +165,11 @@
 - (void)requestFinished:(ASIHTTPRequest *)request{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
+    if (request.responseStatusCode != 200){
+        [NinaHelper handleBadRequest:request sender:self];
+        return;
+    }
+    
     switch (request.tag){
         case 10:
         {    
