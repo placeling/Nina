@@ -10,6 +10,7 @@
 #import "LoginController.h"
 #import "ASIFormDataRequest+OAuth.h"
 #import "ASIHTTPRequest+OAuth.h"
+#import "FlurryAnalytics.h"
 
 
 @implementation NinaHelper
@@ -66,22 +67,11 @@
     int statusCode = [request responseStatusCode];
     NSError *error = [request error];
     NSString *errorMessage = [error localizedDescription];
+    if (errorMessage == nil){
+        errorMessage = @""; //prevents a "nil" error on dictionary creation
+    }
     
-    if ([error code] == 0){
-        //can't connect to server
-        NSString *alertMessage = [NSString stringWithFormat:@"Can't Connect to Server"];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
-                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        [alert release];	
-    } else if ([error code] == 2){
-        //timed out
-        NSString *alertMessage = [NSString stringWithFormat:@"Request Timed Out"];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
-                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        [alert release];	
-    } else if (statusCode == 401){
+    if (statusCode == 401){
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token"];
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token_secret"];
         DLog(@"Got a 401, with access_token: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
@@ -89,8 +79,41 @@
         //if ([request.responseString rangeOfString:@"BAD_PASS"].location != NSNotFound){
             [NinaHelper showLoginController:sender];    
         //}
+    } else if (500 <= statusCode && statusCode <= 599){
+        //500 series server error
+        NSNumber *code = [NSNumber numberWithInt:statusCode];
+        [FlurryAnalytics logEvent:@"500_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                        @"status_code", 
+                                                        code, @"message", errorMessage, nil]];
+        
+        NSString *alertMessage = [NSString stringWithFormat:@"Server Error\n %@", errorMessage];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
+                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        [alert release];	
+    } else if ([error code] == 0 || [error code] == 1){
+        //can't connect to server
+        [FlurryAnalytics logEvent:@"CONNECT_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                   @"message", 
+                                                                   errorMessage, nil]];
+        NSString *alertMessage = [NSString stringWithFormat:@"Can't Connect to Server"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
+                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        [alert release];	
+    } else if ([error code] == 2){
+        //timed out
+        [FlurryAnalytics logEvent:@"TIMEOUT" ];
+        NSString *alertMessage = [NSString stringWithFormat:@"Request Timed Out"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
+                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        [alert release];	
     } else {
         DLog(@"Untested error: %@", errorMessage );
+        [FlurryAnalytics logEvent:@"UNKNOWN_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                  @"message", 
+                                                                  errorMessage, nil]];
         NSString *alertMessage = [NSString stringWithFormat:@"Request returned: %@", errorMessage];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
                                                        delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
