@@ -17,8 +17,9 @@
 #import "PlacePageViewController.h"
 #import "LoginController.h"
 #import "PlacesListView.h"
-
+#import "FlurryAnalytics.h"
 #import "MBProgressHUD.h"
+#import "UIDevice+IdentifierAddition.h"
 
 @implementation HomeViewController
 
@@ -29,6 +30,19 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"Placeling";
+    
+    CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
+    CLLocation *location = manager.location;
+    
+	if (location != nil){ 
+        
+        [FlurryAnalytics setLatitude:location.coordinate.latitude            
+                           longitude:location.coordinate.longitude           
+                    horizontalAccuracy:location.horizontalAccuracy            verticalAccuracy:location.verticalAccuracy]; 
+    }
+
+    [FlurryAnalytics setUserID:[[UIDevice currentDevice]uniqueDeviceIdentifier] ];
+    
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -46,8 +60,11 @@
 }
 
 -(IBAction)showLogin{
-    LoginController *loginController = [[LoginController alloc ] init];    
-    [self.navigationController pushViewController:loginController animated:true];
+    LoginController *loginController = [[LoginController alloc] init];
+    
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
+    [self.navigationController presentModalViewController:navBar animated:YES];
+    [navBar release];
     [loginController release];
 }
 

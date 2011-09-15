@@ -130,6 +130,7 @@
 +(void) clearActiveRequests:(NSInteger) range;
 
 +(NSString*) getHostname;
++(BOOL) isProductionRun;
 +(NSString*) getUsername;
 
 +(void) setAccessToken:(NSString*)accessToken;

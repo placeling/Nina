@@ -9,7 +9,8 @@
 #import "NinaAppDelegate.h"
 #import <CoreLocation/CoreLocation.h>
 #import "LocationManagerManager.h"
-
+#import "FlurryAnalytics.h"
+#import "NinaHelper.h"
 
 @implementation NinaAppDelegate
 
@@ -19,7 +20,17 @@
 
 @synthesize navigationController=_navigationController;
 
+void uncaughtExceptionHandler(NSException *exception) {
+    [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    
+    if ([NinaHelper isProductionRun]){
+        NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+        [FlurryAnalytics startSession:@"TF6YH8QMRQDXBXR9APF9"];
+    }
+    
     // Override point for customization after application launch.
     // Add the tab bar controller's current view as a subview of the window
     

@@ -55,7 +55,10 @@
 
 +(void) showLoginController:(UIViewController*)sender{
     LoginController *loginController = [[LoginController alloc] init];
-    [sender presentModalViewController:loginController animated:YES];
+    
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
+    [sender.navigationController presentModalViewController:navBar animated:YES];
+    [navBar release];
     [loginController release];
 }
 
@@ -147,6 +150,10 @@
     NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
     NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     return [plistData objectForKey:@"server_url"];
+}
+
++(BOOL) isProductionRun{
+    return [self.getHostname isEqualToString:@"http://api.placeling.com"] || [self.getHostname isEqualToString:@"https://api.placeling.com"];
 }
 
 

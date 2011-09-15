@@ -185,15 +185,24 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+-(void)close{
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad{
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(close)] autorelease];
+    //button.tintColor = [UIColor blackColor];
+    button.title = @"Skip";
+    
+    self.navigationItem.rightBarButtonItem = button;
+    
     
     self.navigationItem.title = @"Login";
-    self.navigationController.title = @"Login";
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
