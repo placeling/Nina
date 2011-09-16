@@ -144,7 +144,7 @@
 					<object class="IBUIButton" id="351341360">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 246}, {280, 41}}</string>
+						<string key="NSFrame">{{43, 237}, {235, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="565228906"/>
@@ -152,21 +152,23 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Signup With Facebook</string>
 						<reference key="IBUIHighlightedTitleColor" ref="382560878"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="348867924"/>
+						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">iphone_connect.jpg</string>
+						</object>
 						<reference key="IBUIFontDescription" ref="1039923316"/>
 						<reference key="IBUIFont" ref="533204599"/>
 					</object>
 					<object class="IBUIButton" id="565228906">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 305}, {280, 41}}</string>
+						<string key="NSFrame">{{29, 305}, {265, 41}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -308,9 +310,9 @@
 							<reference ref="473895670"/>
 							<reference ref="1055648550"/>
 							<reference ref="776124718"/>
-							<reference ref="351341360"/>
 							<reference ref="565228906"/>
 							<reference ref="73542738"/>
+							<reference ref="351341360"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -412,12 +414,14 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>cancel</string>
 							<string>signupFacebook</string>
 							<string>signupOldSchool</string>
 							<string>submitLogin</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -427,12 +431,17 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>cancel</string>
 							<string>signupFacebook</string>
 							<string>signupOldSchool</string>
 							<string>submitLogin</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">cancel</string>
+								<string key="candidateClassName">id</string>
+							</object>
 							<object class="IBActionInfo">
 								<string key="name">signupFacebook</string>
 								<string key="candidateClassName">id</string>
@@ -501,6 +510,10 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">iphone_connect.jpg</string>
+			<string key="NS.object.0">{234, 50}</string>
+		</object>
 		<string key="IBCocoaTouchPluginVersion">894</string>
 	</data>
 </archive>
