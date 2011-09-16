@@ -20,6 +20,7 @@
     NSMutableArray *photos; // Array of Photo objects
     BOOL starred;
     NSString *dateAdded;
+    NSString *lastModified;
     BOOL visited;
     BOOL share;
     BOOL mine;
@@ -36,6 +37,7 @@
 @property (nonatomic, assign) BOOL share;
 @property (nonatomic, readonly) BOOL mine;
 @property (nonatomic, retain) NSString* perspectiveId;
+@property (nonatomic, retain) NSString *lastModified;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;

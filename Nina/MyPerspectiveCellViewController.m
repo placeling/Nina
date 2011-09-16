@@ -38,7 +38,7 @@
     CGFloat verticalCursor = 0;
     cell.perspective = perspective;
     BOOL emptyPerspective = true;
-    cell.footerLabel.text = [NSString stringWithFormat:@"Last Modified: ", perspective];
+    cell.footerLabel.text = [NSString stringWithFormat:@"Last Modified: %@", perspective.lastModified];
     
     CGRect memoFrame = cell.memoLabel.frame;
     CGSize memoSize = memoFrame.size;

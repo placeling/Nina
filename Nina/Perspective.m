@@ -10,7 +10,7 @@
 
 
 @implementation Perspective
-@synthesize user, place, notes, tags, photos, starred;
+@synthesize user, place, notes, tags, photos, starred, lastModified;
 @synthesize dateAdded, visited, share, mine, perspectiveId;
 
 -(id) initFromJsonDict:(NSDictionary *)jsonDict{
@@ -34,6 +34,7 @@
     self.perspectiveId = [jsonDict objectForKey:@"_id"];
     self.notes = [jsonDict objectForKey:@"memo"];
     self.starred = [[jsonDict objectForKey:@"starred"] boolValue];
+    self.lastModified =[jsonDict objectForKey:@"updated_at"];
     mine = [[jsonDict objectForKey:@"mine"] boolValue];
 }
 
@@ -45,6 +46,7 @@
     [photos release];
     [dateAdded release];
     [perspectiveId release];
+    [lastModified release];
     [super dealloc];
 }
 
