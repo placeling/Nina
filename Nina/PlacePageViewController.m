@@ -121,6 +121,11 @@
     //self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
     
+    self.mapButtonView.layer.cornerRadius = 8.0f;
+    //self.mapButtonView.layer.borderWidth = 1.0f;
+    //self.mapButtonView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.mapButtonView.layer.masksToBounds = YES;
+
 }
 
 #pragma mark - Share Sheet
