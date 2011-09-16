@@ -8,7 +8,7 @@
 
 //single place to define debugging or not -iMack
 #ifndef DEBUG 
-#define DEBUG 
+//#define DEBUG 
 #endif
 
 #ifdef DEBUG
