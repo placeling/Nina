@@ -61,10 +61,16 @@
 	[request startAsynchronous];
     
 	[self blankLoad];
+    
+    
+    self.profileImageView.layer.cornerRadius = 8.0f;
+    self.profileImageView.layer.borderWidth = 1.0f;
+    self.profileImageView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.profileImageView.layer.masksToBounds = YES;
 }
 
 -(void) blankLoad{
-    UIImage *profileImage = [UIImage imageNamed:@"default_image.png"];
+    UIImage *profileImage = [UIImage imageNamed:@"default_profile_image.png"];
     self.profileImageView.image = profileImage;
     self.usernameLabel.text = @"";
     self.locationLabel.text = @"";

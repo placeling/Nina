@@ -7,6 +7,7 @@
 //
 
 #import "PerspectiveTableViewCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation PerspectiveTableViewCell
 
@@ -63,6 +64,11 @@
             [cell.upvoteButton setImage:[UIImage imageNamed:@"unstarred.png"] forState:UIControlStateNormal];
         }
     }
+    
+    cell.userImage.layer.cornerRadius = 8.0f;
+    cell.userImage.layer.borderWidth = 1.0f;
+    cell.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    cell.userImage.layer.masksToBounds = YES;
     
 }
 

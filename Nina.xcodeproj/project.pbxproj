@@ -180,6 +180,7 @@
 		28B61943142292E600B0A7E5 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B61942142292E500B0A7E5 /* icon@2x.png */; };
 		28B619451422942300B0A7E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B619441422942200B0A7E5 /* Default.png */; };
 		28B619471422942C00B0A7E5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B619461422942B00B0A7E5 /* Default@2x.png */; };
+		28B6194A1423177000B0A7E5 /* default_profile_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B619491423177000B0A7E5 /* default_profile_image.png */; };
 		28BA237113F0925900463234 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28BA237013F0925900463234 /* MessageUI.framework */; };
 		28E1372213EB12DF00C17A68 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E1372013EB12DF00C17A68 /* HomeViewController.m */; };
 		28E1372313EB12DF00C17A68 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28E1372113EB12DF00C17A68 /* HomeViewController.xib */; };
@@ -458,20 +459,21 @@
 		28B61942142292E500B0A7E5 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		28B619441422942200B0A7E5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		28B619461422942B00B0A7E5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		28B619491423177000B0A7E5 /* default_profile_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_profile_image.png; sourceTree = "<group>"; };
 		28BA237013F0925900463234 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		28E1371F13EB12DF00C17A68 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		28E1372013EB12DF00C17A68 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		28E1372113EB12DF00C17A68 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		28F4778013D7CEE4003477CD /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		28F4778113D7CEE4003477CD /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
-		28F4778413D7D02C003477CD /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
-		28F4778513D7D02C003477CD /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
-		28F4778613D7D02C003477CD /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
-		28F4778713D7D02C003477CD /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
-		28F4778813D7D02C003477CD /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayArrow.png; sourceTree = "<group>"; };
-		28F4778913D7D02C003477CD /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
-		28F4778A13D7D02C003477CD /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
-		28F4778B13D7D02C003477CD /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
+		28F4778413D7D02C003477CD /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blackArrow.png; path = ../blackArrow.png; sourceTree = "<group>"; };
+		28F4778513D7D02C003477CD /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blackArrow@2x.png"; path = "../blackArrow@2x.png"; sourceTree = "<group>"; };
+		28F4778613D7D02C003477CD /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueArrow.png; path = ../blueArrow.png; sourceTree = "<group>"; };
+		28F4778713D7D02C003477CD /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blueArrow@2x.png"; path = "../blueArrow@2x.png"; sourceTree = "<group>"; };
+		28F4778813D7D02C003477CD /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayArrow.png; path = ../grayArrow.png; sourceTree = "<group>"; };
+		28F4778913D7D02C003477CD /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grayArrow@2x.png"; path = "../grayArrow@2x.png"; sourceTree = "<group>"; };
+		28F4778A13D7D02C003477CD /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteArrow.png; path = ../whiteArrow.png; sourceTree = "<group>"; };
+		28F4778B13D7D02C003477CD /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whiteArrow@2x.png"; path = "../whiteArrow@2x.png"; sourceTree = "<group>"; };
 		28F4779E13D89060003477CD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -737,8 +739,8 @@
 		2895004513D64559009E1BD7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				28B619481423177000B0A7E5 /* images */,
 				28086B8513ECA9B900790404 /* icons */,
-				28F4778313D7CFDC003477CD /* Images */,
 				2895004613D64559009E1BD7 /* Nina-Info.plist */,
 				2895004A13D64559009E1BD7 /* Nina-Prefix.pch */,
 				2895004B13D64559009E1BD7 /* main.m */,
@@ -975,16 +977,7 @@
 			path = UIDevice;
 			sourceTree = "<group>";
 		};
-		28F4777F13D7CEE4003477CD /* EGORefreshTable */ = {
-			isa = PBXGroup;
-			children = (
-				28F4778013D7CEE4003477CD /* EGORefreshTableHeaderView.m */,
-				28F4778113D7CEE4003477CD /* EGORefreshTableHeaderView.h */,
-			);
-			path = EGORefreshTable;
-			sourceTree = "<group>";
-		};
-		28F4778313D7CFDC003477CD /* Images */ = {
+		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
 				28F4778413D7D02C003477CD /* blackArrow.png */,
@@ -995,8 +988,18 @@
 				28F4778913D7D02C003477CD /* grayArrow@2x.png */,
 				28F4778A13D7D02C003477CD /* whiteArrow.png */,
 				28F4778B13D7D02C003477CD /* whiteArrow@2x.png */,
+				28B619491423177000B0A7E5 /* default_profile_image.png */,
 			);
-			name = Images;
+			path = images;
+			sourceTree = "<group>";
+		};
+		28F4777F13D7CEE4003477CD /* EGORefreshTable */ = {
+			isa = PBXGroup;
+			children = (
+				28F4778013D7CEE4003477CD /* EGORefreshTableHeaderView.m */,
+				28F4778113D7CEE4003477CD /* EGORefreshTableHeaderView.h */,
+			);
+			path = EGORefreshTable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1169,6 +1172,7 @@
 				28B61943142292E600B0A7E5 /* icon@2x.png in Resources */,
 				28B619451422942300B0A7E5 /* Default.png in Resources */,
 				28B619471422942C00B0A7E5 /* Default@2x.png in Resources */,
+				28B6194A1423177000B0A7E5 /* default_profile_image.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
