@@ -48,12 +48,12 @@
 }
 
 -(void)mapUserPlaces {
-	CLLocation *location = locationManager.location;
+	CLLocationCoordinate2D coordinate = self.mapView.centerCoordinate;
     
     NSString *urlString = [NSString stringWithFormat:@"%@/v1/perspectives/nearby", [NinaHelper getHostname]];		
     
-    NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-    NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+    NSString* lat = [NSString stringWithFormat:@"%f", coordinate.latitude];
+    NSString* lng = [NSString stringWithFormat:@"%f", coordinate.longitude];
     
     NSString *span = [NSString stringWithFormat:@"%f", self.mapView.region.span.latitudeDelta];
     
@@ -107,6 +107,10 @@
     region.span = span;
     
     [self.mapView setRegion:region animated:YES];
+}
+
+-(IBAction)refreshMap{
+    [self mapUserPlaces];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)_annotation{
@@ -175,26 +179,33 @@
 	if (200 != statusCode){
         [NinaHelper handleBadRequest:request  sender:self];
 	} else {
-		NSData *data = [request responseData];
-        
 		// Store incoming data into a string
-		NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		NSString *jsonString = [request responseString];
 		DLog(@"Got JSON BACK: %@", jsonString);
 		// Create a dictionary from the JSON string
         
-		[nearbyMarks release];
         NSArray *rawPlaces = [[jsonString JSONValue] objectForKey:@"places"];
-        nearbyMarks = [[NSMutableArray alloc] initWithCapacity:[rawPlaces count]];
+        if (!nearbyMarks){
+            nearbyMarks = [[NSMutableArray alloc] initWithCapacity:[rawPlaces count]];
+        } 
         
         for (NSDictionary* dict in rawPlaces){
-            Place* place = [[Place alloc] initFromJsonDict:dict];
-            [nearbyMarks addObject:place]; 
-            [place release];
+            
+            BOOL found = false;
+            for (Place *place in nearbyMarks){
+                if ([[dict objectForKey:@"_id"] isEqualToString:place.pid]){
+                    found = true; //already exists
+                }
+            }
+            
+            if (!found){
+                Place* place = [[Place alloc] initFromJsonDict:dict];
+                [nearbyMarks addObject:place]; 
+                [place release];
+            }
         }
         
         [self updateMapView];
-        [self recenter];
-        [jsonString release];
 	}
     
 }

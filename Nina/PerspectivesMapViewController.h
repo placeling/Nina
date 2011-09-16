@@ -25,6 +25,7 @@
 @property(nonatomic, retain) CLLocationManager *locationManager;
 
 -(IBAction)recenter;
+-(IBAction)refreshMap;
 
 - (id) initForUserName:(NSString *)username;
 
