@@ -181,6 +181,8 @@
     [NinaHelper setAccessTokenSecret:nil];
     [NinaHelper setUsername:nil];
     
+    [self viewWillAppear:NO];
+    
 }
 
 

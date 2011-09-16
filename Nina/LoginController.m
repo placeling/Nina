@@ -25,6 +25,7 @@
 @synthesize username;
 @synthesize password;
 @synthesize submitButton;
+@synthesize delegate;
 
 -(IBAction) submitLogin{
     NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
@@ -139,7 +140,6 @@
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
-	// Use when fetching binary data
 	int statusCode = [request responseStatusCode];
 	if (200 != statusCode){
         NSString *body = [request responseString];
@@ -161,7 +161,7 @@
             }
         } 
         
-        
+        [delegate viewDidLoad];
         [self close];
     }
 }
@@ -200,11 +200,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    UIBarButtonItem *button = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(close)] autorelease];
-    //button.tintColor = [UIColor blackColor];
-    button.title = @"Skip";
-    
+    UIBarButtonItem *button =  [[UIBarButtonItem  alloc]initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
     self.navigationItem.rightBarButtonItem = button;
+    [button release];
     
     
     self.navigationItem.title = @"Login";
@@ -223,9 +221,8 @@
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
-    UIBarButtonItem *cancelButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
-    self.navigationItem.rightBarButtonItem = cancelButton;
-    [cancelButton release];
+
+     
 
 }
 
@@ -240,6 +237,7 @@
     [username release];
     [password release];
     [submitButton release];
+    [delegate release];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

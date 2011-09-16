@@ -17,11 +17,14 @@
     IBOutlet UITextField *username;
     IBOutlet UITextField *password;
     IBOutlet UIButton *submitButton;
+    UIViewController *delegate; //for telling to refresh
 }
 
 @property(nonatomic, retain) IBOutlet UITextField *username;
 @property(nonatomic, retain) IBOutlet UITextField *password;
 @property(nonatomic, retain) IBOutlet UIButton *submitButton;
+@property(nonatomic, retain) UIViewController *delegate;
+
 
 -(IBAction)cancel;
 

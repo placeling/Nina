@@ -56,6 +56,7 @@
 
 +(void) showLoginController:(UIViewController*)sender{
     LoginController *loginController = [[LoginController alloc] init];
+    loginController.delegate = sender;
     
     UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
     [sender.navigationController presentModalViewController:navBar animated:YES];
@@ -224,11 +225,11 @@
 
 
 +(NSString*) getConsumerKey{
-    return @"7pAO2eGdlMn6OHpBoAs7SqkNZlEB2uij2CRhtxWu";
+    return @"1DRofwfgxS49oEelM5e1fiMDnmEbczYZwNWfVGFB";
 }
 
 +(NSString*) getConsumerSecret{
-    return @"bJERnC21b7toDaC8l6zHGI1geY8EPJhDirNxcmcc";
+    return @"fKh6F1GWXuAwE57KaUY3gxI4UGxSPzOcf30Gni8u";
 }
 
 @end
