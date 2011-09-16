@@ -136,9 +136,19 @@
         
         [self.navigationController dismissModalViewControllerAnimated:YES];        
     } else {
-        DLog(@"Signup Error: %@",[jsonDict objectForKey:@"message"] );
+        NSDictionary *errors = [jsonDict objectForKey:@"message"];
+        DLog(@"Signup Error: %@",errors );        
         
-        NSString *errorMessage = [jsonDict objectForKey:@"message"];
+        NSString *errorMessage = @"";
+        NSEnumerator *enumerator = [errors keyEnumerator];
+        NSString *key;
+        while ((key = [enumerator nextObject])) {
+            NSString *tmp = [errors objectForKey:key];
+            errorMessage = [NSString stringWithFormat:@"%@%@ %@\n", errorMessage, key, tmp];
+        }
+        [jsonDict objectForKey:@"message"];
+        
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
         [alert release];
@@ -169,6 +179,8 @@
 -(void)dealloc{
     [NinaHelper clearActiveRequests:60];
     [fbDict release];
+    [accessKey release];
+    [accessSecret release];
     [super dealloc];
 }
 
