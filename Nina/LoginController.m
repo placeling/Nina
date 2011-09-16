@@ -215,7 +215,7 @@
     
     
     UIBarButtonItem *button =  [[UIBarButtonItem  alloc]initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(close)];
-    self.navigationItem.rightBarButtonItem = button;
+    self.navigationItem.leftBarButtonItem = button;
     [button release];
     
     
