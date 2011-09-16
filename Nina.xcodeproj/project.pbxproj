@@ -77,6 +77,7 @@
 		280EA882141154C80045B296 /* SinglePlaceMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280EA880141154C70045B296 /* SinglePlaceMapView.xib */; };
 		280EA88614117B0B0045B296 /* GenericWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280EA88414117B090045B296 /* GenericWebViewController.m */; };
 		280EA88714117B0B0045B296 /* GenericWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280EA88514117B0A0045B296 /* GenericWebViewController.xib */; };
+		2817988E1423C0D300406E78 /* iphone_connect.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2817988D1423C0D300406E78 /* iphone_connect.jpg */; };
 		2822BDAA1406E1200077868C /* PlaceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDA91406E11F0077868C /* PlaceHeaderView.xib */; };
 		2822BDAC1406EE720077868C /* PlaceFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDAB1406EE710077868C /* PlaceFooterView.xib */; };
 		2833C099140D66980076A398 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 2833C098140D66980076A398 /* facebook.png */; };
@@ -287,6 +288,7 @@
 		280EA88314117B080045B296 /* GenericWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericWebViewController.h; sourceTree = "<group>"; };
 		280EA88414117B090045B296 /* GenericWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericWebViewController.m; sourceTree = "<group>"; };
 		280EA88514117B0A0045B296 /* GenericWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericWebViewController.xib; sourceTree = "<group>"; };
+		2817988D1423C0D300406E78 /* iphone_connect.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone_connect.jpg; sourceTree = "<group>"; };
 		2822BDA91406E11F0077868C /* PlaceHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceHeaderView.xib; sourceTree = "<group>"; };
 		2822BDAB1406EE710077868C /* PlaceFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceFooterView.xib; sourceTree = "<group>"; };
 		2833C098140D66980076A398 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
@@ -980,6 +982,7 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				2817988D1423C0D300406E78 /* iphone_connect.jpg */,
 				28F4778413D7D02C003477CD /* blackArrow.png */,
 				28F4778513D7D02C003477CD /* blackArrow@2x.png */,
 				28F4778613D7D02C003477CD /* blueArrow.png */,
@@ -1173,6 +1176,7 @@
 				28B619451422942300B0A7E5 /* Default.png in Resources */,
 				28B619471422942C00B0A7E5 /* Default@2x.png in Resources */,
 				28B6194A1423177000B0A7E5 /* default_profile_image.png in Resources */,
+				2817988E1423C0D300406E78 /* iphone_connect.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
