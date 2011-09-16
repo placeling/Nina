@@ -49,7 +49,7 @@
     NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
     NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
     
-    request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:targetURL]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:targetURL]];
                 
     [request setPostValue:username forKey:@"username"];
     [request setPostValue:email forKey:@"email"];
@@ -62,6 +62,14 @@
         [request setPostValue:fbDict forKey:@"fbDict"];
     }else{
         NSString * passwordConfirm = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]]).textField.text;
+        
+        if (![password isEqualToString:passwordConfirm]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Passwords dont match" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alert show];
+            [alert release];	
+            return;
+        }
+        
         [request setPostValue:passwordConfirm forKey:@"password_confirm"];
     }
                                    
@@ -70,6 +78,7 @@
     
     [request setRequestMethod:@"POST"];
     [request setDelegate:self]; //whatever called this should handle it
+    [request setTag:60];
     
     [NinaHelper signRequest:request];
     
@@ -80,13 +89,31 @@
 }
 
 
--(void)requestFailed:(ASIHTTPRequest *)_request{
-    [NinaHelper handleBadRequest:_request sender:self];
+-(void)requestFailed:(ASIHTTPRequest *)request{
+    
+    int statusCode = [request responseStatusCode];
+    NSError *error = [request error];
+    NSString *errorMessage = [error localizedDescription];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Error: %i", statusCode] message:errorMessage
+                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+    [alert show];
+    [alert release];	
 }
 
 
-- (void)requestFinished:(ASIHTTPRequest *)_request{    
+- (void)requestFinished:(ASIHTTPRequest *)request{    
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];    
+    
+    if (request.responseStatusCode != 200){
+        int statusCode = [request responseStatusCode];
+        NSError *error = [request error];
+        NSString *errorMessage = [error localizedDescription];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Error: %i", statusCode] message:errorMessage
+                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        return;
+    }
     
     NSString *responseString = [request responseString];        
     DLog(@"%@", responseString);
@@ -107,9 +134,14 @@
         
         [NinaHelper setUsername:((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField.text];
         
-        [self.navigationController popToRootViewControllerAnimated:TRUE];        
+        [self.navigationController dismissModalViewControllerAnimated:YES];        
     } else {
-        DLog(@"Login error: %@",[jsonDict objectForKey:@"message"] );
+        DLog(@"Signup Error: %@",[jsonDict objectForKey:@"message"] );
+        
+        NSString *errorMessage = [jsonDict objectForKey:@"message"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        [alert release];
         
     }
     
@@ -135,7 +167,7 @@
 }
 
 -(void)dealloc{
-    request.delegate = nil;
+    [NinaHelper clearActiveRequests:60];
     [fbDict release];
     [super dealloc];
 }
@@ -174,7 +206,17 @@
             if (indexPath.row == 0){
                 eCell.textLabel.text = @"Username";
                 if ([fbDict objectForKey:@"username"]){
-                    eCell.textField.text = [fbDict objectForKey:@"username"];
+                    NSString *username = [fbDict objectForKey:@"username"];
+                    
+                    NSCharacterSet *charactersToRemove =
+                    [[ NSCharacterSet alphanumericCharacterSet ] invertedSet ];
+                    
+                    username =
+                    [[ username componentsSeparatedByCharactersInSet:charactersToRemove ]
+                     componentsJoinedByString:@"" ];
+                    
+                    
+                    eCell.textField.text = username;
                 }
             } else if (indexPath.row == 1){
                 eCell.textLabel.text = @"Email";
@@ -216,6 +258,12 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (fbDict && indexPath.row == 1){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signup" message:@"This is a validated email from Facebook, you can change it later on if you wish."
+                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        [alert release];	
+    }
 }
 
 @end

@@ -16,8 +16,6 @@
     
     NSString *accessKey;
     NSString *accessSecret;
-    
-    ASIFormDataRequest *request;
 }
 
 

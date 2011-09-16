@@ -200,13 +200,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    UIBarButtonItem *button =  [[UIBarButtonItem  alloc]initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(close)];
-    self.navigationItem.rightBarButtonItem = button;
-    [button release];
-    
-    
-    self.navigationItem.title = @"Login";
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];
@@ -215,6 +208,18 @@
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
     
+}
+
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    
+    UIBarButtonItem *button =  [[UIBarButtonItem  alloc]initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(close)];
+    self.navigationItem.rightBarButtonItem = button;
+    [button release];
+    
+    
+    self.navigationItem.title = @"Login";
 }
 
 

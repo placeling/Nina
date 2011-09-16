@@ -168,7 +168,7 @@
 					<object class="IBUIButton" id="565228906">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{29, 305}, {265, 41}}</string>
+						<string key="NSFrame">{{51, 305}, {219, 41}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -177,7 +177,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Signup Oldschool</string>
+						<string key="IBUINormalTitle">Signup with Email</string>
 						<reference key="IBUIHighlightedTitleColor" ref="382560878"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
@@ -310,9 +310,9 @@
 							<reference ref="473895670"/>
 							<reference ref="1055648550"/>
 							<reference ref="776124718"/>
-							<reference ref="565228906"/>
 							<reference ref="73542738"/>
 							<reference ref="351341360"/>
+							<reference ref="565228906"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
