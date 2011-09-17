@@ -213,6 +213,7 @@
     if (cell == nil) {
 
         EditableTableCell *eCell = [[[EditableTableCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];   
+        eCell.textField.text = @"";
         
         if(fbDict){
             if (indexPath.row == 0){
