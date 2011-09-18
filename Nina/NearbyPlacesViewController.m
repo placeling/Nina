@@ -41,6 +41,7 @@
         
         float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
         accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
+        accuracy = MAX(accuracy, 50);
         
         self.gpsLabel.text = [NSString stringWithFormat:@"GPS: %im", (int)accuracy];
         
