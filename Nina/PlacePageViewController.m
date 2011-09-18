@@ -277,6 +277,7 @@
                     myPerspective = [[Perspective alloc]initFromJsonDict:jsonString];
                     [homePerspectives insertObject:myPerspective atIndex:0];
                 }
+                myPerspective.place = self.place;
                 
                 
                 self.place.bookmarked = true;
