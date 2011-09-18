@@ -635,6 +635,7 @@
             Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
             
             if (perspective.mine){
+                myPerspective = perspective;
                 NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"MyPerspectiveCellViewController" owner:self options:nil];
                 
                 for(id item in objects){
