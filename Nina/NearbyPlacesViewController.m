@@ -41,10 +41,11 @@
         
         float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
         accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
-        accuracy = MAX(accuracy, 50);
         
         self.gpsLabel.text = [NSString stringWithFormat:@"GPS: %im", (int)accuracy];
         
+        accuracy = MAX(accuracy, 50); //govern the accuracy so a few places get in
+
 		NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/nearby", [NinaHelper getHostname]];		
         
 		NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
