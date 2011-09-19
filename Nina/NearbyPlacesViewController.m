@@ -54,6 +54,8 @@
 		
         NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
         
+        searchTerm  = [searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+        
         urlString = [NSString stringWithFormat:@"%@?lat=%@&long=%@&accuracy=%@&query=%@", urlString, lat, lon, radius, searchTerm];
         NSURL *url = [NSURL URLWithString:urlString];
         
@@ -187,10 +189,8 @@
 	if (200 != [request responseStatusCode]){
 		[NinaHelper handleBadRequest:request sender:self];
 	} else {
-		NSData *data = [request responseData];
-        
 		// Store incoming data into a string
-		NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		NSString *jsonString = [request responseString];
 		DLog(@"Got JSON BACK: %@", jsonString);
 		// Create a dictionary from the JSON string
         
@@ -200,7 +200,6 @@
         
 		[self.placesTableView  reloadData];
 		[jsonDict release];
-        [jsonString release];
 	}
     
     [self dataSourceDidFinishLoadingNewData];
