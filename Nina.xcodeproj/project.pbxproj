@@ -185,6 +185,9 @@
 		28BA237113F0925900463234 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28BA237013F0925900463234 /* MessageUI.framework */; };
 		28E1372213EB12DF00C17A68 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E1372013EB12DF00C17A68 /* HomeViewController.m */; };
 		28E1372313EB12DF00C17A68 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28E1372113EB12DF00C17A68 /* HomeViewController.xib */; };
+		28F189F61427F00F005DE786 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F189F51427F00F005DE786 /* UIImage+Resize.m */; };
+		28F189FC1427F072005DE786 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F189F91427F071005DE786 /* UIImage+Alpha.m */; };
+		28F189FD1427F072005DE786 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F189FB1427F072005DE786 /* UIImage+RoundedCorner.m */; };
 		28F4778213D7CEE4003477CD /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F4778013D7CEE4003477CD /* EGORefreshTableHeaderView.m */; };
 		28F4778C13D7D02C003477CD /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F4778413D7D02C003477CD /* blackArrow.png */; };
 		28F4778D13D7D02C003477CD /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F4778513D7D02C003477CD /* blackArrow@2x.png */; };
@@ -466,6 +469,12 @@
 		28E1371F13EB12DF00C17A68 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		28E1372013EB12DF00C17A68 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		28E1372113EB12DF00C17A68 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		28F189F41427F00F005DE786 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		28F189F51427F00F005DE786 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		28F189F81427F071005DE786 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
+		28F189F91427F071005DE786 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
+		28F189FA1427F072005DE786 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		28F189FB1427F072005DE786 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		28F4778013D7CEE4003477CD /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		28F4778113D7CEE4003477CD /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		28F4778413D7D02C003477CD /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blackArrow.png; path = ../blackArrow.png; sourceTree = "<group>"; };
@@ -783,6 +792,12 @@
 				2895017A13D67896009E1BD7 /* ASIHttpRequest */,
 				287145C913F4789B0047BDB5 /* LocationManagerManager.h */,
 				287145CA13F4789B0047BDB5 /* LocationManagerManager.m */,
+				28F189F81427F071005DE786 /* UIImage+Alpha.h */,
+				28F189F91427F071005DE786 /* UIImage+Alpha.m */,
+				28F189FA1427F072005DE786 /* UIImage+RoundedCorner.h */,
+				28F189FB1427F072005DE786 /* UIImage+RoundedCorner.m */,
+				28F189F41427F00F005DE786 /* UIImage+Resize.h */,
+				28F189F51427F00F005DE786 /* UIImage+Resize.m */,
 				286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */,
 			);
 			path = lib;
@@ -1280,6 +1295,9 @@
 				28B6190F141EC52F00B0A7E5 /* PlacesListView.m in Sources */,
 				28B6191B1421440200B0A7E5 /* NSString+MD5Addition.m in Sources */,
 				28B6191C1421440200B0A7E5 /* UIDevice+IdentifierAddition.m in Sources */,
+				28F189F61427F00F005DE786 /* UIImage+Resize.m in Sources */,
+				28F189FC1427F072005DE786 /* UIImage+Alpha.m in Sources */,
+				28F189FD1427F072005DE786 /* UIImage+RoundedCorner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

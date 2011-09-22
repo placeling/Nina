@@ -54,6 +54,12 @@
 
 }
 
++(void) clearCredentials{
+    [NinaHelper setAccessToken:nil];
+    [NinaHelper setAccessTokenSecret:nil];
+    [NinaHelper setUsername:nil];
+}
+
 +(void) showLoginController:(UIViewController*)sender{
     LoginController *loginController = [[LoginController alloc] init];
     loginController.delegate = sender;
@@ -73,9 +79,9 @@
     }
     
     if (statusCode == 401){
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token"];
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"access_token_secret"];
+        [self clearCredentials];
         DLog(@"Got a 401, with access_token: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
+        [FlurryAnalytics logEvent:@"401_CREDENTIAL_RESET"];
         
         //if ([request.responseString rangeOfString:@"BAD_PASS"].location != NSNotFound){
             [NinaHelper showLoginController:sender];    
@@ -126,6 +132,37 @@
 
 
 +(void) signRequest:(ASIHTTPRequest *)request{
+    NSString *userAgent = [NSString stringWithFormat:@"nina-client-%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    [request addRequestHeader:@"User-Agent" value:userAgent];
+    [request setTimeOutSeconds:60];
+    
+    if ([request isKindOfClass:[ASIFormDataRequest class]]){
+        
+        ASIFormDataRequest *formRequest = (ASIFormDataRequest*) request;
+        
+        CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
+        CLLocation *location =  locationManager.location;
+        
+        NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+        NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+        float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
+        accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
+        
+        [formRequest setPostValue:lat forKey:@"lat"];
+        [formRequest setPostValue:lng forKey:@"long"];
+        [formRequest setPostValue:[NSString stringWithFormat:@"%f", accuracy] forKey:@"accuracy"];
+        
+        //for debugging, for now.
+        for (NSDictionary* dict in [formRequest postData]){
+            if ([dict objectForKey:@"value"] == nil){
+                DLog(@"ALERT-NULL POST VALUE");
+            }
+        }
+        [formRequest setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"uuid"];
+    
+    
+    }
+    
     [request signRequestWithClientIdentifier:[NinaHelper getConsumerKey] secret:[NinaHelper getConsumerSecret]
             tokenIdentifier:[NinaHelper getAccessToken] secret:[NinaHelper getAccessTokenSecret]
                                      usingMethod:ASIOAuthHMAC_SHA1SignatureMethod];    

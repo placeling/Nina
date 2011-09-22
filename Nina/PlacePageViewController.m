@@ -450,18 +450,7 @@
     
     NSURL *url = [NSURL URLWithString:urlText];
     
-    CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
-    CLLocation *location =  locationManager.location;
-    
-    NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-    NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
-    float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
-    accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
-    
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:lat forKey:@"lat"];
-    [request setPostValue:lng forKey:@"long"];
-    [request setPostValue:[NSString stringWithFormat:@"%f", accuracy] forKey:@"accuracy"];
     
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
