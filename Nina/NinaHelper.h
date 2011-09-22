@@ -143,4 +143,6 @@
 +(NSString*) getConsumerKey;
 +(NSString*) getConsumerSecret;
 
++(void) clearCredentials;
+
 @end
