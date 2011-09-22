@@ -12,8 +12,9 @@
 
 - (NSArray *)oauthPostBodyParameters
 {
-	if ([fileData count] > 0)
-        return nil;
+	//if ([fileData count] > 0) this was in original, but it causes some hyper-fails as 
+      // it no longer returns postdata, which is still necessary in multi-part
+        //return nil;
 
     return postData;
 }
