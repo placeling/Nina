@@ -177,9 +177,7 @@
 }
 
 -(IBAction) logout{
-    [NinaHelper setAccessToken:nil];
-    [NinaHelper setAccessTokenSecret:nil];
-    [NinaHelper setUsername:nil];
+    [NinaHelper clearCredentials];
     
     [self viewWillAppear:NO];
     
