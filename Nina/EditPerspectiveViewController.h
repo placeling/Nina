@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Perspective.h"
 #import "NinaHelper.h"
+#import "MBProgressHUD.h"
 
 
 @protocol EditPerspectiveDelegate
@@ -17,21 +18,42 @@
 -(void)requestFinished:(ASIHTTPRequest *)request;
 @end
 
-@interface EditPerspectiveViewController : UIViewController<UITextViewDelegate>{
+@interface EditPerspectiveViewController : UIViewController<UITextViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, ASIHTTPRequestDelegate>{
     Perspective *_perspective;
     id<EditPerspectiveDelegate> delegate;
     
     IBOutlet UITextView *memoTextView;
     IBOutlet UIButton *photoButton;
+    
+    IBOutlet UIButton *existingButton;
+	IBOutlet UIButton *takeButton;
+    
+    IBOutlet UIScrollView *scrollView;
+    
+    MBProgressHUD *hud;
+    
+    NSMutableArray *uploadedPics;
+    
+    NSOperationQueue *queue;
+
 }
 
 @property(nonatomic,retain) Perspective *perspective;
 @property(nonatomic,retain) IBOutlet UITextView *memoTextView;
 @property(nonatomic,retain) IBOutlet UIButton *photoButton;
+@property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
+@property(nonatomic,retain) IBOutlet UIButton *existingButton;
+@property(nonatomic,retain) IBOutlet UIButton *takeButton;
+@property(nonatomic,retain) IBOutlet NSOperationQueue *queue;
+
 @property(nonatomic,assign) id<EditPerspectiveDelegate> delegate;
 
 - (id) initWithPerspective:(Perspective *)perspective;
 -(IBAction)savePerspective;
 -(IBAction)showPhotos;
+
+-(IBAction)existingImage;
+-(IBAction)takeImage;
+
 
 @end
