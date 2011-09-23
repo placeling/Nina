@@ -32,10 +32,11 @@
     
     MBProgressHUD *hud;
     
-    NSMutableArray *uploadedPics;
+    NSMutableDictionary *uploadingPics;
+    NSMutableDictionary *downloadingPics;
+    int requestCount;
     
     NSOperationQueue *queue;
-
 }
 
 @property(nonatomic,retain) Perspective *perspective;

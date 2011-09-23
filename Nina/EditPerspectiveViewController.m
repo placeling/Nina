@@ -10,12 +10,14 @@
 #import "UIImage+Resize.h"
 #import "ASIFormDataRequest+OAuth.h"
 #import "ASIHTTPRequest+OAuth.h"
-//#import "OAuthCore.h"
-
+#import "Photo.h"
+#import "NSString+SBJSON.h"
 
 
 @interface EditPerspectiveViewController()
--(void) uploadImage:(UIImage*)image;
+-(NSNumber*) uploadImageAndReturnTag:(UIImage*)mainImage;
+-(NSNumber*) downloadThumbAndReturnTag:(Photo*)photo;
+-(void) refreshImages;
 @end
 
 @implementation EditPerspectiveViewController
@@ -35,6 +37,9 @@
     if (![self queue]) {
         [self setQueue:[[NSOperationQueue alloc] init]];
     }
+    uploadingPics = [[NSMutableDictionary alloc] init];
+    downloadingPics = [[NSMutableDictionary alloc] init];
+    requestCount = 0;
     
     return self;
 }
@@ -60,9 +65,9 @@
     self.navigationItem.rightBarButtonItem = saveButton;
     [saveButton release];
     
-    uploadedPics = [[NSMutableArray alloc] initWithCapacity:1];
-    
     [self.memoTextView becomeFirstResponder];
+    
+    [self refreshImages];
     
 }
 
@@ -78,15 +83,29 @@
     if (200 != [request responseStatusCode]){
 		[NinaHelper handleBadRequest:request sender:self];
 	} else {
-        
-        switch( [request tag] ){
-            case 70:{
+        if ([request tag] >= 1000){
+            if ([uploadingPics objectForKey:[NSNumber numberWithInt:request.tag]]){
                 //perspective picture return
-                NSString *responseString = [request responseString];        
+                NSString *responseString = [request responseString];
                 DLog(@"%@", responseString);
                 
-                break;
+                Photo *photo = [uploadingPics objectForKey:[NSNumber numberWithInt:request.tag]];
+                [photo updateFromJsonDict:[responseString JSONValue]];
+                
+                [uploadingPics removeObjectForKey:[NSNumber numberWithInt:request.tag]];
+                
+            } else if ([downloadingPics objectForKey:[NSNumber numberWithInt:request.tag]]){
+                NSData *responseData = [request responseData];
+                DLog(@"Image response");
+                UIImage *image = [[UIImage alloc] initWithData:responseData];
+                
+                Photo *photo = [downloadingPics objectForKey:[NSNumber numberWithInt:request.tag]];
+                photo.thumb_image = image;
+                
+                [image release];
+                [downloadingPics removeObjectForKey:[NSNumber numberWithInt:request.tag]];
             }
+            [self refreshImages];
         }
         
 	}
@@ -138,17 +157,54 @@
     //[self.scrollView setBackgroundColor:[UIColor blackColor]];
     [self.scrollView setCanCancelContentTouches:NO];
     
-    scrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+    scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.clipsToBounds = NO;
     scrollView.scrollEnabled = YES;
     scrollView.pagingEnabled = YES;
 
-    CGFloat cx = 0;
+    CGFloat cx = 5;
     
-    for (UIImage* image in uploadedPics){
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    for ( Photo* photo in self.perspective.photos ){
+        
+        UIImageView *imageView;
+        if (photo.photo_id){
+            UIImage *image;
+            if (photo.thumb_image){
+                image = photo.thumb_image;
+            } else {
+                NSNumber *tag = [self downloadThumbAndReturnTag:photo];
+                [downloadingPics setObject:photo forKey:tag];
+                
+                image = [UIImage imageWithContentsOfFile:@"86-camera.png"];
+            }
+            
+            UIImage *thumbImage = [image thumbnailImage:64
+                                    transparentBorder:0
+                                         cornerRadius:0
+                                 interpolationQuality:kCGInterpolationHigh ];
+            imageView = [[UIImageView alloc] initWithImage:thumbImage];
+            
+        } else {
+            if (photo.thumb_image){
+                //have thumb, but is currently being uploaded
+                UIImage *thumbImage = [photo.thumb_image thumbnailImage:64
+                                        transparentBorder:0
+                                             cornerRadius:0
+                                     interpolationQuality:kCGInterpolationHigh ];
+                imageView = [[UIImageView alloc] initWithImage:thumbImage];
+                
+                UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+
+                //[imageView addSubview:spinner];
+                [spinner startAnimating];
+                [spinner release];
+            } else {
+                DLog(@"ERROR: Got photo with no ID or image");
+            }
+        }
         
         CGRect rect = imageView.frame;
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
         rect.size.height = 64;
         rect.size.width = 64;
         rect.origin.x = cx;
@@ -170,33 +226,59 @@
 
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img editingInfo:(NSDictionary *)editInfo {
-	
-	UIImage *image = img;
     
-    UIImage *thumbImage = [image thumbnailImage:64
-                transparentBorder:2
-                cornerRadius:2
-                interpolationQuality:kCGInterpolationHigh ];
+    NSNumber *tag = [self uploadImageAndReturnTag:img];
     
-    NSData* imgData = UIImageJPEGRepresentation(thumbImage, 0.9);
-    DLog(@"Got image, shrank thumb to: %i", [imgData length]);
-    [uploadedPics addObject:thumbImage];
+    if (img.size.width > 160 || img.size.height > 160){
+        img = [img
+                 resizedImageWithContentMode:UIViewContentModeScaleAspectFit
+                 bounds:CGSizeMake(960, 960)
+                 interpolationQuality:kCGInterpolationHigh];
+    }
     
-    [self uploadImage:image];
+    Photo *photo = [[Photo alloc] init];
+    photo.thumb_image = img;
+    
+    [uploadingPics setObject:photo forKey:tag];
+    
+    [self.perspective.photos addObject:photo];
+    [photo release];
     
     //create an image for upload, bounded by 960, since that's the max the thing will take anyway
     [self refreshImages];
     [self dismissModalViewControllerAnimated:YES];
 }
 
+-(NSNumber*) downloadThumbAndReturnTag:(Photo*)photo{
 
--(void) uploadImage:(UIImage*)image{
-    UIImage *mainImage = [image
-                          resizedImageWithContentMode:UIViewContentModeScaleAspectFit
-                          bounds:CGSizeMake(960, 960)
-                          interpolationQuality:kCGInterpolationHigh];
+    DLog(@"Downloading photo for %@", photo.photo_id);
+    NSString *urlText = [NSString stringWithFormat:@"%@%@", [NinaHelper getHostname], photo.thumb_url];
     
-    NSData* imgData = UIImageJPEGRepresentation(mainImage, 0.6);
+    NSURL *url = [NSURL URLWithString:urlText];
+    
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setDelegate:self]; 
+    
+    [request setTag:(1000+requestCount++)];     
+    
+    //[NinaHelper signRequest:request];
+    [[self queue] addOperation:request]; 
+    
+    return [NSNumber numberWithInt:request.tag];
+}
+
+-(NSNumber*) uploadImageAndReturnTag:(UIImage*)image{
+    if (image.size.width > 960 || image.size.height > 960){
+        image = [image
+                              resizedImageWithContentMode:UIViewContentModeScaleAspectFit
+                              bounds:CGSizeMake(960, 960)
+                              interpolationQuality:kCGInterpolationHigh];
+        
+        
+    }
+    
+    NSData* imgData = UIImageJPEGRepresentation(image, 0.5);
+    
     DLog(@"Got image, shrank main to: %i", [imgData length]); 
     
     NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/photos", [NinaHelper getHostname], self.perspective.place.pid];
@@ -207,18 +289,19 @@
     
     [request setRequestMethod:@"POST"];
     [request setDelegate:self]; 
-    [request setTag:70];     
-    [request setTimeOutSeconds:60];
+    
+    [request setTag:(1000+requestCount++)];     
     
     [request setData:imgData withFileName:@"image.jpg" andContentType:@"image/jpeg"  forKey:@"image"];
     
-    [NinaHelper signRequest:request];
-    
-    //[request startAsynchronous];
-    
-    //[request setUploadProgressDelegate:hud];
-    
+    //[NinaHelper signRequest:request];
+    [request signRequestWithClientIdentifier:[NinaHelper getConsumerKey] secret:[NinaHelper getConsumerSecret]
+                             tokenIdentifier:[NinaHelper getAccessToken] secret:[NinaHelper getAccessTokenSecret]
+                                 usingMethod:ASIOAuthHMAC_SHA1SignatureMethod];    
     [[self queue] addOperation:request]; 
+    
+    
+    return [NSNumber numberWithInt:request.tag];
 }
 
 - (void)imagePickerControllerDidCancel{
@@ -243,7 +326,7 @@
 
 
 -(void)dealloc{
-    [NinaHelper clearActiveRequests:70];
+    [NinaHelper clearActiveRequests:1000];
     [queue release];
     [memoTextView release];
     [photoButton release];
@@ -251,8 +334,8 @@
     [existingButton release];
     [takeButton release];
     [scrollView release];
-    
-    [uploadedPics release];
+    [uploadingPics release];
+    [downloadingPics release];
     
     [super dealloc];
 }
