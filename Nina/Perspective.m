@@ -24,18 +24,37 @@
             self.user = [[[User alloc] initFromJsonDict:[jsonDict objectForKey:@"user"]]autorelease];
         }
         
+        self.photos = [[NSMutableArray alloc] init];
+        
         [self updateFromJsonDict:jsonDict];
 	}
 	return self;
 }
 
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
-    //self.tags = [jsonDict objectForKey:@"tags"];
+    
+    for (NSDictionary *photoDict in [jsonDict objectForKey:@"photos"]){
+        bool found = false;
+        for (Photo *photo in self.photos){
+            if ([[photoDict objectForKey:@"_id"] isEqualToString:photo.photo_id]){
+                found = true;
+                break;
+            }
+        }
+        
+        if (!found){
+            Photo *photo = [[Photo alloc] initFromJsonDict:photoDict];
+            [self.photos addObject:photo];
+            [photo release];
+        }
+    }    
+    
     self.perspectiveId = [jsonDict objectForKey:@"_id"];
     self.notes = [jsonDict objectForKey:@"memo"];
     self.starred = [[jsonDict objectForKey:@"starred"] boolValue];
     self.lastModified =[jsonDict objectForKey:@"updated_at"];
     mine = [[jsonDict objectForKey:@"mine"] boolValue];
+    
 }
 
 - (void) dealloc {
