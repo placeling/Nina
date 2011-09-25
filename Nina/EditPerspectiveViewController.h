@@ -33,7 +33,6 @@
     MBProgressHUD *hud;
     
     NSMutableDictionary *uploadingPics;
-    NSMutableDictionary *downloadingPics;
     int requestCount;
     
     NSOperationQueue *queue;

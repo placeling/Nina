@@ -16,6 +16,8 @@
     IBOutlet UIButton *upvoteButton;
     IBOutlet UITextView *memoText;
     IBOutlet UILabel *titleLabel;
+    
+    IBOutlet UIScrollView *scrollView;
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
@@ -23,6 +25,8 @@
 @property(nonatomic,retain) IBOutlet UIButton *upvoteButton;
 @property(nonatomic,retain) IBOutlet UITextView *memoText;
 @property(nonatomic,retain) IBOutlet UILabel *titleLabel;
+@property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
+
 
 -(IBAction)toggleStarred;
 

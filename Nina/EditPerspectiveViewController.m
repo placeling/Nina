@@ -12,11 +12,11 @@
 #import "ASIHTTPRequest+OAuth.h"
 #import "Photo.h"
 #import "NSString+SBJSON.h"
+#import "asyncimageview.h"
 
 
 @interface EditPerspectiveViewController()
 -(NSNumber*) uploadImageAndReturnTag:(UIImage*)mainImage;
--(NSNumber*) downloadThumbAndReturnTag:(Photo*)photo;
 -(void) refreshImages;
 @end
 
@@ -38,7 +38,6 @@
         [self setQueue:[[NSOperationQueue alloc] init]];
     }
     uploadingPics = [[NSMutableDictionary alloc] init];
-    downloadingPics = [[NSMutableDictionary alloc] init];
     requestCount = 0;
     
     return self;
@@ -94,20 +93,11 @@
                 
                 [uploadingPics removeObjectForKey:[NSNumber numberWithInt:request.tag]];
                 
-            } else if ([downloadingPics objectForKey:[NSNumber numberWithInt:request.tag]]){
-                NSData *responseData = [request responseData];
-                DLog(@"Image response");
-                UIImage *image = [[UIImage alloc] initWithData:responseData];
-                
-                Photo *photo = [downloadingPics objectForKey:[NSNumber numberWithInt:request.tag]];
-                photo.thumb_image = image;
-                
-                [image release];
-                [downloadingPics removeObjectForKey:[NSNumber numberWithInt:request.tag]];
+            } else {
+                DLog(@"WARNING: request handled with no uploading tag");
             }
             [self refreshImages];
         }
-        
 	}
 }
 
@@ -167,50 +157,29 @@
     for ( Photo* photo in self.perspective.photos ){
         
         UIImageView *imageView;
+        CGRect rect = CGRectMake(cx, 0, 64, 64);
+        
         if (photo.photo_id){
-            UIImage *image;
-            if (photo.thumb_image){
-                image = photo.thumb_image;
-            } else {
-                NSNumber *tag = [self downloadThumbAndReturnTag:photo];
-                [downloadingPics setObject:photo forKey:tag];
-                
-                image = [UIImage imageWithContentsOfFile:@"86-camera.png"];
-            }
-            
-            UIImage *thumbImage = [image thumbnailImage:64
-                                    transparentBorder:0
-                                         cornerRadius:0
-                                 interpolationQuality:kCGInterpolationHigh ];
-            imageView = [[UIImageView alloc] initWithImage:thumbImage];
-            
+            imageView = [[AsyncImageView alloc] initWithFrame:rect];
+            [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
+            imageView.alpha = 1.0;
         } else {
             if (photo.thumb_image){
                 //have thumb, but is currently being uploaded
-                UIImage *thumbImage = [photo.thumb_image thumbnailImage:64
-                                        transparentBorder:0
-                                             cornerRadius:0
-                                     interpolationQuality:kCGInterpolationHigh ];
-                imageView = [[UIImageView alloc] initWithImage:thumbImage];
+                
+                imageView = [[AsyncImageView alloc] initWithFrame:rect];
+                [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
+                imageView.alpha = 0.5; //Alpha runs from 0.0 to 1.0
                 
                 UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 
-                //[imageView addSubview:spinner];
+                [imageView addSubview:spinner];
                 [spinner startAnimating];
-                [spinner release];
+                [spinner release]; 
             } else {
                 DLog(@"ERROR: Got photo with no ID or image");
             }
         }
-        
-        CGRect rect = imageView.frame;
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        rect.size.height = 64;
-        rect.size.width = 64;
-        rect.origin.x = cx;
-        rect.origin.y = 0;
-        
-        imageView.frame = rect;
         
         [scrollView addSubview:imageView];
         
@@ -229,13 +198,6 @@
     
     NSNumber *tag = [self uploadImageAndReturnTag:img];
     
-    if (img.size.width > 160 || img.size.height > 160){
-        img = [img
-                 resizedImageWithContentMode:UIViewContentModeScaleAspectFit
-                 bounds:CGSizeMake(960, 960)
-                 interpolationQuality:kCGInterpolationHigh];
-    }
-    
     Photo *photo = [[Photo alloc] init];
     photo.thumb_image = img;
     
@@ -249,32 +211,16 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
--(NSNumber*) downloadThumbAndReturnTag:(Photo*)photo{
-
-    DLog(@"Downloading photo for %@", photo.photo_id);
-    NSString *urlText = [NSString stringWithFormat:@"%@%@", [NinaHelper getHostname], photo.thumb_url];
-    
-    NSURL *url = [NSURL URLWithString:urlText];
-    
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setDelegate:self]; 
-    
-    [request setTag:(1000+requestCount++)];     
-    
-    //[NinaHelper signRequest:request];
-    [[self queue] addOperation:request]; 
-    
-    return [NSNumber numberWithInt:request.tag];
-}
 
 -(NSNumber*) uploadImageAndReturnTag:(UIImage*)image{
+    
     if (image.size.width > 960 || image.size.height > 960){
         image = [image
                               resizedImageWithContentMode:UIViewContentModeScaleAspectFit
                               bounds:CGSizeMake(960, 960)
                               interpolationQuality:kCGInterpolationHigh];
-        
-        
+    } else {
+        image = image;
     }
     
     NSData* imgData = UIImageJPEGRepresentation(image, 0.5);
@@ -299,7 +245,6 @@
                              tokenIdentifier:[NinaHelper getAccessToken] secret:[NinaHelper getAccessTokenSecret]
                                  usingMethod:ASIOAuthHMAC_SHA1SignatureMethod];    
     [[self queue] addOperation:request]; 
-    
     
     return [NSNumber numberWithInt:request.tag];
 }
@@ -335,7 +280,6 @@
     [takeButton release];
     [scrollView release];
     [uploadingPics release];
-    [downloadingPics release];
     
     [super dealloc];
 }

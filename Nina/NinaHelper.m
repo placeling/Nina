@@ -55,9 +55,9 @@
 }
 
 +(void) clearCredentials{
-    [NinaHelper setAccessToken:nil];
-    [NinaHelper setAccessTokenSecret:nil];
-    [NinaHelper setUsername:nil];
+    //[NinaHelper setAccessToken:nil];
+    //[NinaHelper setAccessTokenSecret:nil];
+    //[NinaHelper setUsername:nil];
 }
 
 +(void) showLoginController:(UIViewController*)sender{
@@ -134,7 +134,7 @@
 +(void) signRequest:(ASIHTTPRequest *)request{
     NSString *userAgent = [NSString stringWithFormat:@"nina-client-%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
     [request addRequestHeader:@"User-Agent" value:userAgent];
-    [request setTimeOutSeconds:60];
+    [request setTimeOutSeconds:120];
     
     if ([request isKindOfClass:[ASIFormDataRequest class]]){
         
@@ -176,7 +176,7 @@
     for (ASIHTTPRequest *req in ASIHTTPRequest.sharedQueue.operations){
         NSInteger tag = req.tag;
         
-        if (range <= tag && tag < range+10){
+        if ((range <= tag && tag < range+10) || (tag >= 1000 && range >= 1000)){
             [req cancel];
             [req setDelegate:nil];
         }

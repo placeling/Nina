@@ -3,15 +3,16 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1280</int>
 		<string key="IBDocument.SystemVersion">10K549</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1900</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1934</string>
 		<string key="IBDocument.AppKitVersion">1038.36</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">894</string>
+			<string key="NS.object.0">931</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<string>IBUIScrollView</string>
 			<string>IBUITableViewCell</string>
 			<string>IBUIButton</string>
 			<string>IBUILabel</string>
@@ -52,7 +53,7 @@
 								<string key="NSFrameSize">{317, 67}</string>
 								<reference key="NSSuperview" ref="573158253"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="1049628760"/>
+								<reference key="NSNextKeyView" ref="616047440"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -80,6 +81,17 @@
 									<double key="NSSize">14</double>
 									<int key="NSfFlags">16</int>
 								</object>
+							</object>
+							<object class="IBUIScrollView" id="616047440">
+								<reference key="NSNextResponder" ref="573158253"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{0, 63}, {320, 72}}</string>
+								<reference key="NSSuperview" ref="573158253"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="1049628760"/>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<bool key="IBUIMultipleTouchEnabled">YES</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 							<object class="IBUIView" id="1049628760">
 								<reference key="NSNextResponder" ref="573158253"/>
@@ -200,7 +212,7 @@
 										</object>
 									</object>
 								</object>
-								<string key="NSFrame">{{0, 64}, {317, 59}}</string>
+								<string key="NSFrame">{{3, 134}, {317, 60}}</string>
 								<reference key="NSSuperview" ref="573158253"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="502736216"/>
@@ -214,7 +226,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</object>
-						<string key="NSFrame">{{1, 0}, {317, 122}}</string>
+						<string key="NSFrameSize">{320, 193}</string>
 						<reference key="NSSuperview" ref="309600393"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="535021188"/>
@@ -229,7 +241,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</object>
-				<string key="NSFrameSize">{319, 123}</string>
+				<string key="NSFrameSize">{319, 194}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="573158253"/>
@@ -239,12 +251,7 @@
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="573158253"/>
-				<object class="IBUIFontDescription" key="IBUIFontDescription">
-					<int key="type">1</int>
-					<int key="size">4</int>
-				</object>
-				<reference key="IBUIFont" ref="17172108"/>
-				<real value="123" key="IBUIRowHeight"/>
+				<real value="194" key="IBUIRowHeight"/>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -299,13 +306,12 @@
 					<int key="connectionID">18</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">editPerspective</string>
-						<reference key="source" ref="542733839"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">imageScroll</string>
+						<reference key="source" ref="309600393"/>
+						<reference key="destination" ref="616047440"/>
 					</object>
-					<int key="connectionID">20</int>
+					<int key="connectionID">23</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -315,6 +321,15 @@
 						<int key="IBEventType">7</int>
 					</object>
 					<int key="connectionID">21</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">editPerspective</string>
+						<reference key="source" ref="542733839"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">20</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -344,8 +359,9 @@
 						<reference key="object" ref="309600393"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="1049628760"/>
 							<reference ref="535021188"/>
+							<reference ref="1049628760"/>
+							<reference ref="616047440"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">My Perspective Cell View Controller</string>
@@ -387,6 +403,11 @@
 						<reference key="object" ref="502736216"/>
 						<reference key="parent" ref="1049628760"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">22</int>
+						<reference key="object" ref="616047440"/>
+						<reference key="parent" ref="309600393"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -401,6 +422,7 @@
 					<string>11.IBPluginDependency</string>
 					<string>15.IBPluginDependency</string>
 					<string>16.IBPluginDependency</string>
+					<string>22.IBPluginDependency</string>
 					<string>4.CustomClassName</string>
 					<string>4.IBPluginDependency</string>
 					<string>5.IBPluginDependency</string>
@@ -411,6 +433,7 @@
 					<string>PlacePageViewController</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>UIResponder</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -434,7 +457,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">21</int>
+			<int key="maxID">23</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -529,9 +552,11 @@
 							<string>googlePlacePage</string>
 							<string>shareFacebook</string>
 							<string>shareTwitter</string>
+							<string>showSingleAnnotatedMap</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -554,6 +579,7 @@
 							<string>googlePlacePage</string>
 							<string>shareFacebook</string>
 							<string>shareTwitter</string>
+							<string>showSingleAnnotatedMap</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -589,6 +615,10 @@
 								<string key="name">shareTwitter</string>
 								<string key="candidateClassName">id</string>
 							</object>
+							<object class="IBActionInfo">
+								<string key="name">showSingleAnnotatedMap</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
@@ -596,10 +626,11 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addressLabel</string>
+							<string>bookmarkView</string>
 							<string>categoriesLabel</string>
 							<string>cityLabel</string>
 							<string>googlePlacesButton</string>
-							<string>mapImageView</string>
+							<string>mapButtonView</string>
 							<string>nameLabel</string>
 							<string>segmentedControl</string>
 							<string>tableFooterView</string>
@@ -609,10 +640,11 @@
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UILabel</string>
+							<string>UIView</string>
 							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UIButton</string>
-							<string>UIImageView</string>
+							<string>UIButton</string>
 							<string>UILabel</string>
 							<string>UISegmentedControl</string>
 							<string>UIView</string>
@@ -625,10 +657,11 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addressLabel</string>
+							<string>bookmarkView</string>
 							<string>categoriesLabel</string>
 							<string>cityLabel</string>
 							<string>googlePlacesButton</string>
-							<string>mapImageView</string>
+							<string>mapButtonView</string>
 							<string>nameLabel</string>
 							<string>segmentedControl</string>
 							<string>tableFooterView</string>
@@ -640,6 +673,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">addressLabel</string>
 								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">bookmarkView</string>
+								<string key="candidateClassName">UIView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">categoriesLabel</string>
@@ -654,8 +691,8 @@
 								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">mapImageView</string>
-								<string key="candidateClassName">UIImageView</string>
+								<string key="name">mapButtonView</string>
+								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">nameLabel</string>
@@ -707,6 +744,6 @@
 				<string>{24, 18}</string>
 			</object>
 		</object>
-		<string key="IBCocoaTouchPluginVersion">894</string>
+		<string key="IBCocoaTouchPluginVersion">931</string>
 	</data>
 </archive>

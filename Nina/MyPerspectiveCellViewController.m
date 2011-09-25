@@ -8,6 +8,7 @@
 
 #import "MyPerspectiveCellViewController.h"
 #import "EditPerspectiveViewController.h"
+#import "asyncimageview.h"
 
 @implementation MyPerspectiveCellViewController
 
@@ -18,7 +19,7 @@
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
-    CGFloat heightCalc = 55; //mostly for footer label
+    CGFloat heightCalc = 60; //mostly for footer label
     
     CGSize textAreaSize;
     textAreaSize.height = 66;
@@ -28,8 +29,11 @@
     
     heightCalc += textSize.height;
     
-    return heightCalc+10;
+    if (perspective.photos && perspective.photos.count > 0){
+        heightCalc += 70;
+    }
     
+    return heightCalc;
 }
 
 
@@ -40,20 +44,52 @@
     BOOL emptyPerspective = true;
     cell.footerLabel.text = [NSString stringWithFormat:@"Last Modified: %@", perspective.lastModified];
     
-    CGRect memoFrame = cell.memoLabel.frame;
-    CGSize memoSize = memoFrame.size;
-    
-    if(perspective.notes || perspective.notes.length > 0){
+    if(perspective.notes && perspective.notes.length > 0){
         emptyPerspective = false;
         cell.memoLabel.text = perspective.notes;
+        CGRect memoFrame = cell.memoLabel.frame;
         
-        CGSize textSize = [perspective.notes sizeWithFont:cell.memoLabel.font constrainedToSize:memoSize lineBreakMode:UILineBreakModeWordWrap];
+        CGSize textSize = [perspective.notes sizeWithFont:cell.memoLabel.font constrainedToSize:memoFrame.size lineBreakMode:UILineBreakModeWordWrap];
         
-        [cell.memoLabel setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, memoSize.width, textSize.height)];
-
-        verticalCursor = cell.memoLabel.frame.size.height;
+        [cell.memoLabel setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, memoFrame.size.width, textSize.height)];
+        
+        verticalCursor += textSize.height;
     }else{
         cell.memoLabel.text = @""; //get rid of hipster lorem
+        cell.memoLabel.hidden = TRUE;
+    }
+    
+    if(perspective.photos && perspective.photos.count > 0){
+        emptyPerspective = false;
+        CGRect scrollFrame = cell.imageScroll.frame;
+        
+        [cell.imageScroll setFrame:CGRectMake(scrollFrame.origin.x, verticalCursor, scrollFrame.size.width, 70)];
+        
+        [cell.imageScroll setCanCancelContentTouches:NO];
+        
+        cell.imageScroll.showsHorizontalScrollIndicator = NO;
+        cell.imageScroll.clipsToBounds = NO;
+        cell.imageScroll.scrollEnabled = YES;
+        cell.imageScroll.pagingEnabled = YES;
+        
+        CGFloat cx = 5;
+        for ( Photo* photo in perspective.photos ){
+            
+            CGRect rect = CGRectMake(cx, 3, 64, 64);
+            UIImageView *imageView = [[AsyncImageView alloc] initWithFrame:rect];
+            [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
+                        
+            [cell.imageScroll addSubview:imageView];
+            
+            cx += imageView.frame.size.width+5;
+            
+            [imageView release];
+        }
+        
+        verticalCursor += cell.imageScroll.frame.size.height;
+        [cell.imageScroll setContentSize:CGSizeMake(cx, [cell.imageScroll bounds].size.height)];
+    }else{
+        cell.imageScroll.hidden = TRUE; //remove from view
     }
     
     if(emptyPerspective){

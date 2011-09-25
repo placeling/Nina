@@ -8,10 +8,11 @@
 
 #import "PerspectiveTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "asyncimageview.h"
 
 @implementation PerspectiveTableViewCell
 
-@synthesize perspective, userImage, upvoteButton, memoText,titleLabel;
+@synthesize perspective, userImage, upvoteButton, memoText,titleLabel, scrollView;
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
@@ -25,13 +26,17 @@
     
     heightCalc += textSize.height;
     
+    if (perspective.photos && perspective.photos.count > 0){
+        heightCalc += 166;
+    }
+    
     return MAX(90, heightCalc);
     
 }
 
 
 +(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective userSource:(BOOL)userSource{
-    
+    CGFloat verticalCursor = cell.memoText.frame.origin.y;;
     cell.perspective = perspective;
     cell.memoText.text = perspective.notes;
     
@@ -42,20 +47,25 @@
     }
     
     //cell.memoText.backgroundColor = [UIColor grayColor];
-    
     CGRect memoFrame = cell.memoText.frame;
     CGSize memoSize = memoFrame.size;
-    
-    CGSize textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:memoSize lineBreakMode:UILineBreakModeWordWrap];
-    
-    
-    [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, memoSize.width, MAX(textSize.height, 44))];
-
+        
+    if(perspective.notes && perspective.notes.length > 0){
+        cell.memoText.text = perspective.notes;
+        
+        CGSize textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:memoFrame.size lineBreakMode:UILineBreakModeWordWrap];
+                
+        [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, memoSize.width, MAX(textSize.height, 44))];
+        
+        verticalCursor += MAX(textSize.height, 44);
+    }else{
+        cell.memoText.text = @""; //get rid of hipster lorem
+        cell.memoText.hidden = TRUE;
+    }
 
     if (perspective.mine){
         //can't star own perspective
         [cell.upvoteButton setHidden:true];
-        
     } else {
         [cell.upvoteButton setHidden:false];
         if(perspective.starred){
@@ -69,6 +79,38 @@
     cell.userImage.layer.borderWidth = 1.0f;
     cell.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     cell.userImage.layer.masksToBounds = YES;
+    
+    if(perspective.photos && perspective.photos.count > 0){
+        CGRect scrollFrame = cell.scrollView.frame;
+        
+        [cell.scrollView setFrame:CGRectMake(scrollFrame.origin.x, verticalCursor, scrollFrame.size.width, 160)];
+        
+        [cell.scrollView setCanCancelContentTouches:NO];
+        
+        cell.scrollView.showsHorizontalScrollIndicator = NO;
+        cell.scrollView.clipsToBounds = NO;
+        cell.scrollView.scrollEnabled = YES;
+        cell.scrollView.pagingEnabled = YES;
+        
+        CGFloat cx = 5;
+        for ( Photo* photo in perspective.photos ){
+            
+            CGRect rect = CGRectMake(cx, 3, 150, 150);
+            UIImageView *imageView = [[AsyncImageView alloc] initWithFrame:rect];
+            [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
+            
+            [cell.scrollView addSubview:imageView];
+            
+            cx += imageView.frame.size.width+5;
+            
+            [imageView release];
+        }
+        
+        [cell.scrollView setContentSize:CGSizeMake(cx, [cell.scrollView bounds].size.height)];
+    }else{
+        cell.scrollView.hidden = TRUE; //remove from view
+    }
+    
     
 }
 
@@ -112,6 +154,7 @@
     [upvoteButton release];
     [memoText release];
     [titleLabel release];
+    [scrollView release];
     
     [super dealloc];
 }
