@@ -546,30 +546,16 @@
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+    
     //UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (([perspectives count] > 0) && [[perspectives objectAtIndex:0] isKindOfClass:[NSString class]]){
+    if ( [perspective isKindOfClass:[NSString class]] ){
         //loading case
         return 44;
-    }else if ( self.perspectiveType == home && indexPath.row == 0){
-        //own perspective row
-        if (myPerspective){
-            return [MyPerspectiveCellViewController cellHeightForPerspective:myPerspective];            
-        } else {
-            //BookmarkTableViewCell 
-            return 44;
-        }
-        
+    }else if ( self.perspectiveType == home && perspective.mine){
+        return [MyPerspectiveCellViewController cellHeightForPerspective:myPerspective];            
     } else {
-        //a visible perspective row PerspectiveTableViewCell
-        
-        Perspective *perspective;
-        
-        if(self.perspectiveType == home){
-            perspective = [perspectives objectAtIndex:indexPath.row-1];
-        }else{
-            perspective = [perspectives objectAtIndex:indexPath.row];
-        }
-        
+        //a visible perspective row PerspectiveTableViewCell        
         return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
     }
     
@@ -597,12 +583,11 @@
     static NSString *spinnerCellIdentifier = @"SpinnerCellIdentifier";
     
     UITableViewCell *cell;
+    Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
     
-     if ([[perspectives objectAtIndex:indexPath.row] isKindOfClass:[NSString class]]){
+     if ( [perspective isKindOfClass:[NSString class]] ){
         cell = [tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
-     }else {
-         Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
-         
+     }else {         
         if (perspective.mine){
             cell = [tableView dequeueReusableCellWithIdentifier:editableCellIdentifier];
         } else {
@@ -612,8 +597,7 @@
     
     
     if (cell == nil) {
-        if ([[perspectives objectAtIndex:indexPath.row] isKindOfClass:[NSString class]]){
-            
+        if ( [perspective isKindOfClass:[NSString class]] ){
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
             
             for(id item in objects){
@@ -622,9 +606,7 @@
                 }
             }             
         }else {
-            Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
-            
-            if (perspective.mine){
+            if ( self.perspectiveType == home && perspective.mine){
                 myPerspective = perspective;
                 NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"MyPerspectiveCellViewController" owner:self options:nil];
                 
