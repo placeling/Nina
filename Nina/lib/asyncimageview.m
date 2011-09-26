@@ -40,7 +40,7 @@
         
         DLog(@"Downloading photo for %@", photo.photo_id);
         
-        NSString *urlText = [NSString stringWithFormat:@"%@%@", [NinaHelper getHostname], photo.thumb_url];
+        NSString *urlText = [NSString stringWithFormat:@"%@", photo.thumb_url];
         
         NSURL *url = [[NSURL alloc]initWithString:urlText];
         
