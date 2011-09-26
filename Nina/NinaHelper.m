@@ -86,6 +86,18 @@
         //if ([request.responseString rangeOfString:@"BAD_PASS"].location != NSNotFound){
             [NinaHelper showLoginController:sender];    
         //}
+    } else if (400 <= statusCode && statusCode <= 499){
+        //non-401 400 series server error
+        NSNumber *code = [NSNumber numberWithInt:statusCode];
+        [FlurryAnalytics logEvent:@"400_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                               @"status_code", 
+                                                               code, @"message", errorMessage, nil]];
+        
+        NSString *alertMessage = [NSString stringWithFormat:@"%i Error", code];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertMessage message:errorMessage
+                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        [alert release];	
     } else if (500 <= statusCode && statusCode <= 599){
         //500 series server error
         NSNumber *code = [NSNumber numberWithInt:statusCode];
@@ -143,14 +155,16 @@
         CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
         CLLocation *location =  locationManager.location;
         
-        NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-        NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
-        float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
-        accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
-        
-        [formRequest setPostValue:lat forKey:@"lat"];
-        [formRequest setPostValue:lng forKey:@"long"];
-        [formRequest setPostValue:[NSString stringWithFormat:@"%f", accuracy] forKey:@"accuracy"];
+        if (location){
+            NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+            NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+            float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
+            accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
+            
+            [formRequest setPostValue:lat forKey:@"lat"];
+            [formRequest setPostValue:lng forKey:@"long"];
+            [formRequest setPostValue:[NSString stringWithFormat:@"%f", accuracy] forKey:@"accuracy"];
+        }
         
         //for debugging, for now.
         for (NSDictionary* dict in [formRequest postData]){
@@ -158,9 +172,6 @@
                 DLog(@"ALERT-NULL POST VALUE");
             }
         }
-        [formRequest setPostValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"uuid"];
-    
-    
     }
     
     [request signRequestWithClientIdentifier:[NinaHelper getConsumerKey] secret:[NinaHelper getConsumerSecret]
