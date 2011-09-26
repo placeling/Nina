@@ -193,9 +193,28 @@
     
 }
 
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [picker dismissModalViewControllerAnimated:YES];
+    DLog(@"Cancelled image picking");
+}
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img editingInfo:(NSDictionary *)editInfo {
+/*
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    [picker dismissModalViewControllerAnimated:YES];
+    [picker release];
     
+    UIImage *img = [info objectForKey:UIImagePickerControllerEditedImage];
+    // AND the original image works great
+    
+    if (!img){
+        img = [info objectForKey:UIImagePickerControllerEditedImage];
+    }
+    
+    if (!img){
+        DLog(@"ERROR:Null pic returned");
+        return;
+    }
+
     NSNumber *tag = [self uploadImageAndReturnTag:img];
     
     Photo *photo = [[Photo alloc] init];
@@ -208,7 +227,24 @@
     
     //create an image for upload, bounded by 960, since that's the max the thing will take anyway
     [self refreshImages];
-    [self dismissModalViewControllerAnimated:YES];
+}
+ */
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img editingInfo:(NSDictionary *)editingInfo{
+    [picker dismissModalViewControllerAnimated:YES];
+    NSNumber *tag = [self uploadImageAndReturnTag:img];
+    
+    Photo *photo = [[Photo alloc] init];
+    photo.thumb_image = img;
+    
+    [uploadingPics setObject:photo forKey:tag];
+    
+    [self.perspective.photos addObject:photo];
+    self.perspective.modified = TRUE;
+    [photo release];
+    
+    //create an image for upload, bounded by 960, since that's the max the thing will take anyway
+    [self refreshImages];
 }
 
 
@@ -219,9 +255,7 @@
                               resizedImageWithContentMode:UIViewContentModeScaleAspectFit
                               bounds:CGSizeMake(960, 960)
                               interpolationQuality:kCGInterpolationHigh];
-    } else {
-        image = image;
-    }
+    } 
     
     NSData* imgData = UIImageJPEGRepresentation(image, 0.5);
     

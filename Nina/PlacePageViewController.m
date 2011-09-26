@@ -128,6 +128,15 @@
 
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    if (myPerspective && myPerspective.mine && myPerspective.modified){
+        myPerspective.modified = false;
+        [self.tableView reloadData];
+    }
+}
+
 #pragma mark - Share Sheet
 
 -(void) showShareSheet{

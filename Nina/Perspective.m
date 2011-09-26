@@ -11,7 +11,7 @@
 
 @implementation Perspective
 @synthesize user, place, notes, tags, photos, starred, lastModified;
-@synthesize dateAdded, visited, share, mine, perspectiveId;
+@synthesize dateAdded, visited, share, mine, perspectiveId, modified;
 
 -(id) initFromJsonDict:(NSDictionary *)jsonDict{
     if(self = [super init]){
@@ -27,6 +27,7 @@
         self.photos = [[NSMutableArray alloc] init];
         
         [self updateFromJsonDict:jsonDict];
+        modified = false;
 	}
 	return self;
 }
