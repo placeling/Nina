@@ -13,9 +13,11 @@
 #import "SignupController.h"
 #import "Facebook.h"
 #import "NinaAppDelegate.h"
+#import "NSString+SBJSON.h"
 
 @interface LoginController (Private)
     -(void)close;
+    -(BOOL)testAlreadyLoggedInFacebook:(NSDictionary*)fbDict;
 @end
 
 
@@ -83,19 +85,61 @@
     [facebook requestWithGraphPath:@"me" andDelegate:self];
 }
 
+-(BOOL)testAlreadyLoggedInFacebook:(NSDictionary*)fbDict{
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/v1/oauth/login_fb", [NinaHelper getHostname]];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    ASIFormDataRequest *request =  [[ASIFormDataRequest  alloc]  initWithURL:url];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [request setPostValue:@"FBAccessTokenKey" forKey:[defaults objectForKey:@"FBAccessTokenKey"] ];
+    [request setPostValue:@"FBId" forKey:[fbDict objectForKey:@"id"]];
+
+    [NinaHelper signRequest:request];
+
+    [request startSynchronous];
+    
+    NSString *body = [request responseString];
+
+    NSArray *tokens = [body componentsSeparatedByString:@"&"];
+    
+    if ([tokens count] > 1){
+        for (NSString* token in tokens){
+            NSArray *component = [token componentsSeparatedByString:@"="];
+            if ( [[NSString stringWithString:@"oauth_token"] isEqualToString:[component objectAtIndex:0]] ){
+                [NinaHelper setAccessToken:[component objectAtIndex:1]];
+            } else if ( [[NSString stringWithString:@"oauth_token_secret"] isEqualToString:[component objectAtIndex:0]] ){
+                [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
+            } else if ( [[NSString stringWithString:@"username"] isEqualToString:[component objectAtIndex:0]] ){
+                [NinaHelper setUsername:[component objectAtIndex:1]];
+            }
+        } 
+        return true;
+    } else {
+        return false;
+    }
+}
 
 - (void)request:(FBRequest *)request didLoad:(id)result{
     DLog(@"got facebook response: %@", result);
     
     NSDictionary *fbDict = (NSDictionary*)result;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    SignupController *signupController = [[SignupController alloc ] initWithStyle:UITableViewStyleGrouped];
-                                          
-    signupController.fbDict = fbDict;
+    [fbDict setValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"FBAccessTokenKey"];
+    [fbDict setValue:[defaults objectForKey:@"FBExpirationDateKey"] forKey:@"FBExpirationDateKey"];
     
-    [self.navigationController pushViewController:signupController animated:true];
-    
-    [signupController release];
+    if (![self testAlreadyLoggedInFacebook:fbDict]){
+        SignupController *signupController = [[SignupController alloc ] initWithStyle:UITableViewStyleGrouped];
+                                              
+        signupController.fbDict = fbDict;
+        
+        [self.navigationController pushViewController:signupController animated:true];
+        
+        [signupController release];
+    } else {
+        [self.navigationController dismissModalViewControllerAnimated:TRUE];
+    }
 }
 
 
