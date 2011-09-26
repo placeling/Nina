@@ -55,9 +55,9 @@
 }
 
 +(void) clearCredentials{
-    //[NinaHelper setAccessToken:nil];
-    //[NinaHelper setAccessTokenSecret:nil];
-    //[NinaHelper setUsername:nil];
+    [NinaHelper setAccessToken:nil];
+    [NinaHelper setAccessTokenSecret:nil];
+    [NinaHelper setUsername:nil];
 }
 
 +(void) showLoginController:(UIViewController*)sender{
