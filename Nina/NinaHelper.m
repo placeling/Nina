@@ -93,7 +93,7 @@
                                                                @"status_code", 
                                                                code, @"message", errorMessage, nil]];
         
-        NSString *alertMessage = [NSString stringWithFormat:@"%i Error", code];
+        NSString *alertMessage = [NSString stringWithFormat:@"%@ Error", code];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertMessage message:errorMessage
                                                        delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
