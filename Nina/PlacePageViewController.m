@@ -446,11 +446,14 @@
 }
 
 -(IBAction) googlePlacePage{    
-    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:self.place.googlePlacesUrl];
     
-    [self.navigationController pushViewController:genericWebViewController animated:true];
-    
-    [genericWebViewController release];
+    if (self.place.googlePlacesUrl != nil && ![self.place.googlePlacesUrl isKindOfClass:NSNull.class]){
+        GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:self.place.googlePlacesUrl];
+        
+        [self.navigationController pushViewController:genericWebViewController animated:true];
+        
+        [genericWebViewController release];
+    }
 }
 
 
