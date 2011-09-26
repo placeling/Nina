@@ -92,7 +92,7 @@
     
     ASIFormDataRequest *request =  [[ASIFormDataRequest  alloc]  initWithURL:url];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [request setPostValue:@"FBAccessTokenKey" forKey:[defaults objectForKey:@"FBAccessTokenKey"] ];
+    [request setPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"FBAccessTokenKey" ];
     [request setPostValue:@"FBId" forKey:[fbDict objectForKey:@"id"]];
 
     [NinaHelper signRequest:request];
@@ -124,11 +124,6 @@
     DLog(@"got facebook response: %@", result);
     
     NSDictionary *fbDict = (NSDictionary*)result;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    [fbDict setValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"FBAccessTokenKey"];
-    [fbDict setValue:[defaults objectForKey:@"FBExpirationDateKey"] forKey:@"FBExpirationDateKey"];
-    
     if (![self testAlreadyLoggedInFacebook:fbDict]){
         SignupController *signupController = [[SignupController alloc ] initWithStyle:UITableViewStyleGrouped];
                                               
