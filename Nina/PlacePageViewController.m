@@ -84,15 +84,22 @@
 
     NSString *urlText;
     if (self.referrer){
-        urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@&rf=%@", [NinaHelper getHostname], self.google_id, self.google_ref, self.referrer.username];
+        if (self.google_ref){
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@&rf=%@", [NinaHelper getHostname], self.google_id, self.google_ref, self.referrer.username];
+        } else {
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?rf=%@", [NinaHelper getHostname], self.google_id, self.referrer.username];
+        }
     } else {
-        urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@", [NinaHelper getHostname], self.google_id, self.google_ref];
+        if (self.google_ref){
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@", [NinaHelper getHostname], self.google_id, self.google_ref];
+        } else {
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@", [NinaHelper getHostname], self.google_id];
+        }
     }
     
     
     NSURL *url = [NSURL URLWithString:urlText];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [NinaHelper signRequest:request];
     
     homePerspectives = [[NSMutableArray alloc] initWithObjects:@"Loading", nil];
     followingPerspectives = [[NSMutableArray alloc] init];
@@ -100,10 +107,10 @@
     perspectives = homePerspectives;
     self.perspectiveType = home;
     
-
-    
     [request setDelegate:self];
     [request setTag:0];
+    
+    [NinaHelper signRequest:request];
     [request startAsynchronous];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
@@ -418,10 +425,10 @@
             NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/following", [NinaHelper getHostname], self.google_id];
             
             ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlText]];
-            [NinaHelper signRequest:request];
             [followingPerspectives addObject:@"Loading"]; //marker for spinner cell
             [request setDelegate:self];
             [request setTag:2];
+            [NinaHelper signRequest:request];
             [request startAsynchronous];
         } 
         perspectives = followingPerspectives;
@@ -432,10 +439,10 @@
             NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/all", [NinaHelper getHostname], self.google_id];
             
             ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlText]];
-            [NinaHelper signRequest:request];
             [everyonePerspectives addObject:@"Loading"]; //marker for spinner cell
             [request setDelegate:self];
             [request setTag:3];
+            [NinaHelper signRequest:request];
             [request startAsynchronous];
         }
         perspectives = everyonePerspectives;
