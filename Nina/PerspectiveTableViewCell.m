@@ -106,6 +106,13 @@
             [imageView release];
         }
         
+        //more then 2 photos means a scroll, otherwise click should go to page
+        if ([perspective.photos count] > 2){
+            cell.scrollView.userInteractionEnabled = true;
+        } else {
+            cell.scrollView.userInteractionEnabled = false;
+        }
+        
         [cell.scrollView setContentSize:CGSizeMake(cx, [cell.scrollView bounds].size.height)];
     }else{
         cell.scrollView.hidden = TRUE; //remove from view
