@@ -79,9 +79,12 @@
     }
     
     if (statusCode == 401){
-        [self clearCredentials];
         DLog(@"Got a 401, with access_token: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
-        [FlurryAnalytics logEvent:@"401_CREDENTIAL_RESET"];
+        if([[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]){
+            //only send event on a hard reset
+            [FlurryAnalytics logEvent:@"401_CREDENTIAL_RESET"];
+        }
+        [self clearCredentials];
         
         //if ([request.responseString rangeOfString:@"BAD_PASS"].location != NSNotFound){
             [NinaHelper showLoginController:sender];    
