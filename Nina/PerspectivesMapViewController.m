@@ -231,6 +231,10 @@
     [self mapUserPlaces];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [StyleHelper styleToolBar:self.toolbar];
+}
+
 - (void)viewDidUnload{
     [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
     [super viewDidUnload];
