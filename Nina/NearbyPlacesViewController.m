@@ -24,7 +24,7 @@
 
 @synthesize reloading=_reloading;
 @synthesize placesTableView;
-@synthesize searchBar=_searchBar;
+@synthesize searchBar=_searchBar, toolBar;
 @synthesize tableFooterView, gpsLabel;
 
 -(void)findNearbyPlaces {
@@ -85,6 +85,7 @@
     [_searchBar release];
     [nearbyPlaces release];
     [gpsLabel release];
+    [toolBar release];
     [super dealloc];
     
 }
@@ -169,6 +170,12 @@
     self.searchBar.delegate = self;
     [self findNearbyPlaces];
     
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [StyleHelper styleSearchBar:self.searchBar];
+    [StyleHelper styleToolBar:self.toolBar];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

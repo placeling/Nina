@@ -49,6 +49,7 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:TRUE];    
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
+    [StyleHelper styleBackgroundView:self.view];
     
     if ([NinaHelper getAccessTokenSecret]){
         UIBarButtonItem *accountButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(showAccountSheet)];
