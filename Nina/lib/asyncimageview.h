@@ -25,6 +25,9 @@
 
 @property(nonatomic, retain) Photo *photo;
 
-- (void)loadImageFromPhoto:(Photo*)photo;
+- (id) initWithPhoto:(Photo *)photo;
+
+-(void) loadImageFromPhoto:(Photo*)photo;
+-(void) loadImage;
 
 @end

@@ -26,6 +26,7 @@
 #import "MyPerspectiveCellViewController.h"
 
 #import "SinglePlaceMapView.h"
+#import "ASIDownloadCache.h"
 
 #define kMinCellHeight 60
 #define SectionHeaderHeight 44
@@ -340,6 +341,7 @@
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request setDelegate:self];
     [request setTag:1];
+    [request setDownloadCache:[ASIDownloadCache sharedCache]];
     [request startAsynchronous];
     
     mapRequested = true;

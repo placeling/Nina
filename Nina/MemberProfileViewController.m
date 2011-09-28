@@ -16,6 +16,7 @@
 #import "MyPerspectiveCellViewController.h"
 #import "PlacePageViewController.h"
 #import "PerspectivesMapViewController.h"
+#import "ASIDownloadCache.h"
 
 @interface MemberProfileViewController() 
 -(void) loadData;
