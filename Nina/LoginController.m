@@ -251,7 +251,7 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     
     UIBarButtonItem *button =  [[UIBarButtonItem  alloc]initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(close)];
     self.navigationItem.leftBarButtonItem = button;

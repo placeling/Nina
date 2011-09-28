@@ -20,6 +20,7 @@
 #import "FlurryAnalytics.h"
 #import "MBProgressHUD.h"
 #import "UIDevice+IdentifierAddition.h"
+#import "ActivityFeedViewController.h"
 
 @implementation HomeViewController
 
@@ -46,7 +47,8 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:TRUE];
+    [super viewWillAppear:TRUE];    
+    [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     
     if ([NinaHelper getAccessTokenSecret]){
         UIBarButtonItem *accountButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(showAccountSheet)];
@@ -130,6 +132,13 @@
     NearbyPlacesViewController *nearbyPlacesViewController = [[NearbyPlacesViewController alloc] init];
     [self.navigationController pushViewController:nearbyPlacesViewController animated:YES];
     [nearbyPlacesViewController release];
+}
+
+-(IBAction) activityFeed{
+    ActivityFeedViewController *activityFeedViewController = [[ActivityFeedViewController alloc] init];
+    
+    [self.navigationController pushViewController:activityFeedViewController animated:true];
+    [activityFeedViewController release];
 }
 
 -(IBAction) random{

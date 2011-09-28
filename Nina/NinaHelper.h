@@ -120,6 +120,7 @@
 #import "ASIFormDataRequest.h"
 #import <CoreLocation/CoreLocation.h>
 #import "LocationManagerManager.h"
+#import "StyleHelper.h"
 
 @interface NinaHelper : NSObject 
 

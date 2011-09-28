@@ -11,6 +11,9 @@
 
 @interface HomeViewController : UIViewController<UIActionSheetDelegate>
 
+
+-(IBAction) activityFeed;
+
 -(IBAction) suggested;
 
 -(IBAction) bookmarkSpot;
@@ -20,7 +23,7 @@
 
 -(IBAction) everythingList;
 
--(IBAction)showLogin;
+-(IBAction) showLogin;
 
 -(IBAction) logout;
 -(IBAction) myProfile;
