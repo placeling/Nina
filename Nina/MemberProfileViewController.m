@@ -62,9 +62,6 @@
 	[request startAsynchronous];
     
 	[self blankLoad];
-    
-    
-
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -80,6 +77,8 @@
     self.followButton.enabled = false;
     self.followersButton.enabled = false;
     self.followingButton.enabled = false;
+    
+    [StyleHelper styleInfoView:self.headerView];
     
 }
 
