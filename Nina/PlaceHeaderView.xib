@@ -45,8 +45,9 @@
 					<object class="IBUILabel" id="922658027">
 						<reference key="NSNextResponder" ref="903079877"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{18, 10}, {232, 24}}</string>
+						<string key="NSFrame">{{18, 10}, {283, 24}}</string>
 						<reference key="NSSuperview" ref="903079877"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1030895817"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -74,8 +75,9 @@
 					<object class="IBUILabel" id="1030895817">
 						<reference key="NSNextResponder" ref="903079877"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{18, 32}, {232, 20}}</string>
+						<string key="NSFrame">{{18, 32}, {192, 20}}</string>
 						<reference key="NSSuperview" ref="903079877"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="844907482"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -100,8 +102,9 @@
 					<object class="IBUILabel" id="844907482">
 						<reference key="NSNextResponder" ref="903079877"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{18, 47}, {232, 20}}</string>
+						<string key="NSFrame">{{18, 47}, {192, 20}}</string>
 						<reference key="NSSuperview" ref="903079877"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="344370070"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -121,6 +124,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{18, 60}, {179, 34}}</string>
 						<reference key="NSSuperview" ref="903079877"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="729265678"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -146,8 +150,9 @@
 					<object class="IBUISegmentedControl" id="543716752">
 						<reference key="NSNextResponder" ref="903079877"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, 137}, {320, 44}}</string>
+						<string key="NSFrame">{{-1, 181}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="903079877"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -190,8 +195,9 @@
 					<object class="IBUIScrollView" id="1021377505">
 						<reference key="NSNextResponder" ref="903079877"/>
 						<int key="NSvFlags">296</int>
-						<string key="NSFrame">{{0, 101}, {320, 28}}</string>
+						<string key="NSFrame">{{0, 114}, {320, 51}}</string>
 						<reference key="NSSuperview" ref="903079877"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="543716752"/>
 						<object class="NSColor" key="IBUIBackgroundColor" id="821382414">
 							<int key="NSColorSpace">3</int>
@@ -204,9 +210,10 @@
 					</object>
 					<object class="IBUIButton" id="729265678">
 						<reference key="NSNextResponder" ref="903079877"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{167, 30}, {134, 69}}</string>
+						<int key="NSvFlags">301</int>
+						<string key="NSFrame">{{217, 32}, {74, 74}}</string>
 						<reference key="NSSuperview" ref="903079877"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1021377505"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -236,8 +243,9 @@
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{321, 180}</string>
+				<string key="NSFrameSize">{321, 224}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="922658027"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
@@ -353,11 +361,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="922658027"/>
 							<reference ref="1030895817"/>
-							<reference ref="1021377505"/>
 							<reference ref="344370070"/>
-							<reference ref="729265678"/>
 							<reference ref="844907482"/>
+							<reference ref="1021377505"/>
 							<reference ref="543716752"/>
+							<reference ref="729265678"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">View</string>
@@ -448,7 +456,202 @@
 			<nil key="sourceID"/>
 			<int key="maxID">36</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">PlacePageViewController</string>
+					<string key="superclassName">UITableViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>bookmark</string>
+							<string>changedSegment</string>
+							<string>checkinFoursquare</string>
+							<string>editPerspective</string>
+							<string>editPerspectivePhotos</string>
+							<string>googlePlacePage</string>
+							<string>shareFacebook</string>
+							<string>shareTwitter</string>
+							<string>showSingleAnnotatedMap</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>bookmark</string>
+							<string>changedSegment</string>
+							<string>checkinFoursquare</string>
+							<string>editPerspective</string>
+							<string>editPerspectivePhotos</string>
+							<string>googlePlacePage</string>
+							<string>shareFacebook</string>
+							<string>shareTwitter</string>
+							<string>showSingleAnnotatedMap</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">bookmark</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">changedSegment</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">checkinFoursquare</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">editPerspective</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">editPerspectivePhotos</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">googlePlacePage</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">shareFacebook</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">shareTwitter</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showSingleAnnotatedMap</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addressLabel</string>
+							<string>bookmarkButton</string>
+							<string>bookmarkView</string>
+							<string>categoriesLabel</string>
+							<string>cityLabel</string>
+							<string>googlePlacesButton</string>
+							<string>mapButtonView</string>
+							<string>nameLabel</string>
+							<string>segmentedControl</string>
+							<string>tableFooterView</string>
+							<string>tableHeaderView</string>
+							<string>tagScrollView</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UILabel</string>
+							<string>UIButton</string>
+							<string>UIView</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UILabel</string>
+							<string>UISegmentedControl</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIScrollView</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addressLabel</string>
+							<string>bookmarkButton</string>
+							<string>bookmarkView</string>
+							<string>categoriesLabel</string>
+							<string>cityLabel</string>
+							<string>googlePlacesButton</string>
+							<string>mapButtonView</string>
+							<string>nameLabel</string>
+							<string>segmentedControl</string>
+							<string>tableFooterView</string>
+							<string>tableHeaderView</string>
+							<string>tagScrollView</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">addressLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">bookmarkButton</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">bookmarkView</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">categoriesLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">cityLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">googlePlacesButton</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">mapButtonView</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">nameLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">segmentedControl</string>
+								<string key="candidateClassName">UISegmentedControl</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tableFooterView</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tableHeaderView</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tagScrollView</string>
+								<string key="candidateClassName">UIScrollView</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/PlacePageViewController.h</string>
+					</object>
+				</object>
+			</object>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">

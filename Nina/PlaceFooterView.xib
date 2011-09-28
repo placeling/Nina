@@ -3,17 +3,16 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1280</int>
 		<string key="IBDocument.SystemVersion">10K549</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1900</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1934</string>
 		<string key="IBDocument.AppKitVersion">1038.36</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">894</string>
+			<string key="NS.object.0">931</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<string>IBUIButton</string>
-			<string>IBUIImageView</string>
 			<string>IBUIView</string>
 			<string>IBUILabel</string>
 			<string>IBProxyObject</string>
@@ -44,7 +43,7 @@
 					<object class="IBUIButton" id="418554374">
 						<reference key="NSNextResponder" ref="334200685"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{193, 7}, {120, 30}}</string>
+						<string key="NSFrame">{{8, 11}, {304, 44}}</string>
 						<reference key="NSSuperview" ref="334200685"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1069850209"/>
@@ -53,7 +52,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Place Page</string>
+						<string key="IBUINormalTitle">Hours, directions &amp; contact info:</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -68,53 +67,6 @@
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">2</int>
-							<int key="size">2</int>
-						</object>
-						<object class="NSFont" key="IBUIFont">
-							<string key="NSName">Helvetica-Bold</string>
-							<double key="NSSize">18</double>
-							<int key="NSfFlags">16</int>
-						</object>
-					</object>
-					<object class="IBUIImageView" id="839361019">
-						<reference key="NSNextResponder" ref="334200685"/>
-						<int key="NSvFlags">256</int>
-						<string key="NSFrame">{{168, 36}, {145, 37}}</string>
-						<reference key="NSSuperview" ref="334200685"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<int key="IBUIContentMode">1</int>
-						<bool key="IBUIMultipleTouchEnabled">YES</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">powered-by-google-on-white.png</string>
-						</object>
-					</object>
-					<object class="IBUILabel" id="490790326">
-						<reference key="NSNextResponder" ref="334200685"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{5, 7}, {180, 30}}</string>
-						<reference key="NSSuperview" ref="334200685"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="418554374"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<int key="IBUIContentMode">7</int>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Hours, directions &amp; contact info:</string>
-						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
-						</object>
-						<nil key="IBUIHighlightedColor"/>
-						<int key="IBUIBaselineAdjustment">1</int>
-						<float key="IBUIMinimumFontSize">10</float>
-						<object class="IBUIFontDescription" key="IBUIFontDescription">
-							<int key="type">2</int>
 							<double key="pointSize">12</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
@@ -126,10 +78,10 @@
 					<object class="IBUILabel" id="1069850209">
 						<reference key="NSNextResponder" ref="334200685"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{40, 72}, {280, 21}}</string>
+						<string key="NSFrame">{{20, 56}, {280, 21}}</string>
 						<reference key="NSSuperview" ref="334200685"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="839361019"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -154,13 +106,13 @@
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{320, 93}</string>
+				<string key="NSFrameSize">{320, 77}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="490790326"/>
+				<reference key="NSNextKeyView" ref="418554374"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC41OTY0NzA4ODg1IDAuNzgyNDQ3NzQ3OCAxAA</bytes>
+					<bytes key="NSRGB">MC43ODgyMzUyOTQxIDAuNzA5ODAzOTIxNiAwLjQzNTI5NDExNzYAA</bytes>
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
@@ -177,6 +129,14 @@
 					<int key="connectionID">5</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">tableFooterView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="334200685"/>
+					</object>
+					<int key="connectionID">7</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">googlePlacePage</string>
 						<reference key="source" ref="418554374"/>
@@ -184,14 +144,6 @@
 						<int key="IBEventType">7</int>
 					</object>
 					<int key="connectionID">6</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">tableFooterView</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="334200685"/>
-					</object>
-					<int key="connectionID">7</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -221,26 +173,14 @@
 						<reference key="object" ref="334200685"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="418554374"/>
-							<reference ref="839361019"/>
 							<reference ref="1069850209"/>
-							<reference ref="490790326"/>
+							<reference ref="418554374"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">4</int>
 						<reference key="object" ref="418554374"/>
-						<reference key="parent" ref="334200685"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">8</int>
-						<reference key="object" ref="839361019"/>
-						<reference key="parent" ref="334200685"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">9</int>
-						<reference key="object" ref="490790326"/>
 						<reference key="parent" ref="334200685"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -261,16 +201,12 @@
 					<string>10.IBPluginDependency</string>
 					<string>3.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
-					<string>8.IBPluginDependency</string>
-					<string>9.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>PlacePageViewController</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>UIResponder</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -304,12 +240,18 @@
 							<string>bookmark</string>
 							<string>changedSegment</string>
 							<string>checkinFoursquare</string>
+							<string>editPerspective</string>
+							<string>editPerspectivePhotos</string>
 							<string>googlePlacePage</string>
 							<string>shareFacebook</string>
 							<string>shareTwitter</string>
+							<string>showSingleAnnotatedMap</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -325,9 +267,12 @@
 							<string>bookmark</string>
 							<string>changedSegment</string>
 							<string>checkinFoursquare</string>
+							<string>editPerspective</string>
+							<string>editPerspectivePhotos</string>
 							<string>googlePlacePage</string>
 							<string>shareFacebook</string>
 							<string>shareTwitter</string>
+							<string>showSingleAnnotatedMap</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -344,6 +289,14 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">editPerspective</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">editPerspectivePhotos</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">googlePlacePage</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -355,6 +308,10 @@
 								<string key="name">shareTwitter</string>
 								<string key="candidateClassName">id</string>
 							</object>
+							<object class="IBActionInfo">
+								<string key="name">showSingleAnnotatedMap</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
@@ -362,26 +319,32 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addressLabel</string>
+							<string>bookmarkButton</string>
+							<string>bookmarkView</string>
 							<string>categoriesLabel</string>
 							<string>cityLabel</string>
 							<string>googlePlacesButton</string>
-							<string>mapImageView</string>
+							<string>mapButtonView</string>
 							<string>nameLabel</string>
 							<string>segmentedControl</string>
 							<string>tableFooterView</string>
 							<string>tableHeaderView</string>
+							<string>tagScrollView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UILabel</string>
+							<string>UIButton</string>
+							<string>UIView</string>
 							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UIButton</string>
-							<string>UIImageView</string>
+							<string>UIButton</string>
 							<string>UILabel</string>
 							<string>UISegmentedControl</string>
 							<string>UIView</string>
 							<string>UIView</string>
+							<string>UIScrollView</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -389,20 +352,31 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addressLabel</string>
+							<string>bookmarkButton</string>
+							<string>bookmarkView</string>
 							<string>categoriesLabel</string>
 							<string>cityLabel</string>
 							<string>googlePlacesButton</string>
-							<string>mapImageView</string>
+							<string>mapButtonView</string>
 							<string>nameLabel</string>
 							<string>segmentedControl</string>
 							<string>tableFooterView</string>
 							<string>tableHeaderView</string>
+							<string>tagScrollView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
 								<string key="name">addressLabel</string>
 								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">bookmarkButton</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">bookmarkView</string>
+								<string key="candidateClassName">UIView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">categoriesLabel</string>
@@ -417,8 +391,8 @@
 								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">mapImageView</string>
-								<string key="candidateClassName">UIImageView</string>
+								<string key="name">mapButtonView</string>
+								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">nameLabel</string>
@@ -435,6 +409,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">tableHeaderView</string>
 								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tagScrollView</string>
+								<string key="candidateClassName">UIScrollView</string>
 							</object>
 						</object>
 					</object>
@@ -453,10 +431,6 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">powered-by-google-on-white.png</string>
-			<string key="NS.object.0">{212, 32}</string>
-		</object>
-		<string key="IBCocoaTouchPluginVersion">894</string>
+		<string key="IBCocoaTouchPluginVersion">931</string>
 	</data>
 </archive>

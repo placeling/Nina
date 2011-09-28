@@ -46,7 +46,7 @@
 @synthesize place=_place, mapImage, referrer;
 @synthesize nameLabel, addressLabel, cityLabel, categoriesLabel;
 @synthesize segmentedControl, tagScrollView;
-@synthesize mapButtonView, googlePlacesButton;
+@synthesize mapButtonView, googlePlacesButton, bookmarkButton;
 @synthesize tableHeaderView, tableFooterView, bookmarkView, perspectiveType;
 @synthesize homePerspectives, followingPerspectives, everyonePerspectives;
 
@@ -128,16 +128,14 @@
     UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
     //self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
-    
-    self.mapButtonView.layer.cornerRadius = 8.0f;
-    //self.mapButtonView.layer.borderWidth = 1.0f;
-    //self.mapButtonView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    self.mapButtonView.layer.masksToBounds = YES;
-
 }
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [StyleHelper styleBackgroundView:self.view];
+    [StyleHelper styleBookmarkButton:self.bookmarkButton];
+    [StyleHelper styleInfoView:self.tableHeaderView];
+    [StyleHelper styleMapImage:self.mapButtonView];
     
     if (myPerspective && myPerspective.mine && myPerspective.modified){
         myPerspective.modified = false;
@@ -238,6 +236,7 @@
             case 1:{
                 //map download
                 NSData *responseData = [request responseData];
+                self.mapButtonView.contentMode = UIViewContentModeScaleToFill;
                 self.mapImage = [UIImage imageWithData:responseData];
                 
                 [self.mapButtonView setImage:self.mapImage forState:UIControlStateNormal];
@@ -675,6 +674,7 @@
     [cityLabel release];
     [tableHeaderView release];
     [referrer release];
+    [bookmarkButton release];
     
     [super dealloc];
 }

@@ -37,6 +37,7 @@ typedef enum {
     PerspectiveTypes perspectiveType;
     
     IBOutlet UIButton *googlePlacesButton;
+    IBOutlet UIButton *bookmarkButton;
     IBOutlet UILabel *nameLabel;
     IBOutlet UILabel *addressLabel;
     IBOutlet UILabel *cityLabel;
@@ -63,6 +64,7 @@ typedef enum {
 @property (nonatomic, retain) Place *place;
 @property (nonatomic, retain) UIImage *mapImage;
 
+@property (nonatomic, retain) IBOutlet UIButton *bookmarkButton;
 @property (nonatomic, retain) IBOutlet UIButton *googlePlacesButton;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *addressLabel;
