@@ -63,10 +63,23 @@
 	[self blankLoad];
     
     
+
+}
+
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [StyleHelper styleBackgroundView:self.tableView];
+    
     self.profileImageView.layer.cornerRadius = 8.0f;
     self.profileImageView.layer.borderWidth = 1.0f;
     self.profileImageView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    self.profileImageView.layer.masksToBounds = YES;
+    self.profileImageView.layer.masksToBounds = YES; 
+    
+    self.placeMarkButton.enabled = false;
+    self.followButton.enabled = false;
+    self.followersButton.enabled = false;
+    self.followingButton.enabled = false;
+    
 }
 
 -(void) blankLoad{
@@ -113,6 +126,11 @@
     self.followingButton.detailLabel.text = @"Following";    
     self.followersButton.detailLabel.text = @"Followers";
     self.placeMarkButton.detailLabel.text = @"Bookmarks";
+    
+    self.placeMarkButton.enabled = true;
+    self.followButton.enabled = true;
+    self.followersButton.enabled = true;
+    self.followingButton.enabled = true;
     
     self.followingButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.followingCount];
     self.followersButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.followerCount];
