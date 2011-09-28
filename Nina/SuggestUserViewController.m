@@ -61,7 +61,7 @@
 	NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users/suggested?lat=%i&long=%i", [NinaHelper getHostname], location.latitude, location.longitude];
     
     NSURL *url = [NSURL URLWithString:targetURL];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [NinaHelper signRequest:request];
     [request setDelegate:self];
     [request startSynchronous];
