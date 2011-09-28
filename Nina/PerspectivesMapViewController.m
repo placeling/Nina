@@ -22,7 +22,7 @@
 
 @implementation PerspectivesMapViewController
 
-@synthesize mapView;
+@synthesize mapView, toolbar;
 @synthesize username=_username;
 @synthesize nearbyMarks;
 @synthesize locationManager;
@@ -82,6 +82,7 @@
     [_username release];
     [locationManager release];
     [nearbyMarks release];
+    [toolbar release];
     [super dealloc];
 }
 

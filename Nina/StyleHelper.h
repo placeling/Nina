@@ -14,4 +14,8 @@
 +(void) styleBackgroundView:(UIView*)view;
 +(void) styleSearchBar:(UISearchBar*)searchBar;
 +(void) styleToolBar:(UIToolbar *)toolBar;
++(void) styleInfoView:(UIView *)view;
++(void) styleBookmarkButton:(UIButton*)button;
++(void) styleMapImage:(UIButton*)button;
+
 @end
