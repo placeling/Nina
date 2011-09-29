@@ -32,16 +32,15 @@
     [super dealloc];
 }
 
--(void) viewDidLoad{
-    //make sizing choices based on your needs, experiment with these. maybe not all the calls below are needed.
-    self.contentMode = UIViewContentModeScaleAspectFit;
-}
-
 -(void) loadImage{
     UIImage *picture;
     if (self.photo.thumb_image){
         picture = self.photo.thumb_image;
     } else {
+        
+        if (self.photo.thumb_url == nil){
+            
+        }
         if (_request!=nil) { [_request release]; } //in case we are downloading a 2nd image
         
         DLog(@"Downloading photo for %@", self.photo.photo_id);
@@ -63,16 +62,22 @@
         
     }
     
-    CGSize size = self.frame.size;
-    
-    if ( picture.size.width > size.width || picture.size.height > size.height){
-        picture = [picture
-                   resizedImageWithContentMode:UIViewContentModeScaleAspectFit
-                   bounds:CGSizeMake(size.width, size.height)
-                   interpolationQuality:kCGInterpolationHigh];
+    for (UIView *subView in self.subviews){
+        [subView removeFromSuperview];
     }
     
-    self.image = picture;
+    //make sizing choices based on your needs, experiment with these. maybe not all the calls below are needed.
+    self.contentMode = UIViewContentModeScaleAspectFit;
+    
+    CGSize size = self.frame.size;
+    
+    
+    self.image = [picture
+                  thumbnailImage:MIN(size.width, size.height)
+                  transparentBorder:1
+                  cornerRadius:1
+                  interpolationQuality:kCGInterpolationHigh ];
+                  
     [self setNeedsLayout]; 
 }
 
@@ -113,25 +118,9 @@
         //make an image view for the image
         UIImage *picture = [UIImage imageWithData:responseData];
         
-        //make sizing choices based on your needs, experiment with these. maybe not all the calls below are needed.
-        self.contentMode = UIViewContentModeScaleAspectFit;
+        self.photo.thumb_image = picture;
         
-        CGSize size = self.frame.size;
-        
-        if ( picture.size.width < size.width || picture.size.height < size.height){
-            picture = [picture
-                     resizedImageWithContentMode:UIViewContentModeScaleAspectFit
-                     bounds:CGSizeMake(size.width, size.height)
-                     interpolationQuality:kCGInterpolationHigh];
-        }
-        
-        for (UIView *subView in self.subviews){
-            [subView removeFromSuperview];
-        }
-        
-        self.image = picture;
-        
-        [self setNeedsLayout];
+        [self loadImage];
 	}
     
 }

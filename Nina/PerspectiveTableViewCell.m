@@ -24,7 +24,7 @@
     
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    heightCalc += textSize.height;
+    heightCalc += MAX(textSize.height, 44);
     
     if (perspective.photos && perspective.photos.count > 0){
         heightCalc += 166;
@@ -55,12 +55,13 @@
         
         CGSize textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:memoFrame.size lineBreakMode:UILineBreakModeWordWrap];
                 
-        [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, memoSize.width, MAX(textSize.height, 44))];
+        [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, memoSize.width, MAX(textSize.height, 55))];
         
-        verticalCursor += MAX(textSize.height, 44);
+        verticalCursor += cell.memoText.frame.size.height;
     }else{
         cell.memoText.text = @""; //get rid of hipster lorem
         cell.memoText.hidden = TRUE;
+        verticalCursor += 55;
     }
 
     if (perspective.mine){
@@ -79,6 +80,7 @@
     cell.userImage.layer.borderWidth = 1.0f;
     cell.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     cell.userImage.layer.masksToBounds = YES;
+    cell.memoText.backgroundColor = [UIColor clearColor];
     
     if(perspective.photos && perspective.photos.count > 0){
         CGRect scrollFrame = cell.scrollView.frame;
@@ -92,16 +94,17 @@
         cell.scrollView.scrollEnabled = YES;
         cell.scrollView.pagingEnabled = YES;
         
-        CGFloat cx = 5;
-        for ( Photo* photo in perspective.photos ){
+        CGFloat cx = 2;
+        for ( Photo* photo in [perspective.photos reverseObjectEnumerator] ){
             
-            CGRect rect = CGRectMake(cx, 3, 150, 150);
+            CGRect rect = CGRectMake(cx, 3, 152, 152);
             UIImageView *imageView = [[AsyncImageView alloc] initWithFrame:rect];
+            [(AsyncImageView*)imageView setPhoto:photo]; 
             [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
             
             [cell.scrollView addSubview:imageView];
             
-            cx += imageView.frame.size.width+5;
+            cx += imageView.frame.size.width+2;
             
             [imageView release];
         }

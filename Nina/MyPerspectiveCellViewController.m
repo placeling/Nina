@@ -27,10 +27,10 @@
     
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    heightCalc += textSize.height;
-    
+    heightCalc += MAX(textSize.height, 44);
+
     if (perspective.photos && perspective.photos.count > 0){
-        heightCalc += 70;
+        heightCalc += 160;
     }
     
     return heightCalc;
@@ -39,7 +39,7 @@
 
 +(void) setupCell:(MyPerspectiveCellViewController*)cell forPerspective:(Perspective*)perspective{
     
-    CGFloat verticalCursor = 0;
+    CGFloat verticalCursor = cell.memoLabel.frame.origin.y;
     cell.perspective = perspective;
     BOOL emptyPerspective = true;
     cell.footerLabel.text = [NSString stringWithFormat:@"Last Modified: %@", perspective.lastModified];
@@ -62,8 +62,7 @@
     if(perspective.photos && perspective.photos.count > 0){
         emptyPerspective = false;
         CGRect scrollFrame = cell.imageScroll.frame;
-        
-        [cell.imageScroll setFrame:CGRectMake(scrollFrame.origin.x, verticalCursor, scrollFrame.size.width, 70)];
+        [cell.imageScroll setFrame:CGRectMake(scrollFrame.origin.x, verticalCursor, scrollFrame.size.width, scrollFrame.size.height)];
         
         [cell.imageScroll setCanCancelContentTouches:NO];
         
@@ -73,9 +72,9 @@
         cell.imageScroll.pagingEnabled = YES;
         
         CGFloat cx = 5;
-        for ( Photo* photo in perspective.photos ){
+        for ( Photo* photo in [perspective.photos reverseObjectEnumerator] ){
             
-            CGRect rect = CGRectMake(cx, 3, 64, 64);
+            CGRect rect = CGRectMake(cx, 3, 150, 150);
             UIImageView *imageView = [[AsyncImageView alloc] initWithFrame:rect];
             [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
                         
@@ -86,7 +85,7 @@
             [imageView release];
         }
         
-        verticalCursor += cell.imageScroll.frame.size.height;
+        verticalCursor += scrollFrame.size.height;
         [cell.imageScroll setContentSize:CGSizeMake(cx, [cell.imageScroll bounds].size.height)];
     }else{
         cell.imageScroll.hidden = TRUE; //remove from view

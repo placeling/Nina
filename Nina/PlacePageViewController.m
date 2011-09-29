@@ -136,7 +136,7 @@
     [StyleHelper styleBookmarkButton:self.bookmarkButton];
     [StyleHelper styleInfoView:self.tableHeaderView];
     [StyleHelper styleMapImage:self.mapButtonView];
-    
+    //self.tableview.
     if (myPerspective && myPerspective.mine && myPerspective.modified){
         myPerspective.modified = false;
         [self.tableView reloadData];
