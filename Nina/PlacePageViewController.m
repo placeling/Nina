@@ -42,7 +42,7 @@
 @implementation PlacePageViewController
 
 @synthesize dataLoaded;
-@synthesize google_id, google_ref;
+@synthesize place_id, google_ref, perspective_id;
 @synthesize place=_place, mapImage, referrer;
 @synthesize nameLabel, addressLabel, cityLabel, categoriesLabel;
 @synthesize segmentedControl, tagScrollView;
@@ -53,7 +53,7 @@
 - (id) initWithPlace:(Place *)place{
     if(self = [super init]){
         self.place = place;
-        self.google_id = place.google_id;
+        self.place_id = place.google_id;
         
 	}
 	return self;    
@@ -77,24 +77,27 @@
     self.tableView.tableFooterView = self.tableFooterView;
     
     if (self.place){
-        self.google_id = self.place.google_id;
+        self.place_id = self.place.google_id;
     }
     
     // Initializations
     [self blankLoad];
 
     NSString *urlText;
-    if (self.referrer){
+    
+    if (self.perspective_id){
+        urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@", [NinaHelper getHostname], self.perspective_id];
+    }else if (self.referrer){
         if (self.google_ref){
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@&rf=%@", [NinaHelper getHostname], self.google_id, self.google_ref, self.referrer.username];
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@&rf=%@", [NinaHelper getHostname], self.place_id, self.google_ref, self.referrer.username];
         } else {
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?rf=%@", [NinaHelper getHostname], self.google_id, self.referrer.username];
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?rf=%@", [NinaHelper getHostname], self.place_id, self.referrer.username];
         }
     } else {
         if (self.google_ref){
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@", [NinaHelper getHostname], self.google_id, self.google_ref];
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@", [NinaHelper getHostname], self.place_id, self.google_ref];
         } else {
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@", [NinaHelper getHostname], self.google_id];
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@", [NinaHelper getHostname], self.place_id];
         }
     }
     
@@ -423,7 +426,7 @@
         self.perspectiveType = following;
         if (self.place.followingPerspectiveCount > 0 && (self.followingPerspectives.count == 0)){
             //only call if we know something there
-            NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/following", [NinaHelper getHostname], self.google_id];
+            NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/following", [NinaHelper getHostname], self.place_id];
             
             ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlText]];
             [followingPerspectives addObject:@"Loading"]; //marker for spinner cell
@@ -437,7 +440,7 @@
         self.perspectiveType = everyone;
         if (self.place.perspectiveCount > 0 && (self.everyonePerspectives.count ==0)){
             //only call if we know something there
-            NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/all", [NinaHelper getHostname], self.google_id];
+            NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/all", [NinaHelper getHostname], self.place_id];
             
             ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlText]];
             [everyonePerspectives addObject:@"Loading"]; //marker for spinner cell
@@ -663,7 +666,8 @@
 - (void)dealloc{
     [NinaHelper clearActiveRequests:0];
     
-    [google_id release];
+    [perspective_id release];
+    [place_id release];
     [google_ref release];
     [_place release];
     [mapImage release];

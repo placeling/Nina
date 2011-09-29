@@ -263,7 +263,7 @@
     NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
     PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] init];
     
-    placePageViewController.google_id = [place objectForKey:@"id"];
+    placePageViewController.place_id = [place objectForKey:@"id"];
     placePageViewController.google_ref = [place objectForKey:@"reference"];
 	[[self navigationController] pushViewController:placePageViewController animated:YES];
 	[placePageViewController release];

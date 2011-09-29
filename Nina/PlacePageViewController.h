@@ -25,7 +25,8 @@ typedef enum {
 //#import "EditViewController.h"
 
 @interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate> {        
-    NSString *google_id; 
+    NSString *place_id; 
+    NSString *perspective_id; 
     NSString *google_ref;
     
     Place *_place;
@@ -59,8 +60,9 @@ typedef enum {
 
 @property BOOL dataLoaded;
 
-@property (nonatomic, retain) NSString *google_id;
+@property (nonatomic, retain) NSString *place_id;
 @property (nonatomic, retain) NSString *google_ref;
+@property (nonatomic, retain) NSString *perspective_id; 
 @property (nonatomic, retain) Place *place;
 @property (nonatomic, retain) UIImage *mapImage;
 

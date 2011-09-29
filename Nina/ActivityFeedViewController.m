@@ -8,6 +8,9 @@
 
 #import "ActivityFeedViewController.h"
 #import "NSString+SBJSON.h"
+#import "PlacePageViewController.h"
+#import "MemberProfileViewController.h"
+#import "User.h"
 
 
 @interface ActivityFeedViewController (Private)
@@ -193,7 +196,35 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
- 
+    NSDictionary *activity = [recentActivities objectAtIndex:indexPath.row];
+    
+    NSString *activityType = [activity objectForKey:@"activity_type"];
+    
+    UIViewController *viewController;
+    
+        
+    if ([activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
+        PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+        placeController.perspective_id = [activity objectForKey:@"subject"];
+        viewController = placeController;
+    }else if ([activityType isEqualToString:@"NEW_PERSPECTIVE"]){
+        PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+        placeController.perspective_id = [activity objectForKey:@"subject"];
+        viewController = placeController;
+    } else if ([activityType isEqualToString:@"STAR_PERSPECTIVE"]){
+        PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+        placeController.perspective_id = [activity objectForKey:@"subject"];
+        viewController = placeController;
+    }  else if ([activityType isEqualToString:@"FOLLOW"]){
+        MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];
+        memberView.username = [activity objectForKey:@"username2"];
+        viewController = memberView;
+    } else {
+        DLog(@"ERROR: unknown activity story type");
+    }
+    
+    [self.navigationController pushViewController:viewController animated:TRUE];
+    [viewController release];
     
 }
 
