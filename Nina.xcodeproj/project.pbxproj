@@ -197,6 +197,10 @@
 		28EE54E61433D1EB00E36686 /* leather@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE54E41433D1EB00E36686 /* leather@2x.png */; };
 		28EE54F71434DDC600E36686 /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28EE54F51434DDC600E36686 /* ActivityTableViewCell.m */; };
 		28EE54F81434DDC600E36686 /* ActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28EE54F61434DDC600E36686 /* ActivityTableViewCell.xib */; };
+		28EE550214352BD800E36686 /* feed.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE54FE14352BD800E36686 /* feed.png */; };
+		28EE550314352BD800E36686 /* feed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE54FF14352BD800E36686 /* feed@2x.png */; };
+		28EE550414352BD800E36686 /* mymap.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE550014352BD800E36686 /* mymap.png */; };
+		28EE550514352BD800E36686 /* mymap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE550114352BD800E36686 /* mymap@2x.png */; };
 		28F189F61427F00F005DE786 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F189F51427F00F005DE786 /* UIImage+Resize.m */; };
 		28F189FC1427F072005DE786 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F189F91427F071005DE786 /* UIImage+Alpha.m */; };
 		28F189FD1427F072005DE786 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F189FB1427F072005DE786 /* UIImage+RoundedCorner.m */; };
@@ -498,6 +502,10 @@
 		28EE54F41434DDC600E36686 /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
 		28EE54F51434DDC600E36686 /* ActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableViewCell.m; sourceTree = "<group>"; };
 		28EE54F61434DDC600E36686 /* ActivityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityTableViewCell.xib; sourceTree = "<group>"; };
+		28EE54FE14352BD800E36686 /* feed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feed.png; sourceTree = "<group>"; };
+		28EE54FF14352BD800E36686 /* feed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feed@2x.png"; sourceTree = "<group>"; };
+		28EE550014352BD800E36686 /* mymap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mymap.png; sourceTree = "<group>"; };
+		28EE550114352BD800E36686 /* mymap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mymap@2x.png"; sourceTree = "<group>"; };
 		28F189F41427F00F005DE786 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		28F189F51427F00F005DE786 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		28F189F81427F071005DE786 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
@@ -1047,6 +1055,10 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				28EE54FE14352BD800E36686 /* feed.png */,
+				28EE54FF14352BD800E36686 /* feed@2x.png */,
+				28EE550014352BD800E36686 /* mymap.png */,
+				28EE550114352BD800E36686 /* mymap@2x.png */,
 				28A437911432E5AF005F192B /* canvas.png */,
 				28A437921432E5AF005F192B /* canvas@2x.png */,
 				28EE54E31433D1EB00E36686 /* leather.png */,
@@ -1253,6 +1265,10 @@
 				28EE54E51433D1EB00E36686 /* leather.png in Resources */,
 				28EE54E61433D1EB00E36686 /* leather@2x.png in Resources */,
 				28EE54F81434DDC600E36686 /* ActivityTableViewCell.xib in Resources */,
+				28EE550214352BD800E36686 /* feed.png in Resources */,
+				28EE550314352BD800E36686 /* feed@2x.png in Resources */,
+				28EE550414352BD800E36686 /* mymap.png in Resources */,
+				28EE550514352BD800E36686 /* mymap@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
