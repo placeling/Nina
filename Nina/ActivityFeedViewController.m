@@ -20,9 +20,7 @@
 @synthesize activityTableView;
 
 
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
@@ -109,6 +107,12 @@
     
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.title = @"Activity Feed";
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -157,36 +161,39 @@
     return [recentActivities count];
 }
 
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
+    
+    NSDictionary *activity;
+    activity = [recentActivities objectAtIndex:indexPath.row];
+    return [ActivityTableViewCell cellHeightForActivity:activity];
+}
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"Cell";
-    NSDictionary *place = [recentActivities objectAtIndex:indexPath.row];
+    static NSString *CellIdentifier = @"ActivityCell";
+    NSDictionary *activity = [recentActivities objectAtIndex:indexPath.row];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"ActivityTableViewCell" owner:self options:nil];
+        
+        for(id item in objects){
+            if ( [item isKindOfClass:[UITableViewCell class]]){
+                ActivityTableViewCell *pcell = (ActivityTableViewCell *)item;                  
+                [ActivityTableViewCell setupCell:pcell forActivity:activity];
+                cell = pcell;
+                break;
+            }
+        }   
+        
     }
-    
-    if ( [place objectForKey:@"name"] != [NSNull null] ){
-		cell.textLabel.text = [place objectForKey:@"name"];
-	} else {
-        DLog(@"got a place with no-name: %@", [place objectForKey:@"google_id"]);
-		cell.textLabel.text = @"n/a";
-	}
-    
-    if ( [place objectForKey:@"distance"] != [NSNull null] ){
-		cell.detailTextLabel.text = [NSString stringWithFormat:@"%@m", [place objectForKey:@"distance"]];
-	} else {
-		cell.detailTextLabel.text = @"";
-	}
-    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+ 
     
 }
 

@@ -10,6 +10,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "ASIHTTPRequest.h"
 #import "NinaHelper.h"
+#import "ActivityTableViewCell.h"
 
 @interface ActivityFeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate> {
     EGORefreshTableHeaderView *refreshHeaderView;
