@@ -14,7 +14,7 @@
 @synthesize name, pid, user;
 @synthesize address, city, perspectiveCount, bookmarked, followingPerspectiveCount;
 @synthesize location;
-@synthesize google_id, phone, googlePlacesUrl;
+@synthesize place_id, phone, googlePlacesUrl;
 @synthesize categories, icon;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
@@ -25,7 +25,7 @@
         self.address = [jsonDict objectForKey:@"street_address"];
         self.city = [jsonDict objectForKey:@"city_data"];
         self.phone = [jsonDict objectForKey:@"phone_number"];
-        self.google_id = [jsonDict objectForKey:@"google_id"];
+        self.place_id = [jsonDict objectForKey:@"google_id"];
         self.googlePlacesUrl = [jsonDict objectForKey:@"google_url"];
         NSNumber *lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
         NSNumber *lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1]; 
@@ -48,7 +48,7 @@
     [user release];
     [address release];
     [city release];
-    [google_id release];
+    [place_id release];
     [phone release];
     [location release];
 

@@ -80,7 +80,7 @@
     if ([activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
         return [NSString stringWithFormat:@"%@ updated bookmark on %@", [dict objectForKey:@"username1"], [dict objectForKey:@"subject_title"]];
     }else if ([activityType isEqualToString:@"NEW_PERSPECTIVE"]){
-        return [NSString stringWithFormat:@"%@ bookmarked %@", [dict objectForKey:@"username1"], [dict objectForKey:@"username2"]];    
+        return [NSString stringWithFormat:@"%@ bookmarked %@", [dict objectForKey:@"username1"], [dict objectForKey:@"subject_title"]];    
         
     } else if ([activityType isEqualToString:@"STAR_PERSPECTIVE"]){
         return [NSString stringWithFormat:@"%@ favorited %@'s bookmark for %@", [dict objectForKey:@"username1"], [dict objectForKey:@"username2"], [dict objectForKey:@"subject_title"]];    

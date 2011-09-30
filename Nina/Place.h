@@ -19,7 +19,7 @@
     
     NSString *address;
     NSString *city;
-    NSString *google_id;
+    NSString *place_id;
     
     CLLocation* location;
     
@@ -35,7 +35,7 @@
 
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *pid;
-@property (nonatomic, retain) NSString *google_id;
+@property (nonatomic, retain) NSString *place_id;
 @property (nonatomic, retain) User *user;
 @property (nonatomic, retain) NSString *googlePlacesUrl;
 
