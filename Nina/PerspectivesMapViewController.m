@@ -77,6 +77,7 @@
 }
 
 - (void)dealloc{
+    //[self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
     [NinaHelper clearActiveRequests:50];
     [mapView release];
     [_username release];
@@ -235,10 +236,6 @@
     [StyleHelper styleToolBar:self.toolbar];
 }
 
-- (void)viewDidUnload{
-    [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
-    [super viewDidUnload];
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
