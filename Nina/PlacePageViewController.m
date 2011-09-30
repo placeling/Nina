@@ -53,7 +53,7 @@
 - (id) initWithPlace:(Place *)place{
     if(self = [super init]){
         self.place = place;
-        self.place_id = place.google_id;
+        self.place_id = place.place_id;
         
 	}
 	return self;    
@@ -77,7 +77,7 @@
     self.tableView.tableFooterView = self.tableFooterView;
     
     if (self.place){
-        self.place_id = self.place.google_id;
+        self.place_id = self.place.place_id;
     }
     
     // Initializations
@@ -194,6 +194,7 @@
                 Place *newPlace = [[Place alloc] initFromJsonDict:jsonDict];
                 
                 self.place = newPlace;
+                self.place_id = newPlace.place_id;
                 [newPlace release];
                 
                 [homePerspectives removeLastObject]; //get rid of spinner wait
