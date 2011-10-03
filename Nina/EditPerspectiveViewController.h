@@ -34,6 +34,7 @@
     
     NSMutableDictionary *uploadingPics;
     int requestCount;
+    NSString *updatedMemo;
     
     NSOperationQueue *queue;
 }
@@ -45,6 +46,7 @@
 @property(nonatomic,retain) IBOutlet UIButton *existingButton;
 @property(nonatomic,retain) IBOutlet UIButton *takeButton;
 @property(nonatomic,retain) IBOutlet NSOperationQueue *queue;
+@property(nonatomic,retain) IBOutlet NSString *updatedMemo;
 
 @property(nonatomic,assign) id<EditPerspectiveDelegate> delegate;
 

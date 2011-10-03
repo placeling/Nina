@@ -21,7 +21,7 @@
 @end
 
 @implementation EditPerspectiveViewController
-@synthesize perspective=_perspective;
+@synthesize perspective=_perspective, updatedMemo;
 @synthesize memoTextView, scrollView;
 @synthesize photoButton;
 @synthesize delegate, queue;
@@ -58,7 +58,12 @@
  
     NSString *placeName = self.perspective.place.name;
     self.navigationItem.title = placeName;
-    self.memoTextView.text = self.perspective.notes;
+    
+    if (updatedMemo){ //handles case where this is called again after init (from taking photo)
+        self.memoTextView.text = self.updatedMemo;
+    } else {
+        self.memoTextView.text = self.perspective.notes;
+    }
     
     UIBarButtonItem *saveButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(savePerspective)];
     self.navigationItem.rightBarButtonItem = saveButton;
@@ -127,6 +132,8 @@
 }
 
 -(IBAction)existingImage{
+    self.updatedMemo = self.memoTextView.text;
+    
 	UIImagePickerController *imgPicker = [[UIImagePickerController alloc] init];
 	imgPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imgPicker.delegate = self;
@@ -135,6 +142,9 @@
 }
 
 -(IBAction)takeImage{
+    self.updatedMemo = self.memoTextView.text;
+    
+    
 	UIImagePickerController *imgPicker = [[UIImagePickerController alloc] init];
 	imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imgPicker.delegate = self;
@@ -314,6 +324,7 @@
     [takeButton release];
     [scrollView release];
     [uploadingPics release];
+    [updatedMemo release];
     
     [super dealloc];
 }
