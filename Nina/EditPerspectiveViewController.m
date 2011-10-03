@@ -279,6 +279,7 @@
     
     [request setRequestMethod:@"POST"];
     [request setDelegate:self]; 
+    [request setTimeOutSeconds:120];
     
     [request setTag:(1000+requestCount++)];     
     
