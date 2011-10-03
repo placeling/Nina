@@ -19,9 +19,17 @@
 #pragma mark - View lifecycle
 
 -(void) viewWillAppear:(BOOL)animated{
-	//[self.navigationController setNavigationBarHidden:YES animated:YES];
+    [super viewWillAppear:animated];
+	[self.navigationController setNavigationBarHidden:YES animated:YES];
 	self.navigationController.navigationBar.translucent = YES;
-	[super viewWillAppear:animated];
+	
+}
+
+-(void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+	self.navigationController.navigationBar.translucent = NO;
+    
 }
 
 //Displays image, but we need to download it, as displayData only has url initially -iMack
@@ -54,6 +62,7 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
 
+    self.progressView.hidden = TRUE;
     if ([request responseStatusCode] != 200){
         [NinaHelper handleBadRequest:request sender:self];
     } else {

@@ -10,6 +10,7 @@
 #import "AsyncImageView.h"
 #import "ASIDownloadCache.h"
 #import "UIImage+Resize.h"
+#import "PictureViewController.h"
 
 @implementation AsyncImageView
 
@@ -92,9 +93,22 @@
     
     UITouch *touch = [touches anyObject];
     
-    if ([touch view] == self)
-    {
+    if ([touch view] == self){
         DLog(@"TOUCH ON IMAGEVIEW"); 
+        
+        PictureViewController *pictureViewController = [[PictureViewController alloc] init];
+        pictureViewController.photo = self.photo;
+        
+        id nextResponder = [self nextResponder];
+        while (nextResponder != nil){
+            if ([nextResponder isKindOfClass:[UIViewController class]]) {
+                [[(UIViewController*)nextResponder navigationController] pushViewController:pictureViewController animated:TRUE];
+            }
+            nextResponder = [nextResponder nextResponder];
+        }
+        
+        [pictureViewController release];
+        
     }
     
 }

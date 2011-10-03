@@ -98,9 +98,10 @@
         for ( Photo* photo in [perspective.photos reverseObjectEnumerator] ){
             
             CGRect rect = CGRectMake(cx, 3, 152, 152);
-            UIImageView *imageView = [[AsyncImageView alloc] initWithFrame:rect];
-            [(AsyncImageView*)imageView setPhoto:photo]; 
-            [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
+            AsyncImageView *imageView = [[AsyncImageView alloc] initWithFrame:rect];
+            [imageView setPhoto:photo]; 
+            [imageView loadImageFromPhoto:photo]; 
+            imageView.userInteractionEnabled = TRUE;
             
             [cell.scrollView addSubview:imageView];
             
@@ -110,11 +111,12 @@
         }
         
         //more then 2 photos means a scroll, otherwise click should go to page
+        /*
         if ([perspective.photos count] > 2){
             cell.scrollView.userInteractionEnabled = true;
         } else {
             cell.scrollView.userInteractionEnabled = false;
-        }
+        }*/
         
         [cell.scrollView setContentSize:CGSizeMake(cx, [cell.scrollView bounds].size.height)];
     }else{
