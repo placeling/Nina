@@ -73,11 +73,6 @@
     self.profileImageView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.profileImageView.layer.masksToBounds = YES; 
     
-    self.placeMarkButton.enabled = false;
-    self.followButton.enabled = false;
-    self.followersButton.enabled = false;
-    self.followingButton.enabled = false;
-    
     [StyleHelper styleInfoView:self.headerView];
     
 }
@@ -96,6 +91,11 @@
     self.followingButton.numberLabel.text = @"-";
     self.followingButton.numberLabel.text = @"-";
     self.followingButton.numberLabel.text = @"-";
+    
+    self.placeMarkButton.enabled = false;
+    self.followButton.enabled = false;
+    self.followersButton.enabled = false;
+    self.followingButton.enabled = false;
 }
 
 -(IBAction) userPerspectives{
