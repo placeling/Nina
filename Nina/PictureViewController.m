@@ -21,15 +21,13 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
-	self.navigationController.navigationBar.translucent = YES;
-	
+	self.navigationController.navigationBar.translucent = YES;	
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-	self.navigationController.navigationBar.translucent = NO;
-    
+	self.navigationController.navigationBar.translucent = NO;    
 }
 
 //Displays image, but we need to download it, as displayData only has url initially -iMack
@@ -62,12 +60,13 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
 
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     self.progressView.hidden = TRUE;
     if ([request responseStatusCode] != 200){
         [NinaHelper handleBadRequest:request sender:self];
     } else {
-        imageView.image = [UIImage imageWithData:[request responseData]]; 
-        imageView.hidden = FALSE;
+        self.imageView.image = [UIImage imageWithData:[request responseData]]; 
+        self.imageView.hidden = FALSE;
     }
 }
 
@@ -90,7 +89,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 - (void)dealloc {
