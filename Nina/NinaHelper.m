@@ -84,12 +84,13 @@
             //only send event on a hard reset
             [FlurryAnalytics logEvent:@"401_CREDENTIAL_RESET"];
         }
-        [self clearCredentials];
+       //[self clearCredentials];
         
         //if ([request.responseString rangeOfString:@"BAD_PASS"].location != NSNotFound){
-            [NinaHelper showLoginController:sender];    
+            //[NinaHelper showLoginController:sender];    
         //}
-    } else if (400 <= statusCode && statusCode <= 499){
+    }  
+    if (400 <= statusCode && statusCode <= 499){
         //non-401 400 series server error
         NSNumber *code = [NSNumber numberWithInt:statusCode];
         [FlurryAnalytics logEvent:@"400_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
