@@ -93,7 +93,7 @@
     ASIFormDataRequest *request =  [[ASIFormDataRequest  alloc]  initWithURL:url];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [request setPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"FBAccessTokenKey" ];
-    [request setPostValue:@"FBId" forKey:[fbDict objectForKey:@"id"]];
+    [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"facebook_id"];
 
     [NinaHelper signRequest:request];
 

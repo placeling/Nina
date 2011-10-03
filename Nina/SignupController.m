@@ -59,7 +59,7 @@
         NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
         Facebook *facebook = appDelegate.facebook;
         [request setPostValue:facebook.accessToken forKey:@"facebook_access_token"];
-        [request setPostValue:fbDict forKey:@"fbDict"];
+        [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"facebook_id"];
     }else{
         NSString * passwordConfirm = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]]).textField.text;
         
