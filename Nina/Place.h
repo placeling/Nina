@@ -20,7 +20,7 @@
     NSString *address;
     NSString *city;
     NSString *place_id;
-    NSString *usersBookmarking;
+    NSArray *usersBookmarking;
     
     CLLocation* location;
     
@@ -49,12 +49,14 @@
 @property (nonatomic, retain) NSArray *categories;
 @property (nonatomic, assign) NSInteger perspectiveCount;
 @property (nonatomic, assign) NSInteger followingPerspectiveCount;
-@property (nonatomic, assign) NSString *usersBookmarking;
+@property (nonatomic, assign) NSArray *usersBookmarking;
 
 @property (nonatomic, retain) UIImage *icon;
 @property (nonatomic, assign) BOOL bookmarked;
 
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
+
+-(NSString*) usersBookmarkingString;
 
 @end
