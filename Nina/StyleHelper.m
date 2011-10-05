@@ -39,8 +39,15 @@
 }
 
 +(void) styleBookmarkButton:(UIButton*)button{
-    button.imageView.image = [UIImage imageNamed:@"leather.png"];
-
+    button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"leather.png"]];
+    
+    [button.layer setCornerRadius:5.0f];
+    //[button.layer setBorderColor:[UIColor blackColor].CGColor];
+    //[button.layer setBorderWidth:0.5f];
+    [button.layer setShadowColor:[UIColor blackColor].CGColor];
+    [button.layer setShadowOpacity:0.8];
+    [button.layer setShadowRadius:5];
+    [button.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
 }
 
 +(void) styleMapImage:(UIButton*)button{
@@ -50,6 +57,29 @@
     button.layer.shadowRadius = 5;
     button.layer.shadowOffset = CGSizeMake(6.0f, 6.0f);
     //[UIColor colorWithPatternImage:[UIImage imageNamed:@"leather.png"] ];
+}
+
++(void) styleTagButton:(UIButton*)button{
+    button.titleLabel.textColor = [UIColor whiteColor];
+    [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = button.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[self getTintColour] CGColor], (id)[[UIColor whiteColor] CGColor], nil];
+    //[button.layer insertSublayer:gradient atIndex:0];
+    
+    [button.layer setCornerRadius:5.0f];
+    button.layer.masksToBounds = TRUE;
+    //[button.layer setBorderColor:[UIColor blackColor].CGColor];
+    //[button.layer setBorderWidth:0.5f];
+    [button.layer setShadowColor:[UIColor blackColor].CGColor];
+    [button.layer setShadowOpacity:0.8];
+    [button.layer setShadowRadius:2.0];
+    [button.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
+    
+    button.layer.backgroundColor = [self getTintColour].CGColor;
+    
+    //[button setNeedsDisplay];
 }
 
 +(UIColor*) getTintColour{

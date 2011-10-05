@@ -150,9 +150,10 @@
 					<object class="IBUISegmentedControl" id="543716752">
 						<reference key="NSNextResponder" ref="903079877"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, 129}, {320, 44}}</string>
+						<string key="NSFrame">{{0, 166}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="903079877"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -194,14 +195,15 @@
 					<object class="IBUIScrollView" id="1021377505">
 						<reference key="NSNextResponder" ref="903079877"/>
 						<int key="NSvFlags">296</int>
-						<string key="NSFrame">{{0, 114}, {320, 7}}</string>
+						<string key="NSFrame">{{0, 114}, {321, 44}}</string>
 						<reference key="NSSuperview" ref="903079877"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="543716752"/>
-						<object class="NSColor" key="IBUIBackgroundColor" id="821382414">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MQA</bytes>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MSAxIDAuNDAwMDAwMDA2AA</bytes>
 						</object>
+						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -218,7 +220,10 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
-						<reference key="IBUIHighlightedTitleColor" ref="821382414"/>
+						<object class="NSColor" key="IBUIHighlightedTitleColor">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MQA</bytes>
+						</object>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
@@ -242,7 +247,7 @@
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{321, 172}</string>
+				<string key="NSFrameSize">{321, 209}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="922658027"/>
@@ -311,6 +316,14 @@
 						<reference key="destination" ref="729265678"/>
 					</object>
 					<int key="connectionID">36</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">tagScrollView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="1021377505"/>
+					</object>
+					<int key="connectionID">37</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -453,7 +466,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">36</int>
+			<int key="maxID">37</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

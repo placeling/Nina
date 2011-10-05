@@ -1,3 +1,4 @@
+
 //
 //  PlacePageViewController.m
 //  placeling2
@@ -139,7 +140,10 @@
     [StyleHelper styleBookmarkButton:self.bookmarkButton];
     [StyleHelper styleInfoView:self.tableHeaderView];
     [StyleHelper styleMapImage:self.mapButtonView];
-    //self.tableview.
+    [StyleHelper styleBackgroundView:self.bookmarkView];
+    
+    self.tagScrollView.backgroundColor = [UIColor whiteColor];
+    
     if (myPerspective && myPerspective.mine && myPerspective.modified){
         myPerspective.modified = false;
         [self.tableView reloadData];
@@ -356,17 +360,31 @@
     self.nameLabel.text = self.place.name;
     self.addressLabel.text = self.place.address;
     
-    
     if (!mapRequested){
         [self loadMap];
     } 
-   
 
     self.cityLabel.text = self.place.city;
     self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@","];
     [self.segmentedControl setTitle:[NSString stringWithFormat:@"Following (%i)", self.place.followingPerspectiveCount] forSegmentAtIndex:1];
     [self.segmentedControl setTitle:[NSString stringWithFormat:@"Everyone (%i)", self.place.perspectiveCount] forSegmentAtIndex:2];
     
+    CGFloat cx = 7;
+    
+    for ( NSString* tag in self.place.tags ){        
+        CGRect rect = CGRectMake(cx, 10, [tag length]*9, 26);        
+
+        UIButton *tagButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        tagButton.frame = rect;
+        [tagButton setTitle:[NSString stringWithFormat:@"#%@", tag] forState:UIControlStateNormal];
+        [StyleHelper styleTagButton:tagButton];
+        
+        [self.tagScrollView addSubview:tagButton];        
+        cx += tagButton.frame.size.width+7;
+        
+    }
+    
+    [self.tagScrollView setContentSize:CGSizeMake(cx, [self.tagScrollView bounds].size.height)];    
 }
 
 -(IBAction)editPerspective{

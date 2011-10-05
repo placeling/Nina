@@ -17,5 +17,6 @@
 +(void) styleInfoView:(UIView *)view;
 +(void) styleBookmarkButton:(UIButton*)button;
 +(void) styleMapImage:(UIButton*)button;
++(void) styleTagButton:(UIButton*)button;
 
 @end

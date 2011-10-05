@@ -21,6 +21,7 @@
     NSString *city;
     NSString *place_id;
     NSArray *usersBookmarking;
+    NSArray *tags;
     
     CLLocation* location;
     
@@ -50,6 +51,7 @@
 @property (nonatomic, assign) NSInteger perspectiveCount;
 @property (nonatomic, assign) NSInteger followingPerspectiveCount;
 @property (nonatomic, assign) NSArray *usersBookmarking;
+@property (nonatomic, assign) NSArray *tags;
 
 @property (nonatomic, retain) UIImage *icon;
 @property (nonatomic, assign) BOOL bookmarked;

@@ -15,7 +15,7 @@
 @synthesize address, city, perspectiveCount, bookmarked, followingPerspectiveCount;
 @synthesize location, usersBookmarking;
 @synthesize place_id, phone, googlePlacesUrl;
-@synthesize categories, icon;
+@synthesize categories, icon, tags;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
     
@@ -35,13 +35,9 @@
         self.bookmarked = [[jsonDict objectForKey:@"bookmarked"] boolValue] ;
         self.categories = [jsonDict objectForKey:@"venue_types"];
         
-        self.usersBookmarking = [jsonDict objectForKey:@"users_bookmarking"];
-        
+        self.usersBookmarking = [jsonDict objectForKey:@"users_bookmarking"];        
         self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
-        
-        
-
-        
+        self.tags = [jsonDict objectForKey:@"tags"];
 	}
 	return self;
 }
@@ -70,6 +66,7 @@
     [phone release];
     [location release];
     [usersBookmarking release];
+    [tags release];
 
     [categories release];
     [icon release];
