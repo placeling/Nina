@@ -9,6 +9,8 @@
 #import "NearbySuggestedPlaceController.h"
 #import "NSString+SBJSON.h"
 #import "PlacePageViewController.h"
+#import "SuggestUserViewController.h"
+#import "PlaceSuggestTableViewCell.h"
 #import "Place.h"
 
 @interface NearbySuggestedPlaceController (Private)
@@ -21,13 +23,18 @@
 @implementation NearbySuggestedPlaceController
 
 @synthesize searchBar=_searchBar, popularPlacesButton, topLocalsButton, toolbar;
-@synthesize reloading=_reloading, placesTableView;
+@synthesize reloading=_reloading, showAll, placesTableView, searchTerm=_searchTerm;
 
 -(IBAction)topLocals:(id)sender{
+    
+    SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
+    [self.navigationController pushViewController:suggestUserViewController animated:YES];
+    [suggestUserViewController release]; 
     
 }
 
 -(IBAction)popularPlaces:(id)sender{
+    self.showAll = TRUE;
     
 }
 
@@ -104,6 +111,7 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.title = @"Nearby";
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     [StyleHelper styleToolBar:self.toolbar];
     [StyleHelper styleSearchBar:self.searchBar];
@@ -130,6 +138,7 @@
     [topLocalsButton release];
     [toolbar release];
     [placesTableView release];
+    [_searchTerm release];
     [super dealloc] ;
 }
 
@@ -236,37 +245,40 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [nearbyPlaces count]+1;
+    return [nearbyPlaces count];
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
+    return 70;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *placeCellIdentifier = @"PlaceCell";
     
     Place *place;
+    PlaceSuggestTableViewCell *cell;
+
+    cell = [tableView dequeueReusableCellWithIdentifier:placeCellIdentifier];
+    place = [nearbyPlaces objectAtIndex:indexPath.row];
+    //searchTerm
     
-    if (indexPath.row >= [nearbyPlaces count]){
-        
-    
-    } else {
-        place = [nearbyPlaces objectAtIndex:indexPath.row];
-    }
-    
-    
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PlaceSuggestTableViewCell" owner:self options:nil];
+        
+        for(id item in objects){
+            if ( [item isKindOfClass:[UITableViewCell class]]){
+                cell = item;
+            }
+        }
     }
     
-    // Configure the cell...
-    if (indexPath.row >= [nearbyPlaces count]){
-        cell.textLabel.text = @"...Spinner Wait...";
-    } else {
-        cell.textLabel.text = place.name;
-        cell.detailTextLabel.text = place.usersBookmarkingString;
-    }
-    
+    cell.titleLabel.text = place.name;
+    cell.addressLabel.text = place.address;
+    cell.distanceLabel.text = @""; //place.
+    cell.usersLabel.text = place.usersBookmarkingString;
+
     return cell;
 }
 
