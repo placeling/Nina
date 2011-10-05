@@ -13,7 +13,7 @@
 
 @synthesize name, pid, user;
 @synthesize address, city, perspectiveCount, bookmarked, followingPerspectiveCount;
-@synthesize location;
+@synthesize location, usersBookmarking;
 @synthesize place_id, phone, googlePlacesUrl;
 @synthesize categories, icon;
 
@@ -35,7 +35,11 @@
         self.bookmarked = [[jsonDict objectForKey:@"bookmarked"] boolValue] ;
         self.categories = [jsonDict objectForKey:@"venue_types"];
         
+        self.usersBookmarking = [jsonDict objectForKey:@"users_bookmarking"];
+        
         self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
+        
+        
 
         
 	}
@@ -51,6 +55,7 @@
     [place_id release];
     [phone release];
     [location release];
+    [usersBookmarking release];
 
     [categories release];
     [icon release];
