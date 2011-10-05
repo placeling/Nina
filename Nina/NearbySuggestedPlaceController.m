@@ -15,7 +15,6 @@
 
 @interface NearbySuggestedPlaceController (Private)
 -(void)findNearbyPlaces;
--(void)findNearbyPlaces:(NSString*)searchTerm;
 -(void)dataSourceDidFinishLoadingNewData;
 @end
 
@@ -23,7 +22,7 @@
 @implementation NearbySuggestedPlaceController
 
 @synthesize searchBar=_searchBar, popularPlacesButton, topLocalsButton, toolbar;
-@synthesize reloading=_reloading, showAll, placesTableView, searchTerm=_searchTerm;
+@synthesize reloading=_reloading, showAll, placesTableView, searchTerm;
 
 -(IBAction)topLocals:(id)sender{
     
@@ -47,12 +46,7 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-
 -(void)findNearbyPlaces {
-    [self findNearbyPlaces:@""];
-}
-
--(void)findNearbyPlaces:(NSString*)searchTerm {
 	//NSDate *now = [NSDate date];
 	
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
@@ -72,9 +66,9 @@
 				
         NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
         
-        searchTerm  = [searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+        self.searchTerm  = [self.searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
         
-        urlString = [NSString stringWithFormat:@"%@?lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lng, radius, searchTerm];
+        urlString = [NSString stringWithFormat:@"%@?lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lng, radius, self.searchTerm];
         NSURL *url = [NSURL URLWithString:urlString];
         
 		ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
@@ -90,8 +84,7 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
@@ -102,6 +95,14 @@
 		self.placesTableView.showsVerticalScrollIndicator = YES;
 		[refreshHeaderView release];
 	}
+    
+    if (!self.searchTerm){
+        self.searchTerm = @"";
+        self.searchBar.text = @"";
+        self.searchBar.placeholder = @"enter tag search";
+    } else {
+        self.searchBar.text = self.searchTerm;
+    }
     
     self.searchBar.delegate = self;
     self.placesTableView.delegate = self;
@@ -138,7 +139,7 @@
     [topLocalsButton release];
     [toolbar release];
     [placesTableView release];
-    [_searchTerm release];
+    [searchTerm release];
     [super dealloc] ;
 }
 
@@ -191,7 +192,8 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [self findNearbyPlaces:searchBar.text];
+    self.searchTerm = searchBar.text;
+    [self findNearbyPlaces];
 }
 
 

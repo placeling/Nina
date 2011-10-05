@@ -29,6 +29,8 @@
 #import "SinglePlaceMapView.h"
 #import "ASIDownloadCache.h"
 
+#import "NearbySuggestedPlaceController.h"
+
 #define kMinCellHeight 60
 #define SectionHeaderHeight 60
 
@@ -48,7 +50,7 @@
 @synthesize nameLabel, addressLabel, cityLabel, categoriesLabel;
 @synthesize segmentedControl, tagScrollView;
 @synthesize mapButtonView, googlePlacesButton, bookmarkButton;
-@synthesize tableHeaderView, tableFooterView, bookmarkView, perspectiveType;
+@synthesize tableHeaderView, tableFooterView, bookmarkView, perspectiveType, topofHeaderView;
 @synthesize homePerspectives, followingPerspectives, everyonePerspectives;
 
 - (id) initWithPlace:(Place *)place{
@@ -126,7 +128,6 @@
         mapRequested = false;
     }
     
-    
     self.navigationController.title = self.place.name;
     
     UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
@@ -138,11 +139,11 @@
     [super viewWillAppear:animated];
     [StyleHelper styleBackgroundView:self.view];
     [StyleHelper styleBookmarkButton:self.bookmarkButton];
-    [StyleHelper styleInfoView:self.tableHeaderView];
+    [StyleHelper styleInfoView:self.topofHeaderView];
     [StyleHelper styleMapImage:self.mapButtonView];
     [StyleHelper styleBackgroundView:self.bookmarkView];
     
-    self.tagScrollView.backgroundColor = [UIColor whiteColor];
+    self.tagScrollView.backgroundColor = [UIColor clearColor];
     
     if (myPerspective && myPerspective.mine && myPerspective.modified){
         myPerspective.modified = false;
@@ -355,6 +356,21 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
+-(IBAction)tagSearch:(id)sender{
+    
+    UIButton *button = (UIButton*)sender;
+    NSString *searchString = button.titleLabel.text;
+    
+    NearbySuggestedPlaceController *suggestedPlaceController = [[NearbySuggestedPlaceController alloc] init];
+    
+    suggestedPlaceController.searchTerm = searchString;
+    
+    [self.navigationController pushViewController:suggestedPlaceController animated:TRUE];
+    
+    [suggestedPlaceController release];
+    
+}
+
 
 -(void) loadData{
     self.nameLabel.text = self.place.name;
@@ -378,6 +394,8 @@
         tagButton.frame = rect;
         [tagButton setTitle:[NSString stringWithFormat:@"#%@", tag] forState:UIControlStateNormal];
         [StyleHelper styleTagButton:tagButton];
+        
+        [tagButton addTarget:self action:@selector(tagSearch:) forControlEvents:UIControlEventTouchUpInside];
         
         [self.tagScrollView addSubview:tagButton];        
         cx += tagButton.frame.size.width+7;
@@ -698,6 +716,7 @@
     [tableHeaderView release];
     [referrer release];
     [bookmarkButton release];
+    [topofHeaderView release];
     
     [super dealloc];
 }

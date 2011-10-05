@@ -47,6 +47,7 @@ typedef enum {
     IBOutlet UIButton *mapButtonView;
     IBOutlet UISegmentedControl *segmentedControl; 
     IBOutlet UIView *tableHeaderView;
+    IBOutlet UIView *topofHeaderView;
     IBOutlet UIView *tableFooterView;
     IBOutlet UIView *bookmarkView;
     
@@ -77,6 +78,7 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet UIView *tableHeaderView;
 @property (nonatomic, retain) IBOutlet UIView *tableFooterView;
 @property (nonatomic, retain) IBOutlet UIView *bookmarkView;
+@property (nonatomic, retain) IBOutlet UIView *topofHeaderView;
 
 @property (nonatomic, retain) IBOutlet UISegmentedControl *segmentedControl;
 @property (nonatomic, assign) PerspectiveTypes perspectiveType;
@@ -104,6 +106,7 @@ typedef enum {
 -(IBAction) shareFacebook;
 -(IBAction) checkinFoursquare;
 
+-(IBAction)tagSearch:(id)sender;
 
 - (id) initWithPlace:(Place *)place;
 

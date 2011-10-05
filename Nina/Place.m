@@ -66,7 +66,7 @@
     [phone release];
     [location release];
     [usersBookmarking release];
-    [tags release];
+    //[tags release];
 
     [categories release];
     [icon release];

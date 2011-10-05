@@ -22,7 +22,7 @@
     BOOL _reloading;
     BOOL showAll;
     
-    NSString *_searchTerm;
+    NSString *searchTerm;
     
     NSMutableArray  *nearbyPlaces;
 }
