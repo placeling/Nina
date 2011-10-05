@@ -255,7 +255,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell...
@@ -263,11 +263,9 @@
         cell.textLabel.text = @"...Spinner Wait...";
     } else {
         cell.textLabel.text = place.name;
-        cell.detailTextLabel.text = place.usersBookmarking;
+        cell.detailTextLabel.text = place.usersBookmarkingString;
     }
-    if (place){
-
-    }
+    
     return cell;
 }
 
