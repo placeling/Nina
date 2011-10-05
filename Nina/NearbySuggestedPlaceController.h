@@ -20,6 +20,9 @@
     IBOutlet UIToolbar *toolbar;
     
     BOOL _reloading;
+    BOOL showAll;
+    
+    NSString *_searchTerm;
     
     NSMutableArray  *nearbyPlaces;
 }
@@ -31,6 +34,8 @@
 @property(nonatomic,retain) IBOutlet UIBarButtonItem *topLocalsButton;
 @property(nonatomic,retain) IBOutlet UIToolbar *toolbar;
 @property(nonatomic,retain) IBOutlet UITableView *placesTableView;
+@property(nonatomic,assign) BOOL showAll;
+@property(nonatomic,retain) NSString *searchTerm;
 
 -(IBAction)popularPlaces:(id)sender;
 -(IBAction)topLocals:(id)sender;
