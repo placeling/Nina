@@ -30,7 +30,7 @@
 #import "ASIDownloadCache.h"
 
 #define kMinCellHeight 60
-#define SectionHeaderHeight 44
+#define SectionHeaderHeight 60
 
 @interface PlacePageViewController ()
 -(void) loadData;
