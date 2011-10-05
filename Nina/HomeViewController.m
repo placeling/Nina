@@ -52,11 +52,13 @@
     [StyleHelper styleBackgroundView:self.view];
     
     if ([NinaHelper getAccessTokenSecret]){
-        UIBarButtonItem *accountButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(showAccountSheet)];
+        UIImage *image = [UIImage imageNamed:@"19-gear.png"];
+        UIBarButtonItem *accountButton =  [[UIBarButtonItem  alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(showAccountSheet)];
         self.navigationItem.leftBarButtonItem = accountButton;
         [accountButton release];  
     } else {
-        UIBarButtonItem *loginButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(showLogin)];
+        UIImage *image = [UIImage imageNamed:@"30-key.png"];
+        UIBarButtonItem *loginButton =  [[UIBarButtonItem  alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(showLogin)];
         self.navigationItem.leftBarButtonItem = loginButton;
         [loginButton release];
     } 

@@ -101,6 +101,10 @@
 		286FA14E143BBB3600EDAE84 /* placeit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA14C143BBB3600EDAE84 /* placeit@2x.png */; };
 		286FA151143BD34C00EDAE84 /* suggest.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA14F143BD34C00EDAE84 /* suggest.png */; };
 		286FA152143BD34C00EDAE84 /* suggest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA150143BD34C00EDAE84 /* suggest@2x.png */; };
+		286FA15C143CC67D00EDAE84 /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA15B143CC67D00EDAE84 /* 19-gear.png */; };
+		286FA15F143CC68700EDAE84 /* 30-key.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA15E143CC68700EDAE84 /* 30-key.png */; };
+		286FA163143CD37500EDAE84 /* PlaceSuggestTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286FA161143CD37400EDAE84 /* PlaceSuggestTableViewCell.m */; };
+		286FA164143CD37500EDAE84 /* PlaceSuggestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286FA162143CD37500EDAE84 /* PlaceSuggestTableViewCell.xib */; };
 		287145CB13F4789B0047BDB5 /* LocationManagerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 287145CA13F4789B0047BDB5 /* LocationManagerManager.m */; };
 		287145F513F789880047BDB5 /* FollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 287145F313F789430047BDB5 /* FollowViewController.m */; };
 		287145F613F789880047BDB5 /* FollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 287145F413F789540047BDB5 /* FollowViewController.xib */; };
@@ -343,6 +347,11 @@
 		286FA14C143BBB3600EDAE84 /* placeit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeit@2x.png"; sourceTree = "<group>"; };
 		286FA14F143BD34C00EDAE84 /* suggest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suggest.png; sourceTree = "<group>"; };
 		286FA150143BD34C00EDAE84 /* suggest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "suggest@2x.png"; sourceTree = "<group>"; };
+		286FA15B143CC67D00EDAE84 /* 19-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear.png"; sourceTree = "<group>"; };
+		286FA15E143CC68700EDAE84 /* 30-key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "30-key.png"; sourceTree = "<group>"; };
+		286FA160143CD37400EDAE84 /* PlaceSuggestTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceSuggestTableViewCell.h; sourceTree = "<group>"; };
+		286FA161143CD37400EDAE84 /* PlaceSuggestTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceSuggestTableViewCell.m; sourceTree = "<group>"; };
+		286FA162143CD37500EDAE84 /* PlaceSuggestTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceSuggestTableViewCell.xib; sourceTree = "<group>"; };
 		287145C913F4789B0047BDB5 /* LocationManagerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManagerManager.h; sourceTree = "<group>"; };
 		287145CA13F4789B0047BDB5 /* LocationManagerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManagerManager.m; sourceTree = "<group>"; };
 		287145F213F789380047BDB5 /* FollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowViewController.h; sourceTree = "<group>"; };
@@ -589,6 +598,8 @@
 		28086B8513ECA9B900790404 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				286FA15E143CC68700EDAE84 /* 30-key.png */,
+				286FA15B143CC67D00EDAE84 /* 19-gear.png */,
 				286B15F6140E9E6100CFED96 /* 86-camera.png */,
 				286B15F3140E9E1800CFED96 /* 152-rolodex.png */,
 				2833C09E140D677E0076A398 /* 162-receipt.png */,
@@ -688,6 +699,9 @@
 				286FA146143AB5EE00EDAE84 /* NearbySuggestedPlaceController.h */,
 				286FA147143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m */,
 				286FA148143AB5EE00EDAE84 /* NearbySuggestedPlaceController.xib */,
+				286FA160143CD37400EDAE84 /* PlaceSuggestTableViewCell.h */,
+				286FA161143CD37400EDAE84 /* PlaceSuggestTableViewCell.m */,
+				286FA162143CD37500EDAE84 /* PlaceSuggestTableViewCell.xib */,
 			);
 			name = QuickPick;
 			sourceTree = "<group>";
@@ -1301,6 +1315,9 @@
 				286FA14E143BBB3600EDAE84 /* placeit@2x.png in Resources */,
 				286FA151143BD34C00EDAE84 /* suggest.png in Resources */,
 				286FA152143BD34C00EDAE84 /* suggest@2x.png in Resources */,
+				286FA15C143CC67D00EDAE84 /* 19-gear.png in Resources */,
+				286FA15F143CC68700EDAE84 /* 30-key.png in Resources */,
+				286FA164143CD37500EDAE84 /* PlaceSuggestTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1412,6 +1429,7 @@
 				28A437891432E1EF005F192B /* StyleHelper.m in Sources */,
 				28EE54F71434DDC600E36686 /* ActivityTableViewCell.m in Sources */,
 				286FA149143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m in Sources */,
+				286FA163143CD37500EDAE84 /* PlaceSuggestTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
