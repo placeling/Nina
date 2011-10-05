@@ -16,7 +16,7 @@
 #import "Place.h"
 #import "PlacePageViewController.h"
 #import "LoginController.h"
-#import "PlacesListView.h"
+#import "NearbySuggestedPlaceController.h"
 #import "FlurryAnalytics.h"
 #import "MBProgressHUD.h"
 #import "UIDevice+IdentifierAddition.h"
@@ -99,14 +99,9 @@
 #pragma mark -IBActions
 
 -(IBAction) everythingList{
-    PerspectivesMapViewController *userPerspectives = [[PerspectivesMapViewController alloc] init];
-    [self.navigationController pushViewController:userPerspectives animated:YES];
-    [userPerspectives release];
-    /*
-    PlacesListView *placesListView = [[PlacesListView alloc] init];
-    
-    [self.navigationController pushViewController:placesListView animated:YES];
-    [placesListView release]; */
+    NearbySuggestedPlaceController *nearbySuggestedPlaceController = [[NearbySuggestedPlaceController alloc] init];
+    [self.navigationController pushViewController:nearbySuggestedPlaceController animated:YES];
+    [nearbySuggestedPlaceController release]; 
 }
 
 -(IBAction)suggested{
