@@ -108,6 +108,8 @@
 		286FA16E143D1A6700EDAE84 /* redLeather.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA16D143D1A6700EDAE84 /* redLeather.png */; };
 		286FA173143D1DBC00EDAE84 /* MarketingScript.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 286FA172143D1DBC00EDAE84 /* MarketingScript.ttf */; };
 		286FA175143D2A3000EDAE84 /* MuseoSlab500.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 286FA174143D2A2F00EDAE84 /* MuseoSlab500.ttf */; };
+		286FA17D143D339400EDAE84 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 286FA17B143D339400EDAE84 /* EditProfileViewController.m */; };
+		286FA17E143D339400EDAE84 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286FA17C143D339400EDAE84 /* EditProfileViewController.xib */; };
 		287145CB13F4789B0047BDB5 /* LocationManagerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 287145CA13F4789B0047BDB5 /* LocationManagerManager.m */; };
 		287145F513F789880047BDB5 /* FollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 287145F313F789430047BDB5 /* FollowViewController.m */; };
 		287145F613F789880047BDB5 /* FollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 287145F413F789540047BDB5 /* FollowViewController.xib */; };
@@ -358,6 +360,9 @@
 		286FA16D143D1A6700EDAE84 /* redLeather.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redLeather.png; sourceTree = "<group>"; };
 		286FA172143D1DBC00EDAE84 /* MarketingScript.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MarketingScript.ttf; sourceTree = "<group>"; };
 		286FA174143D2A2F00EDAE84 /* MuseoSlab500.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSlab500.ttf; sourceTree = "<group>"; };
+		286FA17A143D339400EDAE84 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
+		286FA17B143D339400EDAE84 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
+		286FA17C143D339400EDAE84 /* EditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
 		287145C913F4789B0047BDB5 /* LocationManagerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManagerManager.h; sourceTree = "<group>"; };
 		287145CA13F4789B0047BDB5 /* LocationManagerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManagerManager.m; sourceTree = "<group>"; };
 		287145F213F789380047BDB5 /* FollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowViewController.h; sourceTree = "<group>"; };
@@ -737,6 +742,9 @@
 				2877A0A214198C7400850530 /* MemberProfileViewController.xib */,
 				2877A0B6141AAC6200850530 /* ProfileDetailBadge.h */,
 				2877A0B7141AAC6200850530 /* ProfileDetailBadge.m */,
+				286FA17A143D339400EDAE84 /* EditProfileViewController.h */,
+				286FA17B143D339400EDAE84 /* EditProfileViewController.m */,
+				286FA17C143D339400EDAE84 /* EditProfileViewController.xib */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1330,6 +1338,7 @@
 				286FA16E143D1A6700EDAE84 /* redLeather.png in Resources */,
 				286FA173143D1DBC00EDAE84 /* MarketingScript.ttf in Resources */,
 				286FA175143D2A3000EDAE84 /* MuseoSlab500.ttf in Resources */,
+				286FA17E143D339400EDAE84 /* EditProfileViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1442,6 +1451,7 @@
 				28EE54F71434DDC600E36686 /* ActivityTableViewCell.m in Sources */,
 				286FA149143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m in Sources */,
 				286FA163143CD37500EDAE84 /* PlaceSuggestTableViewCell.m in Sources */,
+				286FA17D143D339400EDAE84 /* EditProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
