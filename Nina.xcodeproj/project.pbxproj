@@ -105,6 +105,9 @@
 		286FA15F143CC68700EDAE84 /* 30-key.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA15E143CC68700EDAE84 /* 30-key.png */; };
 		286FA163143CD37500EDAE84 /* PlaceSuggestTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286FA161143CD37400EDAE84 /* PlaceSuggestTableViewCell.m */; };
 		286FA164143CD37500EDAE84 /* PlaceSuggestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286FA162143CD37500EDAE84 /* PlaceSuggestTableViewCell.xib */; };
+		286FA16E143D1A6700EDAE84 /* redLeather.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA16D143D1A6700EDAE84 /* redLeather.png */; };
+		286FA173143D1DBC00EDAE84 /* MarketingScript.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 286FA172143D1DBC00EDAE84 /* MarketingScript.ttf */; };
+		286FA175143D2A3000EDAE84 /* MuseoSlab500.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 286FA174143D2A2F00EDAE84 /* MuseoSlab500.ttf */; };
 		287145CB13F4789B0047BDB5 /* LocationManagerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 287145CA13F4789B0047BDB5 /* LocationManagerManager.m */; };
 		287145F513F789880047BDB5 /* FollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 287145F313F789430047BDB5 /* FollowViewController.m */; };
 		287145F613F789880047BDB5 /* FollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 287145F413F789540047BDB5 /* FollowViewController.xib */; };
@@ -352,6 +355,9 @@
 		286FA160143CD37400EDAE84 /* PlaceSuggestTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceSuggestTableViewCell.h; sourceTree = "<group>"; };
 		286FA161143CD37400EDAE84 /* PlaceSuggestTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceSuggestTableViewCell.m; sourceTree = "<group>"; };
 		286FA162143CD37500EDAE84 /* PlaceSuggestTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceSuggestTableViewCell.xib; sourceTree = "<group>"; };
+		286FA16D143D1A6700EDAE84 /* redLeather.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redLeather.png; sourceTree = "<group>"; };
+		286FA172143D1DBC00EDAE84 /* MarketingScript.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MarketingScript.ttf; sourceTree = "<group>"; };
+		286FA174143D2A2F00EDAE84 /* MuseoSlab500.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSlab500.ttf; sourceTree = "<group>"; };
 		287145C913F4789B0047BDB5 /* LocationManagerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManagerManager.h; sourceTree = "<group>"; };
 		287145CA13F4789B0047BDB5 /* LocationManagerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManagerManager.m; sourceTree = "<group>"; };
 		287145F213F789380047BDB5 /* FollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowViewController.h; sourceTree = "<group>"; };
@@ -827,6 +833,8 @@
 				28B619481423177000B0A7E5 /* images */,
 				28086B8513ECA9B900790404 /* icons */,
 				2895004613D64559009E1BD7 /* Nina-Info.plist */,
+				286FA174143D2A2F00EDAE84 /* MuseoSlab500.ttf */,
+				286FA172143D1DBC00EDAE84 /* MarketingScript.ttf */,
 				2895004A13D64559009E1BD7 /* Nina-Prefix.pch */,
 				2895004B13D64559009E1BD7 /* main.m */,
 			);
@@ -1089,6 +1097,7 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				286FA16D143D1A6700EDAE84 /* redLeather.png */,
 				286FA14F143BD34C00EDAE84 /* suggest.png */,
 				286FA150143BD34C00EDAE84 /* suggest@2x.png */,
 				286FA14B143BBB3600EDAE84 /* placeit.png */,
@@ -1318,6 +1327,9 @@
 				286FA15C143CC67D00EDAE84 /* 19-gear.png in Resources */,
 				286FA15F143CC68700EDAE84 /* 30-key.png in Resources */,
 				286FA164143CD37500EDAE84 /* PlaceSuggestTableViewCell.xib in Resources */,
+				286FA16E143D1A6700EDAE84 /* redLeather.png in Resources */,
+				286FA173143D1DBC00EDAE84 /* MarketingScript.ttf in Resources */,
+				286FA175143D2A3000EDAE84 /* MuseoSlab500.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
