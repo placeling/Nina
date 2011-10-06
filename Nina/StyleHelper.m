@@ -39,8 +39,9 @@
 }
 
 +(void) styleBookmarkButton:(UIButton*)button{
-    button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"leather.png"]];
+    button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"redLeather.png"]];
     
+    [button.titleLabel setFont:[UIFont fontWithName:@"MarketingScript" size:30]];
     [button.layer setCornerRadius:5.0f];
     //[button.layer setBorderColor:[UIColor blackColor].CGColor];
     //[button.layer setBorderWidth:0.5f];
@@ -69,7 +70,6 @@
     //[button.layer insertSublayer:gradient atIndex:0];
     
     [button.layer setCornerRadius:5.0f];
-    button.layer.masksToBounds = TRUE;
     //[button.layer setBorderColor:[UIColor blackColor].CGColor];
     //[button.layer setBorderWidth:0.5f];
     [button.layer setShadowColor:[UIColor blackColor].CGColor];
