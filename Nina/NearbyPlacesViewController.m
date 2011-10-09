@@ -254,7 +254,18 @@
     return cell;
 }
 
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{	
+	[searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:FALSE animated:true];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+	[searchBar setShowsCancelButton:TRUE animated:true];
+}
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [searchBar setShowsCancelButton:FALSE animated:true];
     [self findNearbyPlaces:searchBar.text];
 }
 

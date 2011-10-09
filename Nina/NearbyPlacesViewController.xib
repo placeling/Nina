@@ -83,6 +83,7 @@
 						<string key="NSFrame">{{0, 372}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="964853423"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -96,6 +97,7 @@
 						<string key="NSFrame">{{225, 383}, {80, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -312,7 +314,6 @@
 							<string>_searchBar</string>
 							<string>gpsLabel</string>
 							<string>placesTableView</string>
-							<string>searchBar</string>
 							<string>tableFooterView</string>
 							<string>toolBar</string>
 						</object>
@@ -321,7 +322,6 @@
 							<string>UISearchBar</string>
 							<string>UILabel</string>
 							<string>UITableView</string>
-							<string>UISearchBar</string>
 							<string>UIView</string>
 							<string>UIToolbar</string>
 						</object>
@@ -333,7 +333,6 @@
 							<string>_searchBar</string>
 							<string>gpsLabel</string>
 							<string>placesTableView</string>
-							<string>searchBar</string>
 							<string>tableFooterView</string>
 							<string>toolBar</string>
 						</object>
@@ -350,10 +349,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">placesTableView</string>
 								<string key="candidateClassName">UITableView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">searchBar</string>
-								<string key="candidateClassName">UISearchBar</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">tableFooterView</string>
