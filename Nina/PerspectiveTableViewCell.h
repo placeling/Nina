@@ -13,6 +13,7 @@
 
 @interface PerspectiveTableViewCell : UITableViewCell{
     Perspective *perspective;
+    UITapGestureRecognizer *tapGesture;
     IBOutlet AsyncImageView *userImage;
     IBOutlet UIButton *upvoteButton;
     IBOutlet UITextView *memoText;
@@ -27,12 +28,14 @@
 @property(nonatomic,retain) IBOutlet UITextView *memoText;
 @property(nonatomic,retain) IBOutlet UILabel *titleLabel;
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
-
+@property(nonatomic,retain) IBOutlet UITapGestureRecognizer *tapGesture;
 
 -(IBAction)toggleStarred;
 
 //for calculating heights
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective;
 +(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective  userSource:(BOOL)userSource;
+
+-(IBAction) showAuthoringUser;
 
 @end

@@ -9,10 +9,12 @@
 #import "PerspectiveTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "asyncimageview.h"
+#import "MemberProfileViewController.h"
 
 @implementation PerspectiveTableViewCell
 
 @synthesize perspective, userImage, upvoteButton, memoText,titleLabel, scrollView;
+@synthesize tapGesture;
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
@@ -45,6 +47,10 @@
     } else {
         cell.titleLabel.text = perspective.user.username;
     }
+
+    cell.titleLabel.userInteractionEnabled = YES;
+    cell.tapGesture = [[[UITapGestureRecognizer alloc] initWithTarget:cell action:@selector(showAuthoringUser)] autorelease];
+    [cell.titleLabel addGestureRecognizer:cell.tapGesture];
     
     //cell.memoText.backgroundColor = [UIColor grayColor];
     CGRect memoFrame = cell.memoText.frame;
@@ -125,13 +131,28 @@
     }else{
         cell.scrollView.hidden = TRUE; //remove from view
     }
+}
+
+-(IBAction) showAuthoringUser{
+    MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
+    
+    memberProfileViewController.user = self.perspective.user;
+    
+    //not a fan of this way, but any other seems to have circular reference issues
+    id nextResponder = [self nextResponder];
+    while (nextResponder != nil){
+        if ([nextResponder isKindOfClass:[UIViewController class]]) {
+            [[(UIViewController*)nextResponder navigationController] pushViewController:memberProfileViewController animated:TRUE];
+        }
+        nextResponder = [nextResponder nextResponder];
+    }
+    
+    [memberProfileViewController release];
     
     
 }
 
-
 -(IBAction)toggleStarred{
-    
     
     NSString *urlText;
   
@@ -170,6 +191,7 @@
     [memoText release];
     [titleLabel release];
     [scrollView release];
+    [tapGesture release];
     
     [super dealloc];
 }
