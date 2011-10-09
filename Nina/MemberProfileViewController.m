@@ -139,9 +139,14 @@
     self.placeMarkButton.detailLabel.text = @"Bookmarks";
     
     self.placeMarkButton.enabled = true;
-    self.followButton.enabled = true;
     self.followersButton.enabled = true;
     self.followingButton.enabled = true;
+    
+    if (self.user.following){
+        [self toggleFollow];
+    } else {
+        self.followButton.enabled = true;
+    }
     
     self.followingButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.followingCount];
     self.followersButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.followerCount];
