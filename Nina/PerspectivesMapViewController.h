@@ -10,6 +10,7 @@
 #import <MapKit/MapKit.h>
 #import "NinaHelper.h"
 #import "ASIHTTPRequest.h"
+#import "User.h"
 
 
 @interface PerspectivesMapViewController : UIViewController<ASIHTTPRequestDelegate, MKMapViewDelegate> {
@@ -18,6 +19,7 @@
     NSString *_username;
     NSMutableArray *nearbyMarks;
     CLLocationManager *locationManager;
+    User *user; //user this is representing
 }
 
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;
@@ -25,6 +27,7 @@
 @property(nonatomic, retain) NSString *username;
 @property(nonatomic, retain) NSMutableArray *nearbyMarks;
 @property(nonatomic, retain) CLLocationManager *locationManager;
+@property(nonatomic, retain) User *user;
 
 -(IBAction)recenter;
 -(IBAction)refreshMap;

@@ -23,7 +23,7 @@
 @implementation PerspectivesMapViewController
 
 @synthesize mapView, toolbar;
-@synthesize username=_username;
+@synthesize username=_username, user;
 @synthesize nearbyMarks;
 @synthesize locationManager;
 
@@ -160,6 +160,10 @@
     // the detail view does not want a toolbar so hide it
     Place* place = [nearbyMarks objectAtIndex:sender.tag];    
     PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:place];
+    
+    if (user){
+        placePageViewController.referrer = user;
+    }
     
     placePageViewController.place = place;
         

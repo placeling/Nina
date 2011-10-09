@@ -111,6 +111,7 @@
 -(IBAction) userPerspectives{
     PerspectivesMapViewController *userPerspectives = [[PerspectivesMapViewController alloc] init];
     userPerspectives.username = self.user.username;
+    userPerspectives.user = self.user;
     [self.navigationController pushViewController:userPerspectives animated:YES];
     [userPerspectives release];
 }
