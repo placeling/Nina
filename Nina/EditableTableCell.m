@@ -18,6 +18,7 @@
         UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(110, 10, 185, 30)];
         
         textField.clearButtonMode = UITextFieldViewModeNever; // no clear 'x' button to the right
+        textField.adjustsFontSizeToFitWidth = FALSE;
         
         textField.adjustsFontSizeToFitWidth = YES;
         textField.textColor = [UIColor blackColor];

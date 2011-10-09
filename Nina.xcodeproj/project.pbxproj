@@ -797,12 +797,12 @@
 		2895004413D64559009E1BD7 /* Nina */ = {
 			isa = PBXGroup;
 			children = (
+				280EA87A14114BE90045B296 /* NearbyPlaces */,
 				286FA144143AB5B300EDAE84 /* QuickPick */,
 				28A4377614327ED5005F192B /* ActivityFeed */,
 				2877A0A114198B5D00850530 /* Profile */,
 				28B38E2E14170ED800D4025F /* Util */,
 				28B38E2D14170E6800D4025F /* Authentication */,
-				280EA87A14114BE90045B296 /* NearbyPlaces */,
 				284A354014044DBE009C8C28 /* PlaceController */,
 				28086B4613EC7F8200790404 /* Model */,
 				28E1371F13EB12DF00C17A68 /* HomeViewController.h */,
@@ -1033,8 +1033,6 @@
 				2893959013E9F8F300B71FA4 /* LoginController.h */,
 				2893959113E9F8F300B71FA4 /* LoginController.m */,
 				2893959213E9F8F300B71FA4 /* LoginController.xib */,
-				2877A09D14183CE400850530 /* EditableTableCell.h */,
-				2877A09E14183CE400850530 /* EditableTableCell.m */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -1042,6 +1040,8 @@
 		28B38E2E14170ED800D4025F /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				2877A09D14183CE400850530 /* EditableTableCell.h */,
+				2877A09E14183CE400850530 /* EditableTableCell.m */,
 				284A354B1404574F009C8C28 /* PerspectiveTableViewCell.h */,
 				284A354C1404574F009C8C28 /* PerspectiveTableViewCell.m */,
 				284A354D1404574F009C8C28 /* PerspectiveTableViewCell.xib */,

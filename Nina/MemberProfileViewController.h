@@ -11,6 +11,7 @@
 #import "NinaHelper.h"
 #import "ASIHTTPRequestDelegate.h"
 #import "ProfileDetailBadge.h"
+#import "asyncimageview.h"
 
 @interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate> {
 	NSString *username;
@@ -18,7 +19,7 @@
     
     NSMutableArray *perspectives;
     
-    IBOutlet UIImageView *profileImageView;
+    IBOutlet AsyncImageView *profileImageView;
     IBOutlet UILabel *usernameLabel;
     IBOutlet UILabel *locationLabel;
     
@@ -36,7 +37,7 @@
 @property (nonatomic, retain) NSString *username;
 @property (nonatomic, retain) User *user;
 
-@property (nonatomic, retain) IBOutlet UIImageView *profileImageView;
+@property (nonatomic, retain) IBOutlet AsyncImageView *profileImageView;
 
 @property (nonatomic, retain) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *userDescriptionLabel;
@@ -54,5 +55,6 @@
 -(IBAction) userPerspectives;
 -(IBAction) userFollowing;
 -(IBAction) userFollowing;
+-(void) loadData; //this is public as the edit perspective controller might want to trigger a refresh
 
 @end

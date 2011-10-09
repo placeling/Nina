@@ -17,11 +17,13 @@
 #import "PlacePageViewController.h"
 #import "PerspectivesMapViewController.h"
 #import "ASIDownloadCache.h"
+#import "NinaHelper.h"
+#import "EditProfileViewController.h"
 
 @interface MemberProfileViewController() 
--(void) loadData;
 -(void) blankLoad;
 -(void) toggleFollow;
+-(IBAction)editUser;
 @end
 
 
@@ -62,6 +64,14 @@
 	[request startAsynchronous];
     
 	[self blankLoad];
+}
+
+-(IBAction)editUser{
+    EditProfileViewController *editProfileViewController = [[EditProfileViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    editProfileViewController.user = self.user;
+    editProfileViewController.delegate = self;
+    [self.navigationController pushViewController:editProfileViewController animated:TRUE];
+    [editProfileViewController release];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -152,6 +162,14 @@
         [self.tableView reloadData];
     }
     
+    if ([self.username isEqualToString:[NinaHelper getUsername]]){
+        UIBarButtonItem *editButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editUser)];
+        self.navigationItem.rightBarButtonItem = editButton;
+        [editButton release];
+    }
+    
+    self.profileImageView.photo = self.user.profilePic;
+    [self.profileImageView loadImage];
     
 }
 
@@ -212,8 +230,7 @@
             
             self.user = [[[User alloc] initFromJsonDict:jsonDict]autorelease];    
             
-            
-            if (self.user.following || [self.user.username isEqualToString:[NinaHelper getUsername]] ){
+            if (self.user.following || [self.username isEqualToString:[NinaHelper getUsername]] ){
                 [self toggleFollow];
             }
             

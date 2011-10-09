@@ -76,6 +76,9 @@
         }
     }
     
+    cell.userImage.photo = perspective.user.profilePic;
+    [cell.userImage loadImage];
+    
     cell.userImage.layer.cornerRadius = 8.0f;
     cell.userImage.layer.borderWidth = 1.0f;
     cell.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];

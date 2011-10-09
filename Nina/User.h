@@ -15,6 +15,10 @@
     NSString *iconURLString;
     NSString *username;
     NSString *description;
+    NSString *email;
+    NSString *url;
+    
+    NSArray *location;
     
     Photo *profilePic;
     NSInteger placeCount;
@@ -30,6 +34,9 @@
 @property (nonatomic, retain) NSString *iconURLString;
 @property (nonatomic, retain) NSString *username;
 @property (nonatomic, retain) NSString *description;
+@property (nonatomic, retain) NSString *email;
+@property (nonatomic, retain) NSString *url;
+@property (nonatomic, retain) NSArray *location;
 
 @property (nonatomic, retain) Photo *profilePic;
 @property (nonatomic, assign) NSInteger placeCount;
@@ -40,5 +47,6 @@
 @property (nonatomic, assign) bool follows_you;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
+- (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
 @end

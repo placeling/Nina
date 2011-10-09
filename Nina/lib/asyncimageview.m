@@ -48,11 +48,11 @@
         
         NSString *urlText = [NSString stringWithFormat:@"%@", self.photo.thumb_url];
         
-        NSURL *url = [[NSURL alloc]initWithString:urlText];
+        NSURL *url = [NSURL URLWithString:urlText];
+        if ([url host] == nil) return;
         
         _request = [[ASIHTTPRequest alloc] initWithURL:url];
         
-        [url release];
         _request.delegate = self;
         [_request setDownloadCache:[ASIDownloadCache sharedCache]];
         
