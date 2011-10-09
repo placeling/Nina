@@ -78,6 +78,12 @@
         errorMessage = @""; //prevents a "nil" error on dictionary creation
     }
     
+    if (![[[request url]  host] isEqualToString:[NinaHelper getHostname]]){
+        DLog(@"Error for which host isn't a placeling server");
+        [FlurryAnalytics logEvent:@"ERROR_NOT_OUR_FAULT"];
+        return; //Issue with server we can't really help, likely google
+    }
+    
     if (statusCode == 401){
         DLog(@"Got a 401, with access_token: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
         if([[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]){
