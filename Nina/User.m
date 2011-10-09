@@ -7,6 +7,7 @@
 //
 
 #import "User.h"
+#import "NSDictionary+Utility.h"
 
 @implementation User
 
@@ -25,23 +26,23 @@
 }
 
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
-    self.userId = [jsonDict objectForKey:@"id"];
-    self.username = [jsonDict objectForKey:@"username"];
-    self.placeCount = [[jsonDict objectForKey:@"perspectives_count"] intValue];
-    self.followerCount =[[jsonDict objectForKey:@"follower_count"] intValue];
-    self.followingCount = [[jsonDict objectForKey:@"following_count"] intValue];
-    self.description = [jsonDict objectForKey:@"description"];
-    self.url = [jsonDict objectForKey:@"url"];
-    self.email = [jsonDict objectForKey:@"email"];
+    self.userId = [jsonDict objectForKeyNotNull:@"id"];
+    self.username = [jsonDict objectForKeyNotNull:@"username"];
+    self.placeCount = [[jsonDict objectForKeyNotNull:@"perspectives_count"] intValue];
+    self.followerCount =[[jsonDict objectForKeyNotNull:@"follower_count"] intValue];
+    self.followingCount = [[jsonDict objectForKeyNotNull:@"following_count"] intValue];
+    self.description = [jsonDict objectForKeyNotNull:@"description"];
+    self.url = [jsonDict objectForKeyNotNull:@"url"];
+    self.email = [jsonDict objectForKeyNotNull:@"email"];
     
-    self.location = [jsonDict objectForKey:@"location"];
+    self.location = [jsonDict objectForKeyNotNull:@"location"];
     
-    self.following = [[jsonDict objectForKey:@"following"] boolValue];
-    self.follows_you = [[jsonDict objectForKey:@"follows_you"] boolValue];
+    self.following = [[jsonDict objectForKeyNotNull:@"following"] boolValue];
+    self.follows_you = [[jsonDict objectForKeyNotNull:@"follows_you"] boolValue];
     
     Photo *photo = [[Photo alloc] init];
-    photo.thumb_url = [jsonDict objectForKey:@"thumb_url"];
-    photo.main_url = [jsonDict objectForKey:@"main_url"];
+    photo.thumb_url = [jsonDict objectForKeyNotNull:@"thumb_url"];
+    photo.main_url = [jsonDict objectForKeyNotNull:@"main_url"];
     self.profilePic = photo;
     
     [photo release];

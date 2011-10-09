@@ -40,7 +40,7 @@
     } else {
         
         if (self.photo.thumb_url == nil){
-            
+            return;
         }
         if (_request!=nil) { [_request release]; } //in case we are downloading a 2nd image
         

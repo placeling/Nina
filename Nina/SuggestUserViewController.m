@@ -14,6 +14,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MemberProfileViewController.h"
 #import "User.h"
+#import "asyncimageview.h"
 
 @implementation SuggestUserViewController
 @synthesize members;
@@ -149,6 +150,14 @@
     cell.detailTextLabel.text = user.description;
 	
     cell.accessoryView.tag = indexPath.row;
+    
+    cell.imageView.image = [UIImage imageNamed:@"default_profile_image.png"];
+    
+    AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:user.profilePic];
+    aImageView.frame = cell.imageView.frame;
+    [aImageView loadImage];
+    [cell addSubview:aImageView];
+    [aImageView release];
     
 	//NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:[entry objectForKey:@"profile_pic"]]];
 	//UIImage *myimage = [[UIImage alloc] initWithData:imageData];    
