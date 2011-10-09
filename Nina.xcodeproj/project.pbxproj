@@ -71,6 +71,10 @@
 		28086C0113ECAA0400790404 /* ProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28086BFB13ECAA0400790404 /* ProfileHeaderView.xib */; };
 		28086C1E13ECAA3E00790404 /* SuggestUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28086C1B13ECAA3E00790404 /* SuggestUserViewController.xib */; };
 		28086C1F13ECAA3E00790404 /* SuggestUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28086C1D13ECAA3E00790404 /* SuggestUserViewController.m */; };
+		280A33C114422C6F007ACBDC /* EverythingPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33BF14422C6F007ACBDC /* EverythingPick.png */; };
+		280A33C214422C6F007ACBDC /* EverythingPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33C014422C6F007ACBDC /* EverythingPick@2x.png */; };
+		280A33C614422D4C007ACBDC /* FoodDrinkPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33C414422D4C007ACBDC /* FoodDrinkPick.png */; };
+		280A33C714422D4C007ACBDC /* FoodDrinkPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33C514422D4C007ACBDC /* FoodDrinkPick@2x.png */; };
 		280D44E213D770620030E770 /* NinaHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 280D44E113D770620030E770 /* NinaHelper.m */; };
 		280EA87D14114C300045B296 /* NearbyPlacesFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280EA87C14114C300045B296 /* NearbyPlacesFooterView.xib */; };
 		280EA881141154C80045B296 /* SinglePlaceMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 280EA87F141154C70045B296 /* SinglePlaceMapView.m */; };
@@ -313,6 +317,10 @@
 		28086C1B13ECAA3E00790404 /* SuggestUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestUserViewController.xib; sourceTree = "<group>"; };
 		28086C1C13ECAA3E00790404 /* SuggestUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuggestUserViewController.h; sourceTree = "<group>"; };
 		28086C1D13ECAA3E00790404 /* SuggestUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestUserViewController.m; sourceTree = "<group>"; };
+		280A33BF14422C6F007ACBDC /* EverythingPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EverythingPick.png; sourceTree = "<group>"; };
+		280A33C014422C6F007ACBDC /* EverythingPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EverythingPick@2x.png"; sourceTree = "<group>"; };
+		280A33C414422D4C007ACBDC /* FoodDrinkPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FoodDrinkPick.png; sourceTree = "<group>"; };
+		280A33C514422D4C007ACBDC /* FoodDrinkPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FoodDrinkPick@2x.png"; sourceTree = "<group>"; };
 		280D44E013D770620030E770 /* NinaHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NinaHelper.h; sourceTree = "<group>"; };
 		280D44E113D770620030E770 /* NinaHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NinaHelper.m; sourceTree = "<group>"; };
 		280EA87C14114C300045B296 /* NearbyPlacesFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyPlacesFooterView.xib; sourceTree = "<group>"; };
@@ -1105,6 +1113,10 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				280A33C414422D4C007ACBDC /* FoodDrinkPick.png */,
+				280A33C514422D4C007ACBDC /* FoodDrinkPick@2x.png */,
+				280A33BF14422C6F007ACBDC /* EverythingPick.png */,
+				280A33C014422C6F007ACBDC /* EverythingPick@2x.png */,
 				286FA16D143D1A6700EDAE84 /* redLeather.png */,
 				286FA14F143BD34C00EDAE84 /* suggest.png */,
 				286FA150143BD34C00EDAE84 /* suggest@2x.png */,
@@ -1339,6 +1351,10 @@
 				286FA173143D1DBC00EDAE84 /* MarketingScript.ttf in Resources */,
 				286FA175143D2A3000EDAE84 /* MuseoSlab500.ttf in Resources */,
 				286FA17E143D339400EDAE84 /* EditProfileViewController.xib in Resources */,
+				280A33C114422C6F007ACBDC /* EverythingPick.png in Resources */,
+				280A33C214422C6F007ACBDC /* EverythingPick@2x.png in Resources */,
+				280A33C614422D4C007ACBDC /* FoodDrinkPick.png in Resources */,
+				280A33C714422D4C007ACBDC /* FoodDrinkPick@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
