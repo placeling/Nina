@@ -310,6 +310,18 @@
                 
                 break;
             }
+            case 5:{
+                //starred perspective 
+                //perspective modified return
+                NSString *responseString = [request responseString];        
+                DLog(@"%@", responseString);
+                
+                self.place.bookmarked = true;
+                [self.tableView reloadData];                
+                
+                break;
+                break;
+            }
         }
 
 	}
@@ -684,6 +696,7 @@
                     if ( [item isKindOfClass:[UITableViewCell class]]){
                         PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
                         [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:false];
+                        pcell.requestDelegate = self;
                         cell = pcell;
                         break;
                     }

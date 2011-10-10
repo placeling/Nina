@@ -18,11 +18,12 @@
     IBOutlet UIButton *upvoteButton;
     IBOutlet UITextView *memoText;
     IBOutlet UILabel *titleLabel;
-    
+    id<ASIHTTPRequestDelegate> requestDelegate;
     IBOutlet UIScrollView *scrollView;
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
+@property(nonatomic,assign) id<ASIHTTPRequestDelegate> requestDelegate;
 @property(nonatomic,retain) IBOutlet AsyncImageView *userImage;
 @property(nonatomic,retain) IBOutlet UIButton *upvoteButton;
 @property(nonatomic,retain) IBOutlet UITextView *memoText;

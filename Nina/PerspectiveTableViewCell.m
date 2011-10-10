@@ -14,7 +14,7 @@
 @implementation PerspectiveTableViewCell
 
 @synthesize perspective, userImage, upvoteButton, memoText,titleLabel, scrollView;
-@synthesize tapGesture;
+@synthesize tapGesture, requestDelegate;
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
@@ -148,8 +148,6 @@
     }
     
     [memberProfileViewController release];
-    
-    
 }
 
 -(IBAction)toggleStarred{
@@ -170,13 +168,8 @@
     
     ASIFormDataRequest  *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
     
-    [request setCompletionBlock:^{
-        
-    }];
-    [request setFailedBlock:^{
-        NSError *error = [request error];
-        DLog(@"error on star operation: %@", error);
-    }];
+    request.delegate = self.requestDelegate;
+    request.tag = 5;
     
     [request setRequestMethod:@"POST"];
     [NinaHelper signRequest:request];
@@ -192,7 +185,6 @@
     [titleLabel release];
     [scrollView release];
     [tapGesture release];
-    
     [super dealloc];
 }
 
