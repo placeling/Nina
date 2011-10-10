@@ -25,7 +25,6 @@
 @synthesize reloading=_reloading, showAll, placesTableView, searchTerm;
 
 -(IBAction)topLocals:(id)sender{
-    
     SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
     [self.navigationController pushViewController:suggestUserViewController animated:YES];
     [suggestUserViewController release]; 
@@ -103,7 +102,7 @@
     } else {
         self.searchBar.text = self.searchTerm;
     }
-    
+    //self.searchBar.
     self.searchBar.delegate = self;
     self.placesTableView.delegate = self;
     [self findNearbyPlaces];
@@ -193,7 +192,19 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     self.searchTerm = searchBar.text;
+    [searchBar setShowsCancelButton:FALSE animated:true];
     [self findNearbyPlaces];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{	
+	searchBar.text = searchTerm;	
+	[searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:FALSE animated:true];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+	[searchBar setShowsCancelButton:TRUE animated:true];
 }
 
 
@@ -275,6 +286,7 @@
             }
         }
     }
+    
     
     cell.titleLabel.text = place.name;
     cell.addressLabel.text = place.address;
