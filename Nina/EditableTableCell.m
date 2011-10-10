@@ -19,8 +19,6 @@
         
         textField.clearButtonMode = UITextFieldViewModeNever; // no clear 'x' button to the right
         textField.adjustsFontSizeToFitWidth = FALSE;
-        
-        textField.adjustsFontSizeToFitWidth = YES;
         textField.textColor = [UIColor blackColor];
         textField.backgroundColor = [UIColor whiteColor];
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
