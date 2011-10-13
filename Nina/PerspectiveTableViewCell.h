@@ -14,10 +14,12 @@
 @interface PerspectiveTableViewCell : UITableViewCell{
     Perspective *perspective;
     UITapGestureRecognizer *tapGesture;
+    UITapGestureRecognizer *showMoreTap;
     IBOutlet AsyncImageView *userImage;
     IBOutlet UIButton *upvoteButton;
-    IBOutlet UITextView *memoText;
+    IBOutlet UILabel *memoText;
     IBOutlet UILabel *titleLabel;
+    IBOutlet UILabel *showMoreLabel;
     id<ASIHTTPRequestDelegate> requestDelegate;
     IBOutlet UIScrollView *scrollView;
 }
@@ -26,10 +28,12 @@
 @property(nonatomic,assign) id<ASIHTTPRequestDelegate> requestDelegate;
 @property(nonatomic,retain) IBOutlet AsyncImageView *userImage;
 @property(nonatomic,retain) IBOutlet UIButton *upvoteButton;
-@property(nonatomic,retain) IBOutlet UITextView *memoText;
+@property(nonatomic,retain) IBOutlet UILabel *memoText;
 @property(nonatomic,retain) IBOutlet UILabel *titleLabel;
+@property(nonatomic,retain) IBOutlet UILabel *showMoreLabel;
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
-@property(nonatomic,retain) IBOutlet UITapGestureRecognizer *tapGesture;
+@property(nonatomic,retain) UITapGestureRecognizer *tapGesture;
+@property(nonatomic,retain) UITapGestureRecognizer *showMoreTap;
 
 -(IBAction)toggleStarred;
 

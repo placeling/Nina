@@ -249,7 +249,7 @@
 					<object class="IBUIScrollView" id="1021377505">
 						<reference key="NSNextResponder" ref="903079877"/>
 						<int key="NSvFlags">296</int>
-						<string key="NSFrame">{{0, 114}, {321, 44}}</string>
+						<string key="NSFrame">{{0, 108}, {321, 44}}</string>
 						<reference key="NSSuperview" ref="903079877"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="543716752"/>
@@ -392,9 +392,9 @@
 						<reference key="object" ref="903079877"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="1021377505"/>
 							<reference ref="543716752"/>
 							<reference ref="111105347"/>
+							<reference ref="1021377505"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">View</string>
@@ -519,9 +519,11 @@
 							<string>shareFacebook</string>
 							<string>shareTwitter</string>
 							<string>showSingleAnnotatedMap</string>
+							<string>tagSearch:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -546,6 +548,7 @@
 							<string>shareFacebook</string>
 							<string>shareTwitter</string>
 							<string>showSingleAnnotatedMap</string>
+							<string>tagSearch:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -583,6 +586,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">showSingleAnnotatedMap</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">tagSearch:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>

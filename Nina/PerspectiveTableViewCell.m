@@ -14,15 +14,15 @@
 @implementation PerspectiveTableViewCell
 
 @synthesize perspective, userImage, upvoteButton, memoText,titleLabel, scrollView;
-@synthesize tapGesture, requestDelegate;
+@synthesize tapGesture, requestDelegate, showMoreLabel, showMoreTap;
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
     CGFloat heightCalc = 39;
     
     CGSize textAreaSize;
-    textAreaSize.height = 130;
-    textAreaSize.width = 260;
+    textAreaSize.height = 100;
+    textAreaSize.width = 233;
     
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
@@ -33,7 +33,6 @@
     }
     
     return MAX(90, heightCalc);
-    
 }
 
 

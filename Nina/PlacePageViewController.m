@@ -30,6 +30,7 @@
 #import "ASIDownloadCache.h"
 
 #import "NearbySuggestedPlaceController.h"
+#import "FullPerspectiveViewController.h"
 
 #define kMinCellHeight 60
 #define SectionHeaderHeight 60
@@ -709,6 +710,22 @@
     // Configure the cell...
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
+}
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+    
+    if ( !( self.perspectiveType == home && perspective.mine  ) ){
+        FullPerspectiveViewController *fullPerspectiveViewController = [[FullPerspectiveViewController alloc] init];
+        fullPerspectiveViewController.perspective = perspective;
+        
+        [[self navigationController] pushViewController:fullPerspectiveViewController animated:YES];
+        [fullPerspectiveViewController release];
+    }
 }
 
 
