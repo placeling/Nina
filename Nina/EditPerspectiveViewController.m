@@ -75,6 +75,14 @@
     
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
+    [StyleHelper styleBackgroundView:self.view];
+    
+}
+
 
 -(void)requestFailed:(ASIHTTPRequest *)request{
     [NinaHelper handleBadRequest:request sender:self];

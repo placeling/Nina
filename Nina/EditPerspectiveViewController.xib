@@ -44,7 +44,7 @@
 					<object class="IBUITextView" id="910232293">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrameSize">{320, 160}</string>
+						<string key="NSFrame">{{20, 9}, {280, 144}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="287540930"/>
@@ -259,7 +259,6 @@
 						<string key="NSFrame">{{15, 352}, {280, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -583,16 +582,20 @@
 							<string>existingButton</string>
 							<string>memoTextView</string>
 							<string>photoButton</string>
+							<string>queue</string>
 							<string>scrollView</string>
 							<string>takeButton</string>
+							<string>updatedMemo</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UIButton</string>
 							<string>UITextView</string>
 							<string>UIButton</string>
+							<string>NSOperationQueue</string>
 							<string>UIScrollView</string>
 							<string>UIButton</string>
+							<string>NSString</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -602,8 +605,10 @@
 							<string>existingButton</string>
 							<string>memoTextView</string>
 							<string>photoButton</string>
+							<string>queue</string>
 							<string>scrollView</string>
 							<string>takeButton</string>
+							<string>updatedMemo</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -620,6 +625,10 @@
 								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">queue</string>
+								<string key="candidateClassName">NSOperationQueue</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">scrollView</string>
 								<string key="candidateClassName">UIScrollView</string>
 							</object>
@@ -627,11 +636,23 @@
 								<string key="name">takeButton</string>
 								<string key="candidateClassName">UIButton</string>
 							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">updatedMemo</string>
+								<string key="candidateClassName">NSString</string>
+							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EditPerspectiveViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSOperationQueue</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NSOperationQueue.h</string>
 					</object>
 				</object>
 			</object>
