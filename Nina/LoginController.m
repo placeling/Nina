@@ -161,7 +161,7 @@
     int statusCode = [request responseStatusCode];
 	
     if (statusCode == 401){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:NSLocalizedString(@"bad_login", "") delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect Username/Password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
         [alert release];
         DLog(@"401 on oauth login request");
