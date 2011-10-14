@@ -26,7 +26,6 @@
 }
 
 -(void) viewDidLoad{
-    CGFloat verticalCursor = self.memoText.frame.origin.y;;
     self.perspective = perspective;
     self.memoText.text = perspective.notes;
     
