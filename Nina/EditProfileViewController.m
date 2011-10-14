@@ -270,14 +270,15 @@
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:photoCellIdentifier] autorelease];
         }
         
-        if (self.user.profilePic.thumb_image){
-            cell.imageView.image = self.user.profilePic.thumb_image;
-        } else if (self.user.profilePic.thumb_url){
-            //download the image or something
-        } else {
-            cell.imageView.image = [UIImage imageNamed:@"default_profile_image.png"];
-        }
-        cell.imageView.contentMode = UIViewContentModeScaleToFill;
+        cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        cell.imageView.image = [UIImage imageNamed:@"default_profile_image.png"];
+        
+        AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:user.profilePic];
+        aImageView.frame = cell.imageView.frame;
+        aImageView.populate = cell.imageView;
+        [aImageView loadImage];
+        [cell addSubview:aImageView]; //mostly to handle de-allocation
+        [aImageView release];
         
         cell.textLabel.text = @"Profile Picture";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
