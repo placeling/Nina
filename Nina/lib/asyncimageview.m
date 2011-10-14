@@ -14,7 +14,7 @@
 
 @implementation AsyncImageView
 
-@synthesize photo=_photo;
+@synthesize photo=_photo, populate;
 
 
 - (id) initWithPhoto:(Photo *)photo{
@@ -58,7 +58,12 @@
         
         [_request startAsynchronous];
         
-        picture = [UIImage imageWithContentsOfFile:@"86-camera.png"];
+        if (populate){
+            picture = populate.image;
+        } else {
+            picture = [UIImage imageNamed:@"default_profile_image.png"];
+        }
+        
         self.photo.thumb_image = picture; //holder for now
         
     }
@@ -70,16 +75,29 @@
     //make sizing choices based on your needs, experiment with these. maybe not all the calls below are needed.
     self.contentMode = UIViewContentModeScaleAspectFit;
     
-    CGSize size = self.frame.size;
+    CGSize size =self.frame.size;
+    if (size.width == 0 || size.height == 0){
+        size.height = 57; //most likely table cases
+        size.width = 57;
+    }
     
-    
-    self.image = [picture
-                  thumbnailImage:MIN(size.width, size.height)
+    if (picture.size.width != picture.size.height){
+        picture = [picture
+                  thumbnailImage:MIN(picture.size.width, picture.size.height)
                   transparentBorder:1
                   cornerRadius:1
                   interpolationQuality:kCGInterpolationHigh ];
-                  
-    [self setNeedsLayout]; 
+    }
+        
+    self.image = picture;
+    
+    if (populate){
+        populate.image = picture;
+        self.hidden = TRUE;
+    } else {
+        self.hidden = FALSE;
+    }
+    
 }
 
 

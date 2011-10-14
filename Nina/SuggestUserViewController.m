@@ -155,13 +155,10 @@
     
     AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:user.profilePic];
     aImageView.frame = cell.imageView.frame;
+    aImageView.populate = cell.imageView;
     [aImageView loadImage];
-    [cell addSubview:aImageView];
+    [cell addSubview:aImageView]; //mostly to handle de-allocation
     [aImageView release];
-    
-	//NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:[entry objectForKey:@"profile_pic"]]];
-	//UIImage *myimage = [[UIImage alloc] initWithData:imageData];    
-	//cell.imageView.image = myimage;
     
     return cell;
 }

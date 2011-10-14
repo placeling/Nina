@@ -7,6 +7,7 @@
 //
 
 #import "Photo.h"
+#import "NSDictionary+Utility.h"
 
 
 @implementation Photo
@@ -25,9 +26,9 @@
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict{
     self.photo_id = [jsonDict objectForKey:@"_id"];
     
-    self.iphone_url = [jsonDict objectForKey:@"iphone_url"];
-    self.main_url = [jsonDict objectForKey:@"main_url"];
-    self.thumb_url = [jsonDict objectForKey:@"thumb_url"];
+    self.iphone_url = [jsonDict objectForKeyNotNull:@"iphone_url"];
+    self.main_url = [jsonDict objectForKeyNotNull:@"main_url"];
+    self.thumb_url = [jsonDict objectForKeyNotNull:@"thumb_url"];
 }
 
 - (void)dealloc
