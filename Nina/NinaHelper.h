@@ -130,6 +130,8 @@
 
 +(void) clearActiveRequests:(NSInteger) range;
 
++(NSString *)dateDiff:(NSString *)origStamp;
+
 +(NSString*) getHostname;
 +(BOOL) isProductionRun;
 +(NSString*) getUsername;

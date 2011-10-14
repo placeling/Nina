@@ -206,6 +206,31 @@
 }
 
 
++(NSString *)dateDiff:(NSString *)origDate {
+    
+    NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    NSDate *convertedDate = [dateFormatter dateFromString:origDate];
+    
+    NSDate *todayDate = [NSDate date];
+    double ti = [convertedDate timeIntervalSinceDate:todayDate];
+    ti = ti * -1;
+    if (ti < 60) {
+        return @"less than a minute ago";
+    } else if (ti < 3600) {
+        int diff = round(ti / 60);
+        return [NSString stringWithFormat:@"%d minutes ago", diff];
+    } else if (ti < 86400) {
+        int diff = round(ti / 60 / 60);
+        return[NSString stringWithFormat:@"%d hours ago", diff];
+    } else if (ti < 2629743) {
+        int diff = round(ti / 60 / 60 / 24);
+        return[NSString stringWithFormat:@"%d days ago", diff];
+    } else {
+        return @"never";
+    }   
+}
+
 
 +(void) setUsername:(NSString*)username{
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];

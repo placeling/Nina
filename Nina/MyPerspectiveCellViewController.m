@@ -42,7 +42,7 @@
     CGFloat verticalCursor = cell.memoLabel.frame.origin.y;
     cell.perspective = perspective;
     BOOL emptyPerspective = true;
-    cell.footerLabel.text = [NSString stringWithFormat:@"Last Modified: %@", perspective.lastModified];
+    cell.footerLabel.text = [NSString stringWithFormat:@"Last Modified: %@", [NinaHelper dateDiff:perspective.lastModified]  ];
     
     if(perspective.notes && perspective.notes.length > 0){
         emptyPerspective = false;
