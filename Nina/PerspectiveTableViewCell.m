@@ -45,11 +45,11 @@
         cell.titleLabel.text = perspective.place.name;
     } else {
         cell.titleLabel.text = perspective.user.username;
+        cell.titleLabel.userInteractionEnabled = YES;
+        cell.tapGesture = [[[UITapGestureRecognizer alloc] initWithTarget:cell action:@selector(showAuthoringUser)] autorelease];
+        [cell.titleLabel addGestureRecognizer:cell.tapGesture];
     }
 
-    cell.titleLabel.userInteractionEnabled = YES;
-    cell.tapGesture = [[[UITapGestureRecognizer alloc] initWithTarget:cell action:@selector(showAuthoringUser)] autorelease];
-    [cell.titleLabel addGestureRecognizer:cell.tapGesture];
     
     //cell.memoText.backgroundColor = [UIColor grayColor];
     CGRect memoFrame = cell.memoText.frame;
