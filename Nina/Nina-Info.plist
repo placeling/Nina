@@ -48,6 +48,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>server_url</key>
-	<string>http://api.placeling.com</string>
+	<string>http://localhost:3000</string>
 </dict>
 </plist>
