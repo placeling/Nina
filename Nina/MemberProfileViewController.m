@@ -153,7 +153,7 @@
     self.placeMarkButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.placeCount];
     
     if (perspectives == nil && self.user.placeCount != 0){
-        NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/perspectives", [NinaHelper getHostname], self.username];		
+        NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/", [NinaHelper getHostname], self.username];		
         
         NSURL *url = [NSURL URLWithString:urlString];
         
