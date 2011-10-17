@@ -16,6 +16,8 @@
 @interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate> {
 	NSString *username;
 	User *user;
+    BOOL loadingMore;
+    BOOL hasMore;
     
     NSMutableArray *perspectives;
     

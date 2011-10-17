@@ -41,6 +41,8 @@
     [[NSBundle mainBundle] loadNibNamed:@"ProfileHeaderView" owner:self options:nil];
     
     [super viewDidLoad];
+    loadingMore = false;
+    hasMore = true;
 	
     NSString *getUsername;
     if (self.user == nil){
@@ -294,6 +296,32 @@
             [self.tableView reloadData];
             
         }
+        case 14:
+        {
+            NSString *responseString = [request responseString];            
+            DLog(@"perspectives get returned: %@", responseString);
+                        
+            NSDictionary *jsonDict =  [responseString JSONValue];
+            
+            
+            if ([jsonDict objectForKey:@"perspectives"]){
+                //has perspectives in call, seed with to make quicker
+                NSMutableArray *rawPerspectives = [jsonDict objectForKey:@"perspectives"];               
+                if ([rawPerspectives count] == 0){
+                    hasMore = false;
+                }
+                for (NSDictionary* dict in rawPerspectives){
+                    Perspective* newPerspective = [[Perspective alloc] initFromJsonDict:dict];
+                    newPerspective.user = self.user;
+                    [perspectives addObject:newPerspective]; 
+                    [newPerspective release];
+                }
+            }
+            
+            [self loadData];
+            loadingMore = false;
+            break;
+        }
     }
 
 }
@@ -370,6 +398,32 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    CGPoint offset = aScrollView.contentOffset;
+    CGRect bounds = aScrollView.bounds;
+    CGSize size = aScrollView.contentSize;
+    UIEdgeInsets inset = aScrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = 10;
+    if(hasMore && y > h + reload_distance && loadingMore == false) {
+        loadingMore = true;
+        
+        // Call url to get profile details
+        NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@/perspectives?start=%i", [NinaHelper getHostname], self.username, [perspectives count]];
+        
+        NSURL *url = [NSURL URLWithString:urlText];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        [request setDelegate:self];
+        [request setTag:14];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        [NinaHelper signRequest:request];
+        [request startAsynchronous];
+        
+    }
+}
 
 
 
