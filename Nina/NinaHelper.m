@@ -198,7 +198,7 @@
     for (ASIHTTPRequest *req in ASIHTTPRequest.sharedQueue.operations){
         NSInteger tag = req.tag;
         
-        if ((range <= tag && tag < range+10) || (tag >= 1000 && range >= 1000)){
+        if ( range <= tag && tag < range+10 ){
             [req cancel];
             [req setDelegate:nil];
         }
