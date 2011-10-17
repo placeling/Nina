@@ -324,7 +324,13 @@
 
 
 -(void)dealloc{
-    [NinaHelper clearActiveRequests:1000];
+    if (queue){
+        for (ASIHTTPRequest *request in queue.operations){
+            [request cancel];
+            request.delegate = nil;
+        }
+    }
+    
     [queue release];
     [memoTextView release];
     [photoButton release];
