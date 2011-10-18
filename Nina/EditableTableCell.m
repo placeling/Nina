@@ -11,7 +11,6 @@
 @implementation EditableTableCell
 @synthesize textField=_textField;
 
-
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:reuseIdentifier]) {
         
@@ -20,10 +19,11 @@
         textField.clearButtonMode = UITextFieldViewModeNever; // no clear 'x' button to the right
         textField.adjustsFontSizeToFitWidth = FALSE;
         textField.textColor = [UIColor blackColor];
-        textField.backgroundColor = [UIColor whiteColor];
+        textField.backgroundColor = [UIColor clearColor];
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
         textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         textField.textAlignment = UITextAlignmentLeft;
+        [textField setReturnKeyType:UIReturnKeyDone];
         
         self.textField = textField;
         

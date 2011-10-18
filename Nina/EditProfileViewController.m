@@ -11,6 +11,7 @@
 #import "NinaHelper.h"
 #import "NSString+SBJSON.h"
 #import "UIImage+Resize.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface EditProfileViewController(Private)
 -(IBAction)showActionSheet;
@@ -18,7 +19,12 @@
 
 
 @implementation EditProfileViewController
-@synthesize user, lat, lng, delegate;
+@synthesize user, lat, lng, delegate, currentLocation;
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -30,10 +36,18 @@
 }
 
 -(IBAction)showActionSheet{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take Photo",@"Choose From Library", nil];
-    [actionSheet showInView:self.view];
-    [actionSheet release];
-    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"New Profile Picture" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take Photo", @"Choose From Library", nil];
+        [actionSheet showInView:self.view];
+        [actionSheet release];
+    }
+    else { // No camera, probably a touch
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        [self presentModalViewController:picker animated:YES];
+    }    
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -42,6 +56,7 @@
         UIImagePickerController *imgPicker = [[UIImagePickerController alloc] init];
         imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         imgPicker.delegate = self;
+        imgPicker.allowsEditing = YES;
         [self presentModalViewController:imgPicker animated:YES];
         [imgPicker release];
  
@@ -49,6 +64,7 @@
         UIImagePickerController *imgPicker = [[UIImagePickerController alloc] init];
         imgPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imgPicker.delegate = self;
+        imgPicker.allowsEditing = YES;
         [self presentModalViewController:imgPicker animated:YES];
         [imgPicker release];
         
@@ -72,8 +88,8 @@
     
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     
-    cell.imageView.image = img;
-    
+    UIImageView *myImageView = (UIImageView*)[cell viewWithTag:1];
+    myImageView.image = img;
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,13 +110,22 @@
     
     UITableViewCell *locationCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
     
-    locationCell.textLabel.text = [NSString stringWithFormat:@"Your home location is near: %@,%@", self.lat, self.lng];
+    locationCell.textLabel.text = [NSString stringWithFormat:@"Your map is centered right here."];
     
     [locationCell setNeedsDisplay];
     
 }
 
 -(IBAction)saveUser{
+    EditableTableCell *cell = (EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+    if (cell.textField.isFirstResponder) {
+        [cell.textField resignFirstResponder];
+    }
+    cell = (EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+    if (cell.textField.isFirstResponder) {
+        [cell.textField resignFirstResponder];
+    }
+    
     NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@", [NinaHelper getHostname], self.user.username];
     
     NSURL *url = [NSURL URLWithString:urlText];
@@ -185,12 +210,25 @@
     UIBarButtonItem *saveButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveUser)];
     self.navigationItem.rightBarButtonItem = saveButton;
     [saveButton release];
+    
+    // Create button at bottom of table
+    // Could do as section footer, but couldn't make button work inside it so table footer instead - lw
+    CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+    UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, screenRect.size.width, 50.0)] autorelease];
+    
+    UIButton *update = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [update addTarget:self action:@selector(updateHomeLocation) forControlEvents:UIControlEventTouchUpInside];
+    [update setTitle:@"Center Map Here" forState:UIControlStateNormal];
+    update.enabled = YES;
+    
+    update.frame = CGRectMake(10.0, 0.0, screenRect.size.width - 20.0, 40.0);
+    
+    [footerView addSubview:update];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.tableFooterView = footerView;
+    
+    CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
+    self.currentLocation = locationManager.location;
 }
 
 - (void)viewDidUnload
@@ -251,8 +289,17 @@
     } else if (section == 1){
         return 3;
     } else{
-        return 2;
+        return 1;
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && indexPath.row == 0) {
+		return 70;
+	} else {
+		return 44;
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -260,7 +307,6 @@
     static NSString *photoCellIdentifier = @"photoCell";
     static NSString *CellIdentifier = @"Cell";
     static NSString *homeCellIdentifier = @"HomeCell";
-    static NSString *locationCellIdentifier = @"LocationCell";
     
     UITableViewCell *cell;
     
@@ -270,23 +316,38 @@
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:photoCellIdentifier] autorelease];
         }
         
-        cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
-        cell.imageView.image = [UIImage imageNamed:@"default_profile_image.png"];
+        UIImage *profile_pic;
+        if (user.profilePic == nil) {
+            profile_pic = [UIImage imageNamed:@"default_profile_image.png"];
+        } else {
+            profile_pic = user.profilePic.thumb_image;
+        }
         
-        AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:user.profilePic];
-        aImageView.frame = cell.imageView.frame;
-        aImageView.populate = cell.imageView;
-        [aImageView loadImage];
-        [cell addSubview:aImageView]; //mostly to handle de-allocation
-        [aImageView release];
+        CGRect myImageRect = CGRectMake(20, 10, 50, 50);
+        UIImageView *myImage = [[UIImageView alloc] initWithFrame:myImageRect];
+        [myImage setImage:profile_pic];
+        myImage.tag = 1;
         
-        cell.textLabel.text = @"Profile Picture";
+        [[myImage layer] setCornerRadius:1.0f];
+        [[myImage layer] setMasksToBounds:YES];
+        [[myImage layer] setBorderWidth:1.0f];
+        [[myImage layer] setBorderColor: [UIColor lightGrayColor].CGColor];
+        
+        [cell addSubview:myImage];
+        [myImage release];
+        
+        UILabel *headerLabel = [[[UILabel alloc] initWithFrame:CGRectMake(84, 13, 200, 40)] autorelease];
+        headerLabel.text = @"profile picture";
+        headerLabel.backgroundColor = [UIColor clearColor];
+        headerLabel.font = [UIFont systemFontOfSize:17];
+        [cell.contentView addSubview:headerLabel];
+
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
     } else if (indexPath.section == 1){
         EditableTableCell *eCell;
         
-        eCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        eCell = (EditableTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (eCell == nil) {
             eCell = [[[EditableTableCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];   
         }
@@ -294,40 +355,39 @@
         eCell.textField.text = @"";
 
         if (indexPath.row == 0){
-            eCell.textLabel.text = @"Email";
+            eCell.textLabel.text = @"email";
             eCell.textField.text = self.user.email;
             eCell.textField.enabled = FALSE;
+            eCell.selectionStyle = UITableViewCellSelectionStyleNone;
         } else if (indexPath.row == 1){
-            eCell.textLabel.text = @"Url";
+            eCell.textLabel.text = @"url";
             eCell.textField.text = self.user.url;
+            eCell.textField.delegate = self;
         }else if (indexPath.row == 2){
             eCell.textLabel.text = @"description";
             eCell.textField.text = self.user.description;
+            eCell.textField.delegate = self;
         }
         
         cell = eCell;
     } else {
-        if (indexPath.row ==0){
-            cell = [tableView dequeueReusableCellWithIdentifier:homeCellIdentifier];
-            if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:homeCellIdentifier] autorelease];
-            }   
-            [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica" size:11]];
-            
-            cell.textLabel.text = [NSString stringWithFormat:@"Your home location is near: %@,%@", self.lat,self.lng];
-            
-        } else {
-            cell = [tableView dequeueReusableCellWithIdentifier:locationCellIdentifier];
-            if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:locationCellIdentifier] autorelease]; 
-            }
-            [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica" size:11]];
-            
-            cell.textLabel.text = @"click here to set current approximate location as home";
-        }
+        cell = [tableView dequeueReusableCellWithIdentifier:homeCellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:homeCellIdentifier] autorelease];
+        }   
+        [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica" size:12]];
+        
+        CLLocationDegrees homeLat = [self.lat doubleValue];
+        CLLocationDegrees homeLng = [self.lng doubleValue];
+        CLLocation *homeLocation = [[CLLocation alloc] initWithLatitude:homeLat longitude:homeLng];        
+        
+        CLLocationDistance distance = [self.currentLocation distanceFromLocation:homeLocation];
+        NSLog(@"%f", distance);
+        cell.textLabel.text = [NSString stringWithFormat:@"Your map is centered %.0f m from here.", distance];
+        
+        cell.textLabel.textAlignment = UITextAlignmentCenter;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
-    // Configure the cell...
     
     return cell;
 }

@@ -12,7 +12,7 @@
 #import "NinaHelper.h"
 #import "MBProgressHUD.h"
 
-@interface EditProfileViewController : UITableViewController<UIActionSheetDelegate, ASIHTTPRequestDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
+@interface EditProfileViewController : UITableViewController<UIActionSheetDelegate, ASIHTTPRequestDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>{
     
     NSNumber *lat;
     NSNumber *lng;
@@ -21,6 +21,8 @@
     
     MBProgressHUD *hud;
     UIImage *uploadingImage;
+    
+    CLLocation *currentLocation;
 }
 
 
@@ -29,6 +31,7 @@
 @property(nonatomic, retain) NSNumber *lat;
 @property(nonatomic, retain) NSNumber *lng;
 @property(nonatomic, assign) MemberProfileViewController *delegate;
+@property(nonatomic, retain) CLLocation *currentLocation;
 
 -(IBAction)saveUser;
 -(IBAction)updateHomeLocation;
