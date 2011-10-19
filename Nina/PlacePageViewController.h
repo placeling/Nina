@@ -95,7 +95,6 @@ typedef enum {
 @property(nonatomic, retain) User *referrer;
 
 -(IBAction) googlePlacePage;
--(IBAction) changedSegment;
 -(IBAction) bookmark;
 
 -(void) showShareSheet;

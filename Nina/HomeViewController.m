@@ -148,7 +148,7 @@
 
 -(void)aboutUs {
     AboutUsController *about = [[AboutUsController alloc] initWithNibName:@"AboutUsController" bundle:nil];
-	[self.navigationController pushViewController:about animated:NO];
+	[self.navigationController pushViewController:about animated:TRUE];
 	[about release];
 }
 

@@ -49,7 +49,6 @@ typedef enum {
 -(void) loadMap;
 -(bool) shouldShowSectionView;
 -(int) numberOfSectionBookmarks;
--(void)addView:(UIView*)subView verticalOffset:(NSUInteger)verticalOffset title:(NSString*)title;
 @end
 
 @implementation PlacePageViewController

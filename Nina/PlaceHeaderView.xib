@@ -59,9 +59,9 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Location Name</string>
-								<object class="NSColor" key="IBUITextColor" id="11148452">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MCAwIDAAA</bytes>
+								<object class="NSColor" key="IBUITextColor" id="726873688">
+									<int key="NSColorSpace">2</int>
+									<bytes key="NSRGB">MC4zOTYwNzg0Njc0IDAuMzA5ODAzOTMyOSAwLjE2NDcwNTg4NzQAA</bytes>
 								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
@@ -89,7 +89,7 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Location Address</string>
-								<reference key="IBUITextColor" ref="11148452"/>
+								<reference key="IBUITextColor" ref="726873688"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">10</float>
@@ -116,7 +116,7 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Location City</string>
-								<reference key="IBUITextColor" ref="11148452"/>
+								<reference key="IBUITextColor" ref="726873688"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">10</float>
@@ -136,7 +136,7 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Categories</string>
-								<reference key="IBUITextColor" ref="11148452"/>
+								<reference key="IBUITextColor" ref="726873688"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">10</float>
@@ -208,7 +208,6 @@
 						<string key="NSFrame">{{0, 108}, {321, 44}}</string>
 						<reference key="NSSuperview" ref="903079877"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
