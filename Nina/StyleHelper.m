@@ -33,8 +33,9 @@
 }
 
 +(void) styleInfoView:(UIView *)view{
-    view.backgroundColor = [self getPanelColour];    
+    view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"infoBackground.png"]];    
     view.opaque =NO;
+    view.layer.opaque = NO;
     //view.layer.opacity = 0.5;
 }
 
@@ -53,6 +54,8 @@
 
 +(void) styleMapImage:(UIButton*)button{
     //button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"leather.png"] ];
+    
+    
     button.layer.shadowColor = [UIColor blackColor].CGColor;
     button.layer.shadowOpacity = 0.8;
     button.layer.shadowRadius = 5;
@@ -88,6 +91,14 @@
 
 +(UIColor*) getPanelColour{
     return [UIColor colorWithRed:201/255.0 green:181/255.0 blue:111/255.0 alpha:1.0];
+}
+
++(void) styleSegmentedControl:(UISegmentedControl*)control{
+    
+    //control
+    //control.layer.backgroundColor = [UIColor grayColor].CGColor;// = [UIColor colorWithPatternImage:[UIImage imageNamed:@"segmentedBackground.png"] ];
+    
+    
 }
 
 

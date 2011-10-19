@@ -14,6 +14,7 @@
 #import "NinaHelper.h"
 #import "BookmarkTableViewCell.h"
 #import "EditPerspectiveViewController.h"
+#import "CustomSegmentedControl.h"
 
 typedef enum {
     home,
@@ -24,7 +25,7 @@ typedef enum {
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate> {        
+@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate> {        
     NSString *place_id; 
     NSString *perspective_id; 
     NSString *google_ref;
@@ -45,7 +46,7 @@ typedef enum {
     IBOutlet UILabel *categoriesLabel;
     
     IBOutlet UIButton *mapButtonView;
-    IBOutlet UISegmentedControl *segmentedControl; 
+    IBOutlet CustomSegmentedControl *segmentedControl; 
     IBOutlet UIView *tableHeaderView;
     IBOutlet UIView *topofHeaderView;
     IBOutlet UIView *tableFooterView;
@@ -57,6 +58,8 @@ typedef enum {
     NSMutableArray *everyonePerspectives;
     
     IBOutlet UIScrollView *tagScrollView;
+    
+    NSDictionary* buttons;
 }
 
 @property BOOL dataLoaded;
@@ -80,7 +83,7 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet UIView *bookmarkView;
 @property (nonatomic, retain) IBOutlet UIView *topofHeaderView;
 
-@property (nonatomic, retain) IBOutlet UISegmentedControl *segmentedControl;
+@property (nonatomic, retain) IBOutlet CustomSegmentedControl *segmentedControl;
 @property (nonatomic, assign) PerspectiveTypes perspectiveType;
 
 @property (nonatomic, assign) NSMutableArray *homePerspectives;

@@ -102,7 +102,7 @@
         cell.scrollView.scrollEnabled = YES;
         cell.scrollView.pagingEnabled = YES;
         
-        CGFloat cx = 2;
+        CGFloat cx = cell.memoText.frame.origin.x;
         for ( Photo* photo in [perspective.photos reverseObjectEnumerator] ){
             
             CGRect rect = CGRectMake(cx, 3, 152, 152);

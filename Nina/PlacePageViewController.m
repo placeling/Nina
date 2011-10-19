@@ -31,9 +31,17 @@
 
 #import "NearbySuggestedPlaceController.h"
 #import "FullPerspectiveViewController.h"
+#import "CustomSegmentedControl.h"
 
 #define kMinCellHeight 60
 #define SectionHeaderHeight 60
+
+typedef enum {
+    CapLeft          = 0,
+    CapMiddle        = 1,
+    CapRight         = 2,
+    CapLeftAndRight  = 3
+} CapLocation;
 
 @interface PlacePageViewController ()
 -(void) loadData;
@@ -41,6 +49,7 @@
 -(void) loadMap;
 -(bool) shouldShowSectionView;
 -(int) numberOfSectionBookmarks;
+-(void)addView:(UIView*)subView verticalOffset:(NSUInteger)verticalOffset title:(NSString*)title;
 @end
 
 @implementation PlacePageViewController
@@ -122,6 +131,17 @@
     [request startAsynchronous];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
+     buttons = 
+    [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"Home", @"Following", @"Everyone", nil], @"titles", [NSValue valueWithCGSize:CGSizeMake(106,69)], @"size", @"segmentedBackground.png", @"button-image", @"segmentedSelected.png", @"button-highlight-image", @"red-divider.png", @"divider-image", [NSNumber numberWithFloat:14.0], @"cap-width", nil];
+    
+    // A red segment control with 3 values
+    NSDictionary* redSegmentedControlData = buttons;
+    NSArray* redSegmentedControlTitles = [redSegmentedControlData objectForKey:@"titles"];
+    CustomSegmentedControl* redSegmentedControl = [[[CustomSegmentedControl alloc] initWithSegmentCount:redSegmentedControlTitles.count segmentsize:[[redSegmentedControlData objectForKey:@"size"] CGSizeValue] dividerImage:[UIImage imageNamed:[redSegmentedControlData objectForKey:@"divider-image"]] tag:1 delegate:self] autorelease];
+    redSegmentedControl.frame = CGRectMake(0, self.tagScrollView.frame.size.height + self.tagScrollView.frame.origin.y, 320, 69);
+    
+    [self.tableHeaderView addSubview:redSegmentedControl];
+    self.segmentedControl = redSegmentedControl;
     
     if (self.place){
         [self loadMap];
@@ -136,14 +156,92 @@
     [shareButton release];
 }
 
+
+-(UIImage*)image:(UIImage*)image withCap:(CapLocation)location capWidth:(NSUInteger)capWidth buttonWidth:(NSUInteger)buttonWidth
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(buttonWidth, image.size.height), NO, 0.0);
+    
+    if (location == CapLeft)
+        // To draw the left cap and not the right, we start at 0, and increase the width of the image by the cap width to push the right cap out of view
+        [image drawInRect:CGRectMake(0, 0, buttonWidth, image.size.height)];
+    else if (location == CapRight)
+        // To draw the right cap and not the left, we start at negative the cap width and increase the width of the image by the cap width to push the left cap out of view
+        [image drawInRect:CGRectMake(0.0, 0, buttonWidth, image.size.height)];
+    else if (location == CapMiddle)
+        // To draw neither cap, we start at negative the cap width and increase the width of the image by both cap widths to push out both caps out of view
+        [image drawInRect:CGRectMake(0.0, 0, buttonWidth, image.size.height)];
+    
+    UIImage* resultImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return resultImage;
+}
+
+#pragma mark -
+#pragma mark CustomSegmentedControlDelegate
+- (UIButton*) buttonFor:(CustomSegmentedControl*)segmentedControl atIndex:(NSUInteger)segmentIndex;
+{
+    NSDictionary* data = buttons;
+    NSArray* titles = [data objectForKey:@"titles"];
+    
+    CapLocation location;
+    if (segmentIndex == 0)
+        location = CapLeft;
+    else if (segmentIndex == titles.count - 1)
+        location = CapRight;
+    else
+        location = CapMiddle;
+    
+    UIImage* buttonImage = nil;
+    UIImage* buttonPressedImage = nil;
+    
+    CGFloat capWidth = [[data objectForKey:@"cap-width"] floatValue];
+    CGSize buttonSize = [[data objectForKey:@"size"] CGSizeValue];
+    
+    if (location == CapLeftAndRight)
+    {
+        buttonImage = [[UIImage imageNamed:[data objectForKey:@"button-image"]] stretchableImageWithLeftCapWidth:capWidth topCapHeight:0.0];
+        buttonPressedImage = [[UIImage imageNamed:[data objectForKey:@"button-highlight-image"]] stretchableImageWithLeftCapWidth:capWidth topCapHeight:0.0];
+    }
+    else
+    {
+        buttonImage = [self image:[[UIImage imageNamed:[data objectForKey:@"button-image"]] stretchableImageWithLeftCapWidth:capWidth topCapHeight:0.0] withCap:location capWidth:capWidth buttonWidth:buttonSize.width];
+        buttonPressedImage = [self image:[[UIImage imageNamed:[data objectForKey:@"button-highlight-image"]] stretchableImageWithLeftCapWidth:capWidth topCapHeight:0.0] withCap:location capWidth:capWidth buttonWidth:buttonSize.width];
+    }
+    
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setFrame:CGRectMake(0.0, 0.0, buttonSize.width, buttonSize.height)];
+    
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [button setTitleColor:[UIColor colorWithRed:101/255.0 green:79/255.0 blue:42/255.0 alpha:1.0] forState:UIControlStateNormal];
+    
+    UILabel *buttonLabel = button.titleLabel;
+    [buttonLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13.0]];
+    
+    [button setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(17.0, 0.0, 0.0, 0.0)];
+    
+    [button setTitle:[titles objectAtIndex:segmentIndex] forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:buttonPressedImage forState:UIControlStateHighlighted];
+    [button setBackgroundImage:buttonPressedImage forState:UIControlStateSelected];
+    button.adjustsImageWhenHighlighted = NO;
+    
+    if (segmentIndex == 0)
+        button.selected = YES;
+    return button;
+}
+
+
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [StyleHelper styleBackgroundView:self.view];
     [StyleHelper styleBookmarkButton:self.bookmarkButton];
     [StyleHelper styleInfoView:self.topofHeaderView];
     [StyleHelper styleMapImage:self.mapButtonView];
-    [StyleHelper styleBackgroundView:self.bookmarkView];
+    [StyleHelper styleBackgroundView:self.tableHeaderView];
     
+    self.bookmarkView.backgroundColor = [UIColor clearColor];
     self.tagScrollView.backgroundColor = [UIColor clearColor];
     
     if (myPerspective && myPerspective.mine && myPerspective.modified){
@@ -395,15 +493,22 @@
 
     self.cityLabel.text = self.place.city;
     self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@","];
-    [self.segmentedControl setTitle:[NSString stringWithFormat:@"Following (%i)", self.place.followingPerspectiveCount] forSegmentAtIndex:1];
-    [self.segmentedControl setTitle:[NSString stringWithFormat:@"Everyone (%i)", self.place.perspectiveCount] forSegmentAtIndex:2];
+    
+    UIButton *button = [self.segmentedControl.buttons objectAtIndex:1];
+    
+    [button setTitle:[NSString stringWithFormat:@"Following (%i)", self.place.followingPerspectiveCount] forState:UIControlStateNormal];
+    
+    button = [self.segmentedControl.buttons objectAtIndex:2];
+    [button setTitle:[NSString stringWithFormat:@"Everyone (%i)", self.place.perspectiveCount] forState:UIControlStateNormal];
     
     CGFloat cx = 7;
     
     for ( NSString* tag in self.place.tags ){        
-        CGRect rect = CGRectMake(cx, 10, [tag length]*9, 26);        
-
         UIButton *tagButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        CGSize textsize = [tag sizeWithFont:tagButton.titleLabel.font forWidth:100.0 lineBreakMode: tagButton.titleLabel.lineBreakMode];
+        CGRect rect = CGRectMake(cx, 15, textsize.width+4, 26);       
+        
         tagButton.frame = rect;
         [tagButton setTitle:[NSString stringWithFormat:@"#%@", tag] forState:UIControlStateNormal];
         [StyleHelper styleTagButton:tagButton];
@@ -466,8 +571,8 @@
     
 }
 
--(IBAction) changedSegment{
-    NSUInteger index = self.segmentedControl.selectedSegmentIndex;
+- (void) touchUpInsideSegmentIndex:(NSUInteger)segmentIndex{
+    NSUInteger index = segmentIndex;
     
     if (index == 0){
         self.perspectiveType = home;
