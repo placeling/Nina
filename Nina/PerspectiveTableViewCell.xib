@@ -109,7 +109,7 @@
 							<object class="IBUILabel" id="363764247">
 								<reference key="NSNextResponder" ref="1000671421"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{67, 0}, {233, 26}}</string>
+								<string key="NSFrame">{{67, 7}, {233, 26}}</string>
 								<reference key="NSSuperview" ref="1000671421"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1068649428"/>
@@ -120,8 +120,8 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Label</string>
 								<object class="NSColor" key="IBUITextColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MCAwLjUwMTk2MDgxNCAxAA</bytes>
+									<int key="NSColorSpace">2</int>
+									<bytes key="NSRGB">MC4zOTYwNzg0Njc0IDAuMzA5ODAzOTMyOSAwLjE2NDcwNTg4NzQAA</bytes>
 								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
@@ -143,7 +143,6 @@
 								<string key="NSFrame">{{0, 127}, {320, 166}}</string>
 								<reference key="NSSuperview" ref="1000671421"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<bool key="IBUIMultipleTouchEnabled">YES</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -151,7 +150,7 @@
 							<object class="IBUILabel" id="420384130">
 								<reference key="NSNextResponder" ref="1000671421"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{67, 27}, {233, 100}}</string>
+								<string key="NSFrame">{{67, 28}, {233, 100}}</string>
 								<reference key="NSSuperview" ref="1000671421"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="344597112"/>
@@ -162,8 +161,8 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
 								<object class="NSColor" key="IBUITextColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MCAwIDAAA</bytes>
+									<int key="NSColorSpace">2</int>
+									<bytes key="NSRGB">MC4zOTYwNzg0Njc0IDAuMzA5ODAzOTMyOSAwLjE2NDcwNTg4NzQAA</bytes>
 								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
@@ -290,9 +289,9 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="446988867"/>
 							<reference ref="1068649428"/>
-							<reference ref="363764247"/>
-							<reference ref="420384130"/>
 							<reference ref="344597112"/>
+							<reference ref="420384130"/>
+							<reference ref="363764247"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
