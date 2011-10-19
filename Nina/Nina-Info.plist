@@ -49,6 +49,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>server_url</key>
-	<string>http://staging.corp.placeling.com</string>
+	<string>http://api.placeling.com</string>
 </dict>
 </plist>
