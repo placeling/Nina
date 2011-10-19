@@ -40,6 +40,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>MarketingScript.ttf</string>
+		<string>MuseoSlab500.ttf</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
@@ -48,6 +49,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>server_url</key>
-	<string>http://api.placeling.com</string>
+	<string>http://staging.corp.placeling.com</string>
 </dict>
 </plist>

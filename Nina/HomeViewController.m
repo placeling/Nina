@@ -21,6 +21,7 @@
 #import "MBProgressHUD.h"
 #import "UIDevice+IdentifierAddition.h"
 #import "ActivityFeedViewController.h"
+#import "AboutUsController.h"
 
 @implementation HomeViewController
 
@@ -52,16 +53,22 @@
     [StyleHelper styleBackgroundView:self.view];
     
     if ([NinaHelper getAccessTokenSecret]){
-        UIImage *image = [UIImage imageNamed:@"19-gear.png"];
+        UIImage *image = [UIImage imageNamed:@"gear.png"];
         UIBarButtonItem *accountButton =  [[UIBarButtonItem  alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(showAccountSheet)];
         self.navigationItem.leftBarButtonItem = accountButton;
         [accountButton release];  
     } else {
-        UIImage *image = [UIImage imageNamed:@"30-key.png"];
+        UIImage *image = [UIImage imageNamed:@"key.png"];
         UIBarButtonItem *loginButton =  [[UIBarButtonItem  alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(showLogin)];
         self.navigationItem.leftBarButtonItem = loginButton;
         [loginButton release];
-    } 
+    }
+    
+    UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    [infoButton addTarget:self action:@selector(aboutUs) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *modalButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
+    
+    self.navigationItem.rightBarButtonItem = modalButton;
 }
 
 -(IBAction)showLogin{
@@ -137,6 +144,12 @@
     
     [self.navigationController pushViewController:activityFeedViewController animated:true];
     [activityFeedViewController release];
+}
+
+-(void)aboutUs {
+    AboutUsController *about = [[AboutUsController alloc] initWithNibName:@"AboutUsController" bundle:nil];
+	[self.navigationController pushViewController:about animated:NO];
+	[about release];
 }
 
 -(IBAction) random{

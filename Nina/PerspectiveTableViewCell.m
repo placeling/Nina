@@ -66,7 +66,7 @@
     }else{
         cell.memoText.text = @""; //get rid of hipster lorem
         cell.memoText.hidden = TRUE;
-        verticalCursor += 55;
+        //verticalCursor += 55;
     }
 
     if (perspective.mine){
@@ -84,7 +84,7 @@
     cell.userImage.photo = perspective.user.profilePic;
     [cell.userImage loadImage];
     
-    cell.userImage.layer.cornerRadius = 8.0f;
+    cell.userImage.layer.cornerRadius = 2.0f;
     cell.userImage.layer.borderWidth = 1.0f;
     cell.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     cell.userImage.layer.masksToBounds = YES;
@@ -110,7 +110,8 @@
             [imageView setPhoto:photo]; 
             [imageView loadImageFromPhoto:photo]; 
             imageView.userInteractionEnabled = TRUE;
-            
+            [imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+            [imageView.layer setBorderWidth: 5.0];
             [cell.scrollView addSubview:imageView];
             
             cx += imageView.frame.size.width+2;

@@ -203,6 +203,13 @@
 		28F4779213D7D02C003477CD /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F4778A13D7D02C003477CD /* whiteArrow.png */; };
 		28F4779313D7D02C003477CD /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F4778B13D7D02C003477CD /* whiteArrow@2x.png */; };
 		28F4779F13D89060003477CD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F4779E13D89060003477CD /* MapKit.framework */; };
+		6CB5B12F144CBD2900A278AC /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB5B12E144CBD2900A278AC /* gear.png */; };
+		6CB5B132144CBEA300A278AC /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB5B131144CBEA300A278AC /* gear@2x.png */; };
+		6CB5B135144CBF0000A278AC /* key.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB5B133144CBF0000A278AC /* key.png */; };
+		6CB5B136144CBF0000A278AC /* key@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB5B134144CBF0000A278AC /* key@2x.png */; };
+		6CB5B144144CC5D700A278AC /* AboutUsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5B142144CC5D700A278AC /* AboutUsController.m */; };
+		6CB5B145144CC5D700A278AC /* AboutUsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB5B143144CC5D700A278AC /* AboutUsController.xib */; };
+		6CB5B147144CCFB000A278AC /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB5B146144CCFB000A278AC /* background.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -506,6 +513,14 @@
 		28F4778A13D7D02C003477CD /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteArrow.png; path = ../whiteArrow.png; sourceTree = "<group>"; };
 		28F4778B13D7D02C003477CD /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whiteArrow@2x.png"; path = "../whiteArrow@2x.png"; sourceTree = "<group>"; };
 		28F4779E13D89060003477CD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6CB5B12E144CBD2900A278AC /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
+		6CB5B131144CBEA300A278AC /* gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@2x.png"; sourceTree = "<group>"; };
+		6CB5B133144CBF0000A278AC /* key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = key.png; sourceTree = "<group>"; };
+		6CB5B134144CBF0000A278AC /* key@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "key@2x.png"; sourceTree = "<group>"; };
+		6CB5B141144CC5D700A278AC /* AboutUsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsController.h; sourceTree = "<group>"; };
+		6CB5B142144CC5D700A278AC /* AboutUsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsController.m; sourceTree = "<group>"; };
+		6CB5B143144CC5D700A278AC /* AboutUsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutUsController.xib; sourceTree = "<group>"; };
+		6CB5B146144CCFB000A278AC /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -572,6 +587,10 @@
 				28086B8713ECA9B900790404 /* crosshairs.png */,
 				28086B8813ECA9B900790404 /* crosshairs@2x.png */,
 				28086B8913ECA9B900790404 /* default_image.png */,
+				6CB5B12E144CBD2900A278AC /* gear.png */,
+				6CB5B131144CBEA300A278AC /* gear@2x.png */,
+				6CB5B133144CBF0000A278AC /* key.png */,
+				6CB5B134144CBF0000A278AC /* key@2x.png */,
 				28086B8A13ECA9B900790404 /* edit.png */,
 				28086B8B13ECA9B900790404 /* edit@2x.png */,
 				28086B8C13ECA9B900790404 /* filter.png */,
@@ -724,6 +743,9 @@
 				28E1371F13EB12DF00C17A68 /* HomeViewController.h */,
 				28E1372013EB12DF00C17A68 /* HomeViewController.m */,
 				28E1372113EB12DF00C17A68 /* HomeViewController.xib */,
+				6CB5B141144CC5D700A278AC /* AboutUsController.h */,
+				6CB5B142144CC5D700A278AC /* AboutUsController.m */,
+				6CB5B143144CC5D700A278AC /* AboutUsController.xib */,
 				28086C1B13ECAA3E00790404 /* SuggestUserViewController.xib */,
 				28086C1C13ECAA3E00790404 /* SuggestUserViewController.h */,
 				28086C1D13ECAA3E00790404 /* SuggestUserViewController.m */,
@@ -1034,6 +1056,7 @@
 				280A33BF14422C6F007ACBDC /* EverythingPick.png */,
 				280A33C014422C6F007ACBDC /* EverythingPick@2x.png */,
 				286FA16D143D1A6700EDAE84 /* redLeather.png */,
+				6CB5B146144CCFB000A278AC /* background.png */,
 				286FA14F143BD34C00EDAE84 /* suggest.png */,
 				286FA150143BD34C00EDAE84 /* suggest@2x.png */,
 				286FA14B143BBB3600EDAE84 /* placeit.png */,
@@ -1238,6 +1261,12 @@
 				2887B8BA144E23E900CBBF1B /* red-divider.png in Resources */,
 				2887B8C0144E29E800CBBF1B /* segmentedSelected.png in Resources */,
 				2887B8C2144E471500CBBF1B /* infoBackground.png in Resources */,
+				6CB5B12F144CBD2900A278AC /* gear.png in Resources */,
+				6CB5B132144CBEA300A278AC /* gear@2x.png in Resources */,
+				6CB5B135144CBF0000A278AC /* key.png in Resources */,
+				6CB5B136144CBF0000A278AC /* key@2x.png in Resources */,
+				6CB5B145144CC5D700A278AC /* AboutUsController.xib in Resources */,
+				6CB5B147144CCFB000A278AC /* background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1354,6 +1383,7 @@
 				28C4F535144262C700A66F32 /* NSDictionary+Utility.m in Sources */,
 				28F388881446A24A004C71F9 /* FullPerspectiveViewController.m in Sources */,
 				2887B8B2144E1D8100CBBF1B /* CustomSegmentedControl.m in Sources */,
+				6CB5B144144CC5D700A278AC /* AboutUsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
