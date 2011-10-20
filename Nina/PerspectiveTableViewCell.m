@@ -26,7 +26,7 @@
     
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    heightCalc += MAX(textSize.height, 44);
+    heightCalc += textSize.height;MAX(textSize.height, 44);
     
     if (perspective.photos && perspective.photos.count > 0){
         heightCalc += 166;

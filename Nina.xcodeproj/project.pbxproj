@@ -35,8 +35,8 @@
 		28086C1F13ECAA3E00790404 /* SuggestUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28086C1D13ECAA3E00790404 /* SuggestUserViewController.m */; };
 		280A33C114422C6F007ACBDC /* EverythingPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33BF14422C6F007ACBDC /* EverythingPick.png */; };
 		280A33C214422C6F007ACBDC /* EverythingPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33C014422C6F007ACBDC /* EverythingPick@2x.png */; };
-		280A33C614422D4C007ACBDC /* FoodDrinkPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33C414422D4C007ACBDC /* FoodDrinkPick.png */; };
-		280A33C714422D4C007ACBDC /* FoodDrinkPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33C514422D4C007ACBDC /* FoodDrinkPick@2x.png */; };
+		280A33C614422D4C007ACBDC /* NightLifePick.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33C414422D4C007ACBDC /* NightLifePick.png */; };
+		280A33C714422D4C007ACBDC /* NightLifePick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33C514422D4C007ACBDC /* NightLifePick@2x.png */; };
 		280D44E213D770620030E770 /* NinaHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 280D44E113D770620030E770 /* NinaHelper.m */; };
 		280EA87D14114C300045B296 /* NearbyPlacesFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280EA87C14114C300045B296 /* NearbyPlacesFooterView.xib */; };
 		280EA881141154C80045B296 /* SinglePlaceMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 280EA87F141154C70045B296 /* SinglePlaceMapView.m */; };
@@ -99,6 +99,11 @@
 		2887B8BA144E23E900CBBF1B /* red-divider.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8B4144E23E900CBBF1B /* red-divider.png */; };
 		2887B8C0144E29E800CBBF1B /* segmentedSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8BF144E29E800CBBF1B /* segmentedSelected.png */; };
 		2887B8C2144E471500CBBF1B /* infoBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8C1144E471500CBBF1B /* infoBackground.png */; };
+		2887B8D0144F7BE600CBBF1B /* pickBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8CF144F7BE600CBBF1B /* pickBackground.png */; };
+		2887B8D9144F92A800CBBF1B /* FoodPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8D8144F92A800CBBF1B /* FoodPick@2x.png */; };
+		2887B8DB144F92C100CBBF1B /* FoodPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8DA144F92C100CBBF1B /* FoodPick.png */; };
+		2887B8DD144F92EF00CBBF1B /* TouristyPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8DC144F92EF00CBBF1B /* TouristyPick.png */; };
+		2887B8DF144F930D00CBBF1B /* TouristyPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8DE144F930D00CBBF1B /* TouristyPick@2x.png */; };
 		2893959313E9F8F300B71FA4 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2893959113E9F8F300B71FA4 /* LoginController.m */; };
 		2893959413E9F8F300B71FA4 /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2893959213E9F8F300B71FA4 /* LoginController.xib */; };
 		2895003F13D64559009E1BD7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2895003E13D64559009E1BD7 /* UIKit.framework */; };
@@ -258,8 +263,8 @@
 		28086C1D13ECAA3E00790404 /* SuggestUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestUserViewController.m; sourceTree = "<group>"; };
 		280A33BF14422C6F007ACBDC /* EverythingPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EverythingPick.png; sourceTree = "<group>"; };
 		280A33C014422C6F007ACBDC /* EverythingPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EverythingPick@2x.png"; sourceTree = "<group>"; };
-		280A33C414422D4C007ACBDC /* FoodDrinkPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FoodDrinkPick.png; sourceTree = "<group>"; };
-		280A33C514422D4C007ACBDC /* FoodDrinkPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FoodDrinkPick@2x.png"; sourceTree = "<group>"; };
+		280A33C414422D4C007ACBDC /* NightLifePick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NightLifePick.png; sourceTree = "<group>"; };
+		280A33C514422D4C007ACBDC /* NightLifePick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NightLifePick@2x.png"; sourceTree = "<group>"; };
 		280D44E013D770620030E770 /* NinaHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NinaHelper.h; sourceTree = "<group>"; };
 		280D44E113D770620030E770 /* NinaHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NinaHelper.m; sourceTree = "<group>"; };
 		280EA87C14114C300045B296 /* NearbyPlacesFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyPlacesFooterView.xib; sourceTree = "<group>"; };
@@ -343,6 +348,11 @@
 		2887B8B4144E23E900CBBF1B /* red-divider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-divider.png"; sourceTree = "<group>"; };
 		2887B8BF144E29E800CBBF1B /* segmentedSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = segmentedSelected.png; sourceTree = "<group>"; };
 		2887B8C1144E471500CBBF1B /* infoBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoBackground.png; sourceTree = "<group>"; };
+		2887B8CF144F7BE600CBBF1B /* pickBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickBackground.png; sourceTree = "<group>"; };
+		2887B8D8144F92A800CBBF1B /* FoodPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FoodPick@2x.png"; sourceTree = "<group>"; };
+		2887B8DA144F92C100CBBF1B /* FoodPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FoodPick.png; sourceTree = "<group>"; };
+		2887B8DC144F92EF00CBBF1B /* TouristyPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TouristyPick.png; sourceTree = "<group>"; };
+		2887B8DE144F930D00CBBF1B /* TouristyPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TouristyPick@2x.png"; sourceTree = "<group>"; };
 		2893959013E9F8F300B71FA4 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		2893959113E9F8F300B71FA4 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		2893959213E9F8F300B71FA4 /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginController.xib; sourceTree = "<group>"; };
@@ -1047,12 +1057,17 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				2887B8DC144F92EF00CBBF1B /* TouristyPick.png */,
+				2887B8DE144F930D00CBBF1B /* TouristyPick@2x.png */,
+				2887B8DA144F92C100CBBF1B /* FoodPick.png */,
+				2887B8D8144F92A800CBBF1B /* FoodPick@2x.png */,
+				2887B8CF144F7BE600CBBF1B /* pickBackground.png */,
 				2887B8C1144E471500CBBF1B /* infoBackground.png */,
 				2887B8BF144E29E800CBBF1B /* segmentedSelected.png */,
 				2887B8B4144E23E900CBBF1B /* red-divider.png */,
 				2887B8A9144DF0FD00CBBF1B /* segmentedBackground.png */,
-				280A33C414422D4C007ACBDC /* FoodDrinkPick.png */,
-				280A33C514422D4C007ACBDC /* FoodDrinkPick@2x.png */,
+				280A33C414422D4C007ACBDC /* NightLifePick.png */,
+				280A33C514422D4C007ACBDC /* NightLifePick@2x.png */,
 				280A33BF14422C6F007ACBDC /* EverythingPick.png */,
 				280A33C014422C6F007ACBDC /* EverythingPick@2x.png */,
 				286FA16D143D1A6700EDAE84 /* redLeather.png */,
@@ -1254,8 +1269,8 @@
 				286FA17E143D339400EDAE84 /* EditProfileViewController.xib in Resources */,
 				280A33C114422C6F007ACBDC /* EverythingPick.png in Resources */,
 				280A33C214422C6F007ACBDC /* EverythingPick@2x.png in Resources */,
-				280A33C614422D4C007ACBDC /* FoodDrinkPick.png in Resources */,
-				280A33C714422D4C007ACBDC /* FoodDrinkPick@2x.png in Resources */,
+				280A33C614422D4C007ACBDC /* NightLifePick.png in Resources */,
+				280A33C714422D4C007ACBDC /* NightLifePick@2x.png in Resources */,
 				28F388891446A24A004C71F9 /* FullPerspectiveViewController.xib in Resources */,
 				2887B8AA144DF0FD00CBBF1B /* segmentedBackground.png in Resources */,
 				2887B8BA144E23E900CBBF1B /* red-divider.png in Resources */,
@@ -1267,6 +1282,11 @@
 				6CB5B136144CBF0000A278AC /* key@2x.png in Resources */,
 				6CB5B145144CC5D700A278AC /* AboutUsController.xib in Resources */,
 				6CB5B147144CCFB000A278AC /* background.png in Resources */,
+				2887B8D0144F7BE600CBBF1B /* pickBackground.png in Resources */,
+				2887B8D9144F92A800CBBF1B /* FoodPick@2x.png in Resources */,
+				2887B8DB144F92C100CBBF1B /* FoodPick.png in Resources */,
+				2887B8DD144F92EF00CBBF1B /* TouristyPick.png in Resources */,
+				2887B8DF144F930D00CBBF1B /* TouristyPick@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

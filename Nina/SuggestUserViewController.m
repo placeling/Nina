@@ -59,7 +59,7 @@
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocationCoordinate2D location = [manager location].coordinate;
 	
-	NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users/suggested?lat=%i&long=%i", [NinaHelper getHostname], location.latitude, location.longitude];
+	NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users/suggested?lat=%i&lng=%i", [NinaHelper getHostname], location.latitude, location.longitude];
     
     NSURL *url = [NSURL URLWithString:targetURL];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];

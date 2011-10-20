@@ -237,6 +237,7 @@ typedef enum {
     [StyleHelper styleBackgroundView:self.view];
     [StyleHelper styleBookmarkButton:self.bookmarkButton];
     [StyleHelper styleInfoView:self.topofHeaderView];
+    [StyleHelper styleInfoView:self.tableFooterView];
     [StyleHelper styleMapImage:self.mapButtonView];
     [StyleHelper styleBackgroundView:self.tableHeaderView];
     

@@ -43,13 +43,13 @@
 					<object class="IBUIButton" id="418554374">
 						<reference key="NSNextResponder" ref="334200685"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{8, 11}, {304, 44}}</string>
+						<string key="NSFrame">{{20, 11}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="334200685"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1069850209"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">2</int>
-							<bytes key="NSRGB">MC44MjM1Mjk0ODE5IDAuNzYwNzg0Mzg3NiAwLjYyNDA4NzU5MTIAA</bytes>
+							<bytes key="NSRGB">MC43Njg2Mjc1MjQ0IDAuNjk4MDM5MjMzNyAwLjM4ODIzNTMzMDYAA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -61,8 +61,8 @@
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
 						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
+							<int key="NSColorSpace">2</int>
+							<bytes key="NSRGB">MC4zOTYwNzg0Njc0IDAuMzA5ODAzOTMyOSAwLjE2NDcwNTg4NzQAA</bytes>
 						</object>
 						<object class="NSColor" key="IBUINormalTitleShadowColor">
 							<int key="NSColorSpace">3</int>
@@ -70,11 +70,11 @@
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">2</int>
-							<double key="pointSize">12</double>
+							<double key="pointSize">13</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica-Bold</string>
-							<double key="NSSize">12</double>
+							<double key="NSSize">13</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
@@ -84,7 +84,6 @@
 						<string key="NSFrame">{{20, 56}, {280, 21}}</string>
 						<reference key="NSSuperview" ref="334200685"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -92,8 +91,8 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Additional info provided by Yellow Pages Inc.</string>
 						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+							<int key="NSColorSpace">2</int>
+							<bytes key="NSRGB">MC4zOTYwNzg0Njc0IDAuMzA5ODAzOTMyOSAwLjE2NDcwNTg4NzQAA</bytes>
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -114,8 +113,8 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="418554374"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC43ODgyMzUyOTQxIDAuNzA5ODAzOTIxNiAwLjQzNTI5NDExNzYAA</bytes>
+					<int key="NSColorSpace">2</int>
+					<bytes key="NSRGB">MC44MzkyMTU3NTU1IDAuNzg4MjM1MzY2MyAwLjUyOTQxMTc5MjgAA</bytes>
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
@@ -234,6 +233,14 @@
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
+					<string key="className">CustomSegmentedControl</string>
+					<string key="superclassName">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/CustomSegmentedControl.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">PlacePageViewController</string>
 					<string key="superclassName">UITableViewController</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -249,9 +256,11 @@
 							<string>shareFacebook</string>
 							<string>shareTwitter</string>
 							<string>showSingleAnnotatedMap</string>
+							<string>tagSearch:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -276,6 +285,7 @@
 							<string>shareFacebook</string>
 							<string>shareTwitter</string>
 							<string>showSingleAnnotatedMap</string>
+							<string>tagSearch:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -315,6 +325,10 @@
 								<string key="name">showSingleAnnotatedMap</string>
 								<string key="candidateClassName">id</string>
 							</object>
+							<object class="IBActionInfo">
+								<string key="name">tagSearch:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
@@ -333,6 +347,7 @@
 							<string>tableFooterView</string>
 							<string>tableHeaderView</string>
 							<string>tagScrollView</string>
+							<string>topofHeaderView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -344,10 +359,11 @@
 							<string>UIButton</string>
 							<string>UIButton</string>
 							<string>UILabel</string>
-							<string>UISegmentedControl</string>
+							<string>CustomSegmentedControl</string>
 							<string>UIView</string>
 							<string>UIView</string>
 							<string>UIScrollView</string>
+							<string>UIView</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -366,6 +382,7 @@
 							<string>tableFooterView</string>
 							<string>tableHeaderView</string>
 							<string>tagScrollView</string>
+							<string>topofHeaderView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -403,7 +420,7 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">segmentedControl</string>
-								<string key="candidateClassName">UISegmentedControl</string>
+								<string key="candidateClassName">CustomSegmentedControl</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">tableFooterView</string>
@@ -416,6 +433,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">tagScrollView</string>
 								<string key="candidateClassName">UIScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">topofHeaderView</string>
+								<string key="candidateClassName">UIView</string>
 							</object>
 						</object>
 					</object>

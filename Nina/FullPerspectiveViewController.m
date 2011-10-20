@@ -35,8 +35,6 @@
     self.tapGesture = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showAuthoringUser)] autorelease];
     [self.titleLabel addGestureRecognizer:self.tapGesture];
     
-    //cell.memoText.backgroundColor = [UIColor grayColor];
-    
     if (perspective.mine){
         //can't star own perspective
         [self.upvoteButton setHidden:true];
@@ -55,9 +53,6 @@
     self.memoText.backgroundColor = [UIColor clearColor];
     
     if(perspective.photos && perspective.photos.count > 0){
-        //CGRect scrollFrame = self.scrollView.frame;
-        
-        //[self.scrollView setFrame:CGRectMake(scrollFrame.origin.x, verticalCursor, scrollFrame.size.width, 160)];
         
         CGFloat cx = 2;
         for ( Photo* photo in [perspective.photos reverseObjectEnumerator] ){
@@ -75,13 +70,6 @@
             [imageView release];
         }
         
-        //more then 2 photos means a scroll, otherwise click should go to page
-        /*
-         if ([perspective.photos count] > 2){
-         cell.scrollView.userInteractionEnabled = true;
-         } else {
-         cell.scrollView.userInteractionEnabled = false;
-         }*/
         
         [self.scrollView setContentSize:CGSizeMake(cx, [self.scrollView bounds].size.height)];
     }else{
