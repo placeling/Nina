@@ -50,6 +50,7 @@
 		2833C09B140D66B20076A398 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 2833C09A140D66B20076A398 /* twitter.png */; };
 		2833C09D140D67430076A398 /* 168-upload-photo-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2833C09C140D67430076A398 /* 168-upload-photo-2.png */; };
 		2833C09F140D677E0076A398 /* 162-receipt.png in Resources */ = {isa = PBXBuildFile; fileRef = 2833C09E140D677E0076A398 /* 162-receipt.png */; };
+		283FBB511454BD5700F6C50A /* QuickPickButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 283FBB501454BD5700F6C50A /* QuickPickButton.m */; };
 		284A35321402C48C009C8C28 /* PerspectivesMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A35301402C48C009C8C28 /* PerspectivesMapViewController.m */; };
 		284A35331402C48C009C8C28 /* PerspectivesMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */; };
 		284A35371402D3C3009C8C28 /* PlaceMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A35361402D3C3009C8C28 /* PlaceMark.m */; };
@@ -281,6 +282,8 @@
 		2833C09A140D66B20076A398 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
 		2833C09C140D67430076A398 /* 168-upload-photo-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "168-upload-photo-2.png"; sourceTree = "<group>"; };
 		2833C09E140D677E0076A398 /* 162-receipt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "162-receipt.png"; sourceTree = "<group>"; };
+		283FBB4F1454BD5700F6C50A /* QuickPickButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickPickButton.h; sourceTree = "<group>"; };
+		283FBB501454BD5700F6C50A /* QuickPickButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickPickButton.m; sourceTree = "<group>"; };
 		284A352F1402C48C009C8C28 /* PerspectivesMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectivesMapViewController.h; sourceTree = "<group>"; };
 		284A35301402C48C009C8C28 /* PerspectivesMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerspectivesMapViewController.m; sourceTree = "<group>"; };
 		284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PerspectivesMapViewController.xib; sourceTree = "<group>"; };
@@ -843,6 +846,8 @@
 				28C4F534144262C700A66F32 /* NSDictionary+Utility.m */,
 				2887B8B0144E1D8100CBBF1B /* CustomSegmentedControl.h */,
 				2887B8B1144E1D8100CBBF1B /* CustomSegmentedControl.m */,
+				283FBB4F1454BD5700F6C50A /* QuickPickButton.h */,
+				283FBB501454BD5700F6C50A /* QuickPickButton.m */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -1404,6 +1409,7 @@
 				28F388881446A24A004C71F9 /* FullPerspectiveViewController.m in Sources */,
 				2887B8B2144E1D8100CBBF1B /* CustomSegmentedControl.m in Sources */,
 				6CB5B144144CC5D700A278AC /* AboutUsController.m in Sources */,
+				283FBB511454BD5700F6C50A /* QuickPickButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

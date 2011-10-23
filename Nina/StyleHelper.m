@@ -68,17 +68,22 @@
     [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = button.bounds;
+    gradient.frame = CGRectMake(button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
+    [gradient setCornerRadius:4.0];
     gradient.colors = [NSArray arrayWithObjects:(id)[[self getTintColour] CGColor], (id)[[UIColor whiteColor] CGColor], nil];
+    gradient.startPoint = CGPointMake(0.5, 0.0);
+    gradient.endPoint = CGPointMake(0.5, 1.0);
+    
+    
     //[button.layer insertSublayer:gradient atIndex:0];
     
-    [button.layer setCornerRadius:5.0f];
+    [button.layer setCornerRadius:4.0f];
     //[button.layer setBorderColor:[UIColor blackColor].CGColor];
     //[button.layer setBorderWidth:0.5f];
     [button.layer setShadowColor:[UIColor blackColor].CGColor];
     [button.layer setShadowOpacity:0.8];
-    [button.layer setShadowRadius:2.0];
-    [button.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
+    [button.layer setShadowRadius:1.0];
+    [button.layer setShadowOffset:CGSizeMake(1.0, 1.0)];
     
     button.layer.backgroundColor = [self getTintColour].CGColor;
     
@@ -91,14 +96,6 @@
 
 +(UIColor*) getPanelColour{
     return [UIColor colorWithRed:201/255.0 green:181/255.0 blue:111/255.0 alpha:1.0];
-}
-
-+(void) styleSegmentedControl:(UISegmentedControl*)control{
-    
-    //control
-    //control.layer.backgroundColor = [UIColor grayColor].CGColor;// = [UIColor colorWithPatternImage:[UIImage imageNamed:@"segmentedBackground.png"] ];
-    
-    
 }
 
 

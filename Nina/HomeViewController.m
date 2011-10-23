@@ -22,14 +22,66 @@
 #import "UIDevice+IdentifierAddition.h"
 #import "ActivityFeedViewController.h"
 #import "AboutUsController.h"
+#import "QuickPickButton.h"
+
+
+@interface HomeViewController (Private) 
+- (IBAction) buttonTouchUpInside:(id)sender;
+@end
+
 
 @implementation HomeViewController
-
+@synthesize pickScroll, scrollFooter;
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
+    NSDictionary *pickCategories = [NSDictionary dictionaryWithObjectsAndKeys:
+            [NSArray arrayWithObjects:@"EverythingPick.png", @"", nil], @"Everything", 
+            [NSArray arrayWithObjects:@"NightlifePick.png", @"\"Bars & Nightlife\"", nil], @"Nightlife",
+            [NSArray arrayWithObjects:@"FoodPick.png", @"\"Restaurants & Food\"", nil], @"Restaurants",
+            [NSArray arrayWithObjects:@"TouristyPick.png", @"\"Interesting & Outdoors\"", nil], @"Touristy", nil];
+
+    CGFloat cx = 10;
+    
+    NSEnumerator *enumerator = [pickCategories keyEnumerator];
+    id key;
+        
+    while( key = [enumerator nextObject] ){
+        NSArray *category = [pickCategories objectForKey:key];
+
+        CGRect rect = CGRectMake(cx, 3, 64, 64);
+        QuickPickButton *button = [[QuickPickButton alloc] initWithFrame:rect];
+        button.query = [category objectAtIndex:1];
+        UIImage *image = [UIImage imageNamed:[category objectAtIndex:0]];
+        [button setImage:image forState:UIControlStateNormal];
+        [self.pickScroll addSubview:button];
+        
+        [button addTarget:self action:@selector(showQuickPick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [button release];
+        
+        CGRect labelRect = CGRectMake(cx, 64, 64, 30);
+        UILabel *label = [[UILabel alloc] initWithFrame:labelRect];
+        [label setFont:[UIFont fontWithName:@"Arial" size:11]];
+        
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setTextColor:[UIColor whiteColor]];
+        [label setTextAlignment:UITextAlignmentCenter];
+        
+        label.text = key;
+        [self.pickScroll addSubview:label];
+        [label release];
+        
+        cx += button.frame.size.width+10;
+
+    }
+    
+    [self.pickScroll setContentSize:CGSizeMake(cx, [self.pickScroll bounds].size.height)];
+    
+    [self.scrollFooter setFrame:CGRectMake(self.scrollFooter.frame.origin.x, self.scrollFooter.frame.origin.y, MAX(cx, 320), self.scrollFooter.frame.size.height)];
     
     self.navigationItem.title = @"Placeling";
     
@@ -68,7 +120,19 @@
     [infoButton addTarget:self action:@selector(aboutUs) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *modalButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
     
+    self.pickScroll.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pickBackground.png"]];
+    
     self.navigationItem.rightBarButtonItem = modalButton;
+}
+
+- (IBAction) showQuickPick:(id)sender {
+    QuickPickButton *buttonClicked = (QuickPickButton *)sender;
+    
+    NearbySuggestedPlaceController *nearbyPlaceController = [[NearbySuggestedPlaceController alloc] init];    
+    nearbyPlaceController.searchTerm = buttonClicked.query;
+    
+    [self.navigationController pushViewController:nearbyPlaceController animated:TRUE];
+    [nearbyPlaceController release];
 }
 
 -(IBAction)showLogin{
@@ -203,7 +267,11 @@
     
 }
 
-
+-(void) dealloc{
+    [pickScroll release];
+    [scrollFooter release];
+    [super dealloc];
+}
 
 
 

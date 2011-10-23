@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface HomeViewController : UIViewController<UIActionSheetDelegate>
+@interface HomeViewController : UIViewController<UIActionSheetDelegate>{
+    IBOutlet UIScrollView *pickScroll;
+    IBOutlet UIView *scrollFooter;
+}
 
+@property (nonatomic, retain) IBOutlet UIScrollView *pickScroll;
+@property (nonatomic, retain) IBOutlet UIView *scrollFooter;
 
 -(IBAction) activityFeed;
 

@@ -32,8 +32,14 @@
 }
 
 -(IBAction)popularPlaces:(id)sender{
-    self.showAll = TRUE;
-    
+    if (!self.showAll){
+        self.showAll = TRUE;
+        self.popularPlacesButton.title = @"Following's Places";
+    }else{
+        self.showAll = false;
+        self.popularPlacesButton.title = @"Popular Places";
+    }
+    [self findNearbyPlaces];
 }
 
 
@@ -67,7 +73,11 @@
         
         self.searchTerm  = [self.searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
         
-        urlString = [NSString stringWithFormat:@"%@?lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lng, radius, self.searchTerm];
+        if (!showAll){
+            urlString = [NSString stringWithFormat:@"%@?showall=false&lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lng, radius, self.searchTerm];
+        } else {
+            urlString = [NSString stringWithFormat:@"%@?showall=true&lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lng, radius, self.searchTerm];
+        }
         NSURL *url = [NSURL URLWithString:urlString];
         
 		ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
