@@ -43,13 +43,6 @@
 }
 
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 -(void)findNearbyPlaces {
 	//NSDate *now = [NSDate date];
@@ -74,9 +67,9 @@
         self.searchTerm  = [self.searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
         
         if (!showAll){
-            urlString = [NSString stringWithFormat:@"%@?showall=false&lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lng, radius, self.searchTerm];
+            urlString = [NSString stringWithFormat:@"%@?socialgraph=true&lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lng, radius, self.searchTerm];
         } else {
-            urlString = [NSString stringWithFormat:@"%@?showall=true&lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lng, radius, self.searchTerm];
+            urlString = [NSString stringWithFormat:@"%@?socialgraph=false&lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lng, radius, self.searchTerm];
         }
         NSURL *url = [NSURL URLWithString:urlString];
         
