@@ -37,6 +37,8 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>MarketingScript.ttf</string>
