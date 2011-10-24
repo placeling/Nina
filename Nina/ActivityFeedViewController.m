@@ -97,6 +97,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.activityTableView.delegate = self;
+    self.activityTableView.backgroundColor = [UIColor clearColor];
     
     if (refreshHeaderView == nil) {
 		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.activityTableView.bounds.size.height, 320.0f, self.activityTableView.bounds.size.height)];
