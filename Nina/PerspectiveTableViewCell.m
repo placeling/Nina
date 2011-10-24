@@ -26,7 +26,7 @@
     
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    heightCalc += textSize.height;MAX(textSize.height, 44);
+    heightCalc += textSize.height + 10;
     
     if (perspective.photos && perspective.photos.count > 0){
         heightCalc += 166;
@@ -60,13 +60,13 @@
         
         CGSize textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:memoFrame.size lineBreakMode:UILineBreakModeWordWrap];
                 
-        [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, memoSize.width, MAX(textSize.height, 55))];
+        [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, memoSize.width, textSize.height + 10)];
         
         verticalCursor += cell.memoText.frame.size.height;
     }else{
         cell.memoText.text = @""; //get rid of hipster lorem
         cell.memoText.hidden = TRUE;
-        //verticalCursor += 55;
+        verticalCursor += 10;
     }
 
     if (perspective.mine){
