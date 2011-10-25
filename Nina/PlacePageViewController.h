@@ -52,7 +52,7 @@ typedef enum {
     IBOutlet UIView *tableFooterView;
     IBOutlet UIView *bookmarkView;
     
-    NSArray *perspectives;
+    NSMutableArray *perspectives;
     NSMutableArray *homePerspectives;
     NSMutableArray *followingPerspectives;
     NSMutableArray *everyonePerspectives;

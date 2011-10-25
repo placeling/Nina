@@ -1,4 +1,3 @@
-
 //
 //  PlacePageViewController.m
 //  placeling2
@@ -49,6 +48,8 @@ typedef enum {
 -(void) loadMap;
 -(bool) shouldShowSectionView;
 -(int) numberOfSectionBookmarks;
+-(void) flagPerspective:(Perspective*)perspective;
+-(void) deletePerspective:(Perspective*)perspective;
 @end
 
 @implementation PlacePageViewController
@@ -419,6 +420,19 @@ typedef enum {
                 [self.tableView reloadData];                
                 
                 break;
+            }
+            case 6:{
+                //deleted perspective
+                NSString *responseString = [request responseString];        
+                DLog(@"%@", responseString);
+                        
+                break;
+            }
+            case 7:{
+                //flag perspective
+                NSString *responseString = [request responseString];        
+                DLog(@"%@", responseString);
+
                 break;
             }
         }
@@ -430,6 +444,28 @@ typedef enum {
 
 
 #pragma mark - Table view delegate
+
+-(void) flagPerspective:(Perspective*)perspective{
+    
+    
+}
+
+-(void) deletePerspective:(Perspective*)perspective{
+    
+    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/", [NinaHelper getHostname], perspective.place.place_id];
+
+    NSURL *url = [NSURL URLWithString:urlText];
+    
+    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
+    
+    request.delegate = self;
+    request.tag = 6;
+    
+    [request setRequestMethod:@"DELETE"];
+    [NinaHelper signRequest:request];
+    [request startAsynchronous];
+}
+
 -(void) blankLoad{
     if (self.place){
         //loads what we have before grabbing detailed view
@@ -643,6 +679,48 @@ typedef enum {
 
 #pragma mark - Table View
 
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row >= [perspectives count]){
+        return NO;
+    } else {
+        //handling editing case before refresh       
+        Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+        
+        if ( [perspective isKindOfClass:[NSString class]] ){
+            return NO;
+        }else {         
+            if (perspective.mine){
+                return YES;
+            } else {
+                return NO;
+            }
+        }
+    }
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+        DLog(@"Deleting perspective");
+        
+        [self deletePerspective:perspective];
+        
+        if ([homePerspectives count] > 0){
+            [homePerspectives removeObject:perspective];
+        }
+             
+        if ([everyonePerspectives count] > 0){
+            [everyonePerspectives removeObject:perspective];
+        }
+        myPerspective = nil;
+        self.place.bookmarked = false;
+        [self.tableView reloadData];        
+    }    
+}
+
 -(bool)shouldShowSectionView{
     
     if (([perspectives count] > 0) && [[perspectives objectAtIndex:0] isKindOfClass:[NSString class]]){
@@ -731,7 +809,7 @@ typedef enum {
         //loading case
         return 44;
     }else if ( self.perspectiveType == home && perspective.mine){
-        return [MyPerspectiveCellViewController cellHeightForPerspective:myPerspective];            
+        return [MyPerspectiveCellViewController cellHeightForPerspective:perspective];            
     } else {
         //a visible perspective row PerspectiveTableViewCell        
         return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
@@ -791,7 +869,7 @@ typedef enum {
                 for(id item in objects){
                     if ( [item isKindOfClass:[UITableViewCell class]]){
                         MyPerspectiveCellViewController *mCell = (MyPerspectiveCellViewController*) item;                        
-                        [MyPerspectiveCellViewController setupCell:mCell forPerspective:myPerspective];
+                        [MyPerspectiveCellViewController setupCell:mCell forPerspective:perspective];
                         cell = mCell;
                     }
                 }
