@@ -75,8 +75,9 @@
         for ( Photo* photo in [perspective.photos reverseObjectEnumerator] ){
             
             CGRect rect = CGRectMake(cx, 3, 150, 150);
-            UIImageView *imageView = [[AsyncImageView alloc] initWithFrame:rect];
-            [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
+            AsyncImageView *imageView = [[AsyncImageView alloc] initWithFrame:rect];
+            [imageView loadImageFromPhoto:photo]; 
+            imageView.userInteractionEnabled = TRUE;
                         
             [cell.imageScroll addSubview:imageView];
             
