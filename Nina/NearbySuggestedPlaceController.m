@@ -205,6 +205,8 @@
 	[refreshHeaderView setCurrentDate];  //  should check if data reload was successful 
 }
 
+#pragma mark Search Bar Methods
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     self.searchTerm = searchBar.text;
     [searchBar resignFirstResponder];

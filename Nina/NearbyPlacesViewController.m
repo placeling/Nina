@@ -26,18 +26,18 @@
 @synthesize placesTableView;
 @synthesize searchBar=_searchBar, toolBar;
 @synthesize tableFooterView, gpsLabel;
+@synthesize dataLoaded, locationEnabled;
 
 -(void)findNearbyPlaces {
     [self findNearbyPlaces:@""];
 }
 
 -(void)findNearbyPlaces:(NSString*)searchTerm {
-	//NSDate *now = [NSDate date];
-	
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocation *location = manager.location;
 
 	if (location != nil){ //[now timeIntervalSinceDate:location.timestamp] < (60 * 5)){
+        self.locationEnabled = TRUE;
         
         float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
         accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
@@ -65,7 +65,18 @@
 		[request setDelegate:self];
 		[request startAsynchronous];
 	} else {
+        
+        self.gpsLabel.text = [NSString stringWithFormat:@"GPS: n/a"];
+        
+        self.dataLoaded = TRUE;
+        self.locationEnabled = FALSE;
+        if (nearbyPlaces) {
+            [nearbyPlaces release];            
+        }
+        nearbyPlaces = [[NSMutableArray alloc] initWithCapacity:0];
+        
         needLocationUpdate = true;
+        self.locationEnabled = FALSE;
         DLog(@"UNABLE TO GET CURRENT LOCATION FOR NEARBY");
     }
     
@@ -150,12 +161,13 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    self.dataLoaded = FALSE;
     // Do any additional setup after loading the view from its nib.
     needLocationUpdate = false;
-    
+
+    self.navigationItem.title = @"Nearby";
+
     [[NSBundle mainBundle] loadNibNamed:@"NearbyPlacesFooterView" owner:self options:nil];
-    
-    self.placesTableView.tableFooterView = self.tableFooterView;
     
     self.placesTableView.delegate = self;
     
@@ -188,14 +200,18 @@
 #pragma mark ASIhttprequest
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
-	[NinaHelper handleBadRequest:request sender:self];
+    [NinaHelper handleBadRequest:request sender:self];
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
     
+    self.placesTableView.tableFooterView = self.tableFooterView;
+    
 	if (200 != [request responseStatusCode]){
 		[NinaHelper handleBadRequest:request sender:self];
-	} else {
+	} else {        
+        self.dataLoaded = TRUE;
+
 		// Store incoming data into a string
 		NSString *jsonString = [request responseString];
 		DLog(@"Got JSON BACK: %@", jsonString);
@@ -223,41 +239,87 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [nearbyPlaces count];
+    // Return the number of rows in the section.
+    NSLog(@"%i", self.dataLoaded);
+    NSLog(@"%i", [nearbyPlaces count]);
+    if (self.dataLoaded && [nearbyPlaces count] == 0) {
+        return 1;
+    } else {
+        return [nearbyPlaces count];
+    }
+    //return [nearbyPlaces count];
 }
 
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
+    if (self.dataLoaded && [nearbyPlaces count] == 0) {
+        return 70;
+    } else {
+        return 44;
+    }
+}
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"Cell";
-    NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    if ( [place objectForKey:@"name"] != [NSNull null] ){
-		cell.textLabel.text = [place objectForKey:@"name"];
-	} else {
-        DLog(@"got a place with no-name: %@", [place objectForKey:@"google_id"]);
-		cell.textLabel.text = @"n/a";
-	}
-    
-    if ( [place objectForKey:@"distance"] != [NSNull null] ){
-		cell.detailTextLabel.text = [NSString stringWithFormat:@"%@m", [place objectForKey:@"distance"]];
-	} else {
-		cell.detailTextLabel.text = @"";
-	}
+    if (self.dataLoaded && [nearbyPlaces count] == 0) {
+        cell.detailTextLabel.text = @"";
+        cell.textLabel.text = @"";
+        
+        UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
+        
+        if (self.locationEnabled == FALSE) {
+            errorText.text = [NSString stringWithFormat:@"We can't show you any nearby places as you've got location services turned off."];
+        } else {
+            if (_searchBar.text == (id)[NSNull null] || _searchBar.text.length == 0) {
+                errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places."];
+            } else {
+                errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places called '%@'.", _searchBar.text];
+            }
+        }        
+        
+        errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+        
+        errorText.tag = 778;
+        [cell addSubview:errorText];
+        [errorText release];
+    } else {
+        NSLog(@"Search bar text is: %@", _searchBar.text);
+
+        
+        NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
+        
+        if ( [place objectForKey:@"name"] != [NSNull null] ){
+            cell.textLabel.text = [place objectForKey:@"name"];
+        } else {
+            DLog(@"got a place with no-name: %@", [place objectForKey:@"google_id"]);
+            cell.textLabel.text = @"n/a";
+        }
+        
+        if ( [place objectForKey:@"distance"] != [NSNull null] ){
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@m", [place objectForKey:@"distance"]];
+        } else {
+            cell.detailTextLabel.text = @"";
+        }
+    }
     
     return cell;
 }
 
+#pragma mark Search Bar Methods
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{	
-	[searchBar resignFirstResponder];
+    [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:FALSE animated:true];
+    
+    searchBar.text = @"";
+    [self findNearbyPlaces:@""];
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
@@ -265,6 +327,7 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:FALSE animated:true];
     [self findNearbyPlaces:searchBar.text];
 }
