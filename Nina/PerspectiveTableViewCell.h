@@ -15,11 +15,14 @@
     Perspective *perspective;
     UITapGestureRecognizer *tapGesture;
     UITapGestureRecognizer *showMoreTap;
+    UITapGestureRecognizer *flagTap;
     IBOutlet AsyncImageView *userImage;
     IBOutlet UIButton *upvoteButton;
     IBOutlet UILabel *memoText;
     IBOutlet UILabel *titleLabel;
     IBOutlet UILabel *showMoreLabel;
+    IBOutlet UILabel *flagLabel;
+    IBOutlet UILabel *createdAtLabel;
     id<ASIHTTPRequestDelegate> requestDelegate;
     IBOutlet UIScrollView *scrollView;
 }
@@ -34,6 +37,9 @@
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic,retain) UITapGestureRecognizer *tapGesture;
 @property(nonatomic,retain) UITapGestureRecognizer *showMoreTap;
+@property(nonatomic,retain) UITapGestureRecognizer *flagTap;
+@property(nonatomic,retain) IBOutlet UILabel *flagLabel;
+@property(nonatomic,retain) IBOutlet UILabel *createdAtLabel;
 
 -(IBAction)toggleStarred;
 
@@ -42,5 +48,6 @@
 +(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective  userSource:(BOOL)userSource;
 
 -(IBAction) showAuthoringUser;
+-(void) flagPerspective;
 
 @end

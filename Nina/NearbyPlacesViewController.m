@@ -274,6 +274,7 @@
         tableView.allowsSelection = YES;
     }
     
+    
     if (self.dataLoaded && [nearbyPlaces count] == 0) {
         cell.detailTextLabel.text = @"";
         cell.textLabel.text = @"";
@@ -297,8 +298,8 @@
         [cell addSubview:errorText];
         [errorText release];
     } else {
-        NSLog(@"Search bar text is: %@", _searchBar.text);
-
+        DLog(@"Search bar text is: %@", _searchBar.text);
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
         

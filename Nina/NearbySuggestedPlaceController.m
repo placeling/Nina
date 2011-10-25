@@ -315,6 +315,12 @@
             }
         }
     }
+
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.titleLabel.text = place.name;
+    cell.addressLabel.text = place.address;
+    cell.distanceLabel.text = @""; //place.
+    cell.usersLabel.text = place.usersBookmarkingString;
     
     if (self.dataLoaded && [nearbyPlaces count] == 0) {
         tableView.allowsSelection = NO;
@@ -373,7 +379,6 @@
         cell.usersLabel.text = place.usersBookmarkingString;        
     }
     
-
     return cell;
 }
 
