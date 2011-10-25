@@ -21,6 +21,8 @@
     
     BOOL _reloading;
     BOOL showAll;
+    BOOL dataLoaded;
+    BOOL locationEnabled;
     
     NSString *searchTerm;
     
@@ -35,6 +37,8 @@
 @property(nonatomic,retain) IBOutlet UIToolbar *toolbar;
 @property(nonatomic,retain) IBOutlet UITableView *placesTableView;
 @property(nonatomic,assign) BOOL showAll;
+@property(nonatomic,assign) BOOL dataLoaded;
+@property(nonatomic,assign) BOOL locationEnabled;
 @property(nonatomic,retain) NSString *searchTerm;
 
 -(IBAction)popularPlaces:(id)sender;
