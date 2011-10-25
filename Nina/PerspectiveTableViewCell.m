@@ -15,10 +15,10 @@
 
 @synthesize perspective, userImage, upvoteButton, memoText,titleLabel, scrollView;
 @synthesize tapGesture, requestDelegate, showMoreLabel, showMoreTap;
-
+@synthesize flagTap, flagLabel, createdAtLabel;
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
-    CGFloat heightCalc = 39;
+    CGFloat heightCalc = 59; //covers header and footer
     
     CGSize textAreaSize;
     textAreaSize.height = 100;
@@ -40,6 +40,7 @@
     CGFloat verticalCursor = cell.memoText.frame.origin.y;;
     cell.perspective = perspective;
     cell.memoText.text = perspective.notes;
+    BOOL hasContent = FALSE;
     
     if (userSource){
         cell.titleLabel.text = perspective.place.name;
@@ -63,6 +64,7 @@
         [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, memoSize.width, textSize.height + 10)];
         
         verticalCursor += cell.memoText.frame.size.height;
+        hasContent = true;
     }else{
         cell.memoText.text = @""; //get rid of hipster lorem
         cell.memoText.hidden = TRUE;
@@ -118,19 +120,28 @@
             
             [imageView release];
         }
-        
-        //more then 2 photos means a scroll, otherwise click should go to page
-        /*
-        if ([perspective.photos count] > 2){
-            cell.scrollView.userInteractionEnabled = true;
-        } else {
-            cell.scrollView.userInteractionEnabled = false;
-        }*/
-        
+        verticalCursor += cell.scrollView.frame.size.height;
         [cell.scrollView setContentSize:CGSizeMake(cx, [cell.scrollView bounds].size.height)];
+        
+        hasContent = true;
+        
     }else{
         cell.scrollView.hidden = TRUE; //remove from view
     }
+    
+    if (hasContent && perspective.mine == false){
+        cell.flagTap = [[[UITapGestureRecognizer alloc] initWithTarget:cell action:@selector(flagPerspective)] autorelease];
+        [cell.flagLabel addGestureRecognizer:cell.flagTap];
+        cell.flagLabel.userInteractionEnabled = TRUE;
+        
+        [cell.flagLabel setFrame:CGRectMake(cell.flagLabel.frame.origin.x, verticalCursor, cell.flagLabel.frame.size.width, cell.flagLabel.frame.size.height)];
+    } else {
+        cell.flagLabel.hidden = TRUE;
+    }
+    cell.createdAtLabel.text = [NSString stringWithFormat:@"Last Modified: %@", [NinaHelper dateDiff:perspective.lastModified]  ];
+    
+    [cell.createdAtLabel setFrame:CGRectMake(cell.createdAtLabel.frame.origin.x, verticalCursor, cell.createdAtLabel.frame.size.width, cell.createdAtLabel.frame.size.height)];
+    
 }
 
 -(IBAction) showAuthoringUser{
@@ -148,6 +159,40 @@
     }
     
     [memberProfileViewController release];
+}
+
+-(void) flagPerspective{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Flag Note" 
+          message:[NSString stringWithFormat: @"Are you sure you want to flag %@'s note?", self.perspective.user.username] 
+          delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+    [alert show];
+    [alert release];
+ 
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 0){
+        DLog(@"Cancel flaggin");
+    } else {
+        DLog(@"Flagging %@'s perspective", self.perspective.user.username);
+        
+        NSString *urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/flag", [NinaHelper getHostname], self.perspective.perspectiveId];
+        self.flagLabel.userInteractionEnabled = FALSE;
+        self.flagLabel.textColor = [UIColor blackColor];
+        self.flagLabel.text = @"Flagged";
+    
+        NSURL *url = [NSURL URLWithString:urlText];
+        
+        ASIFormDataRequest  *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
+        
+        request.delegate = self.requestDelegate;
+        request.tag = 7;
+        
+        [request setRequestMethod:@"POST"];
+        [NinaHelper signRequest:request];
+        [request startAsynchronous];
+    }
 }
 
 -(IBAction)toggleStarred{
@@ -185,6 +230,11 @@
     [titleLabel release];
     [scrollView release];
     [tapGesture release];
+    
+    [flagTap release];
+    [flagLabel release];
+    [createdAtLabel release];
+    
     [super dealloc];
 }
 
