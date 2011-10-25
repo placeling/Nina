@@ -775,20 +775,38 @@ typedef enum {
     } else {
         // Create label with section title
         UILabel *label = [[[UILabel alloc] init] autorelease];
-        label.frame = CGRectMake(20, 6, 300, 30);
+        label.frame = CGRectMake(20, 6, 280, 30);
         label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor blackColor];
         label.font = [UIFont boldSystemFontOfSize:16];
         
         
+        NSLog(@"Index of segmented control is: %i", self.segmentedControl.selectedSegmentIndex);
+        
         if ( [self numberOfSectionBookmarks] == 0 ){
-            label.textColor = [UIColor grayColor];
-            label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
+            //label.textColor = [UIColor grayColor];
+            if (self.segmentedControl.selectedSegmentIndex == 1) {
+                label.text = [NSString stringWithFormat:@"No one you follow has bookmarked this place"];
+            } else {
+                label.text = [NSString stringWithFormat:@"No one has bookmarked this place yet"];
+            }
+            
+            //label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
         } else if ( [self numberOfSectionBookmarks] == 1) {
-            label.text = [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+            if (self.segmentedControl.selectedSegmentIndex == 1) {
+                label.text = [NSString stringWithFormat:@"%i person you follow has bookmarked this place", [self numberOfSectionBookmarks]];
+            } else {
+                label.text = [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+            }
         } else {
-            label.text = [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];
+            if (self.segmentedControl.selectedSegmentIndex == 1) {
+                label.text = [NSString stringWithFormat:@"%i people you follow have bookmarked this place", [self numberOfSectionBookmarks]];
+            } else {
+                label.text = [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];   
+            }            
         }
+        
+        label.adjustsFontSizeToFitWidth = TRUE;
         
         // Create header view and add label as a subview
         view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, SectionHeaderHeight)];
