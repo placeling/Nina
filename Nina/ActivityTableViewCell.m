@@ -25,7 +25,7 @@
 
     CGSize textAreaSize;
     textAreaSize.height = 500;
-    textAreaSize.width = 272;
+    textAreaSize.width = 265;
     
     CGSize textSize = [[self getTitleText:activity] sizeWithFont:[UIFont systemFontOfSize:14.0] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
@@ -33,25 +33,34 @@
     
     heightCalc += textSize.height;
     
-    return heightCalc;
-    
+    if (heightCalc < (8 + 32 + 8)) { // top margin + thumbnail + bottom margin
+        return 48;
+    } else {
+        return heightCalc;
+    }
 }
 
 +(void) setupCell:(ActivityTableViewCell*)cell forActivity:(NSDictionary*)activity{
-    CGFloat verticalCursor = cell.detailText.frame.origin.y;
-    //CGFloat verticalCursor = cell.titleLabel.frame.origin.y;
+    CGFloat verticalCursor = cell.titleLabel.frame.origin.y;
     
     cell.activity = activity;
     
-    CGRect detailFrame = cell.detailText.frame;
-    cell.detailText.text = [self getTitleText:activity];
-    CGSize textSize = [[self getTitleText:activity] sizeWithFont:cell.detailText.font constrainedToSize:detailFrame.size lineBreakMode:UILineBreakModeWordWrap];
+    cell.detailText.text = @"";
+    cell.titleLabel.text = [self getTitleText:activity];
     
-    [cell.detailText setFrame:CGRectMake(cell.detailText.frame.origin.x, cell.detailText.frame.origin.y, textSize.width, textSize.height)];
+    CGSize textAreaSize;
+    textAreaSize.height = 500;
+    textAreaSize.width = 265;
     
-    cell.detailText.contentInset = UIEdgeInsetsMake(-8, -8, 0, 0);
+    CGSize textSize = [[self getTitleText:activity] sizeWithFont:[UIFont systemFontOfSize:14.0] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    verticalCursor += cell.detailText.frame.size.height;
+    CGRect detailFrame = CGRectMake(cell.titleLabel.frame.origin.x, cell.titleLabel.frame.origin.y, textSize.width, textSize.height);
+    
+    [cell.titleLabel setFrame:detailFrame];
+    
+    cell.titleLabel.backgroundColor = [UIColor clearColor];
+    
+    verticalCursor += cell.titleLabel.frame.size.height;
     
     cell.backgroundColor = [UIColor clearColor];
     
@@ -59,8 +68,6 @@
     cell.userImage.layer.borderWidth = 1.0f;
     cell.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     cell.userImage.layer.masksToBounds = YES;
-    
-    cell.detailText.backgroundColor = [UIColor clearColor];
     
     cell.timeAgo.frame = CGRectMake(cell.timeAgo.frame.origin.x, verticalCursor, cell.timeAgo.frame.size.width, cell.timeAgo.frame.size.height);    
     cell.timeAgo.backgroundColor = [UIColor clearColor];
@@ -95,13 +102,25 @@
         timeGap =  @"less than a minute ago";
     } else if (ti < 3600) {
         int diff = round(ti / 60);
-        timeGap = [NSString stringWithFormat:@"%d minutes ago", diff];
+        if (diff == 1) {
+            timeGap = [NSString stringWithFormat:@"%d minute ago", diff];
+        } else {
+            timeGap = [NSString stringWithFormat:@"%d minutes ago", diff];
+        }
     } else if (ti < 86400) {
         int diff = round(ti / 60 / 60);
-        timeGap = [NSString stringWithFormat:@"%d hours ago", diff];
+        if (diff == 1) {
+            timeGap = [NSString stringWithFormat:@"%d hour ago", diff];
+        } else {
+            timeGap = [NSString stringWithFormat:@"%d hours ago", diff];            
+        }
     } else if (ti < 2629743) {
         int diff = round(ti / 60 / 60 / 24);
-        timeGap = [NSString stringWithFormat:@"%d days ago", diff];
+        if (diff == 1) {
+            timeGap = [NSString stringWithFormat:@"%d day ago", diff];
+        } else {
+            timeGap = [NSString stringWithFormat:@"%d days ago", diff];
+        }
     } else {
         timeGap = @"never";
     }

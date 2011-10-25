@@ -21,7 +21,7 @@
 @implementation ActivityFeedViewController
 @synthesize reloading=_reloading;
 @synthesize activityTableView;
-
+@synthesize user;
 
 - (void)didReceiveMemoryWarning{
     // Releases the view if it doesn't have a superview.
@@ -99,6 +99,8 @@
     self.activityTableView.delegate = self;
     self.activityTableView.backgroundColor = [UIColor clearColor];
     
+    self.navigationItem.title = @"Recent activity";
+    
     if (refreshHeaderView == nil) {
 		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.activityTableView.bounds.size.height, 320.0f, self.activityTableView.bounds.size.height)];
 		refreshHeaderView.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
@@ -144,6 +146,10 @@
         NSDictionary *jsonDict = [[jsonString JSONValue] retain];
 		recentActivities = [[jsonDict objectForKey:@"home_feed"] retain];
         
+        if (!user) {
+            self.user = [[[User alloc] initFromJsonDict:[jsonDict objectForKey:@"user"]]autorelease];    
+        }
+        
 		[self.activityTableView  reloadData];
 		[jsonDict release];
 	}
@@ -162,36 +168,74 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [recentActivities count];
+    if ((user) && user.followingCount == 0) {
+        return 1;
+    } else if ((user) && [recentActivities count] == 0) {
+        return 1;
+    } else {
+        return [recentActivities count];
+    }
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
-    
-    NSDictionary *activity;
-    activity = [recentActivities objectAtIndex:indexPath.row];
-    return [ActivityTableViewCell cellHeightForActivity:activity];
+    if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {
+        return 54;
+    } else {
+        NSDictionary *activity;
+        activity = [recentActivities objectAtIndex:indexPath.row];
+        return [ActivityTableViewCell cellHeightForActivity:activity];
+    }
 }
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"ActivityCell";
-    NSDictionary *activity = [recentActivities objectAtIndex:indexPath.row];
     
     ActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {
+        tableView.allowsSelection = FALSE;
+    } else {
+        tableView.allowsSelection = TRUE;
+    }
+    
     if (cell == nil) {
-        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"ActivityTableViewCell" owner:self options:nil];
-        
-        for(id item in objects){
-            if ( [item isKindOfClass:[UITableViewCell class]]){
-                ActivityTableViewCell *pcell = (ActivityTableViewCell *)item;                  
-                [ActivityTableViewCell setupCell:pcell forActivity:activity];
-                cell = pcell;
-                break;
+        if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {            
+            cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            
+            UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
+            
+            if (user.followingCount == 0) {
+                errorText.text = @"Start following people and you'll see what they do here";
+            } else {
+                errorText.text = @"There's no recent activity by people you follow";
             }
-        }   
-        
+            
+            errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+            [errorText setUserInteractionEnabled:NO];
+            [errorText setBackgroundColor:[UIColor clearColor]];
+            
+            [cell addSubview:errorText];
+            [errorText release];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            return cell;
+        } else {
+            NSDictionary *activity = [recentActivities objectAtIndex:indexPath.row];
+            
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"ActivityTableViewCell" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    ActivityTableViewCell *pcell = (ActivityTableViewCell *)item;                  
+                    [ActivityTableViewCell setupCell:pcell forActivity:activity];
+                    cell = pcell;
+                    break;
+                }
+            }   
+        }        
     }
     return cell;
 }
@@ -236,6 +280,7 @@
     [NinaHelper clearActiveRequests:70];
     [recentActivities release];
     [activityTableView release];
+    [user release];
     [super dealloc];
     
 }
