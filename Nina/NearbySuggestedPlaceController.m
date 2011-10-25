@@ -290,7 +290,7 @@
         }
     }
     
-    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.titleLabel.text = place.name;
     cell.addressLabel.text = place.address;
     cell.distanceLabel.text = @""; //place.

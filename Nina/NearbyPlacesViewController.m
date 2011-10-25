@@ -250,6 +250,7 @@
 	} else {
 		cell.detailTextLabel.text = @"";
 	}
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
