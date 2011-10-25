@@ -24,6 +24,8 @@
     NSArray  *nearbyPlaces;
     
     BOOL needLocationUpdate;
+    BOOL dataLoaded;
+    BOOL locationEnabled;
     BOOL _reloading;
     
 }
@@ -38,5 +40,8 @@
 @property(nonatomic, retain) IBOutlet IBOutlet UIToolbar *toolBar;
 @property(nonatomic, retain) IBOutlet UIView *tableFooterView;
 @property(nonatomic, retain) IBOutlet UILabel *gpsLabel;
+
+@property(nonatomic, assign) BOOL dataLoaded;
+@property(nonatomic, assign) BOOL locationEnabled;
 
 @end
