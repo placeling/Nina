@@ -46,7 +46,12 @@
         
         DLog(@"Downloading photo for %@", self.photo.photo_id);
         
-        NSString *urlText = [NSString stringWithFormat:@"%@", self.photo.thumb_url];
+        NSString *urlText;
+        if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] && self.photo.iphone_url) {
+            urlText = [NSString stringWithFormat:@"%@", self.photo.iphone_url];
+        } else {
+            urlText = [NSString stringWithFormat:@"%@", self.photo.thumb_url];
+        }
         
         NSURL *url = [NSURL URLWithString:urlText];
         if ([url host] == nil) return;
