@@ -254,7 +254,7 @@
                     [newPerspective release];
                 }
             }
-            
+
             [self loadData];
             break;
         }
@@ -293,6 +293,7 @@
             }
             
             [jsonString release];
+            
             [self.tableView reloadData];
             
         }
@@ -336,14 +337,19 @@
 }
 
 
+#pragma mark Tableview Methods
+
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
     //a visible perspective row PerspectiveTableViewCell
     
-    Perspective *perspective;
-
-    perspective = [perspectives objectAtIndex:indexPath.row];
-    
-    return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
+    if ((perspectives) && [perspectives count] == 0) {
+        return 70;
+    } else {
+        Perspective *perspective;
+        perspective = [perspectives objectAtIndex:indexPath.row];
+        
+        return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -352,8 +358,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (perspectives){
-        return [perspectives count];
+    if (perspectives) {
+        if ([perspectives count] == 0) {
+            return 1;
+        } else {
+            return [perspectives count];
+        }
     } else {
         return 0;
     }
@@ -361,24 +371,60 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"indexPath.section: %i, indexpath.row %i", indexPath.section, indexPath.row);
+    
     static NSString *perspectiveCellIdentifier = @"Cell";
     
     UITableViewCell *cell;
     cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
     
+    if ((perspectives) && [perspectives count] == 0) {
+        tableView.allowsSelection = NO;
+    } else {
+        tableView.allowsSelection = YES;
+    }
+    
     if (cell == nil) {
-        Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
-
-        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
-        
-        for(id item in objects){
-            if ( [item isKindOfClass:[UITableViewCell class]]){
-                PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
-                [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:true];
-                cell = pcell;
-                break;
+        if ((perspectives) && [perspectives count] == 0) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:perspectiveCellIdentifier] autorelease];
+            
+            cell.detailTextLabel.text = @"";
+            cell.textLabel.text = @"";
+            
+            UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
+            
+            if ([self.username isEqualToString:[NinaHelper getUsername]]) {
+                errorText.text = @"You haven't bookmarked any places yet";
+            } else {
+                errorText.text = [NSString stringWithFormat:@"%@ hasn't bookmarked any places yet", self.username];
             }
-        }            
+
+            errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+            [errorText setUserInteractionEnabled:NO];
+            [errorText setBackgroundColor:[UIColor clearColor]];
+            
+            errorText.tag = 778;
+            [cell addSubview:errorText];
+            [errorText release];
+
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            return cell;
+            
+        } else {
+            Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+            
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
+                    [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:true];
+                    cell = pcell;
+                    break;
+                }
+            }            
+        }
     }
     
     // Configure the cell...

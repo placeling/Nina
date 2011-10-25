@@ -52,7 +52,6 @@
 @property (nonatomic, retain) IBOutlet ProfileDetailBadge *followingButton;
 @property (nonatomic, retain) IBOutlet ProfileDetailBadge *placeMarkButton;
 
-
 -(IBAction) followUser;
 -(IBAction) userPerspectives;
 -(IBAction) userFollowing;
