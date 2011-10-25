@@ -317,6 +317,12 @@
     }
     
     if (self.dataLoaded && [nearbyPlaces count] == 0) {
+        tableView.allowsSelection = NO;
+    } else {
+        tableView.allowsSelection = YES;
+    }
+    
+    if (self.dataLoaded && [nearbyPlaces count] == 0) {
         cell.titleLabel.text = @"";
         cell.addressLabel.text = @"";
         cell.distanceLabel.text = @"";
@@ -332,18 +338,22 @@
                 if ([self.searchTerm isEqualToString:@""] == TRUE) {
                     errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places."];
                 } else {
-                    errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places tagged '%@'.", self.searchTerm];
+                    errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
                 }
             } else {
                 if ([self.searchTerm isEqualToString:@""] == TRUE) {
                     errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places."];
                 } else {
-                    errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places tagged '%@'.", self.searchTerm];
+                    errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
                 }
+                
+                
+                self.searchTerm  = [self.searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
             }
         }        
         
         errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+        [errorText setUserInteractionEnabled:NO];
         
         errorText.tag = 778;
         [cell addSubview:errorText];

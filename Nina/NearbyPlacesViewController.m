@@ -269,6 +269,12 @@
     }
     
     if (self.dataLoaded && [nearbyPlaces count] == 0) {
+        tableView.allowsSelection = NO;
+    } else {
+        tableView.allowsSelection = YES;
+    }
+    
+    if (self.dataLoaded && [nearbyPlaces count] == 0) {
         cell.detailTextLabel.text = @"";
         cell.textLabel.text = @"";
         
@@ -285,6 +291,7 @@
         }        
         
         errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+        [errorText setUserInteractionEnabled:NO];
         
         errorText.tag = 778;
         [cell addSubview:errorText];
