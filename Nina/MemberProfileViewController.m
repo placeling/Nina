@@ -98,7 +98,7 @@
     
     self.followingButton.detailLabel.text = @"Following";    
     self.followersButton.detailLabel.text = @"Followers";
-    self.placeMarkButton.detailLabel.text = @"Bookmarks";
+    self.placeMarkButton.detailLabel.text = @"Places";
     
     self.followingButton.numberLabel.text = @"-";
     self.followingButton.numberLabel.text = @"-";
@@ -138,7 +138,7 @@
     
     self.followingButton.detailLabel.text = @"Following";    
     self.followersButton.detailLabel.text = @"Followers";
-    self.placeMarkButton.detailLabel.text = @"Bookmarks";
+    self.placeMarkButton.detailLabel.text = @"Places";
     
     self.placeMarkButton.enabled = true;
     self.followersButton.enabled = true;
