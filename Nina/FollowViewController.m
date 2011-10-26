@@ -78,9 +78,11 @@
     NSString *urlString;
     
     if (self.following){
-        urlString = [NSString stringWithFormat:@"%@/v1/users/%@/following", [NinaHelper getHostname], self.user.username];	
+        urlString = [NSString stringWithFormat:@"%@/v1/users/%@/following", [NinaHelper getHostname], self.user.username];
+        self.navigationItem.title = @"Following";
     } else {
-        urlString = [NSString stringWithFormat:@"%@/v1/users/%@/followers", [NinaHelper getHostname], self.user.username];	
+        urlString = [NSString stringWithFormat:@"%@/v1/users/%@/followers", [NinaHelper getHostname], self.user.username];
+        self.navigationItem.title = @"Followers";
     }
     	
     NSURL *url = [NSURL URLWithString:urlString];
@@ -136,9 +138,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Return the number of rows in the section.
     if (users){
-        return [users count];
+        if ([users count] == 0) {
+            return 1;
+        } else {
+            return [users count];
+        }
     } else {
-        return 1; //show a loading spinny or something
+        return 0; //show a loading spinny or something
     }
 }
 
@@ -150,20 +156,34 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
-    User* user = [users objectAtIndex:indexPath.row];
-    cell.textLabel.text = user.username;
-    cell.detailTextLabel.text = user.description;
-	
-    cell.accessoryView.tag = indexPath.row;
     
-    cell.imageView.image = [UIImage imageNamed:@"default_profile_image.png"];
+    if ((users) && [users count] == 0) {
+        tableView.allowsSelection = NO;
+        [cell.textLabel setFont:[UIFont systemFontOfSize:14.0]];
+        if (self.following) {
+            cell.textLabel.text = @"You're not yet following anyone";
+        } else {
+            cell.textLabel.text = @"No one's yet following you";
+        }
+    } else {
+        tableView.allowsSelection = YES;
+        User* user = [users objectAtIndex:indexPath.row];
+
+        cell.textLabel.text = user.username;
+        cell.detailTextLabel.text = user.description;
+        
+        cell.accessoryView.tag = indexPath.row;
+        
+        cell.imageView.image = [UIImage imageNamed:@"default_profile_image.png"];
+        
+        AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:user.profilePic];
+        aImageView.frame = cell.imageView.frame;
+        aImageView.populate = cell.imageView;
+        [aImageView loadImage];
+        [cell addSubview:aImageView]; //mostly to handle de-allocation
+        [aImageView release];
+    }
     
-    AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:user.profilePic];
-    aImageView.frame = cell.imageView.frame;
-    aImageView.populate = cell.imageView;
-    [aImageView loadImage];
-    [cell addSubview:aImageView]; //mostly to handle de-allocation
-    [aImageView release];
     return cell;
 }
 

@@ -11,9 +11,11 @@
 #import "ASIHTTPRequest.h"
 #import "NinaHelper.h"
 #import "ActivityTableViewCell.h"
+#import "User.h"
 
 @interface ActivityFeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate> {
     EGORefreshTableHeaderView *refreshHeaderView;
+    User *user;
     
     IBOutlet UITableView *activityTableView;
     NSMutableArray  *recentActivities;
@@ -24,6 +26,7 @@
 
 @property(assign,getter=isReloading) BOOL reloading;
 @property(nonatomic, retain) IBOutlet UITableView *activityTableView;
+@property (nonatomic, retain) User *user;
 
 - (void)reloadTableViewDataSource;
 - (void)doneLoadingTableViewData;

@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "asyncimageview.h"
 #import "MemberProfileViewController.h"
+#import "LoginController.h"
 
 @implementation PerspectiveTableViewCell
 
@@ -172,55 +173,90 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    if (buttonIndex == 0){
-        DLog(@"Cancel flaggin");
+    if (alertView.tag == 778) {
+        if (buttonIndex == 1) {
+            LoginController *loginController = [[LoginController alloc] init];
+            
+            UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
+            
+            id nextResponder = [self nextResponder];
+            while (nextResponder != nil){
+                if ([nextResponder isKindOfClass:[UIViewController class]]) {
+                    [[(UIViewController*)nextResponder navigationController] presentModalViewController:navBar animated:YES];
+                }
+                nextResponder = [nextResponder nextResponder];
+            }
+            
+            
+            
+            //[self.navigationController presentModalViewController:navBar animated:YES];
+            [navBar release];
+            [loginController release];
+        }
     } else {
-        DLog(@"Flagging %@'s perspective", self.perspective.user.username);
-        
-        NSString *urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/flag", [NinaHelper getHostname], self.perspective.perspectiveId];
-        self.flagLabel.userInteractionEnabled = FALSE;
-        self.flagLabel.textColor = [UIColor blackColor];
-        self.flagLabel.text = @"Flagged";
+        if (buttonIndex == 0){
+            DLog(@"Cancel flaggin");
+        } else {
+            DLog(@"Flagging %@'s perspective", self.perspective.user.username);
+            
+            NSString *urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/flag", [NinaHelper getHostname], self.perspective.perspectiveId];
+            self.flagLabel.userInteractionEnabled = FALSE;
+            self.flagLabel.textColor = [UIColor blackColor];
+            self.flagLabel.text = @"Flagged";
+            
+            NSURL *url = [NSURL URLWithString:urlText];
+            
+            ASIFormDataRequest  *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
+            
+            request.delegate = self.requestDelegate;
+            request.tag = 7;
+            
+            [request setRequestMethod:@"POST"];
+            [NinaHelper signRequest:request];
+            [request startAsynchronous];
+        }
+    }
+}
+
+-(IBAction)toggleStarred{
     
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+        UIAlertView *baseAlert;
+        NSString *alertMessage = @"Sign up or log in and you can star people's notes & photos";
+        baseAlert = [[UIAlertView alloc] 
+                     initWithTitle:nil message:alertMessage 
+                     delegate:self cancelButtonTitle:@"Not Now" 
+                     otherButtonTitles:@"Let's Go", nil];
+        baseAlert.tag = 778;        
+        [baseAlert show];
+        [baseAlert release];
+    } else {
+        NSString *urlText;
+        
+        if (self.perspective.starred){
+            urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/unstar", [NinaHelper getHostname], self.perspective.perspectiveId];
+            [self.upvoteButton setImage:[UIImage imageNamed:@"unstarred.png"] forState:UIControlStateNormal];
+            self.perspective.starred = false;
+        } else {
+            urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/star", [NinaHelper getHostname], self.perspective.perspectiveId];
+            [self.upvoteButton setImage:[UIImage imageNamed:@"starred.png"] forState:UIControlStateNormal];
+            self.perspective.starred = true;
+        }
+        
         NSURL *url = [NSURL URLWithString:urlText];
         
         ASIFormDataRequest  *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
         
         request.delegate = self.requestDelegate;
-        request.tag = 7;
+        request.tag = 5;
         
         [request setRequestMethod:@"POST"];
         [NinaHelper signRequest:request];
         [request startAsynchronous];
     }
 }
-
--(IBAction)toggleStarred{
-    
-    NSString *urlText;
-  
-    if (self.perspective.starred){
-        urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/unstar", [NinaHelper getHostname], self.perspective.perspectiveId];
-        [self.upvoteButton setImage:[UIImage imageNamed:@"unstarred.png"] forState:UIControlStateNormal];
-        self.perspective.starred = false;
-    } else {
-        urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/star", [NinaHelper getHostname], self.perspective.perspectiveId];
-        [self.upvoteButton setImage:[UIImage imageNamed:@"starred.png"] forState:UIControlStateNormal];
-        self.perspective.starred = true;
-    }
-    
-    NSURL *url = [NSURL URLWithString:urlText];
-    
-    ASIFormDataRequest  *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
-    
-    request.delegate = self.requestDelegate;
-    request.tag = 5;
-    
-    [request setRequestMethod:@"POST"];
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
-}
-
 
 -(void) dealloc{
     [perspective release];
