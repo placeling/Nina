@@ -24,7 +24,23 @@
 -(id)initWithPlace:(Place *)place{
     if(self = [super init]){
         self.title = place.name;
-        self.subtitle = place.address;
+        if (place.tags != (id)[NSNull null] || [place.tags count] > 0) {
+            // Hack: original API call didn't return # before tags
+            // so have to check each entry to see if has #
+            NSMutableArray *cleanedTags = [[NSMutableArray alloc] initWithCapacity:[place.tags count]];
+            for (int i=0; i < [place.tags count]; i++) {
+                NSString *tag = [NSString stringWithFormat:@"%@", [place.tags objectAtIndex:i]];
+                if ([tag hasPrefix:@"#"]) {
+                    [cleanedTags insertObject:tag atIndex:i];
+                } else {
+                    [cleanedTags insertObject:[NSString stringWithFormat:@"#%@", tag] atIndex:i];
+                }
+            }
+            self.subtitle = [cleanedTags componentsJoinedByString:@", "];
+            
+            //self.subtitle = [place.tags componentsJoinedByString:@", "];
+        }
+        //self.subtitle = place.address;
         coordinate = place.location.coordinate;
         self.place = place;
     }

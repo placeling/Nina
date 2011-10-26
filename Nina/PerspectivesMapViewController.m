@@ -13,6 +13,7 @@
 #import "PlaceMark.h"
 #import "Perspective.h"
 #import "PlacePageViewController.h"
+#import "LoginController.h"
 
 @interface PerspectivesMapViewController (Private)
 -(void)mapUserPlaces;
@@ -182,10 +183,10 @@
 - (void)requestFinished:(ASIHTTPRequest *)request{
 	// Use when fetching binary data
 	int statusCode = [request responseStatusCode];
-	if (200 != statusCode){
+	if (200 != statusCode) {
         [NinaHelper handleBadRequest:request  sender:self];
-	} else {
-		// Store incoming data into a string
+    } else {
+        // Store incoming data into a string
 		NSString *jsonString = [request responseString];
 		DLog(@"Got JSON BACK: %@", jsonString);
 		// Create a dictionary from the JSON string
@@ -213,7 +214,6 @@
         
         [self updateMapView];
 	}
-    
 }
 
 
@@ -228,12 +228,27 @@
     //                              options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)  
     //                           context:NULL];
     self.locationManager = [LocationManagerManager sharedCLLocationManager];
-    self.navigationItem.title = self.username;
     
     self.mapView.showsUserLocation = TRUE;
     self.mapView.delegate = self;
     [self recenter];
-    [self mapUserPlaces];
+    
+    if (self.username == (id)[NSNull null] || self.username.length == 0) {
+        self.navigationItem.title = @"Your Map";
+        
+        UIAlertView *baseAlert;
+        NSString *alertMessage = @"Sign up or log in and when you bookmark locations, they'll appear on this map";
+        baseAlert = [[UIAlertView alloc] 
+                     initWithTitle:nil message:alertMessage 
+                     delegate:self cancelButtonTitle:@"Not Now" 
+                     otherButtonTitles:@"Let's Go", nil];
+        
+        [baseAlert show];
+        [baseAlert release];
+    } else {
+        self.navigationItem.title = self.username;
+        [self mapUserPlaces];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -245,6 +260,19 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - Unregistered experience methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        LoginController *loginController = [[LoginController alloc] init];
+        
+        UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
+        [self.navigationController presentModalViewController:navBar animated:YES];
+        [navBar release];
+        [loginController release];
+    }
 }
 
 @end
