@@ -11,7 +11,7 @@
 #import "PlacePageViewController.h"
 #import "MemberProfileViewController.h"
 #import "User.h"
-
+#import "LoginController.h"
 
 @interface ActivityFeedViewController (Private)
 -(void)dataSourceDidFinishLoadingNewData;
@@ -109,8 +109,11 @@
 		[refreshHeaderView release];
 	}
     
-    [self getActivities];
+    NSString *currentUser = [NinaHelper getUsername];
     
+    if (currentUser != (id)[NSNull null] && currentUser.length > 0) {
+        [self getActivities];   
+    }    
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -168,7 +171,11 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ((user) && user.followingCount == 0) {
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+        return 1;
+    } else if ((user) && user.followingCount == 0) {
         return 1;
     } else if ((user) && [recentActivities count] == 0) {
         return 1;
@@ -178,7 +185,11 @@
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
-    if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+        return 90;
+    } else if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {
         return 54;
     } else {
         NSDictionary *activity;
@@ -201,7 +212,26 @@
     }
     
     if (cell == nil) {
-        if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {            
+        NSString *currentUser = [NinaHelper getUsername];
+        
+        if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+            cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            
+            UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 90)];
+            
+            loginText.text = @"Sign up or log in and we'll show you places bookmarked by people you follow.\n\nTap to get started.";
+            
+            loginText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+            [loginText setUserInteractionEnabled:NO];
+            [loginText setBackgroundColor:[UIColor clearColor]];
+            
+            [cell addSubview:loginText];
+            [loginText release];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            return cell;
+        } else if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {            
             cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
             
             UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
@@ -241,38 +271,48 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *activity = [recentActivities objectAtIndex:indexPath.row];
+    NSString *currentUser = [NinaHelper getUsername];
     
-    NSString *activityType = [activity objectForKey:@"activity_type"];
-    
-    UIViewController *viewController;
-    
+    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+        LoginController *loginController = [[LoginController alloc] init];
         
-    if ([activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
-        PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
-        placeController.perspective_id = [activity objectForKey:@"subject"];
-        viewController = placeController;
-    }else if ([activityType isEqualToString:@"NEW_PERSPECTIVE"]){
-        PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
-        placeController.perspective_id = [activity objectForKey:@"subject"];
-        viewController = placeController;
-    } else if ([activityType isEqualToString:@"STAR_PERSPECTIVE"]){
-        PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
-        placeController.perspective_id = [activity objectForKey:@"subject"];
-        viewController = placeController;
-    }  else if ([activityType isEqualToString:@"FOLLOW"]){
-        MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];
-        memberView.username = [activity objectForKey:@"username2"];
-        viewController = memberView;
+        UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
+        [self.navigationController presentModalViewController:navBar animated:YES];
+        [navBar release];
+        [loginController release];
     } else {
-        DLog(@"ERROR: unknown activity story type");
+        NSDictionary *activity = [recentActivities objectAtIndex:indexPath.row];
+        
+        NSString *activityType = [activity objectForKey:@"activity_type"];
+        
+        UIViewController *viewController;
+        
+        
+        if ([activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
+            PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+            placeController.perspective_id = [activity objectForKey:@"subject"];
+            viewController = placeController;
+        }else if ([activityType isEqualToString:@"NEW_PERSPECTIVE"]){
+            PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+            placeController.perspective_id = [activity objectForKey:@"subject"];
+            viewController = placeController;
+        } else if ([activityType isEqualToString:@"STAR_PERSPECTIVE"]){
+            PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+            placeController.perspective_id = [activity objectForKey:@"subject"];
+            viewController = placeController;
+        }  else if ([activityType isEqualToString:@"FOLLOW"]){
+            MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];
+            memberView.username = [activity objectForKey:@"username2"];
+            viewController = memberView;
+        } else {
+            DLog(@"ERROR: unknown activity story type");
+        }
+        
+        [self.navigationController pushViewController:viewController animated:TRUE];
+        [viewController release];
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES]; 
     }
-    
-    [self.navigationController pushViewController:viewController animated:TRUE];
-    [viewController release];
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES]; 
-    
 }
 
 
