@@ -83,6 +83,7 @@ typedef enum {
     
     [super viewDidLoad];
     
+    self.navigationItem.title = @"Details";
     
     self.tableView.delegate = self;
     self.tableView.tableHeaderView = self.tableHeaderView;
@@ -659,6 +660,7 @@ typedef enum {
     if (self.place.googlePlacesUrl != nil && ![self.place.googlePlacesUrl isKindOfClass:NSNull.class]){
         GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:self.place.googlePlacesUrl];
         
+        genericWebViewController.title = @"Contact info";
         [self.navigationController pushViewController:genericWebViewController animated:true];
         
         [genericWebViewController release];
