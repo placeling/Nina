@@ -275,10 +275,8 @@
         }
         case 13:
         {
-            NSData *data = [request responseData];
+            NSString *jsonString = [request responseString];
             
-            // Store incoming data into a string
-            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             DLog(@"Got JSON BACK: %@", jsonString);
             // Create a dictionary from the JSON string
 
