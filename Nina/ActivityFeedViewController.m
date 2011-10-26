@@ -43,8 +43,6 @@
 }
 
 #pragma mark - View lifecycle
-
-
 - (void)reloadTableViewDataSource{
 	[self getActivities];
 	//[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
@@ -56,6 +54,16 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
+    
+    CGPoint offset = scrollView.contentOffset;
+    CGRect bounds = scrollView.bounds;
+    CGSize size = scrollView.contentSize;
+    UIEdgeInsets inset = scrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = 10;
+    
 	if (scrollView.isDragging) {
 		if (refreshHeaderView.state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !_reloading) {
 			[refreshHeaderView setState:EGOOPullRefreshNormal];
@@ -63,6 +71,23 @@
 			[refreshHeaderView setState:EGOOPullRefreshPulling];
 		}
 	}
+    
+
+    if(hasMore && y > h + reload_distance && loadingMore == false) {
+        loadingMore = true;
+        
+        // Call url to get profile details
+        NSString *urlText = [NSString stringWithFormat:@"%@/v1/feeds/home_timeline?start=%i", [NinaHelper getHostname], [recentActivities count]];
+        
+        NSURL *url = [NSURL URLWithString:urlText];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        [request setDelegate:self];
+        [request setTag:71];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        [NinaHelper signRequest:request];
+        [request startAsynchronous];
+        
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
@@ -99,6 +124,10 @@
     self.activityTableView.delegate = self;
     self.activityTableView.backgroundColor = [UIColor clearColor];
     
+    loadingMore = false;
+    hasMore = true;
+    recentActivities = [[NSMutableArray alloc] init];
+    
     if (refreshHeaderView == nil) {
 		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.activityTableView.bounds.size.height, 320.0f, self.activityTableView.bounds.size.height)];
 		refreshHeaderView.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
@@ -131,26 +160,51 @@
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
-    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 	if (200 != [request responseStatusCode]){
 		[NinaHelper handleBadRequest:request sender:self];
-	} else {
-		// Store incoming data into a string
-		NSString *jsonString = [request responseString];
-		DLog(@"Got JSON BACK: %@", jsonString);
-		// Create a dictionary from the JSON string
-        
-		[recentActivities release];
-        NSDictionary *jsonDict = [[jsonString JSONValue] retain];
-		recentActivities = [[jsonDict objectForKey:@"home_feed"] retain];
-        
-		[self.activityTableView  reloadData];
-		[jsonDict release];
+        return;
+	} 
+
+    switch (request.tag){
+        case 70:{
+            // Store incoming data into a string
+            NSString *jsonString = [request responseString];
+            DLog(@"Got JSON BACK: %@", jsonString);
+            // Create a dictionary from the JSON string
+            
+            NSDictionary *jsonDict = [[jsonString JSONValue] retain];
+            NSArray *rawActivities = [jsonDict objectForKey:@"home_feed"];
+            [recentActivities addObjectsFromArray:rawActivities];
+            [self.activityTableView  reloadData];
+            [jsonDict release];
+            break;
+        }
+        case 71:
+        {
+            NSString *responseString = [request responseString];            
+            DLog(@"activites got returned: %@", responseString);
+            
+            NSDictionary *jsonDict =  [responseString JSONValue];            
+            
+            if ([jsonDict objectForKey:@"home_feed"]){
+                //has perspectives in call, seed with to make quicker
+                NSMutableArray *rawActivities = [jsonDict objectForKey:@"home_feed"];               
+                if ([rawActivities count] == 0){
+                    hasMore = false;
+                } else {
+                    [recentActivities addObjectsFromArray:rawActivities];
+                }
+            }
+            
+            [self.activityTableView  reloadData];
+            loadingMore = false;
+            break;
+        }
 	}
     
     [self dataSourceDidFinishLoadingNewData];
 }
-
 
 
 #pragma mark Table view methods

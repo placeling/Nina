@@ -16,8 +16,9 @@
     EGORefreshTableHeaderView *refreshHeaderView;
     
     IBOutlet UITableView *activityTableView;
-    NSArray  *recentActivities;
-    
+    NSMutableArray  *recentActivities;
+    BOOL loadingMore;
+    BOOL hasMore;
     BOOL _reloading;
 }
 
