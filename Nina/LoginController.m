@@ -83,6 +83,7 @@
     
     
     [facebook requestWithGraphPath:@"me" andDelegate:self];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 -(BOOL)testAlreadyLoggedInFacebook:(NSDictionary*)fbDict{
