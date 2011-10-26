@@ -144,7 +144,7 @@
             return [users count];
         }
     } else {
-        return 1; //show a loading spinny or something
+        return 0; //show a loading spinny or something
     }
 }
 
@@ -157,7 +157,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    if ([users count] == 0) {
+    if ((users) && [users count] == 0) {
         tableView.allowsSelection = NO;
         [cell.textLabel setFont:[UIFont systemFontOfSize:14.0]];
         if (self.following) {
@@ -166,6 +166,7 @@
             cell.textLabel.text = @"No one's yet following you";
         }
     } else {
+        tableView.allowsSelection = YES;
         User* user = [users objectAtIndex:indexPath.row];
 
         cell.textLabel.text = user.username;

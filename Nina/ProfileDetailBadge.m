@@ -55,7 +55,7 @@
     [self addSubview:self.detailLabel];
     [self addSubview:self.numberLabel];
     
-    self.layer.cornerRadius = 8.0f;
+    self.layer.cornerRadius = 4.0f;
     self.layer.borderWidth = 1.0f;
     self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.layer.masksToBounds = YES;
