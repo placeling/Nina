@@ -32,6 +32,8 @@
 #import "FullPerspectiveViewController.h"
 #import "CustomSegmentedControl.h"
 
+#import "LoginController.h"
+
 #define kMinCellHeight 60
 #define SectionHeaderHeight 60
 
@@ -669,22 +671,48 @@ typedef enum {
 
 
 -(IBAction) bookmark {
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives", [NinaHelper getHostname], self.place.pid];
+    NSString *currentUser = [NinaHelper getUsername];
     
-    NSURL *url = [NSURL URLWithString:urlText];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setTag:4];
-    
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
-    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+        UIAlertView *baseAlert;
+        NSString *alertMessage = @"Sign up or log in to bookmark locations";
+        baseAlert = [[UIAlertView alloc] 
+                     initWithTitle:nil message:alertMessage 
+                     delegate:self cancelButtonTitle:@"Not Now" 
+                     otherButtonTitles:@"Let's Go", nil];
+        
+        [baseAlert show];
+        [baseAlert release];
+    } else {
+        NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives", [NinaHelper getHostname], self.place.pid];
+        
+        NSURL *url = [NSURL URLWithString:urlText];
+        
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        
+        [request setRequestMethod:@"POST"];
+        [request setDelegate:self];
+        [request setTag:4];
+        
+        [NinaHelper signRequest:request];
+        [request startAsynchronous];
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    }
 }
 
+#pragma mark - Unregistered experience methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        LoginController *loginController = [[LoginController alloc] init];
+        
+        UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
+        [self.navigationController presentModalViewController:navBar animated:YES];
+        [navBar release];
+        [loginController release];
+    }
+}
 
 #pragma mark - Table View
 
@@ -789,30 +817,35 @@ typedef enum {
         label.textColor = [UIColor blackColor];
         label.font = [UIFont boldSystemFontOfSize:16];
         
-        
-        NSLog(@"Index of segmented control is: %i", self.segmentedControl.selectedSegmentIndex);
-        
-        if ( [self numberOfSectionBookmarks] == 0 ){
-            //label.textColor = [UIColor grayColor];
-            if (self.segmentedControl.selectedSegmentIndex == 1) {
-                label.text = [NSString stringWithFormat:@"No one you follow has bookmarked this place"];
-            } else {
-                label.text = [NSString stringWithFormat:@"No one has bookmarked this place yet"];
-            }
-            
-            //label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
-        } else if ( [self numberOfSectionBookmarks] == 1) {
-            if (self.segmentedControl.selectedSegmentIndex == 1) {
-                label.text = [NSString stringWithFormat:@"%i person you follow has bookmarked this place", [self numberOfSectionBookmarks]];
-            } else {
-                label.text = [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
-            }
+        NSString *currentUser = [NinaHelper getUsername];
+        if (self.segmentedControl.selectedSegmentIndex == 1 && (currentUser == (id)[NSNull null] || currentUser.length == 0)) {
+            label.frame = CGRectMake(20, 6, 280, 50);
+            label.numberOfLines = 2;
+            label.text = [NSString stringWithFormat:@"Sign up or log in to see what\npeople you follow think about here"];
+            label.textAlignment = UITextAlignmentCenter;
         } else {
-            if (self.segmentedControl.selectedSegmentIndex == 1) {
-                label.text = [NSString stringWithFormat:@"%i people you follow have bookmarked this place", [self numberOfSectionBookmarks]];
+            if ( [self numberOfSectionBookmarks] == 0 ){
+                //label.textColor = [UIColor grayColor];
+                if (self.segmentedControl.selectedSegmentIndex == 1) {
+                    label.text = [NSString stringWithFormat:@"No one you follow has bookmarked this place"];
+                } else {
+                    label.text = [NSString stringWithFormat:@"No one has bookmarked this place yet"];
+                }
+                
+                //label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
+            } else if ( [self numberOfSectionBookmarks] == 1) {
+                if (self.segmentedControl.selectedSegmentIndex == 1) {
+                    label.text = [NSString stringWithFormat:@"%i person you follow has bookmarked this place", [self numberOfSectionBookmarks]];
+                } else {
+                    label.text = [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+                }
             } else {
-                label.text = [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];   
-            }            
+                if (self.segmentedControl.selectedSegmentIndex == 1) {
+                    label.text = [NSString stringWithFormat:@"%i people you follow have bookmarked this place", [self numberOfSectionBookmarks]];
+                } else {
+                    label.text = [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];   
+                }            
+            }
         }
         
         label.adjustsFontSizeToFitWidth = TRUE;
