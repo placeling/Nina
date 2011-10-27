@@ -360,8 +360,9 @@
                 }
             }
             
-            [self loadData];
+            
             loadingMore = false;
+            [self loadData];
             break;
         }
     }
@@ -387,7 +388,9 @@
     } else {
         if ((perspectives) && [perspectives count] == 0) {
             return 70;
-        } else {
+        } else if (indexPath.row >= [perspectives count]){
+            return 44;
+        }else {
             Perspective *perspective;
             perspective = [perspectives objectAtIndex:indexPath.row];
             
@@ -409,7 +412,11 @@
             if ([perspectives count] == 0) {
                 return 1;
             } else {
-                return [perspectives count];
+                if (loadingMore){   
+                    return [perspectives count] +1;
+                }else{
+                    return [perspectives count];
+                }
             }
         } else {
             return 0;
@@ -480,6 +487,14 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
             
+        } else if ( indexPath.row >= [perspectives count] ){
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    cell = item;
+                }
+            }      
         } else {
             Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
             
@@ -492,18 +507,17 @@
                     cell = pcell;
                     break;
                 }
-            }            
+            }    
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
-    
-    // Configure the cell...
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
         LoginController *loginController = [[LoginController alloc] init];
         
@@ -546,6 +560,7 @@
         [NinaHelper signRequest:request];
         [request startAsynchronous];
         
+        [self.tableView reloadData];
     }
 }
 
