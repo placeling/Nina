@@ -33,6 +33,8 @@
 #import "CustomSegmentedControl.h"
 #import "FollowViewController.h"
 
+#import "LoginController.h"
+
 #define kMinCellHeight 60
 
 typedef enum {
@@ -670,22 +672,48 @@ typedef enum {
 
 
 -(IBAction) bookmark {
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives", [NinaHelper getHostname], self.place.pid];
+    NSString *currentUser = [NinaHelper getUsername];
     
-    NSURL *url = [NSURL URLWithString:urlText];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setTag:4];
-    
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
-    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+        UIAlertView *baseAlert;
+        NSString *alertMessage = @"Sign up or log in to bookmark locations";
+        baseAlert = [[UIAlertView alloc] 
+                     initWithTitle:nil message:alertMessage 
+                     delegate:self cancelButtonTitle:@"Not Now" 
+                     otherButtonTitles:@"Let's Go", nil];
+        
+        [baseAlert show];
+        [baseAlert release];
+    } else {
+        NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives", [NinaHelper getHostname], self.place.pid];
+        
+        NSURL *url = [NSURL URLWithString:urlText];
+        
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        
+        [request setRequestMethod:@"POST"];
+        [request setDelegate:self];
+        [request setTag:4];
+        
+        [NinaHelper signRequest:request];
+        [request startAsynchronous];
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    }
 }
 
+#pragma mark - Unregistered experience methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        LoginController *loginController = [[LoginController alloc] init];
+        
+        UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
+        [self.navigationController presentModalViewController:navBar animated:YES];
+        [navBar release];
+        [loginController release];
+    }
+}
 
 #pragma mark - Table View
 
@@ -762,6 +790,7 @@ typedef enum {
 
 -(NSString*) numberBookmarkCopy{
     DLog(@"Index of segmented control is: %i", self.segmentedControl.selectedSegmentIndex);
+  
     
     if ( [self numberOfSectionBookmarks] == 0 ){
         //label.textColor = [UIColor grayColor];
@@ -770,7 +799,6 @@ typedef enum {
         } else {
             return [NSString stringWithFormat:@"No one has bookmarked this place yet"];
         }
-        
         //label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
     } else if ( [self numberOfSectionBookmarks] == 1) {
         if (self.segmentedControl.selectedSegmentIndex == 1) {

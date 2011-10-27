@@ -12,6 +12,7 @@
 #import "SuggestUserViewController.h"
 #import "PlaceSuggestTableViewCell.h"
 #import "Place.h"
+#import "LoginController.h"
 
 @interface NearbySuggestedPlaceController (Private)
 -(void)findNearbyPlaces;
@@ -117,10 +118,14 @@
     } else {
         self.searchBar.text = self.searchTerm;
     }
-    //self.searchBar.
     self.searchBar.delegate = self;
     self.placesTableView.delegate = self;
-    [self findNearbyPlaces];
+    
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if (currentUser != (id)[NSNull null] && currentUser.length > 0) {
+        [self findNearbyPlaces];
+    }
 
 }
 
@@ -283,8 +288,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    if (self.dataLoaded && [nearbyPlaces count] == 0) {
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+        return 1;
+    } else if (self.dataLoaded && [nearbyPlaces count] == 0) {
         return 1;
     } else {
         return [nearbyPlaces count];
@@ -292,7 +300,13 @@
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
-    return 70;
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+        return 90;
+    } else {
+        return 70;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -303,7 +317,6 @@
     PlaceSuggestTableViewCell *cell;
 
     cell = [tableView dequeueReusableCellWithIdentifier:placeCellIdentifier];
-    //searchTerm
     
     if (cell == nil) {
 
@@ -315,14 +328,29 @@
             }
         }
     }
-
-    if (self.dataLoaded && [nearbyPlaces count] == 0) {
-        tableView.allowsSelection = NO;
-    } else {
-        tableView.allowsSelection = YES;
-    }
     
-    if (self.dataLoaded && [nearbyPlaces count] == 0) {
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+        tableView.allowsSelection = YES;
+        
+        cell.titleLabel.text = @"";
+        cell.addressLabel.text = @"";
+        cell.distanceLabel.text = @"";
+        cell.usersLabel.text = @"";
+        
+        UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
+        
+        loginText.text = @"Sign up or log in and we'll show you nearby places you love - plus those of people you follow.\n\nTap to get started.";
+        
+        [loginText setUserInteractionEnabled:NO];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [cell addSubview:loginText];
+        [loginText release];        
+    } else if (self.dataLoaded && [nearbyPlaces count] == 0) {
+        tableView.allowsSelection = NO;
+        
         cell.titleLabel.text = @"";
         cell.addressLabel.text = @"";
         cell.distanceLabel.text = @"";
@@ -359,6 +387,8 @@
         [cell addSubview:errorText];
         [errorText release];
     } else {
+        tableView.allowsSelection = YES;
+        
         place = [nearbyPlaces objectAtIndex:indexPath.row];
         
         UITextView *errorText = (UITextView *)[cell viewWithTag:778];
@@ -382,15 +412,25 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row < [nearbyPlaces count]){
-        Place *place = [nearbyPlaces objectAtIndex:indexPath.row];
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+        LoginController *loginController = [[LoginController alloc] init];
         
-        PlacePageViewController *placeController = [[PlacePageViewController alloc] initWithPlace:place];
-        [self.navigationController pushViewController:placeController animated:TRUE];
-        [placeController release];
+        UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
+        [self.navigationController presentModalViewController:navBar animated:YES];
+        [navBar release];
+        [loginController release];
+    } else {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        if (indexPath.row < [nearbyPlaces count]){
+            Place *place = [nearbyPlaces objectAtIndex:indexPath.row];
+            
+            PlacePageViewController *placeController = [[PlacePageViewController alloc] initWithPlace:place];
+            [self.navigationController pushViewController:placeController animated:TRUE];
+            [placeController release];
         
+        }
     }
 }
 
