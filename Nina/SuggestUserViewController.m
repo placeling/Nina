@@ -17,7 +17,7 @@
 #import "asyncimageview.h"
 
 @implementation SuggestUserViewController
-@synthesize members;
+@synthesize members, query;
 
 
 - (id)initWithStyle:(UITableViewStyle)style{
@@ -30,6 +30,7 @@
 
 - (void)dealloc{
     [members release];
+    [query release];
     [super dealloc];
 }
 
@@ -59,7 +60,7 @@
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocationCoordinate2D location = [manager location].coordinate;
 	
-	NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users/suggested?lat=%i&lng=%i", [NinaHelper getHostname], location.latitude, location.longitude];
+	NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users/suggested?lat=%f&lng=%f&q=%@", [NinaHelper getHostname], location.latitude, location.longitude, self.query];
     
     NSURL *url = [NSURL URLWithString:targetURL];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];

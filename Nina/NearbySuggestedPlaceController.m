@@ -27,6 +27,9 @@
 
 -(IBAction)topLocals:(id)sender{
     SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
+    
+    suggestUserViewController.query = [self.searchBar.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    
     [self.navigationController pushViewController:suggestUserViewController animated:YES];
     [suggestUserViewController release]; 
     

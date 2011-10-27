@@ -12,8 +12,11 @@
 
 @interface SuggestUserViewController : UITableViewController {
     NSMutableArray *members; // An array where each item is a dictionary with name, photo url and city
+    
+    NSString *query; //for finding users based on a specific area
 }
 
 @property (nonatomic, retain) NSMutableArray *members;
+@property (nonatomic, retain) NSString *query; 
 
 @end
