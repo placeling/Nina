@@ -12,19 +12,19 @@
 #import "NinaHelper.h"
 #import "Facebook.h"
 
+@protocol LoginControllerDelegate;
 
 @interface LoginController : UIViewController<UITextFieldDelegate, ASIHTTPRequestDelegate, UITextFieldDelegate, FBRequestDelegate>{
     IBOutlet UITextField *username;
     IBOutlet UITextField *password;
     IBOutlet UIButton *submitButton;
-    UIViewController *delegate; //for telling to refresh
+    id <LoginControllerDelegate> delegate;
 }
 
 @property(nonatomic, retain) IBOutlet UITextField *username;
 @property(nonatomic, retain) IBOutlet UITextField *password;
 @property(nonatomic, retain) IBOutlet UIButton *submitButton;
-@property(nonatomic, retain) UIViewController *delegate;
-
+@property(nonatomic, assign) id <LoginControllerDelegate> delegate;
 
 -(IBAction)cancel;
 
@@ -32,5 +32,8 @@
 -(IBAction) signupFacebook;
 -(IBAction) signupOldSchool;
 
+@end
 
+@protocol LoginControllerDelegate
+- (void) loadContent;
 @end

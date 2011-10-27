@@ -201,7 +201,7 @@
             }
         } 
         
-        [delegate viewDidLoad];
+        //[delegate viewDidLoad];
         [self close];
     }
 }
@@ -231,6 +231,7 @@
 }
 
 -(void)close{
+    [self.delegate loadContent];
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
@@ -282,7 +283,7 @@
     [username release];
     [password release];
     [submitButton release];
-    [delegate release];
+    //[delegate release];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

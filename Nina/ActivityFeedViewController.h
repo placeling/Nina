@@ -12,8 +12,9 @@
 #import "NinaHelper.h"
 #import "ActivityTableViewCell.h"
 #import "User.h"
+#import "LoginController.h"
 
-@interface ActivityFeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate> {
+@interface ActivityFeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate, LoginControllerDelegate> {
     EGORefreshTableHeaderView *refreshHeaderView;
     User *user;
     

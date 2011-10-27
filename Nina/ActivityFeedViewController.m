@@ -42,6 +42,16 @@
     [request startAsynchronous];    
 }
 
+#pragma mark - Login Controller Delegate Methods
+- (void) loadContent {
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if (currentUser != (id)[NSNull null] && currentUser.length > 0) {
+        [self getActivities];   
+    }    
+
+}
+
 #pragma mark - View lifecycle
 - (void)reloadTableViewDataSource{
 	[self getActivities];
@@ -137,11 +147,7 @@
 		[refreshHeaderView release];
 	}
     
-    NSString *currentUser = [NinaHelper getUsername];
-    
-    if (currentUser != (id)[NSNull null] && currentUser.length > 0) {
-        [self getActivities];   
-    }    
+    [self loadContent];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -174,7 +180,8 @@
         case 70:{
             // Store incoming data into a string
             NSString *jsonString = [request responseString];
-            DLog(@"Got JSON BACK: %@", jsonString);
+            NSLog(@"Got JSON back");
+            //DLog(@"Got JSON BACK: %@", jsonString);
             // Create a dictionary from the JSON string
             
             NSDictionary *jsonDict = [[jsonString JSONValue] retain];
@@ -255,8 +262,24 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"ActivityCell";
+    static NSString *LoginCellIdentifier = @"LoginCell";
+    static NSString *NoActivityCellIdentifier = @"NoActivityCell";
     
-    ActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ActivityTableViewCell *cell;
+    if ([recentActivities count] > 0) {
+        NSLog(@"Cell is a %@", CellIdentifier);
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    } else {
+        NSString *currentUser = [NinaHelper getUsername];
+        
+        if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+            NSLog(@"Cell is a %@", LoginCellIdentifier);
+            cell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
+        } else {
+            NSLog(@"Cell is a %@", NoActivityCellIdentifier);
+            cell = [tableView dequeueReusableCellWithIdentifier:NoActivityCellIdentifier];
+        }
+    }
     
     if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {
         tableView.allowsSelection = FALSE;
@@ -267,14 +290,16 @@
     if (cell == nil) {
         NSString *currentUser = [NinaHelper getUsername];
         
-        if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
-            cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        if (!currentUser || currentUser.length == 0) {
+            NSLog(@"Logic 1, %d", indexPath.row);
+            cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:LoginCellIdentifier] autorelease];
             
             UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 90)];
             
             loginText.text = @"Sign up or log in and we'll show you places bookmarked by people you follow.\n\nTap to get started.";
             
             loginText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+            loginText.tag = 778;
             [loginText setUserInteractionEnabled:NO];
             [loginText setBackgroundColor:[UIColor clearColor]];
             
@@ -285,7 +310,8 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
         } else if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {            
-            cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            NSLog(@"Logic 2, %d", indexPath.row);
+            cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:NoActivityCellIdentifier] autorelease];
             
             UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
             
@@ -296,6 +322,7 @@
             }
             
             errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+            errorText.tag = 778;
             [errorText setUserInteractionEnabled:NO];
             [errorText setBackgroundColor:[UIColor clearColor]];
             
@@ -306,6 +333,13 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
         } else {
+            NSLog(@"Logic 3, %d", indexPath.row);
+            UITextView *existingText = (UITextView *)[cell viewWithTag:778];
+            if (existingText) {
+                [existingText removeFromSuperview];
+                [existingText release];
+            }
+            
             NSDictionary *activity = [recentActivities objectAtIndex:indexPath.row];
             
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"ActivityTableViewCell" owner:self options:nil];
@@ -319,7 +353,8 @@
                 }
             }   
         }        
-    }
+    }    
+    
     return cell;
 }
 
@@ -328,6 +363,7 @@
     
     if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
         LoginController *loginController = [[LoginController alloc] init];
+        loginController.delegate = self;
         
         UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
         [self.navigationController presentModalViewController:navBar animated:YES];
