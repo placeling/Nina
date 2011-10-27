@@ -216,6 +216,32 @@
 	}
 }
 
+#pragma mark - loginController delegates
+- (void)loadContent {
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if ((currentUser || currentUser.length > 0) && (!self.username || self.username.length == 0)) {
+        self.username = currentUser;
+    }
+    
+    if (!self.username || self.username.length == 0) {
+        self.navigationItem.title = @"Your Map";
+        
+        UIAlertView *baseAlert;
+        NSString *alertMessage = @"Sign up or log in and when you bookmark locations, they'll appear on this map";
+        baseAlert = [[UIAlertView alloc] 
+                     initWithTitle:nil message:alertMessage 
+                     delegate:self cancelButtonTitle:@"Not Now" 
+                     otherButtonTitles:@"Let's Go", nil];
+        
+        [baseAlert show];
+        [baseAlert release];
+    } else {
+        self.navigationItem.title = self.username;
+        [self mapUserPlaces];
+    }
+}
+
 
 #pragma mark - View lifecycle
 
@@ -233,22 +259,8 @@
     self.mapView.delegate = self;
     [self recenter];
     
-    if (self.username == (id)[NSNull null] || self.username.length == 0) {
-        self.navigationItem.title = @"Your Map";
-        
-        UIAlertView *baseAlert;
-        NSString *alertMessage = @"Sign up or log in and when you bookmark locations, they'll appear on this map";
-        baseAlert = [[UIAlertView alloc] 
-                     initWithTitle:nil message:alertMessage 
-                     delegate:self cancelButtonTitle:@"Not Now" 
-                     otherButtonTitles:@"Let's Go", nil];
-        
-        [baseAlert show];
-        [baseAlert release];
-    } else {
-        self.navigationItem.title = self.username;
-        [self mapUserPlaces];
-    }
+    [self loadContent];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -267,6 +279,7 @@
 {
     if (buttonIndex == 1) {
         LoginController *loginController = [[LoginController alloc] init];
+        loginController.delegate = self;
         
         UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
         [self.navigationController presentModalViewController:navBar animated:YES];
