@@ -802,11 +802,11 @@ typedef enum {
         if (self.segmentedControl.selectedSegmentIndex == 1) {
            return [NSString stringWithFormat:@"%i person you follow has bookmarked this place", [self numberOfSectionBookmarks]];
         } else {
-            return [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+            return [NSString stringWithFormat:@"%i people you follow have bookmarked this place", [self numberOfSectionBookmarks]];
         }
     } else {
         if (self.segmentedControl.selectedSegmentIndex == 1) {
-            return [NSString stringWithFormat:@"%i people you follow have bookmarked this place", [self numberOfSectionBookmarks]];
+            return [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
         } else {
             return [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];   
         }            
