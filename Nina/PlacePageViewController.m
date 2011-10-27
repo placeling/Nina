@@ -31,9 +31,9 @@
 #import "NearbySuggestedPlaceController.h"
 #import "FullPerspectiveViewController.h"
 #import "CustomSegmentedControl.h"
+#import "FollowViewController.h"
 
 #define kMinCellHeight 60
-#define SectionHeaderHeight 60
 
 typedef enum {
     CapLeft          = 0,
@@ -50,6 +50,7 @@ typedef enum {
 -(int) numberOfSectionBookmarks;
 -(void) flagPerspective:(Perspective*)perspective;
 -(void) deletePerspective:(Perspective*)perspective;
+-(NSString*) numberBookmarkCopy;
 @end
 
 @implementation PlacePageViewController
@@ -759,75 +760,47 @@ typedef enum {
     return  0;
 }
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if ([self shouldShowSectionView]) {
-        return SectionHeaderHeight;
-    }
-    else {
-        // If no section header title, no section header needed
-        return 0;
+-(NSString*) numberBookmarkCopy{
+    DLog(@"Index of segmented control is: %i", self.segmentedControl.selectedSegmentIndex);
+    
+    if ( [self numberOfSectionBookmarks] == 0 ){
+        //label.textColor = [UIColor grayColor];
+        if (self.segmentedControl.selectedSegmentIndex == 1) {
+            return [NSString stringWithFormat:@"No one you follow has bookmarked this place"];
+        } else {
+            return [NSString stringWithFormat:@"No one has bookmarked this place yet"];
+        }
+        
+        //label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
+    } else if ( [self numberOfSectionBookmarks] == 1) {
+        if (self.segmentedControl.selectedSegmentIndex == 1) {
+           return [NSString stringWithFormat:@"%i person you follow has bookmarked this place", [self numberOfSectionBookmarks]];
+        } else {
+            return [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+        }
+    } else {
+        if (self.segmentedControl.selectedSegmentIndex == 1) {
+            return [NSString stringWithFormat:@"%i people you follow have bookmarked this place", [self numberOfSectionBookmarks]];
+        } else {
+            return [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];   
+        }            
     }
 }
 
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (![self shouldShowSectionView]){
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {    
+    if (self.perspectiveType == home && self.place.bookmarked == false){
+        return self.bookmarkView;
+    } else {
         return nil;
     }
-
-    UIView *view;
-    
-    if (self.perspectiveType == home){
-        view = self.bookmarkView;
-        
-    } else {
-        // Create label with section title
-        UILabel *label = [[[UILabel alloc] init] autorelease];
-        label.frame = CGRectMake(20, 6, 280, 30);
-        label.backgroundColor = [UIColor clearColor];
-        label.textColor = [UIColor blackColor];
-        label.font = [UIFont boldSystemFontOfSize:16];
-        
-        
-        NSLog(@"Index of segmented control is: %i", self.segmentedControl.selectedSegmentIndex);
-        
-        if ( [self numberOfSectionBookmarks] == 0 ){
-            //label.textColor = [UIColor grayColor];
-            if (self.segmentedControl.selectedSegmentIndex == 1) {
-                label.text = [NSString stringWithFormat:@"No one you follow has bookmarked this place"];
-            } else {
-                label.text = [NSString stringWithFormat:@"No one has bookmarked this place yet"];
-            }
-            
-            //label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
-        } else if ( [self numberOfSectionBookmarks] == 1) {
-            if (self.segmentedControl.selectedSegmentIndex == 1) {
-                label.text = [NSString stringWithFormat:@"%i person you follow has bookmarked this place", [self numberOfSectionBookmarks]];
-            } else {
-                label.text = [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
-            }
-        } else {
-            if (self.segmentedControl.selectedSegmentIndex == 1) {
-                label.text = [NSString stringWithFormat:@"%i people you follow have bookmarked this place", [self numberOfSectionBookmarks]];
-            } else {
-                label.text = [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];   
-            }            
-        }
-        
-        label.adjustsFontSizeToFitWidth = TRUE;
-        
-        // Create header view and add label as a subview
-        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, SectionHeaderHeight)];
-        [view autorelease];
-        [view addSubview:label];
-    }
-    
-    return view;
 }
 
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if ([self shouldShowSectionView] && indexPath.section == 0){
+        return 44;
+    }
     
     Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
     
@@ -846,15 +819,21 @@ typedef enum {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     // Return the number of sections.
-    return 1;
+    if ([self shouldShowSectionView]) {
+        return 2;
+    }
+    else {
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Return the number of rows in the section.
-    if (perspectives){ 
+    
+    if ([self shouldShowSectionView] && section == 0){
+        return 1;
+    }else {
         return [perspectives count];
-    } else {
-        return 0; //probably shouldn't actually ever reach here
     }
     
 }
@@ -864,8 +843,24 @@ typedef enum {
     static NSString *perspectiveCellIdentifier = @"PerspectiveCellIdentifier";
     static NSString *editableCellIdentifier = @"MyPerspectiveCellIdentifier";
     static NSString *spinnerCellIdentifier = @"SpinnerCellIdentifier";
+    static NSString *infoCellIdentifier = @"infoCellIdentifier";
     
     UITableViewCell *cell;
+    
+    
+    if (indexPath.section == 0 && [self shouldShowSectionView]){
+        cell = [tableView dequeueReusableCellWithIdentifier:infoCellIdentifier];
+        
+        
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:infoCellIdentifier];
+        }
+        cell.textLabel.text = [self numberBookmarkCopy];
+        
+        return cell;
+
+    }
+    
     Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
     
      if ( [perspective isKindOfClass:[NSString class]] ){
@@ -927,14 +922,30 @@ typedef enum {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
-    
-    if ( !( self.perspectiveType == home && perspective.mine  ) ){
-        FullPerspectiveViewController *fullPerspectiveViewController = [[FullPerspectiveViewController alloc] init];
-        fullPerspectiveViewController.perspective = perspective;
+    if ([self shouldShowSectionView] && indexPath.section == 0){
+        DLog(@"Show people who've bookmarked");
+        FollowViewController *followViewController;
         
-        [[self navigationController] pushViewController:fullPerspectiveViewController animated:YES];
-        [fullPerspectiveViewController release];
+        if(self.perspectiveType == following){
+            followViewController = [[FollowViewController alloc] initWithPlace:self.place andFollowing:TRUE];
+        } else {
+            followViewController = [[FollowViewController alloc] initWithPlace:self.place andFollowing:FALSE];
+        }
+        
+        [self.navigationController pushViewController:followViewController animated:TRUE];
+        [followViewController release];
+        
+    } else {
+    
+        Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+        
+        if ( !( self.perspectiveType == home && perspective.mine  ) ){
+            FullPerspectiveViewController *fullPerspectiveViewController = [[FullPerspectiveViewController alloc] init];
+            fullPerspectiveViewController.perspective = perspective;
+            
+            [[self navigationController] pushViewController:fullPerspectiveViewController animated:YES];
+            [fullPerspectiveViewController release];
+        }
     }
 }
 

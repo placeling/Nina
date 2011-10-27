@@ -14,6 +14,7 @@
 @implementation FollowViewController
 
 @synthesize user=_user;
+@synthesize place=_place;
 @synthesize users, following;
 
 - (void)didReceiveMemoryWarning{
@@ -28,6 +29,15 @@
     if (self) {
         self.following = follow;
         self.user = focusUser;
+    }
+    return self;
+}
+
+-(id) initWithPlace:(Place*)place andFollowing:(bool)follow{
+    self = [super init];
+    if (self) {
+        self.place = place;
+        self.following = follow;
     }
     return self;
 }
@@ -50,11 +60,17 @@
         [users release];
         NSDictionary *jsonDict = [responseString JSONValue];
         NSMutableArray *rawUsers;
-        if (self.following){
-            rawUsers = [jsonDict objectForKey:@"following"];
+        
+        if (self.place){
+             rawUsers = [jsonDict objectForKey:@"users"];           
         } else {
-            rawUsers = [jsonDict objectForKey:@"followers"];
+            if (self.following){
+                rawUsers = [jsonDict objectForKey:@"following"];
+            } else {
+                rawUsers = [jsonDict objectForKey:@"followers"];
+            }
         }
+        
         users = [[NSMutableArray alloc] initWithCapacity:[rawUsers count]];
         
         for (NSDictionary* dict in rawUsers){
@@ -77,12 +93,23 @@
     
     NSString *urlString;
     
-    if (self.following){
-        urlString = [NSString stringWithFormat:@"%@/v1/users/%@/following", [NinaHelper getHostname], self.user.username];
-        self.navigationItem.title = @"Following";
+    if (self.place){        
+        self.navigationItem.title = self.place.name;  
+        
+        if (self.following){
+            urlString = [NSString stringWithFormat:@"%@/v1/places/%@/users?filter_follow=true", [NinaHelper getHostname], self.place.place_id];
+        } else {
+            urlString = [NSString stringWithFormat:@"%@/v1/places/%@/users", [NinaHelper getHostname], self.place.place_id];
+        }
+        
     } else {
-        urlString = [NSString stringWithFormat:@"%@/v1/users/%@/followers", [NinaHelper getHostname], self.user.username];
-        self.navigationItem.title = @"Followers";
+        if (self.following){
+            urlString = [NSString stringWithFormat:@"%@/v1/users/%@/following", [NinaHelper getHostname], self.user.username];
+            self.navigationItem.title = @"Following";
+        } else {
+            urlString = [NSString stringWithFormat:@"%@/v1/users/%@/followers", [NinaHelper getHostname], self.user.username];
+            self.navigationItem.title = @"Followers";
+        }
     }
     	
     NSURL *url = [NSURL URLWithString:urlString];
@@ -160,10 +187,18 @@
     if ((users) && [users count] == 0) {
         tableView.allowsSelection = NO;
         [cell.textLabel setFont:[UIFont systemFontOfSize:14.0]];
-        if (self.following) {
-            cell.textLabel.text = @"You're not yet following anyone";
+        if (self.place){
+            if (self.following) {
+                cell.textLabel.text = @"Nobody you follow has bookmarked this location";
+            } else {
+                cell.textLabel.text = @"Nobody has bookmarked this location";
+            }            
         } else {
-            cell.textLabel.text = @"No one's yet following you";
+            if (self.following) {
+                cell.textLabel.text = @"You're not yet following anyone";
+            } else {
+                cell.textLabel.text = @"No one's yet following you";
+            }
         }
     } else {
         tableView.allowsSelection = YES;
@@ -202,6 +237,7 @@
     [NinaHelper clearActiveRequests:40];
     [users release];
     [_user release];
+    [_place release];
     [super dealloc];
     
 }
