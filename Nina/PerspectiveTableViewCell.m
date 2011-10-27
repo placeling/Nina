@@ -33,7 +33,7 @@
         heightCalc += 166;
     }
     
-    return MAX(90, heightCalc);
+    return heightCalc;
 }
 
 
