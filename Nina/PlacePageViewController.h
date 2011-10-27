@@ -50,7 +50,6 @@ typedef enum {
     IBOutlet UIView *tableHeaderView;
     IBOutlet UIView *topofHeaderView;
     IBOutlet UIView *tableFooterView;
-    IBOutlet UIView *bookmarkView;
     
     NSMutableArray *perspectives;
     NSMutableArray *homePerspectives;
@@ -80,7 +79,6 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet UIButton *mapButtonView;
 @property (nonatomic, retain) IBOutlet UIView *tableHeaderView;
 @property (nonatomic, retain) IBOutlet UIView *tableFooterView;
-@property (nonatomic, retain) IBOutlet UIView *bookmarkView;
 @property (nonatomic, retain) IBOutlet UIView *topofHeaderView;
 
 @property (nonatomic, retain) IBOutlet CustomSegmentedControl *segmentedControl;

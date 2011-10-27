@@ -16,7 +16,7 @@
 @end
 
 
-@interface BookmarkTableViewCell : UIView{
+@interface BookmarkTableViewCell : UITableViewCell{
     Place *place;
     
     IBOutlet UIButton *bookmarkButton;
