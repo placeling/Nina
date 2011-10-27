@@ -184,6 +184,10 @@
 		28C4F535144262C700A66F32 /* NSDictionary+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C4F534144262C700A66F32 /* NSDictionary+Utility.m */; };
 		28E1372213EB12DF00C17A68 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E1372013EB12DF00C17A68 /* HomeViewController.m */; };
 		28E1372313EB12DF00C17A68 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28E1372113EB12DF00C17A68 /* HomeViewController.xib */; };
+		28E5541C1459F0220026F7B4 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E554181459F0220026F7B4 /* camera.png */; };
+		28E5541D1459F0220026F7B4 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E554191459F0220026F7B4 /* camera@2x.png */; };
+		28E5541E1459F0220026F7B4 /* writer.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E5541A1459F0220026F7B4 /* writer.png */; };
+		28E5541F1459F0220026F7B4 /* writer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28E5541B1459F0220026F7B4 /* writer@2x.png */; };
 		28EE54E51433D1EB00E36686 /* leather.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE54E31433D1EB00E36686 /* leather.png */; };
 		28EE54E61433D1EB00E36686 /* leather@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE54E41433D1EB00E36686 /* leather@2x.png */; };
 		28EE54F71434DDC600E36686 /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28EE54F51434DDC600E36686 /* ActivityTableViewCell.m */; };
@@ -495,6 +499,10 @@
 		28E1371F13EB12DF00C17A68 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		28E1372013EB12DF00C17A68 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		28E1372113EB12DF00C17A68 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		28E554181459F0220026F7B4 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		28E554191459F0220026F7B4 /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x.png"; sourceTree = "<group>"; };
+		28E5541A1459F0220026F7B4 /* writer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = writer.png; sourceTree = "<group>"; };
+		28E5541B1459F0220026F7B4 /* writer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "writer@2x.png"; sourceTree = "<group>"; };
 		28EE54E31433D1EB00E36686 /* leather.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leather.png; sourceTree = "<group>"; };
 		28EE54E41433D1EB00E36686 /* leather@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leather@2x.png"; sourceTree = "<group>"; };
 		28EE54F41434DDC600E36686 /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -1062,6 +1070,10 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				28E554181459F0220026F7B4 /* camera.png */,
+				28E554191459F0220026F7B4 /* camera@2x.png */,
+				28E5541A1459F0220026F7B4 /* writer.png */,
+				28E5541B1459F0220026F7B4 /* writer@2x.png */,
 				2887B8DC144F92EF00CBBF1B /* TouristyPick.png */,
 				2887B8DE144F930D00CBBF1B /* TouristyPick@2x.png */,
 				2887B8DA144F92C100CBBF1B /* FoodPick.png */,
@@ -1292,6 +1304,10 @@
 				2887B8DB144F92C100CBBF1B /* FoodPick.png in Resources */,
 				2887B8DD144F92EF00CBBF1B /* TouristyPick.png in Resources */,
 				2887B8DF144F930D00CBBF1B /* TouristyPick@2x.png in Resources */,
+				28E5541C1459F0220026F7B4 /* camera.png in Resources */,
+				28E5541D1459F0220026F7B4 /* camera@2x.png in Resources */,
+				28E5541E1459F0220026F7B4 /* writer.png in Resources */,
+				28E5541F1459F0220026F7B4 /* writer@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -124,7 +124,7 @@
 									<object class="IBUIButton" id="542733839">
 										<reference key="NSNextResponder" ref="1049628760"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{221, 8}, {45, 37}}</string>
+										<string key="NSFrame">{{218, 0}, {45, 45}}</string>
 										<reference key="NSSuperview" ref="1049628760"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="27433479"/>
@@ -132,7 +132,6 @@
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<int key="IBUIContentHorizontalAlignment">0</int>
 										<int key="IBUIContentVerticalAlignment">0</int>
-										<int key="IBUIButtonType">1</int>
 										<object class="NSColor" key="IBUIHighlightedTitleColor" id="857036659">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MQA</bytes>
@@ -147,7 +146,7 @@
 										</object>
 										<object class="NSCustomResource" key="IBUINormalImage">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">152-rolodex.png</string>
+											<string key="NSResourceName">writer.png</string>
 										</object>
 										<object class="IBUIFontDescription" key="IBUIFontDescription" id="364749957">
 											<int key="type">1</int>
@@ -162,14 +161,13 @@
 									<object class="IBUIButton" id="27433479">
 										<reference key="NSNextResponder" ref="1049628760"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{269, 8}, {43, 37}}</string>
+										<string key="NSFrame">{{268, 0}, {45, 45}}</string>
 										<reference key="NSSuperview" ref="1049628760"/>
 										<reference key="NSWindow"/>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<int key="IBUIContentHorizontalAlignment">0</int>
 										<int key="IBUIContentVerticalAlignment">0</int>
-										<int key="IBUIButtonType">1</int>
 										<reference key="IBUIHighlightedTitleColor" ref="857036659"/>
 										<object class="NSColor" key="IBUINormalTitleColor">
 											<int key="NSColorSpace">1</int>
@@ -178,7 +176,7 @@
 										<reference key="IBUINormalTitleShadowColor" ref="409779177"/>
 										<object class="NSCustomResource" key="IBUINormalImage">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">86-camera.png</string>
+											<string key="NSResourceName">camera.png</string>
 										</object>
 										<reference key="IBUIFontDescription" ref="364749957"/>
 										<reference key="IBUIFont" ref="417759891"/>
@@ -376,10 +374,10 @@
 						<reference key="object" ref="1049628760"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="542733839"/>
 							<reference ref="299025952"/>
-							<reference ref="27433479"/>
 							<reference ref="502736216"/>
+							<reference ref="542733839"/>
+							<reference ref="27433479"/>
 						</object>
 						<reference key="parent" ref="309600393"/>
 					</object>
@@ -553,7 +551,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>bookmark</string>
-							<string>changedSegment</string>
 							<string>checkinFoursquare</string>
 							<string>editPerspective</string>
 							<string>editPerspectivePhotos</string>
@@ -565,7 +562,6 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -582,7 +578,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>bookmark</string>
-							<string>changedSegment</string>
 							<string>checkinFoursquare</string>
 							<string>editPerspective</string>
 							<string>editPerspectivePhotos</string>
@@ -596,10 +591,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">bookmark</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">changedSegment</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -642,7 +633,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addressLabel</string>
 							<string>bookmarkButton</string>
-							<string>bookmarkView</string>
 							<string>categoriesLabel</string>
 							<string>cityLabel</string>
 							<string>googlePlacesButton</string>
@@ -658,7 +648,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UILabel</string>
 							<string>UIButton</string>
-							<string>UIView</string>
 							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UIButton</string>
@@ -677,7 +666,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addressLabel</string>
 							<string>bookmarkButton</string>
-							<string>bookmarkView</string>
 							<string>categoriesLabel</string>
 							<string>cityLabel</string>
 							<string>googlePlacesButton</string>
@@ -698,10 +686,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">bookmarkButton</string>
 								<string key="candidateClassName">UIButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">bookmarkView</string>
-								<string key="candidateClassName">UIView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">categoriesLabel</string>
@@ -764,13 +748,13 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>152-rolodex.png</string>
-				<string>86-camera.png</string>
+				<string>camera.png</string>
+				<string>writer.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{26, 18}</string>
-				<string>{24, 18}</string>
+				<string>{50, 50}</string>
+				<string>{50, 50}</string>
 			</object>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">931</string>
