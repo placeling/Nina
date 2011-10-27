@@ -267,16 +267,13 @@
     
     ActivityTableViewCell *cell;
     if ([recentActivities count] > 0) {
-        NSLog(@"Cell is a %@", CellIdentifier);
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     } else {
         NSString *currentUser = [NinaHelper getUsername];
         
         if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
-            NSLog(@"Cell is a %@", LoginCellIdentifier);
             cell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
         } else {
-            NSLog(@"Cell is a %@", NoActivityCellIdentifier);
             cell = [tableView dequeueReusableCellWithIdentifier:NoActivityCellIdentifier];
         }
     }
@@ -291,7 +288,6 @@
         NSString *currentUser = [NinaHelper getUsername];
         
         if (!currentUser || currentUser.length == 0) {
-            NSLog(@"Logic 1, %d", indexPath.row);
             cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:LoginCellIdentifier] autorelease];
             
             UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 90)];
@@ -310,8 +306,13 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
         } else if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {            
-            NSLog(@"Logic 2, %d", indexPath.row);
             cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:NoActivityCellIdentifier] autorelease];
+            
+            UITextView *existingText = (UITextView *)[cell viewWithTag:778];
+            if (existingText) {
+                [existingText removeFromSuperview];
+                [existingText release];
+            }
             
             UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
             
@@ -333,7 +334,6 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
         } else {
-            NSLog(@"Logic 3, %d", indexPath.row);
             UITextView *existingText = (UITextView *)[cell viewWithTag:778];
             if (existingText) {
                 [existingText removeFromSuperview];

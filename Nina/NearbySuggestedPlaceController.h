@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "NinaHelper.h"
 #import "EGORefreshTableHeaderView.h"
+#import "LoginController.h"
 
-@interface NearbySuggestedPlaceController : UIViewController<UITableViewDelegate,UITableViewDataSource, ASIHTTPRequestDelegate, UISearchBarDelegate>{
+@interface NearbySuggestedPlaceController : UIViewController<UITableViewDelegate,UITableViewDataSource, ASIHTTPRequestDelegate, UISearchBarDelegate, LoginControllerDelegate>{
     EGORefreshTableHeaderView *refreshHeaderView;
     
     IBOutlet UISearchBar *_searchBar;

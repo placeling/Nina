@@ -60,7 +60,7 @@
     [NinaHelper setUsername:nil];
 }
 
-+(void) showLoginController:(UIViewController*)sender{
++(void) showLoginController:(UIViewController<LoginControllerDelegate>*)sender{
     LoginController *loginController = [[LoginController alloc] init];
     loginController.delegate = sender;
     
