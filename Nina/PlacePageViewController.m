@@ -63,7 +63,7 @@ typedef enum {
 @synthesize nameLabel, addressLabel, cityLabel, categoriesLabel;
 @synthesize segmentedControl, tagScrollView;
 @synthesize mapButtonView, googlePlacesButton, bookmarkButton;
-@synthesize tableHeaderView, tableFooterView, bookmarkView, perspectiveType, topofHeaderView;
+@synthesize tableHeaderView, tableFooterView, perspectiveType, topofHeaderView;
 @synthesize homePerspectives, followingPerspectives, everyonePerspectives;
 
 - (id) initWithPlace:(Place *)place{
@@ -240,13 +240,11 @@ typedef enum {
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [StyleHelper styleBackgroundView:self.view];
-    [StyleHelper styleBookmarkButton:self.bookmarkButton];
     [StyleHelper styleInfoView:self.topofHeaderView];
     [StyleHelper styleInfoView:self.tableFooterView];
     [StyleHelper styleMapImage:self.mapButtonView];
     [StyleHelper styleBackgroundView:self.tableHeaderView];
     
-    self.bookmarkView.backgroundColor = [UIColor clearColor];
     self.tagScrollView.backgroundColor = [UIColor clearColor];
     
     if (myPerspective && myPerspective.mine && myPerspective.modified){
@@ -815,19 +813,15 @@ typedef enum {
     }
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {    
-    if (self.perspectiveType == home && self.place.bookmarked == false){
-        return self.bookmarkView;
-    } else {
-        return nil;
-    }
-}
-
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if ([self shouldShowSectionView] && indexPath.section == 0){
-        return 44;
+        if (self.perspectiveType == home && self.place.bookmarked == false){
+            return 64;
+        }else{
+            return 44;
+        }
     }
     
     Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
@@ -872,19 +866,40 @@ typedef enum {
     static NSString *editableCellIdentifier = @"MyPerspectiveCellIdentifier";
     static NSString *spinnerCellIdentifier = @"SpinnerCellIdentifier";
     static NSString *infoCellIdentifier = @"infoCellIdentifier";
+    static NSString *bookmarkCellIdentifier = @"bookmarkCellIdentifier";
     
     UITableViewCell *cell;
     
     
     if (indexPath.section == 0 && [self shouldShowSectionView]){
-        cell = [tableView dequeueReusableCellWithIdentifier:infoCellIdentifier];
-        
-        
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:infoCellIdentifier];
+        if (self.perspectiveType == home && self.place.bookmarked == false){
+            cell = [tableView dequeueReusableCellWithIdentifier:bookmarkCellIdentifier];
+        }else{
+            cell = [tableView dequeueReusableCellWithIdentifier:infoCellIdentifier];
         }
-        cell.textLabel.text = [self numberBookmarkCopy];
-        
+            
+        if (cell == nil) {
+            if (self.perspectiveType == home && self.place.bookmarked == false){
+                NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"BookmarkTableViewCell" owner:self options:nil];
+                
+                for(id item in objects){
+                    if ( [item isKindOfClass:[UITableViewCell class]]){
+                        BookmarkTableViewCell *mCell = (BookmarkTableViewCell*) item;  
+                        mCell.backgroundColor = [UIColor clearColor];
+                        [StyleHelper styleBookmarkButton:mCell.bookmarkButton];
+                        cell = mCell;
+                    }
+                }
+            }else{
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:infoCellIdentifier];
+                cell.textLabel.text = [self numberBookmarkCopy];
+                cell.textLabel.textColor = self.addressLabel.textColor;
+                cell.textLabel.font = self.nameLabel.font;
+                cell.textLabel.textAlignment = UITextAlignmentCenter;
+            }            
+            
+        }
+   
         return cell;
 
     }
@@ -900,7 +915,7 @@ typedef enum {
             cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
         }
     } 
-    
+   
     
     if (cell == nil) {
         if ( [perspective isKindOfClass:[NSString class]] ){
