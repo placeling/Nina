@@ -89,9 +89,20 @@
         }
         nearbyPlaces = [[NSMutableArray alloc] initWithCapacity:0];
         
+        [self.placesTableView reloadData];
+        
         DLog(@"UNABLE TO GET CURRENT LOCATION FOR NEARBY");
     }
     
+}
+
+#pragma mark - Login delegate methods
+- (void) loadContent {
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if (currentUser != (id)[NSNull null] && currentUser.length > 0) {
+        [self findNearbyPlaces];
+    }
 }
 
 #pragma mark - View lifecycle
@@ -121,12 +132,7 @@
     self.searchBar.delegate = self;
     self.placesTableView.delegate = self;
     
-    NSString *currentUser = [NinaHelper getUsername];
-    
-    if (currentUser != (id)[NSNull null] && currentUser.length > 0) {
-        [self findNearbyPlaces];
-    }
-
+    [self loadContent];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -135,7 +141,6 @@
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     [StyleHelper styleToolBar:self.toolbar];
     [StyleHelper styleSearchBar:self.searchBar];
-    
 }
 
 - (void)viewDidUnload
@@ -312,23 +317,124 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *placeCellIdentifier = @"PlaceCell";
+    static NSString *loginCellIdentifier = @"LoginCell";
+    static NSString *noNearbyCellIdentifier = @"NoNearbyCell";
     
     Place *place;
     PlaceSuggestTableViewCell *cell;
-
-    cell = [tableView dequeueReusableCellWithIdentifier:placeCellIdentifier];
     
-    if (cell == nil) {
-
-        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PlaceSuggestTableViewCell" owner:self options:nil];
-        
-        for(id item in objects){
-            if ( [item isKindOfClass:[UITableViewCell class]]){
-                cell = item;
-            }
+    if ([nearbyPlaces count] > 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:placeCellIdentifier];
+    } else {
+        NSString *currentUser = [NinaHelper getUsername];
+        if (!currentUser || currentUser.length == 0) {
+            cell = [tableView dequeueReusableCellWithIdentifier:loginCellIdentifier];
+        } else {
+            cell = [tableView dequeueReusableCellWithIdentifier:noNearbyCellIdentifier];
         }
     }
     
+    //cell = [tableView dequeueReusableCellWithIdentifier:placeCellIdentifier];
+    
+    if (cell == nil) {
+        NSString *currentUser = [NinaHelper getUsername];
+        
+        if (!currentUser || currentUser.length == 0) {
+            cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
+            
+            tableView.allowsSelection = YES;
+            
+            cell.titleLabel.text = @"";
+            cell.addressLabel.text = @"";
+            cell.distanceLabel.text = @"";
+            cell.usersLabel.text = @"";
+            
+            UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
+            
+            loginText.text = @"Sign up or log in and we'll show you nearby places you love - plus those of people you follow.\n\nTap to get started.";
+            loginText.tag = 778;
+            
+            [loginText setUserInteractionEnabled:NO];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            [cell addSubview:loginText];
+            [loginText release];
+        } else if (self.dataLoaded && [nearbyPlaces count] == 0) {
+            cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noNearbyCellIdentifier] autorelease];
+            
+            UITextView *existingText = (UITextView *)[cell viewWithTag:778];
+            if (existingText) {
+                [existingText removeFromSuperview];
+                [existingText release];
+            }
+            
+            tableView.allowsSelection = NO;
+            
+            cell.titleLabel.text = @"";
+            cell.addressLabel.text = @"";
+            cell.distanceLabel.text = @"";
+            cell.usersLabel.text = @"";
+            
+            UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
+            
+            
+            if (self.locationEnabled == FALSE) {
+                errorText.text = [NSString stringWithFormat:@"We can't show you any nearby places as you've got location services turned off."];
+            } else {
+                if (self.showAll == TRUE) {
+                    if ([self.searchTerm isEqualToString:@""] == TRUE) {
+                        errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places."];
+                    } else {
+                        errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+                    }
+                } else {
+                    if ([self.searchTerm isEqualToString:@""] == TRUE) {
+                        errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places."];
+                    } else {
+                        errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+                    }
+                    
+                    
+                    self.searchTerm  = [self.searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+                }
+            }        
+            
+            errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+            [errorText setUserInteractionEnabled:NO];
+            
+            errorText.tag = 778;
+            [cell addSubview:errorText];
+            [errorText release];
+        } else {
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PlaceSuggestTableViewCell" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    cell = item;
+                }
+            }
+            
+            tableView.allowsSelection = YES;
+            
+            place = [nearbyPlaces objectAtIndex:indexPath.row];
+            
+            UITextView *errorText = (UITextView *)[cell viewWithTag:778];
+            if (errorText) {
+                [errorText removeFromSuperview];
+                [errorText release];
+            }
+            
+            cell.titleLabel.text = place.name;
+            cell.addressLabel.text = place.address;
+            cell.distanceLabel.text = @""; //place.
+            cell.usersLabel.text = place.usersBookmarkingString;   
+            
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+        }
+    }
+    
+    /*
     NSString *currentUser = [NinaHelper getUsername];
     
     if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
@@ -403,7 +509,7 @@
         cell.usersLabel.text = place.usersBookmarkingString;   
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+    }*/
     
     return cell;
 }
@@ -416,6 +522,7 @@
     
     if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
         LoginController *loginController = [[LoginController alloc] init];
+        loginController.delegate = self;
         
         UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
         [self.navigationController presentModalViewController:navBar animated:YES];
