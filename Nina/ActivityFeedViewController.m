@@ -96,6 +96,7 @@
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [NinaHelper signRequest:request];
         [request startAsynchronous];
+        [self.activityTableView reloadData];
         
     }
 }
@@ -212,8 +213,8 @@
                 }
             }
             
-            [self.activityTableView  reloadData];
             loadingMore = false;
+            [self.activityTableView  reloadData];
             break;
         }
 	}
@@ -240,7 +241,11 @@
     } else if ((user) && [recentActivities count] == 0) {
         return 1;
     } else {
-        return [recentActivities count];
+        if (loadingMore){
+            return [recentActivities count] +1;
+        }else{ 
+            return [recentActivities count];
+        }
     }
 }
 
@@ -251,6 +256,8 @@
         return 90;
     } else if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {
         return 54;
+    }else if (indexPath.row >= [recentActivities count]){
+        return 44;
     } else {
         NSDictionary *activity;
         activity = [recentActivities objectAtIndex:indexPath.row];
@@ -333,6 +340,14 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
+        } else if ([recentActivities count] <= indexPath.row){
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    cell = item;
+                }
+            }      
         } else {
             UITextView *existingText = (UITextView *)[cell viewWithTag:778];
             if (existingText) {
