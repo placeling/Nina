@@ -525,7 +525,8 @@
         [self.navigationController presentModalViewController:navBar animated:YES];
         [navBar release];
         [loginController release];
-    } else {
+    } else if (indexPath.row < [perspectives count]){ 
+        //in case some jackass tries to click the spin wait
         Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
         PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:perspective.place];
         placePageViewController.referrer = self.user;
