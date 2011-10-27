@@ -7,6 +7,7 @@
 //
 
 #import "Place.h"
+#import "NSDictionary+Utility.h"
 
 
 @implementation Place
@@ -20,24 +21,24 @@
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
     
     if(self = [super init]){
-        self.pid = [jsonDict objectForKey:@"_id"];
-        self.name = [jsonDict objectForKey:@"name"];
-        self.address = [jsonDict objectForKey:@"street_address"];
-        self.city = [jsonDict objectForKey:@"city_data"];
-        self.phone = [jsonDict objectForKey:@"phone_number"];
-        self.place_id = [jsonDict objectForKey:@"google_id"];
-        self.googlePlacesUrl = [jsonDict objectForKey:@"google_url"];
+        self.pid = [jsonDict objectForKeyNotNull:@"_id"];
+        self.name = [jsonDict objectForKeyNotNull:@"name"];
+        self.address = [jsonDict objectForKeyNotNull:@"street_address"];
+        self.city = [jsonDict objectForKeyNotNull:@"city_data"];
+        self.phone = [jsonDict objectForKeyNotNull:@"phone_number"];
+        self.place_id = [jsonDict objectForKeyNotNull:@"google_id"];
+        self.googlePlacesUrl = [jsonDict objectForKeyNotNull:@"google_url"];
         NSNumber *lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
         NSNumber *lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1]; 
         
         self.location = [[[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]]autorelease];
-        self.perspectiveCount = [[jsonDict objectForKey:@"perspective_count"] intValue];
-        self.bookmarked = [[jsonDict objectForKey:@"bookmarked"] boolValue] ;
-        self.categories = [jsonDict objectForKey:@"venue_types"];
+        self.perspectiveCount = [[jsonDict objectForKeyNotNull:@"perspective_count"] intValue];
+        self.bookmarked = [[jsonDict objectForKeyNotNull:@"bookmarked"] boolValue] ;
+        self.categories = [jsonDict objectForKeyNotNull:@"venue_types"];
         
         self.usersBookmarking = [jsonDict objectForKey:@"users_bookmarking"];        
         self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
-        self.tags = [jsonDict objectForKey:@"tags"];
+        self.tags = [jsonDict objectForKeyNotNull:@"tags"];
 	}
 	return self;
 }
@@ -66,7 +67,7 @@
     [phone release];
     [location release];
     [usersBookmarking release];
-    //[tags release];
+    [tags release];
 
     [categories release];
     [icon release];
