@@ -45,9 +45,6 @@
 
     MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
                                            initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier] autorelease];
-    
-    customPinView.pinColor = MKPinAnnotationColorPurple;            
-    customPinView.animatesDrop = YES;            
     customPinView.canShowCallout = YES;
     
     if( [annotation isKindOfClass:[PlaceMark class]] ){
@@ -58,6 +55,12 @@
         customPinView.rightCalloutAccessoryView = rightButton;
         
     }
+    if (annotation.place.bookmarked){
+        customPinView.image = [UIImage imageNamed:@"MyMarker.png"];
+    } else {
+        customPinView.image = [UIImage imageNamed:@"FriendMarker.png"];
+    }
+    
     return customPinView;
 }
 
@@ -96,6 +99,9 @@
     region.span = span;
     
     [self.mapView setRegion:region animated:YES];
+    
+    //pre-opens callout   
+    [self.mapView selectAnnotation:[mapView.annotations objectAtIndex:0] animated:FALSE];
     
 }
 
