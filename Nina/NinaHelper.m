@@ -212,11 +212,12 @@
     
     NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     NSDate *convertedDate = [dateFormatter dateFromString:origDate];
     
     NSDate *todayDate = [NSDate date];
     double ti = [convertedDate timeIntervalSinceDate:todayDate];
-    ti = ti * -1;
+    ti = fabs(ti);
     if (ti < 60) {
         return @"less than a minute ago";
     } else if (ti < 3600) {
@@ -229,7 +230,8 @@
         int diff = round(ti / 60 / 60 / 24);
         return[NSString stringWithFormat:@"%d days ago", diff];
     } else {
-        return @"never";
+        int diff = round(ti / 60 / 60 / 24 / 30);
+        return[NSString stringWithFormat:@"%d months ago", diff];
     }   
 }
 
