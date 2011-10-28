@@ -52,7 +52,7 @@
         [cell.titleLabel addGestureRecognizer:cell.tapGesture];
     }
 
-    
+
     //cell.memoText.backgroundColor = [UIColor grayColor];
     CGRect memoFrame = cell.memoText.frame;
     CGSize memoSize = memoFrame.size;
@@ -105,7 +105,7 @@
         cell.scrollView.scrollEnabled = YES;
         cell.scrollView.pagingEnabled = YES;
         
-        CGFloat cx = cell.memoText.frame.origin.x;
+        CGFloat cx = 0; //cell.memoText.frame.origin.x;
         for ( Photo* photo in [perspective.photos reverseObjectEnumerator] ){
             
             CGRect rect = CGRectMake(cx, 3, 152, 152);
@@ -143,6 +143,7 @@
     
     [cell.createdAtLabel setFrame:CGRectMake(cell.createdAtLabel.frame.origin.x, verticalCursor, cell.createdAtLabel.frame.size.width, cell.createdAtLabel.frame.size.height)];
     
+    //cell.scrollView.delegate = cell;
 }
 
 -(IBAction) showAuthoringUser{
@@ -160,6 +161,15 @@
     }
     
     [memberProfileViewController release];
+}
+
+- (void) touchesEnded: (NSSet *) touches withEvent: (UIEvent *) event 
+{	
+    // If not dragging, send event to next responder
+    if (!scrollView.dragging) 
+        [self.nextResponder touchesEnded: touches withEvent:event]; 
+    else
+        [super touchesEnded: touches withEvent: event];
 }
 
 -(void) flagPerspective{
