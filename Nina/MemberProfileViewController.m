@@ -389,8 +389,8 @@
                 }
             }
             
-            [self loadData];
             loadingMore = false;
+            [self loadData];
             break;
         }
     }
@@ -416,6 +416,8 @@
     } else {
         if ((perspectives) && [perspectives count] == 0) {
             return 70;
+        } else if (indexPath.row >= [perspectives count]){
+            return 44;
         } else {
             Perspective *perspective;
             perspective = [perspectives objectAtIndex:indexPath.row];
