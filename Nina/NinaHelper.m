@@ -58,6 +58,7 @@
     [NinaHelper setAccessToken:nil];
     [NinaHelper setAccessTokenSecret:nil];
     [NinaHelper setUsername:nil];
+    [ASIHTTPRequest clearSession];
 }
 
 +(void) showLoginController:(UIViewController<LoginControllerDelegate>*)sender{
