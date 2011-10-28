@@ -65,6 +65,12 @@
         self.memoTextView.text = self.perspective.notes;
     }
     
+    // Test to see if camera
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == NO) {
+        self.takeButton.enabled = NO;
+        self.takeButton.titleLabel.textColor = [UIColor grayColor];
+    }
+    
     UIBarButtonItem *saveButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(savePerspective)];
     self.navigationItem.rightBarButtonItem = saveButton;
     [saveButton release];

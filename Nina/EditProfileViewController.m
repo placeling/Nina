@@ -41,7 +41,7 @@
         [actionSheet showInView:self.view];
         [actionSheet release];
     }
-    else { // No camera, probably a touch
+    else { // No camera, probably a touch or iPad 1
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         picker.delegate = self;
