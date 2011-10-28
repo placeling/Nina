@@ -111,4 +111,6 @@ typedef enum {
 
 - (id) initWithPlace:(Place *)place;
 
+-(void) mainContentLoad; // Public as child controllers may recall to refresh data
+
 @end

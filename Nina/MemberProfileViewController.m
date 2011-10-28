@@ -26,7 +26,6 @@
 -(void) blankLoad;
 -(void) toggleFollow;
 -(IBAction)editUser;
--(void) mainContentLoad;
 
 @end
 

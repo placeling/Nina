@@ -33,4 +33,6 @@
 -(IBAction) toggleStarred;
 -(IBAction) showAuthoringUser;
 
+-(void) mainContentLoad; // public as called by child controllers
+
 @end

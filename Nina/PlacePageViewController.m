@@ -55,7 +55,6 @@ typedef enum {
 -(void) flagPerspective:(Perspective*)perspective;
 -(void) deletePerspective:(Perspective*)perspective;
 -(NSString*) numberBookmarkCopy;
--(void) mainContentLoad;
 @end
 
 @implementation PlacePageViewController

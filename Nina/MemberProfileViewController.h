@@ -58,5 +58,6 @@
 -(IBAction) userFollowing;
 -(IBAction) userFollowing;
 -(void) loadData; //this is public as the edit perspective controller might want to trigger a refresh
+-(void) mainContentLoad; // public as child controllers may call to refresh content
 
 @end

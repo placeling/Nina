@@ -13,10 +13,6 @@
 #import "LoginController.h"
 #import "PlacePageViewController.h"
 
-@interface FullPerspectiveViewController ()
--(void) mainContentLoad;
-@end
-
 @implementation FullPerspectiveViewController
 
 @synthesize perspective, userImage, upvoteButton, memoText,titleLabel, scrollView;
