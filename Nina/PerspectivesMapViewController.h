@@ -11,9 +11,9 @@
 #import "NinaHelper.h"
 #import "ASIHTTPRequest.h"
 #import "User.h"
+#import "LoginController.h"
 
-
-@interface PerspectivesMapViewController : UIViewController<ASIHTTPRequestDelegate, MKMapViewDelegate> {
+@interface PerspectivesMapViewController : UIViewController<ASIHTTPRequestDelegate, MKMapViewDelegate, LoginControllerDelegate> {
     IBOutlet MKMapView *mapView;
     IBOutlet UIToolbar *toolbar;
     NSString *_username;

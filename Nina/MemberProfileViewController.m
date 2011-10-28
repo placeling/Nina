@@ -25,6 +25,8 @@
 -(void) blankLoad;
 -(void) toggleFollow;
 -(IBAction)editUser;
+-(void) mainContentLoad;
+
 @end
 
 
@@ -45,36 +47,6 @@
     loadingMore = false;
     hasMore = true;
 	
-    
-    NSLog(@"self.user.username is %@", self.user.username);
-    NSLog(@"self.username is %@", self.username);
-    
-    if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
-        self.navigationItem.title = @"Your Profile";
-        NSLog(@"self.user.username is null");
-    } else {
-        NSString *getUsername;
-        if (self.user == nil){
-            getUsername = self.username; //if this doesn't work, it better break
-        } else if (username == nil)  {
-            getUsername = user.username;
-            self.username = user.username;
-        }
-        
-        self.navigationItem.title = @"Profile";
-        
-        // Call url to get profile details
-        NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@", [NinaHelper getHostname], getUsername];
-        
-        NSURL *url = [NSURL URLWithString:urlText];
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-        [request setDelegate:self];
-        [request setTag:10];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        [NinaHelper signRequest:request];
-        [request startAsynchronous];
-    }
-    
     self.tableView.tableHeaderView = self.headerView;
     
 	[self blankLoad];
@@ -125,6 +97,8 @@
     self.followButton.enabled = false;
     self.followersButton.enabled = false;
     self.followingButton.enabled = false;
+    
+    [self mainContentLoad];
 }
 
 -(IBAction) userPerspectives{
@@ -203,8 +177,55 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(void) mainContentLoad {
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if ((currentUser || currentUser.length > 0) && (!self.username || currentUser.length == 0)) {
+        self.username = currentUser;
+    }
+    
+    if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
+        self.navigationItem.title = @"Your Profile";
+    } else {
+        NSString *getUsername;
+        
+        if (!self.user || self.user.username.length == 0) {
+            getUsername = self.username;
+        } else {
+            getUsername = self.user.username;
+            self.username = getUsername;
+        }
+        
+        self.navigationItem.title = @"Profile";
+        
+        // Call url to get profile details
+        NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@", [NinaHelper getHostname], getUsername];
+        
+        NSURL *url = [NSURL URLWithString:urlText];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        [request setDelegate:self];
+        [request setTag:10];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        [NinaHelper signRequest:request];
+        [request startAsynchronous];
+    }
+}
+
 #pragma mark -
-#pragma mark Navigation
+#pragma mark Login Controller Delegate
+-(void) loadContent {
+    // Go back through navigation stack
+    for (int i=[[[self navigationController] viewControllers] count] - 2; i > 0; i--) {
+        NSObject *parentController = [[[self navigationController] viewControllers] objectAtIndex:i];
+        
+        if ([parentController isKindOfClass:[MemberProfileViewController class]]) {
+            MemberProfileViewController *profile = (MemberProfileViewController *)[[[self navigationController] viewControllers] objectAtIndex:i];
+            [profile mainContentLoad];
+        }
+    }
+    
+    [self mainContentLoad];
+}
 
 #pragma mark -
 #pragma mark Follow/Unfollow
@@ -244,6 +265,7 @@
 {
     if (buttonIndex == 1) {
         LoginController *loginController = [[LoginController alloc] init];
+        loginController.delegate = self;
         
         UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
         [self.navigationController presentModalViewController:navBar animated:YES];
@@ -360,9 +382,8 @@
                 }
             }
             
-            
-            loadingMore = false;
             [self loadData];
+            loadingMore = false;
             break;
         }
     }
@@ -388,9 +409,7 @@
     } else {
         if ((perspectives) && [perspectives count] == 0) {
             return 70;
-        } else if (indexPath.row >= [perspectives count]){
-            return 44;
-        }else {
+        } else {
             Perspective *perspective;
             perspective = [perspectives objectAtIndex:indexPath.row];
             
@@ -426,12 +445,19 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"indexPath.section: %i, indexpath.row %i", indexPath.section, indexPath.row);
-    
     static NSString *perspectiveCellIdentifier = @"Cell";
+    static NSString *loginCellIdentifier = @"LoginCell";
+    static NSString *noActivityCellIdentifier = @"NoActivityCell";
     
     UITableViewCell *cell;
-    cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
+    
+    if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
+        cell = [tableView dequeueReusableCellWithIdentifier:loginCellIdentifier];
+    } else if ((perspectives) && [perspectives count] == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:noActivityCellIdentifier];
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
+    }
     
     if ((perspectives) && [perspectives count] == 0) {
         tableView.allowsSelection = NO;
@@ -441,7 +467,7 @@
     
     if (cell == nil) {
         if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:perspectiveCellIdentifier] autorelease];
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
             
             cell.detailTextLabel.text = @"";
             cell.textLabel.text = @"";
@@ -462,7 +488,7 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
         } else if ((perspectives) && [perspectives count] == 0) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:perspectiveCellIdentifier] autorelease];
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noActivityCellIdentifier] autorelease];
             
             cell.detailTextLabel.text = @"";
             cell.textLabel.text = @"";
@@ -520,6 +546,7 @@
     
     if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
         LoginController *loginController = [[LoginController alloc] init];
+        loginController.delegate = self;
         
         UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
         [self.navigationController presentModalViewController:navBar animated:YES];

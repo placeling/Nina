@@ -12,8 +12,9 @@
 #import "ASIHTTPRequestDelegate.h"
 #import "ProfileDetailBadge.h"
 #import "asyncimageview.h"
+#import "LoginController.h"
 
-@interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate> {
+@interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate, LoginControllerDelegate> {
 	NSString *username;
 	User *user;
     BOOL loadingMore;
