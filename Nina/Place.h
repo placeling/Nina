@@ -11,6 +11,8 @@
 #import "NinaHelper.h"
 
 @interface Place : NSObject {
+    BOOL dirty;
+    
     NSString *name;
     NSString *pid;
     User *user;
@@ -33,8 +35,13 @@
     
     BOOL bookmarked;
     
+    
+    NSMutableArray *homePerspectives;
+    NSMutableArray *followingPerspectives;
+    NSMutableArray *everyonePerspectives;
+    
 }
-
+@property (nonatomic, assign) BOOL dirty;
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *pid;
 @property (nonatomic, retain) NSString *place_id;
@@ -56,6 +63,9 @@
 @property (nonatomic, retain) UIImage *icon;
 @property (nonatomic, assign) BOOL bookmarked;
 
+@property (nonatomic, assign) NSMutableArray *homePerspectives;
+@property (nonatomic, assign) NSMutableArray *followingPerspectives;
+@property (nonatomic, assign) NSMutableArray *everyonePerspectives;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
 

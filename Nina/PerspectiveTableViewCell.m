@@ -236,10 +236,12 @@
         NSString *urlText;
         
         if (self.perspective.starred){
+            [self.perspective unstar];
             urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/unstar", [NinaHelper getHostname], self.perspective.perspectiveId];
             [self.upvoteButton setImage:[UIImage imageNamed:@"unstarred.png"] forState:UIControlStateNormal];
             self.perspective.starred = false;
         } else {
+            [self.perspective star];
             urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/star", [NinaHelper getHostname], self.perspective.perspectiveId];
             [self.upvoteButton setImage:[UIImage imageNamed:@"starred.png"] forState:UIControlStateNormal];
             self.perspective.starred = true;

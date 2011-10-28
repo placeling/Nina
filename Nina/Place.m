@@ -12,11 +12,12 @@
 
 @implementation Place
 
-@synthesize name, pid, user;
+@synthesize dirty, name, pid, user;
 @synthesize address, city, perspectiveCount, bookmarked, followingPerspectiveCount;
 @synthesize location, usersBookmarking;
 @synthesize place_id, phone, googlePlacesUrl;
 @synthesize categories, icon, tags;
+@synthesize homePerspectives,followingPerspectives,everyonePerspectives;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
     
@@ -39,6 +40,7 @@
         self.usersBookmarking = [jsonDict objectForKey:@"users_bookmarking"];        
         self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
         self.tags = [jsonDict objectForKeyNotNull:@"tags"];
+        self.dirty = false;
 	}
 	return self;
 }
@@ -52,7 +54,7 @@
     } else if ([self.usersBookmarking count] > 2){
         return [NSString stringWithFormat:@"%@ & %i others you follow", [self.usersBookmarking objectAtIndex:0], [self.usersBookmarking count] -1];
     } else {
-        DLog(@"Warning: had 0 usersbookmarking but called for string");
+        DLog(@"Warning: had 0 users bookmarking but called for string");
         return @"";
     }
 }
@@ -71,6 +73,10 @@
 
     [categories release];
     [icon release];
+    
+    [homePerspectives release];
+    [followingPerspectives release];
+    [everyonePerspectives release];
     
     [super dealloc];
 }

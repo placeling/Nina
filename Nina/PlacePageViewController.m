@@ -250,7 +250,11 @@ typedef enum {
     if (myPerspective && myPerspective.mine && myPerspective.modified){
         myPerspective.modified = false;
         [self.tableView reloadData];
+    } else if (self.place.dirty){
+        self.place.dirty = false;
+        [self.tableView reloadData];
     }
+    
 }
 
 #pragma mark - Share Sheet
@@ -305,6 +309,12 @@ typedef enum {
                 [newPlace release];
                 
                 [homePerspectives removeLastObject]; //get rid of spinner wait
+                
+                //so child view can modify in place
+                self.place.homePerspectives = self.homePerspectives;
+                self.place.followingPerspectives = self.followingPerspectives;
+                self.place.everyonePerspectives = self.everyonePerspectives;
+
                 
                 NSArray *jsonPerspectives = [jsonDict objectForKey:@"perspectives"];
                 for (NSDictionary *rawDict in jsonPerspectives){

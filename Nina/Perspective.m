@@ -58,6 +58,60 @@
     
 }
 
+-(void) star{
+    if (self.place){
+        self.starred = true;
+        self.place.dirty = true;
+        
+        BOOL exists = false;
+        for (Perspective *p in self.place.homePerspectives){
+            if ([p.perspectiveId isEqualToString:self.perspectiveId]){
+                self.starred = true;
+                exists = true; 
+            }
+        }
+        if (!exists){
+            [self.place.homePerspectives addObject:self];
+        }
+        
+        for (Perspective *p in self.place.homePerspectives){
+            if ([p.perspectiveId isEqualToString:self.perspectiveId]){
+                self.starred = true;
+            }
+        }
+        for (Perspective *p in self.place.homePerspectives){
+            if ([p.perspectiveId isEqualToString:self.perspectiveId]){
+                self.starred = true;
+            }
+        }        
+    }
+}
+
+-(void) unstar{
+    if (self.place){
+        self.starred = false;      
+        self.place.dirty = true;
+
+        for (Perspective *p in self.place.homePerspectives){
+            if ([p.perspectiveId isEqualToString:self.perspectiveId]){
+                self.starred = false;
+                [self.place.homePerspectives removeObject:p];
+            }
+        }
+        
+        for (Perspective *p in self.place.homePerspectives){
+            if ([p.perspectiveId isEqualToString:self.perspectiveId]){
+                self.starred = false;
+            }
+        }
+        for (Perspective *p in self.place.homePerspectives){
+            if ([p.perspectiveId isEqualToString:self.perspectiveId]){
+                self.starred = false;
+            }
+        }        
+    }
+}
+
 - (void) dealloc {
     [user release];
     [place release];

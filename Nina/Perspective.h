@@ -45,4 +45,7 @@
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
+-(void) star;
+-(void) unstar;
+
 @end
