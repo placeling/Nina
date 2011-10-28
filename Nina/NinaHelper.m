@@ -177,12 +177,14 @@
             [formRequest setPostValue:[NSString stringWithFormat:@"%f", accuracy] forKey:@"accuracy"];
         }
         
-        //for debugging, for now.
+        //used for testing for null-signiner errors
+        /*
         for (NSDictionary* dict in [formRequest postData]){
             if ([dict objectForKey:@"value"] == nil){
                 DLog(@"ALERT-NULL POST VALUE");
             }
         }
+        */
     }
     
     [request signRequestWithClientIdentifier:[NinaHelper getConsumerKey] secret:[NinaHelper getConsumerSecret]
