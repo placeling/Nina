@@ -118,9 +118,7 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)_annotation{
     
-    if (_annotation == mapView.userLocation){
-        return nil;
-	} else {
+    if( [_annotation isKindOfClass:[PlaceMark class]] ){
         PlaceMark *annotation = _annotation;
         // try to dequeue an existing pin view first
         static NSString* annotationIdentifier = @"placeAnnotationIdentifier";
@@ -130,33 +128,29 @@
 
         if (!pinView) {            
             // if an existing pin view was not available, create one
-            MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
+            pinView = [[[MKPinAnnotationView alloc]
                                                    initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
-            customPinView.canShowCallout = YES;
-            
-            if( [annotation isKindOfClass:[PlaceMark class]] ){
-                UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-                rightButton.tag = [nearbyMarks indexOfObjectIdenticalTo:annotation.place];
-                [rightButton addTarget:self action:@selector(showPlaceDetails:) 
-                      forControlEvents:UIControlEventTouchUpInside];
-                
-                customPinView.rightCalloutAccessoryView = rightButton;
-
-            }
-            pinView = customPinView;
-            
         } else {           
             pinView.annotation = annotation;            
         }
+        pinView.canShowCallout = YES;
         
+        UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        rightButton.tag = [nearbyMarks indexOfObjectIdenticalTo:annotation.place];
+        [rightButton addTarget:self action:@selector(showPlaceDetails:) 
+              forControlEvents:UIControlEventTouchUpInside];
+        
+        pinView.rightCalloutAccessoryView = rightButton;
+
         if (annotation.place.bookmarked){
             pinView.image = [UIImage imageNamed:@"MyMarker.png"];
         } else {
             pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
         }
         return pinView;
+    } else {
+        return nil;
     }
-
 }
 
 - (void)showPlaceDetails:(UIButton*)sender{
@@ -195,9 +189,6 @@
 		// Create a dictionary from the JSON string
         
         NSArray *rawPlaces = [[jsonString JSONValue] objectForKey:@"places"];
-        if (!nearbyMarks){
-            nearbyMarks = [[NSMutableArray alloc] initWithCapacity:[rawPlaces count]];
-        } 
         
         for (NSDictionary* dict in rawPlaces){
             
@@ -257,7 +248,7 @@
     //                              options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)  
     //                           context:NULL];
     self.locationManager = [LocationManagerManager sharedCLLocationManager];
-    
+    nearbyMarks = [[NSMutableArray alloc] init];
     self.mapView.showsUserLocation = TRUE;
     self.mapView.delegate = self;
     [self recenter];
