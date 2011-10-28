@@ -34,6 +34,8 @@
 #import "FollowViewController.h"
 
 #import "LoginController.h"
+#import "MemberProfileViewController.h"
+#import "FullPerspectiveViewController.h"
 
 #define kMinCellHeight 60
 
@@ -53,6 +55,7 @@ typedef enum {
 -(void) flagPerspective:(Perspective*)perspective;
 -(void) deletePerspective:(Perspective*)perspective;
 -(NSString*) numberBookmarkCopy;
+-(void) mainContentLoad;
 @end
 
 @implementation PlacePageViewController
@@ -99,43 +102,9 @@ typedef enum {
     
     // Initializations
     [self blankLoad];
-
-    NSString *urlText;
+    [self mainContentLoad];
     
-    if (self.perspective_id){
-        urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@", [NinaHelper getHostname], self.perspective_id];
-    }else if (self.referrer){
-        if (self.google_ref){
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@&rf=%@", [NinaHelper getHostname], self.place_id, self.google_ref, self.referrer.username];
-        } else {
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?rf=%@", [NinaHelper getHostname], self.place_id, self.referrer.username];
-        }
-    } else {
-        if (self.google_ref){
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@", [NinaHelper getHostname], self.place_id, self.google_ref];
-        } else {
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@", [NinaHelper getHostname], self.place_id];
-        }
-    }
-    
-    
-    NSURL *url = [NSURL URLWithString:urlText];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    homePerspectives = [[NSMutableArray alloc] initWithObjects:@"Loading", nil];
-    followingPerspectives = [[NSMutableArray alloc] init];
-    everyonePerspectives = [[NSMutableArray alloc] init];
-    perspectives = homePerspectives;
-    self.perspectiveType = home;
-    
-    [request setDelegate:self];
-    [request setTag:0];
-    
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-     buttons = 
+    buttons = 
     [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"Home", @"Following", @"Everyone", nil], @"titles", [NSValue valueWithCGSize:CGSizeMake(106,69)], @"size", @"segmentedBackground.png", @"button-image", @"segmentedSelected.png", @"button-highlight-image", @"red-divider.png", @"divider-image", [NSNumber numberWithFloat:14.0], @"cap-width", nil];
     
     // A red segment control with 3 values
@@ -179,6 +148,65 @@ typedef enum {
     UIGraphicsEndImageContext();
     
     return resultImage;
+}
+
+-(void) mainContentLoad {
+    NSString *urlText;
+    
+    if (self.perspective_id){
+        urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@", [NinaHelper getHostname], self.perspective_id];
+    }else if (self.referrer){
+        if (self.google_ref){
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@&rf=%@", [NinaHelper getHostname], self.place_id, self.google_ref, self.referrer.username];
+        } else {
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?rf=%@", [NinaHelper getHostname], self.place_id, self.referrer.username];
+        }
+    } else {
+        if (self.google_ref){
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@", [NinaHelper getHostname], self.place_id, self.google_ref];
+        } else {
+            urlText = [NSString stringWithFormat:@"%@/v1/places/%@", [NinaHelper getHostname], self.place_id];
+        }
+    }
+    
+    
+    NSURL *url = [NSURL URLWithString:urlText];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    homePerspectives = [[NSMutableArray alloc] initWithObjects:@"Loading", nil];
+    followingPerspectives = [[NSMutableArray alloc] init];
+    everyonePerspectives = [[NSMutableArray alloc] init];
+    perspectives = homePerspectives;
+    self.perspectiveType = home;
+    
+    [request setDelegate:self];
+    [request setTag:0];
+    
+    [NinaHelper signRequest:request];
+    [request startAsynchronous];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+
+#pragma mark -
+#pragma mark LoginController Delegate Methods
+-(void) loadContent {
+    // Go back through navigation stack
+    for (int i=[[[self navigationController] viewControllers] count] - 2; i > 0; i--) {
+        NSObject *parentController = [[[self navigationController] viewControllers] objectAtIndex:i];
+        
+        if ([parentController isKindOfClass:[MemberProfileViewController class]]) {
+            MemberProfileViewController *profile = (MemberProfileViewController *)[[[self navigationController] viewControllers] objectAtIndex:i];
+            [profile mainContentLoad];
+        } else if ([parentController isKindOfClass:[PlacePageViewController class]]) {
+            PlacePageViewController *place = (PlacePageViewController *)[[[self navigationController] viewControllers] objectAtIndex:i];
+            [place mainContentLoad];
+        } else if ([parentController isKindOfClass:[FullPerspectiveViewController class]]) {
+            FullPerspectiveViewController *perspective = (FullPerspectiveViewController *)[[[self navigationController] viewControllers] objectAtIndex:i];
+            [perspective mainContentLoad];
+        }
+    }
+    
+    [self mainContentLoad];
 }
 
 #pragma mark -
@@ -715,6 +743,7 @@ typedef enum {
 {
     if (buttonIndex == 1) {
         LoginController *loginController = [[LoginController alloc] init];
+        loginController.delegate = self;
         
         UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
         [self.navigationController presentModalViewController:navBar animated:YES];

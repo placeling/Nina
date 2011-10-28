@@ -15,6 +15,7 @@
 #import "BookmarkTableViewCell.h"
 #import "EditPerspectiveViewController.h"
 #import "CustomSegmentedControl.h"
+#import "LoginController.h"
 
 typedef enum {
     home,
@@ -25,7 +26,7 @@ typedef enum {
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate> {        
+@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate> {        
     NSString *place_id; 
     NSString *perspective_id; 
     NSString *google_ref;

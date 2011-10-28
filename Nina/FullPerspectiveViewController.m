@@ -10,6 +10,12 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MemberProfileViewController.h"
 #import "NinaHelper.h"
+#import "LoginController.h"
+#import "PlacePageViewController.h"
+
+@interface FullPerspectiveViewController ()
+-(void) mainContentLoad;
+@end
 
 @implementation FullPerspectiveViewController
 
@@ -25,7 +31,7 @@
     return self;
 }
 
--(void) viewDidLoad{
+-(void) mainContentLoad {
     self.perspective = perspective;
     self.memoText.text = perspective.notes;
     
@@ -35,8 +41,13 @@
     self.tapGesture = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showAuthoringUser)] autorelease];
     [self.titleLabel addGestureRecognizer:self.tapGesture];
     
+    NSString *currentUser = [NinaHelper getUsername];
+    
     if (perspective.mine){
         //can't star own perspective
+        [self.upvoteButton setHidden:true];
+    // Manually check if belongs to newly logged in user
+    } else if (currentUser && currentUser.length >0 && [currentUser isEqualToString:self.perspective.user.username]) {
         [self.upvoteButton setHidden:true];
     } else {
         [self.upvoteButton setHidden:false];
@@ -77,6 +88,10 @@
     }
 }
 
+-(void) viewDidLoad{
+    [self mainContentLoad];
+}
+
 -(void) viewWillAppear:(BOOL)animated{
     [StyleHelper styleBackgroundView:self.view];
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
@@ -106,31 +121,44 @@
 }
 
 -(IBAction)toggleStarred{
+    NSString *currentUser = [NinaHelper getUsername];
     
-    NSString *urlText;
-    
-    if (self.perspective.starred){
-        [self.perspective unstar];
-        urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/unstar", [NinaHelper getHostname], self.perspective.perspectiveId];
-        [self.upvoteButton setImage:[UIImage imageNamed:@"unstarred.png"] forState:UIControlStateNormal];
-        self.perspective.starred = false;
+    if (!currentUser || currentUser.length == 0) {
+        UIAlertView *baseAlert;
+        NSString *alertMessage = @"Sign up or log in and you can star people's notes & photos";
+        baseAlert = [[UIAlertView alloc] 
+                     initWithTitle:nil message:alertMessage 
+                     delegate:self cancelButtonTitle:@"Not Now" 
+                     otherButtonTitles:@"Let's Go", nil];
+        baseAlert.tag = 778;        
+        [baseAlert show];
+        [baseAlert release];
     } else {
-        [self.perspective star];
-        urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/star", [NinaHelper getHostname], self.perspective.perspectiveId];
-        [self.upvoteButton setImage:[UIImage imageNamed:@"starred.png"] forState:UIControlStateNormal];
-        self.perspective.starred = true;
+        NSString *urlText;
+        
+        if (self.perspective.starred){
+            [self.perspective unstar];
+            urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/unstar", [NinaHelper getHostname], self.perspective.perspectiveId];
+            [self.upvoteButton setImage:[UIImage imageNamed:@"unstarred.png"] forState:UIControlStateNormal];
+            self.perspective.starred = false;
+        } else {
+            [self.perspective star];
+            urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/star", [NinaHelper getHostname], self.perspective.perspectiveId];
+            [self.upvoteButton setImage:[UIImage imageNamed:@"starred.png"] forState:UIControlStateNormal];
+            self.perspective.starred = true;
+        }
+        
+        NSURL *url = [NSURL URLWithString:urlText];
+        
+        ASIFormDataRequest  *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
+        
+        request.delegate = self;
+        request.tag = 5;
+        
+        [request setRequestMethod:@"POST"];
+        [NinaHelper signRequest:request];
+        [request startAsynchronous];
     }
-    
-    NSURL *url = [NSURL URLWithString:urlText];
-    
-    ASIFormDataRequest  *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
-    
-    request.delegate = self;
-    request.tag = 5;
-    
-    [request setRequestMethod:@"POST"];
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
 }
 
 
@@ -161,6 +189,44 @@
         DLog(@"%@", responseString);
     }
 
+}
+
+#pragma mark -
+#pragma mark LoginController Delegate Methods
+-(void) loadContent {
+    // Go back through navigation stack
+    for (int i=[[[self navigationController] viewControllers] count] - 2; i > 0; i--) {
+        NSObject *parentController = [[[self navigationController] viewControllers] objectAtIndex:i];
+        
+        if ([parentController isKindOfClass:[MemberProfileViewController class]]) {
+            MemberProfileViewController *profile = (MemberProfileViewController *)[[[self navigationController] viewControllers] objectAtIndex:i];
+            [profile mainContentLoad];
+        } else if ([parentController isKindOfClass:[PlacePageViewController class]]) {
+            PlacePageViewController *place = (PlacePageViewController *)[[[self navigationController] viewControllers] objectAtIndex:i];
+            [place mainContentLoad];
+        } else if ([parentController isKindOfClass:[FullPerspectiveViewController class]]) {
+            FullPerspectiveViewController *existingPerspective = (FullPerspectiveViewController *)[[[self navigationController] viewControllers] objectAtIndex:i];
+            [existingPerspective mainContentLoad];
+        }
+    }
+    
+    [self mainContentLoad];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (alertView.tag == 778) {
+        if (buttonIndex == 1) {
+            LoginController *loginController = [[LoginController alloc] init];
+            loginController.delegate = self;
+
+            UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
+            [self.navigationController presentModalViewController:navBar animated:YES];
+            [navBar release];
+            
+            [loginController release];
+        }
+    }
 }
 
 

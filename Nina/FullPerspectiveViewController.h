@@ -10,8 +10,9 @@
 #import "Perspective.h"
 #import "NinaHelper.h"
 #import "asyncimageview.h"
+#import "LoginController.h"
 
-@interface FullPerspectiveViewController : UIViewController{
+@interface FullPerspectiveViewController : UIViewController <LoginControllerDelegate>{
     Perspective *perspective;
     UITapGestureRecognizer *tapGesture;
     IBOutlet AsyncImageView *userImage;
