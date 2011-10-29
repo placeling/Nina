@@ -30,6 +30,8 @@
 @synthesize delegate;
 
 -(IBAction) submitLogin{
+    NSLog(@"Submit login");
+    
     NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
     NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     
@@ -138,8 +140,6 @@
     }
 }
 
-
-
 -(IBAction) signupOldSchool{
     
     SignupController *signupController = [[SignupController alloc]initWithStyle:UITableViewStyleGrouped];
@@ -207,10 +207,15 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
-    if (theTextField == self.username) {
-        [theTextField resignFirstResponder];
-    }
+    //if (theTextField == self.username) {
+    [theTextField resignFirstResponder];
+    //}
     return YES;
+}
+
+-(void)dismissKeyboard {
+    [self.username resignFirstResponder];
+    [self.password resignFirstResponder];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -249,18 +254,22 @@
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
     
+    //UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+    //                                                                      action:@selector(dismissKeyboard)];
+    
+    //[self.view addGestureRecognizer:tap];
+    
 }
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     
-    UIBarButtonItem *button =  [[UIBarButtonItem  alloc]initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(close)];
+    UIBarButtonItem *button =  [[UIBarButtonItem  alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(close)];
     self.navigationItem.leftBarButtonItem = button;
     [button release];
     
-    
-    self.navigationItem.title = @"Login";
+    self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_script.png"]] autorelease];
 }
 
 
