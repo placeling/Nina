@@ -55,6 +55,7 @@ typedef enum {
 -(void) flagPerspective:(Perspective*)perspective;
 -(void) deletePerspective:(Perspective*)perspective;
 -(NSString*) numberBookmarkCopy;
+-(NSString*) getUrlString;
 @end
 
 @implementation PlacePageViewController
@@ -149,25 +150,26 @@ typedef enum {
     return resultImage;
 }
 
--(void) mainContentLoad {
-    NSString *urlText;
-    
+-(NSString*) getUrlString{
     if (self.perspective_id){
-        urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@", [NinaHelper getHostname], self.perspective_id];
+        return [NSString stringWithFormat:@"%@/v1/perspectives/%@", [NinaHelper getHostname], self.perspective_id];
     }else if (self.referrer){
         if (self.google_ref){
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@&rf=%@", [NinaHelper getHostname], self.place_id, self.google_ref, self.referrer.username];
+            return [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@&rf=%@", [NinaHelper getHostname], self.place_id, self.google_ref, self.referrer.username];
         } else {
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?rf=%@", [NinaHelper getHostname], self.place_id, self.referrer.username];
+            return [NSString stringWithFormat:@"%@/v1/places/%@?rf=%@", [NinaHelper getHostname], self.place_id, self.referrer.username];
         }
     } else {
         if (self.google_ref){
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@", [NinaHelper getHostname], self.place_id, self.google_ref];
+            return [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@", [NinaHelper getHostname], self.place_id, self.google_ref];
         } else {
-            urlText = [NSString stringWithFormat:@"%@/v1/places/%@", [NinaHelper getHostname], self.place_id];
+            return [NSString stringWithFormat:@"%@/v1/places/%@", [NinaHelper getHostname], self.place_id];
         }
     }
-    
+}
+
+-(void) mainContentLoad {
+    NSString *urlText = [self getUrlString];
     
     NSURL *url = [NSURL URLWithString:urlText];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -278,7 +280,7 @@ typedef enum {
         myPerspective.modified = false;
         [self.tableView reloadData];
     } else if (self.place.dirty){
-        self.place.dirty = false;
+        [self loadData];
         [self.tableView reloadData];
     }
     
@@ -441,11 +443,11 @@ typedef enum {
                     myPerspective = [[Perspective alloc]initFromJsonDict:jsonString];
                     [homePerspectives insertObject:myPerspective atIndex:0];
                 }
-                myPerspective.place = self.place;
-                
+                myPerspective.place = self.place;                
                 
                 self.place.bookmarked = true;
-                [self.tableView reloadData];                
+                [self.tableView reloadData];      
+                [self loadData];
                 
                 break;
             }
@@ -465,6 +467,7 @@ typedef enum {
                 NSString *responseString = [request responseString];        
                 DLog(@"%@", responseString);
                         
+                [self loadData];
                 break;
             }
             case 7:{
@@ -473,6 +476,49 @@ typedef enum {
                 DLog(@"%@", responseString);
 
                 break;
+            } 
+            case 8:{
+                //load home perspectives
+                [homePerspectives removeAllObjects]; //get rid of spinner wait
+                NSString *responseString = [request responseString];        
+                DLog(@"%@", responseString);
+                NSDictionary *jsonDict = [responseString JSONValue];
+                
+                NSArray *jsonPerspectives = [jsonDict objectForKey:@"perspectives"];
+                for (NSDictionary *rawDict in jsonPerspectives){
+                    Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
+                    perspective.place = self.place;
+                    [homePerspectives addObject:perspective];
+                    [perspective release];
+                }
+                
+                jsonPerspectives = [jsonDict objectForKey:@"referring_perspectives"];
+                for (NSDictionary *rawDict in jsonPerspectives){
+                    //only add referring perspectives if they aren't already there
+                    BOOL exists = false;
+                    for (Perspective *p in homePerspectives){
+                        if ([p.perspectiveId isEqualToString:[rawDict objectForKey:@"_id"]]){
+                            exists = true;
+                            break;
+                        }
+                    }
+                    
+                    if (exists) break;
+                    
+                    Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
+                    
+                    perspective.place = self.place;
+                    [homePerspectives addObject:perspective];
+                    [perspective release];
+                }
+                
+                if (self.place.bookmarked){
+                    //should be the first one of the home persepectives
+                    myPerspective = [homePerspectives objectAtIndex:0];
+                }
+                
+                [self loadData];
+                [self.tableView reloadData];
             }
         }
 
@@ -499,6 +545,15 @@ typedef enum {
     
     request.delegate = self;
     request.tag = 6;
+    
+    self.place.perspectiveCount -=1;
+    
+    for (Perspective *p in self.place.everyonePerspectives){
+        if ( [p.perspectiveId isEqualToString:perspective.perspectiveId] ){
+            [self.place.everyonePerspectives removeObject:p];
+        }
+    }
+    self.place.dirty = true;
     
     [request setRequestMethod:@"DELETE"];
     [NinaHelper signRequest:request];
@@ -568,12 +623,12 @@ typedef enum {
 -(void) loadData{
     self.nameLabel.text = self.place.name;
     self.addressLabel.text = self.place.address;
+    self.cityLabel.text = self.place.city;
     
     if (!mapRequested){
         [self loadMap];
     } 
-
-    self.cityLabel.text = self.place.city;
+    
     self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@","];
     
     UIButton *button = [self.segmentedControl.buttons objectAtIndex:1];
@@ -602,7 +657,8 @@ typedef enum {
         
     }
     
-    [self.tagScrollView setContentSize:CGSizeMake(cx, [self.tagScrollView bounds].size.height)];    
+    [self.tagScrollView setContentSize:CGSizeMake(cx, [self.tagScrollView bounds].size.height)];  
+    self.place.dirty = false;
 }
 
 -(IBAction)editPerspective{
@@ -658,6 +714,16 @@ typedef enum {
     
     if (index == 0){
         self.perspectiveType = home;
+        if (self.place.dirty){
+            NSString *urlText = [self getUrlString];
+            
+            ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlText]];
+            [homePerspectives addObject:@"Loading"]; //marker for spinner cell
+            [request setDelegate:self];
+            [request setTag:8];
+            [NinaHelper signRequest:request];
+            [request startAsynchronous];
+        } 
         perspectives = homePerspectives;
     } else if (index == 1){
         self.perspectiveType = following;
@@ -729,6 +795,7 @@ typedef enum {
         [request setRequestMethod:@"POST"];
         [request setDelegate:self];
         [request setTag:4];
+        self.place.perspectiveCount += 1;
         
         [NinaHelper signRequest:request];
         [request startAsynchronous];
@@ -840,11 +907,11 @@ typedef enum {
         if (self.segmentedControl.selectedSegmentIndex == 1) {
            return [NSString stringWithFormat:@"%i person you follow has bookmarked this place", [self numberOfSectionBookmarks]];
         } else {
-            return [NSString stringWithFormat:@"%i people you follow have bookmarked this place", [self numberOfSectionBookmarks]];
+            return [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
         }
     } else {
         if (self.segmentedControl.selectedSegmentIndex == 1) {
-            return [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+            return [NSString stringWithFormat:@"%i people you follow have bookmarked this place", [self numberOfSectionBookmarks]];
         } else {
             return [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];   
         }            
