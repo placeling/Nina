@@ -212,6 +212,7 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
 						<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
 					</object>
 				</object>
@@ -447,7 +448,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>bookmark</string>
-							<string>changedSegment</string>
 							<string>checkinFoursquare</string>
 							<string>editPerspective</string>
 							<string>editPerspectivePhotos</string>
@@ -459,7 +459,6 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -476,7 +475,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>bookmark</string>
-							<string>changedSegment</string>
 							<string>checkinFoursquare</string>
 							<string>editPerspective</string>
 							<string>editPerspectivePhotos</string>
@@ -490,10 +488,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">bookmark</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">changedSegment</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -536,7 +530,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addressLabel</string>
 							<string>bookmarkButton</string>
-							<string>bookmarkView</string>
 							<string>categoriesLabel</string>
 							<string>cityLabel</string>
 							<string>googlePlacesButton</string>
@@ -552,7 +545,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UILabel</string>
 							<string>UIButton</string>
-							<string>UIView</string>
 							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UIButton</string>
@@ -571,7 +563,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addressLabel</string>
 							<string>bookmarkButton</string>
-							<string>bookmarkView</string>
 							<string>categoriesLabel</string>
 							<string>cityLabel</string>
 							<string>googlePlacesButton</string>
@@ -592,10 +583,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">bookmarkButton</string>
 								<string key="candidateClassName">UIButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">bookmarkView</string>
-								<string key="candidateClassName">UIView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">categoriesLabel</string>
