@@ -10,6 +10,7 @@
 #import "NinaAppDelegate.h"
 #import "EditableTableCell.h"
 #import "NSString+SBJSON.h"
+#import "SuggestUserViewController.h"
 
 @implementation SignupController
 
@@ -134,7 +135,19 @@
         
         [NinaHelper setUsername:((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField.text];
         
-        [self.navigationController dismissModalViewControllerAnimated:YES];        
+        
+        SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
+        
+        UINavigationController *navController = self.navigationController;
+        
+        // retain ourselves so that the controller will still exist once it's popped off
+        [[self retain] autorelease];
+        
+        // Pop this controller and replace with another
+        [navController popViewControllerAnimated:NO];
+        [navController pushViewController:suggestUserViewController animated:NO];
+        [suggestUserViewController release];
+  
     } else {
         NSDictionary *errors = [jsonDict objectForKey:@"message"];
         DLog(@"Signup Error: %@",errors );        

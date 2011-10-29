@@ -30,8 +30,14 @@
     
     suggestUserViewController.query = [self.searchBar.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
     
-    [self.navigationController pushViewController:suggestUserViewController animated:YES];
-    [suggestUserViewController release]; 
+        
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:suggestUserViewController];
+    
+    [StyleHelper styleNavigationBar:suggestUserViewController.navigationController.navigationBar];
+    
+    [self.navigationController presentModalViewController:navBar animated:YES];
+    [navBar release];
+    [suggestUserViewController release];
     
 }
 

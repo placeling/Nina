@@ -102,7 +102,7 @@
 #pragma mark - Actions for Buttons
 - (void)goHome {
     // Take the user to their home screen
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
 };
 
 - (void)socialAction:(id)sender {
