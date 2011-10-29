@@ -62,26 +62,15 @@
     if (self.place){
         self.starred = true;
         self.place.dirty = true;
-        
-        BOOL exists = false;
-        for (Perspective *p in self.place.homePerspectives){
+
+        for (Perspective *p in self.place.followingPerspectives){
             if ([p.perspectiveId isEqualToString:self.perspectiveId]){
-                self.starred = true;
-                exists = true; 
+                p.starred = true;
             }
         }
-        if (!exists){
-            [self.place.homePerspectives addObject:self];
-        }
-        
-        for (Perspective *p in self.place.homePerspectives){
+        for (Perspective *p in self.place.everyonePerspectives){
             if ([p.perspectiveId isEqualToString:self.perspectiveId]){
-                self.starred = true;
-            }
-        }
-        for (Perspective *p in self.place.homePerspectives){
-            if ([p.perspectiveId isEqualToString:self.perspectiveId]){
-                self.starred = true;
+                p.starred = true;
             }
         }        
     }
@@ -94,19 +83,19 @@
 
         for (Perspective *p in self.place.homePerspectives){
             if ([p.perspectiveId isEqualToString:self.perspectiveId]){
-                self.starred = false;
+                p.starred = false;
                 [self.place.homePerspectives removeObject:p];
             }
         }
         
-        for (Perspective *p in self.place.homePerspectives){
+        for (Perspective *p in self.place.followingPerspectives){
             if ([p.perspectiveId isEqualToString:self.perspectiveId]){
-                self.starred = false;
+                p.starred = false;
             }
         }
-        for (Perspective *p in self.place.homePerspectives){
+        for (Perspective *p in self.place.everyonePerspectives){
             if ([p.perspectiveId isEqualToString:self.perspectiveId]){
-                self.starred = false;
+                p.starred = false;
             }
         }        
     }
