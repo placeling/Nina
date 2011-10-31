@@ -1087,6 +1087,21 @@ typedef enum {
     
         Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
         
+        if ( self.perspectiveType == home && perspective.mine ) {
+            BOOL emptyPerspective = true;
+            if(perspective.notes && perspective.notes.length > 0){
+                emptyPerspective = false;
+            }
+            
+            if(perspective.photos && perspective.photos.count > 0){
+                emptyPerspective = false;
+            }
+            
+            if (emptyPerspective) {
+                [self performSelector:@selector(editPerspective)];
+            }
+        }
+        
         if ( !( self.perspectiveType == home && perspective.mine  ) ){
             FullPerspectiveViewController *fullPerspectiveViewController = [[FullPerspectiveViewController alloc] init];
             fullPerspectiveViewController.perspective = perspective;
