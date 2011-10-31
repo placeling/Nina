@@ -56,7 +56,7 @@
         
         searchTerm  = [searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
         
-        urlString = [NSString stringWithFormat:@"%@?lat=%@&long=%@&accuracy=%@&query=%@", urlString, lat, lon, radius, searchTerm];
+        urlString = [NSString stringWithFormat:@"%@?lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lon, radius, searchTerm];
         NSURL *url = [NSURL URLWithString:urlString];
         
 		ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
