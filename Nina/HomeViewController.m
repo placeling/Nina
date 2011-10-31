@@ -84,6 +84,7 @@
     [self.scrollFooter setFrame:CGRectMake(self.scrollFooter.frame.origin.x, self.scrollFooter.frame.origin.y, MAX(cx, 320), self.scrollFooter.frame.size.height)];
     
     self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_script.png"]] autorelease];
+    self.navigationItem.title = @"Placeling";
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocation *location = manager.location;
