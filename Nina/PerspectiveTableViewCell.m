@@ -173,9 +173,9 @@
 }
 
 -(void) flagPerspective{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Flag Note" 
-          message:[NSString stringWithFormat: @"Are you sure you want to flag %@'s note?", self.perspective.user.username] 
-          delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Flag For Moderation" 
+          message:[NSString stringWithFormat: @"Are you sure you want to flag\nthis as inappropriate?", self.perspective.user.username] 
+          delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     [alert show];
     [alert release];
  

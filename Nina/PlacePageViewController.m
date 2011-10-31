@@ -122,6 +122,8 @@ typedef enum {
         mapRequested = false;
     }
     
+    [StyleHelper styleContactInfoButton:self.googlePlacesButton];
+    
     self.navigationController.title = self.place.name;
     
     UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
@@ -920,7 +922,6 @@ typedef enum {
 
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     if ([self shouldShowSectionView] && indexPath.section == 0){
         if (self.perspectiveType == home && self.place.bookmarked == false){
             return 64;
@@ -941,7 +942,6 @@ typedef enum {
         //a visible perspective row PerspectiveTableViewCell        
         return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
     }
-    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -1059,6 +1059,10 @@ typedef enum {
         }
         
     }
+    
+    // Print location of cell
+    NSLog(@"Cell starts at: %f", cell.frame.origin.y);
+    NSLog(@"Cell ends at: %f", cell.frame.size.height);
     
     // Configure the cell...
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
