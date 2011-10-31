@@ -310,10 +310,19 @@
             cell.textLabel.text = @"n/a";
         }
         
-        if ( [place objectForKey:@"distance"] != [NSNull null] ){
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@m", [place objectForKey:@"distance"]];
+        float lat =   [[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lat"] floatValue];
+        float lng =   [[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lng"] floatValue];
+        
+        CLLocation *loc = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
+        
+        CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
+        CLLocation *userLocation = manager.location;
+        
+        if (userLocation != nil){ 
+            float target = [userLocation distanceFromLocation:loc];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%.0fm", target];
         } else {
-            cell.detailTextLabel.text = @"";
+            cell.detailTextLabel.text = @"Can't get location";
         }
     }
     
