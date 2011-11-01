@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "NinaHelper.h"
 
-
-@interface SuggestUserViewController : UITableViewController {
+@interface SuggestUserViewController : UITableViewController<ASIHTTPRequestDelegate> {
     NSMutableArray *members; // An array where each item is a dictionary with name, photo url and city
     
     NSString *query; //for finding users based on a specific area

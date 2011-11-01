@@ -58,7 +58,7 @@
     
     NSString *span = [NSString stringWithFormat:@"%f", self.mapView.region.span.latitudeDelta];
     
-    urlString = [NSString stringWithFormat:@"%@?lat=%@&long=%@&span=%@", urlString, lat, lng, span];
+    urlString = [NSString stringWithFormat:@"%@?lat=%@&lng=%@&span=%@", urlString, lat, lng, span];
     
     if (self.username != nil){
         urlString = [NSString stringWithFormat:@"%@&username=%@", urlString, self.username]; 

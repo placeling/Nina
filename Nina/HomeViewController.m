@@ -54,7 +54,7 @@
 
         CGRect rect = CGRectMake(cx, 3, 64, 64);
         QuickPickButton *button = [[QuickPickButton alloc] initWithFrame:rect];
-        button.query = [category objectAtIndex:1];
+        button.category = [category objectAtIndex:1];
         UIImage *image = [UIImage imageNamed:[category objectAtIndex:0]];
         [button setImage:image forState:UIControlStateNormal];
         [self.pickScroll addSubview:button];
@@ -130,7 +130,8 @@
     QuickPickButton *buttonClicked = (QuickPickButton *)sender;
     
     NearbySuggestedPlaceController *nearbyPlaceController = [[NearbySuggestedPlaceController alloc] init];    
-    nearbyPlaceController.searchTerm = buttonClicked.query;
+    
+    nearbyPlaceController.category = buttonClicked.category;
     
     [self.navigationController pushViewController:nearbyPlaceController animated:TRUE];
     [nearbyPlaceController release];

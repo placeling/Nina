@@ -10,6 +10,6 @@
 
 @implementation QuickPickButton
 
-@synthesize query;
+@synthesize category;
 
 @end

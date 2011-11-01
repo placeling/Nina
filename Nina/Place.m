@@ -8,7 +8,7 @@
 
 #import "Place.h"
 #import "NSDictionary+Utility.h"
-
+#import "NinaHelper.h"
 
 @implementation Place
 
@@ -57,6 +57,20 @@
         DLog(@"Warning: had 0 users bookmarking but called for string");
         return @"";
     }
+}
+
+-(NSString*) distance{
+    
+    CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
+    CLLocation *userLocation = manager.location;
+    
+	if (userLocation != nil){ 
+        float target = [userLocation distanceFromLocation:self.location];
+        return [NSString stringWithFormat:@"%.0fm", target];
+    } else {
+        return @"Can't get location";
+    }
+    
 }
 
 - (void) dealloc{

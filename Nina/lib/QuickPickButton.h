@@ -10,10 +10,10 @@
 
 @interface QuickPickButton : UIButton{
     
-    NSString *query;
+    NSString *category;
 }
 
 
-@property(nonatomic, retain) NSString *query;
+@property(nonatomic, retain) NSString *category;
 
 @end
