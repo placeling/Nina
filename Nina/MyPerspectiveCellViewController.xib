@@ -50,7 +50,7 @@
 							<object class="IBUILabel" id="535021188">
 								<reference key="NSNextResponder" ref="573158253"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrameSize">{317, 67}</string>
+								<string key="NSFrame">{{20, 5}, {280, 77}}</string>
 								<reference key="NSSuperview" ref="573158253"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="616047440"/>
@@ -62,7 +62,7 @@
 									<integer value="320" key="IBUIAccessibilityTraits"/>
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">Pitchfork VHS aesthetic williamsburg, terry richardson keffiyeh hoodie biodiesel vice carles single-origin coffee chambray mcsweeney's squid mlkshk. </string>
+								<string key="IBUIText">Pitchfork VHS aesthetic williamsburg, terry richardson keffiyeh hoodie biodiesel vice carles single-origin coffee chambray mcsweeney's squid mlkshk. Pitchfork VHS aesthetic williamsburg, terry richardson keffiyeh hoodie biodiesel vice carles single-origin coffee chambray mcsweeney's squid mlkshk. </string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">2</int>
 									<bytes key="NSRGB">MC4zOTYwNzg0Njc0IDAuMzA5ODAzOTMyOSAwLjE2NDcwNTg4NzQAA</bytes>
@@ -71,7 +71,6 @@
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUINumberOfLines">3</int>
-								<int key="IBUILineBreakMode">0</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="538559380">
 									<int key="type">1</int>
 									<double key="pointSize">14</double>
@@ -85,7 +84,7 @@
 							<object class="IBUIScrollView" id="616047440">
 								<reference key="NSNextResponder" ref="573158253"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{0, 63}, {320, 160}}</string>
+								<string key="NSFrame">{{0, 90}, {320, 160}}</string>
 								<reference key="NSSuperview" ref="573158253"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1049628760"/>
@@ -164,7 +163,6 @@
 										<string key="NSFrame">{{268, 0}, {45, 45}}</string>
 										<reference key="NSSuperview" ref="1049628760"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<int key="IBUIContentHorizontalAlignment">0</int>
@@ -210,7 +208,7 @@
 										</object>
 									</object>
 								</object>
-								<string key="NSFrame">{{3, 227}, {317, 60}}</string>
+								<string key="NSFrame">{{3, 254}, {317, 60}}</string>
 								<reference key="NSSuperview" ref="573158253"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="502736216"/>
@@ -225,7 +223,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</object>
-						<string key="NSFrameSize">{320, 287}</string>
+						<string key="NSFrameSize">{320, 314}</string>
 						<reference key="NSSuperview" ref="309600393"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="535021188"/>
@@ -240,7 +238,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</object>
-				<string key="NSFrameSize">{319, 288}</string>
+				<string key="NSFrameSize">{319, 315}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="573158253"/>
@@ -250,7 +248,7 @@
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="573158253"/>
-				<real value="288" key="IBUIRowHeight"/>
+				<real value="315" key="IBUIRowHeight"/>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -358,9 +356,9 @@
 						<reference key="object" ref="309600393"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="535021188"/>
 							<reference ref="616047440"/>
 							<reference ref="1049628760"/>
+							<reference ref="535021188"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">My Perspective Cell View Controller</string>
