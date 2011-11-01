@@ -150,7 +150,7 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    if (self.category ||  [self.category length] > 0){
+    if (self.category &&  [self.category length] > 0){
         self.navigationItem.title = self.category;
     } else {
         self.navigationItem.title = @"Nearby";
