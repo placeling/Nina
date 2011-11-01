@@ -999,7 +999,7 @@ typedef enum {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:infoCellIdentifier];
                 cell.textLabel.text = [self numberBookmarkCopy];
                 cell.textLabel.textColor = self.addressLabel.textColor;
-                cell.textLabel.font = self.nameLabel.font;
+                cell.textLabel.font = [UIFont fontWithName:self.nameLabel.font.fontName size:13];
                 cell.textLabel.textAlignment = UITextAlignmentCenter;
             }            
             
