@@ -216,7 +216,10 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
-    if (theTextField == self.password) {
+    if (theTextField == self.username) {
+        [theTextField resignFirstResponder];
+        [self.password becomeFirstResponder];
+    } else if (theTextField == self.password) {
         [theTextField resignFirstResponder];
         [self performSelector:@selector(submitLogin)];
     }
@@ -267,6 +270,7 @@
     
     [StyleHelper styleSubmitTypeButton:submitButton];
     
+    self.username.delegate = self;
     self.password.delegate = self;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
