@@ -15,11 +15,13 @@
 @interface FullPerspectiveViewController : UIViewController <LoginControllerDelegate>{
     Perspective *perspective;
     UITapGestureRecognizer *tapGesture;
+    UITapGestureRecognizer *flagTap;
     IBOutlet AsyncImageView *userImage;
     IBOutlet UIButton *upvoteButton;
     IBOutlet UITextView *memoText;
     IBOutlet UILabel *titleLabel;
     IBOutlet UIScrollView *scrollView;
+    IBOutlet UILabel *flagLabel;
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
@@ -29,10 +31,13 @@
 @property(nonatomic,retain) IBOutlet UILabel *titleLabel;
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic,retain) UITapGestureRecognizer *tapGesture;
+@property(nonatomic,retain) UITapGestureRecognizer *flagTap;
+@property(nonatomic,retain) IBOutlet UILabel *flagLabel;
 
 -(IBAction) toggleStarred;
 -(IBAction) showAuthoringUser;
 
 -(void) mainContentLoad; // public as called by child controllers
+-(void) flagPerspective;
 
 @end
