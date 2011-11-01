@@ -26,6 +26,7 @@
     BOOL locationEnabled;
     
     NSString *searchTerm;
+    NSString *category;
     
     NSMutableArray  *nearbyPlaces;
 }
@@ -41,6 +42,7 @@
 @property(nonatomic,assign) BOOL dataLoaded;
 @property(nonatomic,assign) BOOL locationEnabled;
 @property(nonatomic,retain) NSString *searchTerm;
+@property(nonatomic,retain) NSString *category;
 
 -(IBAction)popularPlaces:(id)sender;
 -(IBAction)topLocals:(id)sender;

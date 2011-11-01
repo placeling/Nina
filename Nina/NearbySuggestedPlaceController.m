@@ -24,33 +24,28 @@
 @implementation NearbySuggestedPlaceController
 
 @synthesize searchBar=_searchBar, popularPlacesButton, topLocalsButton, toolbar;
-@synthesize reloading=_reloading, showAll, placesTableView, searchTerm, dataLoaded, locationEnabled;
+@synthesize reloading=_reloading, showAll, placesTableView, searchTerm, category, dataLoaded, locationEnabled;
 
 -(IBAction)topLocals:(id)sender{
     SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
     
-    suggestUserViewController.query = [self.searchBar.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    suggestUserViewController.query = [self encodeForUrl:self.searchBar.text];
     
-        
-    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:suggestUserViewController];
-    
-    [StyleHelper styleNavigationBar:suggestUserViewController.navigationController.navigationBar];
-    
-    [self.navigationController presentModalViewController:navBar animated:YES];
-    [navBar release];
+    [self.navigationController pushViewController:suggestUserViewController animated:YES];
     [suggestUserViewController release];
     
 }
 
 -(IBAction)popularPlaces:(id)sender{
-    if (!self.showAll){
-        self.showAll = TRUE;
-        self.popularPlacesButton.title = @"Following's Places";
-    }else{
-        self.showAll = false;
-        self.popularPlacesButton.title = @"Popular Places";
-    }
-    [self findNearbyPlaces];
+    
+    NearbySuggestedPlaceController *placeController = [[NearbySuggestedPlaceController alloc] init];
+    
+    placeController.showAll = true;
+    placeController.category = self.category;
+    placeController.searchTerm = self.searchTerm;
+    
+    [self.navigationController pushViewController:placeController animated:true];
+    [placeController release];
 }
 
 
@@ -76,11 +71,12 @@
         NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
         
         NSString *queryString = [self encodeForUrl:self.searchTerm];
+        NSString *categoryString = [self encodeForUrl:self.category];
         
         if (!showAll){
-            urlString = [NSString stringWithFormat:@"%@?socialgraph=true&lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lng, radius, queryString];
+            urlString = [NSString stringWithFormat:@"%@?socialgraph=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", urlString, lat, lng, radius, queryString, categoryString];
         } else {
-            urlString = [NSString stringWithFormat:@"%@?socialgraph=false&lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lng, radius, queryString];
+            urlString = [NSString stringWithFormat:@"%@?socialgraph=false&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", urlString, lat, lng, radius, queryString, categoryString];
         }
         NSURL *url = [NSURL URLWithString:urlString];
         
@@ -139,6 +135,12 @@
     } else {
         self.searchBar.text = self.searchTerm;
     }
+    
+    if (self.showAll){
+        [self.placesTableView setFrame:CGRectMake(self.placesTableView.frame.origin.x, self.placesTableView.frame.origin.y, self.placesTableView.frame.size.width, self.placesTableView.frame.size.height + self.toolbar.frame.size.height)];
+        self.toolbar.hidden = true;
+    }
+    
     self.searchBar.delegate = self;
     self.placesTableView.delegate = self;
     
@@ -147,7 +149,13 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.title = @"Nearby";
+    
+    if (self.category ||  [self.category length] > 0){
+        self.navigationItem.title = self.category;
+    } else {
+        self.navigationItem.title = @"Nearby";
+    }
+    
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     [StyleHelper styleToolBar:self.toolbar];
     [StyleHelper styleSearchBar:self.searchBar];
@@ -174,6 +182,7 @@
     [toolbar release];
     [placesTableView release];
     [searchTerm release];
+    [category release];
     [super dealloc] ;
 }
 

@@ -48,14 +48,15 @@
     
     // Set up buttons
     self.navigationItem.title = @"Follow Suggestions";
-    self.navigationItem.hidesBackButton = YES;
+    
+    /*
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
                                     initWithTitle:@"Done"
                                     style:UIBarButtonItemStyleDone
                                     target:self
                                     action:@selector(goHome)];
 	self.navigationItem.rightBarButtonItem = doneButton;
-	[doneButton release];
+	[doneButton release]; */
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocationCoordinate2D location = [manager location].coordinate;
@@ -66,20 +67,28 @@
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [NinaHelper signRequest:request];
     [request setDelegate:self];
-    [request startSynchronous];
+    [request startAsynchronous];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    if ([request error]){
-        [NinaHelper handleBadRequest:request sender:self];
-    } else {
-		NSString *responseString = [request responseString];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request{
+	[NinaHelper handleBadRequest:request sender:self];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	if (200 != [request responseStatusCode]){
+		[NinaHelper handleBadRequest:request sender:self];
+	} else {
+        NSString *responseString = [request responseString];
         DLog(@"%@", responseString);
         [members release];
         
         NSArray *rawUsers = [[responseString JSONValue] objectForKey:@"suggested"];
         members = [[NSMutableArray alloc]initWithCapacity:[rawUsers count]];
-
+        
         for (NSDictionary* rawUser in rawUsers){
             User *user = [[User alloc] initFromJsonDict:rawUser];
             [members addObject:user];
@@ -87,9 +96,10 @@
         }
         [self.tableView reloadData];
 	}
-	
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
+
+
+
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -105,22 +115,6 @@
     [self.navigationController dismissModalViewControllerAnimated:YES];
 };
 
-- (void)socialAction:(id)sender {
-    /*
-    UIButton *button = (UIButton *)sender;
-    int row = [button superview].tag;
-    
-    NSString *actionURL = [NSString stringWithFormat:@"%@%@", TOP_LEVEL_DOMAIN, [[members objectAtIndex:row] objectForKey:@"url"]];
-	NSLog(@"Need to call: %@", actionURL);
-	NSURL *url = [NSURL URLWithString:actionURL];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	[request setRequestMethod:@"POST"]; 
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [request setDelegate:self];
-    [request startSynchronous];
-
-     */
-}
 
 #pragma mark -
 #pragma mark Get data for table view
