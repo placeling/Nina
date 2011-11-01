@@ -19,5 +19,6 @@
 +(void) styleMapImage:(UIButton*)button;
 +(void) styleTagButton:(UIButton*)button;
 +(void) styleContactInfoButton:(UIButton*)button;
++(void) styleSubmitTypeButton:(UIButton*)button;
 
 @end
