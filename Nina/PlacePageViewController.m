@@ -56,6 +56,7 @@ typedef enum {
 -(void) deletePerspective:(Perspective*)perspective;
 -(NSString*) numberBookmarkCopy;
 -(NSString*) getUrlString;
+-(bool) returnMinRowHeight:(NSIndexPath *)indexPath;
 @end
 
 @implementation PlacePageViewController
@@ -821,8 +822,6 @@ typedef enum {
 }
 
 #pragma mark - Table View
-
-
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row >= [perspectives count]){
         return NO;
@@ -920,8 +919,57 @@ typedef enum {
     }
 }
 
+-(bool)returnMinRowHeight:(NSIndexPath *)indexPath {
+    // Goal is to always have the contact info as a sticky footer at the bottom of the view
+    // However, table has variable number of rows and sections
+    
+    // 1. No perspective at all
+    Perspective *perspective;
+    if ([perspectives count] > 0) {
+        perspective = [perspectives objectAtIndex:indexPath.row];
+        NSLog(@"perspective: %@", perspective);
+    } else {
+        return true;
+    }
+    
+    // 2. Loading
+    if ([perspective isKindOfClass:[NSString class]]) {
+        return true;
+    }
+    
+    // 3. Home, not bookmarked, no referrer
+    if (self.perspectiveType == home && [perspectives count] == 0) {
+        return true;
+    }
+    
+    // 4. Home, bookmarked but no referrer and not enough notes/photos to push off bottom of screen
+    if (self.perspectiveType == home && self.place.bookmarked == true && [perspectives count] < 2) {
+        if ([MyPerspectiveCellViewController cellHeightForPerspective:perspective] < 118) {
+            return true;
+        }
+    }
+    
+    // 5. "Everyone" or "Following" and no content
+    if (self.perspectiveType != home && [perspectives count] == 0) {
+        return true;
+    }
+    
+    // 6. "Everyone" or "Following" and only one cell, but not enough content in cell to push below screen
+    if (self.perspectiveType != home && [perspectives count] < 2) {
+        if ([PerspectiveTableViewCell cellHeightForPerspective:perspective] < 118) {
+            return true;
+        }
+    }
+    
+    return false;
+}
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    // Need to calculate height so that footer always sticks to bottom of screen
+    if ([self returnMinRowHeight:indexPath]) {
+        return 118;
+    }
+    
     if ([self shouldShowSectionView] && indexPath.section == 0){
         if (self.perspectiveType == home && self.place.bookmarked == false){
             return 64;
@@ -1059,10 +1107,6 @@ typedef enum {
         }
         
     }
-    
-    // Print location of cell
-    NSLog(@"Cell starts at: %f", cell.frame.origin.y);
-    NSLog(@"Cell ends at: %f", cell.frame.size.height);
     
     // Configure the cell...
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
