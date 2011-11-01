@@ -139,7 +139,7 @@
     } else {
         cell.flagLabel.hidden = TRUE;
     }
-    cell.createdAtLabel.text = [NSString stringWithFormat:@"Last Modified: %@", [NinaHelper dateDiff:perspective.lastModified]  ];
+    cell.createdAtLabel.text = [NSString stringWithFormat:@"last modified: %@", [NinaHelper dateDiff:perspective.lastModified]  ];
     
     [cell.createdAtLabel setFrame:CGRectMake(cell.createdAtLabel.frame.origin.x, verticalCursor, cell.createdAtLabel.frame.size.width, cell.createdAtLabel.frame.size.height)];
     
@@ -173,9 +173,9 @@
 }
 
 -(void) flagPerspective{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Flag Note" 
-          message:[NSString stringWithFormat: @"Are you sure you want to flag %@'s note?", self.perspective.user.username] 
-          delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Flag For Moderation" 
+          message:[NSString stringWithFormat: @"Are you sure you want to flag\nthis as inappropriate?", self.perspective.user.username] 
+          delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     [alert show];
     [alert release];
  

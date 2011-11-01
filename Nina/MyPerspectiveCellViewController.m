@@ -42,7 +42,7 @@
     CGFloat verticalCursor = cell.memoLabel.frame.origin.y;
     cell.perspective = perspective;
     BOOL emptyPerspective = true;
-    cell.footerLabel.text = [NSString stringWithFormat:@"Last Modified: %@", [NinaHelper dateDiff:perspective.lastModified]  ];
+    cell.footerLabel.text = [NSString stringWithFormat:@"last modified: %@", [NinaHelper dateDiff:perspective.lastModified]  ];
     
     if(perspective.notes && perspective.notes.length > 0){
         emptyPerspective = false;
@@ -93,7 +93,7 @@
     }
     
     if(emptyPerspective){
-        cell.editPromptLabel.text = @"click to add a notes or photos";
+        cell.editPromptLabel.text = @"tap to add notes or photos";
         cell.editPromptLabel.hidden = false;
     }
     

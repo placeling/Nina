@@ -122,6 +122,8 @@ typedef enum {
         mapRequested = false;
     }
     
+    [StyleHelper styleContactInfoButton:self.googlePlacesButton];
+    
     self.navigationController.title = self.place.name;
     
     UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
@@ -920,7 +922,6 @@ typedef enum {
 
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     if ([self shouldShowSectionView] && indexPath.section == 0){
         if (self.perspectiveType == home && self.place.bookmarked == false){
             return 64;
@@ -941,7 +942,6 @@ typedef enum {
         //a visible perspective row PerspectiveTableViewCell        
         return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
     }
-    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -1060,6 +1060,10 @@ typedef enum {
         
     }
     
+    // Print location of cell
+    NSLog(@"Cell starts at: %f", cell.frame.origin.y);
+    NSLog(@"Cell ends at: %f", cell.frame.size.height);
+    
     // Configure the cell...
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -1086,6 +1090,21 @@ typedef enum {
     } else {
     
         Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+        
+        if ( self.perspectiveType == home && perspective.mine ) {
+            BOOL emptyPerspective = true;
+            if(perspective.notes && perspective.notes.length > 0){
+                emptyPerspective = false;
+            }
+            
+            if(perspective.photos && perspective.photos.count > 0){
+                emptyPerspective = false;
+            }
+            
+            if (emptyPerspective) {
+                [self performSelector:@selector(editPerspective)];
+            }
+        }
         
         if ( !( self.perspectiveType == home && perspective.mine  ) ){
             FullPerspectiveViewController *fullPerspectiveViewController = [[FullPerspectiveViewController alloc] init];

@@ -36,25 +36,20 @@
     view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"infoBackground.png"]];    
     view.opaque =NO;
     view.layer.opaque = NO;
-    //view.layer.opacity = 0.5;
 }
 
 +(void) styleBookmarkButton:(UIButton*)button{
     [button setBackgroundImage:[UIImage imageNamed:@"redLeather.png"] forState:UIControlStateNormal];
     [button.titleLabel setFont:[UIFont fontWithName:@"MarketingScript" size:30]];
     [button.layer setCornerRadius:5.0f];
-    [button.layer setShadowColor:[UIColor blackColor].CGColor];
-    [button.layer setShadowOpacity:0.8];
-    [button.layer setShadowRadius:5];
-    [button.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
+    [button.layer setMasksToBounds:YES];
 }
 
 +(void) styleMapImage:(UIButton*)button{
-    button.layer.shadowColor = [UIColor blackColor].CGColor;
-    button.layer.shadowOpacity = 0.8;
-    button.layer.shadowRadius = 5;
-    button.layer.shadowOffset = CGSizeMake(6.0f, 6.0f);
-    //[UIColor colorWithPatternImage:[UIImage imageNamed:@"leather.png"] ];
+    [button.layer setCornerRadius:4.0f];
+    [button.layer setMasksToBounds:YES];
+    button.layer.borderWidth = 1.0f;
+    button.layer.borderColor = [UIColor colorWithRed:203.0f/255.0f green:196.0f/255.0f blue:151.0f/255.0f alpha:1.0f].CGColor;
 }
 
 +(void) styleTagButton:(UIButton*)button{
@@ -68,20 +63,20 @@
     gradient.startPoint = CGPointMake(0.5, 0.0);
     gradient.endPoint = CGPointMake(0.5, 1.0);
     
-    
-    //[button.layer insertSublayer:gradient atIndex:0];
-    
     [button.layer setCornerRadius:4.0f];
-    //[button.layer setBorderColor:[UIColor blackColor].CGColor];
-    //[button.layer setBorderWidth:0.5f];
     [button.layer setShadowColor:[UIColor blackColor].CGColor];
     [button.layer setShadowOpacity:0.8];
     [button.layer setShadowRadius:1.0];
     [button.layer setShadowOffset:CGSizeMake(1.0, 1.0)];
     
     button.layer.backgroundColor = [self getTintColour].CGColor;
-    
-    //[button setNeedsDisplay];
+}
+
++(void) styleContactInfoButton:(UIButton*)button {
+    [button.layer setCornerRadius:5.0f];
+    [button.layer setMasksToBounds:YES];
+    button.layer.borderWidth = 1.0f;
+    button.layer.borderColor = [UIColor colorWithRed:203.0f/255.0f green:196.0f/255.0f blue:151.0f/255.0f alpha:1.0f].CGColor;
 }
 
 +(UIColor*) getTintColour{

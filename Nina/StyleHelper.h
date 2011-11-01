@@ -18,5 +18,6 @@
 +(void) styleBookmarkButton:(UIButton*)button;
 +(void) styleMapImage:(UIButton*)button;
 +(void) styleTagButton:(UIButton*)button;
++(void) styleContactInfoButton:(UIButton*)button;
 
 @end
