@@ -1047,7 +1047,7 @@ typedef enum {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:infoCellIdentifier];
                 cell.textLabel.text = [self numberBookmarkCopy];
                 cell.textLabel.textColor = self.addressLabel.textColor;
-                cell.textLabel.font = self.nameLabel.font;
+                cell.textLabel.font = [UIFont fontWithName:self.nameLabel.font.fontName size:13];
                 cell.textLabel.textAlignment = UITextAlignmentCenter;
             }            
             
@@ -1135,28 +1135,11 @@ typedef enum {
     
         Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
         
-        if ( self.perspectiveType == home && perspective.mine ) {
-            BOOL emptyPerspective = true;
-            if(perspective.notes && perspective.notes.length > 0){
-                emptyPerspective = false;
-            }
-            
-            if(perspective.photos && perspective.photos.count > 0){
-                emptyPerspective = false;
-            }
-            
-            if (emptyPerspective) {
-                [self performSelector:@selector(editPerspective)];
-            }
-        }
+        FullPerspectiveViewController *fullPerspectiveViewController = [[FullPerspectiveViewController alloc] init];
+        fullPerspectiveViewController.perspective = perspective;
         
-        if ( !( self.perspectiveType == home && perspective.mine  ) ){
-            FullPerspectiveViewController *fullPerspectiveViewController = [[FullPerspectiveViewController alloc] init];
-            fullPerspectiveViewController.perspective = perspective;
-            
-            [[self navigationController] pushViewController:fullPerspectiveViewController animated:YES];
-            [fullPerspectiveViewController release];
-        }
+        [[self navigationController] pushViewController:fullPerspectiveViewController animated:YES];
+        [fullPerspectiveViewController release];
     }
 }
 

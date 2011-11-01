@@ -9,6 +9,7 @@
 #import "MyPerspectiveCellViewController.h"
 #import "EditPerspectiveViewController.h"
 #import "asyncimageview.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation MyPerspectiveCellViewController
 
@@ -19,7 +20,7 @@
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
-    CGFloat heightCalc = 60; //mostly for footer label
+    CGFloat heightCalc = 87; //mostly for footer label
     
     CGSize textAreaSize;
     textAreaSize.height = 66;
@@ -78,7 +79,8 @@
             AsyncImageView *imageView = [[AsyncImageView alloc] initWithFrame:rect];
             [imageView loadImageFromPhoto:photo]; 
             imageView.userInteractionEnabled = TRUE;
-                        
+            [imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+            [imageView.layer setBorderWidth: 5.0];   
             [cell.imageScroll addSubview:imageView];
             
             cx += imageView.frame.size.width+5;

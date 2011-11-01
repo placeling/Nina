@@ -16,7 +16,7 @@
 @implementation FullPerspectiveViewController
 
 @synthesize perspective, userImage, upvoteButton, memoText,titleLabel, scrollView;
-@synthesize tapGesture;
+@synthesize tapGesture, flagLabel, flagTap;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,6 +30,11 @@
 -(void) mainContentLoad {
     self.perspective = perspective;
     self.memoText.text = perspective.notes;
+    BOOL hasContent = false;
+    
+    if ([perspective.notes length] > 0){
+        hasContent = true;
+    }
     
     self.titleLabel.text = perspective.user.username;
     
@@ -60,7 +65,7 @@
     self.memoText.backgroundColor = [UIColor clearColor];
     
     if(perspective.photos && perspective.photos.count > 0){
-        
+        hasContent = true;
         CGFloat cx = 2;
         for ( Photo* photo in [perspective.photos reverseObjectEnumerator] ){
             
@@ -82,6 +87,17 @@
     }else{
         self.scrollView.hidden = TRUE; //remove from view
     }
+    
+    if (hasContent && self.perspective.mine == false){
+        self.flagTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(flagPerspective)] autorelease];
+        [self.flagLabel addGestureRecognizer:self.flagTap];
+        self.flagLabel.userInteractionEnabled = TRUE;
+
+    } else {
+        self.flagLabel.hidden = TRUE;
+    }
+
+    
 }
 
 -(void) viewDidLoad{
@@ -166,6 +182,9 @@
     [titleLabel release];
     [scrollView release];
     [tapGesture release];
+    [flagLabel  release];
+    [flagTap release];
+    
     [super dealloc];
 }
 
@@ -209,18 +228,50 @@
     [self mainContentLoad];
 }
 
+
+-(void) flagPerspective{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Flag For Moderation" 
+                                                    message:[NSString stringWithFormat: @"Are you sure you want to flag\nthis as inappropriate?", self.perspective.user.username] 
+                                                   delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [alert show];
+    [alert release];
+    
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     if (alertView.tag == 778) {
         if (buttonIndex == 1) {
             LoginController *loginController = [[LoginController alloc] init];
             loginController.delegate = self;
-
+            
             UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
             [self.navigationController presentModalViewController:navBar animated:YES];
             [navBar release];
             
             [loginController release];
+        }
+    } else {
+        if (buttonIndex == 0){
+            DLog(@"Cancel flaggin");
+        } else {
+            DLog(@"Flagging %@'s perspective", self.perspective.user.username);
+            
+            NSString *urlText = [NSString stringWithFormat:@"%@/v1/perspectives/%@/flag", [NinaHelper getHostname], self.perspective.perspectiveId];
+            self.flagLabel.userInteractionEnabled = FALSE;
+            self.flagLabel.textColor = [UIColor blackColor];
+            self.flagLabel.text = @"Flagged";
+            
+            NSURL *url = [NSURL URLWithString:urlText];
+            
+            ASIFormDataRequest  *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
+            
+            request.delegate = self;
+            request.tag = 7;
+            
+            [request setRequestMethod:@"POST"];
+            [NinaHelper signRequest:request];
+            [request startAsynchronous];
         }
     }
 }
