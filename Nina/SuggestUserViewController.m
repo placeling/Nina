@@ -48,7 +48,7 @@
     [super viewDidLoad];
     
     // Set up buttons
-    self.navigationItem.title = @"Follow Suggestions";
+    self.navigationItem.title = @"Top Locals";
     
     /*
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
