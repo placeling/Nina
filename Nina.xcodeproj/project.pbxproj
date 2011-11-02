@@ -215,6 +215,8 @@
 		28F4779213D7D02C003477CD /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F4778A13D7D02C003477CD /* whiteArrow.png */; };
 		28F4779313D7D02C003477CD /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F4778B13D7D02C003477CD /* whiteArrow@2x.png */; };
 		28F4779F13D89060003477CD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F4779E13D89060003477CD /* MapKit.framework */; };
+		6C1DBA3F1461F93200A725D7 /* segmentedBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBA3E1461F93200A725D7 /* segmentedBackground@2x.png */; };
+		6C1DBA421461F93A00A725D7 /* segmentedSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBA411461F93A00A725D7 /* segmentedSelected@2x.png */; };
 		6C4FADB014608CC400A03E3C /* SignupFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4FADAF14608CC400A03E3C /* SignupFooterView.xib */; };
 		6CB5B12F144CBD2900A278AC /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB5B12E144CBD2900A278AC /* gear.png */; };
 		6CB5B132144CBEA300A278AC /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB5B131144CBEA300A278AC /* gear@2x.png */; };
@@ -567,6 +569,8 @@
 		28F4778A13D7D02C003477CD /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteArrow.png; path = ../whiteArrow.png; sourceTree = "<group>"; };
 		28F4778B13D7D02C003477CD /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whiteArrow@2x.png"; path = "../whiteArrow@2x.png"; sourceTree = "<group>"; };
 		28F4779E13D89060003477CD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6C1DBA3E1461F93200A725D7 /* segmentedBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmentedBackground@2x.png"; sourceTree = "<group>"; };
+		6C1DBA411461F93A00A725D7 /* segmentedSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmentedSelected@2x.png"; sourceTree = "<group>"; };
 		6C4FADAF14608CC400A03E3C /* SignupFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupFooterView.xib; sourceTree = "<group>"; };
 		6CB5B12E144CBD2900A278AC /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
 		6CB5B131144CBEA300A278AC /* gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@2x.png"; sourceTree = "<group>"; };
@@ -1174,8 +1178,10 @@
 				2887B8CF144F7BE600CBBF1B /* pickBackground.png */,
 				2887B8C1144E471500CBBF1B /* infoBackground.png */,
 				2887B8BF144E29E800CBBF1B /* segmentedSelected.png */,
+				6C1DBA411461F93A00A725D7 /* segmentedSelected@2x.png */,
 				2887B8B4144E23E900CBBF1B /* red-divider.png */,
 				2887B8A9144DF0FD00CBBF1B /* segmentedBackground.png */,
+				6C1DBA3E1461F93200A725D7 /* segmentedBackground@2x.png */,
 				280A33C414422D4C007ACBDC /* NightLifePick.png */,
 				280A33C514422D4C007ACBDC /* NightLifePick@2x.png */,
 				280A33BF14422C6F007ACBDC /* EverythingPick.png */,
@@ -1432,6 +1438,8 @@
 				6CD8AA6B145F67C30018FCC3 /* MyMarker@2x.png in Resources */,
 				6CD8AA71145F752A0018FCC3 /* FriendMarker@2x.png in Resources */,
 				6C4FADB014608CC400A03E3C /* SignupFooterView.xib in Resources */,
+				6C1DBA3F1461F93200A725D7 /* segmentedBackground@2x.png in Resources */,
+				6C1DBA421461F93A00A725D7 /* segmentedSelected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
