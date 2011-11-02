@@ -128,6 +128,10 @@
 		[refreshHeaderView release];
 	}
     
+    if (!self.category){
+        self.category = @""; //can't be a nil
+    }
+        
     if (!self.searchTerm){
         self.searchTerm = @"";
         self.searchBar.text = @"";
