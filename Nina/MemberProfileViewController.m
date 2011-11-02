@@ -135,6 +135,9 @@
     self.followersButton.enabled = true;
     self.followingButton.enabled = true;
     
+    [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+    [StyleHelper styleFollowButton:self.followButton];
+        
     if (self.user.following){
         [self toggleFollow];
     } else {
@@ -165,6 +168,8 @@
         UIBarButtonItem *editButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editUser)];
         self.navigationItem.rightBarButtonItem = editButton;
         [editButton release];
+        
+        [self.followButton removeFromSuperview];
     }
     
     self.profileImageView.photo = self.user.profilePic;

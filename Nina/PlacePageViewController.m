@@ -649,7 +649,7 @@ typedef enum {
         UIButton *tagButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
         CGSize textsize = [tag sizeWithFont:tagButton.titleLabel.font forWidth:100.0 lineBreakMode: tagButton.titleLabel.lineBreakMode];
-        CGRect rect = CGRectMake(cx, 15, textsize.width+4, 26);       
+        CGRect rect = CGRectMake(cx, 13, textsize.width+4, 26);       
         
         tagButton.frame = rect;
         [tagButton setTitle:[NSString stringWithFormat:@"#%@", tag] forState:UIControlStateNormal];
@@ -1138,18 +1138,33 @@ typedef enum {
         [followViewController release];
         
     } else {
-    
         Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
         
-        FullPerspectiveViewController *fullPerspectiveViewController = [[FullPerspectiveViewController alloc] init];
-        fullPerspectiveViewController.perspective = perspective;
+        BOOL emptyPerspective = true;
         
-        [[self navigationController] pushViewController:fullPerspectiveViewController animated:YES];
-        [fullPerspectiveViewController release];
+        if(perspective.notes && perspective.notes.length > 0){
+            emptyPerspective = false;
+        }
+        if(perspective.photos && perspective.photos.count > 0){
+            emptyPerspective = false;
+        }
+        if(emptyPerspective && perspective.mine){
+            EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
+            
+            editPerspectiveViewController.delegate = self;
+            [self.navigationController pushViewController:editPerspectiveViewController animated:YES];
+            
+            [editPerspectiveViewController release];       
+
+        } else {
+            FullPerspectiveViewController *fullPerspectiveViewController = [[FullPerspectiveViewController alloc] init];
+            fullPerspectiveViewController.perspective = perspective;
+            
+            [[self navigationController] pushViewController:fullPerspectiveViewController animated:YES];
+            [fullPerspectiveViewController release];
+        }
     }
 }
-
-
 
 - (void)dealloc{
     [NinaHelper clearActiveRequests:0];

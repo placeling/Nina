@@ -15,6 +15,7 @@
 #import "MemberProfileViewController.h"
 #import "User.h"
 #import "asyncimageview.h"
+#import "LoginController.h"
 
 @implementation SuggestUserViewController
 @synthesize members, query;
@@ -120,6 +121,53 @@
 #pragma mark Get data for table view
 
 #pragma mark - Table view data source
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    int previous = [[[self navigationController] viewControllers] count] - 2;
+    NSObject *parentController = [[[self navigationController] viewControllers] objectAtIndex:previous];
+    
+    NSLog(@"parent controller is: %@", parentController);
+    
+    if ([parentController isKindOfClass:[LoginController class]]) {
+        UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)] autorelease];
+        
+        UIImageView *imagePattern = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"canvas.png"]];
+        imagePattern.frame = CGRectMake(0, 0, 320, 60);
+        [view addSubview:imagePattern];
+        [imagePattern release];
+        
+        UILabel *info = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 50)];
+        info.text = @"Placeling's better when you follow others to discover new places. Here are some suggestions.";
+        info.numberOfLines = 3;
+        info.lineBreakMode = UILineBreakModeWordWrap;
+        info.textAlignment = UITextAlignmentCenter;
+        info.backgroundColor = [UIColor clearColor];
+        [info setFont:[UIFont systemFontOfSize:12.0f]];
+        
+        [view addSubview:info];
+        
+        [info release];
+        
+        return view;
+    }
+    
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CGFloat height = 0;
+    
+    int previous = [[[self navigationController] viewControllers] count] - 2;
+    NSObject *parentController = [[[self navigationController] viewControllers] objectAtIndex:previous];
+    
+    if ([parentController isKindOfClass:[LoginController class]]) {
+        height = 60;
+    }
+    
+    return height;
+}
 
 
 

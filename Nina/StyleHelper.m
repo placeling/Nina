@@ -84,12 +84,19 @@
     button.layer.borderColor = [UIColor colorWithRed:193.0f/255.0f green:183.0f/255.0f blue:155.0f/255.0f alpha:0.8f].CGColor;
     [button.layer setCornerRadius:5.0f];
     [button.layer setMasksToBounds:YES];
-    /*[button.layer setShadowColor:[UIColor whiteColor].CGColor];
-    [button.layer setShadowRadius:1.0];
-    [button.layer setShadowOffset:CGSizeMake(0.0, 0.0)];*/
     [button.layer setBackgroundColor:[UIColor colorWithRed:239.0f/255.0f green:235.0f/255.0f blue:224.0f/255.0f alpha:1.0].CGColor];
     [button.titleLabel setFont:[UIFont fontWithName:@"MarketingScript" size:24]];
     [button.titleLabel setTextColor:[UIColor colorWithRed:194.0f/255.0f green:106.0f/255.0f blue:86.0f/255.0f alpha:1.0]];
+}
+
++(void) styleFollowButton:(UIButton*)button {
+    button.layer.borderWidth = 2.0f;
+    [button.layer setCornerRadius:5.0f];
+    button.layer.borderColor = [UIColor colorWithRed:189.0f/255.0f green:61.0f/255.0f blue:64.0f/255.0f alpha:1.0f].CGColor;
+    button.layer.backgroundColor = [UIColor colorWithRed:213.0f/255.0f green:168.0f/255.0f blue:157.0f/255.0f alpha:1.0f].CGColor;
+    [button.titleLabel setFont:[UIFont fontWithName:@"MarketingScript" size:18]];
+    [button.titleLabel setTextColor:[UIColor whiteColor]];
+    [button.layer setMasksToBounds:YES];
 }
 
 +(UIColor*) getTintColour{
