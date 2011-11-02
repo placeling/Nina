@@ -370,7 +370,7 @@
             
             UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
             
-            loginText.text = @"Sign up or log in and we'll show you nearby places you love - plus those of people you follow.\n\nTap to get started.";
+            loginText.text = @"Sign up or log in to check out nearby places you and the people you follow love.\n\nTap here to get started.";
             loginText.tag = 778;
             
             [loginText setUserInteractionEnabled:NO];
@@ -452,83 +452,6 @@
 
         }
     }
-    
-    /*
-    NSString *currentUser = [NinaHelper getUsername];
-    
-    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
-        tableView.allowsSelection = YES;
-        
-        cell.titleLabel.text = @"";
-        cell.addressLabel.text = @"";
-        cell.distanceLabel.text = @"";
-        cell.usersLabel.text = @"";
-        
-        UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
-        
-        loginText.text = @"Sign up or log in and we'll show you nearby places you love - plus those of people you follow.\n\nTap to get started.";
-        
-        [loginText setUserInteractionEnabled:NO];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        [cell addSubview:loginText];
-        [loginText release];        
-    } else if (self.dataLoaded && [nearbyPlaces count] == 0) {
-        tableView.allowsSelection = NO;
-        
-        cell.titleLabel.text = @"";
-        cell.addressLabel.text = @"";
-        cell.distanceLabel.text = @"";
-        cell.usersLabel.text = @"";
-
-        UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
-
-        
-        if (self.locationEnabled == FALSE) {
-            errorText.text = [NSString stringWithFormat:@"We can't show you any nearby places as you've got location services turned off."];
-        } else {
-            if (self.showAll == TRUE) {
-                if ([self.searchTerm isEqualToString:@""] == TRUE) {
-                    errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places."];
-                } else {
-                    errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-                }
-            } else {
-                if ([self.searchTerm isEqualToString:@""] == TRUE) {
-                    errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places."];
-                } else {
-                    errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-                }
-                
-                
-                self.searchTerm  = [self.searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-            }
-        }        
-        
-        errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
-        [errorText setUserInteractionEnabled:NO];
-        
-        errorText.tag = 778;
-        [cell addSubview:errorText];
-        [errorText release];
-    } else {
-        tableView.allowsSelection = YES;
-        
-        place = [nearbyPlaces objectAtIndex:indexPath.row];
-        
-        UITextView *errorText = (UITextView *)[cell viewWithTag:778];
-        if (errorText) {
-            [errorText removeFromSuperview];
-            [errorText release];
-        }
-        
-        cell.titleLabel.text = place.name;
-        cell.addressLabel.text = place.address;
-        cell.distanceLabel.text = @""; //place.
-        cell.usersLabel.text = place.usersBookmarkingString;   
-        
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }*/
     
     return cell;
 }

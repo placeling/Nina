@@ -482,7 +482,7 @@
             
             UITextView *unregisteredText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 80)];
             
-            unregisteredText.text = @"Sign up or log in to get your own profile and see places you recently bookmarked.\n\nTap to get started.";
+            unregisteredText.text = @"Sign up or log in to get your own profile and see places you recently bookmarked.\n\nTap here to get started.";
             
             
             unregisteredText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
