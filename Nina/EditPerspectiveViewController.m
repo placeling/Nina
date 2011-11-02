@@ -178,6 +178,9 @@
     //[self.scrollView setBackgroundColor:[UIColor blackColor]];
     [self.scrollView setCanCancelContentTouches:NO];
     
+    for (UIView *subView in scrollView.subviews){
+        [subView removeFromSuperview];
+    }
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.clipsToBounds = NO;
     scrollView.scrollEnabled = YES;
@@ -353,7 +356,6 @@
     [scrollView release];
     [uploadingPics release];
     [updatedMemo release];
-    [uploadingPics release];
     
     [super dealloc];
 }
