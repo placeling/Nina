@@ -649,7 +649,7 @@ typedef enum {
         UIButton *tagButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
         CGSize textsize = [tag sizeWithFont:tagButton.titleLabel.font forWidth:100.0 lineBreakMode: tagButton.titleLabel.lineBreakMode];
-        CGRect rect = CGRectMake(cx, 15, textsize.width+4, 26);       
+        CGRect rect = CGRectMake(cx, 13, textsize.width+4, 26);       
         
         tagButton.frame = rect;
         [tagButton setTitle:[NSString stringWithFormat:@"#%@", tag] forState:UIControlStateNormal];
