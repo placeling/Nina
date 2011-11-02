@@ -382,11 +382,12 @@
         CLLocation *homeLocation = [[CLLocation alloc] initWithLatitude:homeLat longitude:homeLng];        
         
         CLLocationDistance distance = [self.currentLocation distanceFromLocation:homeLocation];
-        NSLog(@"%f", distance);
+        DLog(@"%f", distance);
         cell.textLabel.text = [NSString stringWithFormat:@"Your map is centered %.0f m from here.", distance];
         
         cell.textLabel.textAlignment = UITextAlignmentCenter;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [homeLocation release];
     }
     
     return cell;

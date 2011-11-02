@@ -124,6 +124,7 @@
     self.pickScroll.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pickBackground.png"]];
     
     self.navigationItem.rightBarButtonItem = modalButton;
+    [modalButton release];
 }
 
 - (IBAction) showQuickPick:(id)sender {

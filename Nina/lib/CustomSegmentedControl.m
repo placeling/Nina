@@ -44,7 +44,9 @@
     self.frame = CGRectMake(0, 0, (segmentsize.width * segmentCount), segmentsize.height);
 
     // Initalize the array we use to store our buttons
-    self.buttons = [[NSMutableArray alloc] initWithCapacity:segmentCount];
+      NSMutableArray *initButtons = [[NSMutableArray alloc] initWithCapacity:segmentCount];
+    self.buttons = initButtons;
+    [initButtons release];
 
     // horizontalOffset tracks the proper x value as we add buttons as subviews
     CGFloat horizontalOffset = 0;
@@ -84,7 +86,7 @@
     }
   }
 
-    selectedSegmentIndex= 0;
+  selectedSegmentIndex= 0;
   return self;
 }
 

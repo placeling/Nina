@@ -26,7 +26,7 @@
 @synthesize photoButton;
 @synthesize delegate, queue;
 @synthesize existingButton;
-@synthesize takeButton;
+@synthesize takeButton, uploadingPics;
 
 - (id) initWithPerspective:(Perspective *)perspective{
     self = [super init];
@@ -34,11 +34,14 @@
         self.perspective = perspective;
     }
     
-    if (![self queue]) {
-        [self setQueue:[[NSOperationQueue alloc] init]];
+    if (!self.queue) {
+        NSOperationQueue *initQueue =[[NSOperationQueue alloc] init];
+        self.queue = initQueue;
+        [initQueue release];
     }
-    uploadingPics = [[NSMutableDictionary alloc] init];
-    requestCount = 0;
+    NSMutableDictionary *uploadingPicsInit = [[NSMutableDictionary alloc] init];
+    self.uploadingPics = uploadingPicsInit;
+    [uploadingPicsInit release];
     
     return self;
 }
@@ -58,6 +61,7 @@
  
     NSString *placeName = self.perspective.place.name;
     self.navigationItem.title = placeName;
+    requestCount = 0;
     
     if (updatedMemo){ //handles case where this is called again after init (from taking photo)
         self.memoTextView.text = self.updatedMemo;
@@ -349,6 +353,7 @@
     [scrollView release];
     [uploadingPics release];
     [updatedMemo release];
+    [uploadingPics release];
     
     [super dealloc];
 }

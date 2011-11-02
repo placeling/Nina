@@ -73,6 +73,7 @@
         self.locationEnabled = FALSE;
         DLog(@"UNABLE TO GET CURRENT LOCATION FOR NEARBY");
     }
+    [now release];
     
 }
 
@@ -371,6 +372,7 @@
         } else {
             cell.detailTextLabel.text = @"Can't get location";
         }
+        [loc release];
     }
     
     return cell;

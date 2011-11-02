@@ -48,6 +48,8 @@
 @property(nonatomic,retain) IBOutlet NSOperationQueue *queue;
 @property(nonatomic,retain) IBOutlet NSString *updatedMemo;
 
+@property(nonatomic,retain) NSMutableDictionary *uploadingPics;
+
 @property(nonatomic,assign) id<EditPerspectiveDelegate> delegate;
 
 - (id) initWithPerspective:(Perspective *)perspective;

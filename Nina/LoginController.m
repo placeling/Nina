@@ -102,7 +102,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/v1/oauth/login_fb", [NinaHelper getHostname]];
     NSURL *url = [NSURL URLWithString:urlString];
     
-    ASIFormDataRequest *request =  [[ASIFormDataRequest  alloc]  initWithURL:url];
+    ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [request setPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"FBAccessTokenKey" ];
     [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"facebook_id"];

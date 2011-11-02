@@ -318,7 +318,6 @@
             UITextView *existingText = (UITextView *)[cell viewWithTag:778];
             if (existingText) {
                 [existingText removeFromSuperview];
-                [existingText release];
             }
             
             UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];

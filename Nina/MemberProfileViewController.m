@@ -361,10 +361,7 @@
                 [newPerspective release];
             }
             
-            [jsonString release];
-            
-            [self.tableView reloadData];
-            
+            [self.tableView reloadData];            
         }
         case 14:
         {

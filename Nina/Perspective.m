@@ -24,7 +24,9 @@
             self.user = [[[User alloc] initFromJsonDict:[jsonDict objectForKey:@"user"]]autorelease];
         }
         
-        self.photos = [[NSMutableArray alloc] init];
+        NSMutableArray *initPhotos = [[NSMutableArray alloc] init];
+        self.photos = initPhotos;
+        [initPhotos release];
         
         [self updateFromJsonDict:jsonDict];
         modified = false;

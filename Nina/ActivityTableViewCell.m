@@ -89,7 +89,7 @@
         
     [enUSPOSIXLocale release];
     
-    NSString *timeGap = [NSString stringWithFormat:@""];
+    NSString *timeGap;
     
     NSDate *convertedDate = [dateFormatter dateFromString:RFC3339String];
     [dateFormatter release];
@@ -114,16 +114,14 @@
         } else {
             timeGap = [NSString stringWithFormat:@"%d hours ago", diff];            
         }
-    } else if (ti < 2629743) {
+    } else { //if (ti < 2629743) {
         int diff = round(ti / 60 / 60 / 24);
         if (diff == 1) {
             timeGap = [NSString stringWithFormat:@"%d day ago", diff];
         } else {
             timeGap = [NSString stringWithFormat:@"%d days ago", diff];
         }
-    } else {
-        timeGap = @"never";
-    }
+    } 
     
     cell.timeAgo.text = timeGap;
 }

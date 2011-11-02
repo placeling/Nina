@@ -286,7 +286,7 @@
 		[nearbyPlaces release];
         nearbyPlaces = nil;
         NSDictionary *jsonDict = [[jsonString JSONValue] retain];
-		NSArray *rawPlaces = [[jsonDict objectForKey:@"suggested_places"] retain];
+		NSArray *rawPlaces = [jsonDict objectForKey:@"suggested_places"];
         
         if (!nearbyPlaces){
             nearbyPlaces = [[NSMutableArray alloc] initWithCapacity:[rawPlaces count]];
@@ -388,7 +388,6 @@
             UITextView *existingText = (UITextView *)[cell viewWithTag:778];
             if (existingText) {
                 [existingText removeFromSuperview];
-                [existingText release];
             }
             
             tableView.allowsSelection = NO;
@@ -444,7 +443,6 @@
             UITextView *errorText = (UITextView *)[cell viewWithTag:778];
             if (errorText) {
                 [errorText removeFromSuperview];
-                [errorText release];
             }
             
             cell.titleLabel.text = place.name;
