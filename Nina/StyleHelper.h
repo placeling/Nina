@@ -20,5 +20,6 @@
 +(void) styleTagButton:(UIButton*)button;
 +(void) styleContactInfoButton:(UIButton*)button;
 +(void) styleSubmitTypeButton:(UIButton*)button;
++(void) styleFollowButton:(UIButton*)button;
 
 @end

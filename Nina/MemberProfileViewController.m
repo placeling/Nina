@@ -135,6 +135,9 @@
     self.followersButton.enabled = true;
     self.followingButton.enabled = true;
     
+    [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+    [StyleHelper styleFollowButton:self.followButton];
+        
     if (self.user.following){
         [self toggleFollow];
     } else {
