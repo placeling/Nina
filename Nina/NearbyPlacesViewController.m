@@ -18,6 +18,8 @@
     -(void)dataSourceDidFinishLoadingNewData;
     -(void)findNearbyPlaces;
     -(void)findNearbyPlaces:(NSString*)searchTerm;
+    -(void)impatientUser;
+-(void)getNearbyPlaces:(NSString*)searchTerm;
 @end
 
 @implementation NearbyPlacesViewController 
@@ -26,44 +28,36 @@
 @synthesize placesTableView;
 @synthesize searchBar=_searchBar, toolBar;
 @synthesize tableFooterView, gpsLabel;
-@synthesize dataLoaded, locationEnabled;
-
+@synthesize dataLoaded, locationEnabled, location=_location;
 -(void)findNearbyPlaces {
     [self findNearbyPlaces:@""];
 }
 
 -(void)findNearbyPlaces:(NSString*)searchTerm {
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
-    CLLocation *location = manager.location;
-
-	if (location != nil){ //[now timeIntervalSinceDate:location.timestamp] < (60 * 5)){
-        self.locationEnabled = TRUE;
+    self.location = manager.location;
+    NSDate *now = [[NSDate alloc]init];
+    float accuracy = pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
+    accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
+    
+    if ([now timeIntervalSinceDate:self.location.timestamp] > (60 * 5) || accuracy > 200){
+        //if the location is more than 5 minutes old, or over 200m in accuracy, wait
+        //for an update, to a maximum of "n" seconds
+        needLocationUpdate = TRUE;
         
-        float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
-        accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
+        manager.delegate = self;
+        [manager startUpdatingLocation]; //should already be going
         
-        self.gpsLabel.text = [NSString stringWithFormat:@"GPS: %im", (int)accuracy];
+        timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(impatientUser) userInfo:nil repeats:NO];
         
-        accuracy = MAX(accuracy, 50); //govern the accuracy so a few places get in
-
-		NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/nearby", [NinaHelper getHostname]];		
+        HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        [self.navigationController.view addSubview:HUD];
+        HUD.delegate = self;
+        HUD.labelText = @"Narrowing Location";
+        [HUD show:YES];
         
-		NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-		NSString* lon = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
-		
-		
-        NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
-        
-        searchTerm  = [searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-        
-        urlString = [NSString stringWithFormat:@"%@?lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lon, radius, searchTerm];
-        NSURL *url = [NSURL URLWithString:urlString];
-        
-		ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-        request.tag = 20;
-        [NinaHelper signRequest:request];
-		[request setDelegate:self];
-		[request startAsynchronous];
+    }else if (self.location != nil){ //
+        [self getNearbyPlaces:self.searchBar.text];
 	} else {
         
         self.gpsLabel.text = [NSString stringWithFormat:@"GPS: n/a"];
@@ -90,6 +84,58 @@
     return self;
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
+    
+    self.location = newLocation;
+    
+    float accuracy = pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
+    accuracy = sqrt( accuracy ); 
+    if (accuracy < 200){
+        manager.delegate = nil;
+        [timer invalidate];
+        [self findNearbyPlaces:self.searchBar.text];
+    }
+}
+
+-(void)impatientUser{    
+    [timer invalidate];
+    [self getNearbyPlaces:self.searchBar.text];
+}
+
+-(void)getNearbyPlaces:(NSString*)searchTerm{
+    [HUD show:NO];
+    
+    if (!searchTerm){
+        searchTerm = @"";
+    }
+    
+    self.locationEnabled = TRUE;
+    float accuracy = pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
+    accuracy = sqrt( accuracy );
+    
+    self.gpsLabel.text = [NSString stringWithFormat:@"GPS: %im", (int)accuracy];
+    
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/nearby", [NinaHelper getHostname]];		
+    
+    NSString* lat = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
+    NSString* lon = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
+    
+    
+    NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
+    
+    searchTerm  = [searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    
+    urlString = [NSString stringWithFormat:@"%@?lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lon, radius, searchTerm];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
+    request.tag = 20;
+    [NinaHelper signRequest:request];
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
 - (void)dealloc{
     [NinaHelper clearActiveRequests:20];
     [placesTableView release];
@@ -97,6 +143,7 @@
     [nearbyPlaces release];
     [gpsLabel release];
     [toolBar release];
+    [_location release];
     [super dealloc];
     
 }
@@ -329,6 +376,7 @@
     return cell;
 }
 
+
 #pragma mark Search Bar Methods
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{	
@@ -361,6 +409,18 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    [HUD release];
+	HUD = nil;
+}
+
+-(void)hudWasHidden{
+    [HUD removeFromSuperview];
+    [HUD release];
+	HUD = nil;
+}
 
 
 @end

@@ -10,9 +10,11 @@
 #import "EGORefreshTableHeaderView.h"
 #import "ASIHTTPRequest.h"
 #import "User.h"
+#import "NinaHelper.h"
+#import "MBProgressHUD.h"
 
 
-@interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate, UISearchBarDelegate> {
+@interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate, UISearchBarDelegate, CLLocationManagerDelegate, MBProgressHUDDelegate> {
     EGORefreshTableHeaderView *refreshHeaderView;
     
     IBOutlet UIView *tableFooterView;
@@ -20,6 +22,7 @@
     IBOutlet UISearchBar *_searchBar;
     IBOutlet UIToolbar *toolBar;
     IBOutlet UILabel *gpsLabel;
+    CLLocation *_location;
     
     NSArray  *nearbyPlaces;
     
@@ -27,7 +30,9 @@
     BOOL dataLoaded;
     BOOL locationEnabled;
     BOOL _reloading;
+    MBProgressHUD *HUD;
     
+    NSTimer *timer;
 }
 
 @property(assign,getter=isReloading) BOOL reloading;
@@ -43,5 +48,6 @@
 
 @property(nonatomic, assign) BOOL dataLoaded;
 @property(nonatomic, assign) BOOL locationEnabled;
+@property(nonatomic, retain) CLLocation *location;
 
 @end
