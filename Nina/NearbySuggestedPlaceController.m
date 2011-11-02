@@ -31,6 +31,8 @@
     
     suggestUserViewController.query = [self encodeForUrl:self.searchBar.text];
     
+    suggestUserViewController.title = @"Top Locals";
+    
     [self.navigationController pushViewController:suggestUserViewController animated:YES];
     [suggestUserViewController release];
     

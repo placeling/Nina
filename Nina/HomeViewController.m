@@ -42,7 +42,7 @@
             [NSArray arrayWithObjects:@"EverythingPick.png", @"", nil], @"Everything", 
             [NSArray arrayWithObjects:@"NightLifePick.png", @"Bars & Nightlife", nil], @"Nightlife",
             [NSArray arrayWithObjects:@"FoodPick.png", @"Restaurants & Food", nil], @"Restaurants",
-            [NSArray arrayWithObjects:@"TouristyPick.png", @"Interesting & Outdoors", nil], @"Touristy", nil];
+            [NSArray arrayWithObjects:@"TouristyPick.png", @"Interesting & Outdoors", nil], @"Interesting", nil];
 
     CGFloat cx = 10;
     
