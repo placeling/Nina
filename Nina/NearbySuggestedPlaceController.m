@@ -106,7 +106,7 @@
 - (void) loadContent {
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (currentUser != (id)[NSNull null] && currentUser.length > 0) {
+    if (self.showAll || (currentUser && currentUser.length > 0)) {
         [self findNearbyPlaces];
     }
 }
@@ -318,7 +318,7 @@
 {
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+    if (!self.showAll && (!currentUser || currentUser.length == 0)) {
         return 1;
     } else if (self.dataLoaded && [nearbyPlaces count] == 0) {
         return 1;
@@ -330,7 +330,7 @@
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+    if (!self.showAll && (!currentUser || currentUser.length == 0)) {
         return 90;
     } else {
         return 70;
@@ -362,7 +362,7 @@
     if (cell == nil) {
         NSString *currentUser = [NinaHelper getUsername];
         
-        if (!currentUser || currentUser.length == 0) {
+        if (!self.showAll && (!currentUser || currentUser.length == 0)) {
             cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
             
             tableView.allowsSelection = YES;
