@@ -48,7 +48,7 @@
         email = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]).textField.text;
     }
     
-    NSString *password = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]]).textField.text;
+    NSString *password = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]).textField.text;
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocation *location = [manager location];
@@ -144,19 +144,8 @@
         } 
         
         [NinaHelper setUsername:((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField.text];
-        
-        
-        SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
-        
-        UINavigationController *navController = self.navigationController;
-        
-        // retain ourselves so that the controller will still exist once it's popped off
-        [[self retain] autorelease];
-        
-        // Pop this controller and replace with another
-        [navController popViewControllerAnimated:NO];
-        [navController pushViewController:suggestUserViewController animated:NO];
-        [suggestUserViewController release];
+
+        [self.navigationController dismissModalViewControllerAnimated:YES];
   
     } else {
         NSDictionary *errors = [jsonDict objectForKey:@"message"];
@@ -358,12 +347,7 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (fbDict && indexPath.row == 1){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signup" message:@"This is a validated email from Facebook, you can change it later on if you wish."
-                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        [alert release];	
-    }
+
 }
 
 @end
