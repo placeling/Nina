@@ -7,10 +7,11 @@
 //
 
 #import "AboutUsController.h"
+#import "GenericWebViewController.h"
 
 @implementation AboutUsController
 
-@synthesize contactButton;
+@synthesize contactButton, termsButton, privacyButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,6 +54,14 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc
+{
+    [contactButton release];
+    [termsButton release];
+    [privacyButton release];
+    [super dealloc];
+}
+
 #pragma mark -
 #pragma mark Contact Us
 
@@ -73,5 +82,22 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
 
+-(IBAction) showTerms {
+    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:@"http://www.placeling.com/terms/"];
+    
+    genericWebViewController.title = @"Terms & Conditions";
+    [self.navigationController pushViewController:genericWebViewController animated:true];
+    
+    [genericWebViewController release];
+}
+
+-(IBAction) showPrivacy {
+    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:@"http://www.placeling.com/privacy/"];
+    
+    genericWebViewController.title = @"Privacy Policy";
+    [self.navigationController pushViewController:genericWebViewController animated:true];
+    
+    [genericWebViewController release];
+}
 
 @end

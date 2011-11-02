@@ -13,10 +13,17 @@
 
 @interface AboutUsController : UIViewController <MFMailComposeViewControllerDelegate> {
     IBOutlet UIButton *contactButton;
+    
+    IBOutlet UIButton *termsButton;
+    IBOutlet UIButton *privacyButton;
 }
 
 @property (nonatomic, retain) IBOutlet UIButton *contactButton;
+@property (nonatomic, retain) IBOutlet UIButton *termsButton;
+@property (nonatomic, retain) IBOutlet UIButton *privacyButton;
 
 - (IBAction)contactUs:(id)sender;
+-(IBAction)showTerms;
+-(IBAction)showPrivacy;
 
 @end
