@@ -11,11 +11,12 @@
 #import "EditableTableCell.h"
 #import "NSString+SBJSON.h"
 #import "SuggestUserViewController.h"
+#import "GenericWebViewController.h"
 
 @implementation SignupController
 
 
-@synthesize fbDict, accessKey, accessSecret;
+@synthesize fbDict, accessKey, accessSecret, tableFooterView, termsButton, privacyButton;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -39,7 +40,14 @@
     DLog(@"Sending signup info");
 
     NSString *username = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField.text;
-    NSString *email = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]).textField.text;
+    
+    NSString *email;
+    if (fbDict) {
+        email = [fbDict objectForKey:@"email"];
+    } else {
+        email = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]).textField.text;
+    }
+    
     NSString *password = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]]).textField.text;
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
@@ -82,6 +90,8 @@
     [request setTag:60];
     
     [NinaHelper signRequest:request];
+    
+    DLog(@"Sending request");
     
     [request startAsynchronous];
     
@@ -175,8 +185,20 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
+    [[NSBundle mainBundle] loadNibNamed:@"SignupFooterView" owner:self options:nil];
+    self.tableView.tableFooterView = self.tableFooterView;
+    
     self.navigationItem.title = @"Signup";
-
+    
+    // Background image
+    self.tableView.opaque = NO;
+    self.tableView.backgroundView = nil;
+    UIImage *image = [UIImage imageNamed:@"canvas.png"];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:image];
+    
+    self.tableView.tableFooterView = self.tableFooterView;
+    
     UIBarButtonItem *signupButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Signup" style:UIBarButtonItemStylePlain target:self action:@selector(signup)];
     self.navigationItem.rightBarButtonItem = signupButton;
     [signupButton release];
@@ -194,13 +216,47 @@
     [fbDict release];
     [accessKey release];
     [accessSecret release];
+    [tableFooterView release];
+    [termsButton release];
+    [privacyButton release];
     [super dealloc];
 }
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
+    int tag = theTextField.tag;
+    
+    if (tag == 1 || tag == 2 || tag == 3) {
+        [theTextField resignFirstResponder];
+        UITextField *nextField = (UITextField *)[self.view viewWithTag:(tag + 1)];
+        [nextField becomeFirstResponder];
+    } else if (tag == 4) {
+        [theTextField resignFirstResponder];
+        [self performSelector:@selector(signup)];
+    }
+    return YES;
+}
+
+-(IBAction) showTerms {
+    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:@"http://www.placeling.com/terms/"];
+    
+    genericWebViewController.title = @"Terms & Conditions";
+    [self.navigationController pushViewController:genericWebViewController animated:true];
+    
+    [genericWebViewController release];
+}
+
+-(IBAction) showPrivacy {
+    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:@"http://www.placeling.com/privacy/"];
+    
+    genericWebViewController.title = @"Privacy Policy";
+    [self.navigationController pushViewController:genericWebViewController animated:true];
+    
+    [genericWebViewController release];
 }
 
 #pragma mark - Table view data source
@@ -212,7 +268,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (fbDict){
-        return 3;
+        return 2;
     }else {
         return 4;
     }
@@ -230,7 +286,7 @@
         
         if(fbDict){
             if (indexPath.row == 0){
-                eCell.textLabel.text = @"Username";
+                eCell.textLabel.text = @"username";
                 if ([fbDict objectForKey:@"username"]){
                     NSString *username = [fbDict objectForKey:@"username"];
                     
@@ -241,32 +297,50 @@
                     [[ username componentsSeparatedByCharactersInSet:charactersToRemove ]
                      componentsJoinedByString:@"" ];
                     
-                    
                     eCell.textField.text = username;
+                    eCell.textField.returnKeyType = UIReturnKeyDefault;
+                    eCell.textField.delegate = self;
+                    eCell.textField.tag = 3;
                 }
-            } else if (indexPath.row == 1){
-                eCell.textLabel.text = @"Email";
+            } 
+            
+            /*
+            else if (indexPath.row == 1){
+                eCell.textLabel.text = @"email";
                 eCell.textField.text = [fbDict objectForKey:@"email"];
                 eCell.textField.enabled = false;
                 eCell.textField.textColor = [UIColor grayColor];
-            }else if (indexPath.row == 2){
-                eCell.textLabel.text = @"Password";
+            } */
+            else if (indexPath.row == 1){
+                eCell.textLabel.text = @"password";
                 eCell.textField.secureTextEntry = true;
-                [eCell.textField becomeFirstResponder];
+                eCell.textField.tag = 4;
+                eCell.textField.delegate = self;
+                eCell.textField.returnKeyType = UIReturnKeyGo;
             }
         } else {
             if (indexPath.row == 0){
-                eCell.textLabel.text = @"Username";
-                [eCell.textField becomeFirstResponder];
+                eCell.textLabel.text = @"username";
+                eCell.textField.returnKeyType = UIReturnKeyDefault;
+                eCell.textField.delegate = self;
+                eCell.textField.tag = 1;
             } else if (indexPath.row == 1){
-                eCell.textLabel.text = @"Email";
+                eCell.textLabel.text = @"email";
+                eCell.textField.returnKeyType = UIReturnKeyDefault;
+                eCell.textField.delegate = self;
+                eCell.textField.tag = 2;
             }else if (indexPath.row == 2){
-                eCell.textLabel.text = @"Password";
+                eCell.textLabel.text = @"password";
                 eCell.textField.secureTextEntry = true;
-                
+                eCell.textField.returnKeyType = UIReturnKeyDefault;
+                eCell.textField.delegate = self;
+                eCell.textField.tag = 3;
             }else if (indexPath.row == 3){
-                eCell.textLabel.text = @"Confirm Password";
+                eCell.textLabel.text = @"confirm";
                 eCell.textField.secureTextEntry = true;
+                eCell.textField.tag = 4;
+                eCell.textField.delegate = self;
+                eCell.textField.returnKeyType = UIReturnKeyGo;
             }
         }
 

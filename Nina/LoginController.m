@@ -14,10 +14,12 @@
 #import "Facebook.h"
 #import "NinaAppDelegate.h"
 #import "NSString+SBJSON.h"
+#import "GenericWebViewController.h"
 
 @interface LoginController (Private)
     -(void)close;
     -(BOOL)testAlreadyLoggedInFacebook:(NSDictionary*)fbDict;
+    -(void)dismissKeyboard:(id)sender;
 @end
 
 
@@ -27,11 +29,10 @@
 @synthesize username;
 @synthesize password;
 @synthesize submitButton;
+@synthesize forgotPasswordButton;
 @synthesize delegate;
 
 -(IBAction) submitLogin{
-    NSLog(@"Submit login");
-    
     NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
     NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     
@@ -62,6 +63,14 @@
     
 }
 
+-(IBAction) forgotPassword {
+    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:@"http://www.placeling.com/resetpassword/"];
+    
+    genericWebViewController.title = @"Reset Password";
+    [self.navigationController pushViewController:genericWebViewController animated:true];
+    
+    [genericWebViewController release];
+}
 
 -(IBAction) signupFacebook{
     NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -162,7 +171,7 @@
     int statusCode = [request responseStatusCode];
 	
     if (statusCode == 401){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Incorrect Username/Password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Incorrect Username/Password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
         [alert release];
         DLog(@"401 on oauth login request");
@@ -207,13 +216,18 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
-    //if (theTextField == self.username) {
-    [theTextField resignFirstResponder];
-    //}
+    if (theTextField == self.username) {
+        [theTextField resignFirstResponder];
+        [self.password becomeFirstResponder];
+    } else if (theTextField == self.password) {
+        [theTextField resignFirstResponder];
+        [self performSelector:@selector(submitLogin)];
+    }
+    
     return YES;
 }
 
--(void)dismissKeyboard {
+-(void)dismissKeyboard:(id)sender {
     [self.username resignFirstResponder];
     [self.password resignFirstResponder];
 }
@@ -254,11 +268,24 @@
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
     
-    //UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-    //                                                                      action:@selector(dismissKeyboard)];
+    [StyleHelper styleSubmitTypeButton:submitButton];
     
-    //[self.view addGestureRecognizer:tap];
+    self.username.delegate = self;
+    self.password.delegate = self;
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(dismissKeyboard:)];
+    tap.delegate = self;
+    [self.view addGestureRecognizer:tap];
+    
+}
+
+// Dismiss keyboard if tap outside text field and not on button/reset password link
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isKindOfClass:[UIButton class]]) {
+        return NO;
+    }
+    return YES;
 }
 
 -(void) viewWillAppear:(BOOL)animated{

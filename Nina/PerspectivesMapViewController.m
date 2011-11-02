@@ -222,7 +222,7 @@
         self.navigationItem.title = @"Your Map";
         
         UIAlertView *baseAlert;
-        NSString *alertMessage = @"Sign up or log in and when you bookmark locations, they'll appear on this map";
+        NSString *alertMessage = @"Sign up or log in to bookmark locations and create your own map";
         baseAlert = [[UIAlertView alloc] 
                      initWithTitle:nil message:alertMessage 
                      delegate:self cancelButtonTitle:@"Not Now" 
