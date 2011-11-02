@@ -103,7 +103,7 @@
 }
 
 -(void)getNearbyPlaces:(NSString*)searchTerm{
-    [HUD show:NO];
+    [HUD removeFromSuperview];
     
     if (!searchTerm){
         searchTerm = @"";
