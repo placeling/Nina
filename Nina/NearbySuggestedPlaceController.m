@@ -246,7 +246,7 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {	
     [searchBar resignFirstResponder];
-    [searchBar setShowsCancelButton:TRUE animated:true];
+    [searchBar setShowsCancelButton:false animated:true];
     
     searchBar.text = @"";
     
