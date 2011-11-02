@@ -195,9 +195,17 @@
             }            
         } else {
             if (self.following) {
-                cell.textLabel.text = @"You're not yet following anyone";
+                if ([self.user.username isEqualToString:[NinaHelper getUsername]]) {
+                    cell.textLabel.text = @"You're not yet following anyone";
+                } else {
+                    cell.textLabel.text = [NSString stringWithFormat:@"%@ isn't yet following anyone", self.user.username];
+                }
             } else {
-                cell.textLabel.text = @"No one's yet following you";
+                if ([self.user.username isEqualToString:[NinaHelper getUsername]]) {
+                    cell.textLabel.text = @"No one's yet following you";
+                } else {
+                    cell.textLabel.text = [NSString stringWithFormat:@"No one's yet following %@", self.user.username];
+                }
             }
         }
     } else {
