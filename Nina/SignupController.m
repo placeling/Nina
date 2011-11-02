@@ -73,7 +73,7 @@
         NSString * passwordConfirm = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]]).textField.text;
         
         if (![password isEqualToString:passwordConfirm]){
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Passwords dont match" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Your passwords don't match" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alert show];
             [alert release];	
             return;
@@ -172,7 +172,7 @@
         [jsonDict objectForKey:@"message"];
         
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:errorMessage delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
         [alert release];
         
