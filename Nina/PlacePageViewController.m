@@ -39,6 +39,8 @@
 
 #define kMinCellHeight 60
 
+#define minTableHeight 118
+
 typedef enum {
     CapLeft          = 0,
     CapMiddle        = 1,
@@ -908,7 +910,12 @@ typedef enum {
         if (self.segmentedControl.selectedSegmentIndex == 1) {
            return [NSString stringWithFormat:@"%i person you follow has bookmarked this place", [self numberOfSectionBookmarks]];
         } else {
-            return [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+            // How do I update this to include a saying if you're the only one has done this
+            if (self.place.bookmarked == TRUE) {
+                return [NSString stringWithFormat:@"You're the first to bookmark this place"];
+            } else {
+                return [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+            }
         }
     } else {
         if (self.segmentedControl.selectedSegmentIndex == 1) {
@@ -927,7 +934,6 @@ typedef enum {
     Perspective *perspective;
     if ([perspectives count] > 0) {
         perspective = [perspectives objectAtIndex:indexPath.row];
-        NSLog(@"perspective: %@", perspective);
     } else {
         return true;
     }
@@ -944,7 +950,7 @@ typedef enum {
     
     // 4. Home, bookmarked but no referrer and not enough notes/photos to push off bottom of screen
     if (self.perspectiveType == home && self.place.bookmarked == true && [perspectives count] < 2) {
-        if ([MyPerspectiveCellViewController cellHeightForPerspective:perspective] < 118) {
+        if ([MyPerspectiveCellViewController cellHeightForPerspective:perspective] < minTableHeight) {
             return true;
         }
     }
@@ -956,7 +962,7 @@ typedef enum {
     
     // 6. "Everyone" or "Following" and only one cell, but not enough content in cell to push below screen
     if (self.perspectiveType != home && [perspectives count] < 2) {
-        if ([PerspectiveTableViewCell cellHeightForPerspective:perspective] < 118) {
+        if ([PerspectiveTableViewCell cellHeightForPerspective:perspective] < minTableHeight) {
             return true;
         }
     }
@@ -967,7 +973,7 @@ typedef enum {
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     // Need to calculate height so that footer always sticks to bottom of screen
     if ([self returnMinRowHeight:indexPath]) {
-        return 118;
+        return minTableHeight;
     }
     
     if ([self shouldShowSectionView] && indexPath.section == 0){
