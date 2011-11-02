@@ -72,7 +72,7 @@
         verticalCursor += 10;
     }
 
-    if (perspective.mine){
+    if (perspective.mine || !hasContent){
         //can't star own perspective
         [cell.upvoteButton setHidden:true];
     } else {
@@ -138,6 +138,7 @@
         [cell.flagLabel setFrame:CGRectMake(cell.flagLabel.frame.origin.x, verticalCursor, cell.flagLabel.frame.size.width, cell.flagLabel.frame.size.height)];
     } else {
         cell.flagLabel.hidden = TRUE;
+        cell.upvoteButton.hidden = TRUE;
     }
     cell.createdAtLabel.text = [NSString stringWithFormat:@"last modified: %@", [NinaHelper dateDiff:perspective.lastModified]  ];
     
