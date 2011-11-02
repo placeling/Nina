@@ -40,10 +40,10 @@
     float accuracy = pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
     accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
     
-    if ([now timeIntervalSinceDate:self.location.timestamp] > (60 * 5) || accuracy > 200){
+    if (!narrowed && ([now timeIntervalSinceDate:self.location.timestamp] > (60 * 5) || accuracy > 200)){
         //if the location is more than 5 minutes old, or over 200m in accuracy, wait
         //for an update, to a maximum of "n" seconds
-        needLocationUpdate = TRUE;
+        narrowed = TRUE;
         
         manager.delegate = self;
         [manager startUpdatingLocation]; //should already be going
@@ -69,7 +69,6 @@
         }
         nearbyPlaces = [[NSMutableArray alloc] initWithCapacity:0];
         
-        needLocationUpdate = true;
         self.locationEnabled = FALSE;
         DLog(@"UNABLE TO GET CURRENT LOCATION FOR NEARBY");
     }
@@ -211,7 +210,7 @@
     [super viewDidLoad];
     self.dataLoaded = FALSE;
     // Do any additional setup after loading the view from its nib.
-    needLocationUpdate = false;
+    narrowed = false;
 
     self.navigationItem.title = @"Nearby";
 
@@ -288,8 +287,8 @@
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    NSLog(@"%i", self.dataLoaded);
-    NSLog(@"%i", [nearbyPlaces count]);
+    DLog(@"%i", self.dataLoaded);
+    DLog(@"%i", [nearbyPlaces count]);
     if (self.dataLoaded && [nearbyPlaces count] == 0) {
         return 1;
     } else {

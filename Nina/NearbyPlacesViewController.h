@@ -26,7 +26,7 @@
     
     NSArray  *nearbyPlaces;
     
-    BOOL needLocationUpdate;
+    BOOL narrowed;
     BOOL dataLoaded;
     BOOL locationEnabled;
     BOOL _reloading;
