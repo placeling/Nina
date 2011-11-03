@@ -142,6 +142,7 @@
     LoginController *loginController = [[LoginController alloc] init];
     
     UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
+    [FlurryAnalytics logAllPageViews:navBar];
     [self.navigationController presentModalViewController:navBar animated:YES];
     [navBar release];
     [loginController release];

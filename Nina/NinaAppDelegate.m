@@ -46,7 +46,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     facebook = [[Facebook alloc] initWithAppId:@"280758755284342" andDelegate:self];
     
-    
+    [FlurryAnalytics logAllPageViews:self.navigationController];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     return YES;
