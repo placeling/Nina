@@ -266,10 +266,24 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img editingInfo:(NSDictionary *)editingInfo{
     [picker dismissModalViewControllerAnimated:YES];
+    
     NSNumber *tag = [self uploadImageAndReturnTag:img];
     
+    UIImage *thumbImage;
+    //scale down image, since we dont' need the whole thing for the app
+    if (img.size.width > 160 || img.size.height > 160){
+        thumbImage = [img
+                      thumbnailImage:160
+                   transparentBorder:1
+                   cornerRadius:1
+                   interpolationQuality:kCGInterpolationHigh ];
+    } else {
+        thumbImage = [img copy]; // keep own, other might still be uploading
+    }
+    
+    
     Photo *photo = [[Photo alloc] init];
-    photo.thumb_image = img;
+    photo.thumb_image = thumbImage;
     
     [uploadingPics setObject:photo forKey:tag];
     
