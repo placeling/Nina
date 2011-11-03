@@ -92,7 +92,7 @@ typedef enum {
     
     [super viewDidLoad];
     
-    self.navigationItem.title = @"Details";
+    self.navigationItem.title = @"Place Info";
     
     self.tableView.delegate = self;
     self.tableView.tableHeaderView = self.tableHeaderView;
