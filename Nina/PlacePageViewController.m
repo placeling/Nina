@@ -1051,12 +1051,15 @@ typedef enum {
                 }
             }else{
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:infoCellIdentifier] autorelease];
-                cell.textLabel.text = [self numberBookmarkCopy];
-                cell.textLabel.textColor = self.addressLabel.textColor;
-                cell.textLabel.font = [UIFont fontWithName:self.nameLabel.font.fontName size:13];
-                cell.textLabel.textAlignment = UITextAlignmentCenter;
             }            
             
+        } 
+        
+        if (!(self.perspectiveType == home && self.place.bookmarked == false)){
+            cell.textLabel.text = [self numberBookmarkCopy];
+            cell.textLabel.textColor = self.addressLabel.textColor;
+            cell.textLabel.font = [UIFont fontWithName:self.nameLabel.font.fontName size:13];
+            cell.textLabel.textAlignment = UITextAlignmentCenter;
         }
    
         return cell;
