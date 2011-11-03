@@ -12,6 +12,7 @@
 #import "ASIHTTPRequest.h"
 #import <CoreLocation/CoreLocation.h>
 #import "NinaHelper.h"
+#import "FlurryAnalytics.h"
 
 
 @interface NearbyPlacesViewController (Private)
@@ -44,6 +45,7 @@
         //if the location is more than 5 minutes old, or over 200m in accuracy, wait
         //for an update, to a maximum of "n" seconds
         narrowed = TRUE;
+        [FlurryAnalytics logEvent:@"LOW_ACCURACY_NEARBY"];
         
         manager.delegate = self;
         [manager startUpdatingLocation]; //should already be going
