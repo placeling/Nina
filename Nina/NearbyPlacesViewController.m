@@ -50,7 +50,7 @@
         manager.delegate = self;
         [manager startUpdatingLocation]; //should already be going
         
-        timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(impatientUser) userInfo:nil repeats:NO];
+        timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(impatientUser) userInfo:nil repeats:NO];
         
         HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
         [self.navigationController.view addSubview:HUD];
