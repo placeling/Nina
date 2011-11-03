@@ -32,7 +32,6 @@
 
 -(void)getActivities{
     NSString *urlString = [NSString stringWithFormat:@"%@/v1/feeds/home_timeline", [NinaHelper getHostname]];		
-
     NSURL *url = [NSURL URLWithString:urlString];
     
     ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
@@ -46,7 +45,7 @@
 - (void) loadContent {
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (currentUser != (id)[NSNull null] && currentUser.length > 0) {
+    if (currentUser && currentUser.length > 0) {
         [self getActivities];   
     }    
 
@@ -181,8 +180,7 @@
         case 70:{
             // Store incoming data into a string
             NSString *jsonString = [request responseString];
-            NSLog(@"Got JSON back");
-            //DLog(@"Got JSON BACK: %@", jsonString);
+            DLog(@"Got JSON BACK: %@", jsonString);
             // Create a dictionary from the JSON string
             
             NSDictionary *jsonDict = [[jsonString JSONValue] retain];

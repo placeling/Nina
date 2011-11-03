@@ -9,6 +9,7 @@
 #import "ActivityTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "NinaHelper.h"
+#import "asyncimageview.h"
 
 @interface ActivityTableViewCell (Private) 
 +(NSString*) getTitleText:(NSDictionary*)dict;
@@ -69,59 +70,27 @@
     cell.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     cell.userImage.layer.masksToBounds = YES;
     
+    cell.userImage.image = [UIImage imageNamed:@"default_profile_image.png"];
+    
+    if ([activity objectForKey:@"thumb1"]){
+        Photo *profilePic = [[Photo alloc] init];
+        profilePic.thumb_url = [activity objectForKey:@"thumb1"];
+        
+        AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:profilePic];
+        aImageView.frame = cell.userImage.frame;
+        aImageView.populate = cell.userImage;
+        [aImageView loadImage];
+        [cell addSubview:aImageView]; //mostly to handle de-allocation
+        [aImageView release];
+        [profilePic release];
+    }
+    
+    
     cell.timeAgo.frame = CGRectMake(cell.timeAgo.frame.origin.x, verticalCursor, cell.timeAgo.frame.size.width, cell.timeAgo.frame.size.height);    
     cell.timeAgo.backgroundColor = [UIColor clearColor];
     
-    // Need to remove last colon in timestamp as will break an NSDateFormatter
-    // See http://stackoverflow.com/questions/4330137/parsing-rfc3339-dates-with-nsdateformatter-in-ios-4-x-and-macos-x-10-6-impossib/
-    NSString *RFC3339String = [NSString stringWithFormat:@"%@", [activity objectForKey:@"updated_at"]];
-    RFC3339String = [RFC3339String stringByReplacingOccurrencesOfString:@":" 
-                                                                  withString:@"" 
-                                                                     options:0
-                                                                       range:NSMakeRange(20, RFC3339String.length-20)];
-    
-    NSString* format = @"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
-    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    NSLocale* enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:format];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-        
-    [enUSPOSIXLocale release];
-    
-    NSString *timeGap;
-    
-    NSDate *convertedDate = [dateFormatter dateFromString:RFC3339String];
-    [dateFormatter release];
-    NSDate *todayDate = [NSDate date];
-    double ti = [convertedDate timeIntervalSinceDate:todayDate];
-    ti = ti * -1;
-    if(ti < 1) {
-        timeGap = @"never";
-    } else      if (ti < 60) {
-        timeGap =  @"less than a minute ago";
-    } else if (ti < 3600) {
-        int diff = round(ti / 60);
-        if (diff == 1) {
-            timeGap = [NSString stringWithFormat:@"%d minute ago", diff];
-        } else {
-            timeGap = [NSString stringWithFormat:@"%d minutes ago", diff];
-        }
-    } else if (ti < 86400) {
-        int diff = round(ti / 60 / 60);
-        if (diff == 1) {
-            timeGap = [NSString stringWithFormat:@"%d hour ago", diff];
-        } else {
-            timeGap = [NSString stringWithFormat:@"%d hours ago", diff];            
-        }
-    } else { //if (ti < 2629743) {
-        int diff = round(ti / 60 / 60 / 24);
-        if (diff == 1) {
-            timeGap = [NSString stringWithFormat:@"%d day ago", diff];
-        } else {
-            timeGap = [NSString stringWithFormat:@"%d days ago", diff];
-        }
-    } 
+    NSString *timeGap = [NinaHelper dateDiff:[activity objectForKey:@"updated_at"]];
+
     
     cell.timeAgo.text = timeGap;
 }
