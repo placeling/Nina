@@ -64,7 +64,7 @@
 }
 
 -(IBAction) forgotPassword {
-    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:@"http://www.placeling.com/resetpassword/"];
+    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:[NSString stringWithFormat:@"%@/users/password/new", [NinaHelper getHostname]]];
     
     genericWebViewController.title = @"Reset Password";
     [self.navigationController pushViewController:genericWebViewController animated:true];

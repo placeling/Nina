@@ -83,7 +83,7 @@
 }
 
 -(IBAction) showTerms {
-    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:@"http://www.placeling.com/terms/"];
+    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:[NSString stringWithFormat:@"%@/terms_of_service", [NinaHelper getHostname]]];
     
     genericWebViewController.title = @"Terms & Conditions";
     [self.navigationController pushViewController:genericWebViewController animated:true];
@@ -92,7 +92,7 @@
 }
 
 -(IBAction) showPrivacy {
-    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:@"http://www.placeling.com/privacy/"];
+    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:[NSString stringWithFormat:@"%@/privacy_policy", [NinaHelper getHostname]]];
     
     genericWebViewController.title = @"Privacy Policy";
     [self.navigationController pushViewController:genericWebViewController animated:true];
