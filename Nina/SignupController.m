@@ -181,6 +181,9 @@
     
     [[NSBundle mainBundle] loadNibNamed:@"SignupFooterView" owner:self options:nil];
     self.tableView.tableFooterView = self.tableFooterView;
+    self.tableView.tableFooterView.userInteractionEnabled = TRUE;
+    
+    [self.tableFooterView setAutoresizingMask:UIViewAutoresizingNone];
     
     self.navigationItem.title = @"Signup";
     
@@ -235,7 +238,7 @@
 }
 
 -(IBAction) showTerms {
-    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:@"http://www.placeling.com/terms/"];
+    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:[NSString stringWithFormat:@"%@/terms_of_service", [NinaHelper getHostname]]];
     
     genericWebViewController.title = @"Terms & Conditions";
     [self.navigationController pushViewController:genericWebViewController animated:true];
@@ -244,7 +247,7 @@
 }
 
 -(IBAction) showPrivacy {
-    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:@"http://www.placeling.com/privacy/"];
+    GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:[NSString stringWithFormat:@"%@/privacy_policy", [NinaHelper getHostname]]];
     
     genericWebViewController.title = @"Privacy Policy";
     [self.navigationController pushViewController:genericWebViewController animated:true];
@@ -351,7 +354,7 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    DLog(@"Click on the indexpath row %i", indexPath.row);
 }
 
 @end
