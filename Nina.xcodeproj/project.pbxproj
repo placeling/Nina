@@ -58,6 +58,9 @@
 		284A354F1404574F009C8C28 /* PerspectiveTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A354D1404574F009C8C28 /* PerspectiveTableViewCell.xib */; };
 		284A355F14048DCD009C8C28 /* BookmarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A355D14048DCD009C8C28 /* BookmarkTableViewCell.m */; };
 		284A356014048DCD009C8C28 /* BookmarkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A355E14048DCD009C8C28 /* BookmarkTableViewCell.xib */; };
+		284D1CD3147B13CF001F80D1 /* FriendsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 284D1CD2147B13CD001F80D1 /* FriendsButton.png */; };
+		284D1CDE147C29DE001F80D1 /* FriendFindController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284D1CDC147C29DE001F80D1 /* FriendFindController.m */; };
+		284D1CDF147C29DE001F80D1 /* FriendFindController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284D1CDD147C29DE001F80D1 /* FriendFindController.xib */; };
 		285BE74E142CFFFA00898FDF /* asyncimageview.m in Sources */ = {isa = PBXBuildFile; fileRef = 285BE74D142CFFF900898FDF /* asyncimageview.m */; };
 		286B15F4140E9E1800CFED96 /* 152-rolodex.png in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F3140E9E1800CFED96 /* 152-rolodex.png */; };
 		286B15F7140E9E6100CFED96 /* 86-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F6140E9E6100CFED96 /* 86-camera.png */; };
@@ -372,6 +375,10 @@
 		284A355C14048DCC009C8C28 /* BookmarkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkTableViewCell.h; sourceTree = "<group>"; };
 		284A355D14048DCD009C8C28 /* BookmarkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkTableViewCell.m; sourceTree = "<group>"; };
 		284A355E14048DCD009C8C28 /* BookmarkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkTableViewCell.xib; sourceTree = "<group>"; };
+		284D1CD2147B13CD001F80D1 /* FriendsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FriendsButton.png; sourceTree = "<group>"; };
+		284D1CDB147C29DE001F80D1 /* FriendFindController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendFindController.h; sourceTree = "<group>"; };
+		284D1CDC147C29DE001F80D1 /* FriendFindController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendFindController.m; sourceTree = "<group>"; };
+		284D1CDD147C29DE001F80D1 /* FriendFindController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendFindController.xib; sourceTree = "<group>"; };
 		285BE74C142CFFF900898FDF /* asyncimageview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asyncimageview.h; sourceTree = "<group>"; };
 		285BE74D142CFFF900898FDF /* asyncimageview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = asyncimageview.m; sourceTree = "<group>"; };
 		286B15F3140E9E1800CFED96 /* 152-rolodex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "152-rolodex.png"; sourceTree = "<group>"; };
@@ -844,6 +851,16 @@
 			name = PlaceController;
 			sourceTree = "<group>";
 		};
+		284D1CD9147C29A9001F80D1 /* FriendFind */ = {
+			isa = PBXGroup;
+			children = (
+				284D1CDB147C29DE001F80D1 /* FriendFindController.h */,
+				284D1CDC147C29DE001F80D1 /* FriendFindController.m */,
+				284D1CDD147C29DE001F80D1 /* FriendFindController.xib */,
+			);
+			name = FriendFind;
+			sourceTree = "<group>";
+		};
 		286FA144143AB5B300EDAE84 /* QuickPick */ = {
 			isa = PBXGroup;
 			children = (
@@ -937,6 +954,7 @@
 		2895004413D64559009E1BD7 /* Nina */ = {
 			isa = PBXGroup;
 			children = (
+				284D1CD9147C29A9001F80D1 /* FriendFind */,
 				280EA87A14114BE90045B296 /* NearbyPlaces */,
 				286FA144143AB5B300EDAE84 /* QuickPick */,
 				28A4377614327ED5005F192B /* ActivityFeed */,
@@ -1255,6 +1273,7 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				284D1CD2147B13CD001F80D1 /* FriendsButton.png */,
 				28B17C2D14622477008C98E8 /* profilePattern.png */,
 				28B17C2E14622477008C98E8 /* profilePattern@2x.png */,
 				6CE40033145B67AF00101082 /* cloud1.png */,
@@ -1600,6 +1619,8 @@
 				28B17C6F1462249C008C98E8 /* your_map_popular@2x.png in Resources */,
 				28B17C701462249C008C98E8 /* your_map.png in Resources */,
 				28B17C711462249C008C98E8 /* your_map@2x.png in Resources */,
+				284D1CD3147B13CF001F80D1 /* FriendsButton.png in Resources */,
+				284D1CDF147C29DE001F80D1 /* FriendFindController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1718,6 +1739,7 @@
 				2887B8B2144E1D8100CBBF1B /* CustomSegmentedControl.m in Sources */,
 				6CB5B144144CC5D700A278AC /* AboutUsController.m in Sources */,
 				283FBB511454BD5700F6C50A /* QuickPickButton.m in Sources */,
+				284D1CDE147C29DE001F80D1 /* FriendFindController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

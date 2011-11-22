@@ -23,7 +23,6 @@
 
 -(IBAction) bookmarkSpot;
 -(IBAction) nearbyPerspectives;
--(IBAction) random;
 -(IBAction) showAccountSheet;
 
 -(IBAction) everythingList;
@@ -32,5 +31,7 @@
 
 -(IBAction) logout;
 -(IBAction) myProfile;
+
+-(IBAction) findFriends;
 
 @end
