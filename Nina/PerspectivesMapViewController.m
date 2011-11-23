@@ -109,10 +109,11 @@
     CLLocationDegrees mLng = center.longitude;
     
     
-    if (fabs(uLat - mLat) > region.span.latitudeDelta/2 || fabs(uLng - mLng) > region.span.longitudeDelta/2){
+    if (fabs(uLat - mLat) > region.span.latitudeDelta/2 || fabs(uLng - mLng) > region.span.longitudeDelta/2 || region.span.latitudeDelta > 2.5*lastLatSpan ){
         lastCoordinate = mapView.region.center;
+        lastLatSpan = mapView.region.span.latitudeDelta;
         DLog(@"Reloading map contents for new co-ordinate");
-        [self loadContent];
+        [self mapUserPlaces];
     }    
 }
 
@@ -238,6 +239,8 @@
     if ((currentUser || currentUser.length > 0) && (!self.username || self.username.length == 0)) {
         self.username = currentUser;
     }
+    lastCoordinate = self.mapView.region.center;
+    lastLatSpan = self.mapView.region.span.latitudeDelta;
     
     if (!self.username || self.username.length == 0) {
         self.navigationItem.title = @"Your Map";
@@ -253,7 +256,7 @@
         [baseAlert release];
     } else {
         self.navigationItem.title = self.username;
-        [self mapUserPlaces];
+        //[self mapUserPlaces]; happens implicitly
     }
 }
 
@@ -274,7 +277,7 @@
     self.mapView.delegate = self;
     [self recenter];
     
-    //[self loadContent]; //done impllictly after recenter
+    [self loadContent];
     
 }
 

@@ -20,6 +20,7 @@
     NSMutableArray *nearbyMarks;
     CLLocationManager *locationManager;
     CLLocationCoordinate2D lastCoordinate;
+    CLLocationDegrees lastLatSpan;
     User *user; //user this is representing
 }
 
