@@ -35,7 +35,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     // Add the tab bar controller's current view as a subview of the window
     
     if (![CLLocationManager locationServicesEnabled]) {
-        UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"location_disabled", nil) message:NSLocalizedString(@"location_disabled_desc", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Disabled" message:@"Location services are disabled on your device " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [servicesDisabledAlert show];
         [servicesDisabledAlert release];
     } else {

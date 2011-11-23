@@ -127,7 +127,7 @@
         [FlurryAnalytics logEvent:@"CONNECT_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                    @"message", 
                                                                    errorMessage, nil]];
-        NSString *alertMessage = [NSString stringWithFormat:@"Can't Connect to Server"];
+        NSString *alertMessage = [NSString stringWithFormat:@"We can't connect to Placeling servers right now"];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
                                                        delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
