@@ -52,7 +52,7 @@
     } else if ([self.usersBookmarking count] ==2){
         return [NSString stringWithFormat:@"%@ & %@", [self.usersBookmarking objectAtIndex:0], [self.usersBookmarking objectAtIndex:1]];
     } else if ([self.usersBookmarking count] > 2){
-        return [NSString stringWithFormat:@"%@ & %i others you follow", [self.usersBookmarking objectAtIndex:0], [self.usersBookmarking count] -1];
+        return [NSString stringWithFormat:@"%@ & %i others", [self.usersBookmarking objectAtIndex:0], [self.usersBookmarking count] -1];
     } else {
         DLog(@"Warning: had 0 users bookmarking but called for string");
         return @"";
