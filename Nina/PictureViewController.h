@@ -10,8 +10,9 @@
 #import "ASIHTTPRequest.h"
 #import "NinaHelper.h"
 #import "Photo.h"
+#import "Perspective.h"
 
-@interface PictureViewController : UIViewController{
+@interface PictureViewController : UIViewController<UIActionSheetDelegate>{
     IBOutlet UIImageView *imageView;
     IBOutlet UIProgressView *progressView;
     UIImage *image;
@@ -20,6 +21,7 @@
 }
 
 @property(nonatomic,retain) Photo *photo;
+
 @property(nonatomic,retain) IBOutlet UIImageView *imageView;
 @property(nonatomic,retain) IBOutlet UIProgressView *progressView;
 

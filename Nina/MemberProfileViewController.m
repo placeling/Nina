@@ -71,6 +71,14 @@
     
     [StyleHelper styleInfoView:self.headerView];
     
+    for (Perspective *perspective in perspectives){
+        if (perspective.modified){
+            perspective.modified = false;            
+            [self.tableView reloadData];
+            break;
+        }
+    }
+    
 }
 
 -(void) blankLoad{

@@ -16,6 +16,48 @@
 @synthesize progressView;
 
 
+#pragma mark -ActionSheet 
+
+-(IBAction)showAccountSheet{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete Photo" otherButtonTitles:nil];
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0){
+        DLog(@"Deleting Photo:%@", self.photo.thumb_url);
+        Perspective *perspective = self.photo.perspective;
+        
+        NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/photos/%@", [NinaHelper getHostname], perspective.place.place_id, self.photo.photo_id];        
+        NSURL *url = [NSURL URLWithString:urlText];        
+        ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
+
+        [perspective.photos removeObject:self.photo];
+        perspective.modified = TRUE;
+        
+        [request setRequestMethod:@"DELETE"];
+        
+        [request setCompletionBlock:^{
+            // Use when fetching text data
+            NSString *responseString = [request responseString];
+            DLog(@"%@", responseString); 
+        }];
+        [request setFailedBlock:^{
+            [NinaHelper handleBadRequest:request sender:nil];
+        }];
+        
+        [NinaHelper signRequest:request];
+        [request startAsynchronous];
+        
+        [self.navigationController popViewControllerAnimated:TRUE];
+        
+    }
+    
+}
+
+
+
 #pragma mark - View lifecycle
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -35,6 +77,13 @@
 	[super viewDidLoad];
 
 	NSURL *url = [NSURL URLWithString:photo.iphone_url];
+        
+    if ( photo.mine ){
+        UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showAccountSheet)];
+        self.navigationItem.rightBarButtonItem = shareButton;
+        [shareButton release];
+    }
+    
 	
 	_request =  [[ASIHTTPRequest  alloc]  initWithURL:url];
 	[self becomeFirstResponder];

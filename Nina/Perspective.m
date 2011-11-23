@@ -35,18 +35,22 @@
 }
 
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
+    mine = [[jsonDict objectForKey:@"mine"] boolValue];
     
     for (NSDictionary *photoDict in [jsonDict objectForKey:@"photos"]){
         bool found = false;
         for (Photo *photo in self.photos){
             if ([[photoDict objectForKey:@"_id"] isEqualToString:photo.photo_id]){
                 found = true;
+                photo.mine = mine;
                 break;
             }
         }
         
         if (!found){
             Photo *photo = [[Photo alloc] initFromJsonDict:photoDict];
+            photo.perspective = self;
+            photo.mine = self.mine;
             [self.photos addObject:photo];
             [photo release];
         }
@@ -56,7 +60,7 @@
     self.notes = [jsonDict objectForKey:@"memo"];
     self.starred = [[jsonDict objectForKey:@"starred"] boolValue];
     self.lastModified =[jsonDict objectForKey:@"updated_at"];
-    mine = [[jsonDict objectForKey:@"mine"] boolValue];
+    
     
 }
 

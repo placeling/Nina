@@ -14,7 +14,7 @@
 
 @synthesize thumb_image, iphone_image, main_image;
 
-@synthesize thumb_url,iphone_url,main_url, photo_id;
+@synthesize thumb_url,iphone_url,main_url, photo_id, mine, perspective;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
     if(self = [super init]){
