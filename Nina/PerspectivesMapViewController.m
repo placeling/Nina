@@ -23,7 +23,7 @@
 
 @implementation PerspectivesMapViewController
 
-@synthesize mapView, toolbar;
+@synthesize mapView=_mapView, toolbar;
 @synthesize username=_username, user;
 @synthesize nearbyMarks;
 @synthesize locationManager;
@@ -43,7 +43,7 @@
         
         placemark.title = place.name;
         //placemark.subtitle = subTitle;
-        [mapView addAnnotation:placemark];
+        [self.mapView addAnnotation:placemark];
         [placemark release];
     }
 }
@@ -80,7 +80,7 @@
 - (void)dealloc{
     //[self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
     [NinaHelper clearActiveRequests:50];
-    [mapView release];
+    [_mapView release];
     [_username release];
     [locationManager release];
     [nearbyMarks release];
@@ -93,6 +93,27 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+
+
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated{
+    MKCoordinateRegion region = mapView.region;
+    CLLocationCoordinate2D center = region.center;
+    
+    
+    CLLocationDegrees uLat = lastCoordinate.latitude;
+    CLLocationDegrees uLng = lastCoordinate.longitude;
+    
+    CLLocationDegrees mLat = center.latitude;
+    CLLocationDegrees mLng = center.longitude;
+    
+    
+    if (fabs(uLat - mLat) > region.span.latitudeDelta/2 || fabs(uLng - mLng) > region.span.longitudeDelta/2){
+        lastCoordinate = mapView.region.center;
+        DLog(@"Reloading map contents for new co-ordinate");
+        [self loadContent];
+    }    
 }
 
 
@@ -124,7 +145,7 @@
         static NSString* annotationIdentifier = @"placeAnnotationIdentifier";
         
         MKPinAnnotationView* pinView = (MKPinAnnotationView *)        
-        [mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+        [self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
 
         if (!pinView) {            
             // if an existing pin view was not available, create one
@@ -253,7 +274,7 @@
     self.mapView.delegate = self;
     [self recenter];
     
-    [self loadContent];
+    //[self loadContent]; //done impllictly after recenter
     
 }
 

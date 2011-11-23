@@ -14,11 +14,12 @@
 #import "LoginController.h"
 
 @interface PerspectivesMapViewController : UIViewController<ASIHTTPRequestDelegate, MKMapViewDelegate, LoginControllerDelegate> {
-    IBOutlet MKMapView *mapView;
+    IBOutlet MKMapView *_mapView;
     IBOutlet UIToolbar *toolbar;
     NSString *_username;
     NSMutableArray *nearbyMarks;
     CLLocationManager *locationManager;
+    CLLocationCoordinate2D lastCoordinate;
     User *user; //user this is representing
 }
 
