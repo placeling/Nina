@@ -22,10 +22,12 @@
     CLLocationCoordinate2D lastCoordinate;
     CLLocationDegrees lastLatSpan;
     User *user; //user this is representing
+    UIActivityIndicatorView *spinnerView;    
 }
 
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;
 @property(nonatomic, retain) IBOutlet UIToolbar *toolbar;
+@property(nonatomic, retain) IBOutlet UIActivityIndicatorView *spinnerView;
 @property(nonatomic, retain) NSString *username;
 @property(nonatomic, retain) NSMutableArray *nearbyMarks;
 @property(nonatomic, retain) CLLocationManager *locationManager;

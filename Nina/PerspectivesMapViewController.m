@@ -23,7 +23,7 @@
 
 @implementation PerspectivesMapViewController
 
-@synthesize mapView=_mapView, toolbar;
+@synthesize mapView=_mapView, toolbar, spinnerView;
 @synthesize username=_username, user;
 @synthesize nearbyMarks;
 @synthesize locationManager;
@@ -74,6 +74,7 @@
     
     [NinaHelper signRequest:request];
     [request startAsynchronous];
+    [self.spinnerView startAnimating];
     
 }
 
@@ -196,11 +197,13 @@
 #pragma mark ASIhttprequest
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
+    [self.spinnerView stopAnimating];
     [NinaHelper handleBadRequest:request sender:self];
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
 	// Use when fetching binary data
+    [self.spinnerView stopAnimating];
 	int statusCode = [request responseStatusCode];
 	if (200 != statusCode) {
         [NinaHelper handleBadRequest:request  sender:self];
@@ -275,6 +278,7 @@
     nearbyMarks = [[NSMutableArray alloc] init];
     self.mapView.showsUserLocation = TRUE;
     self.mapView.delegate = self;
+    self.spinnerView.hidden = true;
     [self recenter];
     
     [self loadContent];
