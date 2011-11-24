@@ -16,10 +16,13 @@
 @interface SinglePlaceMapView : UIViewController<MKMapViewDelegate>{
     Place *_place;
     IBOutlet MKMapView *mapView;
+    IBOutlet UIToolbar *toolbar;
+    
 }
 
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;
 @property(nonatomic, retain) Place *place;
+@property(nonatomic, retain) IBOutlet UIToolbar *toolbar;
 
 
 - (id)initWithPlace:(Place *)place;

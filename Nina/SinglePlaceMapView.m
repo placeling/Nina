@@ -11,7 +11,7 @@
 
 @implementation SinglePlaceMapView
 
-@synthesize mapView, place=_place;
+@synthesize mapView, place=_place, toolbar;
 
 - (id)initWithPlace:(Place *)place{
     self = [super init];
@@ -33,6 +33,7 @@
 -(void)dealloc{
     [mapView release];
     [_place release];
+    [toolbar release];
     [super dealloc];
 }
 
@@ -52,22 +53,28 @@
         [rightButton addTarget:self action:@selector(spawnMapApp) 
               forControlEvents:UIControlEventTouchUpInside];
         
-        customPinView.rightCalloutAccessoryView = rightButton;
+        //customPinView.rightCalloutAccessoryView = rightButton;
         
-    }
-    if (annotation.place.bookmarked){
-        customPinView.image = [UIImage imageNamed:@"MyMarker.png"];
-    } else {
-        customPinView.image = [UIImage imageNamed:@"FriendMarker.png"];
+        if (annotation.place.bookmarked){
+            customPinView.image = [UIImage imageNamed:@"MyMarker.png"];
+        } else {
+            customPinView.image = [UIImage imageNamed:@"FriendMarker.png"];
+        }
+        return customPinView;
+    }else {
+        return nil;
     }
     
-    return customPinView;
 }
 
 -(IBAction) spawnMapApp{
-    UIApplication *app = [UIApplication sharedApplication];
-    NSString *queryString = [NSString stringWithFormat:@"http://maps.google.com/maps?q=%@&near=%@", self.place.name, [NSString stringWithFormat:@"%f,%f", self.place.location.coordinate.latitude , self.place.location.coordinate.longitude]];
-    [app openURL:[[[NSURL alloc] initWithString: queryString] autorelease]];
+    NSString *currentLocation = @"Current+Location";
+    CLLocationCoordinate2D destination = self.place.location.coordinate;        
+    //saddr=%1.6f,%1.6f&   start.latitude, start.longitude
+    NSString *googleMapsURLString = [NSString stringWithFormat:@"http://maps.google.com/?saddr=%@&daddr=%1.6f,%1.6f", currentLocation, destination.latitude, destination.longitude];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:googleMapsURLString]];
+    
 }
 
 #pragma mark - View lifecycle
@@ -85,6 +92,7 @@
     [placemark release];
     
     self.mapView.delegate = self;
+    self.mapView.showsUserLocation = TRUE;
     
     MKCoordinateRegion region;
     CLLocation *location = self.place.location;
@@ -103,6 +111,12 @@
     //pre-opens callout   
     [self.mapView selectAnnotation:[mapView.annotations objectAtIndex:0] animated:FALSE];
     
+}
+
+-(void) viewWillAppear:(BOOL)animated{
+    [StyleHelper styleToolBar:toolbar];
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidUnload
