@@ -44,7 +44,7 @@
     [[NSBundle mainBundle] loadNibNamed:@"ProfileHeaderView" owner:self options:nil];
     
     [super viewDidLoad];
-    loadingMore = false;
+    loadingMore = true;
     hasMore = true;
 	
     self.tableView.tableHeaderView = self.headerView;
@@ -157,6 +157,7 @@
     self.placeMarkButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.placeCount];
     
     if (perspectives == nil && self.user.placeCount != 0){
+        loadingMore = true;
         NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/", [NinaHelper getHostname], self.username];		
         
         NSURL *url = [NSURL URLWithString:urlString];
@@ -210,7 +211,7 @@
         }
         
         self.navigationItem.title = @"Profile";
-        
+        loadingMore = true;
         // Call url to get profile details
         NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@", [NinaHelper getHostname], getUsername];
         
@@ -298,7 +299,7 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
+    loadingMore = false;
     if (request.responseStatusCode != 200){
         [NinaHelper handleBadRequest:request sender:self];
         return;
@@ -446,17 +447,13 @@
         return 1;
     } else {
         if (perspectives) {
-            if ([perspectives count] == 0) {
-                return 1;
-            } else {
-                if (loadingMore){   
-                    return [perspectives count] +1;
-                }else{
-                    return [perspectives count];
-                }
+            if (loadingMore){   
+                return [perspectives count] +1;
+            }else{
+                return [perspectives count];
             }
         } else {
-            return 0;
+            return 1;
         }
     }
 }
