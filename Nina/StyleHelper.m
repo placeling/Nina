@@ -85,7 +85,7 @@
     [button.layer setCornerRadius:5.0f];
     [button.layer setMasksToBounds:YES];
     [button.layer setBackgroundColor:[UIColor colorWithRed:239.0f/255.0f green:235.0f/255.0f blue:224.0f/255.0f alpha:1.0].CGColor];
-    [button.titleLabel setFont:[UIFont fontWithName:@"MarketingScript" size:24]];
+    [button.titleLabel setFont:[UIFont fontWithName:@"MarketingScript" size:22]];
     [button.titleLabel setTextColor:[UIColor colorWithRed:194.0f/255.0f green:106.0f/255.0f blue:86.0f/255.0f alpha:1.0]];
 }
 
