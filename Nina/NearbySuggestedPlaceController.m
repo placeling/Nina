@@ -75,11 +75,14 @@
         NSString *queryString = [self encodeForUrl:self.searchTerm];
         NSString *categoryString = [self encodeForUrl:self.category];
         
-        if (!showAll){
-            urlString = [NSString stringWithFormat:@"%@?socialgraph=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", urlString, lat, lng, radius, queryString, categoryString];
-        } else {
+        
+        NSString *currentUser = [NinaHelper getUsername];            
+        if (showAll || !currentUser || currentUser.length == 0 ){
             urlString = [NSString stringWithFormat:@"%@?socialgraph=false&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", urlString, lat, lng, radius, queryString, categoryString];
+        } else {
+            urlString = [NSString stringWithFormat:@"%@?socialgraph=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", urlString, lat, lng, radius, queryString, categoryString];
         }
+        
         NSURL *url = [NSURL URLWithString:urlString];
         
         self.locationEnabled = TRUE;
@@ -106,11 +109,7 @@
 
 #pragma mark - Login delegate methods
 - (void) loadContent {
-    NSString *currentUser = [NinaHelper getUsername];
-    
-    if (self.showAll || (currentUser && currentUser.length > 0)) {
-        [self findNearbyPlaces];
-    }
+    [self findNearbyPlaces];
 }
 
 #pragma mark - View lifecycle
@@ -312,15 +311,20 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    NSString *currentUser = [NinaHelper getUsername];
     // Return the number of sections.
-    return 1;
+    if (self.showAll || (currentUser && currentUser.length > 0)){
+        return 1;
+    } else {
+        return 2;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (!self.showAll && (!currentUser || currentUser.length == 0)) {
+    if (!self.showAll && (!currentUser || currentUser.length == 0) && section == 0) {
         return 1;
     } else if (self.dataLoaded && [nearbyPlaces count] == 0) {
         return 1;
@@ -332,7 +336,7 @@
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (!self.showAll && (!currentUser || currentUser.length == 0)) {
+    if (!self.showAll && (!currentUser || currentUser.length == 0) && indexPath.section == 0) {
         return 90;
     } else {
         return 70;
@@ -363,8 +367,7 @@
     
     if (cell == nil) {
         NSString *currentUser = [NinaHelper getUsername];
-        
-        if (!self.showAll && (!currentUser || currentUser.length == 0)) {
+        if ((!self.showAll && (!currentUser || currentUser.length == 0)) && indexPath.section == 0) {
             cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
             
             tableView.allowsSelection = YES;
@@ -490,7 +493,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+    if ((!self.showAll && (!currentUser || currentUser.length == 0)) && indexPath.section == 0) {
         LoginController *loginController = [[LoginController alloc] init];
         loginController.delegate = self;
         
