@@ -22,27 +22,33 @@
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
     
     if(self = [super init]){
-        self.pid = [jsonDict objectForKeyNotNull:@"_id"];
-        self.name = [jsonDict objectForKeyNotNull:@"name"];
-        self.address = [jsonDict objectForKeyNotNull:@"street_address"];
-        self.city = [jsonDict objectForKeyNotNull:@"city_data"];
-        self.phone = [jsonDict objectForKeyNotNull:@"phone_number"];
-        self.place_id = [jsonDict objectForKeyNotNull:@"google_id"];
-        self.googlePlacesUrl = [jsonDict objectForKeyNotNull:@"google_url"];
-        NSNumber *lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
-        NSNumber *lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1]; 
-        
-        self.location = [[[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]]autorelease];
-        self.perspectiveCount = [[jsonDict objectForKeyNotNull:@"perspective_count"] intValue];
-        self.bookmarked = [[jsonDict objectForKeyNotNull:@"bookmarked"] boolValue] ;
-        self.categories = [jsonDict objectForKeyNotNull:@"venue_types"];
-        
-        self.usersBookmarking = [jsonDict objectForKey:@"users_bookmarking"];        
-        self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
-        self.tags = [jsonDict objectForKeyNotNull:@"tags"];
+        [self updateFromJsonDict:jsonDict];
         self.dirty = false;
 	}
 	return self;
+}
+
+
+-(void) updateFromJsonDict:(NSDictionary *)jsonDict{
+    self.pid = [jsonDict objectForKeyNotNull:@"_id"];
+    self.name = [jsonDict objectForKeyNotNull:@"name"];
+    self.address = [jsonDict objectForKeyNotNull:@"street_address"];
+    self.city = [jsonDict objectForKeyNotNull:@"city_data"];
+    self.phone = [jsonDict objectForKeyNotNull:@"phone_number"];
+    self.place_id = [jsonDict objectForKeyNotNull:@"google_id"];
+    self.googlePlacesUrl = [jsonDict objectForKeyNotNull:@"google_url"];
+    NSNumber *lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
+    NSNumber *lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1]; 
+    
+    self.location = [[[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]]autorelease];
+    self.perspectiveCount = [[jsonDict objectForKeyNotNull:@"perspective_count"] intValue];
+    self.bookmarked = [[jsonDict objectForKeyNotNull:@"bookmarked"] boolValue] ;
+    self.categories = [jsonDict objectForKeyNotNull:@"venue_types"];
+    
+    self.usersBookmarking = [jsonDict objectForKey:@"users_bookmarking"];        
+    self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
+    self.tags = [jsonDict objectForKeyNotNull:@"tags"];
+    
 }
 
 -(NSString*) usersBookmarkingString{

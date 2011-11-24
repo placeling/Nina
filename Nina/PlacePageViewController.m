@@ -448,6 +448,10 @@ typedef enum {
                     myPerspective = [[Perspective alloc]initFromJsonDict:jsonString];
                     [homePerspectives insertObject:myPerspective atIndex:0];
                 }
+                
+                //handles updates tags, etc
+                [self.place updateFromJsonDict:[jsonString objectForKey:@"place"]];
+                
                 myPerspective.place = self.place;                
                 
                 self.place.bookmarked = true;

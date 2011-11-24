@@ -68,6 +68,7 @@
 @property (nonatomic, assign) NSMutableArray *everyonePerspectives;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
+- (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
 -(NSString*) usersBookmarkingString;
 
