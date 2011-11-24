@@ -75,9 +75,6 @@
         self.takeButton.titleLabel.textColor = [UIColor grayColor];
     }
     
-    [StyleHelper styleSubmitTypeButton:self.takeButton];
-    [StyleHelper styleSubmitTypeButton:self.existingButton];
-    
     UIBarButtonItem *saveButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(savePerspective)];
     self.navigationItem.rightBarButtonItem = saveButton;
     [saveButton release];
@@ -93,6 +90,8 @@
     
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     [StyleHelper styleBackgroundView:self.view];
+    [StyleHelper styleSubmitTypeButton:self.takeButton];
+    [StyleHelper styleSubmitTypeButton:self.existingButton];
     
 }
 
