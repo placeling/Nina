@@ -22,7 +22,8 @@
     CLLocationCoordinate2D lastCoordinate;
     CLLocationDegrees lastLatSpan;
     User *user; //user this is representing
-    UIActivityIndicatorView *spinnerView;    
+    UIActivityIndicatorView *spinnerView;  
+    BOOL mapLoaded;
 }
 
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;

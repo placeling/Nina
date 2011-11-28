@@ -109,8 +109,8 @@
     CLLocationDegrees mLat = center.latitude;
     CLLocationDegrees mLng = center.longitude;
     
-    
-    if (fabs(uLat - mLat) > region.span.latitudeDelta/2 || fabs(uLng - mLng) > region.span.longitudeDelta/2 || region.span.latitudeDelta > 2.5*lastLatSpan ){
+    //without maploaded, the first time this runs it will get a whole world map
+    if (mapLoaded && (fabs(uLat - mLat) > region.span.latitudeDelta/2 || fabs(uLng - mLng) > region.span.longitudeDelta/2 || region.span.latitudeDelta > 2.5*lastLatSpan) ){
         lastCoordinate = mapView.region.center;
         lastLatSpan = mapView.region.span.latitudeDelta;
         DLog(@"Reloading map contents for new co-ordinate");
@@ -198,7 +198,7 @@
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
     [self.spinnerView stopAnimating];
-    [NinaHelper handleBadRequest:request sender:self];
+    //[NinaHelper handleBadRequest:request sender:self];
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
@@ -238,6 +238,7 @@
 #pragma mark - loginController delegates
 - (void)loadContent {
     NSString *currentUser = [NinaHelper getUsername];
+    mapLoaded = true;
     
     if ((currentUser || currentUser.length > 0) && (!self.username || self.username.length == 0)) {
         self.username = currentUser;
@@ -259,7 +260,7 @@
         [baseAlert release];
     } else {
         self.navigationItem.title = self.username;
-        //[self mapUserPlaces]; happens implicitly
+        [self mapUserPlaces];
     }
 }
 
@@ -268,7 +269,7 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
+    mapLoaded = false;
     // Do any additional setup after loading the view from its nib.
     //[self.mapView.userLocation addObserver:self  
     //                            forKeyPath:@"location"
@@ -281,12 +282,17 @@
     self.spinnerView.hidden = true;
     [self recenter];
     
-    [self loadContent];
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [StyleHelper styleToolBar:self.toolbar];
+}
+
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self loadContent];
 }
 
 
