@@ -75,6 +75,9 @@
             [imageView loadImageFromPhoto:photo]; 
             imageView.userInteractionEnabled = TRUE;
             
+            [imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+            [imageView.layer setBorderWidth: 5.0];
+            
             [self.scrollView addSubview:imageView];
             
             cx += imageView.frame.size.width+2;
@@ -113,13 +116,20 @@
     self.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.userImage.layer.masksToBounds = YES;
     
+    if ([self.perspective.photos count] == 0){
+        //extend text all the way down if no photos
+        self.scrollView.hidden = true;
+        [self.memoText setFrame:CGRectMake(self.memoText.frame.origin.x, self.memoText.frame.origin.y, self.memoText.frame.size.width, self.view.frame.size.height - self.memoText.frame.origin.y)];
+    } else {
+        [self.scrollView setCanCancelContentTouches:NO];
+        
+        self.scrollView.showsHorizontalScrollIndicator = NO;
+        self.scrollView.clipsToBounds = NO;
+        self.scrollView.scrollEnabled = YES;
+        self.scrollView.pagingEnabled = YES;
+    }
     
-    [self.scrollView setCanCancelContentTouches:NO];
-    
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.clipsToBounds = NO;
-    self.scrollView.scrollEnabled = YES;
-    self.scrollView.pagingEnabled = YES;
+
 }
 
 -(IBAction) showAuthoringUser{
