@@ -106,7 +106,7 @@
 					<object class="IBUIButton" id="713298254">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{15, -6}, {126, 128}}</string>
+						<string key="NSFrame">{{27, 5}, {102, 110}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="931022643"/>
@@ -178,7 +178,7 @@
 					<object class="IBUILabel" id="322693303">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{177, 185}, {84, 21}}</string>
+						<string key="NSFrame">{{177, 186}, {84, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="934564687"/>
@@ -302,7 +302,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="839236553"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">FriendsButton.png</string>
+							<string key="NSResourceName">PeopleIcon.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="330832871"/>
 						<reference key="IBUIFont" ref="646591182"/>
@@ -416,12 +416,12 @@
 							<reference ref="86865012"/>
 							<reference ref="286212048"/>
 							<reference ref="934564687"/>
-							<reference ref="713298254"/>
 							<reference ref="931022643"/>
 							<reference ref="47310288"/>
 							<reference ref="15055512"/>
-							<reference ref="322693303"/>
+							<reference ref="713298254"/>
 							<reference ref="699192188"/>
+							<reference ref="322693303"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -704,7 +704,7 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>FriendsButton.png</string>
+				<string>PeopleIcon.png</string>
 				<string>feed@2x.png</string>
 				<string>mymap@2x.png</string>
 				<string>placeit.png</string>
@@ -712,7 +712,7 @@
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{64, 64}</string>
+				<string>{522, 278}</string>
 				<string>{150, 150}</string>
 				<string>{178, 178}</string>
 				<string>{399, 192}</string>

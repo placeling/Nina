@@ -48,6 +48,8 @@
 		2833C09B140D66B20076A398 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 2833C09A140D66B20076A398 /* twitter.png */; };
 		2833C09D140D67430076A398 /* 168-upload-photo-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2833C09C140D67430076A398 /* 168-upload-photo-2.png */; };
 		283FBB511454BD5700F6C50A /* QuickPickButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 283FBB501454BD5700F6C50A /* QuickPickButton.m */; };
+		28417F91148354EA00CA6D4D /* PeopleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417F8F148354EA00CA6D4D /* PeopleIcon.png */; };
+		28417F92148354EA00CA6D4D /* PeopleIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417F90148354EA00CA6D4D /* PeopleIcon@2x.png */; };
 		284A35321402C48C009C8C28 /* PerspectivesMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A35301402C48C009C8C28 /* PerspectivesMapViewController.m */; };
 		284A35331402C48C009C8C28 /* PerspectivesMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */; };
 		284A35371402D3C3009C8C28 /* PlaceMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A35361402D3C3009C8C28 /* PlaceMark.m */; };
@@ -55,7 +57,6 @@
 		284A354F1404574F009C8C28 /* PerspectiveTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A354D1404574F009C8C28 /* PerspectiveTableViewCell.xib */; };
 		284A355F14048DCD009C8C28 /* BookmarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A355D14048DCD009C8C28 /* BookmarkTableViewCell.m */; };
 		284A356014048DCD009C8C28 /* BookmarkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A355E14048DCD009C8C28 /* BookmarkTableViewCell.xib */; };
-		284D1CD3147B13CF001F80D1 /* FriendsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 284D1CD2147B13CD001F80D1 /* FriendsButton.png */; };
 		284D1CDE147C29DE001F80D1 /* FriendFindController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284D1CDC147C29DE001F80D1 /* FriendFindController.m */; };
 		284D1CDF147C29DE001F80D1 /* FriendFindController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284D1CDD147C29DE001F80D1 /* FriendFindController.xib */; };
 		285BE74E142CFFFA00898FDF /* asyncimageview.m in Sources */ = {isa = PBXBuildFile; fileRef = 285BE74D142CFFF900898FDF /* asyncimageview.m */; };
@@ -331,6 +332,8 @@
 		2833C09C140D67430076A398 /* 168-upload-photo-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "168-upload-photo-2.png"; sourceTree = "<group>"; };
 		283FBB4F1454BD5700F6C50A /* QuickPickButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickPickButton.h; sourceTree = "<group>"; };
 		283FBB501454BD5700F6C50A /* QuickPickButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickPickButton.m; sourceTree = "<group>"; };
+		28417F8F148354EA00CA6D4D /* PeopleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PeopleIcon.png; sourceTree = "<group>"; };
+		28417F90148354EA00CA6D4D /* PeopleIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PeopleIcon@2x.png"; sourceTree = "<group>"; };
 		284A352F1402C48C009C8C28 /* PerspectivesMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectivesMapViewController.h; sourceTree = "<group>"; };
 		284A35301402C48C009C8C28 /* PerspectivesMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerspectivesMapViewController.m; sourceTree = "<group>"; };
 		284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PerspectivesMapViewController.xib; sourceTree = "<group>"; };
@@ -342,7 +345,6 @@
 		284A355C14048DCC009C8C28 /* BookmarkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkTableViewCell.h; sourceTree = "<group>"; };
 		284A355D14048DCD009C8C28 /* BookmarkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkTableViewCell.m; sourceTree = "<group>"; };
 		284A355E14048DCD009C8C28 /* BookmarkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkTableViewCell.xib; sourceTree = "<group>"; };
-		284D1CD2147B13CD001F80D1 /* FriendsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FriendsButton.png; sourceTree = "<group>"; };
 		284D1CDB147C29DE001F80D1 /* FriendFindController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendFindController.h; sourceTree = "<group>"; };
 		284D1CDC147C29DE001F80D1 /* FriendFindController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendFindController.m; sourceTree = "<group>"; };
 		284D1CDD147C29DE001F80D1 /* FriendFindController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendFindController.xib; sourceTree = "<group>"; };
@@ -1181,9 +1183,10 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				28417F8F148354EA00CA6D4D /* PeopleIcon.png */,
+				28417F90148354EA00CA6D4D /* PeopleIcon@2x.png */,
 				289BCEEC147EFE8100B89C25 /* UnReMark.png */,
 				289BCEEA147EFE2000B89C25 /* ReMark.png */,
-				284D1CD2147B13CD001F80D1 /* FriendsButton.png */,
 				28B17C2D14622477008C98E8 /* profilePattern.png */,
 				28B17C2E14622477008C98E8 /* profilePattern@2x.png */,
 				6CE40033145B67AF00101082 /* cloud1.png */,
@@ -1497,10 +1500,11 @@
 				28B17C5D1462249C008C98E8 /* profile_pic_small.png in Resources */,
 				28B17C5E1462249C008C98E8 /* red_button.png in Resources */,
 				28B17C671462249C008C98E8 /* unloaded_profile_pic.png in Resources */,
-				284D1CD3147B13CF001F80D1 /* FriendsButton.png in Resources */,
 				284D1CDF147C29DE001F80D1 /* FriendFindController.xib in Resources */,
 				289BCEEB147EFE2000B89C25 /* ReMark.png in Resources */,
 				289BCEED147EFE8100B89C25 /* UnReMark.png in Resources */,
+				28417F91148354EA00CA6D4D /* PeopleIcon.png in Resources */,
+				28417F92148354EA00CA6D4D /* PeopleIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
