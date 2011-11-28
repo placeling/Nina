@@ -466,8 +466,23 @@ typedef enum {
                 NSString *responseString = [request responseString];        
                 DLog(@"%@", responseString);
                 
+                NSDictionary *jsonString = [responseString JSONValue];
+                
+                if (myPerspective){
+                    [myPerspective updateFromJsonDict:[jsonString objectForKey:@"perspective"] ];
+                } else {
+                    myPerspective = [[Perspective alloc]initFromJsonDict:[jsonString objectForKey:@"perspective"]];
+                    [homePerspectives insertObject:myPerspective atIndex:0];
+                }
+                
+                //handles updates tags, etc
+                [self.place updateFromJsonDict:[[jsonString objectForKey:@"perspective"] objectForKey:@"place"]];
+                
+                myPerspective.place = self.place;                
+                
                 self.place.bookmarked = true;
-                [self.tableView reloadData];                
+                [self.tableView reloadData];   
+                [self loadData];
                 
                 break;
             }
