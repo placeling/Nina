@@ -57,7 +57,7 @@
 					<object class="IBUIButton" id="730675213">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{13, 56}, {32, 30}}</string>
+						<string key="NSFrame">{{18, 56}, {22, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="10021839"/>
@@ -86,7 +86,7 @@
 						</object>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">unstarred.png</string>
+							<string key="NSResourceName">UnReMark.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">1</int>
@@ -292,11 +292,11 @@
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="385667341"/>
-							<reference ref="730675213"/>
 							<reference ref="10021839"/>
 							<reference ref="318136685"/>
 							<reference ref="466755262"/>
 							<reference ref="435554092"/>
+							<reference ref="730675213"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -436,8 +436,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="UnReMark.png">{54, 80}</string>
 			<string key="default_profile_image.png">{175, 175}</string>
-			<string key="unstarred.png">{25, 25}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">931</string>
 	</data>

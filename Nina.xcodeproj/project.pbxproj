@@ -50,6 +50,7 @@
 		283FBB511454BD5700F6C50A /* QuickPickButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 283FBB501454BD5700F6C50A /* QuickPickButton.m */; };
 		28417F91148354EA00CA6D4D /* PeopleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417F8F148354EA00CA6D4D /* PeopleIcon.png */; };
 		28417F92148354EA00CA6D4D /* PeopleIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417F90148354EA00CA6D4D /* PeopleIcon@2x.png */; };
+		28417F95148361A300CA6D4D /* ReMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417F94148361A300CA6D4D /* ReMark.png */; };
 		284A35321402C48C009C8C28 /* PerspectivesMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A35301402C48C009C8C28 /* PerspectivesMapViewController.m */; };
 		284A35331402C48C009C8C28 /* PerspectivesMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */; };
 		284A35371402D3C3009C8C28 /* PlaceMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A35361402D3C3009C8C28 /* PlaceMark.m */; };
@@ -143,7 +144,6 @@
 		289501F713D684A0009E1BD7 /* NearbyPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289501F513D684A0009E1BD7 /* NearbyPlacesViewController.m */; };
 		289501F813D684A0009E1BD7 /* NearbyPlacesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 289501F613D684A0009E1BD7 /* NearbyPlacesViewController.xib */; };
 		2899261D13D8D0C3004EFF81 /* PerspectivePlaceMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 2899261C13D8D0C3004EFF81 /* PerspectivePlaceMark.m */; };
-		289BCEEB147EFE2000B89C25 /* ReMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 289BCEEA147EFE2000B89C25 /* ReMark.png */; };
 		289BCEED147EFE8100B89C25 /* UnReMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 289BCEEC147EFE8100B89C25 /* UnReMark.png */; };
 		289EAD6B13EAF0950072EAD5 /* ASIFormDataRequest+OAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 289EAD6213EAF0950072EAD5 /* ASIFormDataRequest+OAuth.m */; };
 		289EAD6C13EAF0950072EAD5 /* ASIHTTPRequest+OAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 289EAD6413EAF0950072EAD5 /* ASIHTTPRequest+OAuth.m */; };
@@ -334,6 +334,7 @@
 		283FBB501454BD5700F6C50A /* QuickPickButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickPickButton.m; sourceTree = "<group>"; };
 		28417F8F148354EA00CA6D4D /* PeopleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PeopleIcon.png; sourceTree = "<group>"; };
 		28417F90148354EA00CA6D4D /* PeopleIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PeopleIcon@2x.png"; sourceTree = "<group>"; };
+		28417F94148361A300CA6D4D /* ReMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ReMark.png; sourceTree = "<group>"; };
 		284A352F1402C48C009C8C28 /* PerspectivesMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectivesMapViewController.h; sourceTree = "<group>"; };
 		284A35301402C48C009C8C28 /* PerspectivesMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerspectivesMapViewController.m; sourceTree = "<group>"; };
 		284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PerspectivesMapViewController.xib; sourceTree = "<group>"; };
@@ -479,7 +480,6 @@
 		289501F613D684A0009E1BD7 /* NearbyPlacesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyPlacesViewController.xib; sourceTree = "<group>"; };
 		2899261B13D8D0C3004EFF81 /* PerspectivePlaceMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectivePlaceMark.h; sourceTree = "<group>"; };
 		2899261C13D8D0C3004EFF81 /* PerspectivePlaceMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerspectivePlaceMark.m; sourceTree = "<group>"; };
-		289BCEEA147EFE2000B89C25 /* ReMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ReMark.png; path = ../icons/ReMark.png; sourceTree = "<group>"; };
 		289BCEEC147EFE8100B89C25 /* UnReMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnReMark.png; sourceTree = "<group>"; };
 		289EAD6113EAF0950072EAD5 /* ASIFormDataRequest+OAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ASIFormDataRequest+OAuth.h"; sourceTree = "<group>"; };
 		289EAD6213EAF0950072EAD5 /* ASIFormDataRequest+OAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ASIFormDataRequest+OAuth.m"; sourceTree = "<group>"; };
@@ -1183,10 +1183,10 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				28417F94148361A300CA6D4D /* ReMark.png */,
 				28417F8F148354EA00CA6D4D /* PeopleIcon.png */,
 				28417F90148354EA00CA6D4D /* PeopleIcon@2x.png */,
 				289BCEEC147EFE8100B89C25 /* UnReMark.png */,
-				289BCEEA147EFE2000B89C25 /* ReMark.png */,
 				28B17C2D14622477008C98E8 /* profilePattern.png */,
 				28B17C2E14622477008C98E8 /* profilePattern@2x.png */,
 				6CE40033145B67AF00101082 /* cloud1.png */,
@@ -1501,10 +1501,10 @@
 				28B17C5E1462249C008C98E8 /* red_button.png in Resources */,
 				28B17C671462249C008C98E8 /* unloaded_profile_pic.png in Resources */,
 				284D1CDF147C29DE001F80D1 /* FriendFindController.xib in Resources */,
-				289BCEEB147EFE2000B89C25 /* ReMark.png in Resources */,
 				289BCEED147EFE8100B89C25 /* UnReMark.png in Resources */,
 				28417F91148354EA00CA6D4D /* PeopleIcon.png in Resources */,
 				28417F92148354EA00CA6D4D /* PeopleIcon@2x.png in Resources */,
+				28417F95148361A300CA6D4D /* ReMark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
