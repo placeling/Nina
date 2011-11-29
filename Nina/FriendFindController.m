@@ -172,7 +172,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Number of rows on screen
-    return [self.members count];
+    return MAX([self.members count], 1); //in "1" case we have a memo
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -187,25 +187,42 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    User *user = [self.members objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+    static NSString *InfoCellIdentifier = @"InfoCell";
+    
+    UITableViewCell *cell;
+    
+    if (indexPath.row ==0 && [self.members count] ==0){
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:InfoCellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:InfoCellIdentifier] autorelease];
+        }
+        
+        cell.textLabel.textColor = [UIColor grayColor];
+        cell.textLabel.text = @"No Username Matches";
+        [cell setUserInteractionEnabled:NO];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    } else {    
+        User *user = [self.members objectAtIndex:indexPath.row];
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        }
+        
+        cell.textLabel.text = user.username;
+        cell.detailTextLabel.text = user.description;
+        
+        cell.accessoryView.tag = indexPath.row;
+        
+        cell.imageView.image = [UIImage imageNamed:@"default_profile_image.png"];
+        
+        AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:user.profilePic];
+        aImageView.frame = cell.imageView.frame;
+        aImageView.populate = cell.imageView;
+        [aImageView loadImage];
+        [cell addSubview:aImageView]; //mostly to handle de-allocation
+        [aImageView release];
     }
-    
-    cell.textLabel.text = user.username;
-    cell.detailTextLabel.text = user.description;
-	
-    cell.accessoryView.tag = indexPath.row;
-    
-    cell.imageView.image = [UIImage imageNamed:@"default_profile_image.png"];
-    
-    AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:user.profilePic];
-    aImageView.frame = cell.imageView.frame;
-    aImageView.populate = cell.imageView;
-    [aImageView loadImage];
-    [cell addSubview:aImageView]; //mostly to handle de-allocation
-    [aImageView release];
     
     return cell;
 }
