@@ -13,6 +13,7 @@
     NSMutableArray *searchUsers; 
     NSMutableArray *suggestedUsers; 
     NSMutableArray *members;
+    NSMutableArray *recentSearches;
     
     UITableView *_tableView;
     UISearchBar *_searchBar;
@@ -21,6 +22,7 @@
 @property (nonatomic, retain) NSMutableArray *searchUsers; 
 @property (nonatomic, retain) NSMutableArray *suggestedUsers; 
 @property (nonatomic, retain) NSMutableArray *members; 
+@property (nonatomic, retain) NSMutableArray *recentSearches;
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 
