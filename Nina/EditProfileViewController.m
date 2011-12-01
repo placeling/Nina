@@ -15,11 +15,18 @@
 
 @interface EditProfileViewController(Private)
 -(IBAction)showActionSheet;
+-(void)close;
 @end
 
 
 @implementation EditProfileViewController
 @synthesize user, lat, lng, delegate, currentLocation;
+
+
+
+-(void)close{
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -206,6 +213,12 @@
         self.lat = [NSNumber numberWithInt:0];
         self.lng = [NSNumber numberWithInt:0];
     }
+    
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(close)];
+    //button.tintColor = [UIColor blackColor];
+    
+    self.navigationItem.leftBarButtonItem = button;
+    [button release];
     
     UIBarButtonItem *saveButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveUser)];
     self.navigationItem.rightBarButtonItem = saveButton;

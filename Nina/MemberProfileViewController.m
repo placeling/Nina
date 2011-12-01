@@ -53,11 +53,18 @@
 }
 
 -(IBAction)editUser{
+    
     EditProfileViewController *editProfileViewController = [[EditProfileViewController alloc] initWithStyle:UITableViewStyleGrouped];
     editProfileViewController.user = self.user;
     editProfileViewController.delegate = self;
-    [self.navigationController pushViewController:editProfileViewController animated:TRUE];
-    [editProfileViewController release];
+    
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editProfileViewController];
+    [StyleHelper styleNavigationBar:navBar.navigationBar];
+    [self.navigationController presentModalViewController:navBar animated:YES];
+    [navBar release];
+    
+    [editProfileViewController release]; 
+    
 }
 
 -(void) viewWillAppear:(BOOL)animated{
