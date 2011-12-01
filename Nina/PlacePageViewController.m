@@ -687,10 +687,15 @@ typedef enum {
 
 -(IBAction)editPerspective{
     DLog(@"modifying on perspective on %@", self.place.name);
+    
     EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
     
     editPerspectiveViewController.delegate = self;
-    [self.navigationController pushViewController:editPerspectiveViewController animated:YES];
+    
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editPerspectiveViewController];
+    [StyleHelper styleNavigationBar:navBar.navigationBar];
+    [self.navigationController presentModalViewController:navBar animated:YES];
+    [navBar release];
     
     [editPerspectiveViewController release];       
 }
@@ -698,11 +703,15 @@ typedef enum {
 
 -(IBAction)editPerspectivePhotos{
     DLog(@"modifying on perspective on %@", self.place.name);
+    
     EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
     
     editPerspectiveViewController.delegate = self;
     
-    [self.navigationController pushViewController:editPerspectiveViewController animated:YES];
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editPerspectiveViewController];
+    [StyleHelper styleNavigationBar:navBar.navigationBar];
+    [self.navigationController presentModalViewController:navBar animated:YES];
+    [navBar release];
     [editPerspectiveViewController.memoTextView resignFirstResponder];
     [editPerspectiveViewController release];       
 }

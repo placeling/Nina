@@ -18,6 +18,7 @@
 @interface EditPerspectiveViewController()
 -(NSNumber*) uploadImageAndReturnTag:(UIImage*)mainImage;
 -(void) refreshImages;
+-(void) close;
 @end
 
 @implementation EditPerspectiveViewController
@@ -53,6 +54,10 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+-(void)close{
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad{
@@ -61,6 +66,13 @@
  
     NSString *placeName = self.perspective.place.name;
     self.navigationItem.title = placeName;
+    
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(close)];
+    //button.tintColor = [UIColor blackColor];
+    
+    self.navigationItem.leftBarButtonItem = button;
+    [button release];
+    
     requestCount = 0;
     
     if (updatedMemo){ //handles case where this is called again after init (from taking photo)
