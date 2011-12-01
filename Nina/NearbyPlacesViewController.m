@@ -20,7 +20,8 @@
     -(void)findNearbyPlaces;
     -(void)findNearbyPlaces:(NSString*)searchTerm;
     -(void)impatientUser;
--(void)getNearbyPlaces:(NSString*)searchTerm;
+    -(BOOL)showPredictive;
+    -(void)getNearbyPlaces:(NSString*)searchTerm;
 @end
 
 @implementation NearbyPlacesViewController 
@@ -30,11 +31,23 @@
 @synthesize searchBar=_searchBar, toolBar;
 @synthesize tableFooterView, gpsLabel;
 @synthesize dataLoaded, locationEnabled, location=_location;
+
+
+
+-(BOOL) showPredictive{
+    return showPredictive;        
+}
+
 -(void)findNearbyPlaces {
     [self findNearbyPlaces:@""];
 }
 
 -(void)findNearbyPlaces:(NSString*)searchTerm {
+    //clear predictive places
+    [predictivePlaces release];
+    predictivePlaces = [[NSMutableArray alloc] init];
+    showPredictive = false;
+    
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     self.location = manager.location;
     NSDate *now = [[NSDate alloc]init];
@@ -110,30 +123,34 @@
     if (!searchTerm){
         searchTerm = @"";
     }
-    
+    [FlurryAnalytics logEvent:@"GOOGLE_PLACES_NEABY_QUERY"];
     self.locationEnabled = TRUE;
     float accuracy = pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
     accuracy = sqrt( accuracy );
     
     self.gpsLabel.text = [NSString stringWithFormat:@"GPS: %im", (int)accuracy];
     
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/nearby", [NinaHelper getHostname]];		
-    
     NSString* lat = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
     NSString* lon = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
     
-    
-    NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
+    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y", [NinaHelper getHostname]];		
     
     searchTerm  = [searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
     
-    urlString = [NSString stringWithFormat:@"%@?lat=%@&lng=%@&accuracy=%@&query=%@", urlString, lat, lon, radius, searchTerm];
+    
+    if ([searchTerm length] > 0){
+        accuracy = 15000.0;
+        urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f&name=%@", urlString, lat, lon, accuracy, searchTerm];
+    } else {
+        accuracy = MAX(50.0, MIN(200.0, accuracy));
+        urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f", urlString, lat, lon, accuracy];
+    }
+    
     NSURL *url = [NSURL URLWithString:urlString];
     
     ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
     request.tag = 20;
-    [NinaHelper signRequest:request];
+    //[NinaHelper signRequest:request]; //don't sign for Google
     [request setDelegate:self];
     [request startAsynchronous];
 }
@@ -143,6 +160,7 @@
     [placesTableView release];
     [_searchBar release];
     [nearbyPlaces release];
+    [predictivePlaces release];
     [gpsLabel release];
     [toolBar release];
     [_location release];
@@ -213,6 +231,7 @@
     self.dataLoaded = FALSE;
     // Do any additional setup after loading the view from its nib.
     narrowed = false;
+    showPredictive = false;
 
     self.navigationItem.title = @"Nearby";
 
@@ -266,10 +285,42 @@
 		DLog(@"Got JSON BACK: %@", jsonString);
 		// Create a dictionary from the JSON string
         
-		[nearbyPlaces release];
         NSDictionary *jsonDict = [[jsonString JSONValue] retain];
-		nearbyPlaces = [[jsonDict objectForKey:@"places"] retain];
+		//nearbyPlaces = [[jsonDict objectForKey:@"places"] retain];
         
+        
+        if (request.tag == 20){
+            [nearbyPlaces release];
+            nearbyPlaces = [[NSMutableArray alloc] init];
+        
+        
+            //remove results we don't really care about
+            for (NSDictionary *place in [jsonDict objectForKey:@"results"]){
+                NSMutableArray *types = [place objectForKey:@"types"];
+                for (int i=0; i<[types count]; i++){
+                    [types replaceObjectAtIndex:i withObject:[(NSString*)[types objectAtIndex:i] lowercaseString]];
+                }
+                if ([types indexOfObject:@"political"] == NSNotFound && 
+                     [types indexOfObject:@"route"] == NSNotFound){
+                    [nearbyPlaces addObject:place];                
+                }
+            }
+        } else if (request.tag == 21) {
+            [predictivePlaces release];
+            predictivePlaces = [[NSMutableArray alloc] init];
+                        
+            //remove results we don't really care about
+            for (NSDictionary *place in [jsonDict objectForKey:@"predictions"]){
+                NSMutableArray *types = [place objectForKey:@"types"];
+                for (int i=0; i<[types count]; i++){
+                    [types replaceObjectAtIndex:i withObject:[(NSString*)[types objectAtIndex:i] lowercaseString]];
+                }
+                if ([types indexOfObject:@"political"] == NSNotFound && 
+                    [types indexOfObject:@"route"] == NSNotFound){
+                    [predictivePlaces addObject:place];                
+                }
+            }
+        }
 		[self.placesTableView  reloadData];
 		[jsonDict release];
 	}
@@ -291,12 +342,15 @@
     // Return the number of rows in the section.
     DLog(@"%i", self.dataLoaded);
     DLog(@"%i", [nearbyPlaces count]);
-    if (self.dataLoaded && [nearbyPlaces count] == 0) {
+    if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
         return 1;
     } else {
-        return [nearbyPlaces count];
+        if ([self showPredictive]){
+            return [predictivePlaces count];
+        } else {
+            return [nearbyPlaces count];
+        }
     }
-    //return [nearbyPlaces count];
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
@@ -317,14 +371,14 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    if (self.dataLoaded && [nearbyPlaces count] == 0) {
+    if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
         tableView.allowsSelection = NO;
     } else {
         tableView.allowsSelection = YES;
     }
     
     
-    if (self.dataLoaded && [nearbyPlaces count] == 0) {
+    if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
         cell.detailTextLabel.text = @"";
         cell.textLabel.text = @"";
         
@@ -350,30 +404,43 @@
         DLog(@"Search bar text is: %@", _searchBar.text);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
-        NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
-        
-        if ( [place objectForKey:@"name"] != [NSNull null] ){
-            cell.textLabel.text = [place objectForKey:@"name"];
+        if ([self showPredictive]){
+            NSDictionary *place = [predictivePlaces objectAtIndex:indexPath.row];
+            NSMutableArray *terms = [place objectForKey:@"terms"];
+            cell.textLabel.text = [[terms objectAtIndex:0] objectForKey:@"value"];
+            
+            NSString *subtitle = @"";
+            for (int i =1; i < MIN([terms count], 3); i++){
+                subtitle = [NSString stringWithFormat:@"%@ %@", subtitle, [[terms objectAtIndex:i] objectForKey:@"value"]];
+            }
+            
+            cell.detailTextLabel.text = subtitle;
         } else {
-            DLog(@"got a place with no-name: %@", [place objectForKey:@"google_id"]);
-            cell.textLabel.text = @"n/a";
+            NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
+            
+            if ( [place objectForKey:@"name"] != [NSNull null] ){
+                cell.textLabel.text = [place objectForKey:@"name"];
+            } else {
+                DLog(@"got a place with no-name: %@", [place objectForKey:@"google_id"]);
+                cell.textLabel.text = @"n/a";
+            }
+            
+            float lat =   [[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lat"] floatValue];
+            float lng =   [[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lng"] floatValue];
+            
+            CLLocation *loc = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
+            
+            CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
+            CLLocation *userLocation = manager.location;
+            
+            if (userLocation != nil){ 
+                float target = [userLocation distanceFromLocation:loc];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%.0fm", target];
+            } else {
+                cell.detailTextLabel.text = @"Can't get location";
+            }
+            [loc release];
         }
-        
-        float lat =   [[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lat"] floatValue];
-        float lng =   [[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lng"] floatValue];
-        
-        CLLocation *loc = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
-        
-        CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
-        CLLocation *userLocation = manager.location;
-        
-        if (userLocation != nil){ 
-            float target = [userLocation distanceFromLocation:loc];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%.0fm", target];
-        } else {
-            cell.detailTextLabel.text = @"Can't get location";
-        }
-        [loc release];
     }
     
     return cell;
@@ -381,6 +448,32 @@
 
 
 #pragma mark Search Bar Methods
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    //http://code.google.com/apis/maps/documentation/places/autocomplete.html
+    showPredictive = true;
+    NSString* lat = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
+    NSString* lon = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
+    
+    NSString *urlString = @"https://maps.googleapis.com/maps/api/place/autocomplete/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y&";		
+    
+    NSString *searchTerm  = [searchBar.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    
+    if ([searchText length] > 0){
+        urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f&input=%@", urlString, lat, lon, 500.0, searchTerm];
+        NSURL *url = [NSURL URLWithString:urlString];
+        
+        ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
+        request.tag = 21;
+        [request setDelegate:self];
+        [request startAsynchronous];
+    } else {
+        showPredictive = false;
+        [predictivePlaces release];
+        predictivePlaces = [[NSMutableArray alloc] init];
+        [self.placesTableView  reloadData];
+    }
+}
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{	
     [searchBar resignFirstResponder];
@@ -402,7 +495,12 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
+    NSDictionary *place;
+    if ([self showPredictive]){
+        place = [predictivePlaces objectAtIndex:indexPath.row];
+    } else {
+        place = [nearbyPlaces objectAtIndex:indexPath.row];
+    }
     PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] init];
     
     placePageViewController.place_id = [place objectForKey:@"id"];

@@ -24,8 +24,10 @@
     IBOutlet UILabel *gpsLabel;
     CLLocation *_location;
     
-    NSArray  *nearbyPlaces;
+    NSMutableArray  *nearbyPlaces;
+    NSMutableArray  *predictivePlaces;
     
+    BOOL showPredictive;
     BOOL narrowed;
     BOOL dataLoaded;
     BOOL locationEnabled;
