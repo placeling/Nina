@@ -149,5 +149,6 @@
 +(void) clearCredentials;
 
 +(NSString*) metersToLocalizedDistance:(float)m;
++(NSString*) encodeForUrl:(NSString*)string;
 
 @end
