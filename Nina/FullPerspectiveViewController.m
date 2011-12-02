@@ -130,7 +130,7 @@
         self.scrollView.scrollEnabled = YES;
         self.scrollView.pagingEnabled = YES;
     }
-    
+    [self.memoText flashScrollIndicators];
 
 }
 
