@@ -17,9 +17,7 @@
 @interface NearbySuggestedPlaceController (Private)
 -(void)findNearbyPlaces;
 -(void)dataSourceDidFinishLoadingNewData;
--(NSString*) encodeForUrl:(NSString*)string;
 @end
-
 
 @implementation NearbySuggestedPlaceController
 
@@ -29,7 +27,7 @@
 -(IBAction)topLocals:(id)sender{
     SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
     
-    suggestUserViewController.query = [self encodeForUrl:self.searchBar.text];
+    suggestUserViewController.query = [NinaHelper encodeForUrl:self.searchBar.text];
     
     suggestUserViewController.title = @"Top Locals";
     
@@ -72,8 +70,8 @@
 				
         NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
         
-        NSString *queryString = [self encodeForUrl:self.searchTerm];
-        NSString *categoryString = [self encodeForUrl:self.category];
+        NSString *queryString = [NinaHelper encodeForUrl:self.searchTerm];
+        NSString *categoryString = [NinaHelper encodeForUrl:self.category];
         
         
         NSString *currentUser = [NinaHelper getUsername];            
@@ -472,30 +470,7 @@
     return cell;
 }
 
--(NSString*) encodeForUrl:(NSString*)string{
 
-    NSMutableString *escaped = [NSMutableString stringWithString:[string stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];   
-    
-    [escaped replaceOccurrencesOfString:@"$" withString:@"%24" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"&" withString:@"%26" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"+" withString:@"%2B" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"," withString:@"%2C" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"/" withString:@"%2F" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@":" withString:@"%3A" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@";" withString:@"%3B" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"=" withString:@"%3D" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"?" withString:@"%3F" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"@" withString:@"%40" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@" " withString:@"%20" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"\t" withString:@"%09" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"#" withString:@"%23" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"<" withString:@"%3C" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@">" withString:@"%3E" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"\"" withString:@"%22" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    [escaped replaceOccurrencesOfString:@"\n" withString:@"%0A" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [escaped length])];
-    
-    return escaped;
-}
 
 #pragma mark - Table view delegate
 
