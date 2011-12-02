@@ -13,7 +13,7 @@
 #import "Photo.h"
 #import "NSString+SBJSON.h"
 #import "asyncimageview.h"
-
+#import <QuartzCore/QuartzCore.h>
 
 @interface EditPerspectiveViewController()
 -(NSNumber*) uploadImageAndReturnTag:(UIImage*)mainImage;
@@ -159,7 +159,7 @@
     [request startAsynchronous];
     
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
     
 }
 
@@ -201,23 +201,25 @@
     
     for ( Photo* photo in [self.perspective.photos reverseObjectEnumerator] ){
         
-        UIImageView *imageView;
+        AsyncImageView *imageView;
         CGRect rect = CGRectMake(cx, 0, 64, 64);
         
         if (photo.photo_id){
             imageView = [[AsyncImageView alloc] initWithFrame:rect];
-            [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
+            [imageView loadImageFromPhoto:photo]; 
             imageView.alpha = 1.0;
         } else {
             if (photo.thumb_image){
                 //have thumb, but is currently being uploaded
                 
                 imageView = [[AsyncImageView alloc] initWithFrame:rect];
-                [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
+                [imageView loadImageFromPhoto:photo]; 
                 imageView.alpha = 0.5; //Alpha runs from 0.0 to 1.0
-                
+                                
                 UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-
+                
+                [spinner setFrame:CGRectMake((imageView.frame.size.height-spinner.frame.size.height)/2, (imageView.frame.size.width-spinner.frame.size.width)/2, spinner.frame.size.width, spinner.frame.size.height) ];
+                
                 [imageView addSubview:spinner];
                 [spinner startAnimating];
                 [spinner release]; 
@@ -225,6 +227,9 @@
                 DLog(@"ERROR: Got photo with no ID or image");
             }
         }
+        
+        [imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+        [imageView.layer setBorderWidth: 3.0];
         
         [scrollView addSubview:imageView];
         
