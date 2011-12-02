@@ -233,7 +233,12 @@
         return[NSString stringWithFormat:@"%d days ago", diff];
     } else {
         int diff = round(ti / 60 / 60 / 24 / 30);
-        return[NSString stringWithFormat:@"%d months ago", diff];
+        if (diff == 1){
+            return[NSString stringWithFormat:@"%d month ago", diff];
+        } else {
+            return[NSString stringWithFormat:@"%d months ago", diff];
+        }
+        
     }   
 }
 
