@@ -104,6 +104,7 @@
     [StyleHelper styleBackgroundView:self.view];
     [StyleHelper styleSubmitTypeButton:self.takeButton];
     [StyleHelper styleSubmitTypeButton:self.existingButton];
+    [self refreshImages];
     
 }
 
@@ -208,6 +209,7 @@
             imageView = [[AsyncImageView alloc] initWithFrame:rect];
             [imageView loadImageFromPhoto:photo]; 
             imageView.alpha = 1.0;
+            imageView.userInteractionEnabled = true;
         } else {
             if (photo.thumb_image){
                 //have thumb, but is currently being uploaded
