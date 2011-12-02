@@ -461,7 +461,7 @@
             
             cell.titleLabel.text = place.name;
             cell.addressLabel.text = place.address;
-            cell.distanceLabel.text = place.distance;
+            cell.distanceLabel.text = [NinaHelper metersToLocalizedDistance:place.distance];
             cell.usersLabel.text = place.usersBookmarkingString;   
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

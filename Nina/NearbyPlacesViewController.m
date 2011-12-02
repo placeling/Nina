@@ -128,7 +128,7 @@
     float accuracy = pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
     accuracy = sqrt( accuracy );
     
-    self.gpsLabel.text = [NSString stringWithFormat:@"GPS: %im", (int)accuracy];
+    self.gpsLabel.text = [NSString stringWithFormat:@"GPS: %@", [NinaHelper metersToLocalizedDistance:accuracy]];
     
     NSString* lat = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
     NSString* lon = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
@@ -435,7 +435,7 @@
             
             if (userLocation != nil){ 
                 float target = [userLocation distanceFromLocation:loc];
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%.0fm", target];
+                cell.detailTextLabel.text = [NinaHelper metersToLocalizedDistance:target];
             } else {
                 cell.detailTextLabel.text = @"Can't get location";
             }

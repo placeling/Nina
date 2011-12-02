@@ -148,4 +148,6 @@
 
 +(void) clearCredentials;
 
++(NSString*) metersToLocalizedDistance:(float)m;
+
 @end

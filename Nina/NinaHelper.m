@@ -271,6 +271,18 @@
 }
 
 
+
++(NSString*) metersToLocalizedDistance:(float)m{
+    
+    return [NSString stringWithFormat:@"%.0fm", m];
+
+    
+}
+
+
+
+
+
 +(NSString*) getAccessToken{
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     if ([standardUserDefaults objectForKey:@"access_token"]){
