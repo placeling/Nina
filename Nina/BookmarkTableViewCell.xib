@@ -47,14 +47,9 @@
 							<object class="IBUIButton" id="435958021">
 								<reference key="NSNextResponder" ref="935250718"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{21, 11}, {279, 42}}</string>
+								<string key="NSFrame">{{36, 0}, {249, 59}}</string>
 								<reference key="NSSuperview" ref="935250718"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC41NzY0NzA1ODgyIDAuMDE5NjA3ODQzMTQgMAA</bytes>
-								</object>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
@@ -71,6 +66,10 @@
 								<object class="NSColor" key="IBUINormalTitleShadowColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
+								</object>
+								<object class="NSCustomResource" key="IBUINormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">PlaceMarkIt.png</string>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<string key="name">Helvetica-Bold</string>
@@ -354,7 +353,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addressLabel</string>
 							<string>bookmarkButton</string>
-							<string>bookmarkView</string>
 							<string>categoriesLabel</string>
 							<string>cityLabel</string>
 							<string>googlePlacesButton</string>
@@ -370,7 +368,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UILabel</string>
 							<string>UIButton</string>
-							<string>UIView</string>
 							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UIButton</string>
@@ -389,7 +386,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addressLabel</string>
 							<string>bookmarkButton</string>
-							<string>bookmarkView</string>
 							<string>categoriesLabel</string>
 							<string>cityLabel</string>
 							<string>googlePlacesButton</string>
@@ -410,10 +406,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">bookmarkButton</string>
 								<string key="candidateClassName">UIButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">bookmarkView</string>
-								<string key="candidateClassName">UIView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">categoriesLabel</string>
@@ -472,6 +464,10 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">PlaceMarkIt.png</string>
+			<string key="NS.object.0">{670, 173}</string>
+		</object>
 		<string key="IBCocoaTouchPluginVersion">931</string>
 	</data>
 </archive>

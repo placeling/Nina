@@ -44,7 +44,7 @@
 					<object class="IBUIButton" id="934564687">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{45, 214}, {230, 107}}</string>
+						<string key="NSFrame">{{40, 233}, {235, 60}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="286212048"/>
@@ -66,7 +66,7 @@
 						</object>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">placeit.png</string>
+							<string key="NSResourceName">PlaceMarkIt.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="330832871">
 							<int key="type">1</int>
@@ -81,7 +81,7 @@
 					<object class="IBUIButton" id="295301298">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{35, 111}, {86, 89}}</string>
+						<string key="NSFrame">{{35, 118}, {86, 89}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="86865012"/>
@@ -178,7 +178,7 @@
 					<object class="IBUILabel" id="322693303">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{177, 186}, {84, 21}}</string>
+						<string key="NSFrame">{{177, 193}, {84, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="934564687"/>
@@ -225,7 +225,7 @@
 					<object class="IBUILabel" id="86865012">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{40, 185}, {77, 21}}</string>
+						<string key="NSFrame">{{40, 192}, {77, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="699192188"/>
@@ -263,7 +263,6 @@
 								<string key="NSFrame">{{0, 64}, {320, 30}}</string>
 								<reference key="NSSuperview" ref="286212048"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">2</int>
 									<bytes key="NSRGB">MC43MDE5NjA4MDIxIDAuNjM5MjE1NzA3OCAwLjYwNzg0MzE2MDYAA</bytes>
@@ -287,7 +286,7 @@
 					<object class="IBUIButton" id="699192188">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{166, 111}, {109, 84}}</string>
+						<string key="NSFrame">{{166, 118}, {109, 84}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="322693303"/>
@@ -413,16 +412,16 @@
 						<reference key="object" ref="191373211"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="295301298"/>
-							<reference ref="86865012"/>
 							<reference ref="286212048"/>
-							<reference ref="934564687"/>
 							<reference ref="931022643"/>
 							<reference ref="47310288"/>
 							<reference ref="15055512"/>
 							<reference ref="713298254"/>
-							<reference ref="699192188"/>
+							<reference ref="934564687"/>
+							<reference ref="295301298"/>
 							<reference ref="322693303"/>
+							<reference ref="86865012"/>
+							<reference ref="699192188"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -706,17 +705,17 @@
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>PeopleIcon.png</string>
+				<string>PlaceMarkIt.png</string>
 				<string>feed@2x.png</string>
 				<string>mymap@2x.png</string>
-				<string>placeit.png</string>
 				<string>profile.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{522, 278}</string>
+				<string>{616, 332}</string>
+				<string>{670, 173}</string>
 				<string>{150, 150}</string>
 				<string>{178, 178}</string>
-				<string>{399, 192}</string>
 				<string>{89, 89}</string>
 			</object>
 		</object>

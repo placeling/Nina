@@ -1073,7 +1073,6 @@ typedef enum {
                     if ( [item isKindOfClass:[UITableViewCell class]]){
                         BookmarkTableViewCell *mCell = (BookmarkTableViewCell*) item;  
                         mCell.backgroundColor = [UIColor clearColor];
-                        [StyleHelper styleBookmarkButton:mCell.bookmarkButton];
                         cell = mCell;
                     }
                 }
