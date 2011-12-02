@@ -396,7 +396,7 @@
         
         CLLocationDistance distance = [self.currentLocation distanceFromLocation:homeLocation];
         DLog(@"%f", distance);
-        cell.textLabel.text = [NSString stringWithFormat:@"Your map is centered %.0f m from here.", distance];
+        cell.textLabel.text = [NSString stringWithFormat:@"Your map is centered %@ from here.", [NinaHelper metersToLocalizedDistance:distance]];
         
         cell.textLabel.textAlignment = UITextAlignmentCenter;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
