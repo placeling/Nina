@@ -314,6 +314,7 @@
                     User *ruser = [self.recentSearches objectAtIndex:i];
                     NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
                     [jsonDict setValue:ruser.username forKey:@"username"];
+                    [jsonDict setValue:ruser.description forKey:@"description"];
                     [jsonDict setValue:ruser.profilePic.thumb_url forKey:@"thumb_url"];
                     [standardUserDefaults setObject:jsonDict forKey:[NSString stringWithFormat:@"recent_search_%i", i]];
                     [jsonDict release];                    
@@ -323,7 +324,9 @@
             [standardUserDefaults synchronize];
         }
         
-    } else {        
+    } else if (tableView.numberOfSections ==2 && indexPath.section == 0){        
+        user = [self.recentSearches objectAtIndex:indexPath.row];
+    } else if (tableView.numberOfSections ==2 && indexPath.section == 1){        
         user = [self.members objectAtIndex:indexPath.row];
     }
     
