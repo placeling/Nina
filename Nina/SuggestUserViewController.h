@@ -12,6 +12,7 @@
 
 @interface SuggestUserViewController : UITableViewController<ASIHTTPRequestDelegate> {
     NSMutableArray *members; // An array where each item is a dictionary with name, photo url and city
+    BOOL loadingMore;
     
     NSString *query; //for finding users based on a specific area
 }

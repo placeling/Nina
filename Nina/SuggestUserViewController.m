@@ -46,7 +46,7 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
+    loadingMore = true;
     // Set up buttons
     self.navigationItem.title = @"Top Locals";
     
@@ -178,30 +178,59 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Number of rows on screen
-    return [self.members count];
+    return MAX([self.members count], 1); //in "1" case we have a memo
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *UserCellIdentifier = @"UserCell";
     static NSString *CellIdentifier = @"Cell";
-    User *user = [members objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+    
+    UITableViewCell *cell;
+    
+    if ([members count] > 0){
+        cell = [tableView dequeueReusableCellWithIdentifier:UserCellIdentifier];
+        tableView.allowsSelection = YES;
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:UserCellIdentifier] autorelease];
+        }
+    }else if (loadingMore) {        
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
+        tableView.allowsSelection = NO;
+        for(id item in objects){
+            if ( [item isKindOfClass:[UITableViewCell class]]){
+                cell = item;
+            }
+        }      
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        tableView.allowsSelection = NO;
+        if (cell == nil){
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        }
     }
+
     
-    cell.textLabel.text = user.username;
-    cell.detailTextLabel.text = user.description;
-	
-    cell.accessoryView.tag = indexPath.row;
-    
-    cell.imageView.image = [UIImage imageNamed:@"default_profile_image.png"];
-    
-    AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:user.profilePic];
-    aImageView.frame = cell.imageView.frame;
-    aImageView.populate = cell.imageView;
-    [aImageView loadImage];
-    [cell addSubview:aImageView]; //mostly to handle de-allocation
-    [aImageView release];
+    if ([members count] > 0){
+        User *user = [members objectAtIndex:indexPath.row];
+        cell.textLabel.text = user.username;
+        cell.detailTextLabel.text = user.description;
+        
+        cell.accessoryView.tag = indexPath.row;
+        
+        cell.imageView.image = [UIImage imageNamed:@"default_profile_image.png"];
+        
+        AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:user.profilePic];
+        aImageView.frame = cell.imageView.frame;
+        aImageView.populate = cell.imageView;
+        [aImageView loadImage];
+        [cell addSubview:aImageView]; //mostly to handle de-allocation
+        [aImageView release];
+        
+    }else if (!loadingMore) {        
+        cell.detailTextLabel.text = @"";
+        cell.textLabel.text = @"No Suggested Users Nearby";    
+        cell.textLabel.textColor = [UIColor grayColor];
+    } 
     
     return cell;
 }
