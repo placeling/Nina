@@ -72,6 +72,6 @@
 
 -(NSString*) usersBookmarkingString;
 
--(NSString*) distance;
+-(float) distance;
 
 @end

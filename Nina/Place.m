@@ -65,16 +65,16 @@
     }
 }
 
--(NSString*) distance{
+-(float) distance{
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocation *userLocation = manager.location;
     
 	if (userLocation != nil){ 
         float target = [userLocation distanceFromLocation:self.location];
-        return [NSString stringWithFormat:@"%.0fm", target];
+        return target;
     } else {
-        return @"Can't get location";
+        return 0.0;
     }
     
 }
