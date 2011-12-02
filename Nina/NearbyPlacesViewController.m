@@ -142,7 +142,7 @@
         accuracy = 15000.0;
         urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f&name=%@", urlString, lat, lon, accuracy, searchTerm];
     } else {
-        accuracy = MAX(50.0, MIN(200.0, accuracy));
+        accuracy = MAX(100.0, MIN(300.0, accuracy));
         urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f", urlString, lat, lon, accuracy];
     }
     
