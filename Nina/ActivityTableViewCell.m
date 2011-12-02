@@ -100,12 +100,12 @@
     NSString *activityType = [dict objectForKey:@"activity_type"];
     
     if ([activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
-        return [NSString stringWithFormat:@"%@ updated bookmark on %@", [dict objectForKey:@"username1"], [dict objectForKey:@"subject_title"]];
+        return [NSString stringWithFormat:@"%@ updated placemark on %@", [dict objectForKey:@"username1"], [dict objectForKey:@"subject_title"]];
     }else if ([activityType isEqualToString:@"NEW_PERSPECTIVE"]){
-        return [NSString stringWithFormat:@"%@ bookmarked %@", [dict objectForKey:@"username1"], [dict objectForKey:@"subject_title"]];    
+        return [NSString stringWithFormat:@"%@ placemarked %@", [dict objectForKey:@"username1"], [dict objectForKey:@"subject_title"]];    
         
     } else if ([activityType isEqualToString:@"STAR_PERSPECTIVE"]){
-        return [NSString stringWithFormat:@"%@ favorited %@'s bookmark for %@", [dict objectForKey:@"username1"], [dict objectForKey:@"username2"], [dict objectForKey:@"subject_title"]];    
+        return [NSString stringWithFormat:@"%@ favorited %@'s placemark for %@", [dict objectForKey:@"username1"], [dict objectForKey:@"username2"], [dict objectForKey:@"subject_title"]];    
         
     }  else if ([activityType isEqualToString:@"FOLLOW"]){
         return [NSString stringWithFormat:@"%@ started following %@", [dict objectForKey:@"username1"], [dict objectForKey:@"username2"]];    

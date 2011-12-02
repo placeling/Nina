@@ -929,27 +929,27 @@ typedef enum {
     if ( [self numberOfSectionBookmarks] == 0 ){
         //label.textColor = [UIColor grayColor];
         if (self.segmentedControl.selectedSegmentIndex == 1) {
-            return [NSString stringWithFormat:@"No one you follow has bookmarked this place"];
+            return [NSString stringWithFormat:@"No one you follow has placemarks here place"];
         } else {
-            return [NSString stringWithFormat:@"No one has bookmarked this place yet"];
+            return [NSString stringWithFormat:@"No one has placemarks here yet"];
         }
         //label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
     } else if ( [self numberOfSectionBookmarks] == 1) {
         if (self.segmentedControl.selectedSegmentIndex == 1) {
-           return [NSString stringWithFormat:@"%i person you follow has bookmarked this place", [self numberOfSectionBookmarks]];
+           return [NSString stringWithFormat:@"%i person you follow has a placemark here", [self numberOfSectionBookmarks]];
         } else {
             // How do I update this to include a saying if you're the only one has done this
             if (self.place.bookmarked == TRUE) {
-                return [NSString stringWithFormat:@"You're the first to bookmark this place"];
+                return [NSString stringWithFormat:@"You have the only placemark here"];
             } else {
-                return [NSString stringWithFormat:@"%i person has bookmarked this place", [self numberOfSectionBookmarks]];
+                return [NSString stringWithFormat:@"%i person has a placemark here", [self numberOfSectionBookmarks]];
             }
         }
     } else {
         if (self.segmentedControl.selectedSegmentIndex == 1) {
-            return [NSString stringWithFormat:@"%i people you follow have bookmarked this place", [self numberOfSectionBookmarks]];
+            return [NSString stringWithFormat:@"%i people you follow have placemarks here", [self numberOfSectionBookmarks]];
         } else {
-            return [NSString stringWithFormat:@"%i people have bookmarked this place", [self numberOfSectionBookmarks]];   
+            return [NSString stringWithFormat:@"%i people have placemarks here", [self numberOfSectionBookmarks]];   
         }            
     }
 }
@@ -1155,7 +1155,6 @@ typedef enum {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if ([self shouldShowSectionView] && indexPath.section == 0){
-        DLog(@"Show people who've bookmarked");
         FollowViewController *followViewController;
         
         if(self.perspectiveType == following){

@@ -297,7 +297,7 @@
             
             UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 90)];
             
-            loginText.text = @"Sign up or log in to check out what people you follow have bookmarked lately.\n\nTap here to get started.";
+            loginText.text = @"Sign up or log in to check out what people you follow have placemarked lately.\n\nTap here to get started.";
             
             loginText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
             loginText.tag = 778;
