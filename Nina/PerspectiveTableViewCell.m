@@ -71,18 +71,6 @@
         cell.memoText.hidden = TRUE;
         verticalCursor += 10;
     }
-
-    if (perspective.mine || !hasContent){
-        //can't star own perspective
-        [cell.upvoteButton setHidden:true];
-    } else {
-        [cell.upvoteButton setHidden:false];
-        if(perspective.starred){
-            [cell.upvoteButton setImage:[UIImage imageNamed:@"ReMark.png"] forState:UIControlStateNormal];
-        } else {
-            [cell.upvoteButton setImage:[UIImage imageNamed:@"UnReMark.png"] forState:UIControlStateNormal];
-        }
-    }
     
     cell.userImage.photo = perspective.user.profilePic;
     [cell.userImage loadImage];
@@ -128,6 +116,18 @@
         
     }else{
         cell.scrollView.hidden = TRUE; //remove from view
+    }
+    
+    if (perspective.mine || !hasContent){
+        //can't star own perspective
+        [cell.upvoteButton setHidden:true];
+    } else {
+        [cell.upvoteButton setHidden:false];
+        if(perspective.starred){
+            [cell.upvoteButton setImage:[UIImage imageNamed:@"ReMark.png"] forState:UIControlStateNormal];
+        } else {
+            [cell.upvoteButton setImage:[UIImage imageNamed:@"UnReMark.png"] forState:UIControlStateNormal];
+        }
     }
     
     if (hasContent && perspective.mine == false){

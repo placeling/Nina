@@ -44,20 +44,6 @@
     
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (perspective.mine){
-        //can't star own perspective
-        [self.upvoteButton setHidden:true];
-    // Manually check if belongs to newly logged in user
-    } else if (currentUser && currentUser.length >0 && [currentUser isEqualToString:self.perspective.user.username]) {
-        [self.upvoteButton setHidden:true];
-    } else {
-        [self.upvoteButton setHidden:false];
-        if(perspective.starred){
-            [self.upvoteButton setImage:[UIImage imageNamed:@"ReMark.png"] forState:UIControlStateNormal];
-        } else {
-            [self.upvoteButton setImage:[UIImage imageNamed:@"UnReMark.png"] forState:UIControlStateNormal];
-        }
-    }
     
     self.userImage.photo = perspective.user.profilePic;
     [self.userImage loadImage];
@@ -89,6 +75,22 @@
         [self.scrollView setContentSize:CGSizeMake(cx, [self.scrollView bounds].size.height)];
     }else{
         self.scrollView.hidden = TRUE; //remove from view
+    }
+    
+    
+    if (perspective.mine){
+        //can't star own perspective
+        [self.upvoteButton setHidden:true];
+        // Manually check if belongs to newly logged in user
+    } else if (currentUser && currentUser.length >0 && [currentUser isEqualToString:self.perspective.user.username]) {
+        [self.upvoteButton setHidden:true];
+    } else {
+        [self.upvoteButton setHidden:false];
+        if(perspective.starred){
+            [self.upvoteButton setImage:[UIImage imageNamed:@"ReMark.png"] forState:UIControlStateNormal];
+        } else {
+            [self.upvoteButton setImage:[UIImage imageNamed:@"UnReMark.png"] forState:UIControlStateNormal];
+        }
     }
     
     if (hasContent && self.perspective.mine == false){
