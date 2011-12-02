@@ -173,7 +173,7 @@
     // Set determinate mode
     hud.labelText = @"Saving...";
     [hud retain];
-    //[self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 
