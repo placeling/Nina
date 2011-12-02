@@ -133,7 +133,7 @@
     NSString* lat = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
     NSString* lon = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
     
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y", [NinaHelper getHostname]];		
+    NSString *urlString = @"https://maps.googleapis.com/maps/api/place/search/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y";		
     
     searchTerm  = [searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
     
