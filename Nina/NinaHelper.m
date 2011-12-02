@@ -273,10 +273,30 @@
 
 
 +(NSString*) metersToLocalizedDistance:(float)m{
+    NSLocale *currentUsersLocale = [NSLocale currentLocale];
+    DLog(@"Current Locale: %@", [currentUsersLocale localeIdentifier]);
     
-    return [NSString stringWithFormat:@"%.0fm", m];
-
     
+    if ( [[currentUsersLocale localeIdentifier] isEqualToString:@"en_US"]){
+        //Yankee mother fucker
+        float ft = 3.2808399 * m; //meters to feet
+        
+        if (ft < 528){
+            return [NSString stringWithFormat:@"%.0fft", ft];
+        } else {
+            float mi = ft / 5280;
+            return [NSString stringWithFormat:@"%.1fmi", mi];
+        }        
+        
+    } else {
+        if (m < 300){
+            return [NSString stringWithFormat:@"%.0fm", m];
+        } else {
+            float km = m / 1000;
+            return [NSString stringWithFormat:@"%.1fkm", km];
+        }       
+        
+    }
 }
 
 
