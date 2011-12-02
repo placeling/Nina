@@ -113,7 +113,7 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     
     if ([self searchResults]){
-        NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users/search?q=%@", [NinaHelper getHostname], searchText];
+        NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users/search?q=%@", [NinaHelper getHostname], [NinaHelper encodeForUrl:searchText]];
         
         NSURL *url = [NSURL URLWithString:targetURL];
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
