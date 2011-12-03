@@ -1181,9 +1181,13 @@ typedef enum {
             EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
             
             editPerspectiveViewController.delegate = self;
-            [self.navigationController pushViewController:editPerspectiveViewController animated:YES];
             
-            [editPerspectiveViewController release];       
+            UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editPerspectiveViewController];
+            [StyleHelper styleNavigationBar:navBar.navigationBar];
+            [self.navigationController presentModalViewController:navBar animated:YES];
+            [navBar release];
+            
+            [editPerspectiveViewController release];         
 
         } else {
             FullPerspectiveViewController *fullPerspectiveViewController = [[FullPerspectiveViewController alloc] init];
