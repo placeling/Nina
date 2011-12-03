@@ -7,11 +7,12 @@
 //
 
 #import "Perspective.h"
+#import "NSDictionary+Utility.h"
 
 
 @implementation Perspective
 @synthesize user, place, notes, tags, photos, starred, lastModified;
-@synthesize dateAdded, visited, share, mine, perspectiveId, modified;
+@synthesize dateAdded, visited, share, mine, perspectiveId, modified, url;
 
 -(id) initFromJsonDict:(NSDictionary *)jsonDict{
     if(self = [super init]){
@@ -56,10 +57,11 @@
         }
     }    
     
-    self.perspectiveId = [jsonDict objectForKey:@"_id"];
-    self.notes = [jsonDict objectForKey:@"memo"];
-    self.starred = [[jsonDict objectForKey:@"starred"] boolValue];
-    self.lastModified =[jsonDict objectForKey:@"updated_at"];
+    self.perspectiveId = [jsonDict objectForKeyNotNull:@"_id"];
+    self.notes = [jsonDict objectForKeyNotNull:@"memo"];
+    self.starred = [[jsonDict objectForKeyNotNull:@"starred"] boolValue];
+    self.lastModified =[jsonDict objectForKeyNotNull:@"updated_at"];
+    self.url = [jsonDict objectForKeyNotNull:@"url"];
     
     
 }
@@ -109,6 +111,7 @@
 
 - (void) dealloc {
     [user release];
+    [url release];
     [place release];
     [notes release];
     [tags release];

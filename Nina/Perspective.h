@@ -16,6 +16,7 @@
 
     NSString *perspectiveId;
     NSString *notes;
+    NSString *url;
     NSArray *tags;
     NSMutableArray *photos; // Array of Photo objects
     BOOL starred;
@@ -41,6 +42,7 @@
 @property (nonatomic, readonly) BOOL mine;
 @property (nonatomic, retain) NSString* perspectiveId;
 @property (nonatomic, retain) NSString *lastModified;
+@property (nonatomic, retain) NSString *url;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;

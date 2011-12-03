@@ -22,6 +22,7 @@
     IBOutlet UILabel *titleLabel;
     IBOutlet UIScrollView *scrollView;
     IBOutlet UILabel *flagLabel;
+    UIButton *moreOnWeb;
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
@@ -33,9 +34,11 @@
 @property(nonatomic,retain) UITapGestureRecognizer *tapGesture;
 @property(nonatomic,retain) UITapGestureRecognizer *flagTap;
 @property(nonatomic,retain) IBOutlet UILabel *flagLabel;
+@property(nonatomic,retain) IBOutlet UIButton *moreOnWeb;
 
 -(IBAction) toggleStarred;
 -(IBAction) showAuthoringUser;
+-(IBAction) goToWeb;
 
 -(void) mainContentLoad; // public as called by child controllers
 -(void) flagPerspective;

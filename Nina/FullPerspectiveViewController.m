@@ -12,11 +12,12 @@
 #import "NinaHelper.h"
 #import "LoginController.h"
 #import "PlacePageViewController.h"
+#import "GenericWebViewController.h"
 
 @implementation FullPerspectiveViewController
 
 @synthesize perspective, userImage, upvoteButton, memoText,titleLabel, scrollView;
-@synthesize tapGesture, flagLabel, flagTap;
+@synthesize tapGesture, flagLabel, flagTap, moreOnWeb;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -25,6 +26,20 @@
         // Custom initialization
     }
     return self;
+}
+
+
+
+-(IBAction) goToWeb{
+    
+    if (perspective.url && [perspective.url length] > 0){
+        GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:perspective.url];
+        
+        //genericWebViewController.title = @"Terms & Conditions";
+        [self.navigationController pushViewController:genericWebViewController animated:true];
+        
+        [genericWebViewController release];
+    }
 }
 
 -(void) mainContentLoad {
@@ -118,10 +133,17 @@
     self.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.userImage.layer.masksToBounds = YES;
     
+    if (perspective.url && [perspective.url length] > 0){
+        self.moreOnWeb.hidden = FALSE;
+    }else {
+        self.moreOnWeb.hidden = TRUE;
+    }
+    
     if ([self.perspective.photos count] == 0){
         //extend text all the way down if no photos
         self.scrollView.hidden = true;
-        [self.memoText setFrame:CGRectMake(self.memoText.frame.origin.x, self.memoText.frame.origin.y, self.memoText.frame.size.width, self.view.frame.size.height - self.memoText.frame.origin.y)];
+        [self.memoText setFrame:CGRectMake(self.memoText.frame.origin.x, self.memoText.frame.origin.y, self.memoText.frame.size.width, self.view.frame.size.height - self.memoText.frame.origin.y - self.moreOnWeb.frame.size.height)];
+        [self.moreOnWeb setFrame:CGRectMake(self.moreOnWeb.frame.origin.x, self.memoText.frame.origin.y + self.memoText.frame.size.height, self.moreOnWeb.frame.size.width, self.moreOnWeb.frame.size.height)];
     } else {
         [self.scrollView setCanCancelContentTouches:NO];
         
