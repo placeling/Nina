@@ -11,15 +11,17 @@
 #import "ASIHTTPRequest.h"
 #import "NinaHelper.h"
 #import "Facebook.h"
+#import "MBProgressHUD.h"
 
 @protocol LoginControllerDelegate;
 
-@interface LoginController : UIViewController<UITextFieldDelegate, ASIHTTPRequestDelegate, UITextFieldDelegate, FBRequestDelegate, UIGestureRecognizerDelegate>{
+@interface LoginController : UIViewController<UITextFieldDelegate, ASIHTTPRequestDelegate, UITextFieldDelegate, FBRequestDelegate,FBSessionDelegate, UIGestureRecognizerDelegate, MBProgressHUDDelegate>{
     IBOutlet UITextField *username;
     IBOutlet UITextField *password;
     IBOutlet UIButton *submitButton;
     IBOutlet UIButton *forgotPasswordButton;
     id <LoginControllerDelegate> delegate;
+    MBProgressHUD *HUD;
 }
 
 @property(nonatomic, retain) IBOutlet UITextField *username;

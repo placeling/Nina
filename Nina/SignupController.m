@@ -46,7 +46,6 @@
     
     if (fbDict) {
         email = [fbDict objectForKey:@"email"];
-        password = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]).textField.text;
     } else {
         email = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]).textField.text;
         password = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]]).textField.text;
@@ -66,7 +65,7 @@
                 
     [request setPostValue:username forKey:@"username"];
     [request setPostValue:email forKey:@"email"];
-    [request setPostValue:password forKey:@"password"];
+    
     
     if (fbDict){
         NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -74,6 +73,7 @@
         [request setPostValue:facebook.accessToken forKey:@"facebook_access_token"];
         [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"facebook_id"];
     }else{
+        [request setPostValue:password forKey:@"password"];
         NSString * passwordConfirm = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]]).textField.text;
         
         if (![password isEqualToString:passwordConfirm]){
@@ -264,7 +264,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (fbDict){
-        return 2;
+        return 1;
     }else {
         return 4;
     }
@@ -306,14 +306,14 @@
                 eCell.textField.text = [fbDict objectForKey:@"email"];
                 eCell.textField.enabled = false;
                 eCell.textField.textColor = [UIColor grayColor];
-            } */
+            } 
             else if (indexPath.row == 1){
                 eCell.textLabel.text = @"password";
                 eCell.textField.secureTextEntry = true;
                 eCell.textField.tag = 4;
                 eCell.textField.delegate = self;
                 eCell.textField.returnKeyType = UIReturnKeyGo;
-            }
+            }*/
         } else {
             if (indexPath.row == 0){
                 eCell.textLabel.text = @"username";

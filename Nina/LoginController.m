@@ -15,6 +15,8 @@
 #import "NinaAppDelegate.h"
 #import "NSString+SBJSON.h"
 #import "GenericWebViewController.h"
+#import "MBProgressHUD.h"
+#import "FlurryAnalytics.h"
 
 @interface LoginController (Private)
     -(void)close;
@@ -87,14 +89,25 @@
         NSArray* permissions =  [[NSArray arrayWithObjects:
                                   @"email", @"publish_stream",@"offline_access", nil] retain];
 
+        facebook.sessionDelegate = self;
         [facebook authorize:permissions];
                                  
         [permissions release];
-    }
-    
-    
-    [facebook requestWithGraphPath:@"me" andDelegate:self];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    } else {
+        
+        
+        HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        [self.navigationController.view addSubview:HUD];
+        
+        HUD.delegate = self;
+        HUD.labelText = @"Authenticating";
+        HUD.detailsLabelText = @"Getting Facebook Stuff";
+        
+        [HUD show:TRUE];
+        
+        [facebook requestWithGraphPath:@"me" andDelegate:self];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    } 
 }
 
 -(BOOL)testAlreadyLoggedInFacebook:(NSDictionary*)fbDict{
@@ -132,8 +145,70 @@
     }
 }
 
+- (void)fbDidLogin {
+    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+    Facebook *facebook = appDelegate.facebook;
+    facebook.sessionDelegate = appDelegate; //put back where found
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
+    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Authenticating";
+    HUD.detailsLabelText = @"Getting Facebook Stuff";
+    
+    [HUD show:TRUE];
+    
+    [facebook requestWithGraphPath:@"me" andDelegate:self];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+}
+
+- (void)fbDidNotLogin:(BOOL)cancelled{
+    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+    Facebook *facebook = appDelegate.facebook;
+    facebook.sessionDelegate = appDelegate; //put back where found
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [FlurryAnalytics logEvent:@"REJECTED_PERMISSIONS"];
+} 
+
+- (void)request:(FBRequest *)request didFailWithError:(NSError *)error{
+    [HUD hide:TRUE];
+    DLog(@"got facebook response: %@", [error localizedDescription]);
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    NSDictionary *details = [error userInfo];
+    
+    [FlurryAnalytics logEvent:@"UNKNOWN_FB_FAIL" withParameters:details];
+
+    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+    Facebook *facebook = appDelegate.facebook;
+    
+    facebook.expirationDate = nil;
+    facebook.accessToken = nil;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"FBAccessTokenKey"];
+    [defaults removeObjectForKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    
+    
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR" 
+                                                    message:@"Facebook returned a credential error, try again" 
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+    
+}
 - (void)request:(FBRequest *)request didLoad:(id)result{
     DLog(@"got facebook response: %@", result);
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     NSDictionary *fbDict = (NSDictionary*)result;
     if (![self testAlreadyLoggedInFacebook:fbDict]){
@@ -147,6 +222,7 @@
     } else {
         [self.navigationController dismissModalViewControllerAnimated:TRUE];
     }
+    [HUD hide:TRUE];    
 }
 
 -(IBAction) signupOldSchool{
@@ -312,6 +388,14 @@
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     self.navigationItem.rightBarButtonItem = nil;
+}
+
+
+- (void)hudWasHidden {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    [HUD release];
+	HUD = nil;
 }
 
 - (void)viewDidUnload

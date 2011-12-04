@@ -53,7 +53,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    
     return [facebook handleOpenURL:url]; 
 }
 
@@ -64,6 +63,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     [defaults synchronize];
     
 }
+
+- (void)fbDidNotLogin:(BOOL)cancelled{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [FlurryAnalytics logEvent:@"REJECTED_PERMISSIONS"];
+} 
 
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -108,6 +112,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)dealloc{
     [_window release];
     [_navigationController release];
+    [facebook release];
     [super dealloc];
 }
 
