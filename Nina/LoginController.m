@@ -46,6 +46,7 @@
     [request setPostValue:username.text forKey:@"x_auth_username"];
     [request setPostValue:password.text forKey:@"x_auth_password"];
 
+    request.tag = 110;
     [request setDelegate:self];
     
     [request signRequestWithClientIdentifier:[NinaHelper getConsumerKey] secret:[NinaHelper getConsumerSecret]
@@ -407,6 +408,16 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+-(void) dealloc{    
+    [NinaHelper clearActiveRequests:110];
+    [username release];
+    [password release];
+    [submitButton release];
+    [forgotPasswordButton release];    
+    
+    [super dealloc];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
