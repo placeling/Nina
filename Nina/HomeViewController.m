@@ -39,24 +39,25 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    NSDictionary *pickCategories = [NSDictionary dictionaryWithObjectsAndKeys:
-            [NSArray arrayWithObjects:@"EverythingPick.png", @"", nil], @"Everything", 
-            [NSArray arrayWithObjects:@"NightLifePick.png", @"Bars & Nightlife", nil], @"Nightlife",
-            [NSArray arrayWithObjects:@"FoodPick.png", @"Restaurants & Food", nil], @"Restaurants",
-            [NSArray arrayWithObjects:@"TouristyPick.png", @"Interesting & Outdoors", nil], @"Interesting", nil];
-
-    CGFloat cx = 10;
     
-    NSEnumerator *enumerator = [pickCategories keyEnumerator];
-    id key;
+    
+    NSArray *pickCategories = [NSArray arrayWithObjects:
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"EverythingPick.png", @"image", @"", @"category",  @"Everything", @"title", nil],
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"NightLifePick.png", @"image", @"Bars & Nightlife", @"category",  @"Nightlife", @"title", nil],
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"FoodPick.png", @"image", @"Restaurants & Food", @"category",  @"Restaurants", @"title", nil],
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"ShoppingPick.png", @"image", @"Shopping", @"category",  @"Shopping", @"title", nil],
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"BeautyPick.png", @"image", @"Beauty", @"category",  @"Beauty", @"title", nil],
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"GovernmentPick.png", @"image", @"Government", @"category",  @"Government", @"title", nil],
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"TouristyPick.png", @"image", @"Interesting & Outdoors", @"category",  @"Touristy", @"title", nil], nil];
+
+    CGFloat cx = 5;
         
-    while( key = [enumerator nextObject] ){
-        NSArray *category = [pickCategories objectForKey:key];
+    for( NSDictionary *quickPick in pickCategories ){
 
         CGRect rect = CGRectMake(cx, 3, 64, 64);
         QuickPickButton *button = [[QuickPickButton alloc] initWithFrame:rect];
-        button.category = [category objectAtIndex:1];
-        UIImage *image = [UIImage imageNamed:[category objectAtIndex:0]];
+        button.category = [quickPick objectForKey:@"category"];
+        UIImage *image = [UIImage imageNamed:[quickPick objectForKey:@"image"]];
         [button setImage:image forState:UIControlStateNormal];
         [self.pickScroll addSubview:button];
         
@@ -72,11 +73,11 @@
         [label setTextColor:[UIColor whiteColor]];
         [label setTextAlignment:UITextAlignmentCenter];
         
-        label.text = key;
+        label.text = [quickPick objectForKey:@"title"];
         [self.pickScroll addSubview:label];
         [label release];
         
-        cx += button.frame.size.width+10;
+        cx += button.frame.size.width+5;
 
     }
     
