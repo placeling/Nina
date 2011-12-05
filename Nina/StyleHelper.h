@@ -21,5 +21,6 @@
 +(void) styleContactInfoButton:(UIButton*)button;
 +(void) styleSubmitTypeButton:(UIButton*)button;
 +(void) styleFollowButton:(UIButton*)button;
++(void) styleUnFollowButton:(UIButton*)button;
 
 @end

@@ -149,15 +149,8 @@
     self.placeMarkButton.enabled = true;
     self.followersButton.enabled = true;
     self.followingButton.enabled = true;
-    
-    [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
-    [StyleHelper styleFollowButton:self.followButton];
-        
-    if (self.user.following){
-        [self toggleFollow];
-    } else {
-        self.followButton.enabled = true;
-    }
+  
+    [self toggleFollow];
     
     self.followingButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.followingCount];
     self.followersButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.followerCount];
@@ -260,37 +253,51 @@
 -(IBAction) followUser{
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+    if (!currentUser || [currentUser length] == 0) {
         UIAlertView *baseAlert;
         NSString *alertMessage = @"Sign up or log in to follow people and get updates on places they love";
         baseAlert = [[UIAlertView alloc] 
                      initWithTitle:nil message:alertMessage 
                      delegate:self cancelButtonTitle:@"Not Now" 
                      otherButtonTitles:@"Let's Go", nil];
+        baseAlert.tag = 0;
         
         [baseAlert show];
         [baseAlert release];
     } else {
         // Get the URL to call to follow/unfollow
         
-        NSString *actionURL = [NSString stringWithFormat:@"%@/v1/users/%@/follow", [NinaHelper getHostname], self.user.username];
-        DLog(@"Follow/unfollow url is: %@", actionURL);
-        NSURL *url = [NSURL URLWithString:actionURL];
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-        [request setRequestMethod:@"POST"];
-        
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        [request setDelegate:self];
-        [request setTag:11];
-        [NinaHelper signRequest:request];
-        [request startAsynchronous];
+        if (self.followButton.tag == 0){
+            NSString *actionURL = [NSString stringWithFormat:@"%@/v1/users/%@/follow", [NinaHelper getHostname], self.user.username];
+            DLog(@"Follow/unfollow url is: %@", actionURL);
+            NSURL *url = [NSURL URLWithString:actionURL];
+            ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+            [request setRequestMethod:@"POST"];
+            
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            [request setDelegate:self];
+            [request setTag:11];
+            [NinaHelper signRequest:request];
+            [request startAsynchronous];
+        } else {
+            UIAlertView *baseAlert;
+            NSString *alertMessage = [NSString stringWithFormat:@"Unfollow %@?", self.user.username];
+            baseAlert = [[UIAlertView alloc] 
+                         initWithTitle:nil message:alertMessage 
+                         delegate:self cancelButtonTitle:@"Cancel" 
+                         otherButtonTitles:@"Unfollow", nil];
+            baseAlert.tag = 1;
+            
+            [baseAlert show];
+            [baseAlert release];
+        }
     }	
 }
 
 #pragma mark - Unregistered experience methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
+    if (alertView.tag == 0 && buttonIndex == 1) {
         LoginController *loginController = [[LoginController alloc] init];
         loginController.delegate = self;
         
@@ -298,6 +305,18 @@
         [self.navigationController presentModalViewController:navBar animated:YES];
         [navBar release];
         [loginController release];
+    } else if (alertView.tag == 1 && buttonIndex == 1){
+        NSString *actionURL = [NSString stringWithFormat:@"%@/v1/users/%@/unfollow", [NinaHelper getHostname], self.user.username];
+        DLog(@"Follow/unfollow url is: %@", actionURL);
+        NSURL *url = [NSURL URLWithString:actionURL];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        [request setRequestMethod:@"POST"];
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        [request setDelegate:self];
+        [request setTag:15];
+        [NinaHelper signRequest:request];
+        [request startAsynchronous];
     }
 }
 
@@ -329,10 +348,8 @@
             NSDictionary *jsonDict =  [responseString JSONValue];
             
             self.user = [[[User alloc] initFromJsonDict:jsonDict]autorelease];    
-            
-            if (self.user.following || [self.username isEqualToString:[NinaHelper getUsername]] ){
-                [self toggleFollow];
-            }
+
+            [self toggleFollow];
             
             if ([jsonDict objectForKey:@"perspectives"]){
                 //has perspectives in call, seed with to make quicker
@@ -352,6 +369,7 @@
         }
         case 11:
         {
+            self.user.following = true;
             [self toggleFollow];
             break;
         }
@@ -410,13 +428,35 @@
             [self loadData];
             break;
         }
+        case 15:
+        {
+            self.user.following = false;
+            [self toggleFollow];
+            break;
+        }
     }
 
 }
 
 -(void) toggleFollow{
-    self.followButton.enabled = FALSE;
-    self.followButton.titleLabel.textColor = [UIColor grayColor];
+    
+    if (self.user.following || [self.username isEqualToString:[NinaHelper getUsername]] ){        
+        self.followButton.enabled = true;
+        self.followButton.tag = 1;
+        [self.followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+        [StyleHelper styleUnFollowButton:self.followButton];
+        
+    } else {
+        self.followButton.enabled = true;        
+        self.followButton.tag = 0;
+        [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        [StyleHelper styleFollowButton:self.followButton];
+    }
+    
+    
+    if ([self.username isEqualToString:[NinaHelper getUsername]]){
+        self.followButton.enabled = false;
+    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
