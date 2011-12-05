@@ -53,6 +53,13 @@
 		28417F95148361A300CA6D4D /* ReMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417F94148361A300CA6D4D /* ReMark.png */; };
 		28417FAA14893E8300CA6D4D /* PlaceMarkIt.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417FA814893E8200CA6D4D /* PlaceMarkIt.png */; };
 		28417FAB14893E8300CA6D4D /* PlaceMarkIt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417FA914893E8300CA6D4D /* PlaceMarkIt@2x.png */; };
+		28417FB5148AE40200CA6D4D /* spinner.gif in Resources */ = {isa = PBXBuildFile; fileRef = 28417FB4148AE40200CA6D4D /* spinner.gif */; };
+		28417FC1148CA9AF00CA6D4D /* BeautyPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417FBB148CA9A300CA6D4D /* BeautyPick.png */; };
+		28417FC2148CA9AF00CA6D4D /* BeautyPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417FBC148CA9A500CA6D4D /* BeautyPick@2x.png */; };
+		28417FC3148CA9AF00CA6D4D /* GovernmentPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417FBD148CA9A700CA6D4D /* GovernmentPick.png */; };
+		28417FC4148CA9AF00CA6D4D /* GovernmentPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417FBE148CA9AB00CA6D4D /* GovernmentPick@2x.png */; };
+		28417FC5148CA9AF00CA6D4D /* ShoppingPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417FBF148CA9AC00CA6D4D /* ShoppingPick.png */; };
+		28417FC6148CA9AF00CA6D4D /* ShoppingPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417FC0148CA9AD00CA6D4D /* ShoppingPick@2x.png */; };
 		284A35321402C48C009C8C28 /* PerspectivesMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A35301402C48C009C8C28 /* PerspectivesMapViewController.m */; };
 		284A35331402C48C009C8C28 /* PerspectivesMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */; };
 		284A35371402D3C3009C8C28 /* PlaceMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A35361402D3C3009C8C28 /* PlaceMark.m */; };
@@ -335,6 +342,13 @@
 		28417F94148361A300CA6D4D /* ReMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ReMark.png; sourceTree = "<group>"; };
 		28417FA814893E8200CA6D4D /* PlaceMarkIt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlaceMarkIt.png; sourceTree = "<group>"; };
 		28417FA914893E8300CA6D4D /* PlaceMarkIt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PlaceMarkIt@2x.png"; sourceTree = "<group>"; };
+		28417FB4148AE40200CA6D4D /* spinner.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = spinner.gif; sourceTree = "<group>"; };
+		28417FBB148CA9A300CA6D4D /* BeautyPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BeautyPick.png; sourceTree = "<group>"; };
+		28417FBC148CA9A500CA6D4D /* BeautyPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BeautyPick@2x.png"; sourceTree = "<group>"; };
+		28417FBD148CA9A700CA6D4D /* GovernmentPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GovernmentPick.png; sourceTree = "<group>"; };
+		28417FBE148CA9AB00CA6D4D /* GovernmentPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GovernmentPick@2x.png"; sourceTree = "<group>"; };
+		28417FBF148CA9AC00CA6D4D /* ShoppingPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShoppingPick.png; sourceTree = "<group>"; };
+		28417FC0148CA9AD00CA6D4D /* ShoppingPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShoppingPick@2x.png"; sourceTree = "<group>"; };
 		284A352F1402C48C009C8C28 /* PerspectivesMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectivesMapViewController.h; sourceTree = "<group>"; };
 		284A35301402C48C009C8C28 /* PerspectivesMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerspectivesMapViewController.m; sourceTree = "<group>"; };
 		284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PerspectivesMapViewController.xib; sourceTree = "<group>"; };
@@ -1177,6 +1191,13 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				28417FBB148CA9A300CA6D4D /* BeautyPick.png */,
+				28417FBC148CA9A500CA6D4D /* BeautyPick@2x.png */,
+				28417FBD148CA9A700CA6D4D /* GovernmentPick.png */,
+				28417FBE148CA9AB00CA6D4D /* GovernmentPick@2x.png */,
+				28417FBF148CA9AC00CA6D4D /* ShoppingPick.png */,
+				28417FC0148CA9AD00CA6D4D /* ShoppingPick@2x.png */,
+				28417FB4148AE40200CA6D4D /* spinner.gif */,
 				28417F94148361A300CA6D4D /* ReMark.png */,
 				28417F8F148354EA00CA6D4D /* PeopleIcon.png */,
 				28417F90148354EA00CA6D4D /* PeopleIcon@2x.png */,
@@ -1497,6 +1518,13 @@
 				28417F95148361A300CA6D4D /* ReMark.png in Resources */,
 				28417FAA14893E8300CA6D4D /* PlaceMarkIt.png in Resources */,
 				28417FAB14893E8300CA6D4D /* PlaceMarkIt@2x.png in Resources */,
+				28417FB5148AE40200CA6D4D /* spinner.gif in Resources */,
+				28417FC1148CA9AF00CA6D4D /* BeautyPick.png in Resources */,
+				28417FC2148CA9AF00CA6D4D /* BeautyPick@2x.png in Resources */,
+				28417FC3148CA9AF00CA6D4D /* GovernmentPick.png in Resources */,
+				28417FC4148CA9AF00CA6D4D /* GovernmentPick@2x.png in Resources */,
+				28417FC5148CA9AF00CA6D4D /* ShoppingPick.png in Resources */,
+				28417FC6148CA9AF00CA6D4D /* ShoppingPick@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
