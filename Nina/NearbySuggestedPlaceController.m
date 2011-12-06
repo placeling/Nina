@@ -76,9 +76,9 @@
         
         NSString *currentUser = [NinaHelper getUsername];            
         if (showAll || !currentUser || currentUser.length == 0 ){
-            urlString = [NSString stringWithFormat:@"%@?socialgraph=false&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", urlString, lat, lng, radius, queryString, categoryString];
+            urlString = [NSString stringWithFormat:@"%@?socialgraph=false&barrie=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", urlString, lat, lng, radius, queryString, categoryString];
         } else {
-            urlString = [NSString stringWithFormat:@"%@?socialgraph=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", urlString, lat, lng, radius, queryString, categoryString];
+            urlString = [NSString stringWithFormat:@"%@?socialgraph=true&barrie=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", urlString, lat, lng, radius, queryString, categoryString];
         }
         
         NSURL *url = [NSURL URLWithString:urlString];
@@ -311,7 +311,9 @@
 {
     NSString *currentUser = [NinaHelper getUsername];
     // Return the number of sections.
-    if (self.showAll || (currentUser && currentUser.length > 0)){
+    if (self.showAll){
+        return 1;
+    } else if (currentUser && currentUser.length > 0 && [nearbyPlaces count] > 0){
         return 1;
     } else {
         return 2;
@@ -491,6 +493,11 @@
             Place *place = [nearbyPlaces objectAtIndex:indexPath.row];
             
             PlacePageViewController *placeController = [[PlacePageViewController alloc] initWithPlace:place];
+            
+            if (place.google_ref){
+                placeController.google_ref = place.google_ref;
+            }
+            
             [self.navigationController pushViewController:placeController animated:TRUE];
             [placeController release];
         
