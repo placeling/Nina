@@ -24,6 +24,7 @@
     BOOL showAll;
     BOOL dataLoaded;
     BOOL locationEnabled;
+    BOOL splitView;
     
     NSString *searchTerm;
     NSString *category;
