@@ -15,7 +15,7 @@
 @synthesize dirty, name, pid, user;
 @synthesize address, city, perspectiveCount, bookmarked, followingPerspectiveCount;
 @synthesize location, usersBookmarking;
-@synthesize place_id, phone, googlePlacesUrl;
+@synthesize place_id, phone, googlePlacesUrl, google_ref;
 @synthesize categories, icon, tags;
 @synthesize homePerspectives,followingPerspectives,everyonePerspectives;
 
@@ -35,8 +35,11 @@
     self.address = [jsonDict objectForKeyNotNull:@"street_address"];
     self.city = [jsonDict objectForKeyNotNull:@"city_data"];
     self.phone = [jsonDict objectForKeyNotNull:@"phone_number"];
+    
     self.place_id = [jsonDict objectForKeyNotNull:@"google_id"];
     self.googlePlacesUrl = [jsonDict objectForKeyNotNull:@"google_url"];
+    self.google_ref = [jsonDict objectForKey:@"google_ref"];
+    
     NSNumber *lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
     NSNumber *lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1]; 
     
@@ -86,6 +89,8 @@
     [address release];
     [city release];
     [place_id release];
+    [google_ref release];
+    
     [phone release];
     [location release];
     [usersBookmarking release];

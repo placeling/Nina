@@ -22,6 +22,8 @@
     NSString *address;
     NSString *city;
     NSString *place_id;
+    NSString *google_ref;
+    
     NSArray *usersBookmarking;
     NSArray *tags;
     
@@ -35,7 +37,6 @@
     
     BOOL bookmarked;
     
-    
     NSMutableArray *homePerspectives;
     NSMutableArray *followingPerspectives;
     NSMutableArray *everyonePerspectives;
@@ -47,6 +48,7 @@
 @property (nonatomic, retain) NSString *place_id;
 @property (nonatomic, retain) User *user;
 @property (nonatomic, retain) NSString *googlePlacesUrl;
+@property (nonatomic, retain) NSString *google_ref;
 
 @property (nonatomic, retain) NSString *address;
 @property (nonatomic, retain) NSString *city;
