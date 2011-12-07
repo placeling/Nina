@@ -287,18 +287,18 @@
         float ft = 3.2808399 * m; //meters to feet
         
         if (ft < 528){
-            return [NSString stringWithFormat:@"%.0fft", ft];
+            return [NSString stringWithFormat:@"%.0f ft", ft];
         } else {
             float mi = ft / 5280;
-            return [NSString stringWithFormat:@"%.1fmi", mi];
+            return [NSString stringWithFormat:@"%.1f mi", mi];
         }        
         
     } else {
         if (m < 300){
-            return [NSString stringWithFormat:@"%.0fm", m];
+            return [NSString stringWithFormat:@"%.0f m", m];
         } else {
             float km = m / 1000;
-            return [NSString stringWithFormat:@"%.1fkm", km];
+            return [NSString stringWithFormat:@"%.1f km", km];
         }       
         
     }
