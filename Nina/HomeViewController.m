@@ -44,11 +44,12 @@
     NSArray *pickCategories = [NSArray arrayWithObjects:
                                [NSDictionary dictionaryWithObjectsAndKeys:@"EverythingPick.png", @"image", @"", @"category",  @"Everything", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"NightLifePick.png", @"image", @"Bars & Nightlife", @"category",  @"Nightlife", @"title", nil],
-                               [NSDictionary dictionaryWithObjectsAndKeys:@"FoodPick.png", @"image", @"Restaurants & Food", @"category",  @"Restaurants", @"title", nil],
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"FoodPick.png", @"image", @"Restaurants & Food", @"category",  @"Food", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"ShoppingPick.png", @"image", @"Shopping", @"category",  @"Shopping", @"title", nil],
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"TouristyPick.png", @"image", @"Interesting & Outdoors", @"category",  @"Interesting", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"BeautyPick.png", @"image", @"Beauty", @"category",  @"Beauty", @"title", nil],
-                               [NSDictionary dictionaryWithObjectsAndKeys:@"GovernmentPick.png", @"image", @"Government", @"category",  @"Government", @"title", nil],
-                               [NSDictionary dictionaryWithObjectsAndKeys:@"TouristyPick.png", @"image", @"Interesting & Outdoors", @"category",  @"Touristy", @"title", nil], nil];
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"GovernmentPick.png", @"image", @"Government", @"category",  @"Government", @"title", nil]
+                               , nil];
 
     CGFloat cx = 5;
         
