@@ -66,7 +66,11 @@
         if (populate){
             picture = populate.image;
         } else {
-            picture = [UIImage imageNamed:@"default_profile_image.png"];
+            if (self.photo.perspective){
+                picture = [UIImage imageNamed:@"DefaultPhoto.png"];
+            } else {
+                picture = [UIImage imageNamed:@"default_profile_image.png"];
+            }
         }
         
         self.photo.thumb_image = picture; //holder for now
