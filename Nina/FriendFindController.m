@@ -18,13 +18,13 @@
 
 
 @implementation FriendFindController
-@synthesize searchUsers, suggestedUsers, members, recentSearches;
+@synthesize searchUsers, suggestedUsers, recentSearches;
 @synthesize searchBar=_searchBar, tableView=_tableView;
 
 
 
 -(BOOL) searchResults{
-    return ([self.searchBar.text length] >= 3 || self.members == self.searchUsers);
+    return (showSearchResults);
 }
 
 -(void) dealloc {
@@ -33,7 +33,6 @@
     [NinaHelper clearActiveRequests:100];
     [_searchBar release];
     [_tableView release];
-    [members release];
     [super dealloc];
 }
 
@@ -42,6 +41,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
 
+    showSearchResults = false;
     self.navigationItem.title = @"Find Friends";
     self.searchBar.delegate = self;
     self.suggestedUsers = [[NSMutableArray alloc]init];
@@ -111,8 +111,8 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    
-    if ([self searchResults]){
+    if ( [self.searchBar.text length] >= 2){
+        showSearchResults = true;
         NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users/search?q=%@", [NinaHelper getHostname], [NinaHelper encodeForUrl:searchText]];
         
         NSURL *url = [NSURL URLWithString:targetURL];
@@ -121,11 +121,13 @@
         [request setTag:101];
         [request setDelegate:self];
         [request startAsynchronous];
+    } else {
+        showSearchResults = false;
+        [self.tableView reloadData];
     }
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
-    self.members = self.suggestedUsers;
     searchBar.text = @"";
     [searchBar resignFirstResponder];
     [self.tableView reloadData];
@@ -161,7 +163,6 @@
                     [self.suggestedUsers addObject:user];
                     [user release];
                 }
-                self.members = self.suggestedUsers;
                 [self.tableView reloadData];                
                 break;
             }
@@ -178,7 +179,6 @@
                     [user release];
                 }
                 
-                self.members = self.searchUsers;
                 [self.tableView reloadData];                
                 break;
             }
@@ -252,7 +252,14 @@
         [cell addSubview:aImageView]; //mostly to handle de-allocation
         [aImageView release];
     }else {
-        if (indexPath.row ==0 && [self.members count] ==0){
+        NSArray *members;
+        if ([self searchResults]){
+            members = self.searchUsers;
+        } else {
+            members = self.suggestedUsers;
+        }
+        
+        if (indexPath.row ==0 && [members count] ==0){
             
             cell = [tableView dequeueReusableCellWithIdentifier:InfoCellIdentifier];
             if (cell == nil) {
@@ -264,7 +271,7 @@
             [cell setUserInteractionEnabled:NO];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         } else {    
-            User *user = [self.members objectAtIndex:indexPath.row];
+            User *user = [members objectAtIndex:indexPath.row];
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             if (cell == nil) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
@@ -327,7 +334,7 @@
     } else if (tableView.numberOfSections ==2 && indexPath.section == 0){        
         user = [self.recentSearches objectAtIndex:indexPath.row];
     } else if (tableView.numberOfSections ==2 && indexPath.section == 1){        
-        user = [self.members objectAtIndex:indexPath.row];
+        user = [self.suggestedUsers objectAtIndex:indexPath.row];
     }
     
     MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
