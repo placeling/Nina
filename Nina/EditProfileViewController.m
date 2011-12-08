@@ -12,6 +12,7 @@
 #import "NSString+SBJSON.h"
 #import "UIImage+Resize.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIImageView+WebCache.h"
 
 @interface EditProfileViewController(Private)
 -(IBAction)showActionSheet;
@@ -329,16 +330,13 @@
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:photoCellIdentifier] autorelease];
         }
         
-        UIImage *profile_pic;
-        if (user.profilePic == nil) {
-            profile_pic = [UIImage imageNamed:@"default_profile_image.png"];
-        } else {
-            profile_pic = user.profilePic.thumb_image;
-        }
-        
+
         CGRect myImageRect = CGRectMake(20, 10, 50, 50);
         UIImageView *myImage = [[UIImageView alloc] initWithFrame:myImageRect];
-        [myImage setImage:profile_pic];
+        
+        // Here we use the new provided setImageWithURL: method to load the web image
+        [myImage setImageWithURL:[NSURL URLWithString:user.profilePic.thumb_url]
+                       placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
         myImage.tag = 1;
         
         [[myImage layer] setCornerRadius:1.0f];
