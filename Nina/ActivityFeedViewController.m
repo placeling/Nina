@@ -134,9 +134,10 @@
     self.activityTableView.delegate = self;
     self.activityTableView.backgroundColor = [UIColor clearColor];
     
-    loadingMore = false;
+    loadingMore = true;
     hasMore = true;
     recentActivities = [[NSMutableArray alloc] init];
+    
     self.navigationItem.title = @"Recent activity";
     
     if (refreshHeaderView == nil) {
@@ -192,6 +193,7 @@
             }
             [self.activityTableView  reloadData];
             [jsonDict release];
+            loadingMore = false;
             break;
         }
         case 71:

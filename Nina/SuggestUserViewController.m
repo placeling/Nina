@@ -80,6 +80,7 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    loadingMore = false;
 	if (200 != [request responseStatusCode]){
 		[NinaHelper handleBadRequest:request sender:self];
 	} else {
