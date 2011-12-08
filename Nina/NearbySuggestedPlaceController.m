@@ -87,6 +87,7 @@
         [NinaHelper signRequest:request];
 		[request setDelegate:self];
 		[request startAsynchronous];
+        self.dataLoaded = false;
 	} else {
         self.dataLoaded = TRUE;
         self.locationEnabled = FALSE;
@@ -146,6 +147,7 @@
     if (self.showAll){
         [self.placesTableView setFrame:CGRectMake(self.placesTableView.frame.origin.x, self.placesTableView.frame.origin.y, self.placesTableView.frame.size.width, self.placesTableView.frame.size.height + self.toolbar.frame.size.height)];
         self.toolbar.hidden = true;
+        splitView = false;
     }
     
     self.searchBar.delegate = self;
@@ -308,7 +310,7 @@
             dataLoaded = false;
             splitView = true;
             [self loadContent];
-        }
+        } 
 	}
     
     [self dataSourceDidFinishLoadingNewData];
@@ -376,7 +378,7 @@
     }
     NSString *currentUser = [NinaHelper getUsername];
     if (cell == nil) {
-        if (splitView && indexPath.section == 0 && !currentUser) {
+        if (!showAll && indexPath.section == 0 && !currentUser) {
             cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
             
             tableView.allowsSelection = YES;
@@ -396,7 +398,7 @@
             
             [cell addSubview:loginText];
             [loginText release];
-        } else if (splitView && indexPath.section == 0) {
+        } else if (dataLoaded && [nearbyPlaces count] == 0 ) {
             cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noNearbyCellIdentifier] autorelease];
             
             UITextView *existingText = (UITextView *)[cell viewWithTag:778];
@@ -416,7 +418,7 @@
             if (self.locationEnabled == FALSE) {
                 errorText.text = [NSString stringWithFormat:@"We can't show you any nearby places as you've got location services turned off."];
             } else {
-                if (self.showAll == TRUE) {
+                if (self.showAll == TRUE || (splitView && indexPath.section == 1)) {
                     if ([self.searchTerm isEqualToString:@""] == TRUE) {
                         errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places."];
                     } else {
@@ -440,7 +442,7 @@
             errorText.tag = 778;
             [cell addSubview:errorText];
             [errorText release];
-        } else if ([nearbyPlaces count] == 0 && !self.dataLoaded){
+        } else if (!self.dataLoaded){
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
 
             for(id item in objects){
@@ -449,7 +451,7 @@
                }
             }    
         
-        }else {
+        }else{
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PlaceSuggestTableViewCell" owner:self options:nil];
             
             for(id item in objects){
