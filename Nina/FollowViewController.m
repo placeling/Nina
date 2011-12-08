@@ -10,6 +10,7 @@
 #import "User.h"
 #import "NSString+SBJSON.h"
 #import "MemberProfileViewController.h"
+#import "UIImageView+WebCache.h"
 
 @implementation FollowViewController
 
@@ -216,15 +217,10 @@
         cell.detailTextLabel.text = user.description;
         
         cell.accessoryView.tag = indexPath.row;
-        
-        cell.imageView.image = [UIImage imageNamed:@"default_profile_image.png"];
-        
-        AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:user.profilePic];
-        aImageView.frame = cell.imageView.frame;
-        aImageView.populate = cell.imageView;
-        [aImageView loadImage];
-        [cell addSubview:aImageView]; //mostly to handle de-allocation
-        [aImageView release];
+        cell.imageView.contentMode = UIViewContentModeScaleToFill;
+        // Here we use the new provided setImageWithURL: method to load the web image
+        [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumb_url]
+                       placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
     }
     
     return cell;

@@ -9,14 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "Perspective.h"
 #import "NinaHelper.h"
-#import "asyncimageview.h"
 
 @interface PerspectiveTableViewCell : UITableViewCell{
     Perspective *perspective;
     UITapGestureRecognizer *tapGesture;
     UITapGestureRecognizer *showMoreTap;
     UITapGestureRecognizer *flagTap;
-    IBOutlet AsyncImageView *userImage;
+    IBOutlet UIImageView *userImage;
     IBOutlet UIButton *upvoteButton;
     IBOutlet UILabel *memoText;
     IBOutlet UILabel *titleLabel;
@@ -29,7 +28,7 @@
 
 @property(nonatomic,retain) Perspective *perspective; 
 @property(nonatomic,assign) id<ASIHTTPRequestDelegate> requestDelegate;
-@property(nonatomic,retain) IBOutlet AsyncImageView *userImage;
+@property(nonatomic,retain) IBOutlet UIImageView *userImage;
 @property(nonatomic,retain) IBOutlet UIButton *upvoteButton;
 @property(nonatomic,retain) IBOutlet UILabel *memoText;
 @property(nonatomic,retain) IBOutlet UILabel *titleLabel;

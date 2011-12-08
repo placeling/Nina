@@ -9,7 +9,7 @@
 #import "ActivityTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "NinaHelper.h"
-#import "asyncimageview.h"
+#import "UIImageView+WebCache.h"
 
 @interface ActivityTableViewCell (Private) 
 +(NSString*) getTitleText:(NSDictionary*)dict;
@@ -70,22 +70,13 @@
     cell.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     cell.userImage.layer.masksToBounds = YES;
     
-    cell.userImage.image = [UIImage imageNamed:@"default_profile_image.png"];
     
     if ([activity objectForKey:@"thumb1"]){
-        Photo *profilePic = [[Photo alloc] init];
-        profilePic.thumb_url = [activity objectForKey:@"thumb1"];
-        
-        AsyncImageView *aImageView = [[AsyncImageView alloc] initWithPhoto:profilePic];
-        aImageView.frame = cell.userImage.frame;
-        aImageView.populate = cell.userImage;
-        [aImageView loadImage];
-        [cell addSubview:aImageView]; //mostly to handle de-allocation
-        [aImageView release];
-        [profilePic release];
+        // Here we use the new provided setImageWithURL: method to load the web image
+        [cell.userImage setImageWithURL:[NSURL URLWithString:[activity objectForKey:@"thumb1"]]
+                       placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
     }
-    
-    
+        
     cell.timeAgo.frame = CGRectMake(cell.timeAgo.frame.origin.x, verticalCursor, cell.timeAgo.frame.size.width, cell.timeAgo.frame.size.height);    
     cell.timeAgo.backgroundColor = [UIColor clearColor];
     

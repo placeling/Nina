@@ -11,7 +11,6 @@
 #import "NinaHelper.h"
 #import "ASIHTTPRequestDelegate.h"
 #import "ProfileDetailBadge.h"
-#import "asyncimageview.h"
 #import "LoginController.h"
 
 @interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate, LoginControllerDelegate> {
@@ -22,7 +21,7 @@
     
     NSMutableArray *perspectives;
     
-    IBOutlet AsyncImageView *profileImageView;
+    IBOutlet UIImageView *profileImageView;
     IBOutlet UILabel *usernameLabel;
     IBOutlet UILabel *locationLabel;
     
@@ -40,7 +39,7 @@
 @property (nonatomic, retain) NSString *username;
 @property (nonatomic, retain) User *user;
 
-@property (nonatomic, retain) IBOutlet AsyncImageView *profileImageView;
+@property (nonatomic, retain) IBOutlet UIImageView *profileImageView;
 
 @property (nonatomic, retain) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *userDescriptionLabel;

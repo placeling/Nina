@@ -21,6 +21,7 @@
 #import "EditProfileViewController.h"
 #import "LoginController.h"
 #import "FullPerspectiveViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface MemberProfileViewController() 
 -(void) blankLoad;
@@ -181,9 +182,8 @@
         [self.followButton removeFromSuperview];
     }
     
-    self.profileImageView.photo = self.user.profilePic;
-    [self.profileImageView loadImage];
-    
+    // Here we use the new provided setImageWithURL: method to load the web image
+    [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumb_url] placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
