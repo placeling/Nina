@@ -13,6 +13,8 @@
 #import "LoginController.h"
 #import "PlacePageViewController.h"
 #import "GenericWebViewController.h"
+#import "UIImageView+WebCache.h"
+#import "asyncimageview.h"
 
 @implementation FullPerspectiveViewController
 
@@ -59,9 +61,9 @@
     
     NSString *currentUser = [NinaHelper getUsername];
     
-    
-    self.userImage.photo = perspective.user.profilePic;
-    [self.userImage loadImage];
+    // Here we use the new provided setImageWithURL: method to load the web image
+    [self.userImage setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumb_url]
+                   placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
     
     self.memoText.backgroundColor = [UIColor clearColor];
     

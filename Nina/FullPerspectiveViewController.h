@@ -9,14 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "Perspective.h"
 #import "NinaHelper.h"
-#import "asyncimageview.h"
 #import "LoginController.h"
 
 @interface FullPerspectiveViewController : UIViewController <LoginControllerDelegate>{
     Perspective *perspective;
     UITapGestureRecognizer *tapGesture;
     UITapGestureRecognizer *flagTap;
-    IBOutlet AsyncImageView *userImage;
+    IBOutlet UIImageView *userImage;
     IBOutlet UIButton *upvoteButton;
     IBOutlet UITextView *memoText;
     IBOutlet UILabel *titleLabel;
@@ -26,7 +25,7 @@
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
-@property(nonatomic,retain) IBOutlet AsyncImageView *userImage;
+@property(nonatomic,retain) IBOutlet UIImageView *userImage;
 @property(nonatomic,retain) IBOutlet UIButton *upvoteButton;
 @property(nonatomic,retain) IBOutlet UITextView *memoText;
 @property(nonatomic,retain) IBOutlet UILabel *titleLabel;
