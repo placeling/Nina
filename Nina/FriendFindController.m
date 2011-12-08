@@ -42,7 +42,7 @@
     [super viewDidLoad];
 
     showSearchResults = false;
-    self.navigationItem.title = @"Find Friends";
+    self.navigationItem.title = @"Find People";
     self.searchBar.delegate = self;
     self.suggestedUsers = [[NSMutableArray alloc]init];
     self.searchUsers = [[NSMutableArray alloc]init];
@@ -267,7 +267,7 @@
             }
             
             cell.textLabel.textColor = [UIColor grayColor];
-            cell.textLabel.text = @"No Username Matches";
+            cell.textLabel.text = [NSString stringWithFormat:@"No user called %@", self.searchBar.text];
             [cell setUserInteractionEnabled:NO];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         } else {    
