@@ -103,6 +103,7 @@
 		2878E824140C294500F2A666 /* MyPerspectiveCellViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2878E822140C294500F2A666 /* MyPerspectiveCellViewController.xib */; };
 		2878E828140C2A3900F2A666 /* EditPerspectiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2878E826140C2A3900F2A666 /* EditPerspectiveViewController.m */; };
 		2878E829140C2A3900F2A666 /* EditPerspectiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2878E827140C2A3900F2A666 /* EditPerspectiveViewController.xib */; };
+		28865C951491B65400F20280 /* facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 28865C941491B65400F20280 /* facebook_icon.png */; };
 		2887B8AA144DF0FD00CBBF1B /* segmentedBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8A9144DF0FD00CBBF1B /* segmentedBackground.png */; };
 		2887B8B2144E1D8100CBBF1B /* CustomSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2887B8B1144E1D8100CBBF1B /* CustomSegmentedControl.m */; };
 		2887B8BA144E23E900CBBF1B /* red-divider.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8B4144E23E900CBBF1B /* red-divider.png */; };
@@ -422,6 +423,7 @@
 		2878E825140C2A3900F2A666 /* EditPerspectiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPerspectiveViewController.h; sourceTree = "<group>"; };
 		2878E826140C2A3900F2A666 /* EditPerspectiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPerspectiveViewController.m; sourceTree = "<group>"; };
 		2878E827140C2A3900F2A666 /* EditPerspectiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditPerspectiveViewController.xib; sourceTree = "<group>"; };
+		28865C941491B65400F20280 /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
 		2887B8A9144DF0FD00CBBF1B /* segmentedBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = segmentedBackground.png; sourceTree = "<group>"; };
 		2887B8B0144E1D8100CBBF1B /* CustomSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSegmentedControl.h; sourceTree = "<group>"; };
 		2887B8B1144E1D8100CBBF1B /* CustomSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSegmentedControl.m; sourceTree = "<group>"; };
@@ -1255,6 +1257,7 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				28865C941491B65400F20280 /* facebook_icon.png */,
 				28B5D8B114907E0000763D0C /* DefaultPhoto.png */,
 				28B5D8B214907E0000763D0C /* DefaultPhoto@2x.png */,
 				28417FBB148CA9A300CA6D4D /* BeautyPick.png */,
@@ -1596,6 +1599,7 @@
 				28B5D8D5149096CC00763D0C /* .gitignore in Resources */,
 				28B5D8D6149096CC00763D0C /* LICENSE in Resources */,
 				28B5D8D7149096CC00763D0C /* README.md in Resources */,
+				28865C951491B65400F20280 /* facebook_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
