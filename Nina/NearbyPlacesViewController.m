@@ -256,6 +256,27 @@
     [super viewWillAppear:animated];
     [StyleHelper styleSearchBar:self.searchBar];
     [StyleHelper styleToolBar:self.toolBar];
+    
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(keyboardWillShow:)
+     name:UIKeyboardWillShowNotification
+     object:nil];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(keyboardWillHide:)
+     name:UIKeyboardWillHideNotification
+     object:nil];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -491,6 +512,44 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:FALSE animated:true];
     [self findNearbyPlaces:searchBar.text];
+}
+
+
+
+-(void) keyboardWillShow:(NSNotification *)note
+{
+    CGRect keyboardEndFrame;
+    [[note.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+
+    CGRect keyboardFrame = [self.view convertRect:keyboardEndFrame toView:nil];
+    CGFloat keyboardHeight = keyboardFrame.size.height;
+
+    CGRect frame = self.placesTableView.frame;
+    frame.size.height -= (keyboardHeight - self.toolBar.frame.size.height);
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:0.3f];
+    self.placesTableView.frame = frame;
+    [UIView commitAnimations];
+}
+
+-(void) keyboardWillHide:(NSNotification *)note
+{
+    CGRect keyboardEndFrame;
+    [[note.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+    
+    CGRect keyboardFrame = [self.view convertRect:keyboardEndFrame toView:nil];
+    CGFloat keyboardHeight = keyboardFrame.size.height;
+    
+    CGRect frame = self.placesTableView.frame;
+    frame.size.height += (keyboardHeight - self.toolBar.frame.size.height);
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:0.3f];
+    self.placesTableView.frame = frame;
+    [UIView commitAnimations];
 }
 
 
