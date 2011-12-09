@@ -9,7 +9,6 @@
 #import "NearbySuggestedPlaceController.h"
 #import "NSString+SBJSON.h"
 #import "PlacePageViewController.h"
-#import "SuggestUserViewController.h"
 #import "PlaceSuggestTableViewCell.h"
 #import "Place.h"
 #import "LoginController.h"
@@ -21,20 +20,8 @@
 
 @implementation NearbySuggestedPlaceController
 
-@synthesize searchBar=_searchBar, popularPlacesButton, topLocalsButton, toolbar;
+@synthesize searchBar=_searchBar, popularPlacesButton, toolbar;
 @synthesize reloading=_reloading, showAll, placesTableView, searchTerm, category, dataLoaded, locationEnabled;
-
--(IBAction)topLocals:(id)sender{
-    SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
-    
-    suggestUserViewController.query = [NinaHelper encodeForUrl:self.searchBar.text];
-    
-    suggestUserViewController.title = @"Top Locals";
-    
-    [self.navigationController pushViewController:suggestUserViewController animated:YES];
-    [suggestUserViewController release];
-    
-}
 
 -(IBAction)popularPlaces:(id)sender{
     
@@ -187,7 +174,6 @@
     [NinaHelper clearActiveRequests:80];
     [_searchBar release]; 
     [popularPlacesButton release]; 
-    [topLocalsButton release];
     [toolbar release];
     [placesTableView release];
     [searchTerm release];

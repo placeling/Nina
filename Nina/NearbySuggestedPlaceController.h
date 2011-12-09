@@ -16,7 +16,6 @@
     
     IBOutlet UISearchBar *_searchBar;
     IBOutlet UIBarButtonItem *popularPlacesButton;
-    IBOutlet UIBarButtonItem *topLocalsButton;
     IBOutlet UITableView *placesTableView;
     IBOutlet UIToolbar *toolbar;
     
@@ -36,7 +35,6 @@
 @property(assign,getter=isReloading) BOOL reloading;
 @property(nonatomic,retain) IBOutlet UISearchBar *searchBar;
 @property(nonatomic,retain) IBOutlet UIBarButtonItem *popularPlacesButton;
-@property(nonatomic,retain) IBOutlet UIBarButtonItem *topLocalsButton;
 @property(nonatomic,retain) IBOutlet UIToolbar *toolbar;
 @property(nonatomic,retain) IBOutlet UITableView *placesTableView;
 @property(nonatomic,assign) BOOL showAll;
@@ -46,7 +44,6 @@
 @property(nonatomic,retain) NSString *category;
 
 -(IBAction)popularPlaces:(id)sender;
--(IBAction)topLocals:(id)sender;
 
 - (void)reloadTableViewDataSource;
 - (void)doneLoadingTableViewData;
