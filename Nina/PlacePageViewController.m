@@ -687,7 +687,7 @@ typedef enum {
 
 -(IBAction)editPerspective{
     DLog(@"modifying on perspective on %@", self.place.name);
-    
+    myPerspective.place = self.place;
     EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
     
     editPerspectiveViewController.delegate = self;
@@ -703,6 +703,7 @@ typedef enum {
 
 -(IBAction)editPerspectivePhotos{
     DLog(@"modifying on perspective on %@", self.place.name);
+    myPerspective.place = self.place;
     
     EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
     

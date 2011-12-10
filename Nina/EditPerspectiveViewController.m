@@ -159,7 +159,6 @@
     
     [request startAsynchronous];
     
-    
     [self.navigationController dismissModalViewControllerAnimated:YES];
     
 }
@@ -202,22 +201,24 @@
     
     for ( Photo* photo in [self.perspective.photos reverseObjectEnumerator] ){
         
-        AsyncImageView *imageView;
+        UIImageView *imageView;
         CGRect rect = CGRectMake(cx, 0, 64, 64);
         
         if (photo.photo_id){
             imageView = [[AsyncImageView alloc] initWithFrame:rect];
-            [imageView loadImageFromPhoto:photo]; 
+            [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
             imageView.alpha = 1.0;
             imageView.userInteractionEnabled = true;
         } else {
             if (photo.thumb_image){
                 //have thumb, but is currently being uploaded
                 
-                imageView = [[AsyncImageView alloc] initWithFrame:rect];
-                [imageView loadImageFromPhoto:photo]; 
+                imageView = [[UIImageView alloc] initWithFrame:rect];
+                [imageView setImage:photo.thumb_image];
+                
                 imageView.alpha = 0.5; //Alpha runs from 0.0 to 1.0
-                                
+                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.clipsToBounds = true;
                 UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 
                 [spinner setFrame:CGRectMake((imageView.frame.size.height-spinner.frame.size.height)/2, (imageView.frame.size.width-spinner.frame.size.width)/2, spinner.frame.size.width, spinner.frame.size.height) ];
@@ -302,6 +303,8 @@
     
     Photo *photo = [[Photo alloc] init];
     photo.thumb_image = thumbImage;
+    photo.mine = true;
+    photo.perspective = self.perspective;
     
     [uploadingPics setObject:photo forKey:tag];
     

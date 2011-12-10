@@ -20,12 +20,9 @@
 	ASIHTTPRequest *_request; 	
     NSMutableData* data; 
     Photo *_photo;
-    UIImageView *populate;
-	
 }
 
 @property(nonatomic, retain) Photo *photo;
-@property(nonatomic, retain) UIImageView *populate;
 
 - (id) initWithPhoto:(Photo *)photo;
 

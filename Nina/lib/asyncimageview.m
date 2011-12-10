@@ -9,12 +9,12 @@
 
 #import "AsyncImageView.h"
 #import "ASIDownloadCache.h"
-#import "UIImage+Resize.h"
 #import "PictureViewController.h"
+#import "UIImageView+WebCache.h"
 
 @implementation AsyncImageView
 
-@synthesize photo=_photo, populate;
+@synthesize photo=_photo;
 
 
 - (id) initWithPhoto:(Photo *)photo{
@@ -34,10 +34,13 @@
 }
 
 -(void) loadImage{
-    UIImage *picture;
     if (self.photo.thumb_image){
-        picture = self.photo.thumb_image;
+        self.contentMode = UIViewContentModeScaleAspectFill;
+        self.clipsToBounds = true;
+        [self setImage:self.photo.thumb_image];
     } else {
+        self.contentMode = UIViewContentModeScaleAspectFill;
+        self.clipsToBounds = true;
         
         if (self.photo.thumb_url == nil){
             return;
@@ -46,67 +49,12 @@
         
         DLog(@"Downloading photo for %@", self.photo.photo_id);
         
-        NSString *urlText;
         if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] && self.photo.iphone_url) {
-            urlText = [NSString stringWithFormat:@"%@", self.photo.iphone_url];
+            [self setImageWithURL:[NSURL URLWithString:self.photo.iphone_url] placeholderImage:[UIImage imageNamed:@"DefaultPhoto@2x.png"]];
         } else {
-            urlText = [NSString stringWithFormat:@"%@", self.photo.thumb_url];
+            [self setImageWithURL:[NSURL URLWithString:self.photo.thumb_url] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
         }
-        
-        NSURL *url = [NSURL URLWithString:urlText];
-        if ([url host] == nil) return;
-        
-        _request = [[ASIHTTPRequest alloc] initWithURL:url];
-        
-        _request.delegate = self;
-        [_request setDownloadCache:[ASIDownloadCache sharedCache]];
-        
-        [_request startAsynchronous];
-        
-        if (populate){
-            picture = populate.image;
-        } else {
-            if (self.photo.perspective){
-                picture = [UIImage imageNamed:@"DefaultPhoto.png"];
-            } else {
-                picture = [UIImage imageNamed:@"default_profile_image.png"];
-            }
-        }
-        
-        self.photo.thumb_image = picture; //holder for now
-        
     }
-    
-    for (UIView *subView in self.subviews){
-        [subView removeFromSuperview];
-    }
-    
-    //make sizing choices based on your needs, experiment with these. maybe not all the calls below are needed.
-    self.contentMode = UIViewContentModeScaleAspectFit;
-    
-    CGSize size =self.frame.size;
-    if (size.width == 0 || size.height == 0){
-        size.height = 57; //most likely table cases
-        size.width = 57;
-    }
-    
-    if (picture.size.width != picture.size.height){
-        picture = [picture
-                  thumbnailImage:MIN(picture.size.width, picture.size.height)
-                  transparentBorder:1
-                  cornerRadius:1
-                  interpolationQuality:kCGInterpolationHigh ];
-    }
-        
-    self.image = picture;
-    
-    if (populate){
-        populate.image = picture;
-        self.hidden = TRUE;
-    } else {
-        self.hidden = FALSE;
-    }
-    
 }
 
 
