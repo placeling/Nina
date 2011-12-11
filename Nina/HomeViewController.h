@@ -19,8 +19,6 @@
 
 -(IBAction) activityFeed;
 
--(IBAction) suggested;
-
 -(IBAction) bookmarkSpot;
 -(IBAction) nearbyPerspectives;
 -(IBAction) showAccountSheet;
