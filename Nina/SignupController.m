@@ -10,7 +10,6 @@
 #import "NinaAppDelegate.h"
 #import "EditableTableCell.h"
 #import "NSString+SBJSON.h"
-#import "SuggestUserViewController.h"
 #import "GenericWebViewController.h"
 
 @implementation SignupController
