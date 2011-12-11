@@ -12,14 +12,14 @@
 #import "NinaHelper.h"
 #import "MBProgressHUD.h"
 
-@interface EditProfileViewController : UITableViewController<UIActionSheetDelegate, ASIHTTPRequestDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>{
+@interface EditProfileViewController : UITableViewController<UIActionSheetDelegate, ASIHTTPRequestDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate,FBRequestDelegate,FBSessionDelegate, MBProgressHUDDelegate>{
     
     NSNumber *lat;
     NSNumber *lng;
     User *user;
     MemberProfileViewController *delegate;
     
-    MBProgressHUD *hud;
+    MBProgressHUD *HUD;
     UIImage *uploadingImage;
     
     CLLocation *currentLocation;

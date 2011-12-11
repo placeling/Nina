@@ -11,6 +11,7 @@
 #import "ASIFormDataRequest+OAuth.h"
 #import "ASIHTTPRequest+OAuth.h"
 #import "FlurryAnalytics.h"
+#import "NinaAppDelegate.h"
 
 
 @implementation NinaHelper
@@ -59,6 +60,14 @@
     [NinaHelper setAccessTokenSecret:nil];
     [NinaHelper setUsername:nil];
     [ASIHTTPRequest clearSession];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"FBAccessTokenKey"];
+    [defaults removeObjectForKey:@"FBExpirationDateKey"];
+    
+    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+    Facebook *facebook = appDelegate.facebook;
+    [facebook logout:appDelegate];    
 }
 
 +(void) showLoginController:(UIViewController<LoginControllerDelegate>*)sender{

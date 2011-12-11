@@ -22,6 +22,7 @@
     IBOutlet UIButton *forgotPasswordButton;
     id <LoginControllerDelegate> delegate;
     MBProgressHUD *HUD;
+    NSString *savedUsername;
 }
 
 @property(nonatomic, retain) IBOutlet UITextField *username;

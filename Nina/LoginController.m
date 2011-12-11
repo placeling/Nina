@@ -41,11 +41,13 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/oauth/access_token", [plistData objectForKey:@"server_url"]];
     NSURL *url = [NSURL URLWithString:urlString];
     
+    [NinaHelper clearCredentials];
+    
     ASIFormDataRequest *request =  [[ASIFormDataRequest  alloc]  initWithURL:url];
     [request setPostValue:@"client_auth" forKey:@"x_auth_mode"];
     [request setPostValue:username.text forKey:@"x_auth_username"];
     [request setPostValue:password.text forKey:@"x_auth_password"];
-
+    savedUsername = username.text;
     request.tag = 110;
     [request setDelegate:self];
     
@@ -53,17 +55,6 @@
                              tokenIdentifier:nil secret:nil
                                  usingMethod:ASIOAuthHMAC_SHA1SignatureMethod];
     [request startAsynchronous];
-    
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
-    if (standardUserDefaults ){
-        [standardUserDefaults setObject:username.text forKey:@"current_username"];
-    } else {
-        DLog(@"FATAL ERROR, NULL standardUserDefaults");
-        exit(-1);
-    }
-    [standardUserDefaults synchronize];
-    
 }
 
 -(IBAction) forgotPassword {
@@ -94,8 +85,7 @@
         [facebook authorize:permissions];
                                  
         [permissions release];
-    } else {
-        
+    } else {        
         
         HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
         [self.navigationController.view addSubview:HUD];
@@ -113,13 +103,14 @@
 
 -(BOOL)testAlreadyLoggedInFacebook:(NSDictionary*)fbDict{
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/v1/oauth/login_fb", [NinaHelper getHostname]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/facebook/login", [NinaHelper getHostname]];
     NSURL *url = [NSURL URLWithString:urlString];
     
     ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [request setPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"FBAccessTokenKey" ];
-    [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"facebook_id"];
+    [request setPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"token" ];
+    [request setPostValue:[defaults objectForKey:@"FBExpirationDateKey"] forKey:@"expiry" ];
+    [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"uid"];
 
     [NinaHelper signRequest:request];
 
@@ -286,6 +277,15 @@
                 [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
             }
         } 
+        NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+        
+        if (standardUserDefaults && savedUsername){
+            [standardUserDefaults setObject:savedUsername forKey:@"current_username"];
+        } else {
+            DLog(@"FATAL ERROR, NULL standardUserDefaults");
+            exit(-1);
+        }
+        [standardUserDefaults synchronize];
         
         //[delegate viewDidLoad];
         [self close];

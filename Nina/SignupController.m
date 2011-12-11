@@ -71,6 +71,7 @@
         NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
         Facebook *facebook = appDelegate.facebook;
         [request setPostValue:facebook.accessToken forKey:@"facebook_access_token"];
+        [request setPostValue:facebook.expirationDate forKey:@"facebook_expiry_date"];
         [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"facebook_id"];
     }else{
         [request setPostValue:password forKey:@"password"];

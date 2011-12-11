@@ -8,6 +8,7 @@
 
 #import "User.h"
 #import "NSDictionary+Utility.h"
+#import "NinaAppDelegate.h"
 
 @implementation User
 
@@ -15,11 +16,12 @@
 @synthesize iconURLString, description;
 @synthesize username, profilePic, placeCount;
 @synthesize followingCount, followerCount;
-@synthesize following, follows_you;
-@synthesize email, url, location;
+@synthesize following, follows_you, modified;
+@synthesize email, url, location, auths;
 
 - (id)initFromJsonDict:(NSDictionary *)jsonDict{    
     if(self = [super init]){
+        self.auths = [[NSMutableDictionary alloc] init];
         [self updateFromJsonDict:jsonDict];
 	}
 	return self;
@@ -40,12 +42,34 @@
     self.following = [[jsonDict objectForKeyNotNull:@"following"] boolValue];
     self.follows_you = [[jsonDict objectForKeyNotNull:@"follows_you"] boolValue];
     
+    [self.auths removeAllObjects];
+    if ([jsonDict objectForKey:@"facebook"]){
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if ( ![defaults objectForKey:@"FBAccessTokenKey"] ){
+            [defaults setObject:[[jsonDict objectForKey:@"facebook"] objectForKey:@"token"] forKey:@"FBAccessTokenKey"];
+            [defaults setObject:[[jsonDict objectForKey:@"facebook"] objectForKey:@"expiry"] forKey:@"FBExpirationDateKey"];
+            [defaults synchronize];
+        }
+        
+        [self.auths setObject:[jsonDict objectForKey:@"facebook"] forKey:@"facebook"];
+    }
+    
     Photo *photo = [[Photo alloc] init];
     photo.thumb_url = [jsonDict objectForKeyNotNull:@"thumb_url"];
     photo.main_url = [jsonDict objectForKeyNotNull:@"main_url"];
     self.profilePic = photo;
     
     [photo release];
+    
+}
+
+-(NSDictionary*) facebook{
+    
+    if ([self.auths objectForKey:@"facebook"]){
+        return [self.auths objectForKey:@"facebook"];        
+    } else {
+        return nil;
+    }
     
 }
 
@@ -59,6 +83,7 @@
     [email release];
     [url release];
     [location release];
+    [auths release];
     
     [super dealloc];
 }
