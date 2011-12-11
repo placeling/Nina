@@ -227,6 +227,7 @@
                 [spinner startAnimating];
                 [spinner release]; 
             } else {
+                imageView = [[UIImageView alloc] initWithFrame:rect];
                 DLog(@"ERROR: Got photo with no ID or image");
             }
         }
@@ -297,7 +298,7 @@
                    cornerRadius:1
                    interpolationQuality:kCGInterpolationHigh ];
     } else {
-        thumbImage = [img copy]; // keep own, other might still be uploading
+        thumbImage = img;
     }
     
     

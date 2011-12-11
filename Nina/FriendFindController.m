@@ -44,9 +44,9 @@
     showSearchResults = false;
     self.navigationItem.title = @"Find People";
     self.searchBar.delegate = self;
-    self.suggestedUsers = [[NSMutableArray alloc]init];
-    self.searchUsers = [[NSMutableArray alloc]init];
-    self.recentSearches = [[NSMutableArray alloc]init];
+    self.suggestedUsers = [[[NSMutableArray alloc]init] autorelease];
+    self.searchUsers = [[[NSMutableArray alloc]init]autorelease];
+    self.recentSearches = [[[NSMutableArray alloc]init]autorelease];
     
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -325,7 +325,7 @@
         
     } else if (tableView.numberOfSections ==2 && indexPath.section == 0){        
         user = [self.recentSearches objectAtIndex:indexPath.row];
-    } else if (tableView.numberOfSections ==2 && indexPath.section == 1){        
+    } else{// if (tableView.numberOfSections ==2 && indexPath.section == 1){        
         user = [self.suggestedUsers objectAtIndex:indexPath.row];
     }
     

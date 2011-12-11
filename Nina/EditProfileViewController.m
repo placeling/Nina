@@ -403,23 +403,21 @@
         cell.textLabel.textAlignment = UITextAlignmentCenter;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [homeLocation release];
-    } else if (indexPath.section == 2){
-        if (indexPath.row == 0){
-            cell = [tableView dequeueReusableCellWithIdentifier:authCellIdentifier];
-            if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:authCellIdentifier] autorelease];
-            }   
-            
-            cell.textLabel.text = @"Facebook";
-            
-            if (user.facebook){
-                [cell.imageView setImage:[UIImage imageNamed:@"facebook_icon.png"]];
-                [cell.detailTextLabel setText: @"You are connected via Facebook"];
-            } else {
-                [cell.imageView setImage:[UIImage imageNamed:@"facebook_icon_bw.png"]];
-                [cell.detailTextLabel setText: @"Click to connect with Facebook"];
-            }
-            
+    } else{ // if (indexPath.section == 2){
+        //if (indexPath.row == 0){
+        cell = [tableView dequeueReusableCellWithIdentifier:authCellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:authCellIdentifier] autorelease];
+        }   
+        
+        cell.textLabel.text = @"Facebook";
+        
+        if (user.facebook){
+            [cell.imageView setImage:[UIImage imageNamed:@"facebook_icon.png"]];
+            [cell.detailTextLabel setText: @"You are connected via Facebook"];
+        } else {
+            [cell.imageView setImage:[UIImage imageNamed:@"facebook_icon_bw.png"]];
+            [cell.detailTextLabel setText: @"Click to connect with Facebook"];
         }
     }
     

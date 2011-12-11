@@ -9,7 +9,6 @@
 #import "HomeViewController.h"
 #import "NearbyPlacesViewController.h"
 #import "MemberProfileViewController.h"
-#import "SuggestUserViewController.h"
 #import "PerspectivesMapViewController.h"
 #import "NinaHelper.h"
 #import "NSString+SBJSON.h"
@@ -182,12 +181,6 @@
     NearbySuggestedPlaceController *nearbySuggestedPlaceController = [[NearbySuggestedPlaceController alloc] init];
     [self.navigationController pushViewController:nearbySuggestedPlaceController animated:YES];
     [nearbySuggestedPlaceController release]; 
-}
-
--(IBAction)suggested{
-    SuggestUserViewController *suggestUserViewController = [[SuggestUserViewController alloc] init];
-    [self.navigationController pushViewController:suggestUserViewController animated:YES];
-    [suggestUserViewController release]; 
 }
 
 -(IBAction)nearbyPerspectives{

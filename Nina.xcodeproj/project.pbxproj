@@ -29,8 +29,6 @@
 		28086BD513ECA9B900790404 /* powered-by-google-on-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28086B9F13ECA9B900790404 /* powered-by-google-on-white@2x.png */; };
 		28086BFC13ECAA0400790404 /* MemberProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28086BF413ECAA0400790404 /* MemberProfileViewController.m */; };
 		28086C0113ECAA0400790404 /* ProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28086BFB13ECAA0400790404 /* ProfileHeaderView.xib */; };
-		28086C1E13ECAA3E00790404 /* SuggestUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28086C1B13ECAA3E00790404 /* SuggestUserViewController.xib */; };
-		28086C1F13ECAA3E00790404 /* SuggestUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28086C1D13ECAA3E00790404 /* SuggestUserViewController.m */; };
 		280A33C114422C6F007ACBDC /* EverythingPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33BF14422C6F007ACBDC /* EverythingPick.png */; };
 		280A33C214422C6F007ACBDC /* EverythingPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33C014422C6F007ACBDC /* EverythingPick@2x.png */; };
 		280A33C614422D4C007ACBDC /* NightLifePick.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A33C414422D4C007ACBDC /* NightLifePick.png */; };
@@ -327,9 +325,6 @@
 		28086BF313ECAA0400790404 /* MemberProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberProfileViewController.h; sourceTree = "<group>"; };
 		28086BF413ECAA0400790404 /* MemberProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberProfileViewController.m; sourceTree = "<group>"; };
 		28086BFB13ECAA0400790404 /* ProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderView.xib; sourceTree = "<group>"; };
-		28086C1B13ECAA3E00790404 /* SuggestUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestUserViewController.xib; sourceTree = "<group>"; };
-		28086C1C13ECAA3E00790404 /* SuggestUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuggestUserViewController.h; sourceTree = "<group>"; };
-		28086C1D13ECAA3E00790404 /* SuggestUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestUserViewController.m; sourceTree = "<group>"; };
 		280A33BF14422C6F007ACBDC /* EverythingPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EverythingPick.png; sourceTree = "<group>"; };
 		280A33C014422C6F007ACBDC /* EverythingPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EverythingPick@2x.png"; sourceTree = "<group>"; };
 		280A33C414422D4C007ACBDC /* NightLifePick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NightLifePick.png; sourceTree = "<group>"; };
@@ -926,9 +921,6 @@
 				6CB5B141144CC5D700A278AC /* AboutUsController.h */,
 				6CB5B142144CC5D700A278AC /* AboutUsController.m */,
 				6CB5B143144CC5D700A278AC /* AboutUsController.xib */,
-				28086C1B13ECAA3E00790404 /* SuggestUserViewController.xib */,
-				28086C1C13ECAA3E00790404 /* SuggestUserViewController.h */,
-				28086C1D13ECAA3E00790404 /* SuggestUserViewController.m */,
 				287483AE13D698EF005C11EF /* localizations */,
 				2895004D13D64559009E1BD7 /* NinaAppDelegate.h */,
 				2895004E13D6455A009E1BD7 /* NinaAppDelegate.m */,
@@ -1466,7 +1458,6 @@
 				28086BD413ECA9B900790404 /* powered-by-google-on-white.png in Resources */,
 				28086BD513ECA9B900790404 /* powered-by-google-on-white@2x.png in Resources */,
 				28086C0113ECAA0400790404 /* ProfileHeaderView.xib in Resources */,
-				28086C1E13ECAA3E00790404 /* SuggestUserViewController.xib in Resources */,
 				287145F613F789880047BDB5 /* FollowViewController.xib in Resources */,
 				284A35331402C48C009C8C28 /* PerspectivesMapViewController.xib in Resources */,
 				284A354F1404574F009C8C28 /* PerspectiveTableViewCell.xib in Resources */,
@@ -1679,7 +1670,6 @@
 				28086B4F13EC7F9400790404 /* Place.m in Sources */,
 				28086B6B13ECA5AB00790404 /* User.m in Sources */,
 				28086BFC13ECAA0400790404 /* MemberProfileViewController.m in Sources */,
-				28086C1F13ECAA3E00790404 /* SuggestUserViewController.m in Sources */,
 				287145CB13F4789B0047BDB5 /* LocationManagerManager.m in Sources */,
 				287145F513F789880047BDB5 /* FollowViewController.m in Sources */,
 				284A35321402C48C009C8C28 /* PerspectivesMapViewController.m in Sources */,

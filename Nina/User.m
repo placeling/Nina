@@ -21,7 +21,7 @@
 
 - (id)initFromJsonDict:(NSDictionary *)jsonDict{    
     if(self = [super init]){
-        self.auths = [[NSMutableDictionary alloc] init];
+        self.auths = [[[NSMutableDictionary alloc] init] autorelease];
         [self updateFromJsonDict:jsonDict];
 	}
 	return self;

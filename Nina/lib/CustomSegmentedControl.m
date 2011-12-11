@@ -86,7 +86,7 @@
     }
   }
 
-  selectedSegmentIndex= 0;
+  self.selectedSegmentIndex = 0;
   return self;
 }
 

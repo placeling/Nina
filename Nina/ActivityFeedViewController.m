@@ -408,6 +408,8 @@
             memberView.username = [activity objectForKey:@"username2"];
             viewController = memberView;
         } else {
+            PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+            viewController = placeController;
             DLog(@"ERROR: unknown activity story type");
         }
         
