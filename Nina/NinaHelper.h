@@ -151,4 +151,6 @@
 +(NSString*) metersToLocalizedDistance:(float)m;
 +(NSString*) encodeForUrl:(NSString*)string;
 
++(NSString*) getFacebookAppId;
+
 @end

@@ -393,4 +393,8 @@
     return @"kODuCtHsB0poBe62J3FfWB2rCEUeyeYQkEWW0R6i";
 }
 
++(NSString*) getFacebookAppId{
+    return @"280758755284342";
+}
+
 @end

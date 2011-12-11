@@ -44,7 +44,14 @@ void uncaughtExceptionHandler(NSException *exception) {
         [manager startUpdatingLocation];
     }
     
-    facebook = [[Facebook alloc] initWithAppId:@"280758755284342" andDelegate:self];
+    facebook = [[Facebook alloc] initWithAppId:[NinaHelper getFacebookAppId] andDelegate:self];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"] 
+        && [defaults objectForKey:@"FBExpirationDateKey"]) {
+        facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+        facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    }
     
     [FlurryAnalytics logAllPageViews:self.navigationController];
     self.window.rootViewController = self.navigationController;

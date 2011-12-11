@@ -68,6 +68,18 @@
     }
 }
 
+-(NSString*)tagString{
+    NSMutableArray *cleanedTags = [[[NSMutableArray alloc] init] autorelease];
+    for (NSString *tag in self.tags){ 
+        if ([tag hasPrefix:@"#"]) {
+            [cleanedTags addObject:tag];
+        } else {
+            [cleanedTags addObject:[NSString stringWithFormat:@"#%@", tag]];
+        }
+    }
+    return [cleanedTags componentsJoinedByString:@", "];
+}
+
 -(float) distance{
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];

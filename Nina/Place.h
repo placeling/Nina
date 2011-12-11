@@ -73,6 +73,7 @@
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
 -(NSString*) usersBookmarkingString;
+-(NSString*) tagString;
 
 -(float) distance;
 

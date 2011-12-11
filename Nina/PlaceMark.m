@@ -24,17 +24,8 @@
 -(id)initWithPlace:(Place *)place{
     if(self = [super init]){
         self.title = place.name;
-
-        NSMutableArray *cleanedTags = [[NSMutableArray alloc] init];
-        for (NSString *tag in place.tags){ 
-            if ([tag hasPrefix:@"#"]) {
-                [cleanedTags addObject:tag];
-            } else {
-                [cleanedTags addObject:[NSString stringWithFormat:@"#%@", tag]];
-            }
-        }
-        self.subtitle = [cleanedTags componentsJoinedByString:@", "];
-        [cleanedTags release];
+        self.subtitle = [place tagString];
+        
         //self.subtitle = place.address;
         coordinate = place.location.coordinate;
         self.place = place;
