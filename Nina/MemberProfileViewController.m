@@ -80,7 +80,8 @@
     [StyleHelper styleInfoView:self.headerView];
     
     if (self.user.modified){
-        [self.tableView reloadData];
+        self.user.modified = false;
+        [self loadData];
     } else {
         for (Perspective *perspective in perspectives){
             if (perspective.modified){
@@ -186,7 +187,11 @@
     }
     
     // Here we use the new provided setImageWithURL: method to load the web image
-    [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumb_url] placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
+    if (self.user.profilePic.thumb_image){
+        [self.profileImageView setImage:self.user.profilePic.thumb_image];
+    } else {
+        [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumb_url] placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{

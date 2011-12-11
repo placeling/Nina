@@ -143,15 +143,16 @@
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     
-    NSString *email = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]]).textField.text;
-    NSString *user_url = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]]).textField.text;
-    NSString *description = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]]).textField.text;
+    NSString *user_url = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]]).textField.text;
+    NSString *description = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]]).textField.text;
     
     //[request setPostValue:self.memoTextView.text forKey:@"avatar"];
     
     [request setPostValue:description forKey:@"description"];
-    [request setPostValue:email forKey:@"email"];
     [request setPostValue:user_url forKey:@"url"];
+    
+    self.user.description = description;
+    self.user.url = user_url;
     
     if (uploadingImage){
         Photo *photo = [[Photo alloc] init];
@@ -177,6 +178,9 @@
     // Set determinate mode
     HUD.labelText = @"Saving...";
     [HUD retain];
+    
+    self.user.modified = true;
+    
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
@@ -304,7 +308,7 @@
     if (section == 0){
         return 1;
     } else if (section == 1){
-        return 3;
+        return 2;
     } else if (section ==2){
         return 1;
     } else {
@@ -371,15 +375,10 @@
         eCell.textField.text = @"";
 
         if (indexPath.row == 0){
-            eCell.textLabel.text = @"email";
-            eCell.textField.text = self.user.email;
-            eCell.textField.enabled = FALSE;
-            eCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        } else if (indexPath.row == 1){
             eCell.textLabel.text = @"url";
             eCell.textField.text = self.user.url;
             eCell.textField.delegate = self;
-        }else if (indexPath.row == 2){
+        }else if (indexPath.row == 1){
             eCell.textLabel.text = @"description";
             eCell.textField.text = self.user.description;
             eCell.textField.delegate = self;

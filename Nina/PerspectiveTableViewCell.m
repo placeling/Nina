@@ -74,8 +74,12 @@
     }
     
     // Here we use the new provided setImageWithURL: method to load the web image
-    [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumb_url]
+    if (perspective.user.profilePic.thumb_image){
+        [cell.userImage setImage:perspective.user.profilePic.thumb_image];
+    } else {
+        [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumb_url]
                    placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
+    }
     
     cell.userImage.layer.cornerRadius = 2.0f;
     cell.userImage.layer.borderWidth = 1.0f;
