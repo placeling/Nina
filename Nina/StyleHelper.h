@@ -22,5 +22,8 @@
 +(void) styleSubmitTypeButton:(UIButton*)button;
 +(void) styleFollowButton:(UIButton*)button;
 +(void) styleUnFollowButton:(UIButton*)button;
++(void) styleHomePageLabel:(UILabel*)label;
++(void) colourTitleLabel:(UILabel*)label;
++(void) colourHomePageLabel:(UILabel*)label;
 
 @end

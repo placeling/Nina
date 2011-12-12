@@ -114,6 +114,20 @@
     [StyleHelper styleFollowButtonCommon:button];
 }
 
++(void) styleHomePageLabel:(UILabel*)label{
+    [label setFont:[UIFont fontWithName:@"Museo 500" size:18]];
+    [StyleHelper colourHomePageLabel:label];
+}
+
++(void) colourHomePageLabel:(UILabel*)label{
+    label.textColor = [UIColor colorWithRed:1/255.0 green:131/255.0 blue:122/255.0 alpha:1.0]; //[StyleHelper getTintColour];
+}
+
++(void) colourTitleLabel:(UILabel*)label{
+    label.textColor = [UIColor colorWithRed:98/255.0 green:77/255.0 blue:41/255.0 alpha:1.0];
+}
+
+
 +(UIColor*) getTintColour{
     return [UIColor colorWithRed:0/255.0 green:130/255.0 blue:121/255.0 alpha:1.0];
 }

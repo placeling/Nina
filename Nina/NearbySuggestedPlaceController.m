@@ -156,6 +156,7 @@
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     [StyleHelper styleToolBar:self.toolbar];
     [StyleHelper styleSearchBar:self.searchBar];
+    [StyleHelper styleBackgroundView:self.placesTableView];
 }
 
 - (void)viewDidUnload
@@ -462,6 +463,10 @@
             cell.addressLabel.text = place.address;
             cell.distanceLabel.text = [NinaHelper metersToLocalizedDistance:place.distance];
             cell.usersLabel.text = place.usersBookmarkingString;   
+            [StyleHelper colourHomePageLabel:cell.usersLabel];
+            [StyleHelper colourTitleLabel:cell.titleLabel];
+            [StyleHelper colourTitleLabel:cell.addressLabel];
+            [StyleHelper colourTitleLabel:cell.distanceLabel];            
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
