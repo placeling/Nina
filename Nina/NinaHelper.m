@@ -65,6 +65,13 @@
     [defaults removeObjectForKey:@"FBAccessTokenKey"];
     [defaults removeObjectForKey:@"FBExpirationDateKey"];
     
+    
+    for (int i=0; i< 3; i++){
+        [defaults removeObjectForKey:[NSString stringWithFormat:@"recent_search_%i", i]];                 
+    }
+    
+    [defaults synchronize];
+    
     NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
     Facebook *facebook = appDelegate.facebook;
     [facebook logout:appDelegate];    
