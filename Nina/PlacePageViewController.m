@@ -7,7 +7,7 @@
 //
 
 #import "PlacePageViewController.h"
-
+#import "NinaAppDelegate.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 
@@ -102,6 +102,11 @@ typedef enum {
     if (self.place){
         self.place_id = self.place.place_id;
     }
+        
+    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    [shareButton release];
+    
     
     // Initializations
     [self blankLoad];
@@ -129,9 +134,6 @@ typedef enum {
     
     self.navigationController.title = self.place.name;
     
-    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
-    //self.navigationItem.rightBarButtonItem = shareButton;
-    [shareButton release];
 }
 
 
@@ -294,7 +296,7 @@ typedef enum {
 #pragma mark - Share Sheet
 
 -(void) showShareSheet{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share on Twitter", @"Share on Facebook", @"Check-in with Foursquare", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
     
     [actionSheet showInView:self.view];
     [actionSheet release];
@@ -302,16 +304,55 @@ typedef enum {
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSString *urlString = [NSString stringWithFormat:@"https://www.placeling.com/places/%@", self.place.place_id];
+    
     if (buttonIndex == 0){
-        DLog(@"share on twitter");
+        DLog(@"share by email");
+        
+        MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+        controller.mailComposeDelegate = self;
+        [controller setSubject:[NSString stringWithFormat:@"\"%@\" on Placeling", self.place.name]];
+        [controller setMessageBody:[NSString stringWithFormat:@"\n\n%@", urlString] isHTML:TRUE];
+        
+        if (controller) [self presentModalViewController:controller animated:YES];
+        [controller release];	
+        
+        
     }else if (buttonIndex == 1) {
         DLog(@"share on facebook");
-    }else if (buttonIndex == 2){
-        DLog(@"check-in with foursquare");
-    } else {
-        DLog(@"WARNING - Invalid actionsheet button pressed: %i", buttonIndex);
-    }    
+        
+        NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+        Facebook *facebook = appDelegate.facebook;
+        
+        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       [NinaHelper getFacebookAppId], @"app_id",
+                                       urlString, @"link",
+                                       self.place.placeThumbUrl, @"picture",
+                                       self.place.name, @"name",
+                                       [NSString stringWithFormat:@"%@ %@", self.place.address, self.place.city], @"caption",
+                                       [NSString stringWithFormat:@"Check out %@ on Placeling!", self.place.name], @"description",
+                                       nil];
+        
+        [facebook dialog:@"feed" andParams:params andDelegate:self];
+    } 
 }
+
+- (void)dialogDidComplete:(FBDialog *)dialog{
+    DLog(@"Share on Facebook Dialog completed %@", dialog)
+}
+
+- (void)dialogDidNotComplete:(FBDialog *)dialog{
+    DLog(@"Share on Facebook Dialog completed %@", dialog)
+}
+
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller  
+          didFinishWithResult:(MFMailComposeResult)result 
+                        error:(NSError*)error;
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 
 
 #pragma mark - Selectors for responding to initial URLs
@@ -730,18 +771,6 @@ typedef enum {
     
 }
 
--(IBAction) shareTwitter{
-
-}
-
-
--(IBAction) shareFacebook{
-
-}
-
--(IBAction) checkinFoursquare{
-    
-}
 
 - (void) touchUpInsideSegmentIndex:(NSUInteger)segmentIndex{
     NSUInteger index = segmentIndex;

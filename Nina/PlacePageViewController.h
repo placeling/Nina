@@ -16,6 +16,8 @@
 #import "EditPerspectiveViewController.h"
 #import "CustomSegmentedControl.h"
 #import "LoginController.h"
+#import <MessageUI/MFMailComposeViewController.h>
+#import "Facebook.h"
 
 typedef enum {
     home,
@@ -26,7 +28,7 @@ typedef enum {
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate> {        
+@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate> {        
     NSString *place_id; 
     NSString *perspective_id; 
     NSString *google_ref;
@@ -102,10 +104,6 @@ typedef enum {
 -(IBAction)editPerspectivePhotos;
 
 -(IBAction)showSingleAnnotatedMap;
-
--(IBAction) shareTwitter;
--(IBAction) shareFacebook;
--(IBAction) checkinFoursquare;
 
 -(IBAction)tagSearch:(id)sender;
 
