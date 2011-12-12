@@ -12,8 +12,9 @@
 #import "ASIHTTPRequestDelegate.h"
 #import "ProfileDetailBadge.h"
 #import "LoginController.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate, LoginControllerDelegate> {
+@interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate, LoginControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate> {
 	NSString *username;
 	User *user;
     BOOL loadingMore;

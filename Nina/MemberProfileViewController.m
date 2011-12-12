@@ -22,6 +22,7 @@
 #import "LoginController.h"
 #import "FullPerspectiveViewController.h"
 #import "UIImageView+WebCache.h"
+#import "NinaAppDelegate.h"
 
 @interface MemberProfileViewController() 
 -(void) blankLoad;
@@ -184,6 +185,10 @@
         [editButton release];
         
         [self.followButton removeFromSuperview];
+    } else {
+        UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
+        self.navigationItem.rightBarButtonItem = shareButton;
+        [shareButton release];
     }
     
     // Here we use the new provided setImageWithURL: method to load the web image
@@ -328,6 +333,70 @@
     }
 }
 
+
+#pragma mark - Share Sheet
+
+-(void) showShareSheet{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+    
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+    
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSString *urlString = [NSString stringWithFormat:@"https://www.placeling.com/%@", self.user.username];
+
+    if (buttonIndex == 0){
+        DLog(@"share member by email");
+        
+        MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+        controller.mailComposeDelegate = self;
+        [controller setSubject:[NSString stringWithFormat:@"\"%@\" on Placeling", self.user.username]];
+        [controller setMessageBody:[NSString stringWithFormat:@"\n\n%@", urlString] isHTML:TRUE];
+        
+        if (controller) [self presentModalViewController:controller animated:YES];
+        [controller release];	
+        
+        
+    }else if (buttonIndex == 1) {
+        DLog(@"share on facebook");
+        
+        NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+        Facebook *facebook = appDelegate.facebook;
+        
+        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       [NinaHelper getFacebookAppId], @"app_id",
+                                       urlString, @"link",
+                                       self.user.city ? self.user.city : @"", @"caption",
+                                       self.user.profilePic.thumb_url, @"picture",
+                                       [NSString stringWithFormat:@"%@'s profile on Placeling", self.user.username], @"name",
+                                       @"", @"caption",
+                                       self.user.description, @"description",
+                                       nil];
+        
+        [facebook dialog:@"feed" andParams:params andDelegate:self];
+    } 
+}
+
+
+- (void)dialogDidComplete:(FBDialog *)dialog{
+    DLog(@"Share on Facebook Dialog completed %@", dialog)
+}
+
+- (void)dialogDidNotComplete:(FBDialog *)dialog{
+    DLog(@"Share on Facebook Dialog completed %@", dialog)
+}
+
+    
+- (void)mailComposeController:(MFMailComposeViewController*)controller  
+          didFinishWithResult:(MFMailComposeResult)result 
+                        error:(NSError*)error;
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
+    
+    
 #pragma mark -
 #pragma mark ASIHTTPRequest Delegate Methods
 

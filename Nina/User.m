@@ -30,6 +30,7 @@
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
     self.userId = [jsonDict objectForKeyNotNull:@"id"];
     self.username = [jsonDict objectForKeyNotNull:@"username"];
+    self.city = [jsonDict objectForKeyNotNull:@"city"];
     self.placeCount = [[jsonDict objectForKeyNotNull:@"perspectives_count"] intValue];
     self.followerCount =[[jsonDict objectForKeyNotNull:@"follower_count"] intValue];
     self.followingCount = [[jsonDict objectForKeyNotNull:@"following_count"] intValue];
