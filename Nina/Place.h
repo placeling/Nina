@@ -23,6 +23,7 @@
     NSString *city;
     NSString *place_id;
     NSString *google_ref;
+    NSString *thumb_url;
     
     NSArray *usersBookmarking;
     NSArray *tags;
@@ -49,6 +50,7 @@
 @property (nonatomic, retain) User *user;
 @property (nonatomic, retain) NSString *googlePlacesUrl;
 @property (nonatomic, retain) NSString *google_ref;
+@property (nonatomic, retain) NSString *thumb_url;
 
 @property (nonatomic, retain) NSString *address;
 @property (nonatomic, retain) NSString *city;
@@ -74,6 +76,7 @@
 
 -(NSString*) usersBookmarkingString;
 -(NSString*) tagString;
+-(NSString*) placeThumbUrl;
 
 -(float) distance;
 

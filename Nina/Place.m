@@ -15,7 +15,7 @@
 @synthesize dirty, name, pid, user;
 @synthesize address, city, perspectiveCount, bookmarked, followingPerspectiveCount;
 @synthesize location, usersBookmarking;
-@synthesize place_id, phone, googlePlacesUrl, google_ref;
+@synthesize place_id, phone, googlePlacesUrl, google_ref, thumb_url=_thumb_url;
 @synthesize categories, icon, tags;
 @synthesize homePerspectives,followingPerspectives,everyonePerspectives;
 
@@ -51,7 +51,7 @@
     self.usersBookmarking = [jsonDict objectForKey:@"users_bookmarking"];        
     self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
     self.tags = [jsonDict objectForKeyNotNull:@"tags"];
-    
+    self.thumb_url = [jsonDict objectForKey:@"thumb_url"];
 }
 
 -(NSString*) usersBookmarkingString{
@@ -78,6 +78,19 @@
         }
     }
     return [cleanedTags componentsJoinedByString:@", "];
+}
+
+-(NSString*) placeThumbUrl{
+    /*
+        NSString *mapUrl = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%f,%f&zoom=15&size=%ix%i&markers=color:red%%7C%f,%f&sensor=false&scale=2", self.place.location.coordinate.latitude, self.place.location.coordinate.longitude, 90, 90, self.place.location.coordinate.latitude, self.place.location.coordinate.longitude]; */
+    
+    
+    if (_thumb_url == nil || [thumb_url length] ==0){
+        return @"http://www.placeling.com/images/placeling_thumb_logo.png";
+    } else {
+        return _thumb_url;
+    }
+    
 }
 
 -(float) distance{
@@ -110,6 +123,7 @@
 
     [categories release];
     [icon release];
+    [_thumb_url release];
     
     [homePerspectives release];
     [followingPerspectives release];
