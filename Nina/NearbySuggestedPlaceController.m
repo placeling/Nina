@@ -384,7 +384,7 @@
             
             [cell addSubview:loginText];
             [loginText release];
-        } else if (dataLoaded && [nearbyPlaces count] == 0 ) {
+        } else if (dataLoaded && ((splitView == true && indexPath.section ==0) ||[nearbyPlaces count] == 0 ) ) {
             cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noNearbyCellIdentifier] autorelease];
             
             UITextView *existingText = (UITextView *)[cell viewWithTag:778];
