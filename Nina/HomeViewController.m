@@ -32,6 +32,7 @@
 
 @implementation HomeViewController
 @synthesize pickScroll, scrollFooter;
+@synthesize mapLabel, feedLabel, profileLabel, peopleLabel;
 
 #pragma mark - View lifecycle
 
@@ -106,6 +107,12 @@
     [super viewWillAppear:TRUE];    
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     [StyleHelper styleBackgroundView:self.view];
+    
+    [StyleHelper styleHomePageLabel:self.mapLabel];
+    [StyleHelper styleHomePageLabel:self.feedLabel];
+    [StyleHelper styleHomePageLabel:self.profileLabel];
+    [StyleHelper styleHomePageLabel:self.peopleLabel];
+    
     
     if ([NinaHelper getAccessTokenSecret]){
         UIImage *image = [UIImage imageNamed:@"gear.png"];
@@ -233,6 +240,10 @@
 
 -(void) dealloc{
     [pickScroll release];
+    [mapLabel release];
+    [feedLabel release];
+    [profileLabel release];
+    [peopleLabel release];
     [scrollFooter release];
     [super dealloc];
 }

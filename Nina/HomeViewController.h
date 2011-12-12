@@ -12,10 +12,20 @@
 @interface HomeViewController : UIViewController<UIActionSheetDelegate>{
     IBOutlet UIScrollView *pickScroll;
     IBOutlet UIView *scrollFooter;
+    
+    UILabel *mapLabel;
+    UILabel *feedLabel;
+    UILabel *profileLabel;
+    UILabel *peopleLabel;
 }
 
 @property (nonatomic, retain) IBOutlet UIScrollView *pickScroll;
 @property (nonatomic, retain) IBOutlet UIView *scrollFooter;
+@property (nonatomic, retain) IBOutlet UILabel *mapLabel;
+@property (nonatomic, retain) IBOutlet UILabel *feedLabel;
+@property (nonatomic, retain) IBOutlet UILabel *profileLabel;
+@property (nonatomic, retain) IBOutlet UILabel *peopleLabel;
+
 
 -(IBAction) activityFeed;
 
