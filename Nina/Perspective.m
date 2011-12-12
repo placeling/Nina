@@ -99,6 +99,16 @@
     }
 }
 
+-(NSString*)thumbUrl{
+    if ([[self photos] count] > 0){
+        return ((Photo*)[[self photos] objectAtIndex:0]).thumb_url;
+    } else if (self.place) {
+        return self.place.placeThumbUrl;
+    } else {
+        return @"http://www.placeling.com/images/placeling_thumb_logo.png";
+    }
+}
+
 - (void) dealloc {
     [user release];
     [url release];

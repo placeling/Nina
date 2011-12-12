@@ -10,8 +10,9 @@
 #import "Perspective.h"
 #import "NinaHelper.h"
 #import "LoginController.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface FullPerspectiveViewController : UIViewController <LoginControllerDelegate>{
+@interface FullPerspectiveViewController : UIViewController <LoginControllerDelegate,MFMailComposeViewControllerDelegate, FBDialogDelegate, UIActionSheetDelegate>{
     Perspective *perspective;
     UITapGestureRecognizer *tapGesture;
     UITapGestureRecognizer *flagTap;

@@ -371,7 +371,6 @@
                                        self.user.city ? self.user.city : @"", @"caption",
                                        self.user.profilePic.thumb_url, @"picture",
                                        [NSString stringWithFormat:@"%@'s profile on Placeling", self.user.username], @"name",
-                                       @"", @"caption",
                                        self.user.description, @"description",
                                        nil];
         

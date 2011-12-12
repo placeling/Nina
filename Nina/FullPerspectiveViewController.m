@@ -15,6 +15,7 @@
 #import "GenericWebViewController.h"
 #import "UIImageView+WebCache.h"
 #import "asyncimageview.h"
+#import "NinaAppDelegate.h"
 
 @implementation FullPerspectiveViewController
 
@@ -123,6 +124,11 @@
 }
 
 -(void) viewDidLoad{
+    
+    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    [shareButton release];
+    
     [self mainContentLoad];
 }
 
@@ -208,6 +214,69 @@
         [request startAsynchronous];
     }
 }
+
+#pragma mark - Share Sheet
+
+-(void) showShareSheet{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+    
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+    
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSString *urlString = [NSString stringWithFormat:@"https://www.placeling.com/perspectives/%@", self.perspective.perspectiveId];
+    
+    if (buttonIndex == 0){
+        DLog(@"share member by email");
+        
+        MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+        controller.mailComposeDelegate = self;
+        [controller setSubject:[NSString stringWithFormat:@"\"%@\" on Placeling", self.perspective.place.name]];
+        [controller setMessageBody:[NSString stringWithFormat:@"\n\n%@", urlString] isHTML:TRUE];
+        
+        if (controller) [self presentModalViewController:controller animated:YES];
+        [controller release];	
+        
+        
+    }else if (buttonIndex == 1) {
+        DLog(@"share on facebook");
+        
+        NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+        Facebook *facebook = appDelegate.facebook;
+        
+        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       [NinaHelper getFacebookAppId], @"app_id",
+                                       urlString, @"link",
+                                       [NSString stringWithFormat:@"%@'s Placemark on %@", perspective.user.username, perspective.place.name], @"caption",
+                                       self.perspective.thumbUrl, @"picture",
+                                       [NSString stringWithFormat:@"%@'s on Placeling", self.perspective.place.name], @"name",
+                                       self.perspective.notes, @"description",
+                                       nil];
+        
+        [facebook dialog:@"feed" andParams:params andDelegate:self];
+    } 
+}
+
+
+- (void)dialogDidComplete:(FBDialog *)dialog{
+    DLog(@"Share on Facebook Dialog completed %@", dialog)
+}
+
+- (void)dialogDidNotComplete:(FBDialog *)dialog{
+    DLog(@"Share on Facebook Dialog completed %@", dialog)
+}
+
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller  
+          didFinishWithResult:(MFMailComposeResult)result 
+                        error:(NSError*)error;
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
+
+
 
 
 -(void) dealloc{

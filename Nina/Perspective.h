@@ -50,4 +50,6 @@
 -(void) star;
 -(void) unstar;
 
+-(NSString*)thumbUrl;
+
 @end
