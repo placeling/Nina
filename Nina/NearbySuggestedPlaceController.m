@@ -127,7 +127,7 @@
     if (!self.searchTerm){
         self.searchTerm = @"";
         self.searchBar.text = @"";
-        self.searchBar.placeholder = @"search";
+        self.searchBar.placeholder = @"search tags";
     } else {
         self.searchBar.text = self.searchTerm;
     }
@@ -378,6 +378,8 @@
             
             UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
             
+            loginText.backgroundColor = [UIColor clearColor];
+            
             loginText.text = @"Sign up or log in to check out nearby places you and the people you follow love.\n\nTap here to get started.";
             loginText.tag = 778;
             
@@ -402,6 +404,7 @@
             cell.usersLabel.text = @"";
             
             UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
+            errorText.backgroundColor = [UIColor clearColor];
             
             if (self.locationEnabled == FALSE) {
                 errorText.text = [NSString stringWithFormat:@"We can't show you any nearby places as you've got location services turned off."];
