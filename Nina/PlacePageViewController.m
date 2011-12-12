@@ -705,6 +705,10 @@ typedef enum {
     
     CGFloat cx = 7;
     
+    for (UIView *view in [self.tagScrollView subviews]) {
+        [view removeFromSuperview];
+    }
+     
     for ( NSString* tag in self.place.tags ){        
         UIButton *tagButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
