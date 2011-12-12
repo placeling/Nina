@@ -78,7 +78,7 @@
         [cell.userImage setImage:perspective.user.profilePic.thumb_image];
     } else {
         [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumb_url]
-                   placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
+                   placeholderImage:[UIImage imageNamed:@"profile.png"]];
     }
     
     cell.userImage.layer.cornerRadius = 2.0f;

@@ -220,7 +220,7 @@
         cell.imageView.contentMode = UIViewContentModeScaleToFill;
         // Here we use the new provided setImageWithURL: method to load the web image
         [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumb_url]
-                       placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
+                       placeholderImage:[UIImage imageNamed:@"profile.png"]];
     }
     
     return cell;

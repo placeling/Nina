@@ -345,7 +345,7 @@
         
         // Here we use the new provided setImageWithURL: method to load the web image
         [myImage setImageWithURL:[NSURL URLWithString:user.profilePic.thumb_url]
-                       placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
+                       placeholderImage:[UIImage imageNamed:@"profile.png"]];
         myImage.tag = 1;
         
         [[myImage layer] setCornerRadius:1.0f];

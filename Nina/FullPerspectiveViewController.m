@@ -64,7 +64,7 @@
     
     // Here we use the new provided setImageWithURL: method to load the web image
     [self.userImage setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumb_url]
-                   placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
+                   placeholderImage:[UIImage imageNamed:@"profile.png"]];
     
     self.memoText.backgroundColor = [UIColor clearColor];
     

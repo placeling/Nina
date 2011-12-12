@@ -95,7 +95,7 @@
 }
 
 -(void) blankLoad{
-    UIImage *profileImage = [UIImage imageNamed:@"default_profile_image.png"];
+    UIImage *profileImage = [UIImage imageNamed:@"profile.png"];
     self.profileImageView.image = profileImage;
     
     if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
@@ -195,7 +195,7 @@
     if (self.user.profilePic.thumb_image){
         [self.profileImageView setImage:self.user.profilePic.thumb_image];
     } else {
-        [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumb_url] placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
+        [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumb_url] placeholderImage:[UIImage imageNamed:@"profile.png"]];
     }
 }
 

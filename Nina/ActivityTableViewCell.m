@@ -74,7 +74,7 @@
     if ([activity objectForKey:@"thumb1"]){
         // Here we use the new provided setImageWithURL: method to load the web image
         [cell.userImage setImageWithURL:[NSURL URLWithString:[activity objectForKey:@"thumb1"]]
-                       placeholderImage:[UIImage imageNamed:@"default_profile_image.png"]];
+                       placeholderImage:[UIImage imageNamed:@"profile.png"]];
     }
         
     cell.timeAgo.frame = CGRectMake(cell.timeAgo.frame.origin.x, verticalCursor, cell.timeAgo.frame.size.width, cell.timeAgo.frame.size.height);    
