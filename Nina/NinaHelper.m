@@ -82,14 +82,16 @@
 
 +(void) handleBadRequest:(ASIHTTPRequest *)request sender:(UIViewController*)sender{
     int statusCode = [request responseStatusCode];
-    NSString *host = [NSString stringWithFormat:@"http://%@", [[request url]  host]];
+    NSString *host = [[request url]  host];
     NSError *error = [request error];
     NSString *errorMessage = [error localizedDescription];
     if (errorMessage == nil){
         errorMessage = @""; //prevents a "nil" error on dictionary creation
     }
     
-    if (![host isEqualToString:[NinaHelper getHostname]]){
+    NSRange textRange =[[[NinaHelper getHostname] lowercaseString] rangeOfString:[host lowercaseString]];
+    
+    if(textRange.location == NSNotFound){
         DLog(@"Error for which host isn't a placeling server");
         [FlurryAnalytics logEvent:@"ERROR_NOT_OUR_FAULT"];
         return; //Issue with server we can't really help, likely google
