@@ -12,6 +12,7 @@
 #import "PlaceSuggestTableViewCell.h"
 #import "Place.h"
 #import "LoginController.h"
+#import "UIImageView+WebCache.h"
 
 @interface NearbySuggestedPlaceController (Private)
 -(void)findNearbyPlaces;
@@ -454,6 +455,8 @@
             if (errorText) {
                 [errorText removeFromSuperview];
             }
+            
+            [cell.imageView setImageWithURL:[NSURL URLWithString:place.placeThumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
             
             cell.titleLabel.text = place.name;
             cell.addressLabel.text = place.address;
