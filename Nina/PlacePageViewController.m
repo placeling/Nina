@@ -531,8 +531,15 @@ typedef enum {
                 //deleted perspective
                 NSString *responseString = [request responseString];        
                 DLog(@"%@", responseString);
+                if (self.homePerspectives){
+                    for (Perspective *perspective in self.homePerspectives){
+                        if (perspective.starred){
+                            [self.homePerspectives removeObject:perspective];
+                        }
+                    }
+                }   
                         
-                [self loadData];
+                [self.tableView reloadData];
                 break;
             }
             case 7:{
