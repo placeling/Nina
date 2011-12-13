@@ -178,19 +178,11 @@
     } else {
         [self.tableView reloadData];
     }
-    
-    if ([self.username isEqualToString:[NinaHelper getUsername]]){
-        UIBarButtonItem *editButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editUser)];
-        self.navigationItem.rightBarButtonItem = editButton;
-        [editButton release];
+
+    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    [shareButton release];
         
-        [self.followButton removeFromSuperview];
-    } else {
-        UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
-        self.navigationItem.rightBarButtonItem = shareButton;
-        [shareButton release];
-    }
-    
     // Here we use the new provided setImageWithURL: method to load the web image
     if (self.user.profilePic.thumb_image){
         [self.profileImageView setImage:self.user.profilePic.thumb_image];
@@ -337,8 +329,14 @@
 #pragma mark - Share Sheet
 
 -(void) showShareSheet{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+    UIActionSheet *actionSheet;
+    if ([self.username isEqualToString:[NinaHelper getUsername]]){
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Edit My Profile", nil];
+    } else {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+    } 
     
+    [self.followButton removeFromSuperview]; 
     [actionSheet showInView:self.view];
     [actionSheet release];
     
@@ -375,7 +373,10 @@
                                        nil];
         
         [facebook dialog:@"feed" andParams:params andDelegate:self];
-    } 
+    } else if (([actionSheet numberOfButtons] ==4) && buttonIndex ==2){
+        DLog(@"edit my profile");
+        [self editUser];
+    }
 }
 
 
