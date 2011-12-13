@@ -467,9 +467,9 @@
             cell.distanceLabel.text = [NinaHelper metersToLocalizedDistance:place.distance];
             cell.usersLabel.text = place.usersBookmarkingString;   
             [StyleHelper colourHomePageLabel:cell.usersLabel];
-            [StyleHelper colourTitleLabel:cell.titleLabel];
+            /* [StyleHelper colourTitleLabel:cell.titleLabel];
             [StyleHelper colourTitleLabel:cell.addressLabel];
-            [StyleHelper colourTitleLabel:cell.distanceLabel];            
+            [StyleHelper colourTitleLabel:cell.distanceLabel]; */           
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
