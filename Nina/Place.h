@@ -23,7 +23,7 @@
     NSString *city;
     NSString *place_id;
     NSString *google_ref;
-    NSString *thumb_url;
+    NSString *_thumb_url;
     
     NSArray *usersBookmarking;
     NSArray *tags;
