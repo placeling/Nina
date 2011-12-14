@@ -57,10 +57,10 @@
 					<object class="IBUIButton" id="730675213">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{18, 56}, {22, 30}}</string>
+						<string key="NSFrame">{{13, 56}, {32, 46}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="435554092"/>
+						<reference key="NSNextKeyView" ref="10021839"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MSAwAA</bytes>
@@ -137,7 +137,7 @@
 						<string key="NSFrame">{{67, 0}, {233, 26}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="730675213"/>
+						<reference key="NSNextKeyView" ref="435554092"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -168,6 +168,7 @@
 						<string key="NSFrame">{{0, 250}, {320, 166}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -175,10 +176,10 @@
 					<object class="IBUILabel" id="435554092">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{15, 94}, {37, 23}}</string>
+						<string key="NSFrame">{{15, 98}, {37, 23}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="10021839"/>
+						<reference key="NSNextKeyView" ref="730675213"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -339,10 +340,10 @@
 							<reference ref="385667341"/>
 							<reference ref="318136685"/>
 							<reference ref="466755262"/>
-							<reference ref="435554092"/>
-							<reference ref="730675213"/>
 							<reference ref="10021839"/>
 							<reference ref="866587082"/>
+							<reference ref="730675213"/>
+							<reference ref="435554092"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -489,7 +490,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="UnReMark.png">{54, 80}</string>
+			<string key="UnReMark.png">{75, 106}</string>
 			<string key="default_profile_image.png">{175, 175}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">933</string>
