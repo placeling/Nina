@@ -161,6 +161,8 @@
 		289EAD6F13EAF0950072EAD5 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 289EAD6913EAF0950072EAD5 /* NSString+URLEncode.m */; };
 		289EAD7013EAF0950072EAD5 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 289EAD6A13EAF0950072EAD5 /* README */; };
 		28A2EB941405909600122BBF /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A2EB931405909600122BBF /* MBProgressHUD.m */; };
+		28A327601498290B003CB659 /* followButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A3275C1498290B003CB659 /* followButton.png */; };
+		28A327621498290B003CB659 /* UnfollowButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A3275E1498290B003CB659 /* UnfollowButton.png */; };
 		28A4377B14327EFA005F192B /* ActivityFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A4377914327EFA005F192B /* ActivityFeedViewController.m */; };
 		28A4377C14327EFA005F192B /* ActivityFeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A4377A14327EFA005F192B /* ActivityFeedViewController.xib */; };
 		28A43785143295E4005F192B /* PictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A43783143295E4005F192B /* PictureViewController.m */; };
@@ -520,6 +522,8 @@
 		289EAD6A13EAF0950072EAD5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		28A2EB921405909600122BBF /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		28A2EB931405909600122BBF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		28A3275C1498290B003CB659 /* followButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = followButton.png; sourceTree = "<group>"; };
+		28A3275E1498290B003CB659 /* UnfollowButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnfollowButton.png; sourceTree = "<group>"; };
 		28A4377814327EFA005F192B /* ActivityFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityFeedViewController.h; sourceTree = "<group>"; };
 		28A4377914327EFA005F192B /* ActivityFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityFeedViewController.m; sourceTree = "<group>"; };
 		28A4377A14327EFA005F192B /* ActivityFeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityFeedViewController.xib; sourceTree = "<group>"; };
@@ -1255,6 +1259,8 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				28A3275C1498290B003CB659 /* followButton.png */,
+				28A3275E1498290B003CB659 /* UnfollowButton.png */,
 				28865CA01496CA5800F20280 /* facebook_icon_bw@2x.png */,
 				28865CA11496CA5900F20280 /* facebook_icon@2x.png */,
 				28865C971491C28B00F20280 /* facebook_icon_bw.png */,
@@ -1603,6 +1609,8 @@
 				28865C9F14966CBF00F20280 /* Museo500.otf in Resources */,
 				28865CA21496CA5A00F20280 /* facebook_icon_bw@2x.png in Resources */,
 				28865CA31496CA5A00F20280 /* facebook_icon@2x.png in Resources */,
+				28A327601498290B003CB659 /* followButton.png in Resources */,
+				28A327621498290B003CB659 /* UnfollowButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
