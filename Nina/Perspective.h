@@ -39,7 +39,7 @@
 @property (nonatomic, assign) BOOL visited;
 @property (nonatomic, assign) BOOL share;
 @property (nonatomic, assign) BOOL modified;
-@property (nonatomic, readonly) BOOL mine;
+@property (nonatomic, assign) BOOL mine;
 @property (nonatomic, retain) NSString* perspectiveId;
 @property (nonatomic, retain) NSString *lastModified;
 @property (nonatomic, retain) NSString *url;
