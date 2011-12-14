@@ -273,6 +273,8 @@
         // Get the URL to call to follow/unfollow
         
         if (self.followButton.tag == 0){
+            self.user.following = true;
+            [self toggleFollow];
             NSString *actionURL = [NSString stringWithFormat:@"%@/v1/users/%@/follow", [NinaHelper getHostname], self.user.username];
             DLog(@"Follow/unfollow url is: %@", actionURL);
             NSURL *url = [NSURL URLWithString:actionURL];
@@ -316,6 +318,8 @@
         NSURL *url = [NSURL URLWithString:actionURL];
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
         [request setRequestMethod:@"POST"];
+        self.user.following = false;
+        [self toggleFollow];
         
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [request setDelegate:self];
@@ -336,7 +340,6 @@
         actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
     } 
     
-    [self.followButton removeFromSuperview]; 
     [actionSheet showInView:self.view];
     [actionSheet release];
     
@@ -532,7 +535,9 @@
     
     
     if ([self.username isEqualToString:[NinaHelper getUsername]]){
-        self.followButton.enabled = false;
+        self.followButton.hidden = TRUE;
+    } else {
+        self.followButton.hidden = FALSE;
     }
 }
 
