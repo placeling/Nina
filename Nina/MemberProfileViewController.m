@@ -370,7 +370,7 @@
                                        [NinaHelper getFacebookAppId], @"app_id",
                                        urlString, @"link",
                                        self.user.city ? self.user.city : @"", @"caption",
-                                       self.user.profilePic.thumb_url, @"picture",
+                                       self.user.userThumbUrl, @"picture",
                                        [NSString stringWithFormat:@"%@'s profile on Placeling", self.user.username], @"name",
                                        self.user.description, @"description",
                                        nil];

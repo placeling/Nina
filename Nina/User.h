@@ -56,5 +56,6 @@
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
 -(NSDictionary*) facebook;
+-(NSString*) userThumbUrl;
 
 @end

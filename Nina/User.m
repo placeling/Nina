@@ -64,6 +64,14 @@
     
 }
 
+-(NSString*) userThumbUrl{
+    if (self.profilePic && self.profilePic.thumb_url && [self.profilePic.thumb_url length] >0){
+        return self.profilePic.thumb_url;
+    } else {
+        return @"http://www.placeling.com/images/default_profile.png";
+    }
+}
+
 -(NSDictionary*) facebook{
     
     if ([self.auths objectForKey:@"facebook"]){
