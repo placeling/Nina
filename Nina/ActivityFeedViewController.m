@@ -31,14 +31,19 @@
 }
 
 -(void)getActivities{
-    NSString *urlString = [NSString stringWithFormat:@"%@/v1/feeds/home_timeline", [NinaHelper getHostname]];		
-    NSURL *url = [NSURL URLWithString:urlString];
     
-    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-    request.tag = 70;
-    [NinaHelper signRequest:request];
-    [request setDelegate:self];
-    [request startAsynchronous];    
+    NSString *currentUser = [NinaHelper getUsername];
+    //cover not logged in situation
+    if (currentUser && currentUser.length > 0){
+        NSString *urlString = [NSString stringWithFormat:@"%@/v1/feeds/home_timeline", [NinaHelper getHostname]];		
+        NSURL *url = [NSURL URLWithString:urlString];
+        
+        ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
+        request.tag = 70;
+        [NinaHelper signRequest:request];
+        [request setDelegate:self];
+        [request startAsynchronous];   
+    } 
 }
 
 #pragma mark - Login Controller Delegate Methods
