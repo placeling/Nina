@@ -102,8 +102,7 @@
     myImageView.image = img;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];    
     // Release any cached data, images, etc that aren't in use.
@@ -119,7 +118,7 @@
     self.lng = [NSNumber numberWithFloat:location.coordinate.longitude];
     
     
-    UITableViewCell *locationCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+    UITableViewCell *locationCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
     
     locationCell.textLabel.text = [NSString stringWithFormat:@"Your map is centered right here."];
     
@@ -180,12 +179,11 @@
     [HUD retain];
     
     self.user.modified = true;
-    
-    [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 
 -(void)requestFailed:(ASIHTTPRequest *)request{
+    [HUD hide:TRUE];
     [NinaHelper handleBadRequest:request sender:self];
 }
 
@@ -205,7 +203,7 @@
         [self.user updateFromJsonDict:[userDict objectForKey:@"user"]];
 
         [self.delegate loadData];
-        [self.navigationController popViewControllerAnimated:TRUE];
+        [self.navigationController dismissModalViewControllerAnimated:TRUE];
 	}
 }
 
