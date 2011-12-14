@@ -244,14 +244,8 @@
         [alert release];
         DLog(@"401 on oauth login request");
         
-	} else {
-		NSString *body = [request responseString];
-        
-		DLog(@"Failed on %i, Got BACK: %@",statusCode, body);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"We can't connect to the Placeling servers right now"
-          delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        [alert release];
+	} else { 
+		[NinaHelper handleBadRequest:request sender:self];
     }
     	
 }
