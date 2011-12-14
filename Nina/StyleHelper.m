@@ -92,8 +92,8 @@
 
 
 +(void) styleFollowButtonCommon:(UIButton*)button{
-    button.layer.borderWidth = 2.0f;
-    [button.layer setCornerRadius:5.0f];
+    //button.layer.borderWidth = 2.0f;
+    //[button.layer setCornerRadius:5.0f];
     
     [button.titleLabel setFont:[UIFont fontWithName:@"MarketingScript" size:15]];
     [button.titleLabel setTextColor:[UIColor whiteColor]];
@@ -101,15 +101,17 @@
 }
 
 +(void) styleFollowButton:(UIButton*)button {
-    button.layer.backgroundColor = [UIColor colorWithRed:168.0f/255.0f green:213.0f/255.0f blue:157.0f/255.0f alpha:1.0f].CGColor;
-    button.layer.borderColor = [UIColor colorWithRed:61.0f/255.0f green:189.0f/255.0f blue:64.0f/255.0f alpha:1.0f].CGColor;
+    [button setImage:[UIImage imageNamed:@"followButton.png"] forState:UIControlStateNormal];
+    //button.layer.backgroundColor = [UIColor colorWithRed:168.0f/255.0f green:213.0f/255.0f blue:157.0f/255.0f alpha:1.0f].CGColor;
+    //button.layer.borderColor = [UIColor colorWithRed:61.0f/255.0f green:189.0f/255.0f blue:64.0f/255.0f alpha:1.0f].CGColor;
     
     [StyleHelper styleFollowButtonCommon:button];
 }
 
 +(void) styleUnFollowButton:(UIButton*)button {
-    button.layer.backgroundColor = [UIColor colorWithRed:213.0f/255.0f green:168.0f/255.0f blue:157.0f/255.0f alpha:1.0f].CGColor;
-    button.layer.borderColor = [UIColor colorWithRed:189.0f/255.0f green:61.0f/255.0f blue:64.0f/255.0f alpha:1.0f].CGColor;
+    [button setImage:[UIImage imageNamed:@"UnfollowButton.png"] forState:UIControlStateNormal];
+    //button.layer.backgroundColor = [UIColor colorWithRed:213.0f/255.0f green:168.0f/255.0f blue:157.0f/255.0f alpha:1.0f].CGColor;
+    //button.layer.borderColor = [UIColor colorWithRed:189.0f/255.0f green:61.0f/255.0f blue:64.0f/255.0f alpha:1.0f].CGColor;
     
     [StyleHelper styleFollowButtonCommon:button];
 }
@@ -120,13 +122,12 @@
 }
 
 +(void) colourHomePageLabel:(UILabel*)label{
-    label.textColor = [UIColor colorWithRed:1/255.0 green:131/255.0 blue:122/255.0 alpha:1.0]; //[StyleHelper getTintColour];
+    label.textColor = [UIColor colorWithRed:1/255.0 green:131/255.0 blue:135/255.0 alpha:1.0]; //[StyleHelper getTintColour];    
 }
 
 +(void) colourTitleLabel:(UILabel*)label{
     label.textColor = [UIColor colorWithRed:98/255.0 green:77/255.0 blue:41/255.0 alpha:1.0];
 }
-
 
 +(UIColor*) getTintColour{
     return [UIColor colorWithRed:0/255.0 green:130/255.0 blue:121/255.0 alpha:1.0];
