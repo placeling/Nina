@@ -78,6 +78,7 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [StyleHelper styleSearchBar:self.searchBar];
+    [StyleHelper styleBackgroundView:self.tableView];
     [super viewWillAppear:animated];
 }
 
