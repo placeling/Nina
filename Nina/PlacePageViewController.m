@@ -329,7 +329,7 @@ typedef enum {
                                        urlString, @"link",
                                        self.place.placeThumbUrl, @"picture",
                                        self.place.name, @"name",
-                                       [NSString stringWithFormat:@"%@ %@", self.place.address, self.place.city], @"caption",
+                                       (self.place.address && self.place.city) ? [NSString stringWithFormat:@"%@ %@", self.place.address, self.place.city] : @"", @"caption",
                                        [NSString stringWithFormat:@"Check out %@ on Placeling!", self.place.name], @"description",
                                        nil];
         
