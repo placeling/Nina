@@ -39,8 +39,6 @@
         self.clipsToBounds = true;
         [self setImage:self.photo.thumb_image];
     } else {
-        self.contentMode = UIViewContentModeScaleAspectFill;
-        self.clipsToBounds = true;
         
         if (self.photo.thumb_url == nil){
             return;
@@ -49,11 +47,10 @@
         
         DLog(@"Downloading photo for %@", self.photo.photo_id);
         
-        if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] && self.photo.iphone_url) {
-            [self setImageWithURL:[NSURL URLWithString:self.photo.iphone_url] placeholderImage:[UIImage imageNamed:@"DefaultPhoto@2x.png"]];
-        } else {
-            [self setImageWithURL:[NSURL URLWithString:self.photo.thumb_url] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
-        }
+        self.contentMode = UIViewContentModeScaleAspectFill;
+        self.clipsToBounds = true;
+        
+        [self setImageWithURL:[NSURL URLWithString:self.photo.thumb_url] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
     }
 }
 
