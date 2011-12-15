@@ -212,7 +212,7 @@
         
         [signupController release];
     } else {
-        [self.navigationController dismissModalViewControllerAnimated:TRUE];
+        [self close];
     }
     [HUD hide:TRUE];    
 }

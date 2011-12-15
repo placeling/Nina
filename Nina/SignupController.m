@@ -11,6 +11,7 @@
 #import "EditableTableCell.h"
 #import "NSString+SBJSON.h"
 #import "GenericWebViewController.h"
+#import "LoginController.h"
 
 @implementation SignupController
 
@@ -148,7 +149,13 @@
         } 
         
         [NinaHelper setUsername:((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField.text];
-
+        
+        UIViewController *root = [self.navigationController.viewControllers objectAtIndex:0];
+        
+        if ([root isKindOfClass:[LoginController class]]){
+            id<LoginControllerDelegate> delegate = ((LoginController*)root).delegate;
+            [delegate loadContent];
+        }
         [self.navigationController dismissModalViewControllerAnimated:YES];
   
     } else {
@@ -226,14 +233,15 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
     int tag = theTextField.tag;
     
-    if (tag == 1 || tag == 2 || tag == 3) {
+    if (tag == 4 || (fbDict && tag ==3)) {
+        [theTextField resignFirstResponder];
+        [self performSelector:@selector(signup)];
+    } else if (tag == 1 || tag == 2 || tag == 3) {
         [theTextField resignFirstResponder];
         UITextField *nextField = (UITextField *)[self.view viewWithTag:(tag + 1)];
         [nextField becomeFirstResponder];
-    } else if (tag == 4) {
-        [theTextField resignFirstResponder];
-        [self performSelector:@selector(signup)];
-    }
+    } 
+    
     return YES;
 }
 
@@ -294,7 +302,7 @@
                      componentsJoinedByString:@"" ];
                     
                     eCell.textField.text = username;
-                    eCell.textField.returnKeyType = UIReturnKeyDefault;
+                    eCell.textField.returnKeyType = UIReturnKeyGo;
                     eCell.textField.delegate = self;
                     eCell.textField.tag = 3;
                 }
