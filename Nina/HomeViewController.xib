@@ -154,7 +154,7 @@
 					<object class="IBUILabel" id="15055512">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{180, 89}, {77, 21}}</string>
+						<string key="NSFrame">{{180, 91}, {77, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="295301298"/>
@@ -170,7 +170,7 @@
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
-						<float key="IBUIMinimumFontSize">10</float>
+						<float key="IBUIMinimumFontSize">15</float>
 						<int key="IBUITextAlignment">1</int>
 						<reference key="IBUIFontDescription" ref="330832871"/>
 						<reference key="IBUIFont" ref="646591182"/>
@@ -178,7 +178,7 @@
 					<object class="IBUILabel" id="322693303">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{169, 187}, {105, 32}}</string>
+						<string key="NSFrame">{{169, 196}, {105, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="934564687"/>
@@ -194,22 +194,15 @@
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
-						<float key="IBUIMinimumFontSize">10</float>
+						<float key="IBUIMinimumFontSize">15</float>
 						<int key="IBUITextAlignment">1</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="442770637">
-							<int key="type">1</int>
-							<double key="pointSize">17</double>
-						</object>
-						<object class="NSFont" key="IBUIFont" id="430040019">
-							<string key="NSName">Helvetica</string>
-							<double key="NSSize">17</double>
-							<int key="NSfFlags">16</int>
-						</object>
+						<reference key="IBUIFontDescription" ref="330832871"/>
+						<reference key="IBUIFont" ref="646591182"/>
 					</object>
 					<object class="IBUILabel" id="931022643">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{51, 89}, {55, 21}}</string>
+						<string key="NSFrame">{{51, 91}, {55, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="47310288"/>
@@ -225,14 +218,14 @@
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
-						<float key="IBUIMinimumFontSize">10</float>
+						<float key="IBUIMinimumFontSize">15</float>
 						<reference key="IBUIFontDescription" ref="330832871"/>
 						<reference key="IBUIFont" ref="646591182"/>
 					</object>
 					<object class="IBUILabel" id="86865012">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{40, 192}, {77, 21}}</string>
+						<string key="NSFrame">{{40, 196}, {77, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="699192188"/>
@@ -248,9 +241,10 @@
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
-						<float key="IBUIMinimumFontSize">10</float>
-						<reference key="IBUIFontDescription" ref="442770637"/>
-						<reference key="IBUIFont" ref="430040019"/>
+						<float key="IBUIMinimumFontSize">15</float>
+						<int key="IBUITextAlignment">1</int>
+						<reference key="IBUIFontDescription" ref="330832871"/>
+						<reference key="IBUIFont" ref="646591182"/>
 					</object>
 					<object class="IBUIScrollView" id="286212048">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -452,9 +446,9 @@
 							<reference ref="713298254"/>
 							<reference ref="934564687"/>
 							<reference ref="295301298"/>
-							<reference ref="86865012"/>
 							<reference ref="699192188"/>
 							<reference ref="322693303"/>
+							<reference ref="86865012"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
