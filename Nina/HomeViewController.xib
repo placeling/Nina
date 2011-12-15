@@ -202,7 +202,7 @@
 					<object class="IBUILabel" id="931022643">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{51, 91}, {55, 21}}</string>
+						<string key="NSFrame">{{35, 91}, {86, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="47310288"/>
@@ -219,6 +219,7 @@
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">15</float>
+						<int key="IBUITextAlignment">1</int>
 						<reference key="IBUIFontDescription" ref="330832871"/>
 						<reference key="IBUIFont" ref="646591182"/>
 					</object>
