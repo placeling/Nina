@@ -13,10 +13,11 @@
 #import "ProfileDetailBadge.h"
 #import "LoginController.h"
 #import <MessageUI/MFMailComposeViewController.h>
+#import <RestKit/RestKit.h>
 
-@interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate, LoginControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate> {
+@interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate, LoginControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate> {
 	NSString *username;
-	User *user;
+	User *_user;
     BOOL loadingMore;
     BOOL hasMore;
     

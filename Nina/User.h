@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Photo.h"
+#import <RestKit/RestKit.h>
 
 @interface User : NSObject {
     NSString *userId;
@@ -29,9 +30,10 @@
     bool following;
     bool follows_you;
     
-    bool modified;
-    
+    bool modified;    
 }
+
++(RKObjectMapping*)getObjectMapping;
 
 @property (nonatomic, retain) NSString *userId;
 @property (nonatomic, retain) NSString *city;

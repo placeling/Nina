@@ -12,7 +12,12 @@
 #import "ASIHTTPRequest+OAuth.h"
 #import "FlurryAnalytics.h"
 #import "NinaAppDelegate.h"
+#import <RestKit/RestKit.h>
 
+
+@interface NinaHelper()
++(void) handleBadRequest:(int)statuscode host:(NSString*)host error:(NSError *)error sender:(UIViewController*)sender;
+@end
 
 @implementation NinaHelper
 
@@ -61,6 +66,10 @@
     [NinaHelper setUsername:nil];
     [ASIHTTPRequest clearSession];
     
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [[objectManager client] setOAuth1AccessToken:nil];
+    [[objectManager client] setOAuth1AccessTokenSecret:nil];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:@"FBAccessTokenKey"];
     [defaults removeObjectForKey:@"FBExpirationDateKey"];
@@ -87,10 +96,23 @@
     [loginController release];
 }
 
+
++(void) handleBadRKRequest:(RKResponse *)response sender:(UIViewController*)sender{
+    int statusCode = response.statusCode;
+    NSString *host = [response.request.URL host];
+    NSError *error = response.failureError;
+    
+    [NinaHelper handleBadRequest:statusCode host:host error:error sender:sender];  
+}
+
 +(void) handleBadRequest:(ASIHTTPRequest *)request sender:(UIViewController*)sender{
     int statusCode = [request responseStatusCode];
     NSString *host = [[request url]  host];
     NSError *error = [request error];
+    [NinaHelper handleBadRequest:statusCode host:host error:error sender:sender];
+}
+
++(void) handleBadRequest:(int)statusCode host:(NSString*)host error:(NSError *)error sender:(UIViewController*)sender{      
     NSString *errorMessage = [error localizedDescription];
     if (errorMessage == nil){
         errorMessage = @""; //prevents a "nil" error on dictionary creation
@@ -370,6 +392,9 @@
 }
 
 +(void) setAccessTokenSecret:(NSString*)accessTokenSecret {
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [[objectManager client] setOAuth1AccessTokenSecret:accessTokenSecret];
+    
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     
     if (standardUserDefaults ){
@@ -382,6 +407,9 @@
 }
 
 +(void) setAccessToken:(NSString*)accessToken {
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [[objectManager client] setOAuth1AccessToken:accessToken];
+     
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
 
     if (standardUserDefaults ){

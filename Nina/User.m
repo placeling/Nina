@@ -9,6 +9,7 @@
 #import "User.h"
 #import "NSDictionary+Utility.h"
 #import "NinaAppDelegate.h"
+#import "NinaHelper.h"
 
 @implementation User
 
@@ -78,9 +79,32 @@
         return [self.auths objectForKey:@"facebook"];        
     } else {
         return nil;
-    }
-    
+    }    
 }
+
+
++(RKObjectMapping*)getObjectMapping{
+    RKObjectMapping* userMapping = [RKObjectMapping mappingForClass:[User class]];
+    [userMapping mapKeyPathsToAttributes:
+     @"id", @"userId",
+     @"username", @"username",
+     @"thumb_url", @"iconURLString",
+     @"city", @"city",
+     @"perspectives_count", @"placeCount",
+     @"follower_count", @"followerCount",
+     @"following_count", @"followingCount",
+     @"description", @"description",
+     @"url", @"url",
+     @"email", @"email",
+     @"location", @"location",
+     @"following", @"following",
+     @"follows_you", @"follows_you",
+     nil];
+    [userMapping mapKeyPath:@"picture" toRelationship:@"profilePic" withMapping:[Photo getObjectMapping]];
+    
+    return userMapping;
+}
+
 
 - (void)dealloc{    
     [userId release];

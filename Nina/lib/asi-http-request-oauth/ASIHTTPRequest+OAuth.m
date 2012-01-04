@@ -10,7 +10,7 @@
 #import <CommonCrypto/CommonHMAC.h>
 
 #import "ASIHTTPRequest+OAuth.h"
-#import "NSData+Base64.h"
+//#import "NSData+Base64.h"
 #import "NSString+URLEncode.h"
 
 

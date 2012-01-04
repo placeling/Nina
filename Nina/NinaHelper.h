@@ -121,10 +121,13 @@
 #import <CoreLocation/CoreLocation.h>
 #import "LocationManagerManager.h"
 #import "StyleHelper.h"
+#import <RestKit/RestKit.h>
 
 @interface NinaHelper : NSObject 
 
 +(void) handleBadRequest:(ASIHTTPRequest *)request sender:(UIViewController*)sender;
++(void) handleBadRKRequest:(RKResponse *)response sender:(UIViewController*)sender;
+
 +(void) handleCoreLocationError:(NSError*)error;
 +(void) signRequest:(ASIHTTPRequest *)request; 
 

@@ -24,11 +24,22 @@
 }
 
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict{
-    self.photo_id = [jsonDict objectForKey:@"_id"];
+    self.photo_id = [jsonDict objectForKey:@"id"];
     
     self.iphone_url = [jsonDict objectForKeyNotNull:@"iphone_url"];
     self.main_url = [jsonDict objectForKeyNotNull:@"main_url"];
     self.thumb_url = [jsonDict objectForKeyNotNull:@"thumb_url"];
+}
+
++(RKObjectMapping*)getObjectMapping{
+    RKObjectMapping* photoMapping = [RKObjectMapping mappingForClass:[Photo class]];
+    [photoMapping mapKeyPathsToAttributes:
+        @"id", @"photo_id",
+        @"thumb_url", @"thumb_url",
+        @"main_url", @"main_url",
+     nil];
+    
+    return photoMapping;
 }
 
 - (void)dealloc

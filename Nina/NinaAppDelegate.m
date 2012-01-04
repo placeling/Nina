@@ -11,6 +11,8 @@
 #import "LocationManagerManager.h"
 #import "FlurryAnalytics.h"
 #import "NinaHelper.h"
+#import <RestKit/RestKit.h>
+#import "User.h"
 
 @implementation NinaAppDelegate
 
@@ -25,6 +27,17 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    
+    //Restkit initialization  
+    RKObjectManager* objectManager = [RKObjectManager objectManagerWithBaseURL:[NinaHelper getHostname]];
+    [[objectManager client] setOAuth1AccessToken:[NinaHelper getAccessToken]];
+    [[objectManager client] setOAuth1AccessTokenSecret:[NinaHelper getAccessTokenSecret]];
+    [[objectManager client] setOAuth1ConsumerKey:[NinaHelper getConsumerKey]];
+    [[objectManager client] setOAuth1ConsumerSecret:[NinaHelper getConsumerSecret]];
+    objectManager.client.authenticationType = RKRequestAuthenticationTypeOAuth1;  
+    objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
+    DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
+    
     
     if ([NinaHelper isProductionRun]){
         NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);

@@ -35,7 +35,7 @@
 @implementation MemberProfileViewController
 
 @synthesize username;
-@synthesize user, profileImageView, headerView;
+@synthesize user=_user, profileImageView, headerView;
 @synthesize usernameLabel, userDescriptionLabel;
 @synthesize followButton, locationLabel;
 @synthesize followersButton, followingButton, placeMarkButton;
@@ -131,18 +131,19 @@
 }
 
 -(IBAction) userFollowers{
-    FollowViewController *followViewController = [[FollowViewController alloc] initWithUser:user andFollowing:false];
+    FollowViewController *followViewController = [[FollowViewController alloc] initWithUser:_user andFollowing:false];
     [self.navigationController pushViewController:followViewController animated:YES];
     [followViewController release];
 }
 
 -(IBAction) userFollowing{
-    FollowViewController *followViewController = [[FollowViewController alloc] initWithUser:user andFollowing:true];
+    FollowViewController *followViewController = [[FollowViewController alloc] initWithUser:_user andFollowing:true];
     [self.navigationController pushViewController:followViewController animated:YES];
     [followViewController release];
 }
 
 -(void) loadData{
+    
     self.usernameLabel.text = self.user.username;
     self.locationLabel.text = self.user.city;
     self.userDescriptionLabel.text = self.user.description;
@@ -217,16 +218,10 @@
         
         self.navigationItem.title = @"Profile";
         loadingMore = true;
-        // Call url to get profile details
-        NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@", [NinaHelper getHostname], getUsername];
         
-        NSURL *url = [NSURL URLWithString:urlText];
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-        [request setDelegate:self];
-        [request setTag:10];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        [NinaHelper signRequest:request];
-        [request startAsynchronous];
+        // Call url to get profile details                
+        RKObjectManager* objectManager = [RKObjectManager sharedManager];        
+        [objectManager loadObjectsAtResourcePath:[NSString stringWithFormat:@"/v1/users/%@", self.username] objectMapping:[User getObjectMapping] delegate:self];
     }
 }
 
@@ -331,7 +326,6 @@
 
 
 #pragma mark - Share Sheet
-
 -(void) showShareSheet{
     UIActionSheet *actionSheet;
     if ([self.username isEqualToString:[NinaHelper getUsername]]){
@@ -399,8 +393,25 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
     
-    
-#pragma mark -
+
+#pragma mark - RKObjectLoaderDelegate methods
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+    loadingMore = false;
+    User* user = [objects objectAtIndex:0];
+    DLog(@"Loaded User: %@", user.username);
+    self.user = user;
+    [self loadData];
+}
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    //objectLoader.response.
+    loadingMore = false;
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
+    DLog(@"Encountered an error: %@", error);
+}
+
+
 #pragma mark ASIHTTPRequest Delegate Methods
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
@@ -417,19 +428,11 @@
             NSString *responseString = [request responseString];            
             DLog(@"profile get returned: %@", responseString);
             
-            // Place an asynchronous request to get the profile image
-            /*
-             NSString *picURL = [NSString stringWithFormat:@"%@", [self.targetProfile objectForKey:@"pho"]];
-             NSURL *targetURL = [NSURL URLWithString:picURL];
-             ASIHTTPRequest *picRequest = [ASIHTTPRequest requestWithURL:targetURL];
-             
-             */
-            
             NSDictionary *jsonDict =  [responseString JSONValue];
             
             self.user = [[[User alloc] initFromJsonDict:jsonDict]autorelease];    
 
-            [self toggleFollow];
+            
             
             if ([jsonDict objectForKey:@"perspectives"]){
                 //has perspectives in call, seed with to make quicker
@@ -742,7 +745,7 @@
     [NinaHelper clearActiveRequests:10];
     
     [username release];
-    [user release];
+    [_user release];
     
     [locationLabel release];
     [profileImageView release];
