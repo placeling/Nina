@@ -63,7 +63,7 @@
     NSString *currentUser = [NinaHelper getUsername];
     
     // Here we use the new provided setImageWithURL: method to load the web image
-    [self.userImage setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumb_url]
+    [self.userImage setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumbUrl]
                    placeholderImage:[UIImage imageNamed:@"profile.png"]];
     
     self.memoText.backgroundColor = [UIColor clearColor];

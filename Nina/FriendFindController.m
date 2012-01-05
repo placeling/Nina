@@ -11,6 +11,7 @@
 #import "MemberProfileViewController.h"
 #import "JSON.h"
 #import "UIImageView+WebCache.h"
+#import "Photo.h"
 
 @interface FriendFindController ()
 -(BOOL) searchResults;
@@ -47,6 +48,7 @@
     self.suggestedUsers = [[[NSMutableArray alloc]init] autorelease];
     self.searchUsers = [[[NSMutableArray alloc]init]autorelease];
     self.recentSearches = [[[NSMutableArray alloc]init]autorelease];
+    
     
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -142,6 +144,25 @@
 	[searchBar setShowsCancelButton:FALSE animated:true];
 }
 
+
+#pragma mark - RKObjectLoaderDelegate methods
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+    /*loadingMore = false;
+    User* user = [objects objectAtIndex:0];
+    DLog(@"Loaded User: %@", user.username);
+    self.user = user;
+    [self.tableView reloadData]; */
+}
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    /* objectLoader.response.
+    loadingMore = false;
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
+    DLog(@"Encountered an error: %@", error); */
+}
+
+
 - (void)requestFailed:(ASIHTTPRequest *)request{
 	[NinaHelper handleBadRequest:request sender:self];
 }
@@ -152,6 +173,9 @@
     if (200 != [request responseStatusCode]){
 		[NinaHelper handleBadRequest:request sender:self];
 	} else {
+        RKObjectManager* objectManager = [RKObjectManager sharedManager];
+        NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+        
         switch( [request tag] ){
             case 100:{                
                 NSString *responseString = [request responseString];
@@ -160,7 +184,10 @@
                 NSArray *rawUsers = [[responseString JSONValue] objectForKey:@"suggested"];
                 [self.suggestedUsers removeAllObjects];
                 for (NSDictionary* rawUser in rawUsers){
-                    User *user = [[User alloc] initFromJsonDict:rawUser];
+                    //User *user = (User*)[NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:managedObjectContext];
+                    User *user = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+                    
+                    [user updateFromJsonDict:rawUser];
                     [self.suggestedUsers addObject:user];
                     [user release];
                 }
@@ -175,7 +202,8 @@
                 [self.searchUsers removeAllObjects];
                 
                 for (NSDictionary* rawUser in rawUsers){
-                    User *user = [[User alloc] initFromJsonDict:rawUser];
+                    User *user = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+                    [user updateFromJsonDict:rawUser];
                     [self.searchUsers addObject:user];
                     [user release];
                 }
@@ -240,13 +268,13 @@
         }
         
         cell.textLabel.text = user.username;
-        cell.detailTextLabel.text = user.description;
+        cell.detailTextLabel.text = user.userDescription;
         
         cell.accessoryView.tag = indexPath.row;
         
         cell.imageView.contentMode = UIViewContentModeScaleToFill;
         // Here we use the new provided setImageWithURL: method to load the web image
-        [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumb_url]
+        [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
                        placeholderImage:[UIImage imageNamed:@"profile.png"]];
     }else {
         NSArray *members;
@@ -275,13 +303,13 @@
             }
             
             cell.textLabel.text = user.username;
-            cell.detailTextLabel.text = user.description;
+            cell.detailTextLabel.text = user.userDescription;
             
             cell.accessoryView.tag = indexPath.row;
             
             cell.imageView.contentMode = UIViewContentModeScaleToFill;
             // Here we use the new provided setImageWithURL: method to load the web image
-            [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumb_url]
+            [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
                            placeholderImage:[UIImage imageNamed:@"profile.png"]];
         }
     }
@@ -314,8 +342,8 @@
                     User *ruser = [self.recentSearches objectAtIndex:i];
                     NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
                     [jsonDict setValue:ruser.username forKey:@"username"];
-                    [jsonDict setValue:ruser.description forKey:@"description"];
-                    [jsonDict setValue:ruser.profilePic.thumb_url forKey:@"thumb_url"];
+                    [jsonDict setValue:ruser.userDescription forKey:@"description"];
+                    [jsonDict setValue:ruser.profilePic.thumbUrl forKey:@"thumb_url"];
                     [standardUserDefaults setObject:jsonDict forKey:[NSString stringWithFormat:@"recent_search_%i", i]];
                     [jsonDict release];                    
                 }

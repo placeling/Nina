@@ -146,7 +146,7 @@
     
     self.usernameLabel.text = self.user.username;
     self.locationLabel.text = self.user.city;
-    self.userDescriptionLabel.text = self.user.description;
+    self.userDescriptionLabel.text = self.user.userDescription;
     
     
     self.followingButton.detailLabel.text = @"Following";    
@@ -159,9 +159,9 @@
   
     [self toggleFollow];
     
-    self.followingButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.followingCount];
-    self.followersButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.followerCount];
-    self.placeMarkButton.numberLabel.text = [NSString stringWithFormat:@"%i", self.user.placeCount];
+    self.followingButton.numberLabel.text = [NSString stringWithFormat:@"%@", self.user.followingCount];
+    self.followersButton.numberLabel.text = [NSString stringWithFormat:@"%@", self.user.followerCount];
+    self.placeMarkButton.numberLabel.text = [NSString stringWithFormat:@"%@", self.user.placeCount];
     
     if (perspectives == nil && self.user.placeCount != 0){
         loadingMore = true;
@@ -185,11 +185,8 @@
     [shareButton release];
         
     // Here we use the new provided setImageWithURL: method to load the web image
-    if (self.user.profilePic.thumb_image){
-        [self.profileImageView setImage:self.user.profilePic.thumb_image];
-    } else {
-        [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumb_url] placeholderImage:[UIImage imageNamed:@"profile.png"]];
-    }
+    
+    [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"profile.png"]];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
@@ -268,7 +265,7 @@
         // Get the URL to call to follow/unfollow
         
         if (self.followButton.tag == 0){
-            self.user.following = true;
+            self.user.following = [NSNumber numberWithBool:false];
             [self toggleFollow];
             NSString *actionURL = [NSString stringWithFormat:@"%@/v1/users/%@/follow", [NinaHelper getHostname], self.user.username];
             DLog(@"Follow/unfollow url is: %@", actionURL);
@@ -366,7 +363,7 @@
                                        self.user.city ? self.user.city : @"", @"caption",
                                        self.user.userThumbUrl, @"picture",
                                        [NSString stringWithFormat:@"%@'s profile on Placeling", self.user.username], @"name",
-                                       self.user.description, @"description",
+                                       self.user.userDescription, @"description",
                                        nil];
         
         [facebook dialog:@"feed" andParams:params andDelegate:self];
@@ -423,36 +420,9 @@
     }
     
     switch (request.tag){
-        case 10:
-        {    
-            NSString *responseString = [request responseString];            
-            DLog(@"profile get returned: %@", responseString);
-            
-            NSDictionary *jsonDict =  [responseString JSONValue];
-            
-            self.user = [[[User alloc] initFromJsonDict:jsonDict]autorelease];    
-
-            
-            
-            if ([jsonDict objectForKey:@"perspectives"]){
-                //has perspectives in call, seed with to make quicker
-                NSMutableArray *rawPerspectives = [jsonDict objectForKey:@"perspectives"];                
-                perspectives = [[NSMutableArray alloc] initWithCapacity:[rawPerspectives count]];
-                
-                for (NSDictionary* dict in rawPerspectives){
-                    Perspective* newPerspective = [[Perspective alloc] initFromJsonDict:dict];
-                    newPerspective.user = self.user;
-                    [perspectives addObject:newPerspective]; 
-                    [newPerspective release];
-                }
-            }
-
-            [self loadData];
-            break;
-        }
         case 11:
         {
-            self.user.following = true;
+            self.user.following = [NSNumber numberWithBool:true];
             [self toggleFollow];
             break;
         }

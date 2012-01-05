@@ -215,12 +215,12 @@
         User* user = [users objectAtIndex:indexPath.row];
 
         cell.textLabel.text = user.username;
-        cell.detailTextLabel.text = user.description;
+        cell.detailTextLabel.text = user.userDescription;
         
         cell.accessoryView.tag = indexPath.row;
         cell.imageView.contentMode = UIViewContentModeScaleToFill;
         // Here we use the new provided setImageWithURL: method to load the web image
-        [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumb_url]
+        [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
                        placeholderImage:[UIImage imageNamed:@"profile.png"]];
     }
     

@@ -13,20 +13,12 @@
 
 @implementation User
 
-@synthesize userId, city;
-@synthesize iconURLString, description;
-@synthesize username, profilePic, placeCount;
-@synthesize followingCount, followerCount;
-@synthesize following, follows_you, modified;
-@synthesize email, url, location, auths;
-
-- (id)initFromJsonDict:(NSDictionary *)jsonDict{    
-    if(self = [super init]){
-        self.auths = [[[NSMutableDictionary alloc] init] autorelease];
-        [self updateFromJsonDict:jsonDict];
-	}
-	return self;
-}
+@dynamic userId, city, userDescription;
+@dynamic username, profilePic, placeCount;
+@dynamic followingCount, followerCount;
+@dynamic following, follows_you;
+@dynamic email, url; 
+@synthesize auths, modified, location;
 
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
     self.userId = [jsonDict objectForKeyNotNull:@"id"];
@@ -35,15 +27,16 @@
     self.placeCount = [[jsonDict objectForKeyNotNull:@"perspectives_count"] intValue];
     self.followerCount =[[jsonDict objectForKeyNotNull:@"follower_count"] intValue];
     self.followingCount = [[jsonDict objectForKeyNotNull:@"following_count"] intValue];
-    self.description = [jsonDict objectForKeyNotNull:@"description"];
+    self.userDescription = [jsonDict objectForKeyNotNull:@"description"];
     self.url = [jsonDict objectForKeyNotNull:@"url"];
     self.email = [jsonDict objectForKeyNotNull:@"email"];
     
     self.location = [jsonDict objectForKeyNotNull:@"location"];
     
-    self.following = [[jsonDict objectForKeyNotNull:@"following"] boolValue];
-    self.follows_you = [[jsonDict objectForKeyNotNull:@"follows_you"] boolValue];
+    self.following =[NSNumber numberWithBool:[[jsonDict objectForKeyNotNull:@"following"] boolValue]];
+    self.follows_you = [NSNumber numberWithBool:[[jsonDict objectForKeyNotNull:@"follows_you"] boolValue]]; 
     
+    self.auths = [[[NSMutableDictionary alloc] init] autorelease];
     [self.auths removeAllObjects];
     if ([jsonDict objectForKey:@"facebook"]){
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -56,9 +49,12 @@
         [self.auths setObject:[jsonDict objectForKey:@"facebook"] forKey:@"facebook"];
     }
     
-    Photo *photo = [[Photo alloc] init];
-    photo.thumb_url = [jsonDict objectForKeyNotNull:@"thumb_url"];
-    photo.main_url = [jsonDict objectForKeyNotNull:@"main_url"];
+    RKObjectManager* objectManager = [RKObjectManager sharedManager];
+    NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+    Photo *photo = [[Photo alloc] initWithEntity:[NSEntityDescription entityForName:@"Photo" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+    
+    photo.thumbUrl = [jsonDict objectForKeyNotNull:@"thumb_url"];
+    photo.mainUrl = [jsonDict objectForKeyNotNull:@"main_url"];
     self.profilePic = photo;
     
     [photo release];
@@ -66,8 +62,8 @@
 }
 
 -(NSString*) userThumbUrl{
-    if (self.profilePic && self.profilePic.thumb_url && [self.profilePic.thumb_url length] >0){
-        return self.profilePic.thumb_url;
+    if (self.profilePic && self.profilePic.thumbUrl && [self.profilePic.thumbUrl length] >0){
+        return self.profilePic.thumbUrl;
     } else {
         return @"http://www.placeling.com/images/default_profile.png";
     }
@@ -83,12 +79,11 @@
 }
 
 
-+(RKObjectMapping*)getObjectMapping{
-    RKObjectMapping* userMapping = [RKObjectMapping mappingForClass:[User class]];
++(RKManagedObjectMapping*)getObjectMapping{
+    RKManagedObjectMapping* userMapping = [RKManagedObjectMapping mappingForClass:[User class]];
     [userMapping mapKeyPathsToAttributes:
      @"id", @"userId",
      @"username", @"username",
-     @"thumb_url", @"iconURLString",
      @"city", @"city",
      @"perspectives_count", @"placeCount",
      @"follower_count", @"followerCount",
@@ -109,9 +104,8 @@
 - (void)dealloc{    
     [userId release];
     [city release];
-    [iconURLString release];
     [username release];
-    [description release];
+    [userDescription release];
     [profilePic release];
     [email release];
     [url release];

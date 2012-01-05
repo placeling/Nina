@@ -12,16 +12,16 @@
 @class Perspective;
 
 
-@interface Photo : NSObject {
+@interface Photo : NSManagedObject {
     UIImage *thumb_image;
     UIImage *iphone_image;
     UIImage *main_image;
     
-    NSString *thumb_url;
-    NSString *iphone_url;
-    NSString *main_url;
+    NSString *thumbUrl;
+    NSString *iphoneUrl;
+    NSString *mainUrl;
     
-    NSString *photo_id;
+    NSString *photoId;
     Perspective *perspective;
     BOOL mine;
 }
@@ -30,16 +30,16 @@
 @property (nonatomic, retain) UIImage *iphone_image;
 @property (nonatomic, retain) UIImage *main_image;
 
-@property (nonatomic, retain) NSString *thumb_url;
-@property (nonatomic, retain) NSString *iphone_url;
-@property (nonatomic, retain) NSString *main_url;
-@property (nonatomic, retain) NSString *photo_id;
+@property (nonatomic, retain) NSString *thumbUrl;
+@property (nonatomic, retain) NSString *iphoneUrl;
+@property (nonatomic, retain) NSString *mainUrl;
+@property (nonatomic, retain) NSString *photoId;
 @property (nonatomic, assign) BOOL mine;
 @property (nonatomic, assign) Perspective *perspective; //assign to prevent circular ref
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
-+(RKObjectMapping*)getObjectMapping;
++(RKManagedObjectMapping*)getObjectMapping;
 
 @end

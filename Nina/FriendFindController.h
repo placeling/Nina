@@ -8,6 +8,7 @@
 
 #import "NinaHelper.h"
 #import <UIKit/UIKit.h>
+#import <RestKit/RestKit.h>
 
 @interface FriendFindController : UIViewController<ASIHTTPRequestDelegate,UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>{
     NSMutableArray *searchUsers; 

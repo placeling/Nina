@@ -8,7 +8,7 @@
 
 #import "Perspective.h"
 #import "NSDictionary+Utility.h"
-
+#import "Photo.h"
 
 @implementation Perspective
 @synthesize user, place, notes, tags, photos, starred, lastModified;
@@ -101,7 +101,7 @@
 
 -(NSString*)thumbUrl{
     if ([[self photos] count] > 0){
-        return ((Photo*)[[self photos] objectAtIndex:0]).thumb_url;
+        return ((Photo*)[[self photos] objectAtIndex:0]).thumbUrl;
     } else if (self.place) {
         return self.place.placeThumbUrl;
     } else {

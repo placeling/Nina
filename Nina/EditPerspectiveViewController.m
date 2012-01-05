@@ -204,7 +204,7 @@
         UIImageView *imageView;
         CGRect rect = CGRectMake(cx, 0, 64, 64);
         
-        if (photo.photo_id){
+        if (photo.photoId){
             imageView = [[AsyncImageView alloc] initWithFrame:rect];
             [(AsyncImageView*)imageView loadImageFromPhoto:photo]; 
             imageView.alpha = 1.0;

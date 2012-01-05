@@ -150,7 +150,7 @@
     [request setPostValue:description forKey:@"description"];
     [request setPostValue:user_url forKey:@"url"];
     
-    self.user.description = description;
+    self.user.userDescription = description;
     self.user.url = user_url;
     
     if (uploadingImage){
@@ -343,7 +343,7 @@
         UIImageView *myImage = [[UIImageView alloc] initWithFrame:myImageRect];
         
         // Here we use the new provided setImageWithURL: method to load the web image
-        [myImage setImageWithURL:[NSURL URLWithString:user.profilePic.thumb_url]
+        [myImage setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
                        placeholderImage:[UIImage imageNamed:@"profile.png"]];
         myImage.tag = 1;
         

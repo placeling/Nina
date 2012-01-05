@@ -9,12 +9,10 @@
 #import "Photo.h"
 #import "NSDictionary+Utility.h"
 
-
 @implementation Photo
 
-@synthesize thumb_image, iphone_image, main_image;
-
-@synthesize thumb_url,iphone_url,main_url, photo_id, mine, perspective;
+@synthesize thumb_image, iphone_image, main_image, perspective;
+@dynamic thumbUrl,iphoneUrl,mainUrl, photoId, mine;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
     if(self = [super init]){
@@ -24,21 +22,21 @@
 }
 
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict{
-    self.photo_id = [jsonDict objectForKey:@"id"];
+    self.photoId = [jsonDict objectForKey:@"id"];
     
-    self.iphone_url = [jsonDict objectForKeyNotNull:@"iphone_url"];
-    self.main_url = [jsonDict objectForKeyNotNull:@"main_url"];
-    self.thumb_url = [jsonDict objectForKeyNotNull:@"thumb_url"];
+    self.iphoneUrl = [jsonDict objectForKeyNotNull:@"iphone_url"];
+    self.mainUrl = [jsonDict objectForKeyNotNull:@"main_url"];
+    self.thumbUrl = [jsonDict objectForKeyNotNull:@"thumb_url"];
 }
 
-+(RKObjectMapping*)getObjectMapping{
-    RKObjectMapping* photoMapping = [RKObjectMapping mappingForClass:[Photo class]];
++(RKManagedObjectMapping*)getObjectMapping{
+    RKManagedObjectMapping* photoMapping = [RKManagedObjectMapping mappingForClass:[Photo class]];
     [photoMapping mapKeyPathsToAttributes:
-        @"id", @"photo_id",
-        @"thumb_url", @"thumb_url",
-        @"main_url", @"main_url",
+        @"id", @"photoId",
+        @"thumb_url", @"thumbUrl",
+        @"main_url", @"mainUrl",
      nil];
-    
+    photoMapping.primaryKeyAttribute = @"photoId";
     return photoMapping;
 }
 
@@ -48,10 +46,10 @@
     [iphone_image release];
     [main_image release];
     
-    [thumb_url release];
-    [iphone_url release];
-    [main_url release];
-    [photo_id release];
+    [thumbUrl release];
+    [iphoneUrl release];
+    [mainUrl release];
+    [photoId release];
     
     [super dealloc];
 }

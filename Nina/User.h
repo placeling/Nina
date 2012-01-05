@@ -10,12 +10,11 @@
 #import "Photo.h"
 #import <RestKit/RestKit.h>
 
-@interface User : NSObject {
+@interface User : NSManagedObject {
     NSString *userId;
     NSString *city;
-    NSString *iconURLString;
     NSString *username;
-    NSString *description;
+    NSString *userDescription;
     NSString *email;
     NSString *url;
     
@@ -27,19 +26,18 @@
     NSInteger placeCount;
     NSInteger followingCount;
     NSInteger followerCount;
-    bool following;
-    bool follows_you;
+    NSNumber *following;
+    NSNumber *follows_you;
     
     bool modified;    
 }
 
-+(RKObjectMapping*)getObjectMapping;
++(RKManagedObjectMapping*)getObjectMapping;
 
 @property (nonatomic, retain) NSString *userId;
 @property (nonatomic, retain) NSString *city;
-@property (nonatomic, retain) NSString *iconURLString;
 @property (nonatomic, retain) NSString *username;
-@property (nonatomic, retain) NSString *description;
+@property (nonatomic, retain) NSString *userDescription;
 @property (nonatomic, retain) NSString *email;
 @property (nonatomic, retain) NSString *url;
 @property (nonatomic, retain) NSArray *location;
@@ -50,11 +48,10 @@
 @property (nonatomic, assign) NSInteger followingCount;
 @property (nonatomic, assign) NSInteger followerCount;
 
-@property (nonatomic, assign) bool following;
-@property (nonatomic, assign) bool follows_you;
+@property (nonatomic, retain) NSNumber *following;
+@property (nonatomic, retain) NSNumber *follows_you;
 @property (nonatomic, assign) bool modified;
 
-- (id) initFromJsonDict:(NSDictionary *)jsonDict;
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
 -(NSDictionary*) facebook;
