@@ -73,9 +73,13 @@
         }
         
         users = [[NSMutableArray alloc] initWithCapacity:[rawUsers count]];
+        RKObjectManager* objectManager = [RKObjectManager sharedManager];
+        NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
         
         for (NSDictionary* dict in rawUsers){
-            User* newUser = [[User alloc] initFromJsonDict:dict];
+
+            User *newUser = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+            [newUser updateFromJsonDict:dict];
             [users addObject:newUser]; 
             [newUser release];
         }

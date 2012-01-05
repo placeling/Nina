@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "User.h"
 #import "Place.h"
+#import <RestKit/RestKit.h>
 
 @interface Perspective : NSObject {
     User *user;

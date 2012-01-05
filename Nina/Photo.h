@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 #import <RestKit/RestKit.h>
 
 @class Perspective;
@@ -37,7 +38,6 @@
 @property (nonatomic, assign) BOOL mine;
 @property (nonatomic, assign) Perspective *perspective; //assign to prevent circular ref
 
-- (id) initFromJsonDict:(NSDictionary *)jsonDict;
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
 +(RKManagedObjectMapping*)getObjectMapping;

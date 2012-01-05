@@ -453,7 +453,8 @@
                 [newPerspective release];
             }
             
-            [self.tableView reloadData];            
+            [self.tableView reloadData];    
+            break;
         }
         case 14:
         {

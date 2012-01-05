@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="872" systemVersion="10K549" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Photo" syncable="YES">
+    <entity name="Photo" representedClassName="Photo" syncable="YES">
         <attribute name="iphoneUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mainUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mine" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="photoId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="profilePic" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
@@ -20,10 +19,10 @@
         <attribute name="userDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="profilePic" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" inverseName="user" inverseEntity="Photo" syncable="YES"/>
+        <relationship name="profilePic" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Photo" positionX="-1163" positionY="-342" width="128" height="120"/>
         <element name="User" positionX="-1314" positionY="-450" width="128" height="225"/>
-        <element name="Photo" positionX="-1163" positionY="-342" width="128" height="135"/>
     </elements>
 </model>

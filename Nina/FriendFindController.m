@@ -49,14 +49,17 @@
     self.searchUsers = [[[NSMutableArray alloc]init]autorelease];
     self.recentSearches = [[[NSMutableArray alloc]init]autorelease];
     
-    
+    RKObjectManager* objectManager = [RKObjectManager sharedManager];
+    NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     for (int i=0; i< 3; i++){
         if ([prefs dictionaryForKey:[NSString stringWithFormat:@"recent_search_%i", i]]){
             NSDictionary *jsonDict = [prefs dictionaryForKey:[NSString stringWithFormat:@"recent_search_%i", i]];
-            User *user = [[User alloc] initFromJsonDict:jsonDict];
+            User *user = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+            
+            [user updateFromJsonDict:jsonDict];
             [self.recentSearches addObject:user];
             [user release];
         }

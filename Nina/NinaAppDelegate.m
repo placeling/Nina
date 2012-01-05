@@ -37,18 +37,15 @@ void uncaughtExceptionHandler(NSException *exception) {
     objectManager.client.authenticationType = RKRequestAuthenticationTypeOAuth1;  
     objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
     
-    //[[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&error];
+    //clear previous cache
+    NSError *error = nil;
+    NSString *filePath = [[NSHomeDirectory() 
+                            stringByAppendingPathComponent:@"Documents"] 
+                           stringByAppendingPathComponent:@"NinaRestCache.sqlite"];        
+    [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+    
     
     RKManagedObjectStore* objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:@"NinaRestCache.sqlite"];
-    
-    //reset the persistent store on launch
-    NSPersistentStore *store = [objectStore.persistentStoreCoordinator.persistentStores objectAtIndex:0];
-    NSError *error;
-    NSURL *storeURL = store.URL;
-    NSPersistentStoreCoordinator *storeCoordinator = objectStore.persistentStoreCoordinator;
-    [storeCoordinator removePersistentStore:store error:&error];
-    [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&error];
-    objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:@"NinaRestCache.sqlite"];
     
     objectManager.objectStore = objectStore;
     

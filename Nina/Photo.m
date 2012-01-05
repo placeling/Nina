@@ -12,14 +12,9 @@
 @implementation Photo
 
 @synthesize thumb_image, iphone_image, main_image, perspective;
+
 @dynamic thumbUrl,iphoneUrl,mainUrl, photoId, mine;
 
-- (id) initFromJsonDict:(NSDictionary *)jsonDict{
-    if(self = [super init]){
-        [self updateFromJsonDict:jsonDict];
-	}
-	return self;
-}
 
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict{
     self.photoId = [jsonDict objectForKey:@"id"];

@@ -24,9 +24,9 @@
     self.userId = [jsonDict objectForKeyNotNull:@"id"];
     self.username = [jsonDict objectForKeyNotNull:@"username"];
     self.city = [jsonDict objectForKeyNotNull:@"city"];
-    self.placeCount = [[jsonDict objectForKeyNotNull:@"perspectives_count"] intValue];
-    self.followerCount =[[jsonDict objectForKeyNotNull:@"follower_count"] intValue];
-    self.followingCount = [[jsonDict objectForKeyNotNull:@"following_count"] intValue];
+    self.placeCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"perspectives_count"] intValue]];
+    self.followerCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"follower_count"] intValue]];
+    self.followingCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"following_count"] intValue]];
     self.userDescription = [jsonDict objectForKeyNotNull:@"description"];
     self.url = [jsonDict objectForKeyNotNull:@"url"];
     self.email = [jsonDict objectForKeyNotNull:@"email"];
@@ -88,7 +88,7 @@
      @"perspectives_count", @"placeCount",
      @"follower_count", @"followerCount",
      @"following_count", @"followingCount",
-     @"description", @"description",
+     @"description", @"userDescription",
      @"url", @"url",
      @"email", @"email",
      @"location", @"location",
@@ -111,6 +111,9 @@
     [url release];
     [location release];
     [auths release];
+    [placeCount release];
+    [followingCount release];
+    [followerCount release]; 
     
     [super dealloc];
 }

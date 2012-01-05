@@ -22,7 +22,10 @@
         }
         
         if ([jsonDict objectForKey:@"user"]){
-            self.user = [[[User alloc] initFromJsonDict:[jsonDict objectForKey:@"user"]]autorelease];
+            RKObjectManager* objectManager = [RKObjectManager sharedManager];
+            NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+            self.user = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+            [self.user updateFromJsonDict:[jsonDict objectForKey:@"user"]];
         }
         
         NSMutableArray *initPhotos = [[NSMutableArray alloc] init];
@@ -38,22 +41,26 @@
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
     mine = [[jsonDict objectForKey:@"mine"] boolValue];
     
+    RKObjectManager* objectManager = [RKObjectManager sharedManager];
+    NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+    
     [self.photos removeAllObjects];
     for (NSDictionary *photoDict in [jsonDict objectForKey:@"photos"]){
-        Photo *photo = [[Photo alloc] initFromJsonDict:photoDict];
-        photo.perspective = self;
-        photo.mine = self.mine;
-        [self.photos addObject:photo];
-        [photo release];
+
+        Photo *newPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:managedObjectContext];        
+        
+        [newPhoto updateFromJsonDict:photoDict];
+        newPhoto.perspective = self;
+        newPhoto.mine = self.mine;
+        [self.photos addObject:newPhoto];
+        [newPhoto release];
     }    
     
     self.perspectiveId = [jsonDict objectForKeyNotNull:@"_id"];
     self.notes = [jsonDict objectForKeyNotNull:@"memo"];
     self.starred = [[jsonDict objectForKeyNotNull:@"starred"] boolValue];
     self.lastModified =[jsonDict objectForKeyNotNull:@"updated_at"];
-    self.url = [jsonDict objectForKeyNotNull:@"url"];
-    
-    
+    self.url = [jsonDict objectForKeyNotNull:@"url"];    
 }
 
 -(void) star{
