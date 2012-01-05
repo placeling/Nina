@@ -40,17 +40,18 @@
         [self setImage:self.photo.thumb_image];
     } else {
         
-        if (self.photo.thumb_url == nil){
+        if (self.photo.thumbUrl == nil){
             return;
         }
         if (_request!=nil) { [_request release]; } //in case we are downloading a 2nd image
         
-        DLog(@"Downloading photo for %@", self.photo.photo_id);
+        DLog(@"Downloading photo for %@", self.photo.photoId);
         
         self.contentMode = UIViewContentModeScaleAspectFill;
         self.clipsToBounds = true;
-        
-        [self setImageWithURL:[NSURL URLWithString:self.photo.thumb_url] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
+        if (true){ 
+            [self setImageWithURL:[NSURL URLWithString:self.photo.thumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
+        }
     }
 }
 
