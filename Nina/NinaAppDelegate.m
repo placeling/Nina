@@ -35,6 +35,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     [[objectManager client] setOAuth1AccessTokenSecret:[NinaHelper getAccessTokenSecret]];
     [[objectManager client] setOAuth1ConsumerKey:[NinaHelper getConsumerKey]];
     [[objectManager client] setOAuth1ConsumerSecret:[NinaHelper getConsumerSecret]];
+    //[objectManager client] set
     objectManager.client.authenticationType = RKRequestAuthenticationTypeOAuth1;  
     objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
     //[[RKClient sharedClient].cache invalidateAll];
@@ -50,9 +51,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     objectManager.objectStore.managedObjectCache = [[DBManagedObjectCache new] autorelease];
     
     //set cache policy for restkit
-    //[[objectManager client] setCachePolicy: RKRequestCachePolicyLoadIfOffline|RKRequestCachePolicyTimeout];
-    [[objectManager client] setCachePolicy:RKRequestCachePolicyEnabled];
-    
+    [[objectManager client] setCachePolicy:RKRequestCachePolicyEtag | RKRequestCachePolicyTimeout|RKRequestCachePolicyLoadIfOffline ];
+    [[objectManager client] setCacheTimeout:60*60]; //hour
     
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     
