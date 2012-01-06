@@ -13,11 +13,12 @@
 @implementation DBManagedObjectCache
 
 - (NSArray*)fetchRequestsForResourcePath:(NSString*)resourcePath {
-    
+    /*
     if ([resourcePath isEqualToString:@"/v1/users/imack"]) {
-		NSFetchRequest* request = [User fetchRequest];
+		NSFetchRequest* request = [User requestFirstByAttribute:@"username" withValue:@"imack"];
 		return [NSArray arrayWithObject:request];
 	}
+     */
 	
 	return nil;
 }
