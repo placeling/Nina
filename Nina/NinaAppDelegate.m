@@ -13,6 +13,7 @@
 #import "NinaHelper.h"
 #import <RestKit/RestKit.h>
 #import "User.h"
+#import "DBManagedObjectCache.h"
 
 @implementation NinaAppDelegate
 
@@ -36,18 +37,22 @@ void uncaughtExceptionHandler(NSException *exception) {
     [[objectManager client] setOAuth1ConsumerSecret:[NinaHelper getConsumerSecret]];
     objectManager.client.authenticationType = RKRequestAuthenticationTypeOAuth1;  
     objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
-    
-    //clear previous cache
+    //[[RKClient sharedClient].cache invalidateAll];
     NSError *error = nil;
     NSString *filePath = [[NSHomeDirectory() 
                             stringByAppendingPathComponent:@"Documents"] 
                            stringByAppendingPathComponent:@"NinaRestCache.sqlite"];        
     [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
     
-    
     RKManagedObjectStore* objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:@"NinaRestCache.sqlite"];
-    
     objectManager.objectStore = objectStore;
+    
+    objectManager.objectStore.managedObjectCache = [[DBManagedObjectCache new] autorelease];
+    
+    //set cache policy for restkit
+    //[[objectManager client] setCachePolicy: RKRequestCachePolicyLoadIfOffline|RKRequestCachePolicyTimeout];
+    [[objectManager client] setCachePolicy:RKRequestCachePolicyEnabled];
+    
     
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     

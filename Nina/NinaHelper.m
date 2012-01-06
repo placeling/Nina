@@ -99,7 +99,11 @@
 
 +(void) handleBadRKRequest:(RKResponse *)response sender:(UIViewController*)sender{
     int statusCode = response.statusCode;
-    NSString *host = [response.request.URL host];
+    NSString *host = [[response.request URL] host];
+    if (host == nil){
+        //this seems to happen, make non-nil
+        host = @"http";
+    }
     NSError *error = response.failureError;
     
     [NinaHelper handleBadRequest:statusCode host:host error:error sender:sender];  

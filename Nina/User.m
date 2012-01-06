@@ -95,6 +95,8 @@
      @"following", @"following",
      @"follows_you", @"follows_you",
      nil];
+    
+    userMapping.primaryKeyAttribute = @"username";
     [userMapping mapKeyPath:@"picture" toRelationship:@"profilePic" withMapping:[Photo getObjectMapping]];
     
     return userMapping;

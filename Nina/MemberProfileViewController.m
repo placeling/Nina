@@ -217,7 +217,7 @@
         loadingMore = true;
         
         // Call url to get profile details                
-        RKObjectManager* objectManager = [RKObjectManager sharedManager];        
+        RKObjectManager* objectManager = [RKObjectManager sharedManager];   
         [objectManager loadObjectsAtResourcePath:[NSString stringWithFormat:@"/v1/users/%@", self.username] objectMapping:[User getObjectMapping] delegate:self];
     }
 }
