@@ -15,13 +15,13 @@
 
 @interface FriendFindController ()
 -(BOOL) searchResults;
+-(void) performUsernameSearch:(NSString*) username;
 @end
 
 
 @implementation FriendFindController
 @synthesize searchUsers, suggestedUsers, recentSearches;
 @synthesize searchBar=_searchBar, tableView=_tableView;
-
 
 
 -(BOOL) searchResults{
@@ -67,17 +67,15 @@
 
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocationCoordinate2D location = [manager location].coordinate;
-	
-	NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users/suggested?lat=%f&lng=%f", [NinaHelper getHostname], location.latitude, location.longitude];
     
-    NSURL *url = [NSURL URLWithString:targetURL];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [NinaHelper signRequest:request];
-    [request setTag:100];
-    [request setDelegate:self];
-    [request startAsynchronous];
+    NSString *targetURL = [NSString stringWithFormat:@"/v1/users/suggested?lat=%f&lng=%f", location.latitude, location.longitude];    
     
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+        RKObjectMapping * userMapping = [User getObjectMapping];
+        userMapping.rootKeyPath = @"suggested";
+        loader.objectMapping = userMapping;
+        loader.userData = [NSNumber numberWithInt:100]; //use as a tag
+    }];
     
 }
 
@@ -101,32 +99,29 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users/search?q=%@", [NinaHelper getHostname], searchBar.text];
+-(void) performUsernameSearch:(NSString*) username{
+    RKObjectManager* objectManager = [RKObjectManager sharedManager];
+
+    NSString *targetURL = [NSString stringWithFormat:@"/v1/users/search?q=%@", username];
     
-    NSURL *url = [NSURL URLWithString:targetURL];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [NinaHelper signRequest:request];
-    [request setTag:101];
-    [request setDelegate:self];
-    [request startAsynchronous];
-    
-    [searchBar resignFirstResponder];
-    
-    
+    [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+        RKObjectMapping * userMapping = [User getObjectMapping];
+        userMapping.rootKeyPath = @"users";
+        loader.objectMapping = userMapping;
+        loader.userData = [NSNumber numberWithInt:101]; //use as a tag
+    }];
 }
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [self performUsernameSearch:self.searchBar.text];
+    [searchBar resignFirstResponder];
+}
+
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     if ( [self.searchBar.text length] >= 2){
         showSearchResults = true;
-        NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users/search?q=%@", [NinaHelper getHostname], [NinaHelper encodeForUrl:searchText]];
-        
-        NSURL *url = [NSURL URLWithString:targetURL];
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-        [NinaHelper signRequest:request];
-        [request setTag:101];
-        [request setDelegate:self];
-        [request startAsynchronous];
+        [self performUsernameSearch:self.searchBar.text];
     } else {
         showSearchResults = false;
         [self.tableView reloadData];
@@ -151,72 +146,28 @@
 #pragma mark - RKObjectLoaderDelegate methods
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
-    /*loadingMore = false;
-    User* user = [objects objectAtIndex:0];
-    DLog(@"Loaded User: %@", user.username);
-    self.user = user;
-    [self.tableView reloadData]; */
+
+    if ( [(NSNumber*)objectLoader.userData intValue] == 100){
+        [self.suggestedUsers removeAllObjects];
+        for (User* user in objects){
+            [self.suggestedUsers addObject:user];
+        }
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 101){
+        [self.searchUsers removeAllObjects];
+        
+        for (User* user in objects){
+            [self.searchUsers addObject:user];
+        }
+    }
+    
+    [self.tableView reloadData]; 
 }
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
-    /* objectLoader.response.
-    loadingMore = false;
     [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
-    DLog(@"Encountered an error: %@", error); */
+    DLog(@"Encountered an error: %@", error); 
 }
 
-
-- (void)requestFailed:(ASIHTTPRequest *)request{
-	[NinaHelper handleBadRequest:request sender:self];
-}
-
-- (void)requestFinished:(ASIHTTPRequest *)request{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
-    if (200 != [request responseStatusCode]){
-		[NinaHelper handleBadRequest:request sender:self];
-	} else {
-        RKObjectManager* objectManager = [RKObjectManager sharedManager];
-        NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
-        
-        switch( [request tag] ){
-            case 100:{                
-                NSString *responseString = [request responseString];
-                DLog(@"%@", responseString);
-
-                NSArray *rawUsers = [[responseString JSONValue] objectForKey:@"suggested"];
-                [self.suggestedUsers removeAllObjects];
-                for (NSDictionary* rawUser in rawUsers){
-                    //User *user = (User*)[NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:managedObjectContext];
-                    User *user = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
-                    
-                    [user updateFromJsonDict:rawUser];
-                    [self.suggestedUsers addObject:user];
-                    [user release];
-                }
-                [self.tableView reloadData];                
-                break;
-            }
-            case 101:{
-                NSString *responseString = [request responseString];
-                DLog(@"%@", responseString);
-                
-                NSArray *rawUsers = [[responseString JSONValue] objectForKey:@"users"];
-                [self.searchUsers removeAllObjects];
-                
-                for (NSDictionary* rawUser in rawUsers){
-                    User *user = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
-                    [user updateFromJsonDict:rawUser];
-                    [self.searchUsers addObject:user];
-                    [user release];
-                }
-                
-                [self.tableView reloadData];                
-                break;
-            }
-        }
-	}
-}
 
 #pragma mark - Table view data source
 

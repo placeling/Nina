@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <RestKit/RestKit.h>
 
-@interface FriendFindController : UIViewController<ASIHTTPRequestDelegate,UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>{
+@interface FriendFindController : UIViewController<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, RKObjectLoaderDelegate>{
     NSMutableArray *searchUsers; 
     NSMutableArray *suggestedUsers; 
     NSMutableArray *recentSearches;
