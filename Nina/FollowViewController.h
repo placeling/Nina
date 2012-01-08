@@ -11,8 +11,9 @@
 #import "ASIHTTPRequest.h"
 #import "User.h"
 #import "Place.h"
+#import <RestKit/RestKit.h>
 
-@interface FollowViewController : UITableViewController<ASIHTTPRequestDelegate>{
+@interface FollowViewController : UITableViewController<RKObjectLoaderDelegate>{
     User* _user;
     Place* _place;
     NSMutableArray *users;

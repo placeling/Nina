@@ -43,89 +43,50 @@
     return self;
 }
 
-#pragma mark - asi request handlers
+#pragma mark - RKObjectLoaderDelegate methods
 
-- (void)requestFailed:(ASIHTTPRequest *)request{
-    [NinaHelper handleBadRequest:request sender:self];
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+    
+    users = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+    for (User* user in objects){
+        [users addObject:user];
+    }
+    
+    [self.tableView reloadData]; 
 }
 
-- (void)requestFinished:(ASIHTTPRequest *)request{
-	// Use when fetching binary data
-	int statusCode = [request responseStatusCode];
-	if (200 != statusCode){
-        [NinaHelper handleBadRequest:request  sender:self];
-	} else {
-		NSString *responseString = [request responseString];
-        DLog(@"Got JSON BACK: %@", responseString);
-        
-        [users release];
-        NSDictionary *jsonDict = [responseString JSONValue];
-        NSMutableArray *rawUsers;
-        
-        if (self.place){
-             rawUsers = [jsonDict objectForKey:@"users"];           
-        } else {
-            if (self.following){
-                rawUsers = [jsonDict objectForKey:@"following"];
-            } else {
-                rawUsers = [jsonDict objectForKey:@"followers"];
-            }
-        }
-        
-        users = [[NSMutableArray alloc] initWithCapacity:[rawUsers count]];
-        RKObjectManager* objectManager = [RKObjectManager sharedManager];
-        NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
-        
-        for (NSDictionary* dict in rawUsers){
-
-            User *newUser = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
-            [newUser updateFromJsonDict:dict];
-            [users addObject:newUser]; 
-            [newUser release];
-        }
-        
-        [self.tableView reloadData];
-	}
-    
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
+    DLog(@"Encountered an error: %@", error); 
 }
 
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
-    
-    NSString *urlString;
+    NSString *targetURL;
     
     if (self.place){        
         self.navigationItem.title = self.place.name;  
         
         if (self.following){
-            urlString = [NSString stringWithFormat:@"%@/v1/places/%@/users?filter_follow=true", [NinaHelper getHostname], self.place.place_id];
+            targetURL = [NSString stringWithFormat:@"/v1/places/%@/users?filter_follow=true", self.place.place_id];
         } else {
-            urlString = [NSString stringWithFormat:@"%@/v1/places/%@/users", [NinaHelper getHostname], self.place.place_id];
-        }
-        
+            targetURL = [NSString stringWithFormat:@"/v1/places/%@/users", self.place.place_id];
+        }        
     } else {
         if (self.following){
-            urlString = [NSString stringWithFormat:@"%@/v1/users/%@/following", [NinaHelper getHostname], self.user.username];
+            targetURL = [NSString stringWithFormat:@"/v1/users/%@/following", self.user.username];
             self.navigationItem.title = @"Following";
         } else {
-            urlString = [NSString stringWithFormat:@"%@/v1/users/%@/followers", [NinaHelper getHostname], self.user.username];
+            targetURL = [NSString stringWithFormat:@"/v1/users/%@/followers", self.user.username];
             self.navigationItem.title = @"Followers";
         }
     }
     	
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-    [request setTag:40];
-    [request setDelegate:self];
-    
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
-
+    RKObjectManager* objectManager = [RKObjectManager sharedManager];
+    [objectManager loadObjectsAtResourcePath:targetURL delegate:self];
 }
 
 - (void)viewDidUnload

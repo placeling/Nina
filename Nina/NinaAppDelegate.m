@@ -54,6 +54,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     [[objectManager client] setCachePolicy:RKRequestCachePolicyEtag | RKRequestCachePolicyTimeout|RKRequestCachePolicyLoadIfOffline ];
     [[objectManager client] setCacheTimeout:60*60]; //hour
     
+    
+    [objectManager.mappingProvider setMapping:[User getObjectMapping] forKeyPath:@"users"];
+    [objectManager.mappingProvider setMapping:[User getObjectMapping] forKeyPath:@"followers"];
+    [objectManager.mappingProvider setMapping:[User getObjectMapping] forKeyPath:@"following"];
+    
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     
     if ([NinaHelper isProductionRun]){
