@@ -83,7 +83,7 @@
     
     NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
     Facebook *facebook = appDelegate.facebook;
-    [facebook logout:appDelegate];    
+    [facebook logout];   
 }
 
 +(void) showLoginController:(UIViewController<LoginControllerDelegate>*)sender{
