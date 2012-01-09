@@ -29,13 +29,11 @@
 #import "ASIDownloadCache.h"
 
 #import "NearbySuggestedPlaceController.h"
-#import "FullPerspectiveViewController.h"
 #import "CustomSegmentedControl.h"
 #import "FollowViewController.h"
 
 #import "LoginController.h"
 #import "MemberProfileViewController.h"
-#import "FullPerspectiveViewController.h"
 
 #define kMinCellHeight 60
 
@@ -208,10 +206,7 @@ typedef enum {
         } else if ([parentController isKindOfClass:[PlacePageViewController class]]) {
             PlacePageViewController *place = (PlacePageViewController *)[[[self navigationController] viewControllers] objectAtIndex:i];
             [place mainContentLoad];
-        } else if ([parentController isKindOfClass:[FullPerspectiveViewController class]]) {
-            FullPerspectiveViewController *perspective = (FullPerspectiveViewController *)[[[self navigationController] viewControllers] objectAtIndex:i];
-            [perspective mainContentLoad];
-        }
+        } 
     }
     
     [self mainContentLoad];
@@ -478,7 +473,7 @@ typedef enum {
                 break;
             }
             case 4:{
-                //perspective modified return
+                //bookmarked
                 NSString *responseString = [request responseString];        
                 DLog(@"%@", responseString);
                 NSDictionary *jsonString = [responseString JSONValue];
@@ -498,6 +493,8 @@ typedef enum {
                 self.place.bookmarked = true;
                 [self.tableView reloadData];      
                 [self loadData];
+                
+                [self editPerspective]; //popup after bookmark
                 
                 break;
             }
@@ -594,6 +591,30 @@ typedef enum {
                 
                 [self loadData];
                 [self.tableView reloadData];
+                break;
+            } case 9:{
+                //perspective modified return
+                NSString *responseString = [request responseString];        
+                DLog(@"%@", responseString);
+                NSDictionary *jsonString = [responseString JSONValue];
+                
+                if (myPerspective){
+                    [myPerspective updateFromJsonDict:jsonString];
+                } else {
+                    myPerspective = [[Perspective alloc]initFromJsonDict:jsonString];
+                    [homePerspectives insertObject:myPerspective atIndex:0];
+                }
+                
+                //handles updates tags, etc
+                [self.place updateFromJsonDict:[jsonString objectForKey:@"place"]];
+                
+                myPerspective.place = self.place;                
+                
+                self.place.bookmarked = true;
+                [self.tableView reloadData];      
+                [self loadData];
+                
+                break;
             }
         }
 
@@ -852,7 +873,7 @@ typedef enum {
 -(IBAction) bookmark {
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+    if (!currentUser || currentUser.length == 0) {
         UIAlertView *baseAlert;
         NSString *alertMessage = @"Sign up or log in to bookmark locations";
         baseAlert = [[UIAlertView alloc] 
@@ -1233,13 +1254,7 @@ typedef enum {
             
             [editPerspectiveViewController release];         
 
-        } else {
-            FullPerspectiveViewController *fullPerspectiveViewController = [[FullPerspectiveViewController alloc] init];
-            fullPerspectiveViewController.perspective = perspective;
-            
-            [[self navigationController] pushViewController:fullPerspectiveViewController animated:YES];
-            [fullPerspectiveViewController release];
-        }
+        } 
     }
 }
 

@@ -20,7 +20,6 @@
 #import "NinaHelper.h"
 #import "EditProfileViewController.h"
 #import "LoginController.h"
-#import "FullPerspectiveViewController.h"
 #import "UIImageView+WebCache.h"
 #import "NinaAppDelegate.h"
 
@@ -235,10 +234,7 @@
         } else if ([parentController isKindOfClass:[PlacePageViewController class]]) {
             PlacePageViewController *place = (PlacePageViewController *)[[[self navigationController] viewControllers] objectAtIndex:i];
             [place mainContentLoad];
-        } else if ([parentController isKindOfClass:[FullPerspectiveViewController class]]) {
-            FullPerspectiveViewController *perspective = (FullPerspectiveViewController *)[[[self navigationController] viewControllers] objectAtIndex:i];
-            [perspective mainContentLoad];
-        }
+        } 
     }
     
     [self mainContentLoad];

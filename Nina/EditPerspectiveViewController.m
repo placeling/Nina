@@ -152,7 +152,7 @@
     
     [request setRequestMethod:@"POST"];
     [request setDelegate:delegate]; //whatever called this should handle it
-    [request setTag:4]; //this is the bookmark request tag from placepageviewcontroller -iMack
+    [request setTag:9]; //this is the perspective modified request tag from placepageviewcontroller -iMack
     
     [NinaHelper signRequest:request];
     [request setUploadProgressDelegate:hud];
