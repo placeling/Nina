@@ -385,17 +385,20 @@
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier;
+    
+    if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
+        tableView.allowsSelection = NO;
+        CellIdentifier = @"CopyCell";
+    } else {
+        tableView.allowsSelection = YES;
+        CellIdentifier = @"DataCell";
+    }
+    
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-    if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
-        tableView.allowsSelection = NO;
-    } else {
-        tableView.allowsSelection = YES;
     }
     
     
@@ -513,7 +516,6 @@
     [searchBar setShowsCancelButton:FALSE animated:true];
     [self findNearbyPlaces:searchBar.text];
 }
-
 
 
 -(void) keyboardWillShow:(NSNotification *)note
