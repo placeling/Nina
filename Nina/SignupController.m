@@ -365,6 +365,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     DLog(@"Click on the indexpath row %i", indexPath.row);
+    
+    EditableTableCell *eCell = (EditableTableCell*)[tableView cellForRowAtIndexPath:indexPath];
+    [eCell.textField becomeFirstResponder];
 }
 
 @end
