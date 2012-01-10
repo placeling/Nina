@@ -107,13 +107,17 @@
     accuracy = sqrt( accuracy ); 
     if (accuracy < 200){
         manager.delegate = nil;
-        [timer invalidate];
+        if (timer){ //no guarantee timer is set
+            [timer invalidate];
+        }
         [self findNearbyPlaces:self.searchBar.text];
     }
 }
 
 -(void)impatientUser{    
-    [timer invalidate];
+    if (timer){ //no guarantee timer is set
+        [timer invalidate];
+    }
     [self getNearbyPlaces:self.searchBar.text];
 }
 
