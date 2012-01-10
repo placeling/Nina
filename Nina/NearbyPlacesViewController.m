@@ -135,8 +135,7 @@
     
     NSString *urlString = @"https://maps.googleapis.com/maps/api/place/search/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y";		
     
-    searchTerm  = [searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-    
+    searchTerm  = [NinaHelper encodeForUrl:searchTerm];
     
     if ([searchTerm length] > 0){
         accuracy = 15000.0;
@@ -481,7 +480,7 @@
     
     NSString *urlString = @"https://maps.googleapis.com/maps/api/place/autocomplete/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y&";		
     
-    NSString *searchTerm  = [searchBar.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    NSString *searchTerm  = [NinaHelper encodeForUrl:searchBar.text];
     
     if ([searchText length] > 0){
         urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f&input=%@", urlString, lat, lon, 500.0, searchTerm];
