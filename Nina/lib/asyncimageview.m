@@ -49,7 +49,10 @@
         
         self.contentMode = UIViewContentModeScaleAspectFill;
         self.clipsToBounds = true;
-        if (true){ 
+        
+        if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] && self.photo.iphoneUrl) {
+            [self setImageWithURL:[NSURL URLWithString:self.photo.iphoneUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
+        } else {
             [self setImageWithURL:[NSURL URLWithString:self.photo.thumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
         }
     }
