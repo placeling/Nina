@@ -73,7 +73,7 @@ typedef enum {
 - (id) initWithPlace:(Place *)place{
     if(self = [super init]){
         self.place = place;
-        self.place_id = place.place_id;
+        self.place_id = place.pid;
         
 	}
 	return self;    
@@ -98,7 +98,7 @@ typedef enum {
     self.tableView.tableFooterView = self.tableFooterView;
     
     if (self.place){
-        self.place_id = self.place.place_id;
+        self.place_id = self.place.pid;
     }
         
     UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
@@ -299,7 +299,7 @@ typedef enum {
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSString *urlString = [NSString stringWithFormat:@"https://www.placeling.com/places/%@", self.place.place_id];
+    NSString *urlString = [NSString stringWithFormat:@"https://www.placeling.com/places/%@", self.place.pid];
     
     if (buttonIndex == 0){
         DLog(@"share by email");
@@ -375,7 +375,7 @@ typedef enum {
                 Place *newPlace = [[Place alloc] initFromJsonDict:jsonDict];
                 
                 self.place = newPlace;
-                self.place_id = newPlace.place_id;
+                self.place_id = newPlace.pid;
                 [newPlace release];
                 
                 [homePerspectives removeLastObject]; //get rid of spinner wait
@@ -633,7 +633,7 @@ typedef enum {
 
 -(void) deletePerspective:(Perspective*)perspective{
     
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/", [NinaHelper getHostname], perspective.place.place_id];
+    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/", [NinaHelper getHostname], perspective.place.pid];
 
     NSURL *url = [NSURL URLWithString:urlText];
     

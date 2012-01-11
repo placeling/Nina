@@ -13,6 +13,7 @@
 #import "NinaHelper.h"
 #import <RestKit/RestKit.h>
 #import "User.h"
+#import "Place.h"
 #import "DBManagedObjectCache.h"
 
 @implementation NinaAppDelegate
@@ -58,6 +59,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     [objectManager.mappingProvider setMapping:[User getObjectMapping] forKeyPath:@"users"];
     [objectManager.mappingProvider setMapping:[User getObjectMapping] forKeyPath:@"followers"];
     [objectManager.mappingProvider setMapping:[User getObjectMapping] forKeyPath:@"following"];
+    
+    [objectManager.mappingProvider setMapping:[Place getObjectMapping] forKeyPath:@"suggested_places"];
+    [objectManager.mappingProvider setMapping:[Place getObjectMapping] forKeyPath:@"places"];
     
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     

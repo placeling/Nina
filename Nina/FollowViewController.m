@@ -71,9 +71,9 @@
         self.navigationItem.title = self.place.name;  
         
         if (self.following){
-            targetURL = [NSString stringWithFormat:@"/v1/places/%@/users?filter_follow=true", self.place.place_id];
+            targetURL = [NSString stringWithFormat:@"/v1/places/%@/users?filter_follow=true", self.place.pid];
         } else {
-            targetURL = [NSString stringWithFormat:@"/v1/places/%@/users", self.place.place_id];
+            targetURL = [NSString stringWithFormat:@"/v1/places/%@/users", self.place.pid];
         }        
     } else {
         if (self.following){

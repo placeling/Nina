@@ -14,8 +14,8 @@
 
 @synthesize dirty, name, pid, user;
 @synthesize address, city, perspectiveCount, bookmarked, followingPerspectiveCount;
-@synthesize location, usersBookmarking;
-@synthesize place_id, phone, googlePlacesUrl, google_ref, thumb_url=_thumb_url;
+@synthesize lat, lng, usersBookmarking;
+@synthesize googleId, phone, googlePlacesUrl, google_ref, thumbUrl;
 @synthesize categories, icon, tags;
 @synthesize homePerspectives,followingPerspectives,everyonePerspectives;
 
@@ -36,25 +36,52 @@
     self.city = [jsonDict objectForKeyNotNull:@"city_data"];
     self.phone = [jsonDict objectForKeyNotNull:@"phone_number"];
     
-    self.place_id = [jsonDict objectForKeyNotNull:@"google_id"];
+    self.googleId = [jsonDict objectForKeyNotNull:@"google_id"];
     self.googlePlacesUrl = [jsonDict objectForKeyNotNull:@"google_url"];
     self.google_ref = [jsonDict objectForKey:@"google_ref"];
     
-    NSNumber *lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
-    NSNumber *lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1]; 
+    self.lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
+    self.lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1]; 
     
-    self.location = [[[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]]autorelease];
     self.perspectiveCount = [[jsonDict objectForKeyNotNull:@"perspective_count"] intValue];
     self.bookmarked = [[jsonDict objectForKeyNotNull:@"bookmarked"] boolValue] ;
     self.categories = [jsonDict objectForKeyNotNull:@"venue_types"];
     
-    self.thumb_url = [jsonDict objectForKey:@"thumb_url"];
+    self.thumbUrl = [jsonDict objectForKey:@"thumb_url"];
     
     self.usersBookmarking = [jsonDict objectForKey:@"users_bookmarking"];        
     self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
     self.tags = [jsonDict objectForKeyNotNull:@"tags"];
     
 }
+
+
++(RKObjectMapping*)getObjectMapping{
+    RKObjectMapping* placeMapping = [RKObjectMapping mappingForClass:[Place class]];
+    [placeMapping mapKeyPathsToAttributes:
+     
+     @"id", @"pid",
+     @"name", @"name",
+     @"city_data", @"city",     
+     @"perspective_count", @"perspectiveCount",
+     @"venue_types", @"categories",
+     @"google_ref", @"google_ref",
+     @"google_url", @"googlePlacesUrl",
+     @"google_id", @"googleId",
+     @"users_bookmarking", @"usersBookmarking",
+     @"following_perspective_count", @"followingPerspectiveCount",
+     @"tags", @"tags",
+     @"thumb_url", @"thumbUrl",
+     nil];
+    
+    [placeMapping mapKeyPath:@"lat" toAttribute:@"lat"];
+    [placeMapping mapKeyPath:@"lng" toAttribute:@"lng"];
+    
+    //placeMapping.primaryKeyAttribute = @"pid";
+    
+    return placeMapping;
+}
+
 
 -(NSString*) usersBookmarkingString{
     
@@ -87,10 +114,10 @@
         NSString *mapUrl = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%f,%f&zoom=15&size=%ix%i&markers=color:red%%7C%f,%f&sensor=false&scale=2", self.place.location.coordinate.latitude, self.place.location.coordinate.longitude, 90, 90, self.place.location.coordinate.latitude, self.place.location.coordinate.longitude]; */
     
     
-    if (self.thumb_url == nil || [self.thumb_url length] ==0){
+    if (self.thumbUrl == nil || [self.thumbUrl length] ==0){
         return @"http://www.placeling.com/images/placeling_thumb_logo.png";
     } else {
-        return self.thumb_url;
+        return self.thumbUrl;
     }
     
 }
@@ -109,23 +136,29 @@
     
 }
 
+-(CLLocation*) location{
+    return [[[CLLocation alloc] initWithLatitude:[lat doubleValue] longitude:[lng doubleValue]]autorelease];
+    
+}
+
 - (void) dealloc{
     [name release];
     [pid release];
     [user release];
     [address release];
     [city release];
-    [place_id release];
+    [googleId release];
     [google_ref release];
     
     [phone release];
-    [location release];
+    [lat release];
+    [lng release];
     [usersBookmarking release];
     [tags release];
 
     [categories release];
     [icon release];
-    [_thumb_url release];
+    [thumbUrl release];
     
     [homePerspectives release];
     [followingPerspectives release];

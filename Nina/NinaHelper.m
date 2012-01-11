@@ -218,7 +218,7 @@
             accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
             
             [formRequest setPostValue:lat forKey:@"lat"];
-            [formRequest setPostValue:lng forKey:@"long"];
+            [formRequest setPostValue:lng forKey:@"lng"];
             [formRequest setPostValue:[NSString stringWithFormat:@"%f", accuracy] forKey:@"accuracy"];
         }
         

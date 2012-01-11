@@ -29,7 +29,7 @@
         DLog(@"Deleting Photo:%@", self.photo.thumbUrl);
         Perspective *perspective = self.photo.perspective;
         
-        NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/photos/%@", [NinaHelper getHostname], perspective.place.place_id, self.photo.photoId];        
+        NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/photos/%@", [NinaHelper getHostname], perspective.place.pid, self.photo.photoId];        
         NSURL *url = [NSURL URLWithString:urlText];        
         ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
 

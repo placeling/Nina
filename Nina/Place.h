@@ -21,14 +21,15 @@
     
     NSString *address;
     NSString *city;
-    NSString *place_id;
+    NSString *googleId;
     NSString *google_ref;
-    NSString *_thumb_url;
+    NSString *thumbUrl;
     
     NSArray *usersBookmarking;
     NSArray *tags;
     
-    CLLocation* location;
+    NSNumber *lat;
+    NSNumber *lng;
     
     NSString *phone;
     
@@ -43,19 +44,23 @@
     NSMutableArray *everyonePerspectives;
     
 }
+
++(RKObjectMapping*)getObjectMapping;
+
 @property (nonatomic, assign) BOOL dirty;
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *pid;
-@property (nonatomic, retain) NSString *place_id;
+@property (nonatomic, retain) NSString *googleId;
 @property (nonatomic, retain) User *user;
 @property (nonatomic, retain) NSString *googlePlacesUrl;
 @property (nonatomic, retain) NSString *google_ref;
-@property (nonatomic, retain) NSString *thumb_url;
+@property (nonatomic, retain) NSString *thumbUrl;
 
 @property (nonatomic, retain) NSString *address;
 @property (nonatomic, retain) NSString *city;
 
-@property (nonatomic, retain) CLLocation* location;
+@property (nonatomic, retain) NSNumber *lat;
+@property (nonatomic, retain) NSNumber *lng;
 @property (nonatomic, retain) NSString *phone;
 
 @property (nonatomic, retain) NSArray *categories;
@@ -77,7 +82,7 @@
 -(NSString*) usersBookmarkingString;
 -(NSString*) tagString;
 -(NSString*) placeThumbUrl;
-
+-(CLLocation*) location;
 -(float) distance;
 
 @end
