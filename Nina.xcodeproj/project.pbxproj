@@ -293,13 +293,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2827F24F14BAB189002B4B7E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2827F23D14BAB188002B4B7E /* facebook-ios-sdk.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D;
-			remoteInfo = "facebook-ios-sdk";
-		};
 		2895006813D6455A009E1BD7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2895003113D64559009E1BD7 /* Project object */;
@@ -389,7 +382,6 @@
 		2817988D1423C0D300406E78 /* iphone_connect.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone_connect.jpg; sourceTree = "<group>"; };
 		2822BDA91406E11F0077868C /* PlaceHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceHeaderView.xib; sourceTree = "<group>"; };
 		2822BDAB1406EE710077868C /* PlaceFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceFooterView.xib; sourceTree = "<group>"; };
-		2827F23D14BAB188002B4B7E /* facebook-ios-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "facebook-ios-sdk.xcodeproj"; sourceTree = "<group>"; };
 		2827F24014BAB189002B4B7E /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		2827F24114BAB189002B4B7E /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
 		2827F24214BAB189002B4B7E /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBDialog.bundle; sourceTree = "<group>"; };
@@ -860,7 +852,6 @@
 				2827F25314BACB7B002B4B7E /* FBLoginDialog.h */,
 				2827F25414BACB7B002B4B7E /* FBLoginDialog.m */,
 				2827F25514BACB7B002B4B7E /* JSON */,
-				2827F23D14BAB188002B4B7E /* facebook-ios-sdk.xcodeproj */,
 				2827F24014BAB189002B4B7E /* Facebook.h */,
 				2827F24114BAB189002B4B7E /* Facebook.m */,
 				2827F24214BAB189002B4B7E /* FBDialog.bundle */,
@@ -870,14 +861,6 @@
 				2827F24614BAB189002B4B7E /* FBRequest.m */,
 			);
 			path = "facebook-ios-sdk";
-			sourceTree = "<group>";
-		};
-		2827F23E14BAB189002B4B7E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2827F25014BAB189002B4B7E /* libfacebook_ios_sdk.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		2827F25514BACB7B002B4B7E /* JSON */ = {
@@ -1533,10 +1516,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 2827F23E14BAB189002B4B7E /* Products */;
-					ProjectRef = 2827F23D14BAB188002B4B7E /* facebook-ios-sdk.xcodeproj */;
-				},
-				{
 					ProductGroup = 28AC954D14B2417D00CB73FD /* Products */;
 					ProjectRef = 28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */;
 				},
@@ -1550,13 +1529,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		2827F25014BAB189002B4B7E /* libfacebook_ios_sdk.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libfacebook_ios_sdk.a;
-			remoteRef = 2827F24F14BAB189002B4B7E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		28AC955714B2417D00CB73FD /* libRestKit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
