@@ -235,6 +235,7 @@
     // Do any additional setup after loading the view from its nib.
     narrowed = false;
     showPredictive = false;
+    _reloading = NO;
 
     self.navigationItem.title = @"Nearby";
 
@@ -287,6 +288,7 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
 
 
 #pragma mark ASIhttprequest

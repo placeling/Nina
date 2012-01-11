@@ -105,9 +105,6 @@
     NSString *targetURL = [NSString stringWithFormat:@"/v1/users/search?q=%@", username];
     
     [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
-        RKObjectMapping * userMapping = [User getObjectMapping];
-        userMapping.rootKeyPath = @"users";
-        loader.objectMapping = userMapping;
         loader.userData = [NSNumber numberWithInt:101]; //use as a tag
     }];
 }

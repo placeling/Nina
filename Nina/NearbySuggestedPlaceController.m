@@ -16,26 +16,13 @@
 
 @interface NearbySuggestedPlaceController (Private)
 -(void)findNearbyPlaces;
--(void)dataSourceDidFinishLoadingNewData;
 @end
 
 @implementation NearbySuggestedPlaceController
 
-@synthesize searchBar=_searchBar, popularPlacesButton, toolbar;
-@synthesize reloading=_reloading, showAll, placesTableView, searchTerm, category, dataLoaded, locationEnabled;
-
--(IBAction)popularPlaces:(id)sender{
-    
-    NearbySuggestedPlaceController *placeController = [[NearbySuggestedPlaceController alloc] init];
-    
-    placeController.showAll = true;
-    placeController.category = self.category;
-    placeController.searchTerm = self.searchTerm;
-    
-    [self.navigationController pushViewController:placeController animated:true];
-    [placeController release];
-}
-
+@synthesize searchBar=_searchBar;
+@synthesize placesTableView, searchTerm, category, followingLoaded;
+@synthesize popularLoaded, locationEnabled;
 
 
 -(void)findNearbyPlaces {
@@ -50,7 +37,6 @@
         
         accuracy = MAX(accuracy, 50); //govern the accuracy so a few places get in
         
-		NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/suggested", [NinaHelper getHostname]];		
         
 		NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
 		NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
@@ -60,30 +46,36 @@
         NSString *queryString = [NinaHelper encodeForUrl:self.searchTerm];
         NSString *categoryString = [NinaHelper encodeForUrl:self.category];
         
-        if (showAll || splitView ){
-            urlString = [NSString stringWithFormat:@"%@?socialgraph=false&barrie=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", urlString, lat, lng, radius, queryString, categoryString];
-        } else {
-            urlString = [NSString stringWithFormat:@"%@?socialgraph=true&barrie=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", urlString, lat, lng, radius, queryString, categoryString];
-        }
-        
-        NSURL *url = [NSURL URLWithString:urlString];
         
         self.locationEnabled = TRUE;
         
-		ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-        request.tag = 80;
-        [NinaHelper signRequest:request];
-		[request setDelegate:self];
-		[request startAsynchronous];
-        self.dataLoaded = false;
-	} else {
-        self.dataLoaded = TRUE;
-        self.locationEnabled = FALSE;
-        if (nearbyPlaces) {
-            [nearbyPlaces release];            
-        }
-        nearbyPlaces = [[NSMutableArray alloc] initWithCapacity:0];
+        NSString *currentUser = [NinaHelper getUsername];
         
+        
+        RKObjectManager* objectManager = [RKObjectManager sharedManager];
+        
+        if (currentUser) {   
+            NSString *followingUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=true&barrie=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", lat, lng, radius, queryString, categoryString];
+            [objectManager loadObjectsAtResourcePath:followingUrlString delegate:self block:^(RKObjectLoader* loader) {        
+                loader.userData = [NSNumber numberWithInt:80];
+            }];
+            self.followingLoaded = false;
+        } else {
+            self.followingLoaded = true;
+        }
+            
+        NSString *popularUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=false&barrie=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", lat, lng, radius, queryString, categoryString];
+        
+        [objectManager loadObjectsAtResourcePath:popularUrlString delegate:self block:^(RKObjectLoader* loader) {        
+            loader.userData = [NSNumber numberWithInt:81];
+        }];
+        self.popularLoaded = false;
+        
+	} else {
+        self.followingLoaded = true;
+        self.popularLoaded = true;
+        self.locationEnabled = FALSE;
+
         [self.placesTableView reloadData];
         
         DLog(@"UNABLE TO GET CURRENT LOCATION FOR NEARBY");
@@ -102,26 +94,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.dataLoaded = FALSE;
     self.locationEnabled = TRUE;
-    
-    if (refreshHeaderView == nil) {
-		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.placesTableView.bounds.size.height, 320.0f, self.placesTableView.bounds.size.height)];
-		refreshHeaderView.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
-		[self.placesTableView addSubview:refreshHeaderView];
-		self.placesTableView.showsVerticalScrollIndicator = YES;
-		[refreshHeaderView release];
-	}
     
     if (!self.category){
         self.category = @""; //can't be a nil
-    }
-    
-    NSString *current_user = [NinaHelper getUsername];
-    if (!current_user || [current_user length] == 0){
-        splitView = true;
-    } else {
-        splitView = false;
     }
         
     if (!self.searchTerm){
@@ -131,12 +107,9 @@
     } else {
         self.searchBar.text = self.searchTerm;
     }
-    
-    if (self.showAll){
-        [self.placesTableView setFrame:CGRectMake(self.placesTableView.frame.origin.x, self.placesTableView.frame.origin.y, self.placesTableView.frame.size.width, self.placesTableView.frame.size.height + self.toolbar.frame.size.height)];
-        self.toolbar.hidden = true;
-        splitView = false;
-    }
+
+    followingPlaces = [[NSMutableArray alloc] init];
+    popularPlaces = [[NSMutableArray alloc] init];
     
     self.searchBar.delegate = self;
     self.placesTableView.delegate = self;
@@ -154,7 +127,6 @@
     }
     
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
-    [StyleHelper styleToolBar:self.toolbar];
     [StyleHelper styleSearchBar:self.searchBar];
     [StyleHelper styleBackgroundView:self.placesTableView];
 }
@@ -175,60 +147,12 @@
 -(void) dealloc{
     [NinaHelper clearActiveRequests:80];
     [_searchBar release]; 
-    [popularPlacesButton release]; 
-    [toolbar release];
     [placesTableView release];
     [searchTerm release];
     [category release];
+    [followingPlaces release];
+    [popularPlaces release];
     [super dealloc] ;
-}
-
-#pragma mark - EgoTablerefresh
-
-- (void)reloadTableViewDataSource{
-	[self findNearbyPlaces];
-	//[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
-}
-
-
-- (void)doneLoadingTableViewData{
-	[self dataSourceDidFinishLoadingNewData];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
-	if (scrollView.isDragging) {
-		if (refreshHeaderView.state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !_reloading) {
-			[refreshHeaderView setState:EGOOPullRefreshNormal];
-		} else if (refreshHeaderView.state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f && !_reloading) {
-			[refreshHeaderView setState:EGOOPullRefreshPulling];
-		}
-	}
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    
-	if (scrollView.contentOffset.y <= - 65.0f && !_reloading) {
-        _reloading = YES;
-        [self reloadTableViewDataSource];
-        [refreshHeaderView setState:EGOOPullRefreshLoading];
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.2];
-        self.placesTableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
-        [UIView commitAnimations];
-	}
-}
-
-- (void)dataSourceDidFinishLoadingNewData{
-    
-	_reloading = NO;
-    
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:.3];
-	[self.placesTableView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
-	[UIView commitAnimations];
-    
-	[refreshHeaderView setState:EGOOPullRefreshNormal];
-	[refreshHeaderView setCurrentDate];  //  should check if data reload was successful 
 }
 
 #pragma mark Search Bar Methods
@@ -240,8 +164,7 @@
     [self findNearbyPlaces];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{	
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{	
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:false animated:true];
     
@@ -257,79 +180,53 @@
 	[searchBar setShowsCancelButton:TRUE animated:true];
 }
 
+#pragma mark - RKObjectLoaderDelegate methods
 
-#pragma mark ASIhttprequest
-
-- (void)requestFailed:(ASIHTTPRequest *)request{
-	[NinaHelper handleBadRequest:request sender:self];
-}
-
-- (void)requestFinished:(ASIHTTPRequest *)request{
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     
-	if (200 != [request responseStatusCode]){
-		[NinaHelper handleBadRequest:request sender:self];
-	} else {
-		self.dataLoaded = TRUE;
-        
-        // Store incoming data into a string
-		NSString *jsonString = [request responseString];
-		DLog(@"Got JSON BACK: %@", jsonString);
-		// Create a dictionary from the JSON string
-        
-		[nearbyPlaces release];
-        nearbyPlaces = nil;
-        NSDictionary *jsonDict = [[jsonString JSONValue] retain];
-		NSArray *rawPlaces = [jsonDict objectForKey:@"suggested_places"];
-        
-        if (!nearbyPlaces){
-            nearbyPlaces = [[NSMutableArray alloc] initWithCapacity:[rawPlaces count]];
-        } 
-        
-        for (NSDictionary* dict in rawPlaces){
-            Place* place = [[Place alloc] initFromJsonDict:dict];
-            [nearbyPlaces  addObject:place]; 
-            [place release];
+    if ( [(NSNumber*)objectLoader.userData intValue] == 80){
+        self.followingLoaded = TRUE;
+        [followingPlaces removeAllObjects];
+        for (Place* place in objects){
+            [followingPlaces addObject:place];
         }
-        
-		[self.placesTableView  reloadData];
-		[jsonDict release];
-        
-        if (!splitView && !showAll &&[nearbyPlaces count] ==0){
-            dataLoaded = false;
-            splitView = true;
-            [self loadContent];
-        } 
-	}
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 81){
+        self.popularLoaded = TRUE;
+        [popularPlaces removeAllObjects];
+        for (Place* place in objects){
+            [popularPlaces addObject:place];
+        }
+    }
     
-    [self dataSourceDidFinishLoadingNewData];
+    [self.placesTableView reloadData]; 
 }
 
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
+    DLog(@"Encountered an error: %@", error); 
+}
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    if (splitView){
-        return 2;
-    } else {
-        return 1;
-    }
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == tableView.numberOfSections -1){
-        return MAX([nearbyPlaces count], 1);
+    if (section ==0){
+        return 0;
+    }else if (section == 1){
+        return MAX([followingPlaces count], 1);
     } else {
-        return 1;
+        return [popularPlaces count];
     }
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (!self.showAll && (!currentUser || currentUser.length == 0) && indexPath.section == 0) {
+    if (!currentUser && indexPath.section == 0) {
         return 90;
     } else {
         return 70;
@@ -339,6 +236,8 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	
     if (section == 1){
+        return nil;
+    } else if (section == 2){
         return @"Popular Places";
     } else {
         return nil;
@@ -351,98 +250,22 @@
     static NSString *loginCellIdentifier = @"LoginCell";
     static NSString *noNearbyCellIdentifier = @"NoNearbyCell";
     
+    NSMutableArray *places;
+    BOOL dataloaded;
+    if (indexPath.section ==2){
+        places = popularPlaces;
+        dataloaded = popularLoaded;
+    } else {
+        places = followingPlaces;
+        dataloaded = followingLoaded;
+    }
+    
     Place *place;
     PlaceSuggestTableViewCell *cell;
     
-    if ([nearbyPlaces count] > 0) {
+    if ([places count] > 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:placeCellIdentifier];
-    } else {
-        NSString *currentUser = [NinaHelper getUsername];
-        if (!currentUser || currentUser.length == 0) {
-            cell = [tableView dequeueReusableCellWithIdentifier:loginCellIdentifier];
-        } else {
-            cell = [tableView dequeueReusableCellWithIdentifier:noNearbyCellIdentifier];
-        }
-    }
-    NSString *currentUser = [NinaHelper getUsername];
-    if (cell == nil) {
-        if (!showAll && indexPath.section == 0 && !currentUser) {
-            cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
-            
-            tableView.allowsSelection = YES;
-            
-            cell.titleLabel.text = @"";
-            cell.addressLabel.text = @"";
-            cell.distanceLabel.text = @"";
-            cell.usersLabel.text = @"";
-            
-            UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
-            
-            loginText.backgroundColor = [UIColor clearColor];
-            
-            loginText.text = @"Sign up or log in to check out nearby places you and the people you follow love.\n\nTap here to get started.";
-            loginText.tag = 778;
-            
-            [loginText setUserInteractionEnabled:NO];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            [cell addSubview:loginText];
-            [loginText release];
-        } else if (dataLoaded && ((splitView == true && indexPath.section ==0) ||[nearbyPlaces count] == 0 ) ) {
-            cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noNearbyCellIdentifier] autorelease];
-            
-            UITextView *existingText = (UITextView *)[cell viewWithTag:778];
-            if (existingText) {
-                [existingText removeFromSuperview];
-            }
-            
-            tableView.allowsSelection = NO;
-            
-            cell.titleLabel.text = @"";
-            cell.addressLabel.text = @"";
-            cell.distanceLabel.text = @"";
-            cell.usersLabel.text = @"";
-            
-            UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
-            errorText.backgroundColor = [UIColor clearColor];
-            
-            if (self.locationEnabled == FALSE) {
-                errorText.text = [NSString stringWithFormat:@"We can't show you any nearby places as you've got location services turned off."];
-            } else {
-                if (self.showAll == TRUE || (splitView && indexPath.section == 1)) {
-                    if ([self.searchTerm isEqualToString:@""] == TRUE) {
-                        errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places."];
-                    } else {
-                        errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-                    }
-                } else {
-                    if ([self.searchTerm isEqualToString:@""] == TRUE) {
-                        errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places."];
-                    } else {
-                        errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-                    }
-                    
-                    
-                    self.searchTerm  = [self.searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-                }
-            }        
-            
-            errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
-            [errorText setUserInteractionEnabled:NO];
-            
-            errorText.tag = 778;
-            [cell addSubview:errorText];
-            [errorText release];
-        } else if (!self.dataLoaded){
-            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
-
-            for(id item in objects){
-               if ( [item isKindOfClass:[UITableViewCell class]]){
-                   cell = item;
-               }
-            }    
-        
-        }else{
+        if (cell == nil) {
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PlaceSuggestTableViewCell" owner:self options:nil];
             
             for(id item in objects){
@@ -450,32 +273,124 @@
                     cell = item;
                 }
             }
-            
-            tableView.allowsSelection = YES;
-            
-            place = [nearbyPlaces objectAtIndex:indexPath.row];
-            
-            UITextView *errorText = (UITextView *)[cell viewWithTag:778];
-            if (errorText) {
-                [errorText removeFromSuperview];
+        }
+    } else {
+        NSString *currentUser = [NinaHelper getUsername];
+        if (!currentUser) {
+            cell = [tableView dequeueReusableCellWithIdentifier:loginCellIdentifier];
+            if (cell == nil){
+                cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
             }
-            
-            [cell.imageView setImageWithURL:[NSURL URLWithString:place.placeThumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
-            
-            cell.titleLabel.text = place.name;
-            cell.addressLabel.text = place.address;
-            cell.distanceLabel.text = [NinaHelper metersToLocalizedDistance:place.distance];
-            cell.usersLabel.text = place.usersBookmarkingString;   
-            [StyleHelper colourHomePageLabel:cell.usersLabel];
-            /* [StyleHelper colourTitleLabel:cell.titleLabel];
-            [StyleHelper colourTitleLabel:cell.addressLabel];
-            [StyleHelper colourTitleLabel:cell.distanceLabel]; */           
-            
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
+        } else {
+            cell = [tableView dequeueReusableCellWithIdentifier:noNearbyCellIdentifier];
+            if (cell == nil){
+                cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noNearbyCellIdentifier] autorelease];
+            }
         }
     }
+        
+    NSString *currentUser = [NinaHelper getUsername];
+    if (indexPath.section == 0 && !currentUser) {
+        cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
+        
+        tableView.allowsSelection = YES;
+        
+        cell.titleLabel.text = @"";
+        cell.addressLabel.text = @"";
+        cell.distanceLabel.text = @"";
+        cell.usersLabel.text = @"";
+        
+        UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
+        
+        loginText.backgroundColor = [UIColor clearColor];
+        
+        loginText.text = @"Sign up or log in to check out nearby places you and the people you follow love.\n\nTap here to get started.";
+        loginText.tag = 778;
+        
+        [loginText setUserInteractionEnabled:NO];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [cell addSubview:loginText];
+        [loginText release];
+    } else if (dataloaded && [places count] == 0 ) {
+        cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noNearbyCellIdentifier] autorelease];
+        
+        UITextView *existingText = (UITextView *)[cell viewWithTag:778];
+        if (existingText) {
+            [existingText removeFromSuperview];
+        }
+        
+        tableView.allowsSelection = NO;
+        
+        cell.titleLabel.text = @"";
+        cell.addressLabel.text = @"";
+        cell.distanceLabel.text = @"";
+        cell.usersLabel.text = @"";
+        
+        UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
+        errorText.backgroundColor = [UIColor clearColor];
+        
+        if (self.locationEnabled == FALSE) {
+            errorText.text = [NSString stringWithFormat:@"We can't show you any nearby places as you've got location services turned off."];
+        } else {
+            if (indexPath.section == 2) {
+                if ([self.searchTerm isEqualToString:@""] == TRUE) {
+                    errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places."];
+                } else {
+                    errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+                }
+            } else {
+                if ([self.searchTerm isEqualToString:@""] == TRUE) {
+                    errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places."];
+                } else {
+                    errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+                }
+                
+                
+                self.searchTerm  = [self.searchTerm stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+            }
+        }        
+        
+        errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+        [errorText setUserInteractionEnabled:NO];
+        
+        errorText.tag = 778;
+        [cell addSubview:errorText];
+        [errorText release];
+    } else if (!dataloaded){
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
+
+        for(id item in objects){
+           if ( [item isKindOfClass:[UITableViewCell class]]){
+               cell = item;
+           }
+        }    
     
+    }else{
+        tableView.allowsSelection = YES;
+        
+        place = [places objectAtIndex:indexPath.row];
+        
+        UITextView *errorText = (UITextView *)[cell viewWithTag:778];
+        if (errorText) {
+            [errorText removeFromSuperview];
+        }
+        
+        [cell.imageView setImageWithURL:[NSURL URLWithString:place.placeThumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
+        
+        cell.titleLabel.text = place.name;
+        cell.addressLabel.text = place.address;
+        cell.distanceLabel.text = [NinaHelper metersToLocalizedDistance:place.distance];
+        cell.usersLabel.text = place.usersBookmarkingString;   
+        [StyleHelper colourHomePageLabel:cell.usersLabel];
+        /* [StyleHelper colourTitleLabel:cell.titleLabel];
+        [StyleHelper colourTitleLabel:cell.addressLabel];
+        [StyleHelper colourTitleLabel:cell.distanceLabel]; */           
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+    }
+        
     return cell;
 }
 
@@ -486,7 +401,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *currentUser = [NinaHelper getUsername];
     
-    if ((!self.showAll && (!currentUser || currentUser.length == 0)) && indexPath.section == 0) {
+    if ( !currentUser && indexPath.section == 0) {
         LoginController *loginController = [[LoginController alloc] init];
         loginController.delegate = self;
         
@@ -496,8 +411,8 @@
         [loginController release];
     } else {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if (indexPath.row < [nearbyPlaces count]){
-            Place *place = [nearbyPlaces objectAtIndex:indexPath.row];
+        if (indexPath.row < [followingPlaces count]){
+            Place *place = [followingPlaces objectAtIndex:indexPath.row];
             
             PlacePageViewController *placeController = [[PlacePageViewController alloc] initWithPlace:place];
             
