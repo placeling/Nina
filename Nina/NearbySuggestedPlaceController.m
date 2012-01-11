@@ -14,79 +14,28 @@
 #import "LoginController.h"
 #import "UIImageView+WebCache.h"
 
-@interface NearbySuggestedPlaceController (Private)
--(void)findNearbyPlaces;
-@end
 
 @implementation NearbySuggestedPlaceController
 
-@synthesize searchBar=_searchBar;
-@synthesize placesTableView, searchTerm, category, followingLoaded;
-@synthesize popularLoaded, locationEnabled;
+@synthesize searchBar=_searchBar, placesTableView;
 
-
--(void)findNearbyPlaces {
-	
-    CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
-    CLLocation *location = manager.location;
+-(IBAction)toggleMapList{
+    NearbySuggestedPlaceController *nsController = [[NearbySuggestedPlaceController alloc] init];
     
-	if (location != nil){ //[now timeIntervalSinceDate:location.timestamp] < (60 * 5)){
-        
-        float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
-        accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
-        
-        accuracy = MAX(accuracy, 50); //govern the accuracy so a few places get in
-        
-        
-		NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-		NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
-				
-        NSString *radius = [NSString stringWithFormat:@"%f", accuracy];
-        
-        NSString *queryString = [NinaHelper encodeForUrl:self.searchTerm];
-        NSString *categoryString = [NinaHelper encodeForUrl:self.category];
-        
-        
-        self.locationEnabled = TRUE;
-        
-        NSString *currentUser = [NinaHelper getUsername];
-        
-        
-        RKObjectManager* objectManager = [RKObjectManager sharedManager];
-        
-        if (currentUser) {   
-            NSString *followingUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=true&barrie=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", lat, lng, radius, queryString, categoryString];
-            [objectManager loadObjectsAtResourcePath:followingUrlString delegate:self block:^(RKObjectLoader* loader) {        
-                loader.userData = [NSNumber numberWithInt:80];
-            }];
-            self.followingLoaded = false;
-        } else {
-            self.followingLoaded = true;
-        }
-            
-        NSString *popularUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=false&barrie=true&lat=%@&lng=%@&accuracy=%@&query=%@&category=%@", lat, lng, radius, queryString, categoryString];
-        
-        [objectManager loadObjectsAtResourcePath:popularUrlString delegate:self block:^(RKObjectLoader* loader) {        
-            loader.userData = [NSNumber numberWithInt:81];
-        }];
-        self.popularLoaded = false;
-        
-	} else {
-        self.followingLoaded = true;
-        self.popularLoaded = true;
-        self.locationEnabled = FALSE;
-
-        [self.placesTableView reloadData];
-        
-        DLog(@"UNABLE TO GET CURRENT LOCATION FOR NEARBY");
-    }
+    [UIView beginAnimations:@"View Flip" context:nil];
+    [UIView setAnimationDuration:0.80];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     
+    [UIView setAnimationTransition:
+     UIViewAnimationTransitionFlipFromRight
+                           forView:self.navigationController.view cache:NO];
+    
+    
+    [self.navigationController pushViewController:nsController animated:YES];
+    [UIView commitAnimations];
+
 }
 
-#pragma mark - Login delegate methods
-- (void) loadContent {
-    [self findNearbyPlaces];
-}
 
 #pragma mark - View lifecycle
 
@@ -107,9 +56,11 @@
     } else {
         self.searchBar.text = self.searchTerm;
     }
-
-    followingPlaces = [[NSMutableArray alloc] init];
-    popularPlaces = [[NSMutableArray alloc] init];
+    
+    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(toggleMapList)];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    [shareButton release];
+    
     
     self.searchBar.delegate = self;
     self.placesTableView.delegate = self;
@@ -131,13 +82,6 @@
     [StyleHelper styleBackgroundView:self.placesTableView];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -145,13 +89,8 @@
 }
 
 -(void) dealloc{
-    [NinaHelper clearActiveRequests:80];
     [_searchBar release]; 
     [placesTableView release];
-    [searchTerm release];
-    [category release];
-    [followingPlaces release];
-    [popularPlaces release];
     [super dealloc] ;
 }
 
@@ -183,28 +122,10 @@
 #pragma mark - RKObjectLoaderDelegate methods
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
-    
-    if ( [(NSNumber*)objectLoader.userData intValue] == 80){
-        self.followingLoaded = TRUE;
-        [followingPlaces removeAllObjects];
-        for (Place* place in objects){
-            [followingPlaces addObject:place];
-        }
-    } else if ( [(NSNumber*)objectLoader.userData intValue] == 81){
-        self.popularLoaded = TRUE;
-        [popularPlaces removeAllObjects];
-        for (Place* place in objects){
-            [popularPlaces addObject:place];
-        }
-    }
-    
+    [super objectLoader:objectLoader didLoadObjects:objects];
     [self.placesTableView reloadData]; 
 }
 
-- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
-    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
-    DLog(@"Encountered an error: %@", error); 
-}
 
 #pragma mark - Table view data source
 
@@ -219,7 +140,7 @@
     }else if (section == 1){
         return MAX([followingPlaces count], 1);
     } else {
-        return [popularPlaces count];
+        return MAX([popularPlaces count], 1);
     }
 }
 

@@ -8,36 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "NinaHelper.h"
-#import "EGORefreshTableHeaderView.h"
-#import "LoginController.h"
-#import <RestKit/RestKit.h>
+#import "SuggestedPlaceController.h"
 
-@interface NearbySuggestedPlaceController : UIViewController<UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate, LoginControllerDelegate, RKObjectLoaderDelegate>{
+@interface NearbySuggestedPlaceController : SuggestedPlaceController<UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate>{
     
     IBOutlet UISearchBar *_searchBar;
     IBOutlet UITableView *placesTableView;
-    
-    BOOL followingLoaded;
-    BOOL popularLoaded;
-    BOOL locationEnabled;
-    
-    NSString *searchTerm;
-    NSString *category;
-    
-    //NSMutableArray  *myPlaces;
-    NSMutableArray  *followingPlaces;
-    NSMutableArray  *popularPlaces;
 }
 
 @property(nonatomic,retain) IBOutlet UISearchBar *searchBar;
 @property(nonatomic,retain) IBOutlet UITableView *placesTableView;
-
-@property(nonatomic, assign) BOOL followingLoaded;
-@property(nonatomic, assign) BOOL popularLoaded;
-
-@property(nonatomic,assign) BOOL locationEnabled;
-@property(nonatomic,retain) NSString *searchTerm;
-@property(nonatomic,retain) NSString *category;
-
 
 @end
