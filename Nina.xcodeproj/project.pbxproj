@@ -1961,10 +1961,11 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nina/Nina-Prefix.pch";
-				HEADER_SEARCH_PATHS = "../facebook-ios-sdk/src/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Nina/Nina-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Nina/lib/facebook-ios-sdk\"/**",
 					"$(inherited)",
 					"\"$(SRCROOT)/Nina/lib/FlurryAnalytics\"",
 				);
@@ -1987,10 +1988,10 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nina/Nina-Prefix.pch";
-				"HEADER_SEARCH_PATHS[arch=*]" = "../facebook-ios-sdk/src/**";
 				INFOPLIST_FILE = "Nina/Nina-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Nina/lib/facebook-ios-sdk\"/**",
 					"$(inherited)",
 					"\"$(SRCROOT)/Nina/lib/FlurryAnalytics\"",
 				);
