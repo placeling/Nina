@@ -18,6 +18,7 @@
 #import "LoginController.h"
 #import <MessageUI/MFMailComposeViewController.h>
 #import "Facebook.h"
+#import <RestKit/RestKit.h>
 
 typedef enum {
     home,
@@ -28,7 +29,7 @@ typedef enum {
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate> {        
+@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate> {        
     NSString *place_id; 
     NSString *perspective_id; 
     NSString *google_ref;

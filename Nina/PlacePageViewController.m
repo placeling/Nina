@@ -56,6 +56,7 @@ typedef enum {
 -(void) deletePerspective:(Perspective*)perspective;
 -(NSString*) numberBookmarkCopy;
 -(NSString*) getUrlString;
+-(NSString*) getRestUrl;
 -(bool) returnMinRowHeight:(NSIndexPath *)indexPath;
 @end
 
@@ -173,11 +174,26 @@ typedef enum {
     }
 }
 
+
+-(NSString*) getRestUrl{
+    if (self.perspective_id){
+        return [NSString stringWithFormat:@"/v1/perspectives/%@", self.perspective_id];
+    }else if (self.referrer){
+        if (self.google_ref){
+            return [NSString stringWithFormat:@"/v1/places/%@?google_ref=%@&rf=%@", self.place_id, self.google_ref, self.referrer.username];
+        } else {
+            return [NSString stringWithFormat:@"/v1/places/%@?rf=%@", self.place_id, self.referrer.username];
+        }
+    } else {
+        if (self.google_ref){
+            return [NSString stringWithFormat:@"/v1/places/%@?google_ref=%@", self.place_id, self.google_ref];
+        } else {
+            return [NSString stringWithFormat:@"/v1/places/%@", self.place_id];
+        }
+    }
+}
+
 -(void) mainContentLoad {
-    NSString *urlText = [self getUrlString];
-    
-    NSURL *url = [NSURL URLWithString:urlText];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
     homePerspectives = [[NSMutableArray alloc] initWithObjects:@"Loading", nil];
     followingPerspectives = [[NSMutableArray alloc] init];
@@ -185,13 +201,74 @@ typedef enum {
     perspectives = homePerspectives;
     self.perspectiveType = home;
     
-    [request setDelegate:self];
-    [request setTag:0];
+    // Call url to get profile details                
+    RKObjectManager* objectManager = [RKObjectManager sharedManager];       
     
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [objectManager loadObjectsAtResourcePath:[self getRestUrl] delegate:self block:^(RKObjectLoader* loader) {     
+        loader.objectMapping = [Place getObjectMapping];
+        loader.userData = [NSNumber numberWithInt:0]; //use as a tag
+    }];
 }
+
+
+#pragma mark - RKObjectLoaderDelegate methods
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+    
+    if ( [(NSNumber*)objectLoader.userData intValue] == 0){
+
+        Place *newPlace = [objects objectAtIndex:0];
+        
+        self.place = newPlace;
+        self.place_id = newPlace.pid;
+        
+        [homePerspectives removeLastObject]; //get rid of spinner wait
+        
+        //so child view can modify in place
+        self.place.homePerspectives = self.homePerspectives;
+        self.place.followingPerspectives = self.followingPerspectives;
+        self.place.everyonePerspectives = self.everyonePerspectives;
+        
+        /*
+        jsonPerspectives = [jsonDict objectForKey:@"referring_perspectives"];
+        for (NSDictionary *rawDict in jsonPerspectives){
+            //only add referring perspectives if they aren't already there
+            BOOL exists = false;
+            for (Perspective *p in homePerspectives){
+                if ([p.perspectiveId isEqualToString:[rawDict objectForKey:@"_id"]]){
+                    exists = true;
+                    break;
+                }
+            }
+            
+            if (exists) break;
+            
+            Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
+            
+            perspective.place = self.place;
+            [homePerspectives addObject:perspective];
+            [perspective release];
+        }
+         */
+        
+        if (self.place.bookmarked){
+            //should be the first one of the home persepectives
+            myPerspective = [homePerspectives objectAtIndex:0];
+        }
+        
+        [self loadData];
+        [self.tableView reloadData];
+
+    } 
+    
+    [self.tableView reloadData]; 
+}
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
+    DLog(@"Encountered an error: %@", error); 
+}
+
 
 #pragma mark -
 #pragma mark LoginController Delegate Methods
@@ -365,65 +442,6 @@ typedef enum {
 	} else {
   
         switch( [request tag] ){
-            case 0:{
-                //place detail
-                NSString *responseString = [request responseString];        
-                DLog(@"%@", responseString);
-                
-                NSDictionary *jsonDict = [responseString JSONValue];  
-                
-                Place *newPlace = [[Place alloc] initFromJsonDict:jsonDict];
-                
-                self.place = newPlace;
-                self.place_id = newPlace.pid;
-                [newPlace release];
-                
-                [homePerspectives removeLastObject]; //get rid of spinner wait
-                
-                //so child view can modify in place
-                self.place.homePerspectives = self.homePerspectives;
-                self.place.followingPerspectives = self.followingPerspectives;
-                self.place.everyonePerspectives = self.everyonePerspectives;
-
-                
-                NSArray *jsonPerspectives = [jsonDict objectForKey:@"perspectives"];
-                for (NSDictionary *rawDict in jsonPerspectives){
-                    Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
-                    perspective.place = self.place;
-                    [homePerspectives addObject:perspective];
-                    [perspective release];
-                }
-                
-                jsonPerspectives = [jsonDict objectForKey:@"referring_perspectives"];
-                for (NSDictionary *rawDict in jsonPerspectives){
-                    //only add referring perspectives if they aren't already there
-                    BOOL exists = false;
-                    for (Perspective *p in homePerspectives){
-                        if ([p.perspectiveId isEqualToString:[rawDict objectForKey:@"_id"]]){
-                            exists = true;
-                            break;
-                        }
-                    }
-                    
-                    if (exists) break;
-                             
-                    Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
-                    
-                    perspective.place = self.place;
-                    [homePerspectives addObject:perspective];
-                    [perspective release];
-                }
-                
-                if (self.place.bookmarked){
-                    //should be the first one of the home persepectives
-                    myPerspective = [homePerspectives objectAtIndex:0];
-                }
-                
-                [self loadData];
-                [self.tableView reloadData];
-                
-                break;
-            }
             case 1:{
                 //map download
                 NSData *responseData = [request responseData];
@@ -1260,7 +1278,7 @@ typedef enum {
 
 - (void)dealloc{
     [NinaHelper clearActiveRequests:0];
-    
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [perspective_id release];
     [place_id release];
     [google_ref release];

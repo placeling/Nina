@@ -21,6 +21,9 @@
     NSMutableArray  *followingPlaces;
     NSMutableArray  *popularPlaces;
     
+    NSString* lat;
+    NSString* lng;
+    
     NSString *searchTerm;
     NSString *category;
 }
@@ -32,7 +35,20 @@
 @property(nonatomic,retain) NSString *searchTerm;
 @property(nonatomic,retain) NSString *category;
 
+@property(nonatomic, retain) IBOutlet UIToolbar *toolbar;
+@property(nonatomic, retain) IBOutlet UISegmentedControl *segmentedControl;
+
+@property(nonatomic,retain) NSString *lat;
+@property(nonatomic,retain) NSString *lng;
+
+@property(nonatomic,retain) NSMutableArray  *followingPlaces;
+@property(nonatomic,retain) NSMutableArray  *popularPlaces;
+
+
 -(void)findNearbyPlaces;
 -(IBAction)toggleMapList;
+
+-(bool)dataLoaded;
+-(NSMutableArray*)places;
 
 @end

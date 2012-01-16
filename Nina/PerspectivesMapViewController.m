@@ -219,7 +219,7 @@
             
             BOOL found = false;
             for (Place *place in nearbyMarks){
-                if ([[dict objectForKey:@"_id"] isEqualToString:place.pid]){
+                if ([[dict objectForKey:@"id"] isEqualToString:place.pid]){
                     found = true; //already exists
                 }
             }

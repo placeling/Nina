@@ -48,6 +48,9 @@
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
+
++(RKObjectMapping*)getObjectMapping;
+
 -(void) star;
 -(void) unstar;
 

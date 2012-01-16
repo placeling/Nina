@@ -71,9 +71,6 @@
     NSString *targetURL = [NSString stringWithFormat:@"/v1/users/suggested?lat=%f&lng=%f", location.latitude, location.longitude];    
     
     [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
-        RKObjectMapping * userMapping = [User getObjectMapping];
-        userMapping.rootKeyPath = @"suggested";
-        loader.objectMapping = userMapping;
         loader.userData = [NSNumber numberWithInt:100]; //use as a tag
     }];
     

@@ -9,6 +9,7 @@
 #import "Place.h"
 #import "NSDictionary+Utility.h"
 #import "NinaHelper.h"
+#import "Perspective.h"
 
 @implementation Place
 
@@ -77,6 +78,7 @@
     [placeMapping mapKeyPath:@"lat" toAttribute:@"lat"];
     [placeMapping mapKeyPath:@"lng" toAttribute:@"lng"];
     
+    [placeMapping mapKeyPath:@"perspectives" toRelationship:@"homePerspectives" withMapping:[Perspective getObjectMapping]];
     //placeMapping.primaryKeyAttribute = @"pid";
     
     return placeMapping;

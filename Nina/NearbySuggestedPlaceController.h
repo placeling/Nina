@@ -10,13 +10,14 @@
 #import "NinaHelper.h"
 #import "SuggestedPlaceController.h"
 
-@interface NearbySuggestedPlaceController : SuggestedPlaceController<UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate>{
+@interface NearbySuggestedPlaceController : SuggestedPlaceController<UITableViewDelegate,UITableViewDataSource>{
     
-    IBOutlet UISearchBar *_searchBar;
-    IBOutlet UITableView *placesTableView;
+    UITableView *placesTableView;
 }
 
-@property(nonatomic,retain) IBOutlet UISearchBar *searchBar;
-@property(nonatomic,retain) IBOutlet UITableView *placesTableView;
+@property(nonatomic, retain) IBOutlet UITableView *placesTableView;
+
+-(IBAction)reloadList;
+
 
 @end

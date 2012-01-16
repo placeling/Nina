@@ -13,27 +13,50 @@
 #import "Place.h"
 #import "LoginController.h"
 #import "UIImageView+WebCache.h"
+#import "NearbySuggestedMapController.h"
 
 
 @implementation NearbySuggestedPlaceController
 
-@synthesize searchBar=_searchBar, placesTableView;
+@synthesize placesTableView;
 
 -(IBAction)toggleMapList{
-    NearbySuggestedPlaceController *nsController = [[NearbySuggestedPlaceController alloc] init];
+    NearbySuggestedMapController *nsController = [[NearbySuggestedMapController alloc] init];
     
+    nsController.followingPlaces = self.followingPlaces;
+    nsController.popularPlaces = self.popularPlaces;
+    
+    //nsController.allFollowing = [NSMutableArray arrayWithArray:self.followingPlaces];
+    //nsController.allPopular = [NSMutableArray arrayWithArray:self.popularPlaces];
+    
+    UINavigationController *navController = self.navigationController;
     [UIView beginAnimations:@"View Flip" context:nil];
-    [UIView setAnimationDuration:0.80];
+    [UIView setAnimationDuration:0.50];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     
     [UIView setAnimationTransition:
      UIViewAnimationTransitionFlipFromRight
                            forView:self.navigationController.view cache:NO];
     
+    NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
+    [controllers removeLastObject];
+    navController.viewControllers = controllers;
     
-    [self.navigationController pushViewController:nsController animated:YES];
+    [navController pushViewController:nsController animated: YES];
     [UIView commitAnimations];
 
+}
+
+-(IBAction)reloadList{    
+    //[self.spinnerView startAnimating];
+    //self.spinnerView.hidden = false;
+    [super findNearbyPlaces];
+}
+
+#pragma mark - Login delegate methods
+- (void) loadContent {
+    [super findNearbyPlaces];
+    [self.placesTableView reloadData];
 }
 
 
@@ -44,28 +67,26 @@
     // Do any additional setup after loading the view from its nib.
     
     self.locationEnabled = TRUE;
-    
-    if (!self.category){
-        self.category = @""; //can't be a nil
-    }
         
+    /*
     if (!self.searchTerm){
-        self.searchTerm = @"";
         self.searchBar.text = @"";
         self.searchBar.placeholder = @"search tags";
     } else {
         self.searchBar.text = self.searchTerm;
     }
+     */
     
     UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(toggleMapList)];
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
     
-    
-    self.searchBar.delegate = self;
     self.placesTableView.delegate = self;
     
-    [self loadContent];
+    if ([followingPlaces count] == 0 && [popularPlaces count] == 0){
+        //if a set of places hasn't already been set, get them for current location
+        [self loadContent];
+    }
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -78,19 +99,17 @@
     }
     
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
-    [StyleHelper styleSearchBar:self.searchBar];
     [StyleHelper styleBackgroundView:self.placesTableView];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 -(void) dealloc{
-    [_searchBar release]; 
     [placesTableView release];
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [super dealloc] ;
 }
 
@@ -130,18 +149,15 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 2;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section ==0){
         return 0;
-    }else if (section == 1){
-        return MAX([followingPlaces count], 1);
     } else {
-        return MAX([popularPlaces count], 1);
-    }
+        return MAX([[self places] count], 1);
+    } 
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
@@ -155,14 +171,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	
-    if (section == 1){
-        return nil;
-    } else if (section == 2){
-        return @"Popular Places";
-    } else {
-        return nil;
-    }
+	return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -171,20 +180,10 @@
     static NSString *loginCellIdentifier = @"LoginCell";
     static NSString *noNearbyCellIdentifier = @"NoNearbyCell";
     
-    NSMutableArray *places;
-    BOOL dataloaded;
-    if (indexPath.section ==2){
-        places = popularPlaces;
-        dataloaded = popularLoaded;
-    } else {
-        places = followingPlaces;
-        dataloaded = followingLoaded;
-    }
-    
     Place *place;
     PlaceSuggestTableViewCell *cell;
     
-    if ([places count] > 0) {
+    if ([[self places] count] > 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:placeCellIdentifier];
         if (cell == nil) {
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PlaceSuggestTableViewCell" owner:self options:nil];
@@ -233,7 +232,7 @@
         
         [cell addSubview:loginText];
         [loginText release];
-    } else if (dataloaded && [places count] == 0 ) {
+    } else if ([self dataLoaded] && [[self places] count] == 0 ) {
         cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noNearbyCellIdentifier] autorelease];
         
         UITextView *existingText = (UITextView *)[cell viewWithTag:778];
@@ -278,7 +277,7 @@
         errorText.tag = 778;
         [cell addSubview:errorText];
         [errorText release];
-    } else if (!dataloaded){
+    } else if (![self dataLoaded]){
         NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
 
         for(id item in objects){
@@ -290,7 +289,7 @@
     }else{
         tableView.allowsSelection = YES;
         
-        place = [places objectAtIndex:indexPath.row];
+        place = [[self places] objectAtIndex:indexPath.row];
         
         UITextView *errorText = (UITextView *)[cell viewWithTag:778];
         if (errorText) {

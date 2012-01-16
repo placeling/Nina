@@ -221,6 +221,8 @@
 		28B6194A1423177000B0A7E5 /* default_profile_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B619491423177000B0A7E5 /* default_profile_image.png */; };
 		28BA237113F0925900463234 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28BA237013F0925900463234 /* MessageUI.framework */; };
 		28C05A9214BE055E004C7DF6 /* SuggestedPlaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C05A9114BE055D004C7DF6 /* SuggestedPlaceController.m */; };
+		28C05A9614BE0EA4004C7DF6 /* NearbySuggestedMapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C05A9414BE0EA3004C7DF6 /* NearbySuggestedMapController.m */; };
+		28C05A9714BE0EA4004C7DF6 /* NearbySuggestedMapController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C05A9514BE0EA3004C7DF6 /* NearbySuggestedMapController.xib */; };
 		28C4F535144262C700A66F32 /* NSDictionary+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C4F534144262C700A66F32 /* NSDictionary+Utility.m */; };
 		28E1372213EB12DF00C17A68 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E1372013EB12DF00C17A68 /* HomeViewController.m */; };
 		28E1372313EB12DF00C17A68 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28E1372113EB12DF00C17A68 /* HomeViewController.xib */; };
@@ -665,6 +667,9 @@
 		28BA237013F0925900463234 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		28C05A9014BE055D004C7DF6 /* SuggestedPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuggestedPlaceController.h; sourceTree = "<group>"; };
 		28C05A9114BE055D004C7DF6 /* SuggestedPlaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestedPlaceController.m; sourceTree = "<group>"; };
+		28C05A9314BE0EA2004C7DF6 /* NearbySuggestedMapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbySuggestedMapController.h; sourceTree = "<group>"; };
+		28C05A9414BE0EA3004C7DF6 /* NearbySuggestedMapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbySuggestedMapController.m; sourceTree = "<group>"; };
+		28C05A9514BE0EA3004C7DF6 /* NearbySuggestedMapController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbySuggestedMapController.xib; sourceTree = "<group>"; };
 		28C4F533144262C700A66F32 /* NSDictionary+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Utility.h"; sourceTree = "<group>"; };
 		28C4F534144262C700A66F32 /* NSDictionary+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Utility.m"; sourceTree = "<group>"; };
 		28E1371F13EB12DF00C17A68 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -925,6 +930,9 @@
 				286FA162143CD37500EDAE84 /* PlaceSuggestTableViewCell.xib */,
 				28C05A9014BE055D004C7DF6 /* SuggestedPlaceController.h */,
 				28C05A9114BE055D004C7DF6 /* SuggestedPlaceController.m */,
+				28C05A9314BE0EA2004C7DF6 /* NearbySuggestedMapController.h */,
+				28C05A9414BE0EA3004C7DF6 /* NearbySuggestedMapController.m */,
+				28C05A9514BE0EA3004C7DF6 /* NearbySuggestedMapController.xib */,
 			);
 			name = QuickPick;
 			sourceTree = "<group>";
@@ -1740,6 +1748,7 @@
 				28A327601498290B003CB659 /* followButton.png in Resources */,
 				28A327621498290B003CB659 /* UnfollowButton.png in Resources */,
 				2827F24B14BAB189002B4B7E /* FBDialog.bundle in Resources */,
+				28C05A9714BE0EA4004C7DF6 /* NearbySuggestedMapController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1866,6 +1875,7 @@
 				2827F26814BACB7B002B4B7E /* SBJsonParser.m in Sources */,
 				2827F26914BACB7B002B4B7E /* SBJsonWriter.m in Sources */,
 				28C05A9214BE055E004C7DF6 /* SuggestedPlaceController.m in Sources */,
+				28C05A9614BE0EA4004C7DF6 /* NearbySuggestedMapController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

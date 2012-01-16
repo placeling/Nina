@@ -18,6 +18,9 @@
 
 @synthesize popularLoaded, followingLoaded, locationEnabled;
 @synthesize searchTerm, category;
+@synthesize lat, lng;
+@synthesize followingPlaces, popularPlaces;
+@synthesize toolbar, segmentedControl;
 
 - (void)didReceiveMemoryWarning
 {
@@ -27,56 +30,87 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-#pragma mark - Login delegate methods
-- (void) loadContent {
-    [self findNearbyPlaces];
+
+- (id) init {
+    self = [super init];
+    if (self != nil) {
+        self.followingPlaces = [[[NSMutableArray alloc] init] autorelease];
+        self.popularPlaces = [[[NSMutableArray alloc] init] autorelease];
+        followingLoaded = TRUE;
+        popularLoaded = TRUE;
+    }
+    return self;
+}
+
+-(bool)dataLoaded{
+    if(self.segmentedControl.selectedSegmentIndex == 0){
+        return followingLoaded;
+    } else {
+        return popularLoaded;
+    }
+}
+
+-(NSMutableArray*)places{
+    if(self.segmentedControl.selectedSegmentIndex == 0){
+        return self.followingPlaces;
+    } else {
+        return self.popularPlaces;
+    }
 }
 
 
+-(IBAction)toggleMapList{
+    DLog(@"This shouldn't be called, it's an abstract method");
+}
+
+-(void)loadContent{
+    DLog(@"This shouldn't be called, it's an abstract method");
+}
+
 -(void)findNearbyPlaces {
-	
-    CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
-    CLLocation *location = manager.location;
     
-	if (location != nil){ //[now timeIntervalSinceDate:location.timestamp] < (60 * 5)){
+    if (!lat || !lng){
+        CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
+        CLLocation *location = manager.location;
         
-		NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-		NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
-        
-        NSString *queryString = [NinaHelper encodeForUrl:self.searchTerm];
-        NSString *categoryString = [NinaHelper encodeForUrl:self.category];
-        
-        self.locationEnabled = TRUE;
-        
-        NSString *currentUser = [NinaHelper getUsername];
-        
-        RKObjectManager* objectManager = [RKObjectManager sharedManager];
-        
-        if (currentUser) {   
-            NSString *followingUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=true&barrie=true&lat=%@&lng=%@&query=%@&category=%@", lat, lng, queryString, categoryString];
-            [objectManager loadObjectsAtResourcePath:followingUrlString delegate:self block:^(RKObjectLoader* loader) {        
-                loader.userData = [NSNumber numberWithInt:80];
-            }];
-            self.followingLoaded = false;
-        } else {
+        if (![CLLocationManager  locationServicesEnabled] || !location){
             self.followingLoaded = true;
+            self.popularLoaded = true;
+            self.locationEnabled = FALSE;
+            
+            DLog(@"UNABLE TO GET CURRENT LOCATION FOR NEARBY");
+            return;
         }
         
-        NSString *popularUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=false&barrie=true&lat=%@&lng=%@&query=%@&category=%@", lat, lng, queryString, categoryString];
+        self.lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+		self.lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+    }       
         
-        [objectManager loadObjectsAtResourcePath:popularUrlString delegate:self block:^(RKObjectLoader* loader) {        
-            loader.userData = [NSNumber numberWithInt:81];
+    NSString *queryString = [NinaHelper encodeForUrl:self.searchTerm];
+    NSString *categoryString = [NinaHelper encodeForUrl:self.category];
+    
+    self.locationEnabled = TRUE;
+    
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    RKObjectManager* objectManager = [RKObjectManager sharedManager];
+    
+    if (currentUser) {   
+        NSString *followingUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=true&barrie=true&lat=%@&lng=%@&query=%@&category=%@", lat, lng, queryString, categoryString];
+        [objectManager loadObjectsAtResourcePath:followingUrlString delegate:self block:^(RKObjectLoader* loader) {        
+            loader.userData = [NSNumber numberWithInt:80];
         }];
-        self.popularLoaded = false;
-        
-	} else {
+        self.followingLoaded = false;
+    } else {
         self.followingLoaded = true;
-        self.popularLoaded = true;
-        self.locationEnabled = FALSE;
-        
-        DLog(@"UNABLE TO GET CURRENT LOCATION FOR NEARBY");
     }
     
+    NSString *popularUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=false&barrie=true&lat=%@&lng=%@&query=%@&category=%@", lat, lng, queryString, categoryString];
+    
+    [objectManager loadObjectsAtResourcePath:popularUrlString delegate:self block:^(RKObjectLoader* loader) {        
+        loader.userData = [NSNumber numberWithInt:81];
+    }];
+    self.popularLoaded = false;
 }
 
 
@@ -119,12 +153,21 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
+    if (!self.category){
+        self.category = @""; //can't be a nil
+    }
     
-    followingPlaces = [[NSMutableArray alloc] init];
-    popularPlaces = [[NSMutableArray alloc] init];
-    
+    if (!self.searchTerm){
+        self.searchTerm = @"";
+    }
 }
 
+
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [StyleHelper styleToolBar:self.toolbar];
+}
 
 - (void)viewDidUnload
 {
@@ -146,6 +189,8 @@
     [category release];
     [followingPlaces release];
     [popularPlaces release];
+    [lat release];
+    [lng release];
     [super dealloc];
 }
 

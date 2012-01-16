@@ -710,7 +710,7 @@
 
 - (void)dealloc{
     [NinaHelper clearActiveRequests:10];
-    
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [username release];
     [_user release];
     

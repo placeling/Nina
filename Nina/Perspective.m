@@ -63,6 +63,25 @@
     self.url = [jsonDict objectForKeyNotNull:@"url"];    
 }
 
+
++(RKObjectMapping*)getObjectMapping{
+    RKObjectMapping* perspectiveMapping = [RKObjectMapping mappingForClass:[Perspective class]];
+
+    [perspectiveMapping mapKeyPathsToAttributes:     
+     @"id", @"perspectiveId",
+     @"mine", @"mine",
+     @"memo", @"notes",     
+     @"starred", @"starred",
+     @"updated_at", @"lastModified",
+     @"url", @"url",
+     nil];
+    
+    [perspectiveMapping mapKeyPath:@"photos" toRelationship:@"photos" withMapping:[Photo getObjectMapping]];
+    
+    return perspectiveMapping;
+}
+
+
 -(void) star{
     if (self.place){
         self.starred = true;
