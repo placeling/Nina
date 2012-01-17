@@ -13,11 +13,11 @@
 
 @implementation User
 
-@dynamic userId, city, userDescription;
-@dynamic username, profilePic, placeCount;
-@dynamic followingCount, followerCount;
-@dynamic following, follows_you;
-@dynamic email, url; 
+@synthesize userId, city, userDescription;
+@synthesize username, profilePic, placeCount;
+@synthesize followingCount, followerCount;
+@synthesize following, follows_you;
+@synthesize email, url; 
 @synthesize auths, modified, location;
 
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
@@ -79,8 +79,8 @@
 }
 
 
-+(RKManagedObjectMapping*)getObjectMapping{
-    RKManagedObjectMapping* userMapping = [RKManagedObjectMapping mappingForClass:[User class]];
++(RKObjectMapping*)getObjectMapping{
+    RKObjectMapping* userMapping = [RKObjectMapping mappingForClass:[User class]];
     [userMapping mapKeyPathsToAttributes:
      @"id", @"userId",
      @"username", @"username",
@@ -96,7 +96,7 @@
      @"follows_you", @"follows_you",
      nil];
     
-    userMapping.primaryKeyAttribute = @"username";
+    //userMapping.primaryKeyAttribute = @"username";
     [userMapping mapKeyPath:@"picture" toRelationship:@"profilePic" withMapping:[Photo getObjectMapping]];
     
     return userMapping;

@@ -18,7 +18,7 @@
 @synthesize lat, lng, usersBookmarking;
 @synthesize googleId, phone, googlePlacesUrl, google_ref, thumbUrl;
 @synthesize categories, icon, tags;
-@synthesize homePerspectives,followingPerspectives,everyonePerspectives;
+@synthesize homePerspectives,followingPerspectives,everyonePerspectives, placemarks;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
     
@@ -79,6 +79,9 @@
     [placeMapping mapKeyPath:@"lng" toAttribute:@"lng"];
     
     [placeMapping mapKeyPath:@"perspectives" toRelationship:@"homePerspectives" withMapping:[Perspective getObjectMapping]];
+    
+    [placeMapping mapKeyPath:@"placemarks" toRelationship:@"placemarks" withMapping:[Perspective getObjectMapping]];
+    
     //placeMapping.primaryKeyAttribute = @"pid";
     
     return placeMapping;
@@ -165,6 +168,7 @@
     [homePerspectives release];
     [followingPerspectives release];
     [everyonePerspectives release];
+    [placemarks release];
     
     [super dealloc];
 }

@@ -15,7 +15,7 @@
 #import "User.h"
 #import "Place.h"
 #import "Perspective.h"
-#import "DBManagedObjectCache.h"
+//#import "DBManagedObjectCache.h"
 
 @implementation NinaAppDelegate
 
@@ -47,10 +47,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                            stringByAppendingPathComponent:@"NinaRestCache.sqlite"];        
     [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
     
-    RKManagedObjectStore* objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:@"NinaRestCache.sqlite"];
-    objectManager.objectStore = objectStore;
+    //RKManagedObjectStore* objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:@"NinaRestCache.sqlite"];
+    //objectManager.objectStore = objectStore;
     
-    objectManager.objectStore.managedObjectCache = [[DBManagedObjectCache new] autorelease];
+    //objectManager.objectStore.managedObjectCache = [[DBManagedObjectCache new] autorelease];
     
     //set cache policy for restkit
     [[objectManager client] setCachePolicy:RKRequestCachePolicyEtag | RKRequestCachePolicyTimeout|RKRequestCachePolicyLoadIfOffline ];

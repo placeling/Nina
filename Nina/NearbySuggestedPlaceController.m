@@ -77,7 +77,8 @@
     }
      */
     
-    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(toggleMapList)];
+    UIImage *mapImage = [UIImage imageNamed:@"103-map.png"];
+    UIBarButtonItem *shareButton =  [[UIBarButtonItem alloc] initWithImage:mapImage style:UIBarButtonItemStylePlain target:self action:@selector(toggleMapList)];
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
     

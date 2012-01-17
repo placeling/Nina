@@ -39,6 +39,7 @@
     
     BOOL bookmarked;
     
+    NSMutableArray *placemarks;
     NSMutableArray *homePerspectives;
     NSMutableArray *followingPerspectives;
     NSMutableArray *everyonePerspectives;
@@ -75,6 +76,7 @@
 @property (nonatomic, assign) NSMutableArray *homePerspectives;
 @property (nonatomic, assign) NSMutableArray *followingPerspectives;
 @property (nonatomic, assign) NSMutableArray *everyonePerspectives;
+@property (nonatomic, retain) NSMutableArray *placemarks;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;

@@ -13,7 +13,7 @@
 
 @synthesize thumb_image, iphone_image, main_image, perspective;
 
-@dynamic thumbUrl,iphoneUrl,mainUrl, photoId, mine;
+@synthesize thumbUrl,iphoneUrl,mainUrl, photoId, mine;
 
 
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict{
@@ -24,14 +24,14 @@
     self.thumbUrl = [jsonDict objectForKeyNotNull:@"thumb_url"];
 }
 
-+(RKManagedObjectMapping*)getObjectMapping{
-    RKManagedObjectMapping* photoMapping = [RKManagedObjectMapping mappingForClass:[Photo class]];
++(RKObjectMapping*)getObjectMapping{
+    RKObjectMapping* photoMapping = [RKObjectMapping mappingForClass:[Photo class]];
     [photoMapping mapKeyPathsToAttributes:
         @"id", @"photoId",
         @"thumb_url", @"thumbUrl",
         @"main_url", @"mainUrl",
      nil];
-    photoMapping.primaryKeyAttribute = @"photoId";
+    //photoMapping.primaryKeyAttribute = @"photoId";
     return photoMapping;
 }
 

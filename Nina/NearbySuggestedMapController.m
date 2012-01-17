@@ -16,6 +16,7 @@
 #import "Place.h"
 #import "NearbySuggestedPlaceController.h"
 #import "NearbySuggestedMapController.h"
+#import "PerspectiveUserTableViewController.h"
 
 @interface NearbySuggestedMapController (Private)
 -(void)mapPlaces;
@@ -26,7 +27,7 @@
 @implementation NearbySuggestedMapController
 
 @synthesize mapView=_mapView, spinnerView;
-@synthesize locationManager, bottomToolBar;
+@synthesize locationManager, bottomToolBar, showPeopleButton;
 
 -(IBAction)toggleMapList{
     NearbySuggestedPlaceController *nsController = [[NearbySuggestedPlaceController alloc] init];        
@@ -50,6 +51,15 @@
     [navController pushViewController:nsController animated: YES];
     [UIView commitAnimations];
 
+}
+
+-(IBAction)showPeople{
+    
+    PerspectiveUserTableViewController *peopleController = [[PerspectiveUserTableViewController alloc] initWithPlaces:[self places]];
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:peopleController];
+    [self.navigationController presentModalViewController:navBar animated:YES];
+    [navBar release];
+    [peopleController release];
 }
 
 
@@ -228,8 +238,8 @@
     lastCoordinate = self.mapView.region.center;
     lastLatSpan = self.mapView.region.span.latitudeDelta;
     
-    
-    UIBarButtonItem *flipButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(toggleMapList)];
+    UIImage *mapImage = [UIImage imageNamed:@"104-index-cards.png"];
+    UIBarButtonItem *flipButton =  [[UIBarButtonItem alloc] initWithImage:mapImage style:UIBarButtonItemStylePlain target:self action:@selector(toggleMapList)];
     self.navigationItem.rightBarButtonItem = flipButton;
     [flipButton release];
     

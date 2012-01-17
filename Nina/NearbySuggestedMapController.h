@@ -21,6 +21,9 @@
     CLLocationDegrees lastLatSpan;
     UIActivityIndicatorView *spinnerView;
     UIToolbar *bottomToolBar;
+    
+    UIBarButtonItem *showPeopleButton;
+    
     NSTimer *timer;
 
 }
@@ -29,8 +32,11 @@
 @property(nonatomic, retain) IBOutlet UIActivityIndicatorView *spinnerView;
 @property(nonatomic, retain) CLLocationManager *locationManager;
 @property(nonatomic, retain) IBOutlet UIToolbar *bottomToolBar;
+@property(nonatomic, retain) IBOutlet UIBarButtonItem *showPeopleButton;
 
 -(IBAction)recenter;
 -(IBAction)reloadMap;
+
+-(IBAction)showPeople;
 
 @end

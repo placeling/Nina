@@ -10,7 +10,7 @@
 #import "Photo.h"
 #import <RestKit/RestKit.h>
 
-@interface User : NSManagedObject {
+@interface User : NSObject {
     NSString *userId;
     NSString *city;
     NSString *username;
@@ -32,7 +32,7 @@
     bool modified;    
 }
 
-+(RKManagedObjectMapping*)getObjectMapping;
++(RKObjectMapping*)getObjectMapping;
 
 @property (nonatomic, retain) NSString *userId;
 @property (nonatomic, retain) NSString *city;

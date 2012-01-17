@@ -13,7 +13,7 @@
 @class Perspective;
 
 
-@interface Photo : NSManagedObject {
+@interface Photo : NSObject {
     UIImage *thumb_image;
     UIImage *iphone_image;
     UIImage *main_image;
@@ -40,6 +40,6 @@
 
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
-+(RKManagedObjectMapping*)getObjectMapping;
++(RKObjectMapping*)getObjectMapping;
 
 @end

@@ -78,6 +78,8 @@
     
     [perspectiveMapping mapKeyPath:@"photos" toRelationship:@"photos" withMapping:[Photo getObjectMapping]];
     
+    [perspectiveMapping mapKeyPath:@"user" toRelationship:@"user" withMapping:[User getObjectMapping]];
+    
     return perspectiveMapping;
 }
 
