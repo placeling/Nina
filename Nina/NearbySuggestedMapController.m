@@ -17,6 +17,7 @@
 #import "NearbySuggestedPlaceController.h"
 #import "NearbySuggestedMapController.h"
 #import "PerspectiveUserTableViewController.h"
+#import "FlurryAnalytics.h"
 
 @interface NearbySuggestedMapController (Private)
 -(void)mapPlaces;
@@ -64,7 +65,6 @@
 
 
 -(IBAction)mapPlaces{    
-
     [self.mapView removeAnnotations:self.mapView.annotations];
     for (Place *place in [self places]){        
         DLog(@"putting on point for: %@", place);
@@ -109,6 +109,7 @@
 
 -(IBAction)reloadMap{
     //called on interaction for changing segment
+    [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", self.segmentedControl.selectedSegmentIndex, nil]];
     [self mapPlaces];
 }
 
@@ -228,6 +229,7 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", self.segmentedControl.selectedSegmentIndex, nil]];
     
     self.locationManager = [LocationManagerManager sharedCLLocationManager];
     self.mapView.showsUserLocation = TRUE;

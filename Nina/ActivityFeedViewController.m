@@ -12,6 +12,7 @@
 #import "MemberProfileViewController.h"
 #import "User.h"
 #import "LoginController.h"
+#import "FlurryAnalytics.h"
 
 @interface ActivityFeedViewController (Private)
 -(void)dataSourceDidFinishLoadingNewData;
@@ -142,6 +143,8 @@
     loadingMore = true;
     hasMore = true;
     recentActivities = [[NSMutableArray alloc] init];
+    
+    [FlurryAnalytics logEvent:@"ACTIVITY_FEED_VIEW"];
     
     self.navigationItem.title = @"Recent activity";
     

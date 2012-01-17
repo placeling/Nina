@@ -12,6 +12,7 @@
 #import "JSON.h"
 #import "UIImageView+WebCache.h"
 #import "Photo.h"
+#import "FlurryAnalytics.h"
 
 @interface FriendFindController ()
 -(BOOL) searchResults;
@@ -51,6 +52,8 @@
     
     RKObjectManager* objectManager = [RKObjectManager sharedManager];
     NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+    
+    [FlurryAnalytics logEvent:@"FIND_FRIEND_VIEW"];
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
@@ -269,6 +272,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     User *user;
+    
+    [FlurryAnalytics logEvent:@"FIND_FRIEND_VIEW_USER_CLICK"];
+    
     if (tableView.numberOfSections==1 && indexPath.section ==0){
         user = [self.searchUsers objectAtIndex:indexPath.row];
         

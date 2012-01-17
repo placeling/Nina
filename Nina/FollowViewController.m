@@ -194,8 +194,7 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
     memberProfileViewController.user = [self.users objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:memberProfileViewController animated:YES];

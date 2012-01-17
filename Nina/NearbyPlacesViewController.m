@@ -251,6 +251,8 @@
 		[refreshHeaderView release];
 	}
 
+    [FlurryAnalytics logEvent:@"NEARBY_PLACES_VIEW"];
+    
     self.searchBar.delegate = self;
     [self findNearbyPlaces];
     
@@ -514,6 +516,13 @@
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
 	[searchBar setShowsCancelButton:TRUE animated:true];
+    
+    if (!searchLogged){
+        [FlurryAnalytics logEvent:@"NEARBY_PLACES_VIEW_TEXT_SEARCH"];
+        searchLogged = true;
+    }
+    
+    
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
@@ -523,8 +532,7 @@
 }
 
 
--(void) keyboardWillShow:(NSNotification *)note
-{
+-(void) keyboardWillShow:(NSNotification *)note {
     CGRect keyboardEndFrame;
     [[note.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
 
@@ -541,8 +549,7 @@
     [UIView commitAnimations];
 }
 
--(void) keyboardWillHide:(NSNotification *)note
-{
+-(void) keyboardWillHide:(NSNotification *)note {    
     CGRect keyboardEndFrame;
     [[note.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
     

@@ -22,6 +22,7 @@
 #import "LoginController.h"
 #import "UIImageView+WebCache.h"
 #import "NinaAppDelegate.h"
+#import "FlurryAnalytics.h"
 
 @interface MemberProfileViewController() 
 -(void) blankLoad;
@@ -161,6 +162,9 @@
     self.followingButton.numberLabel.text = [NSString stringWithFormat:@"%@", self.user.followingCount];
     self.followersButton.numberLabel.text = [NSString stringWithFormat:@"%@", self.user.followerCount];
     self.placeMarkButton.numberLabel.text = [NSString stringWithFormat:@"%@", self.user.placeCount];
+    
+    
+    [FlurryAnalytics logEvent:@"PROFILE_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"username", self.username, nil]];
     
     if (perspectives == nil && self.user.placeCount != 0){
         loadingMore = true;
@@ -372,6 +376,7 @@
 
 - (void)dialogDidComplete:(FBDialog *)dialog{
     DLog(@"Share on Facebook Dialog completed %@", dialog)
+    [FlurryAnalytics logEvent:@"FACEBOOK_SHARE_USER"];
 }
 
 - (void)dialogDidNotComplete:(FBDialog *)dialog{

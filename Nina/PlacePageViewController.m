@@ -35,6 +35,9 @@
 #import "LoginController.h"
 #import "MemberProfileViewController.h"
 
+#import "FlurryAnalytics.h"
+
+
 #define kMinCellHeight 60
 
 #define minTableHeight 118
@@ -411,6 +414,7 @@ typedef enum {
 
 - (void)dialogDidComplete:(FBDialog *)dialog{
     DLog(@"Share on Facebook Dialog completed %@", dialog)
+    [FlurryAnalytics logEvent:@"FACEBOOK_SHARE_PLACE"];
 }
 
 - (void)dialogDidNotComplete:(FBDialog *)dialog{
@@ -739,6 +743,9 @@ typedef enum {
     self.addressLabel.text = self.place.address;
     self.cityLabel.text = self.place.city;
     
+    [FlurryAnalytics logEvent:@"PLACE_PAGE_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"name", self.place.name, @"city", self.place.city ? self.place.city : @"", nil]];
+    
+    
     if (!mapRequested){
         [self loadMap];
     } 
@@ -786,6 +793,8 @@ typedef enum {
     
     editPerspectiveViewController.delegate = self;
     
+    [FlurryAnalytics logEvent:@"EDIT_PERSPECTIVE_WRITE"];
+    
     UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editPerspectiveViewController];
     [StyleHelper styleNavigationBar:navBar.navigationBar];
     [self.navigationController presentModalViewController:navBar animated:YES];
@@ -803,6 +812,8 @@ typedef enum {
     
     editPerspectiveViewController.delegate = self;
     
+    [FlurryAnalytics logEvent:@"EDIT_PERSPECTIVE_PHOTO" ];
+    
     UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editPerspectiveViewController];
     [StyleHelper styleNavigationBar:navBar.navigationBar];
     [self.navigationController presentModalViewController:navBar animated:YES];
@@ -816,7 +827,7 @@ typedef enum {
 
 -(IBAction)showSingleAnnotatedMap{
     DLog(@"Spawning map for place: %@", self.place.name);
-      
+    [FlurryAnalytics logEvent:@"GOOGLE_SINGLE_PLACE_MAP"];
     SinglePlaceMapView *singlePlaceMapView = [[SinglePlaceMapView alloc] initWithPlace:self.place];
     
     [self.navigationController pushViewController:singlePlaceMapView animated:TRUE];
@@ -827,6 +838,8 @@ typedef enum {
 
 - (void) touchUpInsideSegmentIndex:(NSUInteger)segmentIndex{
     NSUInteger index = segmentIndex;
+    
+    [FlurryAnalytics logEvent:@"PLACE_PAGE_VIEW_TOGGLE" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"CLICK_TO", segmentIndex, nil]];
     
     if (index == 0){
         self.perspectiveType = home;
@@ -876,7 +889,7 @@ typedef enum {
 }
 
 -(IBAction) googlePlacePage{    
-    
+    [FlurryAnalytics logEvent:@"GOOGLE_PLACES_CLICK"];
     if (self.place.googlePlacesUrl != nil && ![self.place.googlePlacesUrl isKindOfClass:NSNull.class]){
         GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:self.place.googlePlacesUrl];
         
