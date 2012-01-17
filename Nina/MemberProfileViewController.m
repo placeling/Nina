@@ -490,7 +490,7 @@
 
 -(void) toggleFollow{
     
-    if (self.user.following || [self.username isEqualToString:[NinaHelper getUsername]] ){        
+    if ( [self.user.following boolValue] || [self.username isEqualToString:[NinaHelper getUsername]] ){        
         self.followButton.enabled = true;
         self.followButton.tag = 1;
         [self.followButton setTitle:@"Unfollow" forState:UIControlStateNormal];

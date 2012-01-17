@@ -41,13 +41,15 @@
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
     mine = [[jsonDict objectForKey:@"mine"] boolValue];
     
-    RKObjectManager* objectManager = [RKObjectManager sharedManager];
-    NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+    //RKObjectManager* objectManager = [RKObjectManager sharedManager];
+    //NSObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
     
     [self.photos removeAllObjects];
     for (NSDictionary *photoDict in [jsonDict objectForKey:@"photos"]){
 
-        Photo *newPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:managedObjectContext];        
+        //Photo *newPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:managedObjectContext];  
+        
+        Photo *newPhoto = [[Photo alloc] init];
         
         [newPhoto updateFromJsonDict:photoDict];
         newPhoto.perspective = self;
