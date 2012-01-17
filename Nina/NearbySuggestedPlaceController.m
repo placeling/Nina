@@ -14,6 +14,7 @@
 #import "LoginController.h"
 #import "UIImageView+WebCache.h"
 #import "NearbySuggestedMapController.h"
+#import "FlurryAnalytics.h"
 
 
 @implementation NearbySuggestedPlaceController
@@ -76,6 +77,8 @@
         self.searchBar.text = self.searchTerm;
     }
      */
+    
+    [FlurryAnalytics logEvent:@"QUICK_PICK" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"category", self.category, nil]];
     
     UIImage *mapImage = [UIImage imageNamed:@"103-map.png"];
     UIBarButtonItem *shareButton =  [[UIBarButtonItem alloc] initWithImage:mapImage style:UIBarButtonItemStylePlain target:self action:@selector(toggleMapList)];
