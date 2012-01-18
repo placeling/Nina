@@ -306,7 +306,7 @@
                     eCell.textField.delegate = self;
                     eCell.textField.tag = 3;
                 }
-                [eCell.textField becomeFirstResponder];
+                //[eCell.textField becomeFirstResponder];
             } 
             
             /*
@@ -329,7 +329,7 @@
                 eCell.textField.returnKeyType = UIReturnKeyDefault;
                 eCell.textField.delegate = self;
                 eCell.textField.tag = 1;
-                [eCell.textField becomeFirstResponder];
+                //[eCell.textField becomeFirstResponder];
             } else if (indexPath.row == 1){
                 eCell.textLabel.text = @"email";
                 eCell.textField.returnKeyType = UIReturnKeyDefault;
