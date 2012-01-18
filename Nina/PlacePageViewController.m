@@ -772,7 +772,7 @@ typedef enum {
         CGRect rect = CGRectMake(cx, 13, textsize.width+4, 26);       
         
         tagButton.frame = rect;
-        [tagButton setTitle:[NSString stringWithFormat:@"#%@", tag] forState:UIControlStateNormal];
+        [tagButton setTitle:[NSString stringWithFormat:@"#%@", [tag lowercaseString] forState:UIControlStateNormal];
         [StyleHelper styleTagButton:tagButton];
         
         [tagButton addTarget:self action:@selector(tagSearch:) forControlEvents:UIControlEventTouchUpInside];
