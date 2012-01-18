@@ -49,15 +49,16 @@
         [self.auths setObject:[jsonDict objectForKey:@"facebook"] forKey:@"facebook"];
     }
     
-    RKObjectManager* objectManager = [RKObjectManager sharedManager];
-    NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
-    Photo *photo = [[Photo alloc] initWithEntity:[NSEntityDescription entityForName:@"Photo" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+    //RKObjectManager* objectManager = [RKObjectManager sharedManager];
+    //NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+    //Photo *photo = [[Photo alloc] initWithEntity:[NSEntityDescription entityForName:@"Photo" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+    Photo *photo = [[[Photo alloc] init] autorelease];
     
     photo.thumbUrl = [jsonDict objectForKeyNotNull:@"thumb_url"];
     photo.mainUrl = [jsonDict objectForKeyNotNull:@"main_url"];
     self.profilePic = photo;
     
-    [photo release];
+    //[photo release];
     
 }
 
