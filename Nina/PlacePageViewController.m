@@ -839,7 +839,7 @@ typedef enum {
 - (void) touchUpInsideSegmentIndex:(NSUInteger)segmentIndex{
     NSUInteger index = segmentIndex;
     
-    [FlurryAnalytics logEvent:@"PLACE_PAGE_VIEW_TOGGLE" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"CLICK_TO", segmentIndex, nil]];
+    [FlurryAnalytics logEvent:@"PLACE_PAGE_VIEW_TOGGLE" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"CLICK_TO", [NSString stringWithFormat:@"%i", index] , nil]];
     
     if (index == 0){
         self.perspectiveType = home;
@@ -1100,7 +1100,7 @@ typedef enum {
         return minTableHeight;
     }
     
-    if ([self shouldShowSectionView] && indexPath.section == 0){
+    if (indexPath.section == 0){
         if (self.perspectiveType == home && self.place.bookmarked == false){
             return 64;
         }else{
@@ -1123,22 +1123,17 @@ typedef enum {
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    // Return the number of sections.
-    if ([self shouldShowSectionView]) {
-        return 2;
-    }
-    else {
-        return 1;
-    }
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Return the number of rows in the section.
-    
-    if ([self shouldShowSectionView] && section == 0){
+    if (section == 1){
+        return [perspectives count];   
+    } else if ([self shouldShowSectionView] && section == 0){
         return 1;
     }else {
-        return [perspectives count];
+        return 0;
     }
     
 }
@@ -1154,7 +1149,7 @@ typedef enum {
     UITableViewCell *cell;
     
     
-    if (indexPath.section == 0 && [self shouldShowSectionView]){
+    if (indexPath.section == 0){
         if (self.perspectiveType == home && self.place.bookmarked == false){
             cell = [tableView dequeueReusableCellWithIdentifier:bookmarkCellIdentifier];
         }else{
@@ -1250,7 +1245,7 @@ typedef enum {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ([self shouldShowSectionView] && indexPath.section == 0){
+    if ([self shouldShowSectionView] && indexPath.section == 0 && self.perspectiveType != home){
         FollowViewController *followViewController;
         
         if(self.perspectiveType == following){
@@ -1262,7 +1257,7 @@ typedef enum {
         [self.navigationController pushViewController:followViewController animated:TRUE];
         [followViewController release];
         
-    } else {
+    } else if (indexPath.section == 1){
         Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
         
         BOOL emptyPerspective = true;
