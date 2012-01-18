@@ -30,9 +30,9 @@
 }
 
 -(void) dealloc {
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [searchUsers release];
-    [suggestedUsers release];
-    [NinaHelper clearActiveRequests:100];
+    [suggestedUsers release];;
     [_searchBar release];
     [_tableView release];
     [super dealloc];
