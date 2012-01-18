@@ -203,7 +203,7 @@
 }
 
 -(void) dealloc{
-    [NinaHelper clearActiveRequests:40];
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [users release];
     [_user release];
     [_place release];
