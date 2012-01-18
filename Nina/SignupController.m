@@ -16,7 +16,7 @@
 @implementation SignupController
 
 
-@synthesize fbDict, accessKey, accessSecret, tableFooterView, termsButton, privacyButton;
+@synthesize fbDict, accessKey, accessSecret, tableFooterView, tableHeaderView, termsButton, privacyButton, urlLabel;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -105,6 +105,14 @@
 }
 
 
+- (void)usernameChanged:(id)sender {
+    NSString *username = ((UITextField*)sender).text;
+    
+    self.urlLabel.text = [NSString stringWithFormat:@"http://placeling.com/%@", username];
+}
+
+
+
 -(void)requestFailed:(ASIHTTPRequest *)request{
     
     int statusCode = [request responseStatusCode];
@@ -190,6 +198,10 @@
     self.tableView.tableFooterView = self.tableFooterView;
     self.tableView.tableFooterView.userInteractionEnabled = TRUE;
     
+    [[NSBundle mainBundle] loadNibNamed:@"SignupHeaderView" owner:self options:nil];
+    self.tableView.tableHeaderView = self.tableHeaderView;
+    self.tableView.tableHeaderView.userInteractionEnabled = TRUE;
+    
     [self.tableFooterView setAutoresizingMask:UIViewAutoresizingNone];
     
     self.navigationItem.title = @"Signup";
@@ -225,9 +237,21 @@
     [super dealloc];
 }
 
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
+-(void) textFieldDidEndEditing:(UITextField *)textField{
+    
+    
+    if (textField.tag == 1){
+        self.tableHeaderView.hidden = true;
+        [self.tableHeaderView removeFromSuperview];
+        [[self tableView] scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
@@ -305,7 +329,10 @@
                     eCell.textField.returnKeyType = UIReturnKeyGo;
                     eCell.textField.delegate = self;
                     eCell.textField.tag = 3;
+                    [eCell.textField addTarget:self action:@selector(usernameChanged:) forControlEvents:UIControlEventEditingChanged];
+                    self.urlLabel.text = [NSString stringWithFormat:@"http://placeling.com/%@", username];
                 }
+                
                 //[eCell.textField becomeFirstResponder];
             } 
             
@@ -329,6 +356,8 @@
                 eCell.textField.returnKeyType = UIReturnKeyDefault;
                 eCell.textField.delegate = self;
                 eCell.textField.tag = 1;
+                [eCell.textField addTarget:self action:@selector(usernameChanged:) forControlEvents:UIControlEventEditingChanged];
+                
                 //[eCell.textField becomeFirstResponder];
             } else if (indexPath.row == 1){
                 eCell.textLabel.text = @"email";

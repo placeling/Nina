@@ -17,10 +17,12 @@
     NSString *accessKey;
     NSString *accessSecret;
     
-    IBOutlet UIView *tableFooterView;
-    IBOutlet UIButton *termsButton;
-    IBOutlet UIButton *privacyButton;
+    UIView *tableFooterView;
+    UIView *tableHeaderView;
+    UIButton *termsButton;
+    UIButton *privacyButton;
 
+    UILabel *urlLabel;
 }
 
 
@@ -28,11 +30,14 @@
 @property(nonatomic,retain) NSString *accessKey;
 @property(nonatomic,retain) NSString *accessSecret;
 @property(nonatomic,retain) IBOutlet UIView *tableFooterView;
+@property(nonatomic,retain) IBOutlet UIView *tableHeaderView;
 @property(nonatomic,retain) IBOutlet UIButton *termsButton;
 @property(nonatomic,retain) IBOutlet UIButton *privacyButton;
+@property(nonatomic,retain) IBOutlet UILabel *urlLabel;
 
 -(IBAction)signup;
 -(IBAction)showTerms;
 -(IBAction)showPrivacy;
+-(void)usernameChanged:(id)sender;
 
 @end
