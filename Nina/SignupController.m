@@ -174,11 +174,12 @@
         NSEnumerator *enumerator = [errors keyEnumerator];
         NSString *key;
         while ((key = [enumerator nextObject])) {
-            NSString *tmp = [errors objectForKey:key];
-            errorMessage = [NSString stringWithFormat:@"%@%@ %@\n", errorMessage, key, tmp];
+            NSArray *keyErrors = [errors objectForKey:key];
+            
+            for (NSString *failure in keyErrors){
+                errorMessage = [NSString stringWithFormat:@"%@%@ %@\n", errorMessage, key, failure];
+            }
         }
-        [jsonDict objectForKey:@"message"];
-        
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:errorMessage delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
