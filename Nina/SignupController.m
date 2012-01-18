@@ -364,6 +364,7 @@
                 eCell.textField.returnKeyType = UIReturnKeyDefault;
                 eCell.textField.delegate = self;
                 eCell.textField.tag = 2;
+                eCell.textField.keyboardType = UIKeyboardTypeEmailAddress;
             }else if (indexPath.row == 2){
                 eCell.textLabel.text = @"password";
                 eCell.textField.secureTextEntry = true;
