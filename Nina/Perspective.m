@@ -22,9 +22,10 @@
         }
         
         if ([jsonDict objectForKey:@"user"]){
-            RKObjectManager* objectManager = [RKObjectManager sharedManager];
-            NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
-            self.user = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+            //RKObjectManager* objectManager = [RKObjectManager sharedManager];
+            //NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+            //self.user = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+            self.user = [[[User alloc] init] autorelease];
             [self.user updateFromJsonDict:[jsonDict objectForKey:@"user"]];
         }
         

@@ -34,7 +34,7 @@
 
 @implementation MemberProfileViewController
 
-@synthesize username;
+@synthesize username, perspectives;
 @synthesize user=_user, profileImageView, headerView;
 @synthesize usernameLabel, userDescriptionLabel;
 @synthesize followButton, locationLabel;
@@ -168,17 +168,14 @@
     
     if (perspectives == nil && self.user.placeCount != 0){
         loadingMore = true;
-        NSString *urlString = [NSString stringWithFormat:@"%@/v1/users/%@/", [NinaHelper getHostname], self.username];		
         
-        NSURL *url = [NSURL URLWithString:urlString];
+        RKObjectManager* objectManager = [RKObjectManager sharedManager];        
+        NSString *targetURL = [NSString stringWithFormat:@"/v1/users/%@/perspectives", self.username];
         
-        ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-        
-        [request setDelegate:self];
-        [request setTag:13];
-        [NinaHelper signRequest:request];
-        [request startAsynchronous];
-        
+        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+            loader.userData = [NSNumber numberWithInt:13]; //use as a tag
+        }];
+
     } else {
         [self.tableView reloadData];
     }
@@ -198,13 +195,9 @@
 }
 
 -(void) mainContentLoad {
-    NSString *currentUser = [NinaHelper getUsername];
+    //NSString *currentUser = [NinaHelper getUsername];
     
-    if ((currentUser || currentUser.length > 0) && (!self.username || currentUser.length == 0)) {
-        self.username = currentUser;
-    }
-    
-    if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
+    if (( !self.user.username ) && ( !self.username || self.username.length == 0)) {
         self.navigationItem.title = @"Your Profile";
     } else {
         NSString *getUsername;
@@ -221,7 +214,13 @@
         
         // Call url to get profile details                
         RKObjectManager* objectManager = [RKObjectManager sharedManager];   
-        [objectManager loadObjectsAtResourcePath:[NSString stringWithFormat:@"/v1/users/%@", self.username] objectMapping:[User getObjectMapping] delegate:self];
+        NSString *targetURL = [NSString stringWithFormat:@"/v1/users/%@", self.username];
+        
+        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+            loader.objectMapping = [User getObjectMapping];
+            loader.userData = [NSNumber numberWithInt:10]; //use as a tag
+        }];
+
     }
 }
 
@@ -396,10 +395,44 @@
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     loadingMore = false;
-    User* user = [objects objectAtIndex:0];
-    DLog(@"Loaded User: %@", user.username);
-    self.user = user;
-    [self loadData];
+    
+    
+    if ( [(NSNumber*)objectLoader.userData intValue] == 10){
+        User* user = [objects objectAtIndex:0];
+        DLog(@"Loaded User: %@", user.username);        
+        self.user = user;
+        [self loadData];
+        [self.tableView reloadData]; 
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 13){     
+        // get initial perspectives
+        loadingMore = false;
+        if ( [objects count] == 0 ){
+            hasMore = false;
+        }
+        
+        self.perspectives = [[[NSMutableArray alloc] init] autorelease];
+        
+        for (Perspective *perspective in objects){
+            [perspectives addObject:perspective]; 
+        }
+        
+        [self loadData];
+        [self.tableView reloadData]; 
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 14){
+        // adding more perspectives
+        loadingMore = false;
+        if ( [objects count] == 0 ){
+            hasMore = false;
+        }
+        
+        for (Perspective *perspective in objects){
+            [perspectives addObject:perspective]; 
+        }
+        
+        [self loadData];
+        [self.tableView reloadData]; 
+    }
+
 }
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
@@ -436,52 +469,6 @@
             UIImage *newImage = [UIImage imageWithData:responseData];
             
             self.profileImageView.image = newImage;
-        }
-        case 13:
-        {
-            NSString *jsonString = [request responseString];
-            
-            DLog(@"Got JSON BACK: %@", jsonString);
-            // Create a dictionary from the JSON string
-
-            NSMutableArray *rawPerspectives = [[jsonString JSONValue] objectForKey:@"perspectives"];
-            perspectives = [[NSMutableArray alloc] initWithCapacity:[rawPerspectives count]];
-            
-            for (NSDictionary* dict in rawPerspectives){
-                Perspective* newPerspective = [[Perspective alloc] initFromJsonDict:dict];
-                newPerspective.user = self.user;
-                [perspectives addObject:newPerspective]; 
-                [newPerspective release];
-            }
-            
-            [self.tableView reloadData];    
-            break;
-        }
-        case 14:
-        {
-            NSString *responseString = [request responseString];            
-            DLog(@"perspectives get returned: %@", responseString);
-                        
-            NSDictionary *jsonDict =  [responseString JSONValue];
-            
-            
-            if ([jsonDict objectForKey:@"perspectives"]){
-                //has perspectives in call, seed with to make quicker
-                NSMutableArray *rawPerspectives = [jsonDict objectForKey:@"perspectives"];               
-                if ([rawPerspectives count] == 0){
-                    hasMore = false;
-                }
-                for (NSDictionary* dict in rawPerspectives){
-                    Perspective* newPerspective = [[Perspective alloc] initFromJsonDict:dict];
-                    newPerspective.user = self.user;
-                    [perspectives addObject:newPerspective]; 
-                    [newPerspective release];
-                }
-            }
-            
-            loadingMore = false;
-            [self loadData];
-            break;
         }
         case 15:
         {
@@ -696,16 +683,13 @@
     if(hasMore && y > h + reload_distance && loadingMore == false) {
         loadingMore = true;
         
-        // Call url to get profile details
-        NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@/perspectives?start=%i", [NinaHelper getHostname], self.username, [perspectives count]];
+        RKObjectManager* objectManager = [RKObjectManager sharedManager];
         
-        NSURL *url = [NSURL URLWithString:urlText];
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-        [request setDelegate:self];
-        [request setTag:14];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        [NinaHelper signRequest:request];
-        [request startAsynchronous];
+        NSString *targetURL = [NSString stringWithFormat:@"/v1/users/%@/perspectives?start=%i", self.username, [perspectives count]];
+        
+        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+            loader.userData = [NSNumber numberWithInt:14]; //use as a tag
+        }];
         
         [self.tableView reloadData];
     }
@@ -718,7 +702,7 @@
     [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [username release];
     [_user release];
-    
+    [perspectives release];
     [locationLabel release];
     [profileImageView release];
     [usernameLabel release];

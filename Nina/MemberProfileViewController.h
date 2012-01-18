@@ -40,6 +40,7 @@
 
 @property (nonatomic, retain) NSString *username;
 @property (nonatomic, retain) User *user;
+@property (nonatomic, retain) NSMutableArray *perspectives;
 
 @property (nonatomic, retain) IBOutlet UIImageView *profileImageView;
 

@@ -44,9 +44,9 @@
 @property (nonatomic, retain) NSMutableDictionary *auths;
 
 @property (nonatomic, retain) Photo *profilePic;
-@property (nonatomic, assign) NSNumber *placeCount;
-@property (nonatomic, assign) NSNumber *followingCount;
-@property (nonatomic, assign) NSNumber *followerCount;
+@property (nonatomic, retain) NSNumber *placeCount;
+@property (nonatomic, retain) NSNumber *followingCount;
+@property (nonatomic, retain) NSNumber *followerCount;
 
 @property (nonatomic, retain) NSNumber *following;
 @property (nonatomic, retain) NSNumber *follows_you;
