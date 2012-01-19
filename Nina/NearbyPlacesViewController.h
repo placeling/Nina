@@ -30,6 +30,7 @@
     BOOL showPredictive;
     BOOL narrowed;
     BOOL dataLoaded;
+    bool loading;
 
     BOOL locationEnabled;
     BOOL _reloading;

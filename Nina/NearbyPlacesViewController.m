@@ -150,7 +150,7 @@
     }
     
     NSURL *url = [NSURL URLWithString:urlString];
-    
+    loading = true;
     ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
     request.tag = 20;
     //[NinaHelper signRequest:request]; //don't sign for Google
@@ -300,7 +300,7 @@
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
-    
+    loading = false;
     self.placesTableView.tableFooterView = self.tableFooterView;
     
 	if (200 != [request responseStatusCode]){
@@ -372,7 +372,9 @@
     DLog(@"%i", [nearbyPlaces count]);
     if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
         return 1;
-    } else {
+    } else if (loading){
+        return 1;
+    }else {
         if ([self showPredictive]){
             return [predictivePlaces count];
         } else {
@@ -446,6 +448,15 @@
             }
             
             cell.detailTextLabel.text = subtitle;
+        }else if ( loading ){
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    cell = item;
+                }
+            }               
+            
         } else {
             NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
             
