@@ -262,7 +262,7 @@
     [super viewWillAppear:animated];
     [StyleHelper styleSearchBar:self.searchBar];
     [StyleHelper styleToolBar:self.toolBar];
-    
+    [StyleHelper styleBackgroundView:self.placesTableView];
     
     [[NSNotificationCenter defaultCenter]
      addObserver:self
