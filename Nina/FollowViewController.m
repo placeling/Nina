@@ -12,6 +12,11 @@
 #import "MemberProfileViewController.h"
 #import "UIImageView+WebCache.h"
 
+
+@interface FollowViewController()
+-(NSString*) restUrl:(int)start;
+@end
+
 @implementation FollowViewController
 
 @synthesize user=_user;
@@ -46,12 +51,22 @@
 #pragma mark - RKObjectLoaderDelegate methods
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+    loadingMore = false;
     
-    users = [[NSMutableArray alloc] initWithCapacity:[objects count]];
-    for (User* user in objects){
-        [users addObject:user];
+    if ([objects count] < 20){
+        hasMore = false;
     }
     
+    if ( [(NSNumber*)objectLoader.userData intValue] == 40){
+        users = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+        for (User* user in objects){
+            [users addObject:user];
+        }
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 41){
+        for (User* user in objects){
+            [users addObject:user];
+        }
+    }
     [self.tableView reloadData]; 
 }
 
@@ -61,32 +76,40 @@
 }
 
 
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad{
-    [super viewDidLoad];
+-(NSString*) restUrl:(int)start{
     NSString *targetURL;
-    
     if (self.place){        
         self.navigationItem.title = self.place.name;  
         
         if (self.following){
-            targetURL = [NSString stringWithFormat:@"/v1/places/%@/users?filter_follow=true", self.place.pid];
+            targetURL = [NSString stringWithFormat:@"/v1/places/%@/users?filter_follow=true&start=%i", self.place.pid, start];
         } else {
-            targetURL = [NSString stringWithFormat:@"/v1/places/%@/users", self.place.pid];
+            targetURL = [NSString stringWithFormat:@"/v1/places/%@/users?start=%i", self.place.pid, start];
         }        
     } else {
         if (self.following){
-            targetURL = [NSString stringWithFormat:@"/v1/users/%@/following", self.user.username];
+            targetURL = [NSString stringWithFormat:@"/v1/users/%@/following?start=%i", self.user.username, start];
             self.navigationItem.title = @"Following";
         } else {
-            targetURL = [NSString stringWithFormat:@"/v1/users/%@/followers", self.user.username];
+            targetURL = [NSString stringWithFormat:@"/v1/users/%@/followers?start=%i", self.user.username, start];
             self.navigationItem.title = @"Followers";
         }
     }
-    	
+    return targetURL;
+}
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad{
+    [super viewDidLoad];
+  
+    loadingMore = true;
+    hasMore = true;
+        	
     RKObjectManager* objectManager = [RKObjectManager sharedManager];
-    [objectManager loadObjectsAtResourcePath:targetURL delegate:self];
+    [objectManager loadObjectsAtResourcePath:[self restUrl:0] delegate:self block:^(RKObjectLoader* loader) {        
+        loader.userData = [NSNumber numberWithInt:40]; //use as a tag
+    }];
 }
 
 - (void)viewDidUnload
@@ -131,14 +154,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Return the number of rows in the section.
-    if (users){
-        if ([users count] == 0) {
-            return 1;
-        } else {
+
+    if (users) {
+        if (loadingMore){   
+            return [users count] +1;
+        }else{
             return [users count];
         }
     } else {
-        return 0; //show a loading spinny or something
+        return 1;
     }
 }
 
@@ -175,6 +199,14 @@
                 }
             }
         }
+    } else if ( loadingMore && indexPath.row >= [users count] ){
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
+        
+        for(id item in objects){
+            if ( [item isKindOfClass:[UITableViewCell class]]){
+                cell = item;
+            }
+        }   
     } else {
         tableView.allowsSelection = YES;
         User* user = [users objectAtIndex:indexPath.row];
@@ -191,6 +223,31 @@
     
     return cell;
 }
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    CGPoint offset = aScrollView.contentOffset;
+    CGRect bounds = aScrollView.bounds;
+    CGSize size = aScrollView.contentSize;
+    UIEdgeInsets inset = aScrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    float reload_distance = 10;
+    if(hasMore && y > h + reload_distance && loadingMore == false) {
+        loadingMore = true;
+        
+        RKObjectManager* objectManager = [RKObjectManager sharedManager];
+        
+        [objectManager loadObjectsAtResourcePath:[self restUrl:[users count]] delegate:self block:^(RKObjectLoader* loader) {        
+            loader.userData = [NSNumber numberWithInt:41]; //use as a tag
+        }];
+        
+        [self.tableView reloadData];
+    }
+}
+
+
 
 #pragma mark - Table view delegate
 

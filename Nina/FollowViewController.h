@@ -17,7 +17,10 @@
     User* _user;
     Place* _place;
     NSMutableArray *users;
-    bool following;//false for followers, true for following    
+    bool following;//false for followers, true for following 
+    
+    BOOL loadingMore;
+    BOOL hasMore;
 }
 
 @property (nonatomic, retain) NSMutableArray *users;
