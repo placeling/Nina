@@ -51,7 +51,7 @@
     self.recentSearches = [[[NSMutableArray alloc]init]autorelease];
     
     RKObjectManager* objectManager = [RKObjectManager sharedManager];
-    NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+    //NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
     
     [FlurryAnalytics logEvent:@"FIND_FRIEND_VIEW"];
     
@@ -60,7 +60,8 @@
     for (int i=0; i< 3; i++){
         if ([prefs dictionaryForKey:[NSString stringWithFormat:@"recent_search_%i", i]]){
             NSDictionary *jsonDict = [prefs dictionaryForKey:[NSString stringWithFormat:@"recent_search_%i", i]];
-            User *user = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+            //User *user = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
+            User *user = [[User alloc] init];
             
             [user updateFromJsonDict:jsonDict];
             [self.recentSearches addObject:user];
@@ -71,6 +72,7 @@
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocationCoordinate2D location = [manager location].coordinate;
     
+    loading = true;
     NSString *targetURL = [NSString stringWithFormat:@"/v1/users/suggested?lat=%f&lng=%f", location.latitude, location.longitude];    
     
     [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
@@ -143,7 +145,7 @@
 #pragma mark - RKObjectLoaderDelegate methods
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
-
+    loading = false;
     if ( [(NSNumber*)objectLoader.userData intValue] == 100){
         [self.suggestedUsers removeAllObjects];
         for (User* user in objects){
@@ -184,7 +186,7 @@
         if (section == 0){
             return [self.recentSearches count];
         }else {
-            return [self.suggestedUsers count];
+            return MAX([self.suggestedUsers count], 1);
         }
     }else {
         return MAX([self.searchUsers count], 1); //in "1" case we have a memo
@@ -227,6 +229,15 @@
         // Here we use the new provided setImageWithURL: method to load the web image
         [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
                        placeholderImage:[UIImage imageNamed:@"profile.png"]];
+    }else if ( tableView.numberOfSections == 2 && indexPath.section == 1 && loading ){
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
+        
+        for(id item in objects){
+            if ( [item isKindOfClass:[UITableViewCell class]]){
+                cell = item;
+            }
+        }    
+            
     }else {
         NSArray *members;
         if ([self searchResults]){

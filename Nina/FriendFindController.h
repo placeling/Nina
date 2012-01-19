@@ -16,6 +16,7 @@
     NSMutableArray *recentSearches;
     
     BOOL showSearchResults;
+    bool loading;
     UITableView *_tableView;
     UISearchBar *_searchBar;
 }
