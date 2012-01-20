@@ -237,9 +237,17 @@
 	//NSError *error = [request error];
     
     int statusCode = [request responseStatusCode];
-	
+    NSString *error = [request responseString];
+	NSArray *component = [error componentsSeparatedByString:@":"];
+    
     if (statusCode == 401){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Incorrect Username/Password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        UIAlertView *alert;
+        if ( [[NSString stringWithString:@"unconfirmed"] isEqualToString:[[component objectAtIndex:0] lowercaseString] ] ){
+            alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:[component objectAtIndex:1] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        } else {
+            alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Incorrect Username/Password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        }
+        
         [alert show];
         [alert release];
         DLog(@"401 on oauth login request");
