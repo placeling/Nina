@@ -47,6 +47,7 @@
 }
 
 +(RKObjectMapping*)getObjectMapping;
++(RKObjectMapping*)getObjectMappingNoPerspectives;
 
 @property (nonatomic, assign) BOOL dirty;
 @property (nonatomic, retain) NSString *name;

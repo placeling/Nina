@@ -58,6 +58,16 @@
 
 
 +(RKObjectMapping*)getObjectMapping{
+    RKObjectMapping* placeMapping = [Place getObjectMappingNoPerspectives];     
+                                     
+    [placeMapping mapKeyPath:@"perspectives" toRelationship:@"homePerspectives" withMapping:[Perspective getObjectMapping]];
+    
+    [placeMapping mapKeyPath:@"placemarks" toRelationship:@"placemarks" withMapping:[Perspective getObjectMapping]];
+    
+    return placeMapping;
+}
+
++(RKObjectMapping*)getObjectMappingNoPerspectives{
     RKObjectMapping* placeMapping = [RKObjectMapping mappingForClass:[Place class]];
     [placeMapping mapKeyPathsToAttributes:
      
@@ -78,15 +88,10 @@
     [placeMapping mapKeyPath:@"lat" toAttribute:@"lat"];
     [placeMapping mapKeyPath:@"lng" toAttribute:@"lng"];
     
-    [placeMapping mapKeyPath:@"perspectives" toRelationship:@"homePerspectives" withMapping:[Perspective getObjectMapping]];
-    
-    [placeMapping mapKeyPath:@"placemarks" toRelationship:@"placemarks" withMapping:[Perspective getObjectMapping]];
-    
     //placeMapping.primaryKeyAttribute = @"pid";
     
     return placeMapping;
 }
-
 
 -(NSString*) usersBookmarkingString{
     
