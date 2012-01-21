@@ -68,7 +68,16 @@
     // Do any additional setup after loading the view from its nib.
     
     self.locationEnabled = TRUE;
-        
+      
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if ( !currentUser ){
+        //not logged in, show popular
+        self.segmentedControl.selectedSegmentIndex = 1;
+    } else {
+        self.segmentedControl.selectedSegmentIndex = 0;
+    }
+    
     /*
     if (!self.searchTerm){
         self.searchBar.text = @"";
@@ -214,7 +223,7 @@
     }
         
     NSString *currentUser = [NinaHelper getUsername];
-    if (indexPath.section == 0 && !currentUser) {
+    if ( self.segmentedControl.selectedSegmentIndex == 0 && !currentUser) {
         cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
         
         tableView.allowsSelection = YES;
@@ -257,7 +266,7 @@
         if (self.locationEnabled == FALSE) {
             errorText.text = [NSString stringWithFormat:@"We can't show you any nearby places as you've got location services turned off."];
         } else {
-            if (indexPath.section == 2) {
+            if (self.segmentedControl.selectedSegmentIndex == 1) {
                 if ([self.searchTerm isEqualToString:@""] == TRUE) {
                     errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places."];
                 } else {
@@ -325,7 +334,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *currentUser = [NinaHelper getUsername];
     
-    if ( !currentUser && indexPath.section == 0) {
+    if ( self.segmentedControl.selectedSegmentIndex == 0 && !currentUser ) {
         LoginController *loginController = [[LoginController alloc] init];
         loginController.delegate = self;
         
@@ -335,8 +344,8 @@
         [loginController release];
     } else {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if (indexPath.row < [followingPlaces count]){
-            Place *place = [followingPlaces objectAtIndex:indexPath.row];
+        if (indexPath.row < [[self places] count]){
+            Place *place = [[self places] objectAtIndex:indexPath.row];
             
             PlacePageViewController *placeController = [[PlacePageViewController alloc] initWithPlace:place];
             
