@@ -112,7 +112,7 @@
 							<object class="IBUISegmentedControl" id="10428548">
 								<reference key="NSNextResponder" ref="965576721"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{54, 8}, {188, 30}}</string>
+								<string key="NSFrame">{{54, 8}, {203, 30}}</string>
 								<reference key="NSSuperview" ref="965576721"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="341782952"/>
@@ -122,7 +122,7 @@
 								<int key="IBNumberOfSegments">2</int>
 								<int key="IBSelectedSegmentIndex">0</int>
 								<array key="IBSegmentTitles">
-									<string>Following</string>
+									<string>Me + Following</string>
 									<string>Popular</string>
 								</array>
 								<array class="NSMutableArray" key="IBSegmentWidths">

@@ -76,8 +76,8 @@
 								<int key="IBNumberOfSegments">2</int>
 								<int key="IBSelectedSegmentIndex">0</int>
 								<array key="IBSegmentTitles">
-									<string>Following</string>
-									<string>Everyone</string>
+									<string>Me + Following</string>
+									<string>Popular</string>
 								</array>
 								<array class="NSMutableArray" key="IBSegmentWidths">
 									<real value="0.0"/>
