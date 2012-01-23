@@ -9,7 +9,6 @@
 #import "HomeViewController.h"
 #import "NearbyPlacesViewController.h"
 #import "MemberProfileViewController.h"
-#import "PerspectivesMapViewController.h"
 #import "NinaHelper.h"
 #import "NSString+SBJSON.h"
 #import "Place.h"
