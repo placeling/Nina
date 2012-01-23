@@ -24,8 +24,11 @@
 -(IBAction)toggleMapList{
     NearbySuggestedMapController *nsController = [[NearbySuggestedMapController alloc] init];
     
+    nsController.category = self.category;
+    nsController.searchTerm = self.searchTerm;
     nsController.followingPlaces = self.followingPlaces;
     nsController.popularPlaces = self.popularPlaces;
+    nsController.initialIndex = self.segmentedControl.selectedSegmentIndex;
     
     //nsController.allFollowing = [NSMutableArray arrayWithArray:self.followingPlaces];
     //nsController.allPopular = [NSMutableArray arrayWithArray:self.popularPlaces];
@@ -68,24 +71,6 @@
     // Do any additional setup after loading the view from its nib.
     
     self.locationEnabled = TRUE;
-      
-    NSString *currentUser = [NinaHelper getUsername];
-    
-    if ( !currentUser ){
-        //not logged in, show popular
-        self.segmentedControl.selectedSegmentIndex = 1;
-    } else {
-        self.segmentedControl.selectedSegmentIndex = 0;
-    }
-    
-    /*
-    if (!self.searchTerm){
-        self.searchBar.text = @"";
-        self.searchBar.placeholder = @"search tags";
-    } else {
-        self.searchBar.text = self.searchTerm;
-    }
-     */
     
     [FlurryAnalytics logEvent:@"QUICK_PICK" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"category", self.category, nil]];
     
@@ -104,12 +89,6 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    if (self.category &&  [self.category length] > 0){
-        self.navigationItem.title = self.category;
-    } else {
-        self.navigationItem.title = @"Nearby";
-    }
     
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     [StyleHelper styleBackgroundView:self.placesTableView];

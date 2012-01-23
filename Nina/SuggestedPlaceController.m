@@ -16,7 +16,7 @@
 
 @implementation SuggestedPlaceController
 
-@synthesize popularLoaded, followingLoaded, locationEnabled;
+@synthesize popularLoaded, followingLoaded, locationEnabled, initialIndex;
 @synthesize searchTerm, category;
 @synthesize lat, lng;
 @synthesize followingPlaces, popularPlaces;
@@ -160,6 +160,21 @@
     if (!self.searchTerm){
         self.searchTerm = @"";
     }
+    
+    
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if ( !currentUser ){
+        //not logged in, show popular
+        self.segmentedControl.selectedSegmentIndex = 1;
+    } else {
+        self.segmentedControl.selectedSegmentIndex = 0;
+    }
+    
+    if (initialIndex != 0 ){
+        self.segmentedControl.selectedSegmentIndex = initialIndex;
+    }
+    
 }
 
 
@@ -167,6 +182,13 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [StyleHelper styleToolBar:self.toolbar];
+    
+    
+    if (self.category &&  [self.category length] > 0){
+        self.navigationItem.title = self.category;
+    } else {
+        self.navigationItem.title = @"Nearby";
+    }
 }
 
 - (void)viewDidUnload

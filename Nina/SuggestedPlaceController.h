@@ -18,6 +18,8 @@
     BOOL followingLoaded;
     BOOL popularLoaded;
     
+    int initialIndex;
+    
     NSMutableArray  *followingPlaces;
     NSMutableArray  *popularPlaces;
     
@@ -30,7 +32,8 @@
 
 @property(nonatomic, assign) BOOL followingLoaded;
 @property(nonatomic, assign) BOOL popularLoaded;
-@property(nonatomic,assign) BOOL locationEnabled;
+@property(nonatomic, assign) BOOL locationEnabled;
+@property(nonatomic, assign) int initialIndex;;
 
 @property(nonatomic,retain) NSString *searchTerm;
 @property(nonatomic,retain) NSString *category;

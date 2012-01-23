@@ -35,6 +35,9 @@
     
     nsController.followingPlaces = self.followingPlaces;
     nsController.popularPlaces = self.popularPlaces;
+    nsController.category = self.category;
+    nsController.searchTerm = self.searchTerm;
+    nsController.initialIndex = self.segmentedControl.selectedSegmentIndex;
     
     UINavigationController *navController = self.navigationController;
     [UIView beginAnimations:@"View Flip" context:nil];
@@ -241,6 +244,7 @@
     lastLatSpan = self.mapView.region.span.latitudeDelta;
     
     UIImage *mapImage = [UIImage imageNamed:@"104-index-cards.png"];
+    
     UIBarButtonItem *flipButton =  [[UIBarButtonItem alloc] initWithImage:mapImage style:UIBarButtonItemStylePlain target:self action:@selector(toggleMapList)];
     self.navigationItem.rightBarButtonItem = flipButton;
     [flipButton release];
