@@ -79,7 +79,6 @@
 		284D1CDE147C29DE001F80D1 /* FriendFindController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284D1CDC147C29DE001F80D1 /* FriendFindController.m */; };
 		284D1CDF147C29DE001F80D1 /* FriendFindController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284D1CDD147C29DE001F80D1 /* FriendFindController.xib */; };
 		2855238714B51CA300FAAB4D /* RestKitModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2855238514B51CA300FAAB4D /* RestKitModel.xcdatamodeld */; };
-		285523A514B6636D00FAAB4D /* DBManagedObjectCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 285523A414B6636D00FAAB4D /* DBManagedObjectCache.m */; };
 		285BE74E142CFFFA00898FDF /* asyncimageview.m in Sources */ = {isa = PBXBuildFile; fileRef = 285BE74D142CFFF900898FDF /* asyncimageview.m */; };
 		286B15F7140E9E6100CFED96 /* 86-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F6140E9E6100CFED96 /* 86-camera.png */; };
 		286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */; };
@@ -452,8 +451,6 @@
 		284D1CDC147C29DE001F80D1 /* FriendFindController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendFindController.m; sourceTree = "<group>"; };
 		284D1CDD147C29DE001F80D1 /* FriendFindController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendFindController.xib; sourceTree = "<group>"; };
 		2855238614B51CA300FAAB4D /* RestKitModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RestKitModel.xcdatamodel; sourceTree = "<group>"; };
-		285523A314B6636D00FAAB4D /* DBManagedObjectCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManagedObjectCache.h; sourceTree = "<group>"; };
-		285523A414B6636D00FAAB4D /* DBManagedObjectCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManagedObjectCache.m; sourceTree = "<group>"; };
 		285BE74C142CFFF900898FDF /* asyncimageview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asyncimageview.h; sourceTree = "<group>"; };
 		285BE74D142CFFF900898FDF /* asyncimageview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = asyncimageview.m; sourceTree = "<group>"; };
 		286B15F6140E9E6100CFED96 /* 86-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "86-camera.png"; sourceTree = "<group>"; };
@@ -1317,8 +1314,6 @@
 				28A43782143295E4005F192B /* PictureViewController.h */,
 				28A43783143295E4005F192B /* PictureViewController.m */,
 				28A43784143295E4005F192B /* PictureViewController.xib */,
-				285523A314B6636D00FAAB4D /* DBManagedObjectCache.h */,
-				285523A414B6636D00FAAB4D /* DBManagedObjectCache.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -1909,7 +1904,6 @@
 				28B5D8DD149096CC00763D0C /* UIButton+WebCache.m in Sources */,
 				28B5D8DE149096CC00763D0C /* UIImageView+WebCache.m in Sources */,
 				2855238714B51CA300FAAB4D /* RestKitModel.xcdatamodeld in Sources */,
-				285523A514B6636D00FAAB4D /* DBManagedObjectCache.m in Sources */,
 				2827F24A14BAB189002B4B7E /* Facebook.m in Sources */,
 				2827F24C14BAB189002B4B7E /* FBDialog.m in Sources */,
 				2827F24D14BAB189002B4B7E /* FBRequest.m in Sources */,
