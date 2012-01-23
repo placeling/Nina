@@ -46,8 +46,9 @@
                                [NSDictionary dictionaryWithObjectsAndKeys:@"TouristyPick.png", @"image", @"Interesting & Outdoors", @"category",  @"Interesting", @"title", nil],
                                 [NSDictionary dictionaryWithObjectsAndKeys:@"EverythingPick.png", @"image", @"Gas Station", @"category",  @"Gas", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"BeautyPick.png", @"image", @"Beauty", @"category",  @"Beauty", @"title", nil],
-                               [NSDictionary dictionaryWithObjectsAndKeys:@"GovernmentPick.png", @"image", @"Government", @"category",  @"Government", @"title", nil]
-                               , nil];
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"GovernmentPick.png", @"image", @"Government", @"category",  @"Government", @"title", nil],
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"EverythingPick.png", @"image", @"", @"category",  @"Everything", @"title", nil],
+                               nil];
 
     CGFloat cx = 5;
         
