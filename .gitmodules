@@ -1,6 +1,3 @@
 [submodule "RestKit"]
 	path = RestKit
 	url = git@github.com:imackinn/RestKit.git
-[submodule "Nina/lib/facebook-ios-sdk"]
-	path = Nina/lib/facebook-ios-sdk
-	url = git://github.com/facebook/facebook-ios-sdk.git
