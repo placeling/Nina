@@ -79,6 +79,7 @@
      @"google_ref", @"google_ref",
      @"google_url", @"googlePlacesUrl",
      @"google_id", @"googleId",
+     @"bookmarked", @"bookmarked",
      @"users_bookmarking", @"usersBookmarking",
      @"following_perspective_count", @"followingPerspectiveCount",
      @"tags", @"tags",
