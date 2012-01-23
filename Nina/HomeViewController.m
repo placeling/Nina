@@ -23,6 +23,7 @@
 #import "AboutUsController.h"
 #import "QuickPickButton.h"
 #import "FriendFindController.h"
+#import "NearbySuggestedMapController.h"
 
 
 @interface HomeViewController (Private) 
@@ -190,9 +191,10 @@
 }
 
 -(IBAction)nearbyPerspectives{
-    PerspectivesMapViewController *perspectivesMapViewController = [[PerspectivesMapViewController alloc] initForUserName:[NinaHelper getUsername]];
-    [self.navigationController pushViewController:perspectivesMapViewController animated:YES];
-    [perspectivesMapViewController release]; 
+    NearbySuggestedMapController *nearbySuggestedMapController = [[NearbySuggestedMapController alloc] init];    
+    nearbySuggestedMapController.category = @"";
+    [self.navigationController pushViewController:nearbySuggestedMapController animated:TRUE];
+    [nearbySuggestedMapController release];
 }
 
 -(IBAction)myProfile{
