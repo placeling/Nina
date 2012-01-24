@@ -80,6 +80,11 @@
 		284D1CDF147C29DE001F80D1 /* FriendFindController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284D1CDD147C29DE001F80D1 /* FriendFindController.xib */; };
 		2855238714B51CA300FAAB4D /* RestKitModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2855238514B51CA300FAAB4D /* RestKitModel.xcdatamodeld */; };
 		285BE74E142CFFFA00898FDF /* asyncimageview.m in Sources */ = {isa = PBXBuildFile; fileRef = 285BE74D142CFFF900898FDF /* asyncimageview.m */; };
+		2867ABC014CE3419003994DB /* GasPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBB14CE3419003994DB /* GasPick@2x.png */; };
+		2867ABC114CE3419003994DB /* ServicesPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBC14CE3419003994DB /* ServicesPick.png */; };
+		2867ABC214CE3419003994DB /* ServicesPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBD14CE3419003994DB /* ServicesPick@2x.png */; };
+		2867ABC314CE3419003994DB /* TravelPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBE14CE3419003994DB /* TravelPick.png */; };
+		2867ABC414CE3419003994DB /* TravelPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBF14CE3419003994DB /* TravelPick@2x.png */; };
 		286B15F7140E9E6100CFED96 /* 86-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F6140E9E6100CFED96 /* 86-camera.png */; };
 		286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */; };
 		286FA149143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 286FA147143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m */; };
@@ -453,6 +458,11 @@
 		2855238614B51CA300FAAB4D /* RestKitModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RestKitModel.xcdatamodel; sourceTree = "<group>"; };
 		285BE74C142CFFF900898FDF /* asyncimageview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asyncimageview.h; sourceTree = "<group>"; };
 		285BE74D142CFFF900898FDF /* asyncimageview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = asyncimageview.m; sourceTree = "<group>"; };
+		2867ABBB14CE3419003994DB /* GasPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GasPick@2x.png"; sourceTree = "<group>"; };
+		2867ABBC14CE3419003994DB /* ServicesPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ServicesPick.png; sourceTree = "<group>"; };
+		2867ABBD14CE3419003994DB /* ServicesPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ServicesPick@2x.png"; sourceTree = "<group>"; };
+		2867ABBE14CE3419003994DB /* TravelPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TravelPick.png; sourceTree = "<group>"; };
+		2867ABBF14CE3419003994DB /* TravelPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TravelPick@2x.png"; sourceTree = "<group>"; };
 		286B15F6140E9E6100CFED96 /* 86-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "86-camera.png"; sourceTree = "<group>"; };
 		286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpinnerTableCell.xib; sourceTree = "<group>"; };
 		286FA146143AB5EE00EDAE84 /* NearbySuggestedPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbySuggestedPlaceController.h; sourceTree = "<group>"; };
@@ -1390,6 +1400,11 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				2867ABBB14CE3419003994DB /* GasPick@2x.png */,
+				2867ABBC14CE3419003994DB /* ServicesPick.png */,
+				2867ABBD14CE3419003994DB /* ServicesPick@2x.png */,
+				2867ABBE14CE3419003994DB /* TravelPick.png */,
+				2867ABBF14CE3419003994DB /* TravelPick@2x.png */,
 				288CAF2A14C63F8200004962 /* GasPick.png */,
 				28A3275C1498290B003CB659 /* followButton.png */,
 				28A3275E1498290B003CB659 /* UnfollowButton.png */,
@@ -1790,6 +1805,11 @@
 				288CAF2614C4D05400004962 /* 104-index-cards@2x.png in Resources */,
 				288CAF2B14C63F8200004962 /* GasPick.png in Resources */,
 				288CAF2D14C64DD800004962 /* SignupHeaderView.xib in Resources */,
+				2867ABC014CE3419003994DB /* GasPick@2x.png in Resources */,
+				2867ABC114CE3419003994DB /* ServicesPick.png in Resources */,
+				2867ABC214CE3419003994DB /* ServicesPick@2x.png in Resources */,
+				2867ABC314CE3419003994DB /* TravelPick.png in Resources */,
+				2867ABC414CE3419003994DB /* TravelPick@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

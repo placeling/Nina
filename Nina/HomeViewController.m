@@ -44,7 +44,7 @@
                                [NSDictionary dictionaryWithObjectsAndKeys:@"FoodPick.png", @"image", @"Restaurants & Food", @"category",  @"Food", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"ShoppingPick.png", @"image", @"Shopping", @"category",  @"Shopping", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"TouristyPick.png", @"image", @"Interesting & Outdoors", @"category",  @"Interesting", @"title", nil],
-                                [NSDictionary dictionaryWithObjectsAndKeys:@"EverythingPick.png", @"image", @"Gas Station", @"category",  @"Gas", @"title", nil],
+                                [NSDictionary dictionaryWithObjectsAndKeys:@"GasPick.png", @"image", @"Gas Station", @"category",  @"Gas", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"BeautyPick.png", @"image", @"Beauty", @"category",  @"Beauty", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"GovernmentPick.png", @"image", @"Government", @"category",  @"Government", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"EverythingPick.png", @"image", @"", @"category",  @"Everything", @"title", nil],
@@ -54,7 +54,7 @@
         
     for( NSDictionary *quickPick in pickCategories ){
 
-        CGRect rect = CGRectMake(cx, 3, 64, 64);
+        CGRect rect = CGRectMake(cx, 3, 60, 60);
         QuickPickButton *button = [[QuickPickButton alloc] initWithFrame:rect];
         button.category = [quickPick objectForKey:@"category"];
         UIImage *image = [UIImage imageNamed:[quickPick objectForKey:@"image"]];
