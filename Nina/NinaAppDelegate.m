@@ -15,6 +15,8 @@
 #import "User.h"
 #import "Place.h"
 #import "Perspective.h"
+#import "Advertisement.h"
+
 //#import "DBManagedObjectCache.h"
 
 @implementation NinaAppDelegate
@@ -69,6 +71,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     [objectManager.mappingProvider setMapping:[Perspective getObjectMapping] forKeyPath:@"perspectives"];
     [objectManager.mappingProvider setMapping:[Perspective getObjectMapping] forKeyPath:@"referring_perspectives"];
     
+    [objectManager.mappingProvider setMapping:[Advertisement getObjectMapping] forKeyPath:@"ad"];
+    
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     
     if ([NinaHelper isProductionRun]){
@@ -121,6 +125,18 @@ void uncaughtExceptionHandler(NSException *exception) {
     [FlurryAnalytics logEvent:@"REJECTED_PERMISSIONS"];
 } 
 
+
+-(void)fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt{
+    
+}
+
+-(void)fbSessionInvalidated{
+    
+}
+
+-(void)fbDidLogout{
+    
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
