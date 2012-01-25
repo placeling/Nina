@@ -85,6 +85,8 @@
 		2867ABC214CE3419003994DB /* ServicesPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBD14CE3419003994DB /* ServicesPick@2x.png */; };
 		2867ABC314CE3419003994DB /* TravelPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBE14CE3419003994DB /* TravelPick.png */; };
 		2867ABC414CE3419003994DB /* TravelPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBF14CE3419003994DB /* TravelPick@2x.png */; };
+		2867ABC714CE4DF5003994DB /* Advertisement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2867ABC614CE4DF4003994DB /* Advertisement.m */; };
+		2867ABCA14CE540E003994DB /* AdTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2867ABC914CE540E003994DB /* AdTableViewCell.m */; };
 		286B15F7140E9E6100CFED96 /* 86-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F6140E9E6100CFED96 /* 86-camera.png */; };
 		286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */; };
 		286FA149143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 286FA147143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m */; };
@@ -463,6 +465,10 @@
 		2867ABBD14CE3419003994DB /* ServicesPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ServicesPick@2x.png"; sourceTree = "<group>"; };
 		2867ABBE14CE3419003994DB /* TravelPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TravelPick.png; sourceTree = "<group>"; };
 		2867ABBF14CE3419003994DB /* TravelPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TravelPick@2x.png"; sourceTree = "<group>"; };
+		2867ABC514CE4DF4003994DB /* Advertisement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Advertisement.h; sourceTree = "<group>"; };
+		2867ABC614CE4DF4003994DB /* Advertisement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Advertisement.m; sourceTree = "<group>"; };
+		2867ABC814CE540E003994DB /* AdTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdTableViewCell.h; sourceTree = "<group>"; };
+		2867ABC914CE540E003994DB /* AdTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdTableViewCell.m; sourceTree = "<group>"; };
 		286B15F6140E9E6100CFED96 /* 86-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "86-camera.png"; sourceTree = "<group>"; };
 		286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpinnerTableCell.xib; sourceTree = "<group>"; };
 		286FA146143AB5EE00EDAE84 /* NearbySuggestedPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbySuggestedPlaceController.h; sourceTree = "<group>"; };
@@ -829,6 +835,8 @@
 				28086B4A13EC7F9400790404 /* Perspective.m */,
 				28086B4B13EC7F9400790404 /* Place.h */,
 				28086B4C13EC7F9400790404 /* Place.m */,
+				2867ABC514CE4DF4003994DB /* Advertisement.h */,
+				2867ABC614CE4DF4003994DB /* Advertisement.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1324,6 +1332,8 @@
 				28A43782143295E4005F192B /* PictureViewController.h */,
 				28A43783143295E4005F192B /* PictureViewController.m */,
 				28A43784143295E4005F192B /* PictureViewController.xib */,
+				2867ABC814CE540E003994DB /* AdTableViewCell.h */,
+				2867ABC914CE540E003994DB /* AdTableViewCell.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -1938,6 +1948,8 @@
 				28C05A9614BE0EA4004C7DF6 /* NearbySuggestedMapController.m in Sources */,
 				288CAF0D14C3E91600004962 /* PerspectiveUserTableViewController.m in Sources */,
 				288CAF2914C5258F00004962 /* TDBadgedCell.m in Sources */,
+				2867ABC714CE4DF5003994DB /* Advertisement.m in Sources */,
+				2867ABCA14CE540E003994DB /* AdTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
