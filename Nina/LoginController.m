@@ -428,4 +428,20 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
+
+-(void)fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt{
+    
+}
+
+-(void)fbSessionInvalidated{
+    
+}
+
+-(void)fbDidLogout{
+    
+}
+
+
+
 @end
