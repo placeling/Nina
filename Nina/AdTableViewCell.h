@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AdTableViewCell : UITableViewController
+@interface AdTableViewCell : UITableViewCell
 
 @end
