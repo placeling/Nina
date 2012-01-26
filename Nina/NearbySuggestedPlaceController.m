@@ -146,7 +146,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section ==0){
-        return 0;
+        //if (self.ad){
+            //return 1;
+        //} else {
+            return 0;
+        //}
     } else {
         return MAX([[self places] count], 1);
     } 
@@ -171,9 +175,12 @@
     static NSString *placeCellIdentifier = @"PlaceCell";
     static NSString *loginCellIdentifier = @"LoginCell";
     static NSString *noNearbyCellIdentifier = @"NoNearbyCell";
+    //static NSString *adCellIdentifier = @"AdCell";
     
     Place *place;
     PlaceSuggestTableViewCell *cell;
+    
+    
     
     if ([[self places] count] > 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:placeCellIdentifier];

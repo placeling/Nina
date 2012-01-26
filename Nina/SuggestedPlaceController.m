@@ -21,6 +21,7 @@
 @synthesize lat, lng;
 @synthesize followingPlaces, popularPlaces;
 @synthesize toolbar, segmentedControl;
+@synthesize ad;
 
 - (void)didReceiveMemoryWarning
 {
@@ -122,14 +123,22 @@
     if ( [(NSNumber*)objectLoader.userData intValue] == 80){
         self.followingLoaded = TRUE;
         [followingPlaces removeAllObjects];
-        for (Place* place in objects){
-            [followingPlaces addObject:place];
+        for (NSObject* object in objects){
+            if ([object isKindOfClass:[Advertisement class]]){
+                self.ad = (Advertisement*)object;
+            } else {
+                [followingPlaces addObject:object];
+            }
         }
     } else if ( [(NSNumber*)objectLoader.userData intValue] == 81){
         self.popularLoaded = TRUE;
         [popularPlaces removeAllObjects];
-        for (Place* place in objects){
-            [popularPlaces addObject:place];
+        for (NSObject* object in objects){
+            if ([object isKindOfClass:[Advertisement class]]){
+                self.ad = (Advertisement*)object;
+            } else {
+                [popularPlaces addObject:object];
+            }
         }
     }
 }
@@ -213,6 +222,7 @@
     [popularPlaces release];
     [lat release];
     [lng release];
+    [ad release];
     [super dealloc];
 }
 

@@ -11,6 +11,7 @@
 #import "LoginController.h"
 #import <RestKit/RestKit.h>
 #import "Place.h"
+#import "Advertisement.h"
 
 @interface SuggestedPlaceController : UIViewController<LoginControllerDelegate, RKObjectLoaderDelegate>{
     BOOL locationEnabled;
@@ -28,6 +29,8 @@
     
     NSString *searchTerm;
     NSString *category;
+    
+    Advertisement *ad;
 }
 
 @property(nonatomic, assign) BOOL followingLoaded;
@@ -47,6 +50,7 @@
 @property(nonatomic,retain) NSMutableArray  *followingPlaces;
 @property(nonatomic,retain) NSMutableArray  *popularPlaces;
 
+@property(nonatomic,retain) Advertisement *ad;
 
 -(void)findNearbyPlaces;
 -(IBAction)toggleMapList;
