@@ -78,7 +78,6 @@
 		284A356014048DCD009C8C28 /* BookmarkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A355E14048DCD009C8C28 /* BookmarkTableViewCell.xib */; };
 		284D1CDE147C29DE001F80D1 /* FriendFindController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284D1CDC147C29DE001F80D1 /* FriendFindController.m */; };
 		284D1CDF147C29DE001F80D1 /* FriendFindController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284D1CDD147C29DE001F80D1 /* FriendFindController.xib */; };
-		2855238714B51CA300FAAB4D /* RestKitModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2855238514B51CA300FAAB4D /* RestKitModel.xcdatamodeld */; };
 		285BE74E142CFFFA00898FDF /* asyncimageview.m in Sources */ = {isa = PBXBuildFile; fileRef = 285BE74D142CFFF900898FDF /* asyncimageview.m */; };
 		2867ABC014CE3419003994DB /* ActiveGasPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBB14CE3419003994DB /* ActiveGasPick@2x.png */; };
 		2867ABC114CE3419003994DB /* ActiveServicesPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBC14CE3419003994DB /* ActiveServicesPick.png */; };
@@ -477,7 +476,6 @@
 		284D1CDB147C29DE001F80D1 /* FriendFindController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendFindController.h; sourceTree = "<group>"; };
 		284D1CDC147C29DE001F80D1 /* FriendFindController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendFindController.m; sourceTree = "<group>"; };
 		284D1CDD147C29DE001F80D1 /* FriendFindController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendFindController.xib; sourceTree = "<group>"; };
-		2855238614B51CA300FAAB4D /* RestKitModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RestKitModel.xcdatamodel; sourceTree = "<group>"; };
 		285BE74C142CFFF900898FDF /* asyncimageview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asyncimageview.h; sourceTree = "<group>"; };
 		285BE74D142CFFF900898FDF /* asyncimageview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = asyncimageview.m; sourceTree = "<group>"; };
 		2867ABBB14CE3419003994DB /* ActiveGasPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActiveGasPick@2x.png"; sourceTree = "<group>"; };
@@ -1157,7 +1155,6 @@
 				286FA172143D1DBC00EDAE84 /* MarketingScript.ttf */,
 				2895004A13D64559009E1BD7 /* Nina-Prefix.pch */,
 				2895004B13D64559009E1BD7 /* main.m */,
-				2855238514B51CA300FAAB4D /* RestKitModel.xcdatamodeld */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2013,7 +2010,6 @@
 				28B5D8DC149096CC00763D0C /* SDWebImagePrefetcher.m in Sources */,
 				28B5D8DD149096CC00763D0C /* UIButton+WebCache.m in Sources */,
 				28B5D8DE149096CC00763D0C /* UIImageView+WebCache.m in Sources */,
-				2855238714B51CA300FAAB4D /* RestKitModel.xcdatamodeld in Sources */,
 				2827F24A14BAB189002B4B7E /* Facebook.m in Sources */,
 				2827F24C14BAB189002B4B7E /* FBDialog.m in Sources */,
 				2827F24D14BAB189002B4B7E /* FBRequest.m in Sources */,
@@ -2253,19 +2249,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		2855238514B51CA300FAAB4D /* RestKitModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				2855238614B51CA300FAAB4D /* RestKitModel.xcdatamodel */,
-			);
-			currentVersion = 2855238614B51CA300FAAB4D /* RestKitModel.xcdatamodel */;
-			path = RestKitModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 2895003113D64559009E1BD7 /* Project object */;
 }
