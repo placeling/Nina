@@ -15,6 +15,9 @@
 #import "UIImageView+WebCache.h"
 #import "NearbySuggestedMapController.h"
 #import "FlurryAnalytics.h"
+#import "AdTableViewCell.h"
+#import "UIImageView+WebCache.h"
+#import "GenericWebViewController.h"
 
 
 @implementation NearbySuggestedPlaceController
@@ -146,11 +149,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section ==0){
-        //if (self.ad){
-            //return 1;
-        //} else {
+        if (self.ad && [[self places] count] > 0){
+            return 1;
+        } else {
             return 0;
-        //}
+        }
     } else {
         return MAX([[self places] count], 1);
     } 
@@ -159,8 +162,10 @@
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (!currentUser && indexPath.section == 0) {
+    if (!currentUser && indexPath.section == 0 && self.segmentedControl.selectedSegmentIndex ==0) {
         return 90;
+    } else if (indexPath.section ==0 && self.ad){
+        return [self.ad.height intValue];
     } else {
         return 70;
     }
@@ -175,64 +180,32 @@
     static NSString *placeCellIdentifier = @"PlaceCell";
     static NSString *loginCellIdentifier = @"LoginCell";
     static NSString *noNearbyCellIdentifier = @"NoNearbyCell";
-    //static NSString *adCellIdentifier = @"AdCell";
+    static NSString *adCellIdentifier = @"AdCell";
     
     Place *place;
-    PlaceSuggestTableViewCell *cell;
     
+    UITableViewCell *cell;
     
-    
-    if ([[self places] count] > 0) {
-        cell = [tableView dequeueReusableCellWithIdentifier:placeCellIdentifier];
-        if (cell == nil) {
-            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PlaceSuggestTableViewCell" owner:self options:nil];
-            
-            for(id item in objects){
-                if ( [item isKindOfClass:[UITableViewCell class]]){
-                    cell = item;
-                }
-            }
-        }
-    } else {
-        NSString *currentUser = [NinaHelper getUsername];
-        if (!currentUser) {
-            cell = [tableView dequeueReusableCellWithIdentifier:loginCellIdentifier];
-            if (cell == nil){
-                cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
-            }
-        } else {
-            cell = [tableView dequeueReusableCellWithIdentifier:noNearbyCellIdentifier];
-            if (cell == nil){
-                cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noNearbyCellIdentifier] autorelease];
-            }
-        }
-    }
-        
     NSString *currentUser = [NinaHelper getUsername];
-    if ( self.segmentedControl.selectedSegmentIndex == 0 && !currentUser) {
-        cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
+    
+    if (indexPath.section == 1 && indexPath.row ==0 && ![self dataLoaded]){
+        //spinner wait, don't actually recycle
         
-        tableView.allowsSelection = YES;
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
         
-        cell.titleLabel.text = @"";
-        cell.addressLabel.text = @"";
-        cell.distanceLabel.text = @"";
-        cell.usersLabel.text = @"";
+        for(id item in objects){
+            if ( [item isKindOfClass:[UITableViewCell class]]){
+                cell = item;
+                break;
+            }
+        }    
         
-        UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
-        
-        loginText.backgroundColor = [UIColor clearColor];
-        
-        loginText.text = @"Sign up or log in to check out nearby places you and the people you follow love.\n\nTap here to get started.";
-        loginText.tag = 778;
-        
-        [loginText setUserInteractionEnabled:NO];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        [cell addSubview:loginText];
-        [loginText release];
-    } else if ([self dataLoaded] && [[self places] count] == 0 ) {
-        cell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noNearbyCellIdentifier] autorelease];
+    } else if (indexPath.section == 1 && self.segmentedControl.selectedSegmentIndex == 1 && [[self places] count] == 0){
+        PlaceSuggestTableViewCell *pCell;
+        pCell = [tableView dequeueReusableCellWithIdentifier:noNearbyCellIdentifier];
+        if (pCell == nil){
+            pCell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noNearbyCellIdentifier] autorelease];
+        }
         
         UITextView *existingText = (UITextView *)[cell viewWithTag:778];
         if (existingText) {
@@ -241,10 +214,10 @@
         
         tableView.allowsSelection = NO;
         
-        cell.titleLabel.text = @"";
-        cell.addressLabel.text = @"";
-        cell.distanceLabel.text = @"";
-        cell.usersLabel.text = @"";
+        pCell.titleLabel.text = @"";
+        pCell.addressLabel.text = @"";
+        pCell.distanceLabel.text = @"";
+        pCell.usersLabel.text = @"";
         
         UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
         errorText.backgroundColor = [UIColor clearColor];
@@ -274,38 +247,95 @@
         [errorText setUserInteractionEnabled:NO];
         
         errorText.tag = 778;
-        [cell addSubview:errorText];
+        [pCell addSubview:errorText];
         [errorText release];
-    } else if (![self dataLoaded]){
-        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
+        cell = pCell;
 
-        for(id item in objects){
-           if ( [item isKindOfClass:[UITableViewCell class]]){
-               cell = item;
-           }
-        }    
-    
-    }else{
+        
+    } else if (indexPath.section == 1 && self.segmentedControl.selectedSegmentIndex == 0 && !currentUser){
+        PlaceSuggestTableViewCell *pCell;
+        pCell = [tableView dequeueReusableCellWithIdentifier:loginCellIdentifier];
+        if (pCell == nil){
+            pCell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
+        }
+        
         tableView.allowsSelection = YES;
         
-        place = [[self places] objectAtIndex:indexPath.row];
+        pCell.titleLabel.text = @"";
+        pCell.addressLabel.text = @"";
+        pCell.distanceLabel.text = @"";
+        pCell.usersLabel.text = @"";
         
-        UITextView *errorText = (UITextView *)[cell viewWithTag:778];
+        UITextView *errorText = (UITextView *)[pCell viewWithTag:778];
         if (errorText) {
             [errorText removeFromSuperview];
         }
         
-        [cell.imageView setImageWithURL:[NSURL URLWithString:place.placeThumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
+        UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
         
-        cell.titleLabel.text = place.name;
-        cell.addressLabel.text = place.address;
-        cell.distanceLabel.text = [NinaHelper metersToLocalizedDistance:place.distance];
-        cell.usersLabel.text = place.usersBookmarkingString;   
-        [StyleHelper styleQuickPickCell:cell];    
+        loginText.backgroundColor = [UIColor clearColor];
         
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+        loginText.text = @"Sign up or log in to check out nearby places you and the people you follow love.\n\nTap here to get started.";
+        loginText.tag = 778;
         
+        [loginText setUserInteractionEnabled:NO];
+        pCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [pCell addSubview:loginText];
+        [loginText release];
+        
+        cell = pCell;
+
+    } else if (indexPath.section == 0 && self.ad){
+        AdTableViewCell *aCell;
+        aCell = [tableView dequeueReusableCellWithIdentifier:adCellIdentifier];
+        
+        if (aCell == nil){
+            aCell = [[[AdTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:adCellIdentifier] autorelease];
+        }        
+        
+        UIImageView *imageView = [[UIImageView alloc]init];
+        
+        [imageView setImageWithURL:[NSURL URLWithString:self.ad.imageUrl] ];
+        [FlurryAnalytics logEvent:@"AD_DISPLAY" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"type", self.ad.adType, nil]];
+        aCell.backgroundView = imageView;   
+        [imageView release];                    
+        cell = aCell;     
+        
+    } else if ( indexPath.section == 1 && [[self places] count] > 0) {
+        PlaceSuggestTableViewCell *pCell;
+        pCell = [tableView dequeueReusableCellWithIdentifier:placeCellIdentifier];
+        if (pCell == nil) {
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PlaceSuggestTableViewCell" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    pCell = item;
+                }
+            }
+        }
+        tableView.allowsSelection = YES;
+        
+        place = [[self places] objectAtIndex:indexPath.row];
+        
+        UITextView *errorText = (UITextView *)[pCell viewWithTag:778];
+        if (errorText) {
+            [errorText removeFromSuperview];
+        }
+        
+        [pCell.imageView setImageWithURL:[NSURL URLWithString:place.placeThumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
+        
+        pCell.titleLabel.text = place.name;
+        pCell.addressLabel.text = place.address;
+        pCell.distanceLabel.text = [NinaHelper metersToLocalizedDistance:place.distance];
+        pCell.usersLabel.text = place.usersBookmarkingString;   
+        [StyleHelper styleQuickPickCell:pCell];    
+        
+        pCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell = pCell;
+        
+    }   
+    
     return cell;
 }
 
@@ -315,8 +345,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *currentUser = [NinaHelper getUsername];
-    
-    if ( self.segmentedControl.selectedSegmentIndex == 0 && !currentUser ) {
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
+
+    if (indexPath.section == 1 && self.segmentedControl.selectedSegmentIndex == 0 && !currentUser){
         LoginController *loginController = [[LoginController alloc] init];
         loginController.delegate = self;
         
@@ -324,6 +355,15 @@
         [self.navigationController presentModalViewController:navBar animated:YES];
         [navBar release];
         [loginController release];
+        
+    } else if (indexPath.section == 0 && self.ad){
+        [FlurryAnalytics logEvent:@"AD_CLICK" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"type", self.ad.adType, nil]];
+        
+        GenericWebViewController *webController = [[GenericWebViewController alloc] initWithUrl:self.ad.targetUrl];
+        
+        [self.navigationController pushViewController:webController animated:true];
+        [webController release];
+        
     } else {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         if (indexPath.row < [[self places] count]){
@@ -337,9 +377,9 @@
             
             [self.navigationController pushViewController:placeController animated:TRUE];
             [placeController release];
-        
         }
-    }
+    }  
+    
 }
 
 @end

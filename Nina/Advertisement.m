@@ -10,13 +10,17 @@
 
 @implementation Advertisement
 
-@synthesize adType;
+@synthesize adType, targetUrl, imageUrl, height, width;
 
 +(RKObjectMapping*)getObjectMapping{
     RKObjectMapping* adMapping = [RKObjectMapping mappingForClass:[Advertisement class]];
     [adMapping mapKeyPathsToAttributes:
 
      @"ad_type", @"adType",
+     @"target_url", @"targetUrl",
+     @"image_url", @"imageUrl",
+     @"height", @"height",
+     @"width", @"width",
      nil];
     
     return adMapping;

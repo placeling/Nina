@@ -12,9 +12,17 @@
 
 @interface Advertisement : NSObject {
     NSString *adType;
+    NSString *targetUrl;
+    NSString *imageUrl;
+    NSNumber *height;
+    NSNumber *width;
 }
 
 @property(nonatomic, retain) NSString *adType;
+@property(nonatomic, retain) NSString *targetUrl;
+@property(nonatomic, retain) NSString *imageUrl;
+@property(nonatomic, retain) NSNumber *height;
+@property(nonatomic, retain) NSNumber *width;
 
 +(RKObjectMapping*)getObjectMapping;
 
