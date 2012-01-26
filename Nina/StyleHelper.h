@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PlaceSuggestTableViewCell.h"
 
 @interface StyleHelper : NSObject
 
@@ -23,6 +24,8 @@
 +(void) styleFollowButton:(UIButton*)button;
 +(void) styleUnFollowButton:(UIButton*)button;
 +(void) styleHomePageLabel:(UILabel*)label;
++(void) styleQuickPickCell:(PlaceSuggestTableViewCell*)cell;
++(void) styleGenericTableCell:(UITableViewCell*)cell;
 +(void) colourTitleLabel:(UILabel*)label;
 +(void) colourHomePageLabel:(UILabel*)label;
 

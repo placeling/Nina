@@ -11,6 +11,7 @@
 
 @interface StyleHelper(Private)
 +(UIColor*) getTintColour;
++(UIColor*) getTextColour;
 +(UIColor*) getPanelColour;
 +(void) styleFollowButtonCommon:(UIButton*)button;
 @end
@@ -116,6 +117,20 @@
     [StyleHelper styleFollowButtonCommon:button];
 }
 
++(void) styleGenericTableCell:(UITableViewCell*)cell{ 
+    cell.textLabel.textColor = [StyleHelper getTextColour];
+    cell.detailTextLabel.textColor = [StyleHelper getTextColour];
+}
+
++(void) styleQuickPickCell:(PlaceSuggestTableViewCell*)cell{
+    
+    [StyleHelper colourHomePageLabel:cell.usersLabel];
+    
+    cell.titleLabel.textColor = [StyleHelper getTextColour];
+    cell.addressLabel.textColor = [StyleHelper getTextColour];
+    cell.distanceLabel.textColor = [StyleHelper getTextColour];
+}
+
 +(void) styleHomePageLabel:(UILabel*)label{
     [label setFont:[UIFont fontWithName:@"Museo 500" size:18]];
     [StyleHelper colourHomePageLabel:label];
@@ -137,7 +152,9 @@
     return [UIColor colorWithRed:201/255.0 green:181/255.0 blue:111/255.0 alpha:1.0];
 }
 
-
++(UIColor*) getTextColour{
+    return [UIColor colorWithRed:104/255.0 green:80/255.0 blue:38/255.0 alpha:1.0];
+}
 
 
 @end

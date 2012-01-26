@@ -263,6 +263,7 @@
     [StyleHelper styleSearchBar:self.searchBar];
     [StyleHelper styleToolBar:self.toolBar];
     [StyleHelper styleBackgroundView:self.placesTableView];
+    [StyleHelper styleBackgroundView:self.tableFooterView];
     
     [[NSNotificationCenter defaultCenter]
      addObserver:self
@@ -482,6 +483,7 @@
                 cell.detailTextLabel.text = @"Can't get location";
             }
             [loc release];
+            [StyleHelper styleGenericTableCell:cell];
         }
     }
     
