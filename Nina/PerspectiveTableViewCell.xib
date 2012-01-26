@@ -120,9 +120,9 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Label</string>
-								<object class="NSColor" key="IBUITextColor">
-									<int key="NSColorSpace">2</int>
-									<bytes key="NSRGB">MC4zOTYwNzg0Njc0IDAuMzA5ODAzOTMyOSAwLjE2NDcwNTg4NzQAA</bytes>
+								<object class="NSColor" key="IBUITextColor" id="979119610">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MCAwIDAAA</bytes>
 								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
@@ -159,13 +159,9 @@
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-								<object class="NSColor" key="IBUITextColor">
-									<int key="NSColorSpace">2</int>
-									<bytes key="NSRGB">MC4zOTYwNzg0Njc0IDAuMzA5ODAzOTMyOSAwLjE2NDcwNTg4NzQAA</bytes>
-								</object>
+								<reference key="IBUITextColor" ref="979119610"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">14</float>
@@ -215,10 +211,7 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Timeago</string>
-								<object class="NSColor" key="IBUITextColor">
-									<int key="NSColorSpace">2</int>
-									<bytes key="NSRGB">MC4zOTYwNzg0Njc0IDAuMzA5ODAzOTMyOSAwLjE2NDcwNTg4NzQAA</bytes>
-								</object>
+								<reference key="IBUITextColor" ref="979119610"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">10</float>
@@ -359,11 +352,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="446988867"/>
 							<reference ref="420384130"/>
-							<reference ref="363764247"/>
 							<reference ref="768652156"/>
-							<reference ref="859949109"/>
 							<reference ref="344597112"/>
 							<reference ref="1068649428"/>
+							<reference ref="363764247"/>
+							<reference ref="859949109"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>

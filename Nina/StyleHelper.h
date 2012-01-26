@@ -29,4 +29,7 @@
 +(void) colourTitleLabel:(UILabel*)label;
 +(void) colourHomePageLabel:(UILabel*)label;
 
++(void) colourTextLabel:(UILabel*)label;
+
+
 @end

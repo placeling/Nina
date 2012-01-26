@@ -146,6 +146,10 @@
     
     [cell.createdAtLabel setFrame:CGRectMake(cell.createdAtLabel.frame.origin.x, verticalCursor, cell.createdAtLabel.frame.size.width, cell.createdAtLabel.frame.size.height)];
     
+    [StyleHelper colourTextLabel:cell.createdAtLabel];
+    [StyleHelper colourTextLabel:cell.titleLabel];
+    [StyleHelper colourTextLabel:cell.memoText];
+    
     //cell.scrollView.delegate = cell;
 }
 

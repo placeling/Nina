@@ -144,6 +144,10 @@
     label.textColor = [UIColor colorWithRed:98/255.0 green:77/255.0 blue:41/255.0 alpha:1.0];
 }
 
++(void) colourTextLabel:(UILabel*)label{
+    label.textColor = [StyleHelper getTextColour];
+}
+
 +(UIColor*) getTintColour{
     return [UIColor colorWithRed:0/255.0 green:130/255.0 blue:121/255.0 alpha:1.0];
 }
