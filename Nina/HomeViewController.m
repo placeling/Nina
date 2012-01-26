@@ -40,7 +40,7 @@
     [super viewDidLoad];
     
     NSArray *pickCategories = [NSArray arrayWithObjects:
-                               [NSDictionary dictionaryWithObjectsAndKeys:@"NightLifePick.png", @"image", @"Bars & Nightlife", @"category",  @"Nightlife", @"title", nil],
+                               [NSDictionary dictionaryWithObjectsAndKeys:@"NightlifePick.png", @"image", @"Bars & Nightlife", @"category",  @"Nightlife", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"FoodPick.png", @"image", @"Restaurants & Food", @"category",  @"Food", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"ShoppingPick.png", @"image", @"Shopping", @"category",  @"Shopping", @"title", nil],
                                [NSDictionary dictionaryWithObjectsAndKeys:@"TouristyPick.png", @"image", @"Interesting & Outdoors", @"category",  @"Interesting", @"title", nil],
@@ -58,7 +58,10 @@
         QuickPickButton *button = [[QuickPickButton alloc] initWithFrame:rect];
         button.category = [quickPick objectForKey:@"category"];
         UIImage *image = [UIImage imageNamed:[quickPick objectForKey:@"image"]];
+        UIImage *activeImage = [UIImage imageNamed:[NSString stringWithFormat:@"Active%@",[quickPick objectForKey:@"image"]] ];
         [button setImage:image forState:UIControlStateNormal];
+        [button setImage:activeImage forState:UIControlStateHighlighted];
+        
         [self.pickScroll addSubview:button];
         
         [button addTarget:self action:@selector(showQuickPick:) forControlEvents:UIControlEventTouchUpInside];
