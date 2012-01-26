@@ -227,6 +227,10 @@ typedef enum {
         
         [homePerspectives removeLastObject]; //get rid of spinner wait
         
+        for (Perspective *perspective in newPlace.homePerspectives){
+            [homePerspectives addObject:perspective];
+        }
+        
         //so child view can modify in place
         self.place.homePerspectives = self.homePerspectives;
         self.place.followingPerspectives = self.followingPerspectives;
