@@ -223,7 +223,7 @@
         }
         
         //used for testing for null-signiner errors        
-        #ifdef DEBUG
+        /*
         for (NSDictionary* dict in [formRequest postData]){
             if ([dict objectForKey:@"value"] == nil){
                 DLog(@"ALERT-NULL POST VALUE");
@@ -231,6 +231,7 @@
         }
 
         #endif
+         */
     }
     
     [request signRequestWithClientIdentifier:[NinaHelper getConsumerKey] secret:[NinaHelper getConsumerSecret]
