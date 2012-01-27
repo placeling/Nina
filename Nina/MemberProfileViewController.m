@@ -427,6 +427,7 @@
         }
         
         for (Perspective *perspective in objects){
+            perspective.user = self.user;
             [perspectives addObject:perspective]; 
         }
         
