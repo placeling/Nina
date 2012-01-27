@@ -229,6 +229,9 @@
         // Here we use the new provided setImageWithURL: method to load the web image
         [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
                        placeholderImage:[UIImage imageNamed:@"profile.png"]];
+        
+        [StyleHelper styleGenericTableCell:cell];
+        
     }else if ( tableView.numberOfSections == 2 && indexPath.section == 1 && loading ){
         NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
         
