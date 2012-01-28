@@ -273,7 +273,7 @@ typedef enum {
             perspective.place = self.place;
             [followingPerspectives addObject:perspective];
         }
-    }else if ( [(NSNumber*)objectLoader.userData intValue] == 3){
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 3){
         //everyone perspectives
         [everyonePerspectives removeLastObject]; //get rid of spinner wait
         
@@ -281,7 +281,32 @@ typedef enum {
             perspective.place = self.place;
             [everyonePerspectives addObject:perspective];
         }
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 5){
+        //everyone perspectives
+
+        Perspective *newPerspective = [objects objectAtIndex:0];
+        
+        
+        if (myPerspective){
+            myPerspective = newPerspective;
+            [homePerspectives replaceObjectAtIndex:0 withObject:newPerspective];
+        } else {
+            myPerspective = newPerspective;
+            [homePerspectives insertObject:myPerspective atIndex:0];
+        }
+        myPerspective.mine = true;
+        
+        self.place = newPerspective.place;
+        
+        myPerspective.place = self.place;                
+        
+        self.place.bookmarked = true;
+        [self loadData];
+
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 7){
+        //flag perspective
     }
+    
     [self.tableView reloadData];
     
 }
@@ -500,35 +525,7 @@ typedef enum {
                 
                 break;
             }
-            case 5:{
-                //starred perspective 
-                //perspective modified return
-                NSString *responseString = [request responseString];        
-                DLog(@"%@", responseString);
-                
-                NSDictionary *jsonString = [responseString JSONValue];
-                
-                if (myPerspective){
-                    [myPerspective updateFromJsonDict:[jsonString objectForKey:@"perspective"] ];
-                } else {
-                    myPerspective = [[Perspective alloc]initFromJsonDict:[jsonString objectForKey:@"perspective"]];
-                    [homePerspectives insertObject:myPerspective atIndex:0];
-                }
-                myPerspective.mine = true;
-                
-                //handles updates tags, etc
-                if ( [[jsonString objectForKey:@"perspective"] objectForKey:@"place"] ){
-                    [self.place updateFromJsonDict:[[jsonString objectForKey:@"perspective"] objectForKey:@"place"]];
-                }
-                
-                myPerspective.place = self.place;                
-                
-                self.place.bookmarked = true;
-                [self.tableView reloadData];   
-                [self loadData];
-                
-                break;
-            }
+
             case 6:{
                 //deleted perspective
                 NSString *responseString = [request responseString];        
@@ -544,57 +541,7 @@ typedef enum {
                 [self.tableView reloadData];
                 break;
             }
-            case 7:{
-                //flag perspective
-                NSString *responseString = [request responseString];        
-                DLog(@"%@", responseString);
-
-                break;
-            } 
-            case 8:{
-                //load home perspectives
-                [homePerspectives removeAllObjects]; //get rid of spinner wait
-                NSString *responseString = [request responseString];        
-                DLog(@"%@", responseString);
-                NSDictionary *jsonDict = [responseString JSONValue];
-                
-                NSArray *jsonPerspectives = [jsonDict objectForKey:@"perspectives"];
-                for (NSDictionary *rawDict in jsonPerspectives){
-                    Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
-                    perspective.place = self.place;
-                    [homePerspectives addObject:perspective];
-                    [perspective release];
-                }
-                
-                jsonPerspectives = [jsonDict objectForKey:@"referring_perspectives"];
-                for (NSDictionary *rawDict in jsonPerspectives){
-                    //only add referring perspectives if they aren't already there
-                    BOOL exists = false;
-                    for (Perspective *p in homePerspectives){
-                        if ([p.perspectiveId isEqualToString:[rawDict objectForKey:@"_id"]]){
-                            exists = true;
-                            break;
-                        }
-                    }
-                    
-                    if (exists) break;
-                    
-                    Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
-                    
-                    perspective.place = self.place;
-                    [homePerspectives addObject:perspective];
-                    [perspective release];
-                }
-                
-                if (self.place.bookmarked){
-                    //should be the first one of the home persepectives
-                    myPerspective = [homePerspectives objectAtIndex:0];
-                }
-                
-                [self loadData];
-                [self.tableView reloadData];
-                break;
-            } case 9:{
+            case 9:{
                 //perspective modified return
                 NSString *responseString = [request responseString];        
                 DLog(@"%@", responseString);
@@ -824,14 +771,17 @@ typedef enum {
     if (index == 0){
         self.perspectiveType = home;
         if (self.place.dirty){
+            
+            //only call if we know something there
             NSString *urlText = [self getUrlString];
             
-            ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlText]];
-            [homePerspectives addObject:@"Loading"]; //marker for spinner cell
-            [request setDelegate:self];
-            [request setTag:8];
-            [NinaHelper signRequest:request];
-            [request startAsynchronous];
+            // Call url to get profile details                
+            RKObjectManager* objectManager = [RKObjectManager sharedManager];       
+            
+            [objectManager loadObjectsAtResourcePath:urlText delegate:self block:^(RKObjectLoader* loader) {     
+                //loader
+                loader.userData = [NSNumber numberWithInt:0]; //use as a tag
+            }];
         } 
         perspectives = homePerspectives;
     } else if (index == 1){

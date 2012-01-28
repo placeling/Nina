@@ -9,44 +9,48 @@
 #import <UIKit/UIKit.h>
 #import "Perspective.h"
 #import "NinaHelper.h"
+#import <MessageUI/MFMailComposeViewController.h>
+#import <RestKit/RestKit.h>
+#import "Facebook.h"
 
-@interface PerspectiveTableViewCell : UITableViewCell{
+@interface PerspectiveTableViewCell : UITableViewCell<UIActionSheetDelegate>{
     Perspective *perspective;
     UITapGestureRecognizer *tapGesture;
     UITapGestureRecognizer *showMoreTap;
-    UITapGestureRecognizer *flagTap;
-    IBOutlet UIImageView *userImage;
-    IBOutlet UIButton *upvoteButton;
-    IBOutlet UILabel *memoText;
-    IBOutlet UILabel *titleLabel;
-    IBOutlet UILabel *showMoreLabel;
-    IBOutlet UILabel *flagLabel;
-    IBOutlet UILabel *createdAtLabel;
-    id<ASIHTTPRequestDelegate> requestDelegate;
-    IBOutlet UIScrollView *scrollView;
+    UIImageView *userImage;
+    UIImageView *savedIndicator;
+    UIButton *shareSheetButton;
+    UILabel *memoText;
+    UILabel *titleLabel;
+    UILabel *showMoreLabel;
+    UILabel *createdAtLabel;
+    UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate> *requestDelegate;
+    UIScrollView *scrollView;
+    
+    bool expanded;
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
-@property(nonatomic,assign) id<ASIHTTPRequestDelegate> requestDelegate;
+@property(nonatomic,assign) UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate> *requestDelegate;
 @property(nonatomic,retain) IBOutlet UIImageView *userImage;
-@property(nonatomic,retain) IBOutlet UIButton *upvoteButton;
+@property(nonatomic,retain) IBOutlet UIImageView *savedIndicator;
+@property(nonatomic,retain) IBOutlet UIButton *shareSheetButton;
 @property(nonatomic,retain) IBOutlet UILabel *memoText;
 @property(nonatomic,retain) IBOutlet UILabel *titleLabel;
 @property(nonatomic,retain) IBOutlet UILabel *showMoreLabel;
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic,retain) UITapGestureRecognizer *tapGesture;
 @property(nonatomic,retain) UITapGestureRecognizer *showMoreTap;
-@property(nonatomic,retain) UITapGestureRecognizer *flagTap;
-@property(nonatomic,retain) IBOutlet UILabel *flagLabel;
 @property(nonatomic,retain) IBOutlet UILabel *createdAtLabel;
 
--(IBAction)toggleStarred;
+@property(nonatomic, assign) bool expanded;
+
+-(IBAction)showActionSheet;
 
 //for calculating heights
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective;
 +(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective  userSource:(BOOL)userSource;
 
 -(IBAction) showAuthoringUser;
--(void) flagPerspective;
 
 @end

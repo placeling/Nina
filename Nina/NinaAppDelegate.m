@@ -68,6 +68,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     [objectManager.mappingProvider setMapping:[Place getObjectMapping] forKeyPath:@"places"];
     [objectManager.mappingProvider setMapping:[Place getObjectMapping] forKeyPath:@"place"];
     
+    [objectManager.mappingProvider setMapping:[Perspective getObjectMapping] forKeyPath:@"perspective"];
     [objectManager.mappingProvider setMapping:[Perspective getObjectMapping] forKeyPath:@"perspectives"];
     [objectManager.mappingProvider setMapping:[Perspective getObjectMapping] forKeyPath:@"referring_perspectives"];
     
