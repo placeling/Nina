@@ -149,7 +149,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section ==0){
-        if (self.ad && [[self places] count] > 0){
+        if (self.ad){
             return 1;
         } else {
             return 0;
@@ -200,7 +200,7 @@
             }
         }    
         
-    } else if (indexPath.section == 1 && self.segmentedControl.selectedSegmentIndex == 1 && [[self places] count] == 0){
+    } else if (indexPath.section == 1 && [[self places] count] == 0){
         PlaceSuggestTableViewCell *pCell;
         pCell = [tableView dequeueReusableCellWithIdentifier:noNearbyCellIdentifier];
         if (pCell == nil){
