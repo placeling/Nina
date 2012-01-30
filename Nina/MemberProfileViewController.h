@@ -14,8 +14,9 @@
 #import "LoginController.h"
 #import <MessageUI/MFMailComposeViewController.h>
 #import <RestKit/RestKit.h>
+#import "PerspectiveDisplayProtocol.h"
 
-@interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate, LoginControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate> {
+@interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate, LoginControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol> {
 	NSString *username;
 	User *_user;
     BOOL loadingMore;
@@ -35,6 +36,8 @@
     IBOutlet ProfileDetailBadge *placeMarkButton;
     
     IBOutlet UIView *headerView;
+    
+    NSMutableSet *expandedIndexPaths;
     
 }
 

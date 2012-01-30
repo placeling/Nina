@@ -511,6 +511,7 @@
 		2867ABF614D0D3B0003994DB /* TravelPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TravelPick@2x.png"; sourceTree = "<group>"; };
 		2867AC1714D23370003994DB /* 64-zap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-zap.png"; sourceTree = "<group>"; };
 		2867AC1814D23370003994DB /* 64-zap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-zap@2x.png"; sourceTree = "<group>"; };
+		2867AC2C14D73C0F003994DB /* PerspectiveDisplayProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectiveDisplayProtocol.h; sourceTree = "<group>"; };
 		286B15F6140E9E6100CFED96 /* 86-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "86-camera.png"; sourceTree = "<group>"; };
 		286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpinnerTableCell.xib; sourceTree = "<group>"; };
 		286FA146143AB5EE00EDAE84 /* NearbySuggestedPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbySuggestedPlaceController.h; sourceTree = "<group>"; };
@@ -1377,6 +1378,7 @@
 				28A43784143295E4005F192B /* PictureViewController.xib */,
 				2867ABC814CE540E003994DB /* AdTableViewCell.h */,
 				2867ABC914CE540E003994DB /* AdTableViewCell.m */,
+				2867AC2C14D73C0F003994DB /* PerspectiveDisplayProtocol.h */,
 			);
 			name = Util;
 			sourceTree = "<group>";

@@ -12,6 +12,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <RestKit/RestKit.h>
 #import "Facebook.h"
+#import "PerspectiveDisplayProtocol.h"
 
 @interface PerspectiveTableViewCell : UITableViewCell<UIActionSheetDelegate>{
     Perspective *perspective;
@@ -22,15 +23,17 @@
     UILabel *memoText;
     UILabel *titleLabel;
     UILabel *createdAtLabel;
-    UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate> *requestDelegate;
+    UITableViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, PerspectiveDisplayProtocol> *requestDelegate;
     UIScrollView *scrollView;
     UIButton *showMoreButton;
+    
+    NSIndexPath *indexpath;
     
     bool expanded;
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
-@property(nonatomic,assign) UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate> *requestDelegate;
+@property(nonatomic,assign) UITableViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate,PerspectiveDisplayProtocol> *requestDelegate;
 @property(nonatomic,retain) IBOutlet UIImageView *userImage;
 @property(nonatomic,retain) IBOutlet UIImageView *savedIndicator;
 @property(nonatomic,retain) IBOutlet UIButton *shareSheetButton;
@@ -40,7 +43,7 @@
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic,retain) UITapGestureRecognizer *tapGesture;
 @property(nonatomic,retain) IBOutlet UILabel *createdAtLabel;
-
+@property(nonatomic,retain) NSIndexPath *indexpath;
 @property(nonatomic, assign) bool expanded;
 
 -(IBAction)showActionSheet;

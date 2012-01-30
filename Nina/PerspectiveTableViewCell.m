@@ -19,19 +19,23 @@
 
 @synthesize perspective, userImage, savedIndicator, memoText,titleLabel, scrollView;
 @synthesize tapGesture, requestDelegate, showMoreButton, shareSheetButton;
-@synthesize createdAtLabel, expanded;
+@synthesize createdAtLabel, expanded, indexpath;
 
 
 +(CGFloat) cellHeightUnboundedForPerspective:(Perspective*)perspective{
     CGFloat heightCalc = 59; //covers header and footer
     
     CGSize textAreaSize;
-    textAreaSize.height = MAXFLOAT;
+    textAreaSize.height = 600;
     textAreaSize.width = 233;
     
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
     heightCalc += textSize.height + 10;
+    
+    if (perspective.url ){
+        heightCalc += 27;
+    }
     
     if (perspective.photos && perspective.photos.count > 0){
         heightCalc += 160;
@@ -102,9 +106,10 @@
         if (!cell.expanded){
             textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:cell.memoText.frame.size lineBreakMode:UILineBreakModeWordWrap];
         } else {
-            textSize = [perspective.notes sizeWithFont:cell.memoText.font forWidth:cell.memoText.frame.size.width lineBreakMode:UILineBreakModeWordWrap];
+            memoSize.height = 1000;
+            textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:memoSize lineBreakMode:UILineBreakModeWordWrap];
         }
-        [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, memoSize.width, textSize.height + 10)];
+        [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, textSize.width, textSize.height + 10)];
         
         verticalCursor += cell.memoText.frame.size.height;
         hasContent = true;
@@ -210,7 +215,7 @@
 
 
 -(IBAction)expandCell{
-    
+    [self.requestDelegate expandAtIndexPath:self.indexpath];    
 }
 
 
@@ -222,7 +227,7 @@
     
     if ( !currentUser ) {
         UIAlertView *baseAlert;
-        NSString *alertMessage = @"Sign up or log in and you can star people's notes & photos";
+        NSString *alertMessage = @"Sign up or log in to share or flag this placemark";
         baseAlert = [[UIAlertView alloc] 
                      initWithTitle:nil message:alertMessage 
                      delegate:self cancelButtonTitle:@"Not Now" 

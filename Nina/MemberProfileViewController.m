@@ -49,6 +49,7 @@
     loadingMore = true;
     hasMore = true;
 	
+    expandedIndexPaths = [[NSMutableSet alloc] init];
     self.tableView.tableHeaderView = self.headerView;
     
 	[self blankLoad];
@@ -510,11 +511,18 @@
 }
 
 
+
+- (void)expandAtIndexPath:(NSIndexPath*)indexPath{
+    [expandedIndexPaths addObject:indexPath];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
 #pragma mark Tableview Methods
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
     //a visible perspective row PerspectiveTableViewCell
-    if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
+    if (( !self.user.username || self.user.username.length == 0) && (!self.username || self.username.length == 0)) {
         return 100;
     } else {
         if ((perspectives) && [perspectives count] == 0) {
@@ -525,7 +533,11 @@
             Perspective *perspective;
             perspective = [perspectives objectAtIndex:indexPath.row];
             
-            return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
+            if( [expandedIndexPaths member:indexPath]){  
+                return [PerspectiveTableViewCell cellHeightUnboundedForPerspective:perspective];
+            } else {
+                return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
+            }
         }
     }
 }
@@ -536,7 +548,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
+    if ( (!self.user.username || self.user.username.length == 0) && (!self.username || self.username.length == 0)) {
         return 1;
     } else {
         if (perspectives) {
@@ -636,7 +648,13 @@
             
             for(id item in objects){
                 if ( [item isKindOfClass:[UITableViewCell class]]){
-                    PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
+                    PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;
+                    pcell.indexpath = indexPath;
+                    pcell.requestDelegate = self;
+                    if( [expandedIndexPaths member:indexPath]){  
+                        pcell.expanded = true;
+                    }
+                    
                     [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:true];
                     cell = pcell;
                     break;
@@ -710,6 +728,7 @@
     [usernameLabel release];
     [userDescriptionLabel release];
     [followButton release];
+    [expandedIndexPaths release];
     
     [super dealloc];
 }
