@@ -16,16 +16,15 @@
 @interface PerspectiveTableViewCell : UITableViewCell<UIActionSheetDelegate>{
     Perspective *perspective;
     UITapGestureRecognizer *tapGesture;
-    UITapGestureRecognizer *showMoreTap;
     UIImageView *userImage;
     UIImageView *savedIndicator;
     UIButton *shareSheetButton;
     UILabel *memoText;
     UILabel *titleLabel;
-    UILabel *showMoreLabel;
     UILabel *createdAtLabel;
     UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate> *requestDelegate;
     UIScrollView *scrollView;
+    UIButton *showMoreButton;
     
     bool expanded;
 }
@@ -37,18 +36,19 @@
 @property(nonatomic,retain) IBOutlet UIButton *shareSheetButton;
 @property(nonatomic,retain) IBOutlet UILabel *memoText;
 @property(nonatomic,retain) IBOutlet UILabel *titleLabel;
-@property(nonatomic,retain) IBOutlet UILabel *showMoreLabel;
+@property(nonatomic,retain) IBOutlet UIButton *showMoreButton;
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic,retain) UITapGestureRecognizer *tapGesture;
-@property(nonatomic,retain) UITapGestureRecognizer *showMoreTap;
 @property(nonatomic,retain) IBOutlet UILabel *createdAtLabel;
 
 @property(nonatomic, assign) bool expanded;
 
 -(IBAction)showActionSheet;
+-(IBAction)expandCell;
 
 //for calculating heights
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective;
++(CGFloat) cellHeightUnboundedForPerspective:(Perspective*)perspective;
 +(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective  userSource:(BOOL)userSource;
 
 -(IBAction) showAuthoringUser;

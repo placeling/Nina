@@ -14,11 +14,32 @@
 #import "asyncimageview.h"
 #import "NinaAppDelegate.h"
 
+
 @implementation PerspectiveTableViewCell
 
 @synthesize perspective, userImage, savedIndicator, memoText,titleLabel, scrollView;
-@synthesize tapGesture, requestDelegate, showMoreLabel, showMoreTap, shareSheetButton;
+@synthesize tapGesture, requestDelegate, showMoreButton, shareSheetButton;
 @synthesize createdAtLabel, expanded;
+
+
++(CGFloat) cellHeightUnboundedForPerspective:(Perspective*)perspective{
+    CGFloat heightCalc = 59; //covers header and footer
+    
+    CGSize textAreaSize;
+    textAreaSize.height = MAXFLOAT;
+    textAreaSize.width = 233;
+    
+    CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
+    
+    heightCalc += textSize.height + 10;
+    
+    if (perspective.photos && perspective.photos.count > 0){
+        heightCalc += 160;
+    }
+    
+    return heightCalc;    
+}
+
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
     CGFloat heightCalc = 59; //covers header and footer
@@ -27,12 +48,24 @@
     textAreaSize.height = 100;
     textAreaSize.width = 233;
     
+    
+    CGSize maxAreaSize;
+    maxAreaSize.height = 600;
+    maxAreaSize.width = 233;
+    
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
+    
+    
+    CGSize maxTextSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:maxAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
     heightCalc += textSize.height + 10;
     
+    if (perspective.url || maxTextSize.height > textSize.height ){
+        heightCalc += 27;
+    }
+    
     if (perspective.photos && perspective.photos.count > 0){
-        heightCalc += 166;
+        heightCalc += 160;
     }
     
     return heightCalc;
@@ -40,7 +73,7 @@
 
 
 +(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective userSource:(BOOL)userSource{
-    CGFloat verticalCursor = cell.memoText.frame.origin.y;;
+    CGFloat verticalCursor = cell.memoText.frame.origin.y;
     cell.perspective = perspective;
     cell.memoText.text = perspective.notes;
     BOOL hasContent = FALSE;
@@ -57,13 +90,20 @@
 
     //cell.memoText.backgroundColor = [UIColor grayColor];
     CGRect memoFrame = cell.memoText.frame;
-    CGSize memoSize = memoFrame.size;
+    CGSize memoSize;
+    memoSize.width = 233;
+    memoSize.height = 100;
         
     if(perspective.notes && perspective.notes.length > 0){
         cell.memoText.text = perspective.notes;
         
-        CGSize textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:memoFrame.size lineBreakMode:UILineBreakModeWordWrap];
-                
+        CGSize textSize;
+        
+        if (!cell.expanded){
+            textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:cell.memoText.frame.size lineBreakMode:UILineBreakModeWordWrap];
+        } else {
+            textSize = [perspective.notes sizeWithFont:cell.memoText.font forWidth:cell.memoText.frame.size.width lineBreakMode:UILineBreakModeWordWrap];
+        }
         [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, memoSize.width, textSize.height + 10)];
         
         verticalCursor += cell.memoText.frame.size.height;
@@ -74,8 +114,27 @@
         verticalCursor += 10;
     }
     
-    [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumbUrl]
-                   placeholderImage:[UIImage imageNamed:@"profile.png"]];
+    
+    
+    CGSize textAreaSize;
+    textAreaSize.height = 600;
+    textAreaSize.width = 233;
+    
+    CGSize tempSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
+    
+    if (tempSize.height > cell.memoText.bounds.size.height) {
+        cell.expanded = false;
+        
+        [cell.showMoreButton setFrame:CGRectMake(cell.showMoreButton.frame.origin.x, verticalCursor, cell.showMoreButton.frame.size.width , cell.showMoreButton.frame.size.height)];
+        verticalCursor += cell.showMoreButton.frame.size.height;
+        cell.showMoreButton.hidden = false;
+    } else {
+        cell.showMoreButton.hidden = true;
+        cell.expanded = true;
+    }
+
+    
+    [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"profile.png"]];
     
     cell.userImage.layer.cornerRadius = 2.0f;
     cell.userImage.layer.borderWidth = 1.0f;
@@ -123,8 +182,10 @@
     if (perspective.mine || !hasContent){
         //can't star own perspective
         [cell.shareSheetButton setHidden:true];
+        [cell.savedIndicator setHidden:true];
     } else {
         [cell.shareSheetButton setHidden:false];
+        [cell.savedIndicator setHidden:false];
         if(perspective.starred){            
             [cell.savedIndicator setImage:[UIImage imageNamed:@"ReMark.png"]];
         } else {
@@ -142,7 +203,14 @@
     [StyleHelper colourTextLabel:cell.titleLabel];
     [StyleHelper colourTextLabel:cell.memoText];
     
+    cell.accessoryView = nil;
+    
     //cell.scrollView.delegate = cell;
+}
+
+
+-(IBAction)expandCell{
+    
 }
 
 
