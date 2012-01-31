@@ -72,7 +72,7 @@
 								<string key="NSFrame">{{13, 51}, {32, 32}}</string>
 								<reference key="NSSuperview" ref="1000671421"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="759101098"/>
+								<reference key="NSNextKeyView" ref="97723967"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MSAwAA</bytes>
@@ -89,7 +89,7 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
-								<object class="NSColor" key="IBUINormalTitleShadowColor" id="223545518">
+								<object class="NSColor" key="IBUINormalTitleShadowColor" id="988884755">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
 								</object>
@@ -152,7 +152,7 @@
 							<object class="IBUILabel" id="420384130">
 								<reference key="NSNextResponder" ref="1000671421"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{67, 30}, {233, 74}}</string>
+								<string key="NSFrame">{{67, 30}, {233, 136}}</string>
 								<reference key="NSSuperview" ref="1000671421"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="344597112"/>
@@ -217,10 +217,10 @@
 									<string key="NSResourceName">ReMark.png</string>
 								</object>
 							</object>
-							<object class="IBUIButton" id="759101098">
+							<object class="IBUIButton" id="97723967">
 								<reference key="NSNextResponder" ref="1000671421"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{55, 92}, {210, 27}}</string>
+								<string key="NSFrame">{{29, 102}, {262, 18}}</string>
 								<reference key="NSSuperview" ref="1000671421"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="420384130"/>
@@ -234,7 +234,7 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
-								<reference key="IBUINormalTitleShadowColor" ref="223545518"/>
+								<reference key="IBUINormalTitleShadowColor" ref="988884755"/>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">2</int>
 									<double key="pointSize">12</double>
@@ -337,7 +337,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">showMoreButton</string>
 						<reference key="source" ref="276132897"/>
-						<reference key="destination" ref="759101098"/>
+						<reference key="destination" ref="97723967"/>
 					</object>
 					<int key="connectionID">35</int>
 				</object>
@@ -353,7 +353,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">expandCell</string>
-						<reference key="source" ref="759101098"/>
+						<reference key="source" ref="97723967"/>
 						<reference key="destination" ref="276132897"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -393,8 +393,8 @@
 							<reference ref="859949109"/>
 							<reference ref="183528510"/>
 							<reference ref="1068649428"/>
+							<reference ref="97723967"/>
 							<reference ref="420384130"/>
-							<reference ref="759101098"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -438,7 +438,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">34</int>
-						<reference key="object" ref="759101098"/>
+						<reference key="object" ref="97723967"/>
 						<reference key="parent" ref="276132897"/>
 					</object>
 				</object>
@@ -505,11 +505,13 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>expandCell</string>
+							<string>onWeb</string>
 							<string>showActionSheet</string>
 							<string>showAuthoringUser</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -520,6 +522,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>expandCell</string>
+							<string>onWeb</string>
 							<string>showActionSheet</string>
 							<string>showAuthoringUser</string>
 						</object>
@@ -527,6 +530,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">expandCell</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">onWeb</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

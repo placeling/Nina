@@ -48,6 +48,7 @@
 
 -(IBAction)showActionSheet;
 -(IBAction)expandCell;
+-(IBAction)onWeb;
 
 //for calculating heights
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective;

@@ -13,6 +13,7 @@
 #import "UIImageView+WebCache.h"
 #import "asyncimageview.h"
 #import "NinaAppDelegate.h"
+#import "GenericWebViewController.h"
 
 
 @implementation PerspectiveTableViewCell
@@ -49,7 +50,7 @@
     CGFloat heightCalc = 59; //covers header and footer
     
     CGSize textAreaSize;
-    textAreaSize.height = 100;
+    textAreaSize.height = 140;
     textAreaSize.width = 233;
     
     
@@ -65,7 +66,7 @@
     heightCalc += textSize.height + 10;
     
     if (perspective.url || maxTextSize.height > textSize.height ){
-        heightCalc += 27;
+        heightCalc += 18;
     }
     
     if (perspective.photos && perspective.photos.count > 0){
@@ -96,7 +97,7 @@
     CGRect memoFrame = cell.memoText.frame;
     CGSize memoSize;
     memoSize.width = 233;
-    memoSize.height = 100;
+    memoSize.height = 140;
         
     if(perspective.notes && perspective.notes.length > 0){
         cell.memoText.text = perspective.notes;
@@ -119,10 +120,8 @@
         verticalCursor += 10;
     }
     
-    
-    
     CGSize textAreaSize;
-    textAreaSize.height = 600;
+    textAreaSize.height = 1000;
     textAreaSize.width = 233;
     
     CGSize tempSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
@@ -133,6 +132,13 @@
         [cell.showMoreButton setFrame:CGRectMake(cell.showMoreButton.frame.origin.x, verticalCursor, cell.showMoreButton.frame.size.width , cell.showMoreButton.frame.size.height)];
         verticalCursor += cell.showMoreButton.frame.size.height;
         cell.showMoreButton.hidden = false;
+    } else if (perspective.url){
+        cell.showMoreButton.hidden = false;
+        [cell.showMoreButton setTitle:@"...More on Web..." forState:UIControlStateNormal];
+        [cell.showMoreButton setFrame:CGRectMake(cell.showMoreButton.frame.origin.x, verticalCursor, cell.showMoreButton.frame.size.width , cell.showMoreButton.frame.size.height)];
+        [cell.showMoreButton addTarget:cell action:@selector(onWeb) forControlEvents:UIControlEventTouchUpInside];
+        verticalCursor += cell.showMoreButton.frame.size.height;
+        
     } else {
         cell.showMoreButton.hidden = true;
         cell.expanded = true;
@@ -216,6 +222,12 @@
 
 -(IBAction)expandCell{
     [self.requestDelegate expandAtIndexPath:self.indexpath];    
+}
+
+-(IBAction)onWeb{
+    GenericWebViewController *webController = [[GenericWebViewController alloc] initWithUrl:perspective.url];
+    [self.requestDelegate.navigationController pushViewController:webController animated:true];
+    [webController release];
 }
 
 
