@@ -19,6 +19,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import "Facebook.h"
 #import <RestKit/RestKit.h>
+#import "PerspectiveDisplayProtocol.h"
 
 typedef enum {
     home,
@@ -29,7 +30,7 @@ typedef enum {
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate> {        
+@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol> {        
     NSString *place_id; 
     NSString *perspective_id; 
     NSString *google_ref;
@@ -63,6 +64,8 @@ typedef enum {
     IBOutlet UIScrollView *tagScrollView;
     
     NSDictionary* buttons;
+    
+    NSArray *expandedCells;
 }
 
 @property BOOL dataLoaded;

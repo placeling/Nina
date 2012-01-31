@@ -55,7 +55,6 @@ typedef enum {
 -(void) loadMap;
 -(bool) shouldShowSectionView;
 -(int) numberOfSectionBookmarks;
--(void) flagPerspective:(Perspective*)perspective;
 -(void) deletePerspective:(Perspective*)perspective;
 -(NSString*) numberBookmarkCopy;
 -(NSString*) getUrlString;
@@ -93,6 +92,11 @@ typedef enum {
     [[NSBundle mainBundle] loadNibNamed:@"BookmarkTableViewCell" owner:self options:nil];
     
     [super viewDidLoad];
+    
+    expandedCells = 
+    [[NSArray arrayWithObjects:[[[NSMutableSet alloc] init]autorelease], 
+     [[[NSMutableSet alloc] init]autorelease], 
+     [[[NSMutableSet alloc] init]autorelease], nil] retain];
     
     self.navigationItem.title = @"Place Info";
     
@@ -286,7 +290,6 @@ typedef enum {
 
         Perspective *newPerspective = [objects objectAtIndex:0];
         
-        
         if (myPerspective){
             myPerspective = newPerspective;
             [homePerspectives replaceObjectAtIndex:0 withObject:newPerspective];
@@ -361,9 +364,7 @@ typedef enum {
     {
         buttonImage = [[UIImage imageNamed:[data objectForKey:@"button-image"]] stretchableImageWithLeftCapWidth:capWidth topCapHeight:0.0];
         buttonPressedImage = [[UIImage imageNamed:[data objectForKey:@"button-highlight-image"]] stretchableImageWithLeftCapWidth:capWidth topCapHeight:0.0];
-    }
-    else
-    {
+    } else {
         buttonImage = [self image:[[UIImage imageNamed:[data objectForKey:@"button-image"]] stretchableImageWithLeftCapWidth:capWidth topCapHeight:0.0] withCap:location capWidth:capWidth buttonWidth:buttonSize.width];
         buttonPressedImage = [self image:[[UIImage imageNamed:[data objectForKey:@"button-highlight-image"]] stretchableImageWithLeftCapWidth:capWidth topCapHeight:0.0] withCap:location capWidth:capWidth buttonWidth:buttonSize.width];
     }
@@ -574,11 +575,6 @@ typedef enum {
 
 
 #pragma mark - Table view delegate
-
--(void) flagPerspective:(Perspective*)perspective{
-    
-    
-}
 
 -(void) deletePerspective:(Perspective*)perspective{
     
@@ -1031,6 +1027,15 @@ typedef enum {
     return false;
 }
 
+
+- (void)expandAtIndexPath:(NSIndexPath*)indexPath{
+        
+    [[expandedCells objectAtIndex:self.segmentedControl.selectedSegmentIndex ] addObject:indexPath];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
+
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     // Need to calculate height so that footer always sticks to bottom of screen
     if ([self returnMinRowHeight:indexPath]) {
@@ -1054,8 +1059,14 @@ typedef enum {
     }else if ( self.perspectiveType == home && perspective.mine){
         return [MyPerspectiveCellViewController cellHeightForPerspective:perspective];            
     } else {
-        //a visible perspective row PerspectiveTableViewCell        
-        return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
+        //a visible perspective row PerspectiveTableViewCell 
+        NSMutableSet *expandedIndexPaths = [expandedCells objectAtIndex:self.segmentedControl.selectedSegmentIndex];
+        
+        if( [expandedIndexPaths member:indexPath]){  
+            return [PerspectiveTableViewCell cellHeightUnboundedForPerspective:perspective];
+        } else {
+            return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
+        }
     }
 }
 
@@ -1161,8 +1172,14 @@ typedef enum {
                 for(id item in objects){
                     if ( [item isKindOfClass:[UITableViewCell class]]){
                         PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
-                        [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:false];
+                        NSMutableSet *expandedIndexPaths = [expandedCells objectAtIndex:self.segmentedControl.selectedSegmentIndex];
+                        
+                        if( [expandedIndexPaths member:indexPath]){  
+                            pcell.expanded = true;
+                        }
                         pcell.requestDelegate = self;
+                        pcell.indexpath = indexPath;
+                        [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:false];
                         cell = pcell;
                         break;
                     }
@@ -1238,6 +1255,7 @@ typedef enum {
     [referrer release];
     [bookmarkButton release];
     [topofHeaderView release];
+    [expandedCells release];
     
     [super dealloc];
 }
