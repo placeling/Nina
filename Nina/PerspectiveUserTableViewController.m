@@ -13,7 +13,6 @@
 #import "NinaHelper.h"
 #import "UIImageView+WebCache.h"
 #import "TDBadgedCell.h"
-#import "MemberProfileViewController.h"
 
 @interface PerspectiveUserTableViewController()
 -(void) close;
@@ -21,7 +20,7 @@
 
 @implementation PerspectiveUserTableViewController
 
-@synthesize places=_places, users, perspectiveTally;
+@synthesize places=_places, users, perspectiveTally, delegate;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -201,10 +200,10 @@
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
-    memberProfileViewController.user = [self.users objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:memberProfileViewController animated:YES];
-    [memberProfileViewController release]; 
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    User *user = [self.users objectAtIndex:indexPath.row];
+    [delegate setUserFilter:user.username];
+    
+    [self dismissModalViewControllerAnimated:TRUE];
 }
 @end

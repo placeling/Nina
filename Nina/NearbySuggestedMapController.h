@@ -13,8 +13,14 @@
 #import "ASIHTTPRequest.h"
 #import "User.h"
 #import "LoginController.h"
+#import "CMPopTipView.h"
 
-@interface NearbySuggestedMapController : SuggestedPlaceController<MKMapViewDelegate> {
+@protocol SuggestedMapUserFilterProtocol
+-(void) setUserFilter:(NSString*)username;
+@end
+
+
+@interface NearbySuggestedMapController : SuggestedPlaceController<MKMapViewDelegate, SuggestedMapUserFilterProtocol, CMPopTipViewDelegate> {
     MKMapView *_mapView;    
     CLLocationManager *locationManager;
     CLLocationCoordinate2D lastCoordinate;
@@ -25,6 +31,9 @@
     UIBarButtonItem *showPeopleButton;
     
     NSTimer *timer;
+    NSString *userFilter;
+    
+    CMPopTipView *usernameButton;
 
 }
 
@@ -33,6 +42,7 @@
 @property(nonatomic, retain) CLLocationManager *locationManager;
 @property(nonatomic, retain) IBOutlet UIToolbar *bottomToolBar;
 @property(nonatomic, retain) IBOutlet UIBarButtonItem *showPeopleButton;
+@property(nonatomic, retain) CMPopTipView *usernameButton;
 
 -(IBAction)recenter;
 -(IBAction)reloadMap;

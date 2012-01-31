@@ -28,7 +28,7 @@
 @implementation NearbySuggestedMapController
 
 @synthesize mapView=_mapView, spinnerView;
-@synthesize locationManager, bottomToolBar, showPeopleButton;
+@synthesize locationManager, bottomToolBar, showPeopleButton, usernameButton;
 
 -(IBAction)toggleMapList{
     NearbySuggestedPlaceController *nsController = [[NearbySuggestedPlaceController alloc] init];        
@@ -59,7 +59,10 @@
 
 -(IBAction)showPeople{
     
+    [usernameButton dismissAnimated:true];
+    
     PerspectiveUserTableViewController *peopleController = [[PerspectiveUserTableViewController alloc] initWithPlaces:[self places]];
+    peopleController.delegate = self;
     UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:peopleController];
     [self.navigationController presentModalViewController:navBar animated:YES];
     [navBar release];
@@ -188,6 +191,23 @@
         
         pinView.rightCalloutAccessoryView = rightButton;
         
+        
+        if (userFilter){
+            for (Perspective *perspective in annotation.place.placemarks){
+                if ([perspective.user.username isEqualToString:userFilter]){
+                    if (annotation.place.bookmarked){
+                        pinView.image = [UIImage imageNamed:@"MyMarker.png"];
+                    } else {
+                        pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
+                    }
+                    pinView.tag =1;
+                    return pinView;
+                }
+            }
+            pinView.image = [UIImage imageNamed:@"GreyedMarker.png"];
+            pinView.tag = 0;
+            return pinView;
+        }
         if (annotation.place.bookmarked){
             pinView.image = [UIImage imageNamed:@"MyMarker.png"];
         } else {
@@ -198,6 +218,18 @@
         return nil;
     }
 }
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
+    for (MKAnnotationView * annView in views) {
+        if ([annView tag] == 1) {
+            [[annView superview] bringSubviewToFront:annView];
+        } else {
+            [[annView superview] sendSubviewToBack:annView];
+        }
+    }
+    
+}
+
 
 - (void)showPlaceDetails:(UIButton*)sender{
     
@@ -210,6 +242,24 @@
     [self.navigationController pushViewController:placePageViewController animated:YES];
     [placePageViewController release];
     
+}
+
+
+-(void)setUserFilter:(NSString*)username{
+    
+    userFilter = username;
+    [self mapPlaces];
+    
+    self.usernameButton = [[[CMPopTipView alloc] initWithMessage:[NSString stringWithFormat:@"%@", userFilter]]autorelease];
+    self.usernameButton.delegate = self;
+    [self.usernameButton presentPointingAtBarButtonItem:self.showPeopleButton animated:true];
+}
+
+
+// CMPopTipViewDelegate method
+- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
+    userFilter = nil;
+    [self mapPlaces];
 }
 
 
