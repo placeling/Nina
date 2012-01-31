@@ -110,6 +110,7 @@
 		2867AC1A14D23370003994DB /* 64-zap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867AC1814D23370003994DB /* 64-zap@2x.png */; };
 		2867AC2F14D87009003994DB /* GreyedMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867AC2D14D87009003994DB /* GreyedMarker.png */; };
 		2867AC3014D87009003994DB /* GreyedMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867AC2E14D87009003994DB /* GreyedMarker@2x.png */; };
+		2867AC3814D888BB003994DB /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2867AC3714D888BB003994DB /* CMPopTipView.m */; };
 		286B15F7140E9E6100CFED96 /* 86-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F6140E9E6100CFED96 /* 86-camera.png */; };
 		286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */; };
 		286FA149143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 286FA147143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m */; };
@@ -516,6 +517,8 @@
 		2867AC2C14D73C0F003994DB /* PerspectiveDisplayProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectiveDisplayProtocol.h; sourceTree = "<group>"; };
 		2867AC2D14D87009003994DB /* GreyedMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreyedMarker.png; sourceTree = "<group>"; };
 		2867AC2E14D87009003994DB /* GreyedMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GreyedMarker@2x.png"; sourceTree = "<group>"; };
+		2867AC3614D888BB003994DB /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
+		2867AC3714D888BB003994DB /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
 		286B15F6140E9E6100CFED96 /* 86-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "86-camera.png"; sourceTree = "<group>"; };
 		286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpinnerTableCell.xib; sourceTree = "<group>"; };
 		286FA146143AB5EE00EDAE84 /* NearbySuggestedPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbySuggestedPlaceController.h; sourceTree = "<group>"; };
@@ -1013,6 +1016,15 @@
 			name = FriendFind;
 			sourceTree = "<group>";
 		};
+		2867AC3514D888BB003994DB /* CMPopTipView */ = {
+			isa = PBXGroup;
+			children = (
+				2867AC3614D888BB003994DB /* CMPopTipView.h */,
+				2867AC3714D888BB003994DB /* CMPopTipView.m */,
+			);
+			path = CMPopTipView;
+			sourceTree = "<group>";
+		};
 		286FA144143AB5B300EDAE84 /* QuickPick */ = {
 			isa = PBXGroup;
 			children = (
@@ -1193,6 +1205,7 @@
 		2895017713D67896009E1BD7 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				2867AC3514D888BB003994DB /* CMPopTipView */,
 				2827F23C14BAB188002B4B7E /* facebook-ios-sdk */,
 				28B5D8B9149096CB00763D0C /* SDWebImage */,
 				28B619161421440200B0A7E5 /* UIDevice */,
@@ -2044,6 +2057,7 @@
 				288CAF2914C5258F00004962 /* TDBadgedCell.m in Sources */,
 				2867ABC714CE4DF5003994DB /* Advertisement.m in Sources */,
 				2867ABCA14CE540E003994DB /* AdTableViewCell.m in Sources */,
+				2867AC3814D888BB003994DB /* CMPopTipView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
