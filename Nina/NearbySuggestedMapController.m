@@ -220,14 +220,15 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
-    for (MKAnnotationView * annView in views) {
-        if ([annView tag] == 1) {
-            [[annView superview] bringSubviewToFront:annView];
-        } else {
-            [[annView superview] sendSubviewToBack:annView];
+    if (userFilter){
+        for (MKAnnotationView * annView in views) {
+            if ([annView tag] == 1) {
+                [[annView superview] bringSubviewToFront:annView];
+            } else {
+                [[annView superview] sendSubviewToBack:annView];
+            }
         }
     }
-    
 }
 
 
