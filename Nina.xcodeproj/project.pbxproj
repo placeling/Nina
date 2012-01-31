@@ -111,6 +111,7 @@
 		2867AC2F14D87009003994DB /* GreyedMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867AC2D14D87009003994DB /* GreyedMarker.png */; };
 		2867AC3014D87009003994DB /* GreyedMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867AC2E14D87009003994DB /* GreyedMarker@2x.png */; };
 		2867AC3814D888BB003994DB /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2867AC3714D888BB003994DB /* CMPopTipView.m */; };
+		2867AC3B14D8B579003994DB /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2867AC3A14D8B579003994DB /* UIPlaceHolderTextView.m */; };
 		286B15F7140E9E6100CFED96 /* 86-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F6140E9E6100CFED96 /* 86-camera.png */; };
 		286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */; };
 		286FA149143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 286FA147143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m */; };
@@ -519,6 +520,8 @@
 		2867AC2E14D87009003994DB /* GreyedMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GreyedMarker@2x.png"; sourceTree = "<group>"; };
 		2867AC3614D888BB003994DB /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
 		2867AC3714D888BB003994DB /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
+		2867AC3914D8B578003994DB /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
+		2867AC3A14D8B579003994DB /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		286B15F6140E9E6100CFED96 /* 86-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "86-camera.png"; sourceTree = "<group>"; };
 		286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpinnerTableCell.xib; sourceTree = "<group>"; };
 		286FA146143AB5EE00EDAE84 /* NearbySuggestedPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbySuggestedPlaceController.h; sourceTree = "<group>"; };
@@ -1234,6 +1237,8 @@
 				288CAF2814C5258F00004962 /* TDBadgedCell.m */,
 				283FBB4F1454BD5700F6C50A /* QuickPickButton.h */,
 				283FBB501454BD5700F6C50A /* QuickPickButton.m */,
+				2867AC3914D8B578003994DB /* UIPlaceHolderTextView.h */,
+				2867AC3A14D8B579003994DB /* UIPlaceHolderTextView.m */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -2058,6 +2063,7 @@
 				2867ABC714CE4DF5003994DB /* Advertisement.m in Sources */,
 				2867ABCA14CE540E003994DB /* AdTableViewCell.m in Sources */,
 				2867AC3814D888BB003994DB /* CMPopTipView.m in Sources */,
+				2867AC3B14D8B579003994DB /* UIPlaceHolderTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
