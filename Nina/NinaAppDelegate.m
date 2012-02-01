@@ -59,7 +59,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     //set cache policy for restkit
     [[objectManager client] setCachePolicy:RKRequestCachePolicyEtag | RKRequestCachePolicyTimeout|RKRequestCachePolicyLoadIfOffline ];
-    [[objectManager client] setCacheTimeout:60*60]; //hour
+    [[objectManager client] setCacheTimeout:5]; //5 seconds for now
     
     
     [objectManager.mappingProvider setMapping:[User getObjectMapping] forKeyPath:@"users"];
