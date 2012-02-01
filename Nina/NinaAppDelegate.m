@@ -16,6 +16,7 @@
 #import "Place.h"
 #import "Perspective.h"
 #import "Advertisement.h"
+#import "Crittercism.h"
 
 //#import "DBManagedObjectCache.h"
 
@@ -32,6 +33,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    
+
     
     //Restkit initialization  
     RKObjectManager* objectManager = [RKObjectManager objectManagerWithBaseURL:[NinaHelper getHostname]];
@@ -79,6 +82,10 @@ void uncaughtExceptionHandler(NSException *exception) {
     if ([NinaHelper isProductionRun]){
         NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
         [FlurryAnalytics startSession:@"TF6YH8QMRQDXBXR9APF9"];
+        
+        [Crittercism initWithAppID: @"4f2892c1b093157f7200076d"
+                            andKey:@"4f2892c1b093157f7200076dhknlm6lr"
+                         andSecret:@"bdrh0sax6ofnuwjq8zvl47omwirpe9sq"];
     }
     
     // Override point for customization after application launch.

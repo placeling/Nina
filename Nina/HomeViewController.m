@@ -23,6 +23,7 @@
 #import "QuickPickButton.h"
 #import "FriendFindController.h"
 #import "NearbySuggestedMapController.h"
+#import "Crittercism.h"
 
 
 @interface HomeViewController (Private) 
@@ -121,6 +122,11 @@
         UIBarButtonItem *accountButton =  [[UIBarButtonItem  alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(showAccountSheet)];
         self.navigationItem.leftBarButtonItem = accountButton;
         [accountButton release];  
+        NSString *currentUser = [NinaHelper getUsername];
+        if (currentUser){
+            [Crittercism setUsername:currentUser];
+        }
+
     } else {
         UIImage *image = [UIImage imageNamed:@"key.png"];
         UIBarButtonItem *loginButton =  [[UIBarButtonItem  alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(showLogin)];
