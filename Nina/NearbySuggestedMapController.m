@@ -18,6 +18,7 @@
 #import "NearbySuggestedMapController.h"
 #import "PerspectiveUserTableViewController.h"
 #import "FlurryAnalytics.h"
+#import "NearbyPlacesViewController.h"
 
 @interface NearbySuggestedMapController (Private)
 -(void)mapPlaces;
@@ -28,7 +29,7 @@
 @implementation NearbySuggestedMapController
 
 @synthesize mapView=_mapView, spinnerView;
-@synthesize locationManager, bottomToolBar, showPeopleButton, usernameButton;
+@synthesize locationManager, bottomToolBar, showPeopleButton, usernameButton, placemarkButton;
 
 -(IBAction)toggleMapList{
     NearbySuggestedPlaceController *nsController = [[NearbySuggestedPlaceController alloc] init];        
@@ -56,6 +57,25 @@
     [UIView commitAnimations];
 
 }
+
+-(IBAction)showNearbyPlaces{
+    NearbyPlacesViewController *nearbyController = [[NearbyPlacesViewController alloc] init];
+    
+    nearbyController.hardLocation = [[CLLocation alloc] initWithLatitude:self.mapView.centerCoordinate.latitude longitude: self.mapView.centerCoordinate.longitude];
+    
+    CLLocationCoordinate2D coord = self.mapView.centerCoordinate;
+    float ldelta = self.mapView.region.span.latitudeDelta;
+    
+    CLLocation *loc = [[CLLocation alloc] initWithLatitude:coord.latitude + ldelta longitude:coord.longitude];
+    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
+    
+    nearbyController.hardAccuracy = [NSNumber numberWithInt:[loc distanceFromLocation:loc2]];
+    
+    [self.navigationController pushViewController:nearbyController animated:TRUE];
+    
+    [nearbyController release];
+}
+
 
 -(IBAction)showPeople{
     
@@ -108,6 +128,7 @@
     [_mapView release];
     [locationManager release];
     [spinnerView release];
+    [placemarkButton release];
     [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [super dealloc];
 }
@@ -119,9 +140,16 @@
     [self mapPlaces];
 }
 
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated{
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
     MKCoordinateRegion region = mapView.region;
     CLLocationCoordinate2D center = region.center;
+    
+    
+    if (region.span.latitudeDelta > 0.003){
+        self.placemarkButton.hidden = true;
+    } else {
+        self.placemarkButton.hidden = false;
+    }
     
     if (timer){
         //invalidate existing timer
@@ -290,6 +318,7 @@
     self.mapView.delegate = self;
     self.spinnerView.hidden = true;
     [self recenter];
+    self.placemarkButton.hidden = true;
     
     lastCoordinate = self.mapView.region.center;
     lastLatSpan = self.mapView.region.span.latitudeDelta;

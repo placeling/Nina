@@ -30,11 +30,12 @@
     
     UIBarButtonItem *showPeopleButton;
     
+    UIButton *placemarkButton;
+    
     NSTimer *timer;
     NSString *userFilter;
     
     CMPopTipView *usernameButton;
-
 }
 
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;
@@ -43,10 +44,12 @@
 @property(nonatomic, retain) IBOutlet UIToolbar *bottomToolBar;
 @property(nonatomic, retain) IBOutlet UIBarButtonItem *showPeopleButton;
 @property(nonatomic, retain) CMPopTipView *usernameButton;
+@property(nonatomic, retain) IBOutlet UIButton *placemarkButton;
 
 -(IBAction)recenter;
 -(IBAction)reloadMap;
 
 -(IBAction)showPeople;
+-(IBAction)showNearbyPlaces;
 
 @end

@@ -31,7 +31,7 @@
 @synthesize searchBar=_searchBar, toolBar;
 @synthesize tableFooterView, gpsLabel;
 @synthesize dataLoaded, locationEnabled, location=_location;
-
+@synthesize hardLocation, hardAccuracy;
 
 
 -(BOOL) showPredictive{
@@ -49,12 +49,19 @@
     showPredictive = false;
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
-    self.location = manager.location;
-    NSDate *now = [[NSDate alloc]init];
-    float accuracy = pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
-    accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
     
-    if (!narrowed && ([now timeIntervalSinceDate:self.location.timestamp] > (60 * 5) || accuracy > 200)){
+    float accuracy;
+    if (hardAccuracy && hardLocation){
+        self.location = hardLocation;
+        accuracy = [hardAccuracy floatValue];
+    } else {
+        self.location = manager.location;
+        
+        accuracy = pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
+        accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
+    }
+    NSDate *now = [[NSDate alloc]init];
+    if (!hardLocation && !narrowed && ([now timeIntervalSinceDate:self.location.timestamp] > (60 * 5) || accuracy > 200)){
         //if the location is more than 5 minutes old, or over 200m in accuracy, wait
         //for an update, to a maximum of "n" seconds
         narrowed = TRUE;
@@ -129,10 +136,17 @@
     }
     [FlurryAnalytics logEvent:@"GOOGLE_PLACES_NEABY_QUERY"];
     self.locationEnabled = TRUE;
-    float accuracy = pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
-    accuracy = sqrt( accuracy );
+    float accuracy;
     
-    self.gpsLabel.text = [NSString stringWithFormat:@"GPS: %@", [NinaHelper metersToLocalizedDistance:accuracy]];
+    if (!hardAccuracy){
+        accuracy= pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
+        accuracy = sqrt( accuracy );
+        accuracy = MAX(100.0, MIN(300.0, accuracy));
+        self.gpsLabel.text = [NSString stringWithFormat:@"GPS: %@", [NinaHelper metersToLocalizedDistance:accuracy]];
+    } else {
+        accuracy = [self.hardAccuracy floatValue];
+        self.gpsLabel.text = [NSString stringWithFormat:@"GPS: %@", [NinaHelper metersToLocalizedDistance:0.0]];
+    }
     
     NSString* lat = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
     NSString* lon = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
@@ -145,7 +159,6 @@
         accuracy = 15000.0;
         urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f&name=%@", urlString, lat, lon, accuracy, searchTerm];
     } else {
-        accuracy = MAX(100.0, MIN(300.0, accuracy));
         urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f", urlString, lat, lon, accuracy];
     }
     
@@ -167,6 +180,8 @@
     [gpsLabel release];
     [toolBar release];
     [_location release];
+    [hardLocation release];
+    [hardAccuracy release];
     [super dealloc];
     
 }

@@ -37,6 +37,9 @@
     MBProgressHUD *HUD;
     bool searchLogged;
     NSTimer *timer;
+    
+    CLLocation *hardLocation;
+    NSNumber *hardAccuracy;
 }
 
 @property(assign,getter=isReloading) BOOL reloading;
@@ -50,6 +53,9 @@
 @property(nonatomic, retain) IBOutlet UIView *tableFooterView;
 @property(nonatomic, retain) IBOutlet UILabel *gpsLabel;
 @property(nonatomic,assign) BOOL dataLoaded;
+
+@property(nonatomic, retain) CLLocation *hardLocation;
+@property(nonatomic, retain) NSNumber *hardAccuracy;
 
 @property(nonatomic, assign) BOOL locationEnabled;
 @property(nonatomic, retain) CLLocation *location;
