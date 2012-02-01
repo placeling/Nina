@@ -10,6 +10,7 @@
 #import "Perspective.h"
 #import "NinaHelper.h"
 #import "MBProgressHUD.h"
+#import "UIPlaceHolderTextView.h"
 
 
 @protocol EditPerspectiveDelegate
@@ -22,7 +23,7 @@
     Perspective *_perspective;
     id<EditPerspectiveDelegate> delegate;
     
-    IBOutlet UITextView *memoTextView;
+    IBOutlet UIPlaceHolderTextView *memoTextView;
     IBOutlet UIButton *photoButton;
     
     IBOutlet UIButton *existingButton;
@@ -40,7 +41,7 @@
 }
 
 @property(nonatomic,retain) Perspective *perspective;
-@property(nonatomic,retain) IBOutlet UITextView *memoTextView;
+@property(nonatomic,retain) IBOutlet UIPlaceHolderTextView *memoTextView;
 @property(nonatomic,retain) IBOutlet UIButton *photoButton;
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic,retain) IBOutlet UIButton *existingButton;

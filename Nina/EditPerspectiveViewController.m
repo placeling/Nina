@@ -78,7 +78,11 @@
     if (updatedMemo){ //handles case where this is called again after init (from taking photo)
         self.memoTextView.text = self.updatedMemo;
     } else {
-        self.memoTextView.text = self.perspective.notes;
+        if (self.perspective.notes && [self.perspective.notes length] > 0){
+            self.memoTextView.text = self.perspective.notes;
+        }else {
+            self.memoTextView.placeholder = @"Add notes to tell people why you placemarked this place!";
+        }
     }
     
     // Test to see if camera
