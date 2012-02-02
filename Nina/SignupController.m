@@ -245,12 +245,8 @@
 }
 
 
--(void) textFieldDidEndEditing:(UITextField *)textField{
-    
-    
-    if (textField.tag == 1){
-        self.tableHeaderView.hidden = true;
-        [self.tableHeaderView removeFromSuperview];
+-(void) textFieldDidBeginEditing:(UITextField *)textField{
+    if (textField.tag > 1){
         [[self tableView] scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
 }
