@@ -839,7 +839,7 @@ typedef enum {
     
     if (!currentUser || currentUser.length == 0) {
         UIAlertView *baseAlert;
-        NSString *alertMessage = @"Sign up or log in to bookmark locations";
+        NSString *alertMessage = @"Sign up or log in\n to bookmark locations";
         baseAlert = [[UIAlertView alloc] 
                      initWithTitle:nil message:alertMessage 
                      delegate:self cancelButtonTitle:@"Not Now" 
