@@ -120,6 +120,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    self.navigationItem.title = @"Filter by User";
     [StyleHelper styleBackgroundView:self.tableView];
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     
