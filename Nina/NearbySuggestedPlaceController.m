@@ -33,9 +33,6 @@
     nsController.popularPlaces = self.popularPlaces;
     nsController.initialIndex = self.segmentedControl.selectedSegmentIndex;
     
-    //nsController.allFollowing = [NSMutableArray arrayWithArray:self.followingPlaces];
-    //nsController.allPopular = [NSMutableArray arrayWithArray:self.popularPlaces];
-    
     UINavigationController *navController = self.navigationController;
     [UIView beginAnimations:@"View Flip" context:nil];
     [UIView setAnimationDuration:0.50];
@@ -57,7 +54,8 @@
 -(IBAction)reloadList{    
     //[self.spinnerView startAnimating];
     //self.spinnerView.hidden = false;
-    [super findNearbyPlaces];
+    //[super findNearbyPlaces];
+    [self.placesTableView reloadData];
 }
 
 #pragma mark - Login delegate methods
@@ -148,24 +146,41 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    NSString *currentUser = [NinaHelper getUsername];
     if (section ==0){
         if (self.ad){
+            return 1;
+        } else if ( [self dataLoaded] && [self.places count] ==0){
+            return 1;
+        } else if ( !currentUser && self.segmentedControl.selectedSegmentIndex == 0){  
             return 1;
         } else {
             return 0;
         }
     } else {
-        return MAX([[self places] count], 1);
+        if ( [self dataLoaded] ){
+            return [[self places] count];
+        } else {
+            return 1;
+        }
     } 
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (!currentUser && indexPath.section == 0 && self.segmentedControl.selectedSegmentIndex ==0) {
-        return 90;
-    } else if (indexPath.section ==0 && self.ad){
-        return [self.ad.height intValue];
+    if ( indexPath.section == 0 ) {
+        
+        if ( !currentUser && self.segmentedControl.selectedSegmentIndex == 0){
+            return 90;
+        } else if ( [self dataLoaded] && [self.places count] ==0){
+            return 90;
+        } else if ( self.ad ){
+            return [self.ad.height intValue];
+        } else {
+            return 0;
+        }
     } else {
         return 70;
     }
@@ -200,14 +215,49 @@
             }
         }    
         
-    } else if (indexPath.section == 1 && [[self places] count] == 0){
+    } else if (indexPath.section == 0 && self.segmentedControl.selectedSegmentIndex == 0 && !currentUser){
+        PlaceSuggestTableViewCell *pCell;
+        pCell = [tableView dequeueReusableCellWithIdentifier:loginCellIdentifier];
+        if (pCell == nil){
+            pCell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
+        }
+        
+        tableView.allowsSelection = YES;
+        
+        pCell.titleLabel.text = @"";
+        pCell.addressLabel.text = @"";
+        pCell.distanceLabel.text = @"";
+        pCell.usersLabel.text = @"";
+        
+        UITextView *errorText = (UITextView *)[pCell viewWithTag:778];
+        if (errorText) {
+            [errorText removeFromSuperview];
+        }
+        
+        UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
+        
+        loginText.backgroundColor = [UIColor clearColor];
+        
+        loginText.text = @"Sign up or log in to check out nearby places you and the people you follow love.\n\nTap here to get started.";
+        loginText.tag = 778;
+        
+        [loginText setUserInteractionEnabled:NO];
+        pCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [pCell addSubview:loginText];
+        [loginText release];
+        
+        cell = pCell;
+
+        
+    } else if (indexPath.section == 0 && [[self places] count] == 0){
         PlaceSuggestTableViewCell *pCell;
         pCell = [tableView dequeueReusableCellWithIdentifier:noNearbyCellIdentifier];
         if (pCell == nil){
             pCell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:noNearbyCellIdentifier] autorelease];
         }
         
-        UITextView *existingText = (UITextView *)[cell viewWithTag:778];
+        UITextView *existingText = (UITextView *)[pCell viewWithTag:778];
         if (existingText) {
             [existingText removeFromSuperview];
         }
@@ -252,40 +302,7 @@
         cell = pCell;
 
         
-    } else if (indexPath.section == 1 && self.segmentedControl.selectedSegmentIndex == 0 && !currentUser){
-        PlaceSuggestTableViewCell *pCell;
-        pCell = [tableView dequeueReusableCellWithIdentifier:loginCellIdentifier];
-        if (pCell == nil){
-            pCell = [[[PlaceSuggestTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
-        }
-        
-        tableView.allowsSelection = YES;
-        
-        pCell.titleLabel.text = @"";
-        pCell.addressLabel.text = @"";
-        pCell.distanceLabel.text = @"";
-        pCell.usersLabel.text = @"";
-        
-        UITextView *errorText = (UITextView *)[pCell viewWithTag:778];
-        if (errorText) {
-            [errorText removeFromSuperview];
-        }
-        
-        UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
-        
-        loginText.backgroundColor = [UIColor clearColor];
-        
-        loginText.text = @"Sign up or log in to check out nearby places you and the people you follow love.\n\nTap here to get started.";
-        loginText.tag = 778;
-        
-        [loginText setUserInteractionEnabled:NO];
-        pCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        [pCell addSubview:loginText];
-        [loginText release];
-        
-        cell = pCell;
-
+    
     } else if (indexPath.section == 0 && self.ad){
         AdTableViewCell *aCell;
         aCell = [tableView dequeueReusableCellWithIdentifier:adCellIdentifier];
