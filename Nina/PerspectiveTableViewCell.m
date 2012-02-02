@@ -143,7 +143,6 @@
         cell.showMoreButton.hidden = true;
         cell.expanded = true;
     }
-
     
     [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"profile.png"]];
     
@@ -190,7 +189,7 @@
         cell.scrollView.hidden = TRUE; //remove from view
     }
     
-    if (perspective.mine || !hasContent){
+    if ( !hasContent ){
         //can't star own perspective
         [cell.shareSheetButton setHidden:true];
         [cell.savedIndicator setHidden:true];
@@ -250,7 +249,9 @@
     } else {
         UIActionSheet *actionSheet;
         
-        if (self.perspective.starred){
+        if ( self.perspective.mine ){
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+        } else if (self.perspective.starred){
             actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Remove from My Map", nil];
         } else {
             actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Add to My Map", nil];
