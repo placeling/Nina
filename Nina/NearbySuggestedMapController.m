@@ -178,17 +178,10 @@
 
 
 -(IBAction)recenter{
-    MKCoordinateRegion region;
+    MKCoordinateRegion region = self.mapView.region;
     
 	CLLocation *location = locationManager.location;
     region.center = location.coordinate;  
-    
-    MKCoordinateSpan span; 
-    
-    span.latitudeDelta  = 0.02; // default zoom
-    span.longitudeDelta = 0.02; // default zoom
-    
-    region.span = span;
     
     [self.mapView setRegion:region animated:YES];
 }
@@ -336,6 +329,19 @@
     [super viewWillAppear:animated];
     [StyleHelper styleToolBar:self.toolbar];
     [StyleHelper styleToolBar:self.bottomToolBar];
+    
+    MKCoordinateRegion region = self.mapView.region;
+    CLLocation *location = locationManager.location;
+    region.center = location.coordinate;  
+    
+    MKCoordinateSpan span; 
+    
+    span.latitudeDelta  = 0.005; // default zoom
+    span.longitudeDelta = 0.005; // default zoom
+    
+    region.span = span;
+    
+    [self.mapView setRegion:region animated:YES];
     
     if ([popularPlaces count] == 0 && [followingPlaces count] == 0){
         //if a set of places hasn't already been set, get them for current location
