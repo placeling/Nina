@@ -22,7 +22,6 @@
 @implementation ActivityFeedViewController
 @synthesize reloading=_reloading;
 @synthesize activityTableView;
-@synthesize user;
 
 - (void)didReceiveMemoryWarning{
     // Releases the view if it doesn't have a superview.
@@ -161,7 +160,7 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    [StyleHelper styleBackgroundView:self.activityTableView];
     self.navigationController.title = @"Activity Feed";
 }
 
@@ -196,9 +195,6 @@
             NSArray *rawActivities = [jsonDict objectForKey:@"home_feed"];
             [recentActivities addObjectsFromArray:rawActivities];
             
-            if (!user) {
-                self.user = [[[User alloc] initFromJsonDict:[jsonDict objectForKey:@"user"]]autorelease];    
-            }
             [self.activityTableView  reloadData];
             [jsonDict release];
             loadingMore = false;
@@ -242,11 +238,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+    if ( !currentUser || currentUser.length == 0) {
         return 1;
-    } else if ((user) && user.followingCount == 0) {
-        return 1;
-    } else if ((user) && [recentActivities count] == 0) {
+    } else if ( currentUser && [recentActivities count] == 0) {
         return 1;
     } else {
         if (loadingMore){
@@ -262,8 +256,9 @@
     
     if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
         return 90;
+        /*
     } else if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {
-        return 54;
+        return 54; */
     }else if (indexPath.row >= [recentActivities count]){
         return 44;
     } else {
@@ -286,14 +281,16 @@
     } else {
         NSString *currentUser = [NinaHelper getUsername];
         
-        if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+        if ( !currentUser || currentUser.length == 0) {
             cell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
         } else {
             cell = [tableView dequeueReusableCellWithIdentifier:NoActivityCellIdentifier];
         }
     }
     
-    if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if ( currentUser && [recentActivities count] == 0 ) {
         tableView.allowsSelection = FALSE;
     } else {
         tableView.allowsSelection = TRUE;
@@ -320,6 +317,8 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
+            
+            /*
         } else if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {            
             cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:NoActivityCellIdentifier] autorelease];
             
@@ -346,7 +345,7 @@
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryNone;
-            return cell;
+            return cell;*/
         } else if ([recentActivities count] <= indexPath.row){
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
             
@@ -433,7 +432,6 @@
     [NinaHelper clearActiveRequests:70];
     [recentActivities release];
     [activityTableView release];
-    [user release];
     [super dealloc];
     
 }

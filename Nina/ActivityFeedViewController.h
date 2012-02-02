@@ -16,7 +16,6 @@
 
 @interface ActivityFeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate, LoginControllerDelegate> {
     EGORefreshTableHeaderView *refreshHeaderView;
-    User *user;
     
     IBOutlet UITableView *activityTableView;
     NSMutableArray  *recentActivities;
@@ -27,7 +26,6 @@
 
 @property(assign,getter=isReloading) BOOL reloading;
 @property(nonatomic, retain) IBOutlet UITableView *activityTableView;
-@property (nonatomic, retain) User *user;
 
 - (void)reloadTableViewDataSource;
 - (void)doneLoadingTableViewData;
