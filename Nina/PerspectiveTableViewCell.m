@@ -134,7 +134,7 @@
         cell.showMoreButton.hidden = false;
     } else if (perspective.url){
         cell.showMoreButton.hidden = false;
-        [cell.showMoreButton setTitle:@"...More on Web..." forState:UIControlStateNormal];
+        [cell.showMoreButton setTitle:@"More on Web" forState:UIControlStateNormal];
         [cell.showMoreButton setFrame:CGRectMake(cell.showMoreButton.frame.origin.x, verticalCursor, cell.showMoreButton.frame.size.width , cell.showMoreButton.frame.size.height)];
         [cell.showMoreButton addTarget:cell action:@selector(onWeb) forControlEvents:UIControlEventTouchUpInside];
         verticalCursor += cell.showMoreButton.frame.size.height;
