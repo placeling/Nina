@@ -69,7 +69,7 @@
     CLLocation *loc = [[CLLocation alloc] initWithLatitude:coord.latitude + ldelta longitude:coord.longitude];
     CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
     
-    nearbyController.hardAccuracy = [NSNumber numberWithInt:[loc distanceFromLocation:loc2]];
+    nearbyController.hardAccuracy = [NSNumber numberWithFloat:[loc distanceFromLocation:loc2]/2.0];
     
     [self.navigationController pushViewController:nearbyController animated:TRUE];
     
