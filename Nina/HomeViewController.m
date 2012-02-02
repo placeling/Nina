@@ -62,7 +62,7 @@
         UIImage *activeImage = [UIImage imageNamed:[NSString stringWithFormat:@"Active%@",[quickPick objectForKey:@"image"]] ];
         [button setImage:image forState:UIControlStateNormal];
         [button setImage:activeImage forState:UIControlStateHighlighted];
-        
+        [button.titleLabel setText:[quickPick objectForKey:@"title"]];
         [self.pickScroll addSubview:button];
         
         [button addTarget:self action:@selector(showQuickPick:) forControlEvents:UIControlEventTouchUpInside];
@@ -150,6 +150,7 @@
     NearbySuggestedPlaceController *nearbyPlaceController = [[NearbySuggestedPlaceController alloc] init];    
     
     nearbyPlaceController.category = buttonClicked.category;
+    nearbyPlaceController.navTitle = buttonClicked.titleLabel.text;
     
     [self.navigationController pushViewController:nearbyPlaceController animated:TRUE];
     [nearbyPlaceController release];

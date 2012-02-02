@@ -29,6 +29,7 @@
     
     NSString *searchTerm;
     NSString *category;
+    NSString *navTitle;
     
     Advertisement *ad;
 }
@@ -51,6 +52,8 @@
 @property(nonatomic,retain) NSMutableArray  *popularPlaces;
 
 @property(nonatomic,retain) Advertisement *ad;
+
+@property(nonatomic, retain) NSString *navTitle;
 
 -(void)findNearbyPlaces;
 -(IBAction)toggleMapList;

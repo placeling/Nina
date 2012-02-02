@@ -17,7 +17,7 @@
 @implementation SuggestedPlaceController
 
 @synthesize popularLoaded, followingLoaded, locationEnabled, initialIndex;
-@synthesize searchTerm, category;
+@synthesize searchTerm, category, navTitle;
 @synthesize lat, lng;
 @synthesize followingPlaces, popularPlaces;
 @synthesize toolbar, segmentedControl;
@@ -193,8 +193,8 @@
     [StyleHelper styleToolBar:self.toolbar];
     
     
-    if (self.category &&  [self.category length] > 0){
-        self.navigationItem.title = self.category;
+    if ( self.navTitle){
+        self.navigationItem.title = self.navTitle;
     } else {
         self.navigationItem.title = @"Nearby";
     }
@@ -222,6 +222,7 @@
     [popularPlaces release];
     [lat release];
     [lng release];
+    [navTitle release];
     [ad release];
     [super dealloc];
 }
