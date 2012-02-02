@@ -248,7 +248,7 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
-    if (userFilter){
+    if (false){
         for (MKAnnotationView * annView in views) {
             if ([annView tag] == 1) {
                 [[annView superview] bringSubviewToFront:annView];
