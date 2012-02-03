@@ -24,7 +24,7 @@
 
 
 +(CGFloat) cellHeightUnboundedForPerspective:(Perspective*)perspective{
-    CGFloat heightCalc = 59; //covers header and footer
+    CGFloat heightCalc = 65; //covers header and footer
     
     CGSize textAreaSize;
     textAreaSize.height = 600;
@@ -32,10 +32,10 @@
     
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    heightCalc += textSize.height + 10;
+    heightCalc += MAX(textSize.height, 10);
     
     if (perspective.url ){
-        heightCalc += 27;
+        heightCalc += 17;
     }
     
     if (perspective.photos && perspective.photos.count > 0){
@@ -47,7 +47,7 @@
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
-    CGFloat heightCalc = 59; //covers header and footer
+    CGFloat heightCalc = 65; //covers header and footer
     
     CGSize textAreaSize;
     textAreaSize.height = 140;
@@ -63,10 +63,10 @@
     
     CGSize maxTextSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:maxAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    heightCalc += textSize.height + 10;
+    heightCalc +=  MAX(textSize.height, 10);
     
     if (perspective.url || maxTextSize.height > textSize.height ){
-        heightCalc += 18;
+        heightCalc += 17;
     }
     
     if (perspective.photos && perspective.photos.count > 0){
@@ -110,7 +110,7 @@
             memoSize.height = 1000;
             textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:memoSize lineBreakMode:UILineBreakModeWordWrap];
         }
-        [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, textSize.width, textSize.height + 10)];
+        [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, textSize.width, textSize.height)];
         
         verticalCursor += cell.memoText.frame.size.height;
         hasContent = true;
@@ -128,16 +128,17 @@
     
     if (tempSize.height > cell.memoText.bounds.size.height) {
         cell.expanded = false;
-        
+        verticalCursor += 5;
         [cell.showMoreButton setFrame:CGRectMake(cell.showMoreButton.frame.origin.x, verticalCursor, cell.showMoreButton.frame.size.width , cell.showMoreButton.frame.size.height)];
-        verticalCursor += cell.showMoreButton.frame.size.height;
+        verticalCursor += cell.showMoreButton.frame.size.height + 5;
         cell.showMoreButton.hidden = false;
     } else if (perspective.url){
         cell.showMoreButton.hidden = false;
+        verticalCursor += 5;
         [cell.showMoreButton setTitle:@"More on Web" forState:UIControlStateNormal];
         [cell.showMoreButton setFrame:CGRectMake(cell.showMoreButton.frame.origin.x, verticalCursor, cell.showMoreButton.frame.size.width , cell.showMoreButton.frame.size.height)];
         [cell.showMoreButton addTarget:cell action:@selector(onWeb) forControlEvents:UIControlEventTouchUpInside];
-        verticalCursor += cell.showMoreButton.frame.size.height;
+        verticalCursor += cell.showMoreButton.frame.size.height + 5;
         
     } else {
         cell.showMoreButton.hidden = true;
