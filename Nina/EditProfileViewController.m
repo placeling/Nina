@@ -379,7 +379,7 @@
             eCell.textField.delegate = self;
         }else if (indexPath.row == 1){
             eCell.textLabel.text = @"description";
-            eCell.textField.text = self.user.description;
+            eCell.textField.text = self.user.userDescription;
             eCell.textField.delegate = self;
         }
         
