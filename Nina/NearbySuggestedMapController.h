@@ -36,6 +36,8 @@
     NSString *userFilter;
     
     CMPopTipView *usernameButton;
+    
+    bool viewLoaded;
 }
 
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;

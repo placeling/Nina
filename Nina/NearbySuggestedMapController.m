@@ -40,6 +40,8 @@
     nsController.searchTerm = self.searchTerm;
     nsController.initialIndex = self.segmentedControl.selectedSegmentIndex;
     nsController.ad = self.ad;
+    nsController.latitudeDelta = self.latitudeDelta;
+    nsController.origin = self.origin;
     
     UINavigationController *navController = self.navigationController;
     [UIView beginAnimations:@"View Flip" context:nil];
@@ -146,6 +148,10 @@
     CLLocationCoordinate2D center = region.center;
     
     
+    if ( viewLoaded ){
+        self.latitudeDelta = region.span.latitudeDelta;
+        self.origin = center;
+    }
     if (region.span.latitudeDelta > 0.003){
         self.placemarkButton.hidden = true;
     } else {
@@ -293,8 +299,7 @@
     timer = nil;
     lastCoordinate = self.mapView.region.center;
     lastLatSpan = self.mapView.region.span.latitudeDelta;
-    self.lat = [NSString stringWithFormat:@"%f",  lastCoordinate.latitude];
-    self.lng = [NSString stringWithFormat:@"%f",  lastCoordinate.longitude];
+    self.origin = lastCoordinate;
     
     [self.spinnerView startAnimating];
     self.spinnerView.hidden = false;
@@ -314,6 +319,7 @@
     self.spinnerView.hidden = true;
     [self recenter];
     self.placemarkButton.hidden = true;
+    viewLoaded = false;
     
     lastCoordinate = self.mapView.region.center;
     lastLatSpan = self.mapView.region.span.latitudeDelta;
@@ -332,14 +338,24 @@
     [StyleHelper styleToolBar:self.bottomToolBar];
     
     MKCoordinateRegion region = self.mapView.region;
-    CLLocation *location = locationManager.location;
-    region.center = location.coordinate;  
+    CLLocation *location = locationManager.location;    
+    
+    if ( origin.latitude == 0.0 && origin.longitude == 0.0 ){
+        region.center = location.coordinate;  
+    } else {
+        region.center = self.origin;
+    }
     
     MKCoordinateSpan span; 
     
-    span.latitudeDelta  = 0.005; // default zoom
-    span.longitudeDelta = 0.005; // default zoom
-    
+    viewLoaded = true;
+    if (!self.latitudeDelta || self.latitudeDelta == 0.0){
+        span.latitudeDelta  = 0.005; // default zoom
+        span.longitudeDelta = 0.005; // default zoom    
+    } else {
+        span.latitudeDelta  = self.latitudeDelta;
+    }
+
     region.span = span;
     
     [self.mapView setRegion:region animated:YES];

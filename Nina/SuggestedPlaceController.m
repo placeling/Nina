@@ -18,7 +18,7 @@
 
 @synthesize popularLoaded, followingLoaded, locationEnabled, initialIndex;
 @synthesize searchTerm, category, navTitle;
-@synthesize lat, lng;
+@synthesize origin, latitudeDelta;
 @synthesize followingPlaces, popularPlaces;
 @synthesize toolbar, segmentedControl;
 @synthesize ad;
@@ -39,6 +39,7 @@
         self.popularPlaces = [[[NSMutableArray alloc] init] autorelease];
         followingLoaded = TRUE;
         popularLoaded = TRUE;
+        self.latitudeDelta = 0.0;
     }
     return self;
 }
@@ -70,7 +71,7 @@
 
 -(void)findNearbyPlaces {
     
-    if (!lat || !lng){
+    if ( origin.latitude == 0.0 && origin.longitude == 0.0 ){
         CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
         CLLocation *location = manager.location;
         
@@ -83,8 +84,7 @@
             return;
         }
         
-        self.lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-		self.lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+        self.origin = location.coordinate;
     }       
         
     NSString *queryString = [NinaHelper encodeForUrl:self.searchTerm];
@@ -97,7 +97,7 @@
     RKObjectManager* objectManager = [RKObjectManager sharedManager];
     
     if (currentUser) {   
-        NSString *followingUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=true&barrie=true&lat=%@&lng=%@&query=%@&category=%@", lat, lng, queryString, categoryString];
+        NSString *followingUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=true&barrie=true&lat=%f&lng=%f&query=%@&category=%@", origin.latitude, origin.longitude, queryString, categoryString];
         [objectManager loadObjectsAtResourcePath:followingUrlString delegate:self block:^(RKObjectLoader* loader) {        
             loader.userData = [NSNumber numberWithInt:80];
         }];
@@ -106,7 +106,7 @@
         self.followingLoaded = true;
     }
     
-    NSString *popularUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=false&barrie=true&lat=%@&lng=%@&query=%@&category=%@", lat, lng, queryString, categoryString];
+    NSString *popularUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=false&barrie=true&lat=%f&lng=%f&query=%@&category=%@", origin.latitude, origin.longitude, queryString, categoryString];
     
     [objectManager loadObjectsAtResourcePath:popularUrlString delegate:self block:^(RKObjectLoader* loader) {        
         loader.userData = [NSNumber numberWithInt:81];
@@ -220,8 +220,6 @@
     [category release];
     [followingPlaces release];
     [popularPlaces release];
-    [lat release];
-    [lng release];
     [navTitle release];
     [ad release];
     [super dealloc];

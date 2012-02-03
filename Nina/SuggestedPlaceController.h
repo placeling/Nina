@@ -24,8 +24,7 @@
     NSMutableArray  *followingPlaces;
     NSMutableArray  *popularPlaces;
     
-    NSString* lat;
-    NSString* lng;
+    CLLocationCoordinate2D origin;
     
     NSString *searchTerm;
     NSString *category;
@@ -45,8 +44,8 @@
 @property(nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property(nonatomic, retain) IBOutlet UISegmentedControl *segmentedControl;
 
-@property(nonatomic,retain) NSString *lat;
-@property(nonatomic,retain) NSString *lng;
+@property(nonatomic,assign) CLLocationCoordinate2D origin;
+@property(nonatomic,assign) float latitudeDelta;
 
 @property(nonatomic,retain) NSMutableArray  *followingPlaces;
 @property(nonatomic,retain) NSMutableArray  *popularPlaces;
