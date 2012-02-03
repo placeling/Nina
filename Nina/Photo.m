@@ -29,6 +29,7 @@
     [photoMapping mapKeyPathsToAttributes:
         @"id", @"photoId",
         @"thumb_url", @"thumbUrl",
+        @"iphone_url", @"iphoneUrl",
         @"main_url", @"mainUrl",
      nil];
     //photoMapping.primaryKeyAttribute = @"photoId";

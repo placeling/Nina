@@ -76,7 +76,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-	NSURL *url = [NSURL URLWithString:photo.iphoneUrl];
+	NSURL *url = [NSURL URLWithString:photo.mainUrl];
         
     if ( photo.mine ){
         UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showAccountSheet)];
