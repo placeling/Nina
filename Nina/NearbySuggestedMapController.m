@@ -324,7 +324,7 @@
     lastCoordinate = self.mapView.region.center;
     lastLatSpan = self.mapView.region.span.latitudeDelta;
     
-    UIImage *mapImage = [UIImage imageNamed:@"104-index-cards.png"];
+    UIImage *mapImage = [UIImage imageNamed:@"listIcon.png"];
     
     UIBarButtonItem *flipButton =  [[UIBarButtonItem alloc] initWithImage:mapImage style:UIBarButtonItemStylePlain target:self action:@selector(toggleMapList)];
     self.navigationItem.rightBarButtonItem = flipButton;

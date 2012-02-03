@@ -113,6 +113,8 @@
 		2867AC3814D888BB003994DB /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2867AC3714D888BB003994DB /* CMPopTipView.m */; };
 		2867AC3B14D8B579003994DB /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2867AC3A14D8B579003994DB /* UIPlaceHolderTextView.m */; };
 		2867ACFB14DA1614003994DB /* libCrittercism_v3_1_3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2867ACE114DA1614003994DB /* libCrittercism_v3_1_3.a */; };
+		2867ACFE14DB845B003994DB /* listIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ACFC14DB845A003994DB /* listIcon.png */; };
+		2867ACFF14DB845B003994DB /* listIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ACFD14DB845B003994DB /* listIcon@2x.png */; };
 		286B15F7140E9E6100CFED96 /* 86-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F6140E9E6100CFED96 /* 86-camera.png */; };
 		286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */; };
 		286FA149143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 286FA147143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m */; };
@@ -553,6 +555,8 @@
 		2867ACF814DA1614003994DB /* PLCrashReportThreadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportThreadInfo.h; sourceTree = "<group>"; };
 		2867ACF914DA1614003994DB /* PLCrashSignalHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashSignalHandler.h; sourceTree = "<group>"; };
 		2867ACFA14DA1614003994DB /* PLCrashSysctl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashSysctl.h; sourceTree = "<group>"; };
+		2867ACFC14DB845A003994DB /* listIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listIcon.png; sourceTree = "<group>"; };
+		2867ACFD14DB845B003994DB /* listIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listIcon@2x.png"; sourceTree = "<group>"; };
 		286B15F6140E9E6100CFED96 /* 86-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "86-camera.png"; sourceTree = "<group>"; };
 		286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpinnerTableCell.xib; sourceTree = "<group>"; };
 		286FA146143AB5EE00EDAE84 /* NearbySuggestedPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbySuggestedPlaceController.h; sourceTree = "<group>"; };
@@ -1547,6 +1551,8 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				2867ACFC14DB845A003994DB /* listIcon.png */,
+				2867ACFD14DB845B003994DB /* listIcon@2x.png */,
 				2867AC2D14D87009003994DB /* GreyedMarker.png */,
 				2867AC2E14D87009003994DB /* GreyedMarker@2x.png */,
 				2867ABE314D0D3AE003994DB /* BeautyPick.png */,
@@ -2003,6 +2009,8 @@
 				2867AC1A14D23370003994DB /* 64-zap@2x.png in Resources */,
 				2867AC2F14D87009003994DB /* GreyedMarker.png in Resources */,
 				2867AC3014D87009003994DB /* GreyedMarker@2x.png in Resources */,
+				2867ACFE14DB845B003994DB /* listIcon.png in Resources */,
+				2867ACFF14DB845B003994DB /* listIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
