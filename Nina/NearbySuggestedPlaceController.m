@@ -32,6 +32,7 @@
     nsController.followingPlaces = self.followingPlaces;
     nsController.popularPlaces = self.popularPlaces;
     nsController.initialIndex = self.segmentedControl.selectedSegmentIndex;
+    nsController.ad = self.ad;
     
     UINavigationController *navController = self.navigationController;
     [UIView beginAnimations:@"View Flip" context:nil];
