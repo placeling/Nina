@@ -16,15 +16,14 @@
 
 @implementation SuggestedPlaceController
 
-@synthesize popularLoaded, followingLoaded, locationEnabled, initialIndex;
+@synthesize popularLoaded, followingLoaded, myLoaded, locationEnabled, initialIndex;
 @synthesize searchTerm, category, navTitle;
-@synthesize origin, latitudeDelta;
-@synthesize followingPlaces, popularPlaces;
+@synthesize origin, latitudeDelta, radius;
+@synthesize followingPlaces, popularPlaces, myPlaces;
 @synthesize toolbar, segmentedControl;
 @synthesize ad;
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
@@ -37,15 +36,19 @@
     if (self != nil) {
         self.followingPlaces = [[[NSMutableArray alloc] init] autorelease];
         self.popularPlaces = [[[NSMutableArray alloc] init] autorelease];
-        followingLoaded = TRUE;
-        popularLoaded = TRUE;
+        self.myPlaces = [[[NSMutableArray alloc] init] autorelease];
+        followingLoaded = FALSE;
+        popularLoaded = FALSE;
+        myLoaded = FALSE;
         self.latitudeDelta = 0.0;
     }
     return self;
 }
 
 -(bool)dataLoaded{
-    if(self.segmentedControl.selectedSegmentIndex == 0){
+    if ( self.segmentedControl.selectedSegmentIndex == 0 ){
+        return myLoaded;
+    } else if ( self.segmentedControl.selectedSegmentIndex == 1 ){
         return followingLoaded;
     } else {
         return popularLoaded;
@@ -53,7 +56,9 @@
 }
 
 -(NSMutableArray*)places{
-    if(self.segmentedControl.selectedSegmentIndex == 0){
+    if( self.segmentedControl.selectedSegmentIndex == 0 ){
+        return self.myPlaces;
+    } else if ( self.segmentedControl.selectedSegmentIndex == 1 ){
         return self.followingPlaces;
     } else {
         return self.popularPlaces;
@@ -78,6 +83,7 @@
         if (![CLLocationManager  locationServicesEnabled] || !location){
             self.followingLoaded = true;
             self.popularLoaded = true;
+            self.myLoaded = true;
             self.locationEnabled = FALSE;
             
             DLog(@"UNABLE TO GET CURRENT LOCATION FOR NEARBY");
@@ -96,22 +102,29 @@
     
     RKObjectManager* objectManager = [RKObjectManager sharedManager];
     
-    if (currentUser) {   
-        NSString *followingUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=true&barrie=true&lat=%f&lng=%f&query=%@&category=%@", origin.latitude, origin.longitude, queryString, categoryString];
-        [objectManager loadObjectsAtResourcePath:followingUrlString delegate:self block:^(RKObjectLoader* loader) {        
-            loader.userData = [NSNumber numberWithInt:80];
-        }];
+    NSString *requestUrl;
+    NSNumber *requestTag;
+    
+    if ( currentUser &&  self.segmentedControl.selectedSegmentIndex == 0 ){
+        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=me&barrie=true&lat=%f&lng=%f&radius=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.radius, queryString, categoryString];
+
+        requestTag = [NSNumber numberWithInt:80];
+        self.myLoaded = false;
+    } else if ( currentUser &&  self.segmentedControl.selectedSegmentIndex == 1 ){
+        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=following&barrie=true&lat=%f&lng=%f&radius=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.radius, queryString, categoryString];
+        
+        requestTag = [NSNumber numberWithInt:81];
         self.followingLoaded = false;
     } else {
-        self.followingLoaded = true;
+        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=popular&barrie=true&lat=%f&lng=%f&radius=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.radius, queryString, categoryString];
+        requestTag = [NSNumber numberWithInt:82];
+        self.popularLoaded = false;
     }
-    
-    NSString *popularUrlString = [NSString stringWithFormat:@"/v1/places/suggested?socialgraph=false&barrie=true&lat=%f&lng=%f&query=%@&category=%@", origin.latitude, origin.longitude, queryString, categoryString];
-    
-    [objectManager loadObjectsAtResourcePath:popularUrlString delegate:self block:^(RKObjectLoader* loader) {        
-        loader.userData = [NSNumber numberWithInt:81];
+   
+    [objectManager loadObjectsAtResourcePath:requestUrl delegate:self block:^(RKObjectLoader* loader) {        
+        loader.userData = requestTag;
     }];
-    self.popularLoaded = false;
+
 }
 
 
@@ -120,7 +133,17 @@
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     
-    if ( [(NSNumber*)objectLoader.userData intValue] == 80){
+    if ( [(NSNumber*)objectLoader.userData intValue] == 80 ){
+        self.myLoaded = TRUE;
+        [myPlaces removeAllObjects];
+        for (NSObject* object in objects){
+            if ([object isKindOfClass:[Advertisement class]]){
+                self.ad = (Advertisement*)object;
+            } else {
+                [myPlaces addObject:object];
+            }
+        }
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 81 ){
         self.followingLoaded = TRUE;
         [followingPlaces removeAllObjects];
         for (NSObject* object in objects){
@@ -130,7 +153,7 @@
                 [followingPlaces addObject:object];
             }
         }
-    } else if ( [(NSNumber*)objectLoader.userData intValue] == 81){
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 82 ){
         self.popularLoaded = TRUE;
         [popularPlaces removeAllObjects];
         for (NSObject* object in objects){
@@ -170,14 +193,13 @@
         self.searchTerm = @"";
     }
     
-    
     NSString *currentUser = [NinaHelper getUsername];
     
     if ( !currentUser ){
         //not logged in, show popular
-        self.segmentedControl.selectedSegmentIndex = 1;
+        self.segmentedControl.selectedSegmentIndex = 2;
     } else {
-        self.segmentedControl.selectedSegmentIndex = 0;
+        self.segmentedControl.selectedSegmentIndex = 1;
     }
     
     if (initialIndex != 0 ){
@@ -185,7 +207,6 @@
     }
     
 }
-
 
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -219,6 +240,7 @@
     [searchTerm release];
     [category release];
     [followingPlaces release];
+    [myPlaces release];
     [popularPlaces release];
     [navTitle release];
     [ad release];

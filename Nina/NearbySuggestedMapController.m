@@ -140,6 +140,7 @@
 -(IBAction)reloadMap{
     //called on interaction for changing segment
     [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
+    [super findNearbyPlaces];
     [self mapPlaces];
 }
 

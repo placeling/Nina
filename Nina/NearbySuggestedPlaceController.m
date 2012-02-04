@@ -57,7 +57,7 @@
 -(IBAction)reloadList{    
     //[self.spinnerView startAnimating];
     //self.spinnerView.hidden = false;
-    //[super findNearbyPlaces];
+    [super findNearbyPlaces];
     [self.placesTableView reloadData];
 }
 
@@ -156,7 +156,7 @@
             return 1;
         } else if ( [self dataLoaded] && [self.places count] ==0){
             return 1;
-        } else if ( !currentUser && self.segmentedControl.selectedSegmentIndex == 0){  
+        } else if ( !currentUser && self.segmentedControl.selectedSegmentIndex != 2){  
             return 1;
         } else {
             return 0;
@@ -175,7 +175,7 @@
     
     if ( indexPath.section == 0 ) {
         
-        if ( !currentUser && self.segmentedControl.selectedSegmentIndex == 0){
+        if ( !currentUser && self.segmentedControl.selectedSegmentIndex != 2){
             return 90;
         } else if ( [self dataLoaded] && [self.places count] ==0){
             return 90;
@@ -218,7 +218,7 @@
             }
         }    
         
-    } else if (indexPath.section == 0 && self.segmentedControl.selectedSegmentIndex == 0 && !currentUser){
+    } else if (indexPath.section == 0 && self.segmentedControl.selectedSegmentIndex != 2 && !currentUser){
         PlaceSuggestTableViewCell *pCell;
         pCell = [tableView dequeueReusableCellWithIdentifier:loginCellIdentifier];
         if (pCell == nil){
@@ -253,7 +253,7 @@
         cell = pCell;
 
         
-    } else if (indexPath.section == 0 && [[self places] count] == 0){
+    } else if (indexPath.section == 0 && [[self places] count] == 0 && [self dataLoaded] ){
         PlaceSuggestTableViewCell *pCell;
         pCell = [tableView dequeueReusableCellWithIdentifier:noNearbyCellIdentifier];
         if (pCell == nil){
@@ -278,14 +278,14 @@
         if (self.locationEnabled == FALSE) {
             errorText.text = [NSString stringWithFormat:@"We can't show you any nearby places as you've got location services turned off."];
         } else {
-            if (self.segmentedControl.selectedSegmentIndex == 1) {
-                if ([self.searchTerm isEqualToString:@""] == TRUE) {
+            if (self.segmentedControl.selectedSegmentIndex == 2) {
+                if ([self.searchTerm isEqualToString:@""]) {
                     errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places."];
                 } else {
                     errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
                 }
             } else {
-                if ([self.searchTerm isEqualToString:@""] == TRUE) {
+                if ([self.searchTerm isEqualToString:@""]) {
                     errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places."];
                 } else {
                     errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
@@ -367,7 +367,7 @@
     NSString *currentUser = [NinaHelper getUsername];
     [tableView deselectRowAtIndexPath:indexPath animated:true];
 
-    if (indexPath.section == 1 && self.segmentedControl.selectedSegmentIndex == 0 && !currentUser){
+    if (indexPath.section == 1 && self.segmentedControl.selectedSegmentIndex !=2 && !currentUser){
         LoginController *loginController = [[LoginController alloc] init];
         loginController.delegate = self;
         

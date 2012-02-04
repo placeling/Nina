@@ -16,6 +16,7 @@
 @interface SuggestedPlaceController : UIViewController<LoginControllerDelegate, RKObjectLoaderDelegate>{
     BOOL locationEnabled;
     
+    BOOL myLoaded;
     BOOL followingLoaded;
     BOOL popularLoaded;
     
@@ -23,8 +24,10 @@
     
     NSMutableArray  *followingPlaces;
     NSMutableArray  *popularPlaces;
+    NSMutableArray  *myPlaces;
     
     CLLocationCoordinate2D origin;
+    float radius;
     
     NSString *searchTerm;
     NSString *category;
@@ -35,6 +38,7 @@
 
 @property(nonatomic, assign) BOOL followingLoaded;
 @property(nonatomic, assign) BOOL popularLoaded;
+@property(nonatomic, assign) BOOL myLoaded;
 @property(nonatomic, assign) BOOL locationEnabled;
 @property(nonatomic, assign) int initialIndex;;
 
@@ -45,10 +49,12 @@
 @property(nonatomic, retain) IBOutlet UISegmentedControl *segmentedControl;
 
 @property(nonatomic,assign) CLLocationCoordinate2D origin;
+@property(nonatomic,assign) float radius;
 @property(nonatomic,assign) float latitudeDelta;
 
 @property(nonatomic,retain) NSMutableArray  *followingPlaces;
 @property(nonatomic,retain) NSMutableArray  *popularPlaces;
+@property(nonatomic,retain) NSMutableArray  *myPlaces;
 
 @property(nonatomic,retain) Advertisement *ad;
 
