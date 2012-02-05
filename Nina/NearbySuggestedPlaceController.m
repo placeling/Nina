@@ -32,6 +32,12 @@
     nsController.followingPlaces = self.followingPlaces;
     nsController.popularPlaces = self.popularPlaces;
     nsController.initialIndex = self.segmentedControl.selectedSegmentIndex;
+    nsController.myPlaces = self.myPlaces;
+    
+    nsController.popularLoaded = self.popularLoaded;
+    nsController.myLoaded = self.myLoaded;
+    nsController.followingLoaded = self.followingLoaded;
+    
     nsController.ad = self.ad;
     nsController.latitudeDelta = self.latitudeDelta;
     nsController.origin = self.origin;
@@ -57,7 +63,15 @@
 -(IBAction)reloadList{    
     //[self.spinnerView startAnimating];
     //self.spinnerView.hidden = false;
-    [super findNearbyPlaces];
+    
+    if ( self.segmentedControl.selectedSegmentIndex == 0 && !self.myLoaded ){
+        [super findNearbyPlaces];
+    } else if ( self.segmentedControl.selectedSegmentIndex == 1 && !self.followingLoaded ){
+        [super findNearbyPlaces];
+    } else if ( self.segmentedControl.selectedSegmentIndex == 2 && !self.popularLoaded ){
+        [super findNearbyPlaces];
+    }
+    
     [self.placesTableView reloadData];
 }
 
@@ -85,7 +99,7 @@
     
     self.placesTableView.delegate = self;
     
-    if ([followingPlaces count] == 0 && [popularPlaces count] == 0){
+    if ( ![self dataLoaded] ){
         //if a set of places hasn't already been set, get them for current location
         [self loadContent];
     }

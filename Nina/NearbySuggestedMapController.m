@@ -34,11 +34,17 @@
 -(IBAction)toggleMapList{
     NearbySuggestedPlaceController *nsController = [[NearbySuggestedPlaceController alloc] init];        
     
+    nsController.myPlaces = self.myPlaces;
     nsController.followingPlaces = self.followingPlaces;
     nsController.popularPlaces = self.popularPlaces;
     nsController.category = self.category;
     nsController.searchTerm = self.searchTerm;
     nsController.initialIndex = self.segmentedControl.selectedSegmentIndex;
+    
+    nsController.popularLoaded = self.popularLoaded;
+    nsController.myLoaded = self.myLoaded;
+    nsController.followingLoaded = self.followingLoaded;
+    
     nsController.ad = self.ad;
     nsController.latitudeDelta = self.latitudeDelta;
     nsController.origin = self.origin;
@@ -140,7 +146,13 @@
 -(IBAction)reloadMap{
     //called on interaction for changing segment
     [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
-    [super findNearbyPlaces];
+    if ( self.segmentedControl.selectedSegmentIndex == 0 && !self.myLoaded ){
+        [super findNearbyPlaces];
+    } else if ( self.segmentedControl.selectedSegmentIndex == 1 && !self.followingLoaded ){
+        [super findNearbyPlaces];
+    } else if ( self.segmentedControl.selectedSegmentIndex == 2 && !self.popularLoaded ){
+        [super findNearbyPlaces];
+    }
     [self mapPlaces];
 }
 
@@ -174,13 +186,21 @@
     //without dataLoaded, the first time this runs it will get a whole world map
     if ([self dataLoaded] && (fabs(uLat - mLat) > region.span.latitudeDelta/2 || fabs(uLng - mLng) > region.span.longitudeDelta/2 || region.span.latitudeDelta > 2.5*lastLatSpan) ){
         
-        DLog(@"Reloading map contents for new co-ordinate");
         
-        timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+        if ( viewLoaded ){
+            self.myLoaded = false;
+            self.followingLoaded = false;
+            self.popularLoaded = false;
+        
+        
+            DLog(@"Reloading map contents for new co-ordinate");
+        
+            timer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                          target:self
                                        selector:@selector(loadContent)
                                        userInfo:nil
                                         repeats:NO];
+        }
     }    
 }
 
@@ -312,6 +332,7 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
     [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
     
     self.locationManager = [LocationManagerManager sharedCLLocationManager];
@@ -349,7 +370,6 @@
     
     MKCoordinateSpan span; 
     
-    viewLoaded = true;
     if (!self.latitudeDelta || self.latitudeDelta == 0.0){
         span.latitudeDelta  = 0.005; // default zoom
         span.longitudeDelta = 0.005; // default zoom    
@@ -359,14 +379,23 @@
 
     region.span = span;
     
+    viewLoaded = false;
+    
     [self.mapView setRegion:region animated:YES];
     
-    if ([popularPlaces count] == 0 && [followingPlaces count] == 0){
+    
+    if ( ![self dataLoaded] ){
         //if a set of places hasn't already been set, get them for current location
         [self loadContent];
     } else {
         [self mapPlaces];
     }
+}
+
+-(void) viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    viewLoaded = true;
 }
 
 

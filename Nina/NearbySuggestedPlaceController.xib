@@ -65,7 +65,7 @@
 							<object class="IBUISegmentedControl" id="757762426">
 								<reference key="NSNextResponder" ref="484612992"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{54, 8}, {207, 30}}</string>
+								<string key="NSFrame">{{43, 8}, {243, 30}}</string>
 								<reference key="NSSuperview" ref="484612992"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="702618936"/>
@@ -111,7 +111,7 @@
 						<array class="NSMutableArray" key="IBUIItems">
 							<object class="IBUIBarButtonItem" id="524548837">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<float key="IBUIWidth">42</float>
+								<float key="IBUIWidth">31</float>
 								<reference key="IBUIToolbar" ref="484612992"/>
 								<int key="IBUISystemItemIdentifier">6</int>
 							</object>

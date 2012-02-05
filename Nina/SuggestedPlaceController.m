@@ -16,8 +16,8 @@
 
 @implementation SuggestedPlaceController
 
-@synthesize popularLoaded, followingLoaded, myLoaded, locationEnabled, initialIndex;
-@synthesize searchTerm, category, navTitle;
+@synthesize popularLoaded, followingLoaded, myLoaded, locationEnabled;
+@synthesize searchTerm, category, navTitle, initialIndex;
 @synthesize origin, latitudeDelta, radius;
 @synthesize followingPlaces, popularPlaces, myPlaces;
 @synthesize toolbar, segmentedControl;
@@ -40,6 +40,7 @@
         followingLoaded = FALSE;
         popularLoaded = FALSE;
         myLoaded = FALSE;
+        initialIndex = 1;
         self.latitudeDelta = 0.0;
     }
     return self;
@@ -194,18 +195,12 @@
     }
     
     NSString *currentUser = [NinaHelper getUsername];
-    
     if ( !currentUser ){
         //not logged in, show popular
         self.segmentedControl.selectedSegmentIndex = 2;
     } else {
-        self.segmentedControl.selectedSegmentIndex = 1;
+        self.segmentedControl.selectedSegmentIndex = self.initialIndex;
     }
-    
-    if (initialIndex != 0 ){
-        self.segmentedControl.selectedSegmentIndex = initialIndex;
-    }
-    
 }
 
 
