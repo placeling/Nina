@@ -67,7 +67,7 @@
         narrowed = TRUE;
         [FlurryAnalytics logEvent:@"LOW_ACCURACY_NEARBY"];
         
-        manager.delegate = self;
+        //manager.delegate = self;
         [manager startUpdatingLocation]; //should already be going
         
         timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(impatientUser) userInfo:nil repeats:NO];
@@ -104,21 +104,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-    
-    self.location = newLocation;
-    
-    float accuracy = pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
-    accuracy = sqrt( accuracy ); 
-    if (accuracy < 200){
-        manager.delegate = nil;
-        if (timer){ //no guarantee timer is set
-            [timer invalidate];
-        }
-        [self findNearbyPlaces:self.searchBar.text];
-    }
 }
 
 -(void)impatientUser{    

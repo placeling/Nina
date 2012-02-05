@@ -14,7 +14,7 @@
 #import "MBProgressHUD.h"
 
 
-@interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate, UISearchBarDelegate, CLLocationManagerDelegate, MBProgressHUDDelegate> {
+@interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate, UISearchBarDelegate, MBProgressHUDDelegate> {
     EGORefreshTableHeaderView *refreshHeaderView;
     
     IBOutlet UIView *tableFooterView;
