@@ -119,7 +119,6 @@
 
 -(void) dealloc{
     [placesTableView release];
-    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [super dealloc] ;
 }
 

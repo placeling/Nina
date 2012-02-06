@@ -116,21 +116,9 @@
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     [super objectLoader:objectLoader didLoadObjects:objects];
         
-    if ( [(NSNumber*)objectLoader.userData intValue] == 80){
-        if(self.segmentedControl.selectedSegmentIndex == 0){
-            [self.spinnerView stopAnimating];
-            self.spinnerView.hidden = true;
-            [self mapPlaces];
-        } 
-        
-    } else if ( [(NSNumber*)objectLoader.userData intValue] == 81){        
-        if(self.segmentedControl.selectedSegmentIndex == 1){
-            [self.spinnerView stopAnimating];
-            self.spinnerView.hidden = true;
-            [self mapPlaces];
-        } 
-    }
-    
+    [self.spinnerView stopAnimating];
+    self.spinnerView.hidden = true;
+    [self mapPlaces];
 }
 
 - (void)dealloc{
@@ -138,7 +126,6 @@
     [locationManager release];
     [spinnerView release];
     [placemarkButton release];
-    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [super dealloc];
 }
 
@@ -192,10 +179,10 @@
             self.followingLoaded = false;
             self.popularLoaded = false;
         
-        
+            [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
             DLog(@"Reloading map contents for new co-ordinate");
         
-            timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+            timer = [NSTimer scheduledTimerWithTimeInterval:0.5
                                          target:self
                                        selector:@selector(loadContent)
                                        userInfo:nil

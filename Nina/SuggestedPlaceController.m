@@ -232,6 +232,7 @@
 
 
 -(void) dealloc{
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [searchTerm release];
     [category release];
     [followingPlaces release];
