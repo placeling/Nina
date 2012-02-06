@@ -27,7 +27,6 @@
     NSMutableArray  *myPlaces;
     
     CLLocationCoordinate2D origin;
-    float radius;
     
     NSString *searchTerm;
     NSString *category;
@@ -49,7 +48,6 @@
 @property(nonatomic, retain) IBOutlet UISegmentedControl *segmentedControl;
 
 @property(nonatomic,assign) CLLocationCoordinate2D origin;
-@property(nonatomic,assign) float radius;
 @property(nonatomic,assign) float latitudeDelta;
 
 @property(nonatomic,retain) NSMutableArray  *followingPlaces;

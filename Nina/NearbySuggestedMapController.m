@@ -87,7 +87,6 @@
 
 
 -(IBAction)showPeople{
-    
     [usernameButton dismissAnimated:true];
     
     PerspectiveUserTableViewController *peopleController = [[PerspectiveUserTableViewController alloc] initWithPlaces:[self places]];
@@ -147,7 +146,6 @@
     MKCoordinateRegion region = mapView.region;
     CLLocationCoordinate2D center = region.center;
     
-    
     if ( viewLoaded ){
         self.latitudeDelta = region.span.latitudeDelta;
         self.origin = center;
@@ -173,12 +171,13 @@
     //without dataLoaded, the first time this runs it will get a whole world map
     if ([self dataLoaded] && (fabs(uLat - mLat) > region.span.latitudeDelta/2 || fabs(uLng - mLng) > region.span.longitudeDelta/2 || region.span.latitudeDelta > 2.5*lastLatSpan) ){
         
-        
         if ( viewLoaded ){
             self.myLoaded = false;
             self.followingLoaded = false;
             self.popularLoaded = false;
         
+            [self.spinnerView stopAnimating];
+            self.spinnerView.hidden = true;
             [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
             DLog(@"Reloading map contents for new co-ordinate");
         
@@ -357,12 +356,7 @@
     
     MKCoordinateSpan span; 
     
-    if (!self.latitudeDelta || self.latitudeDelta == 0.0){
-        span.latitudeDelta  = 0.005; // default zoom
-        span.longitudeDelta = 0.005; // default zoom    
-    } else {
-        span.latitudeDelta  = self.latitudeDelta;
-    }
+    span.latitudeDelta  = self.latitudeDelta;
 
     region.span = span;
     
