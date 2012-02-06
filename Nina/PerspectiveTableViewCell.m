@@ -271,12 +271,7 @@
         
         NSString *urlText = [NSString stringWithFormat:@"/v1/perspectives/%@/flag", self.perspective.perspectiveId];
         
-        // Call url to get profile details                
-        RKObjectManager* objectManager = [RKObjectManager sharedManager];       
-        [objectManager postObject:nil delegate:self.requestDelegate block:^(RKObjectLoader* loader) {  
-            loader.resourcePath = urlText;
-            loader.userData = [NSNumber numberWithInt:7]; //use as a tag
-        }];
+        [[RKClient sharedClient] post:urlText params:nil delegate:self.requestDelegate]; 
         
     }else if (buttonIndex == 1){
         DLog(@"share member by email");
@@ -315,10 +310,11 @@
         
         if (self.perspective.starred){
             [self.perspective unstar];
-            [objectManager postObject:nil delegate:self.requestDelegate block:^(RKObjectLoader* loader) {  
-                loader.resourcePath = [NSString stringWithFormat:@"/v1/perspectives/%@/unstar", self.perspective.perspectiveId];
-                loader.userData = [NSNumber numberWithInt:5]; //use as a tag
-            }];
+            
+            NSString *urlText = [NSString stringWithFormat:@"/v1/perspectives/%@/unstar", self.perspective.perspectiveId];
+            
+            [[RKClient sharedClient] post:urlText params:nil delegate:self.requestDelegate]; 
+            self.perspective.starred = false;
             [self.savedIndicator setImage:[UIImage imageNamed:@"UnReMark.png"]];
         } else {            
             [self.perspective star];

@@ -397,7 +397,6 @@
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     loadingMore = false;
     
-    
     if ( [(NSNumber*)objectLoader.userData intValue] == 10){
         User* user = [objects objectAtIndex:0];
         DLog(@"Loaded User: %@", user.username);        
@@ -444,7 +443,6 @@
     [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
     DLog(@"Encountered an error: %@", error);
 }
-
 
 #pragma mark ASIHTTPRequest Delegate Methods
 
