@@ -302,7 +302,7 @@
         
         [facebook dialog:@"feed" andParams:params andDelegate:self.requestDelegate];
          
-    } else if (buttonIndex == 3) {
+    } else if (buttonIndex == 3 && actionSheet.numberOfButtons == 5) {
         DLog(@"Add perspective to my map");
         
         // Call url to get profile details                
