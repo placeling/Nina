@@ -102,7 +102,14 @@
         NSNumber *firstTally = [self.perspectiveTally objectForKey:firstId];
         NSNumber *secondTally = [self.perspectiveTally objectForKey:secondId];
         
-        return [secondTally compare:firstTally];
+        
+        int tally = [secondTally compare:firstTally];
+        
+        if (tally == 0){
+            //same count, so go alphabetical
+            tally = [((User*)a).username.lowercaseString compare:((User*)b).username.lowercaseString];
+        }
+        return tally;
     }]];
     
     [self.tableView reloadData];
