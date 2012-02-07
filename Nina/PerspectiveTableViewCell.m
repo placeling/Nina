@@ -200,7 +200,7 @@
     
     if ( perspective.remarkers && [perspective.remarkers length] > 0 ) {
         [cell.remarkersLabel setFrame:CGRectMake(cell.remarkersLabel.frame.origin.x, verticalCursor, cell.remarkersLabel.frame.size.width, cell.remarkersLabel.frame.size.height)];
-        cell.remarkersLabel.text = [NSString stringWithFormat:@"Marked By: %@", perspective.remarkers  ];
+        cell.remarkersLabel.text = [NSString stringWithFormat:@"ReMarked By: %@", perspective.remarkers  ];
          verticalCursor += cell.remarkersLabel.frame.size.height;
     } else {
         cell.remarkersLabel.hidden = true;
@@ -268,9 +268,9 @@
         if ( self.perspective.mine ){
             actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
         } else if (self.perspective.starred){
-            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Remove from My Map", nil];
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"DeMark from My Map", nil];
         } else {
-            actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Add to My Map", nil];
+            actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"ReMark on My Map", nil];
         }
 
         [actionSheet showInView:self.requestDelegate.view];
