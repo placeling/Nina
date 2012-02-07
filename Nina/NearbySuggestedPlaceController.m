@@ -298,11 +298,17 @@
                 } else {
                     errorText.text = [NSString stringWithFormat:@"Boo! We don't know of any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
                 }
-            } else {
+            } else if (self.segmentedControl.selectedSegmentIndex == 1) {
                 if ([self.searchTerm isEqualToString:@""]) {
-                    errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places."];
+                    errorText.text = [NSString stringWithFormat:@"Your network hasn't placemarked anything nearby."];
                 } else {
-                    errorText.text = [NSString stringWithFormat:@"You and your network haven't bookmarked any nearby places tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+                    errorText.text = [NSString stringWithFormat:@"Your network hasn't placemarked anything nearby tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+                }
+            }else {
+                if ([self.searchTerm isEqualToString:@""]) {
+                    errorText.text = [NSString stringWithFormat:@"You haven't placemarked anything nearby."];
+                } else {
+                    errorText.text = [NSString stringWithFormat:@"You haven't placemearked anything nearby tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
                 }
                 
                 

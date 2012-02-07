@@ -197,6 +197,8 @@
     NSString *currentUser = [NinaHelper getUsername];
     if ( !currentUser ){
         //not logged in, show popular
+        self.myLoaded = true;
+        self.followingLoaded = true;
         self.segmentedControl.selectedSegmentIndex = 2;
     } else {
         self.segmentedControl.selectedSegmentIndex = self.initialIndex;
