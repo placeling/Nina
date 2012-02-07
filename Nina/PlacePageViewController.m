@@ -241,28 +241,6 @@ typedef enum {
         self.place.followingPerspectives = self.followingPerspectives;
         self.place.everyonePerspectives = self.everyonePerspectives;
         
-        /*
-        jsonPerspectives = [jsonDict objectForKey:@"referring_perspectives"];
-        for (NSDictionary *rawDict in jsonPerspectives){
-            //only add referring perspectives if they aren't already there
-            BOOL exists = false;
-            for (Perspective *p in homePerspectives){
-                if ([p.perspectiveId isEqualToString:[rawDict objectForKey:@"_id"]]){
-                    exists = true;
-                    break;
-                }
-            }
-            
-            if (exists) break;
-            
-            Perspective *perspective = [[Perspective alloc] initFromJsonDict:rawDict];
-            
-            perspective.place = self.place;
-            [homePerspectives addObject:perspective];
-            [perspective release];
-        }
-         */
-        
         if (self.place.bookmarked){
             //should be the first one of the home persepectives
             myPerspective = [homePerspectives objectAtIndex:0];
