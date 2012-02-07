@@ -15,12 +15,17 @@
 #import "LoginController.h"
 #import "CMPopTipView.h"
 
+@class PerspectiveUserTableViewController;
+
 @protocol SuggestedMapUserFilterProtocol
 -(void) setUserFilter:(NSString*)username;
 @end
 
 
 @interface NearbySuggestedMapController : SuggestedPlaceController<MKMapViewDelegate, SuggestedMapUserFilterProtocol, CMPopTipViewDelegate> {
+    
+    PerspectiveUserTableViewController *userChild;
+    
     MKMapView *_mapView;    
     CLLocationManager *locationManager;
     CLLocationCoordinate2D lastCoordinate;

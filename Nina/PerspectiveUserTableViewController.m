@@ -64,13 +64,8 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad{
-    [super viewDidLoad];    
-    
-    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(close)];
-    self.navigationItem.leftBarButtonItem = button;
-    [button release];
-    
+
+-(void) refreshTable{
     self.users = [[NSMutableArray alloc] init];
     self.perspectiveTally = [[NSMutableDictionary alloc] init];
     
@@ -80,7 +75,7 @@
             DLog(@"%@", perspective.user.username);
             
             bool found = false;
-        
+            
             for (User *user in self.users){
                 if ([user.userId isEqualToString:perspective.user.userId]){
                     found = true;
@@ -109,6 +104,19 @@
         
         return [secondTally compare:firstTally];
     }]];
+    
+    [self.tableView reloadData];
+
+}
+
+- (void)viewDidLoad{
+    [super viewDidLoad];    
+    
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(close)];
+    self.navigationItem.leftBarButtonItem = button;
+    [button release];
+    
+    [self refreshTable];
     
 }
 

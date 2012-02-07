@@ -7,6 +7,7 @@
 //
 
 #import "NSString+SBJSON.h"
+#import "PerspectiveUserTableViewController.h"
 #import "PerspectivePlaceMark.h"
 #import "PlaceMark.h"
 #import "Perspective.h"
@@ -16,7 +17,6 @@
 #import "Place.h"
 #import "NearbySuggestedPlaceController.h"
 #import "NearbySuggestedMapController.h"
-#import "PerspectiveUserTableViewController.h"
 #import "FlurryAnalytics.h"
 #import "NearbyPlacesViewController.h"
 
@@ -92,6 +92,8 @@
     
     PerspectiveUserTableViewController *peopleController = [[PerspectiveUserTableViewController alloc] initWithPlaces:[self places]];
     peopleController.delegate = self;
+    userChild = peopleController;
+    
     UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:peopleController];
     [self.navigationController presentModalViewController:navBar animated:YES];
     [navBar release];
@@ -119,6 +121,13 @@
     [self.spinnerView stopAnimating];
     self.spinnerView.hidden = true;
     [self mapPlaces];
+    
+    if (userChild){
+        userChild.places = [self places];
+        [userChild refreshTable];
+    }
+    
+    
 }
 
 - (void)dealloc{
@@ -362,6 +371,7 @@
     }
     
     MKCoordinateSpan span; 
+    userChild = nil;
     
     span.latitudeDelta  = self.latitudeDelta;
 

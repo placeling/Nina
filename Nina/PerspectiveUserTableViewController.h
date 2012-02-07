@@ -24,5 +24,5 @@
 @property(nonatomic, assign) id<SuggestedMapUserFilterProtocol> delegate;
 
 - (id)initWithPlaces:(NSMutableArray*)newPlaces;
-
+- (void) refreshTable;
 @end
