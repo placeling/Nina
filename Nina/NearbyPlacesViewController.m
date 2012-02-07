@@ -417,6 +417,7 @@
         cell.textLabel.text = @"";
         
         UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
+        errorText.backgroundColor = [UIColor clearColor];
         
         if (self.locationEnabled == FALSE) {
             errorText.text = [NSString stringWithFormat:@"We can't show you any nearby places as you've got location services turned off."];
