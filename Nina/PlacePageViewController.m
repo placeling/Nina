@@ -449,7 +449,7 @@ typedef enum {
                                        urlString, @"link",
                                        self.place.placeThumbUrl, @"picture",
                                        self.place.name, @"name",
-                                       (self.place.address && self.place.city) ? [NSString stringWithFormat:@"%@ %@", self.place.address, self.place.city] : @"", @"caption",
+                                       (self.place.streetAddress && self.place.city) ? [NSString stringWithFormat:@"%@ %@", self.place.streetAddress, self.place.city] : @"", @"caption",
                                        [NSString stringWithFormat:@"Check out %@ on Placeling!", self.place.name], @"description",
                                        nil];
         
@@ -605,7 +605,7 @@ typedef enum {
     if (self.place){
         //loads what we have before grabbing detailed view
         self.nameLabel.text = self.place.name;
-        self.addressLabel.text = self.place.address;
+        self.addressLabel.text = self.place.streetAddress;
         self.cityLabel.text = self.place.city;
 
         self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@","];
@@ -663,7 +663,7 @@ typedef enum {
 
 -(void) loadData{
     self.nameLabel.text = self.place.name;
-    self.addressLabel.text = self.place.address;
+    self.addressLabel.text = self.place.streetAddress;
     self.cityLabel.text = self.place.city;
     
     [FlurryAnalytics logEvent:@"PLACE_PAGE_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"name", self.place.name, @"city", self.place.city ? self.place.city : @"", nil]];

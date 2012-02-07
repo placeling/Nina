@@ -19,7 +19,7 @@
     UIImage *icon;
     NSString *googlePlacesUrl;
     
-    NSString *address;
+    NSString *streetAddress;
     NSString *city;
     NSString *googleId;
     NSString *google_ref;
@@ -58,7 +58,7 @@
 @property (nonatomic, retain) NSString *google_ref;
 @property (nonatomic, retain) NSString *thumbUrl;
 
-@property (nonatomic, retain) NSString *address;
+@property (nonatomic, retain) NSString *streetAddress;
 @property (nonatomic, retain) NSString *city;
 
 @property (nonatomic, retain) NSNumber *lat;

@@ -25,7 +25,7 @@
 -(id)initFromPerspective:(Perspective *)perspective{
     if(self = [super init]){
         self.title = perspective.place.name;
-        self.subtitle = perspective.place.address;
+        self.subtitle = perspective.place.streetAddress;
         coordinate = perspective.place.location.coordinate;
         self.perspective = perspective;
     }

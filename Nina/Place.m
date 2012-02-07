@@ -14,7 +14,7 @@
 @implementation Place
 
 @synthesize dirty, name, pid, user;
-@synthesize address, city, perspectiveCount, bookmarked, followingPerspectiveCount;
+@synthesize streetAddress, city, perspectiveCount, bookmarked, followingPerspectiveCount;
 @synthesize lat, lng, usersBookmarking;
 @synthesize googleId, phone, googlePlacesUrl, google_ref, thumbUrl;
 @synthesize categories, icon, tags;
@@ -33,7 +33,7 @@
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
     self.pid = [jsonDict objectForKeyNotNull:@"_id"];
     self.name = [jsonDict objectForKeyNotNull:@"name"];
-    self.address = [jsonDict objectForKeyNotNull:@"street_address"];
+    self.streetAddress = [jsonDict objectForKeyNotNull:@"street_address"];
     self.city = [jsonDict objectForKeyNotNull:@"city_data"];
     self.phone = [jsonDict objectForKeyNotNull:@"phone_number"];
     
@@ -73,6 +73,7 @@
      
      @"id", @"pid",
      @"name", @"name",
+     @"street_address", @"streetAddress", 
      @"city_data", @"city",     
      @"perspective_count", @"perspectiveCount",
      @"venue_types", @"categories",
@@ -156,7 +157,7 @@
     [name release];
     [pid release];
     [user release];
-    [address release];
+    [streetAddress release];
     [city release];
     [googleId release];
     [google_ref release];

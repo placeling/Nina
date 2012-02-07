@@ -360,7 +360,7 @@
         [pCell.imageView setImageWithURL:[NSURL URLWithString:place.placeThumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
         
         pCell.titleLabel.text = place.name;
-        pCell.addressLabel.text = place.address;
+        pCell.addressLabel.text = place.streetAddress;
         pCell.distanceLabel.text = [NinaHelper metersToLocalizedDistance:place.distance];
         pCell.usersLabel.text = place.usersBookmarkingString;   
         [StyleHelper styleQuickPickCell:pCell];    
