@@ -23,6 +23,7 @@
     BOOL starred;
     NSString *dateAdded;
     NSString *lastModified;
+    NSString *remarkers;
     BOOL visited;
     BOOL share;
     BOOL mine;
@@ -37,6 +38,7 @@
 @property (nonatomic, retain) NSMutableArray *photos;
 @property (nonatomic, assign) BOOL starred;
 @property (nonatomic, retain) NSString *dateAdded;
+@property (nonatomic, retain) NSString *remarkers;
 @property (nonatomic, assign) BOOL visited;
 @property (nonatomic, assign) BOOL share;
 @property (nonatomic, assign) BOOL modified;

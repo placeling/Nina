@@ -23,6 +23,7 @@
     UILabel *memoText;
     UILabel *titleLabel;
     UILabel *createdAtLabel;
+    UILabel *remarkersLabel;
     UITableViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, PerspectiveDisplayProtocol> *requestDelegate;
     UIScrollView *scrollView;
     UIButton *showMoreButton;
@@ -39,6 +40,7 @@
 @property(nonatomic,retain) IBOutlet UIButton *shareSheetButton;
 @property(nonatomic,retain) IBOutlet UILabel *memoText;
 @property(nonatomic,retain) IBOutlet UILabel *titleLabel;
+@property(nonatomic,retain) IBOutlet UILabel *remarkersLabel;
 @property(nonatomic,retain) IBOutlet UIButton *showMoreButton;
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic,retain) UITapGestureRecognizer *tapGesture;

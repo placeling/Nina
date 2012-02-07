@@ -18,7 +18,7 @@
 
 @implementation PerspectiveTableViewCell
 
-@synthesize perspective, userImage, savedIndicator, memoText,titleLabel, scrollView;
+@synthesize perspective, userImage, savedIndicator, memoText,titleLabel, scrollView, remarkersLabel;
 @synthesize tapGesture, requestDelegate, showMoreButton, shareSheetButton;
 @synthesize createdAtLabel, expanded, indexpath;
 
@@ -35,6 +35,10 @@
     heightCalc += MAX(textSize.height, 10);
     
     if (perspective.url ){
+        heightCalc += 17;
+    }
+    
+    if ( perspective.remarkers && [perspective.remarkers length] > 0 ) {
         heightCalc += 17;
     }
     
@@ -66,6 +70,10 @@
     heightCalc +=  MAX(textSize.height, 10);
     
     if (perspective.url || maxTextSize.height > textSize.height ){
+        heightCalc += 17;
+    }
+    
+    if ( perspective.remarkers && [perspective.remarkers length] > 0 ) {
         heightCalc += 17;
     }
     
@@ -190,6 +198,14 @@
         cell.scrollView.hidden = TRUE; //remove from view
     }
     
+    if ( perspective.remarkers && [perspective.remarkers length] > 0 ) {
+        [cell.remarkersLabel setFrame:CGRectMake(cell.remarkersLabel.frame.origin.x, verticalCursor, cell.remarkersLabel.frame.size.width, cell.remarkersLabel.frame.size.height)];
+        cell.remarkersLabel.text = [NSString stringWithFormat:@"Marked By: %@", perspective.remarkers  ];
+         verticalCursor += cell.remarkersLabel.frame.size.height;
+    } else {
+        cell.remarkersLabel.hidden = true;
+    }
+    
     if ( !hasContent ){
         //can't star own perspective
         [cell.shareSheetButton setHidden:true];
@@ -204,10 +220,9 @@
         }
     }
     
-    cell.createdAtLabel.text = [NSString stringWithFormat:@"last modified: %@", [NinaHelper dateDiff:perspective.lastModified]  ];
+    cell.createdAtLabel.text = [NSString stringWithFormat:@"Updated: %@", [NinaHelper dateDiff:perspective.lastModified]  ];
     
     [cell.createdAtLabel setFrame:CGRectMake(cell.createdAtLabel.frame.origin.x, verticalCursor, cell.createdAtLabel.frame.size.width, cell.createdAtLabel.frame.size.height)];
-    
     [cell.savedIndicator setFrame:CGRectMake(cell.savedIndicator.frame.origin.x, verticalCursor, cell.savedIndicator.frame.size.width, cell.savedIndicator.frame.size.height)];
     
     [StyleHelper colourTextLabel:cell.createdAtLabel];
