@@ -37,6 +37,7 @@
     nsController.popularLoaded = self.popularLoaded;
     nsController.myLoaded = self.myLoaded;
     nsController.followingLoaded = self.followingLoaded;
+    nsController.navTitle = self.navTitle;
     
     nsController.ad = self.ad;
     nsController.latitudeDelta = self.latitudeDelta;

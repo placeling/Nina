@@ -40,6 +40,7 @@
     nsController.category = self.category;
     nsController.searchTerm = self.searchTerm;
     nsController.initialIndex = self.segmentedControl.selectedSegmentIndex;
+    nsController.navTitle = self.navTitle;
     
     nsController.popularLoaded = self.popularLoaded;
     nsController.myLoaded = self.myLoaded;
@@ -133,10 +134,16 @@
     //called on interaction for changing segment
     [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
     if ( self.segmentedControl.selectedSegmentIndex == 0 && !self.myLoaded ){
+        [self.spinnerView startAnimating];
+        self.spinnerView.hidden = false;
         [super findNearbyPlaces];
     } else if ( self.segmentedControl.selectedSegmentIndex == 1 && !self.followingLoaded ){
+        [self.spinnerView startAnimating];
+        self.spinnerView.hidden = false;
         [super findNearbyPlaces];
     } else if ( self.segmentedControl.selectedSegmentIndex == 2 && !self.popularLoaded ){
+        [self.spinnerView startAnimating];
+        self.spinnerView.hidden = false;
         [super findNearbyPlaces];
     }
     [self mapPlaces];

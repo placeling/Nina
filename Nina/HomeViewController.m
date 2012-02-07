@@ -202,6 +202,8 @@
 -(IBAction)nearbyPerspectives{
     NearbySuggestedMapController *nearbySuggestedMapController = [[NearbySuggestedMapController alloc] init];    
     nearbySuggestedMapController.category = @"";
+    nearbySuggestedMapController.navTitle = @"My Map";
+    nearbySuggestedMapController.initialIndex = 0; //start on my bookmarks
     [self.navigationController pushViewController:nearbySuggestedMapController animated:TRUE];
     [nearbySuggestedMapController release];
 }
