@@ -232,6 +232,7 @@ typedef enum {
         [homePerspectives removeLastObject]; //get rid of spinner wait
         
         for (Perspective *perspective in newPlace.homePerspectives){
+            perspective.place = self.place; //needs this reference
             [homePerspectives addObject:perspective];
         }
         
