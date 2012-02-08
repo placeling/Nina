@@ -200,14 +200,9 @@
     
     if (( !self.user.username ) && ( !self.username || self.username.length == 0)) {
         self.navigationItem.title = @"Your Profile";
-    } else {
-        NSString *getUsername;
-        
-        if (!self.user || self.user.username.length == 0) {
-            getUsername = self.username;
-        } else {
-            getUsername = self.user.username;
-            self.username = getUsername;
+    } else {        
+        if ( self.user ) {
+            self.username = self.user.username;
         }
         
         self.navigationItem.title = @"Profile";

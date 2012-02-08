@@ -58,6 +58,7 @@
     
     [navController pushViewController:nsController animated: YES];
     [UIView commitAnimations];
+    [nsController release];
 
 }
 

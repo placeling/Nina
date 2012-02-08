@@ -183,7 +183,7 @@
     PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:place];
     
     if (user){
-        placePageViewController.referrer = user;
+        placePageViewController.referrer = user.username;
     }
     
     placePageViewController.place = place;

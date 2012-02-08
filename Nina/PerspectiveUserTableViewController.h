@@ -12,14 +12,14 @@
 @interface PerspectiveUserTableViewController : UITableViewController{
     
     NSMutableArray *_places;
-    NSMutableArray *users;
+    NSArray *users;
     NSMutableDictionary *perspectiveTally;
     id<SuggestedMapUserFilterProtocol> delegate;
 }
 
 
 @property(nonatomic, retain) NSMutableArray *places;
-@property(nonatomic, retain) NSMutableArray *users;
+@property(nonatomic, retain) NSArray *users;
 @property(nonatomic, retain) NSMutableDictionary *perspectiveTally;
 @property(nonatomic, assign) id<SuggestedMapUserFilterProtocol> delegate;
 

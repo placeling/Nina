@@ -66,8 +66,8 @@
 
 
 -(void) refreshTable{
-    self.users = [[NSMutableArray alloc] init];
-    self.perspectiveTally = [[NSMutableDictionary alloc] init];
+    NSMutableArray *unsortedUsers = [[[NSMutableArray alloc] init] autorelease];
+    self.perspectiveTally = [[[NSMutableDictionary alloc] init] autorelease];
     
     
     for (Place *place in self.places){
@@ -76,7 +76,7 @@
             
             bool found = false;
             
-            for (User *user in self.users){
+            for (User *user in unsortedUsers){
                 if ([user.userId isEqualToString:perspective.user.userId]){
                     found = true;
                     break;
@@ -84,7 +84,7 @@
             }
             
             if (!found){
-                [users addObject:perspective.user];
+                [unsortedUsers addObject:perspective.user];
                 [self.perspectiveTally setObject:[NSNumber numberWithInt:1] forKey:perspective.user.userId];
             } else {
                 NSNumber *tally = [self.perspectiveTally objectForKey:perspective.user.userId];
@@ -96,7 +96,7 @@
     }
     
     
-    self.users = [[NSMutableArray alloc] initWithArray:[self.users sortedArrayUsingComparator :^(id a, id b) {
+    self.users = [unsortedUsers sortedArrayUsingComparator :^(id a, id b) {
         NSString *firstId = [(User*)a userId];
         NSString *secondId = [(User*)b userId];
         NSNumber *firstTally = [self.perspectiveTally objectForKey:firstId];
@@ -110,7 +110,7 @@
             tally = [((User*)a).username.lowercaseString compare:((User*)b).username.lowercaseString];
         }
         return tally;
-    }]];
+    }];
     
     [self.tableView reloadData];
 

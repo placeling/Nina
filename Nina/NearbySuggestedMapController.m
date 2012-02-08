@@ -65,19 +65,19 @@
     
     [navController pushViewController:nsController animated: YES];
     [UIView commitAnimations];
-
+    [nsController release];
 }
 
 -(IBAction)showNearbyPlaces{
     NearbyPlacesViewController *nearbyController = [[NearbyPlacesViewController alloc] init];
     
-    nearbyController.hardLocation = [[CLLocation alloc] initWithLatitude:self.mapView.centerCoordinate.latitude longitude: self.mapView.centerCoordinate.longitude];
+    nearbyController.hardLocation = [[[CLLocation alloc] initWithLatitude:self.mapView.centerCoordinate.latitude longitude: self.mapView.centerCoordinate.longitude] autorelease];
     
     CLLocationCoordinate2D coord = self.mapView.centerCoordinate;
     float ldelta = self.mapView.region.span.latitudeDelta;
     
-    CLLocation *loc = [[CLLocation alloc] initWithLatitude:coord.latitude + ldelta longitude:coord.longitude];
-    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
+    CLLocation *loc = [[[CLLocation alloc] initWithLatitude:coord.latitude + ldelta longitude:coord.longitude] autorelease];
+    CLLocation *loc2 = [[[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude] autorelease];
     
     nearbyController.hardAccuracy = [NSNumber numberWithFloat:[loc distanceFromLocation:loc2]/2.0];
     
