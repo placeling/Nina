@@ -37,7 +37,7 @@ typedef enum {
     
     Place *_place;
     Perspective *myPerspective;
-    User *referrer;
+    NSString *referrer;
     
     UIImage *mapImage; // Static Google Map of Location
     BOOL mapRequested;
@@ -57,7 +57,6 @@ typedef enum {
     IBOutlet UIView *topofHeaderView;
     IBOutlet UIView *tableFooterView;
     
-    NSMutableArray *perspectives;
     NSMutableArray *homePerspectives;
     NSMutableArray *followingPerspectives;
     NSMutableArray *everyonePerspectives;
@@ -99,7 +98,7 @@ typedef enum {
 
 @property (nonatomic, retain) IBOutlet UIScrollView *tagScrollView;
 
-@property(nonatomic, retain) User *referrer;
+@property(nonatomic, retain) NSString *referrer;
 
 -(IBAction) googlePlacePage;
 -(IBAction) bookmark;

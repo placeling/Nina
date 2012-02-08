@@ -401,14 +401,20 @@
         if ([activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
             PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
             placeController.perspective_id = [activity objectForKey:@"subject"];
+            placeController.referrer = [activity objectForKey:@"username1"];
+            //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
             viewController = placeController;
         }else if ([activityType isEqualToString:@"NEW_PERSPECTIVE"]){
             PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
             placeController.perspective_id = [activity objectForKey:@"subject"];
+            placeController.referrer = [activity objectForKey:@"username1"];
+            //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
             viewController = placeController;
         } else if ([activityType isEqualToString:@"STAR_PERSPECTIVE"]){
             PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
             placeController.perspective_id = [activity objectForKey:@"subject"];
+            placeController.referrer = [activity objectForKey:@"username1"];
+            //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
             viewController = placeController;
         }  else if ([activityType isEqualToString:@"FOLLOW"]){
             MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];

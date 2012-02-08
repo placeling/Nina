@@ -59,7 +59,8 @@ typedef enum {
 -(NSString*) numberBookmarkCopy;
 -(NSString*) getUrlString;
 -(NSString*) getRestUrl;
--(bool) returnMinRowHeight:(NSIndexPath *)indexPath;
+-(int) paddingRowHeight:(NSIndexPath *)indexPath;
+-(NSMutableArray*)perspectives;
 @end
 
 @implementation PlacePageViewController
@@ -80,6 +81,16 @@ typedef enum {
         
 	}
 	return self;    
+}
+
+-(NSMutableArray*)perspectives{
+    if ( self.perspectiveType== home ){
+        return homePerspectives;
+    } else if ( self.perspectiveType== following ){
+        return followingPerspectives;
+    } else {
+        return everyonePerspectives;
+    }
 }
 
 #pragma mark - View lifecycle
@@ -137,7 +148,7 @@ typedef enum {
     
     [self mainContentLoad];
     
-    if (self.initialSelectedIndex){
+    if (self.initialSelectedIndex && self.place ){
         UIButton *segment = [[self.segmentedControl buttons] objectAtIndex:[self.initialSelectedIndex intValue]];
         [segment sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
@@ -171,12 +182,6 @@ typedef enum {
 -(NSString*) getUrlString{
     if (self.perspective_id){
         return [NSString stringWithFormat:@"%@/v1/perspectives/%@", [NinaHelper getHostname], self.perspective_id];
-    }else if (self.referrer){
-        if (self.google_ref){
-            return [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@&rf=%@", [NinaHelper getHostname], self.place_id, self.google_ref, self.referrer.username];
-        } else {
-            return [NSString stringWithFormat:@"%@/v1/places/%@?rf=%@", [NinaHelper getHostname], self.place_id, self.referrer.username];
-        }
     } else {
         if (self.google_ref){
             return [NSString stringWithFormat:@"%@/v1/places/%@?google_ref=%@", [NinaHelper getHostname], self.place_id, self.google_ref];
@@ -190,12 +195,6 @@ typedef enum {
 -(NSString*) getRestUrl{
     if (self.perspective_id){
         return [NSString stringWithFormat:@"/v1/perspectives/%@", self.perspective_id];
-    }else if (self.referrer){
-        if (self.google_ref){
-            return [NSString stringWithFormat:@"/v1/places/%@?google_ref=%@&rf=%@", self.place_id, self.google_ref, self.referrer.username];
-        } else {
-            return [NSString stringWithFormat:@"/v1/places/%@?rf=%@", self.place_id, self.referrer.username];
-        }
     } else {
         if (self.google_ref){
             return [NSString stringWithFormat:@"/v1/places/%@?google_ref=%@", self.place_id, self.google_ref];
@@ -210,7 +209,6 @@ typedef enum {
     homePerspectives = [[NSMutableArray alloc] initWithObjects:@"Loading", nil];
     followingPerspectives = [[NSMutableArray alloc] init];
     everyonePerspectives = [[NSMutableArray alloc] init];
-    perspectives = homePerspectives;
     self.perspectiveType = home;
     
     // Call url to get profile details                
@@ -766,13 +764,17 @@ typedef enum {
                 loader.userData = [NSNumber numberWithInt:0]; //use as a tag
             }];
         } 
-        perspectives = homePerspectives;
     } else if (index == 1){
         self.perspectiveType = following;
         if ([self.initialSelectedIndex intValue] == 1 || (self.place.followingPerspectiveCount > 0 && (self.followingPerspectives.count == 0))){
             
             //only call if we know something there
-            NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/following", self.place_id];
+            NSString *urlText;
+            if (self.referrer){
+                urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/following?rf=%@", self.place_id, self.referrer];
+            } else {
+                urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/following", self.place_id, self.google_ref];
+            }
             
             // Call url to get profile details                
             RKObjectManager* objectManager = [RKObjectManager sharedManager];       
@@ -784,13 +786,18 @@ typedef enum {
             
             [followingPerspectives addObject:@"Loading"]; //marker for spinner cell
         } 
-        perspectives = followingPerspectives;
     } else if (index == 2){
         self.perspectiveType = everyone;
         if ([self.initialSelectedIndex intValue] == 2 || (self.place.perspectiveCount > 0 && (self.everyonePerspectives.count ==0 ) ) ){          
             //only call if we know something there
-            NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/all", self.place_id];
             
+            NSString *urlText;
+            if (self.referrer){
+                urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/all?rf=%@", self.place_id, self.referrer];
+            } else {
+                urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/all", self.place_id, self.google_ref];
+            }
+
             // Call url to get profile details                
             RKObjectManager* objectManager = [RKObjectManager sharedManager];       
             
@@ -801,7 +808,6 @@ typedef enum {
             
             [everyonePerspectives addObject:@"Loading"]; //marker for spinner cell
         }
-        perspectives = everyonePerspectives;
     }
     
     [self.tableView reloadData];
@@ -869,11 +875,11 @@ typedef enum {
 
 #pragma mark - Table View
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row >= [perspectives count]){
+    if (indexPath.row >= [[self perspectives] count]){
         return NO;
     } else {
         //handling editing case before refresh       
-        Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+        Perspective *perspective = [[self perspectives] objectAtIndex:indexPath.row];
         
         if ( [perspective isKindOfClass:[NSString class]] ){
             return NO;
@@ -891,7 +897,7 @@ typedef enum {
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+        Perspective *perspective = [[self perspectives] objectAtIndex:indexPath.row];
         DLog(@"Deleting perspective");
         
         [self deletePerspective:perspective];
@@ -911,14 +917,13 @@ typedef enum {
 
 -(bool)shouldShowSectionView{
     
-    if (([perspectives count] > 0) && [[perspectives objectAtIndex:0] isKindOfClass:[NSString class]]){
+    if (([[self perspectives] count] > 0) && [[[self perspectives] objectAtIndex:0] isKindOfClass:[NSString class]]){
         return false;
-    }
-    
+    }    
     
     if ( self.perspectiveType == home && self.place.bookmarked == false){
         return true; //show bookmark bar
-    } else if (self.perspectiveType != home && [perspectives count] == 0){
+    } else if (self.perspectiveType != home && [[self perspectives] count] == 0){
         return true; //to show "0 bookmarks" text
     } else if ( self.perspectiveType == following && self.place.followingPerspectiveCount != [followingPerspectives count] ){
         return true;
@@ -970,48 +975,35 @@ typedef enum {
     }
 }
 
--(bool)returnMinRowHeight:(NSIndexPath *)indexPath {
+-(int)paddingRowHeight:(NSIndexPath *)indexPath {
     // Goal is to always have the contact info as a sticky footer at the bottom of the view
     // However, table has variable number of rows and sections
     
     // 1. No perspective at all
     Perspective *perspective;
-    if ([perspectives count] > 0) {
-        perspective = [perspectives objectAtIndex:indexPath.row];
+    if ([[self perspectives] count] > 0) {
+        perspective = [[self perspectives] objectAtIndex:indexPath.row];
     } else {
-        return true;
+        return minTableHeight;
     }
     
-    // 2. Loading
     if ([perspective isKindOfClass:[NSString class]]) {
-        return true;
+        return minTableHeight;
     }
     
-    // 3. Home, not bookmarked, no referrer
-    if (self.perspectiveType == home && [perspectives count] == 0) {
-        return true;
-    }
-    
-    // 4. Home, bookmarked but no referrer and not enough notes/photos to push off bottom of screen
-    if (self.perspectiveType == home && self.place.bookmarked == true && [perspectives count] < 2) {
+    if (self.perspectiveType == home && self.place.bookmarked == true && [[self perspectives] count] < 2) {
         if ([MyPerspectiveCellViewController cellHeightForPerspective:perspective] < minTableHeight) {
-            return true;
+            return minTableHeight;
         }
     }
-    
-    // 5. "Everyone" or "Following" and no content
-    if (self.perspectiveType != home && [perspectives count] == 0) {
-        return true;
-    }
-    
-    // 6. "Everyone" or "Following" and only one cell, but not enough content in cell to push below screen
-    if (self.perspectiveType != home && [perspectives count] < 2) {
+
+    if (self.perspectiveType != home && [[self perspectives] count] < 2) {
         if ([PerspectiveTableViewCell cellHeightForPerspective:perspective] < minTableHeight) {
-            return true;
+            return minTableHeight;
         }
     }
     
-    return false;
+    return 0;
 }
 
 
@@ -1025,35 +1017,40 @@ typedef enum {
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     // Need to calculate height so that footer always sticks to bottom of screen
-    if ([self returnMinRowHeight:indexPath]) {
-        return minTableHeight;
-    }
     
+    int heightval = 0;
     if (indexPath.section == 0){
         if (self.perspectiveType == home && self.place.bookmarked == false){
-            return 64;
+            heightval = 64;
         }else{
-            return 44;
+            heightval = 44;
         }
+        return MAX(heightval, [self paddingRowHeight:indexPath]);
     }
     
-    Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+    Perspective *perspective = [[self perspectives] objectAtIndex:indexPath.row];
     
     //UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if ( [perspective isKindOfClass:[NSString class]] ){
         //loading case
-        return 44;
+        heightval = 44;
     }else if ( self.perspectiveType == home && perspective.mine){
-        return [MyPerspectiveCellViewController cellHeightForPerspective:perspective];            
+        heightval = [MyPerspectiveCellViewController cellHeightForPerspective:perspective];            
     } else {
         //a visible perspective row PerspectiveTableViewCell 
         NSMutableSet *expandedIndexPaths = [expandedCells objectAtIndex:self.segmentedControl.selectedSegmentIndex];
         
         if( [expandedIndexPaths member:indexPath]){  
-            return [PerspectiveTableViewCell cellHeightUnboundedForPerspective:perspective];
+            heightval = [PerspectiveTableViewCell cellHeightUnboundedForPerspective:perspective];
         } else {
-            return [PerspectiveTableViewCell cellHeightForPerspective:perspective];
+            heightval = [PerspectiveTableViewCell cellHeightForPerspective:perspective];
         }
+    }
+    
+    if ( ![self shouldShowSectionView] ){
+        return MAX(heightval, [self paddingRowHeight:indexPath]);
+    } else {
+        return heightval;
     }
 }
 
@@ -1064,7 +1061,7 @@ typedef enum {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Return the number of rows in the section.
     if (section == 1){
-        return [perspectives count];   
+        return [[self perspectives] count];   
     } else if ([self shouldShowSectionView] && section == 0){
         return 1;
     }else {
@@ -1119,7 +1116,7 @@ typedef enum {
 
     }
     
-    Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+    Perspective *perspective = [[self perspectives] objectAtIndex:indexPath.row];
     
      if ( [perspective isKindOfClass:[NSString class]] ){
         cell = [tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
@@ -1199,7 +1196,7 @@ typedef enum {
         [followViewController release];
         
     } else if (indexPath.section == 1){
-        Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
+        Perspective *perspective = [[self perspectives] objectAtIndex:indexPath.row];
         
         BOOL emptyPerspective = true;
         
