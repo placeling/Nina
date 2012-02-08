@@ -42,6 +42,7 @@ typedef enum {
     UIImage *mapImage; // Static Google Map of Location
     BOOL mapRequested;
     PerspectiveTypes perspectiveType;
+    NSNumber *initialSelectedIndex;
     
     IBOutlet UIButton *googlePlacesButton;
     IBOutlet UIButton *bookmarkButton;
@@ -75,6 +76,7 @@ typedef enum {
 @property (nonatomic, retain) NSString *perspective_id; 
 @property (nonatomic, retain) Place *place;
 @property (nonatomic, retain) UIImage *mapImage;
+@property (nonatomic, retain) NSNumber *initialSelectedIndex;
 
 @property (nonatomic, retain) IBOutlet UIButton *bookmarkButton;
 @property (nonatomic, retain) IBOutlet UIButton *googlePlacesButton;

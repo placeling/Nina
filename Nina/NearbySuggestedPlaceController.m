@@ -415,6 +415,8 @@
                 placeController.google_ref = place.google_ref;
             }
             
+            placeController.initialSelectedIndex = [NSNumber numberWithInt:self.segmentedControl.selectedSegmentIndex];
+            
             [self.navigationController pushViewController:placeController animated:TRUE];
             [placeController release];
         }

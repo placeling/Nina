@@ -65,7 +65,7 @@ typedef enum {
 @implementation PlacePageViewController
 
 @synthesize dataLoaded;
-@synthesize place_id, google_ref, perspective_id;
+@synthesize place_id, google_ref, perspective_id, initialSelectedIndex;
 @synthesize place=_place, mapImage, referrer;
 @synthesize nameLabel, addressLabel, cityLabel, categoriesLabel;
 @synthesize segmentedControl, tagScrollView;
@@ -116,7 +116,6 @@ typedef enum {
     
     // Initializations
     [self blankLoad];
-    [self mainContentLoad];
     
     buttons = 
     [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"Home", @"Following", @"Everyone", nil], @"titles", [NSValue valueWithCGSize:CGSizeMake(106,69)], @"size", @"segmentedBackground.png", @"button-image", @"segmentedSelected.png", @"button-highlight-image", @"red-divider.png", @"divider-image", [NSNumber numberWithFloat:14.0], @"cap-width", nil];
@@ -136,10 +135,16 @@ typedef enum {
         mapRequested = false;
     }
     
+    [self mainContentLoad];
+    
+    if (self.initialSelectedIndex){
+        UIButton *segment = [[self.segmentedControl buttons] objectAtIndex:[self.initialSelectedIndex intValue]];
+        [segment sendActionsForControlEvents:UIControlEventTouchUpInside];
+    }
+    
     [StyleHelper styleContactInfoButton:self.googlePlacesButton];
     
     self.navigationController.title = self.place.name;
-    
 }
 
 
@@ -215,6 +220,9 @@ typedef enum {
         loader.objectMapping = [Place getObjectMapping];
         loader.userData = [NSNumber numberWithInt:0]; //use as a tag
     }];
+    
+    //secondary loaf of other information
+    
 }
 
 
@@ -381,7 +389,7 @@ typedef enum {
     [StyleHelper styleBackgroundView:self.tableHeaderView];
     
     self.tagScrollView.backgroundColor = [UIColor clearColor];
-    
+        
     if (myPerspective && myPerspective.mine && myPerspective.modified){
         myPerspective.modified = false;
         [self.tableView reloadData];
@@ -761,7 +769,7 @@ typedef enum {
         perspectives = homePerspectives;
     } else if (index == 1){
         self.perspectiveType = following;
-        if (self.place.followingPerspectiveCount > 0 && (self.followingPerspectives.count == 0)){
+        if ([self.initialSelectedIndex intValue] == 1 || (self.place.followingPerspectiveCount > 0 && (self.followingPerspectives.count == 0))){
             
             //only call if we know something there
             NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/following", self.place_id];
@@ -779,7 +787,7 @@ typedef enum {
         perspectives = followingPerspectives;
     } else if (index == 2){
         self.perspectiveType = everyone;
-        if (self.place.perspectiveCount > 0 && (self.everyonePerspectives.count ==0)){          
+        if ([self.initialSelectedIndex intValue] == 2 || (self.place.perspectiveCount > 0 && (self.everyonePerspectives.count ==0 ) ) ){          
             //only call if we know something there
             NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/all", self.place_id];
             
