@@ -129,7 +129,7 @@ typedef enum {
     [self blankLoad];
     
     buttons = 
-    [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"Home", @"Following", @"Everyone", nil], @"titles", [NSValue valueWithCGSize:CGSizeMake(106,69)], @"size", @"segmentedBackground.png", @"button-image", @"segmentedSelected.png", @"button-highlight-image", @"red-divider.png", @"divider-image", [NSNumber numberWithFloat:14.0], @"cap-width", nil];
+    [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"Home", @"Following", @"Popular", nil], @"titles", [NSValue valueWithCGSize:CGSizeMake(106,69)], @"size", @"segmentedBackground.png", @"button-image", @"segmentedSelected.png", @"button-highlight-image", @"red-divider.png", @"divider-image", [NSNumber numberWithFloat:14.0], @"cap-width", nil];
     
     // A red segment control with 3 values
     NSDictionary* redSegmentedControlData = buttons;
@@ -665,7 +665,7 @@ typedef enum {
     [button setTitle:[NSString stringWithFormat:@"Following (%i)", self.place.followingPerspectiveCount] forState:UIControlStateNormal];
     
     button = [self.segmentedControl.buttons objectAtIndex:2];
-    [button setTitle:[NSString stringWithFormat:@"Everyone (%i)", self.place.perspectiveCount] forState:UIControlStateNormal];
+    [button setTitle:[NSString stringWithFormat:@"Popular (%i)", self.place.perspectiveCount] forState:UIControlStateNormal];
     
     CGFloat cx = 7;
     
