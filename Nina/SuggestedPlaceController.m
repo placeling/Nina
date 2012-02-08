@@ -210,9 +210,10 @@
     [super viewWillAppear:animated];
     [StyleHelper styleToolBar:self.toolbar];
     
-    
     if ( self.navTitle){
         self.navigationItem.title = self.navTitle;
+    } else if ( self.searchTerm ) {
+        self.navigationItem.title = self.searchTerm;
     } else {
         self.navigationItem.title = @"Nearby";
     }
