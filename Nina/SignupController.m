@@ -246,7 +246,7 @@
 
 
 -(void) textFieldDidBeginEditing:(UITextField *)textField{
-    if (textField.tag > 1){
+    if (textField.tag > 1 && [self.tableView numberOfRowsInSection:0] > 2){
         [[self tableView] scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
 }
