@@ -997,7 +997,7 @@ typedef enum {
         }
     }
 
-    if (self.perspectiveType != home && [[self perspectives] count] < 2) {
+    if (self.perspectiveType != home && [[self perspectives] count] < 2 && indexPath.section ==1) {
         if ([PerspectiveTableViewCell cellHeightForPerspective:perspective] < minTableHeight) {
             return minTableHeight;
         }
