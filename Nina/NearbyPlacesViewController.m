@@ -202,7 +202,7 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     
-	if (scrollView.contentOffset.y <= - 65.0f && !_reloading) {
+	if (scrollView.contentOffset.y <= - 65.0f && !_reloading && [self dataLoaded]) {
         _reloading = YES;
         [self reloadTableViewDataSource];
         [refreshHeaderView setState:EGOOPullRefreshLoading];
@@ -535,7 +535,6 @@
         [FlurryAnalytics logEvent:@"NEARBY_PLACES_VIEW_TEXT_SEARCH"];
         searchLogged = true;
     }
-    
     
 }
 
