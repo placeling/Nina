@@ -204,7 +204,8 @@
     CGFloat cx = 5;
     
     for ( Photo* photo in [self.perspective.photos reverseObjectEnumerator] ){
-        
+        photo.mine = true;
+        photo.perspective = self.perspective;
         UIImageView *imageView;
         CGRect rect = CGRectMake(cx, 0, 64, 64);
         

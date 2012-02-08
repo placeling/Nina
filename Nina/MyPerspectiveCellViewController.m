@@ -74,6 +74,8 @@
         
         CGFloat cx = 5;
         for ( Photo* photo in [perspective.photos reverseObjectEnumerator] ){
+            photo.mine = true;
+            photo.perspective = perspective;
             
             CGRect rect = CGRectMake(cx, 3, 150, 150);
             AsyncImageView *imageView = [[AsyncImageView alloc] initWithFrame:rect];
