@@ -675,8 +675,10 @@
         //in case some jackass tries to click the spin wait
         Perspective *perspective = [perspectives objectAtIndex:indexPath.row];
         PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:perspective.place];
-        placePageViewController.referrer = self.user.username;
-        placePageViewController.initialSelectedIndex = [NSNumber numberWithInt:2];
+        if ( ![self.user.username isEqualToString:[NinaHelper getUsername]] ){
+            placePageViewController.initialSelectedIndex = [NSNumber numberWithInt:2];
+            placePageViewController.referrer = self.user.username;
+        }
         [[self navigationController] pushViewController:placePageViewController animated:YES];
         [placePageViewController release];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
