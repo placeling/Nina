@@ -988,7 +988,7 @@ typedef enum {
     }
     
     if ([perspective isKindOfClass:[NSString class]]) {
-        return minTableHeight;
+        return minTableHeight + self.tableView.contentOffset.y; //special case to prevent jerking
     }
     
     if (self.perspectiveType == home && self.place.bookmarked == true && [[self perspectives] count] < 2) {
