@@ -385,7 +385,7 @@
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
-    if (self.dataLoaded && [nearbyPlaces count] == 0) {
+    if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
         return 70;
     } else {
         return 44;
@@ -415,6 +415,9 @@
     if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
         cell.detailTextLabel.text = @"";
         cell.textLabel.text = @"";
+        
+        UIView *olderror = [cell viewWithTag:778];
+        [olderror removeFromSuperview];
         
         UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
         errorText.backgroundColor = [UIColor clearColor];
