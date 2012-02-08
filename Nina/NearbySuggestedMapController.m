@@ -290,6 +290,7 @@
     PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:place];
     
     placePageViewController.place = place;
+    placePageViewController.initialSelectedIndex = [NSNumber numberWithInt:self.segmentedControl.selectedSegmentIndex];
     
     [self.navigationController pushViewController:placePageViewController animated:YES];
     [placePageViewController release];
