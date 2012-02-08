@@ -1112,8 +1112,8 @@ typedef enum {
             cell.textLabel.textAlignment = UITextAlignmentCenter;
         }
    
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-
     }
     
     Perspective *perspective = [[self perspectives] objectAtIndex:indexPath.row];
@@ -1197,6 +1197,11 @@ typedef enum {
         
     } else if (indexPath.section == 1){
         Perspective *perspective = [[self perspectives] objectAtIndex:indexPath.row];
+        
+        if ( ![perspective isKindOfClass:[Perspective class] ] ){
+            //case where it's a spinner
+            return;
+        }
         
         BOOL emptyPerspective = true;
         
