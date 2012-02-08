@@ -236,7 +236,13 @@
         } 
     }
     
-    [self mainContentLoad];
+    if ( !self.user && !self.username ){
+        self.username = [NinaHelper getUsername];
+    }
+    
+    [self blankLoad];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark -
