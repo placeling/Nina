@@ -102,8 +102,34 @@
 
 
 -(IBAction)mapPlaces{    
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    for (Place *place in [self places]){        
+    //[self.mapView removeAnnotations:self.mapView.annotations];
+    
+    NSArray *existing = self.mapView.annotations;
+    NSMutableArray *toAdd = [[NSMutableArray alloc] initWithArray:self.places];
+    
+    for ( PlaceMark *mark in existing ){
+        if ( ![mark isKindOfClass:[PlaceMark class]] ){
+            //at least one annotation is actually the user location
+            continue;
+        }
+        
+        bool keeper = false;
+        
+        for (Place *place in self.places){
+            if ( [place.pid isEqualToString:mark.place.pid] ){
+                [toAdd removeObject:place];
+                mark.place = place; //change reference to newer version of object
+                keeper = true;
+                break;
+            }
+        }
+        
+        if ( !keeper ){
+            [self.mapView removeAnnotation:mark];
+        }
+    }
+    
+    for (Place *place in toAdd){        
         DLog(@"putting on point for: %@", place);
         
         PlaceMark *placemark=[[PlaceMark alloc] initWithPlace:place];
@@ -113,6 +139,7 @@
         [self.mapView addAnnotation:placemark];
         [placemark release];
     }
+    [toAdd release];
 }
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
@@ -166,7 +193,7 @@
         self.latitudeDelta = region.span.latitudeDelta;
         self.origin = center;
     }
-    if (region.span.latitudeDelta > 0.003){
+    if (region.span.latitudeDelta > 0.0015){
         self.placemarkButton.hidden = true;
     } else {
         self.placemarkButton.hidden = false;
