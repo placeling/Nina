@@ -81,7 +81,7 @@
         if (self.perspective.notes && [self.perspective.notes length] > 0){
             self.memoTextView.text = self.perspective.notes;
         }else {
-            self.memoTextView.placeholder = @"Add notes to tell people why you placemarked this place!";
+            self.memoTextView.placeholder = @"Add notes and photos to tell people why you placemarked this location!";
         }
     }
     
