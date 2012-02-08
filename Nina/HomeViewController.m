@@ -150,6 +150,12 @@
     NearbySuggestedPlaceController *nearbyPlaceController = [[NearbySuggestedPlaceController alloc] init];    
     
     nearbyPlaceController.category = buttonClicked.category;
+    
+    if ( [buttonClicked.titleLabel.text isEqualToString:@"Gas"] ){
+        //special case where we initialize to popular since few people will bookmark gas stations
+        nearbyPlaceController.initialIndex = 2;
+    }
+    
     nearbyPlaceController.navTitle = buttonClicked.titleLabel.text;
     
     [self.navigationController pushViewController:nearbyPlaceController animated:TRUE];
