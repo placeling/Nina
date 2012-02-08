@@ -27,6 +27,7 @@
     NSMutableArray  *myPlaces;
     
     CLLocationCoordinate2D origin;
+    float latitudeDelta;
     
     NSString *searchTerm;
     NSString *category;
