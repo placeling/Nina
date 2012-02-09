@@ -33,7 +33,11 @@
     
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    heightCalc += MAX(textSize.height, 10);
+    if ( perspective.notes &&  [perspective.notes length] > 0 ){
+        heightCalc += MAX(textSize.height, 36);
+    } else {
+        heightCalc += 10;
+    }
     
     if (perspective.url ){
         heightCalc += 17;
@@ -68,7 +72,11 @@
     
     CGSize maxTextSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:maxAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    heightCalc +=  MAX(textSize.height, 10);
+    if ( perspective.notes &&  [perspective.notes length] > 0 ){
+        heightCalc += MAX(textSize.height, 36);
+    } else {
+        heightCalc += 10;
+    }
     
     if (perspective.url || maxTextSize.height > textSize.height ){
         heightCalc += 17;
@@ -119,6 +127,10 @@
             memoSize.height = hardMaxCellHeight;
             textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:memoSize lineBreakMode:UILineBreakModeWordWrap];
         }
+        if ( [perspective.notes length] > 0 ){
+            textSize.height = MAX(textSize.height, 36);
+        } 
+        
         [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, textSize.width, textSize.height)];
         
         verticalCursor += cell.memoText.frame.size.height;
@@ -157,8 +169,8 @@
     [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"profile.png"]];
     
     cell.userImage.layer.cornerRadius = 2.0f;
-    cell.userImage.layer.borderWidth = 1.0f;
-    cell.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    [cell.userImage.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+    [cell.userImage.layer setBorderWidth: 2.0];
     cell.userImage.layer.masksToBounds = YES;
     cell.memoText.backgroundColor = [UIColor clearColor];
     
