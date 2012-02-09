@@ -328,18 +328,22 @@
 -(void)setUserFilter:(NSString*)username{
     
     userFilter = username;
+    [self.mapView removeAnnotations:self.mapView.annotations];
     [self mapPlaces];
     
-    self.usernameButton = [[[CMPopTipView alloc] initWithMessage:[NSString stringWithFormat:@"%@", userFilter]]autorelease];
-    self.usernameButton.backgroundColor = [UIColor colorWithRed:185/255.0 green:43/255.0 blue:52/255.0 alpha:1.0];
-    self.usernameButton.delegate = self;
-    [self.usernameButton presentPointingAtBarButtonItem:self.showPeopleButton animated:true];
+    if ( userFilter ){
+        self.usernameButton = [[[CMPopTipView alloc] initWithMessage:[NSString stringWithFormat:@"%@", userFilter]]autorelease];
+        self.usernameButton.backgroundColor = [UIColor colorWithRed:185/255.0 green:43/255.0 blue:52/255.0 alpha:1.0];
+        self.usernameButton.delegate = self;
+        [self.usernameButton presentPointingAtBarButtonItem:self.showPeopleButton animated:true];
+    }
 }
 
 
 // CMPopTipViewDelegate method
 - (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
     userFilter = nil;
+    [self.mapView removeAnnotations:self.mapView.annotations];
     [self mapPlaces];
 }
 

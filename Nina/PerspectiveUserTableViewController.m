@@ -51,6 +51,7 @@
 
 
 -(void)close{
+    [delegate setUserFilter:nil];
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
