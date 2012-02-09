@@ -418,7 +418,7 @@
             [cell.detailTextLabel setText: @"You are connected via Facebook"];
         } else {
             [cell.imageView setImage:[UIImage imageNamed:@"facebook_icon_bw.png"]];
-            [cell.detailTextLabel setText: @"Click to connect with Facebook"];
+            [cell.detailTextLabel setText: @"Tap to connect with Facebook"];
         }
     }
     
