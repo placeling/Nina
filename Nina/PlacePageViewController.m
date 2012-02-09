@@ -129,7 +129,7 @@ typedef enum {
     [self blankLoad];
     
     buttons = 
-    [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"Home", @"Following", @"Popular", nil], @"titles", [NSValue valueWithCGSize:CGSizeMake(106,69)], @"size", @"segmentedBackground.png", @"button-image", @"segmentedSelected.png", @"button-highlight-image", @"red-divider.png", @"divider-image", [NSNumber numberWithFloat:14.0], @"cap-width", nil];
+    [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"Me", @"Following", @"Popular", nil], @"titles", [NSValue valueWithCGSize:CGSizeMake(106,69)], @"size", @"segmentedBackground.png", @"button-image", @"segmentedSelected.png", @"button-highlight-image", @"red-divider.png", @"divider-image", [NSNumber numberWithFloat:14.0], @"cap-width", nil];
     
     // A red segment control with 3 values
     NSDictionary* redSegmentedControlData = buttons;
