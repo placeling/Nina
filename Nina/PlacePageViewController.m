@@ -766,7 +766,7 @@ typedef enum {
         } 
     } else if (index == 1){
         self.perspectiveType = following;
-        if ([self.initialSelectedIndex intValue] == 1 || (self.place.followingPerspectiveCount > 0 && (self.followingPerspectives.count == 0))){
+        if (([self.initialSelectedIndex intValue] == 1 && self.followingPerspectives.count ==0) || (self.place.followingPerspectiveCount > 0 && (self.followingPerspectives.count == 0))){
             
             //only call if we know something there
             NSString *urlText;
@@ -788,7 +788,7 @@ typedef enum {
         } 
     } else if (index == 2){
         self.perspectiveType = everyone;
-        if ([self.initialSelectedIndex intValue] == 2 || (self.place.perspectiveCount > 0 && (self.everyonePerspectives.count ==0 ) ) ){          
+        if (([self.initialSelectedIndex intValue] == 2 && self.everyonePerspectives.count ==0) || (self.place.perspectiveCount > 0 && (self.everyonePerspectives.count ==0 ) ) ){          
             //only call if we know something there
             
             NSString *urlText;
