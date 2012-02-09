@@ -388,7 +388,7 @@
     NSString *currentUser = [NinaHelper getUsername];
     [tableView deselectRowAtIndexPath:indexPath animated:true];
 
-    if (indexPath.section == 1 && self.segmentedControl.selectedSegmentIndex !=2 && !currentUser){
+    if (indexPath.section == 0 && self.segmentedControl.selectedSegmentIndex !=2 && !currentUser){
         LoginController *loginController = [[LoginController alloc] init];
         loginController.delegate = self;
         
