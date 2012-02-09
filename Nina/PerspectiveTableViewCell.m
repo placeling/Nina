@@ -135,7 +135,7 @@
     
     CGSize tempSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    if (tempSize.height > cell.memoText.bounds.size.height) {
+    if (tempSize.height > cell.memoText.frame.size.height) {
         cell.expanded = false;
         verticalCursor += 5;
         [cell.showMoreButton setFrame:CGRectMake(cell.showMoreButton.frame.origin.x, verticalCursor, cell.showMoreButton.frame.size.width , cell.showMoreButton.frame.size.height)];
