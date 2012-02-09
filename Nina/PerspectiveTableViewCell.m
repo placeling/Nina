@@ -15,6 +15,7 @@
 #import "NinaAppDelegate.h"
 #import "GenericWebViewController.h"
 
+#define hardMaxCellHeight 5000
 
 @implementation PerspectiveTableViewCell
 
@@ -27,7 +28,7 @@
     CGFloat heightCalc = 65; //covers header and footer
     
     CGSize textAreaSize;
-    textAreaSize.height = 600;
+    textAreaSize.height = hardMaxCellHeight;
     textAreaSize.width = 233;
     
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
@@ -59,7 +60,7 @@
     
     
     CGSize maxAreaSize;
-    maxAreaSize.height = 600;
+    maxAreaSize.height = hardMaxCellHeight;
     maxAreaSize.width = 233;
     
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
@@ -115,7 +116,7 @@
         if (!cell.expanded){
             textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:cell.memoText.frame.size lineBreakMode:UILineBreakModeWordWrap];
         } else {
-            memoSize.height = 1000;
+            memoSize.height = hardMaxCellHeight;
             textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:memoSize lineBreakMode:UILineBreakModeWordWrap];
         }
         [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, textSize.width, textSize.height)];
@@ -129,7 +130,7 @@
     }
     
     CGSize textAreaSize;
-    textAreaSize.height = 1000;
+    textAreaSize.height = hardMaxCellHeight;
     textAreaSize.width = 233;
     
     CGSize tempSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
