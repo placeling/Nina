@@ -79,6 +79,8 @@
 
 #pragma mark - Login delegate methods
 - (void) loadContent {
+    self.myLoaded = false;
+    self.followingLoaded = false;
     [super findNearbyPlaces];
     [self.placesTableView reloadData];
 }
@@ -103,7 +105,7 @@
     
     if ( ![self dataLoaded] ){
         //if a set of places hasn't already been set, get them for current location
-        [self loadContent];
+        [super findNearbyPlaces];
     }
 }
 
@@ -256,7 +258,11 @@
         
         loginText.backgroundColor = [UIColor clearColor];
         
-        loginText.text = @"Sign up or log in to check out nearby places you and the people you follow love.\n\nTap here to get started.";
+        if ( self.segmentedControl.selectedSegmentIndex == 0 ){
+            loginText.text = @"Sign up or log in to see the nearby places you love.\n\nTap here to get started";
+        } else {
+            loginText.text = @"Sign up or log in to see nearby places you and the people you follow love.\n\nTap here to get started.";
+        }
         loginText.tag = 778;
         
         [loginText setUserInteractionEnabled:NO];
