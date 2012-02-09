@@ -167,22 +167,39 @@
 
 
 -(IBAction)reloadMap{
-    //called on interaction for changing segment
-    [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
-    if ( self.segmentedControl.selectedSegmentIndex == 0 && !self.myLoaded ){
-        [self.spinnerView startAnimating];
-        self.spinnerView.hidden = false;
-        [super findNearbyPlaces];
-    } else if ( self.segmentedControl.selectedSegmentIndex == 1 && !self.followingLoaded ){
-        [self.spinnerView startAnimating];
-        self.spinnerView.hidden = false;
-        [super findNearbyPlaces];
-    } else if ( self.segmentedControl.selectedSegmentIndex == 2 && !self.popularLoaded ){
-        [self.spinnerView startAnimating];
-        self.spinnerView.hidden = false;
-        [super findNearbyPlaces];
+    
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if ( !currentUser && self.segmentedControl.selectedSegmentIndex != 2 ) {
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        UIAlertView *baseAlert;
+        NSString *alertMessage = @"Sign up or log in to see placemarks on this map";
+        baseAlert = [[UIAlertView alloc] 
+                     initWithTitle:nil message:alertMessage 
+                     delegate:self cancelButtonTitle:@"Not Now" 
+                     otherButtonTitles:@"Let's Go", nil];
+        baseAlert.tag = 0;
+        
+        [baseAlert show];
+        [baseAlert release];
+    } else {
+        //called on interaction for changing segment
+        [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
+        if ( self.segmentedControl.selectedSegmentIndex == 0 && !self.myLoaded ){
+            [self.spinnerView startAnimating];
+            self.spinnerView.hidden = false;
+            [super findNearbyPlaces];
+        } else if ( self.segmentedControl.selectedSegmentIndex == 1 && !self.followingLoaded ){
+            [self.spinnerView startAnimating];
+            self.spinnerView.hidden = false;
+            [super findNearbyPlaces];
+        } else if ( self.segmentedControl.selectedSegmentIndex == 2 && !self.popularLoaded ){
+            [self.spinnerView startAnimating];
+            self.spinnerView.hidden = false;
+            [super findNearbyPlaces];
+        }
+        [self mapPlaces];
     }
-    [self mapPlaces];
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
@@ -356,9 +373,7 @@
     lastLatSpan = self.mapView.region.span.latitudeDelta;
     self.origin = lastCoordinate;
     
-    [self.spinnerView startAnimating];
-    self.spinnerView.hidden = false;
-    [super findNearbyPlaces];
+    [self reloadMap];
 }
 
 
