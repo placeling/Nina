@@ -519,7 +519,11 @@
         showPredictive = false;
         [predictivePlaces release];
         predictivePlaces = [[NSMutableArray alloc] init];
-        [self.placesTableView  reloadData];
+        if ( [nearbyPlaces count] == 0 ){
+            [self findNearbyPlaces];
+        } else {
+            [self.placesTableView  reloadData];
+        }
     }
 }
 
