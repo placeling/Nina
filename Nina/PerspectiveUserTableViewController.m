@@ -173,36 +173,53 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.users count];
+    return MAX([self.users count], 1);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell;    
     static NSString *CellIdentifier = @"Cell";
+    static NSString *textCellIdentifier = @"infoCell";
     
-    TDBadgedCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-    User* user = [users objectAtIndex:indexPath.row];
+    if ( [self.users count] == 0){
+        UITableViewCell *pCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (pCell == nil) {
+            pCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:textCellIdentifier] autorelease];
+        }
+        [pCell.textLabel setFont:[UIFont systemFontOfSize:12]];
+        pCell.textLabel.textAlignment = UITextAlignmentCenter;
+        pCell.textLabel.text = @"No one has placemarked a location around here yet";
+        [StyleHelper styleGenericTableCell:pCell];
+        pCell.userInteractionEnabled = false;
+        self.tableView.userInteractionEnabled = false;
+        cell = pCell;
+    } else {        
+        TDBadgedCell *pCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (pCell == nil) {
+            pCell = [[[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        }
+        self.tableView.userInteractionEnabled = true;
+        User* user = [users objectAtIndex:indexPath.row];
         
-    
-	cell.textLabel.text = user.username;
-	cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
-    
-	cell.detailTextLabel.text = user.userDescription;
-	cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
-    
-	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    NSNumber *tally = [self.perspectiveTally objectForKey:user.userId];
-	cell.badgeString = [tally stringValue];
+        pCell.textLabel.text = user.username;
+        pCell.textLabel.font = [UIFont boldSystemFontOfSize:14];
+        
+        pCell.detailTextLabel.text = user.userDescription;
+        pCell.detailTextLabel.font = [UIFont systemFontOfSize:13];
+        
+        pCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        NSNumber *tally = [self.perspectiveTally objectForKey:user.userId];
+        pCell.badgeString = [tally stringValue];
 
-    cell.imageView.contentMode = UIViewContentModeScaleToFill;
-    // Here we use the new provided setImageWithURL: method to load the web image
-    [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
-                   placeholderImage:[UIImage imageNamed:@"profile.png"]];
-    // Configure the cell...
+        pCell.imageView.contentMode = UIViewContentModeScaleToFill;
+        // Here we use the new provided setImageWithURL: method to load the web image
+        [pCell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
+                       placeholderImage:[UIImage imageNamed:@"profile.png"]];
+        
+        [StyleHelper styleGenericTableCell:pCell];
+        cell = pCell;
+    }
     
     return cell;
 }
