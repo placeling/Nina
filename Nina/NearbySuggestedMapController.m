@@ -393,6 +393,7 @@
     self.locationManager = [LocationManagerManager sharedCLLocationManager];
     self.mapView.showsUserLocation = TRUE;
     self.mapView.delegate = self;
+    
     self.spinnerView.hidden = true;
     [self recenter];
     self.placemarkButton.hidden = true;
@@ -427,6 +428,7 @@
     userChild = nil;
     
     span.latitudeDelta  = self.latitudeDelta;
+    span.longitudeDelta  = self.latitudeDelta;
 
     region.span = span;
     
