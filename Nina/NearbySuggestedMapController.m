@@ -173,7 +173,13 @@
     if ( !currentUser && self.segmentedControl.selectedSegmentIndex != 2 ) {
         [self.mapView removeAnnotations:self.mapView.annotations];
         UIAlertView *baseAlert;
-        NSString *alertMessage = @"Sign up or log in to see placemarks on this map";
+        NSString *alertMessage;
+        if ( self.segmentedControl.selectedSegmentIndex == 0 ){
+            alertMessage = @"Sign up or log in to see your\nplacemarks on this map";
+        } else {
+            alertMessage = @"Sign up or log in to see the places\nthat people you follow love";
+        }
+        
         baseAlert = [[UIAlertView alloc] 
                      initWithTitle:nil message:alertMessage 
                      delegate:self cancelButtonTitle:@"Not Now" 
