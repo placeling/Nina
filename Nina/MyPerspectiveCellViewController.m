@@ -23,8 +23,8 @@
     CGFloat heightCalc = 87; //mostly for footer label
     
     CGSize textAreaSize;
-    textAreaSize.height = 66;
-    textAreaSize.width = 320;
+    textAreaSize.height = 5000;
+    textAreaSize.width = 280;
     
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
@@ -49,6 +49,7 @@
         emptyPerspective = false;
         cell.memoLabel.text = perspective.notes;
         CGRect memoFrame = cell.memoLabel.frame;
+        memoFrame.size.height = 5000;
         
         CGSize textSize = [perspective.notes sizeWithFont:cell.memoLabel.font constrainedToSize:memoFrame.size lineBreakMode:UILineBreakModeWordWrap];
         
