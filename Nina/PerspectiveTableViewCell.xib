@@ -69,7 +69,7 @@
 							<object class="IBUIButton" id="1068649428">
 								<reference key="NSNextResponder" ref="1000671421"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{8, 56}, {43, 40}}</string>
+								<string key="NSFrame">{{8, 56}, {45, 40}}</string>
 								<reference key="NSSuperview" ref="1000671421"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="420384130"/>
@@ -84,10 +84,6 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<double key="IBUIContentEdgeInsets.top">10</double>
-								<double key="IBUIContentEdgeInsets.bottom">10</double>
-								<double key="IBUIContentEdgeInsets.left">7</double>
-								<double key="IBUIContentEdgeInsets.right">7</double>
 								<reference key="IBUIHighlightedTitleColor" ref="775410949"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
@@ -99,7 +95,7 @@
 								</object>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">action_sheet.png</string>
+									<string key="NSResourceName">iPhoneDefaultShare_Button.png</string>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">1</int>
@@ -689,13 +685,13 @@
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>ReMark.png</string>
-				<string>action_sheet.png</string>
+				<string>iPhoneDefaultShare_Button.png</string>
 				<string>profile.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{75, 106}</string>
-				<string>{44, 35}</string>
+				<string>{90, 80}</string>
 				<string>{89, 89}</string>
 			</object>
 		</object>
