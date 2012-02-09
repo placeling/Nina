@@ -116,6 +116,10 @@ typedef enum {
     
     self.tableView.tableFooterView = self.tableFooterView;
     
+    [self.mapButtonView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+    [self.mapButtonView.layer setBorderWidth: 5.0];
+    
+    
     if (self.place){
         self.place_id = self.place.pid;
     }

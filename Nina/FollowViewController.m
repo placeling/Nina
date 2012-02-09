@@ -11,7 +11,7 @@
 #import "NSString+SBJSON.h"
 #import "MemberProfileViewController.h"
 #import "UIImageView+WebCache.h"
-
+#import <QuartzCore/QuartzCore.h>
 
 @interface FollowViewController()
 -(NSString*) restUrl:(int)start;
@@ -219,6 +219,9 @@
         // Here we use the new provided setImageWithURL: method to load the web image
         [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
                        placeholderImage:[UIImage imageNamed:@"profile.png"]];
+        
+        [cell.imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+        [cell.imageView.layer setBorderWidth: 2.0];
     }
     
     return cell;

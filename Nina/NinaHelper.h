@@ -122,6 +122,7 @@
 #import "LocationManagerManager.h"
 #import "StyleHelper.h"
 #import <RestKit/RestKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface NinaHelper : NSObject 
 

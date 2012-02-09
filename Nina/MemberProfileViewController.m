@@ -75,8 +75,8 @@
     [StyleHelper styleBackgroundView:self.tableView];
     
     self.profileImageView.layer.cornerRadius = 4.0f;
-    self.profileImageView.layer.borderWidth = 1.0f;
-    self.profileImageView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    [profileImageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+    [profileImageView.layer setBorderWidth: 5.0];
     self.profileImageView.layer.masksToBounds = YES; 
     
     [StyleHelper styleInfoView:self.headerView];

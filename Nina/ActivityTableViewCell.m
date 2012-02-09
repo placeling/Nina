@@ -7,7 +7,6 @@
 //
 
 #import "ActivityTableViewCell.h"
-#import <QuartzCore/QuartzCore.h>
 #import "NinaHelper.h"
 #import "UIImageView+WebCache.h"
 
@@ -65,9 +64,9 @@
     
     cell.backgroundColor = [UIColor clearColor];
     
+    [cell.userImage.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+    [cell.userImage.layer setBorderWidth: 2.0];
     cell.userImage.layer.cornerRadius = 1.0f;
-    cell.userImage.layer.borderWidth = 1.0f;
-    cell.userImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     cell.userImage.layer.masksToBounds = YES;
     
     
