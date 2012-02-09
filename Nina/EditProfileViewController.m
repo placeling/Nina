@@ -212,6 +212,8 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
+    self.navigationItem.title = @"Edit Profile";
+    
     if (self.user.location && [self.user.location objectAtIndex:0] != nil && [self.user.location objectAtIndex:1] != nil){
         self.lat = [self.user.location objectAtIndex:0];
         self.lng = [self.user.location objectAtIndex:1];
