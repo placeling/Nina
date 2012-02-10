@@ -356,6 +356,11 @@
     placePageViewController.place = place;
     placePageViewController.initialSelectedIndex = [NSNumber numberWithInt:self.segmentedControl.selectedSegmentIndex];
     
+    if (place.google_ref){
+        placePageViewController.google_ref = place.google_ref;
+        placePageViewController.initialSelectedIndex = [NSNumber numberWithInt:0];
+    }
+    
     [self.navigationController pushViewController:placePageViewController animated:YES];
     [placePageViewController release];
     
