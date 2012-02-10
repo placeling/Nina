@@ -239,7 +239,7 @@ typedef enum {
         self.place = newPlace;
         self.place_id = newPlace.pid;
         
-        [homePerspectives removeLastObject]; //get rid of spinner wait
+        [homePerspectives removeAllObjects]; //get rid of spinner wait
         
         for (Perspective *perspective in newPlace.homePerspectives){
             perspective.place = self.place; //needs this reference
@@ -288,7 +288,7 @@ typedef enum {
         }
         myPerspective.mine = true;
         
-        self.place = newPerspective.place;
+        //self.place = newPerspective.place;
         
         myPerspective.place = self.place;                
         
@@ -755,16 +755,13 @@ typedef enum {
     
     if (index == 0){
         self.perspectiveType = home;
-        if (self.place.dirty){
-            
-            //only call if we know something there
-            NSString *urlText = [self getUrlString];
-            
+        if (self.place.dirty){            
             // Call url to get profile details                
             RKObjectManager* objectManager = [RKObjectManager sharedManager];       
             
-            [objectManager loadObjectsAtResourcePath:urlText delegate:self block:^(RKObjectLoader* loader) {     
+            [objectManager loadObjectsAtResourcePath:[self getRestUrl] delegate:self block:^(RKObjectLoader* loader) {     
                 //loader
+                loader.objectMapping = [Place getObjectMapping];
                 loader.userData = [NSNumber numberWithInt:0]; //use as a tag
             }];
         } 

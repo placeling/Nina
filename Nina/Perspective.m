@@ -95,6 +95,8 @@
         self.starred = true;
         self.place.dirty = true;
 
+        [self.place.homePerspectives addObject:self];
+        
         for (Perspective *p in self.place.followingPerspectives){
             if ([p.perspectiveId isEqualToString:self.perspectiveId]){
                 p.starred = true;
