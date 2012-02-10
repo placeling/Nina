@@ -90,7 +90,13 @@
 -(IBAction)showPeople{
     [usernameButton dismissAnimated:true];
     
-    PerspectiveUserTableViewController *peopleController = [[PerspectiveUserTableViewController alloc] initWithPlaces:[self places]];
+    NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
+    NSSet *visiblePlacemarks = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
+    for ( PlaceMark *mark in visiblePlacemarks ){
+        [visiblePlaces addObject:mark.place];             
+    }
+    
+    PerspectiveUserTableViewController *peopleController = [[PerspectiveUserTableViewController alloc] initWithPlaces:visiblePlaces];
     peopleController.delegate = self;
     userChild = peopleController;
     
@@ -98,6 +104,7 @@
     [self.navigationController presentModalViewController:navBar animated:YES];
     [navBar release];
     [peopleController release];
+    [visiblePlaces release];
 }
 
 
@@ -150,8 +157,14 @@
     [self mapPlaces];
     
     if (userChild){
-        userChild.places = [self places];
+        NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
+        NSSet *visiblePlacemarks = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
+        for ( PlaceMark *mark in visiblePlacemarks ){
+            [visiblePlaces addObject:mark.place];             
+        }
+        userChild.places = visiblePlaces;
         [userChild refreshTable];
+        [visiblePlaces release];
     }
     
     
@@ -238,9 +251,7 @@
     if ( (fabs(uLat - mLat) > region.span.latitudeDelta/2 || fabs(uLng - mLng) > region.span.longitudeDelta/2 || region.span.latitudeDelta > 2.5*lastLatSpan) ){
         
         if ( viewLoaded ){        
-            
-            
-            
+
             self.myLoaded = false;
             self.followingLoaded = false;
             self.popularLoaded = false;
