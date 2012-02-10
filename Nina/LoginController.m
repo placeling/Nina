@@ -248,6 +248,7 @@
         }];
         [request setFailedBlock:^{
             DLog(@"Error on triggering Resend");
+            [NinaHelper handleBadRequest:request sender:self];
         }];
         [NinaHelper signRequest:request];
         [request startAsynchronous];
