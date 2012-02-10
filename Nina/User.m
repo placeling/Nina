@@ -36,22 +36,30 @@
     self.following =[NSNumber numberWithBool:[[jsonDict objectForKeyNotNull:@"following"] boolValue]];
     self.follows_you = [NSNumber numberWithBool:[[jsonDict objectForKeyNotNull:@"follows_you"] boolValue]]; 
     
-    self.auths = [[[NSMutableDictionary alloc] init] autorelease];
-    [self.auths removeAllObjects];
-    if ([jsonDict objectForKey:@"facebook"]){
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        if ( ![defaults objectForKey:@"FBAccessTokenKey"] ){
-            [defaults setObject:[[jsonDict objectForKey:@"facebook"] objectForKey:@"token"] forKey:@"FBAccessTokenKey"];
-            [defaults setObject:[[jsonDict objectForKey:@"facebook"] objectForKey:@"expiry"] forKey:@"FBExpirationDateKey"];
-            [defaults synchronize];
+    self.auths = [[[NSMutableArray alloc] init] autorelease];
+    
+    for ( NSDictionary *authDict in [jsonDict objectForKey:@"auths"] ){
+        
+        if ([[authDict objectForKey:@"provider"] isEqualToString:@"facebook"] ){
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            if ( ![defaults objectForKey:@"FBAccessTokenKey"] ){
+                [defaults setObject:[authDict objectForKey:@"token"] forKey:@"FBAccessTokenKey"];
+                [defaults setObject:[authDict objectForKey:@"expiry"] forKey:@"FBExpirationDateKey"];
+                [defaults synchronize];
+            } 
         }
         
-        [self.auths setObject:[jsonDict objectForKey:@"facebook"] forKey:@"facebook"];
+        Authentication *auth = [[Authentication alloc] init];
+        auth.provider = [authDict objectForKey:@"provider"];
+        auth.uid = [authDict objectForKey:@"uid"];
+        auth.expiry = [authDict objectForKey:@"expiry"];
+        auth.token = [authDict objectForKey:@"token"];
+        
+        [self.auths addObject:auth];
+        [auth release];
+        
     }
     
-    //RKObjectManager* objectManager = [RKObjectManager sharedManager];
-    //NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
-    //Photo *photo = [[Photo alloc] initWithEntity:[NSEntityDescription entityForName:@"Photo" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
     Photo *photo = [[[Photo alloc] init] autorelease];
     
     photo.thumbUrl = [jsonDict objectForKeyNotNull:@"thumb_url"];
@@ -72,8 +80,8 @@
 
 -(NSDictionary*) facebook{
     
-    if ([self.auths objectForKey:@"facebook"]){
-        return [self.auths objectForKey:@"facebook"];        
+    if ([self.auths count] > 0){
+        return [self.auths objectAtIndex:0];        
     } else {
         return nil;
     }    
@@ -99,6 +107,8 @@
     
     //userMapping.primaryKeyAttribute = @"username";
     [userMapping mapKeyPath:@"picture" toRelationship:@"profilePic" withMapping:[Photo getObjectMapping]];
+    
+    [userMapping mapKeyPath:@"auths" toRelationship:@"auths" withMapping:[Authentication getObjectMapping]];
     
     return userMapping;
 }

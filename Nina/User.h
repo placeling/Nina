@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Photo.h"
 #import <RestKit/RestKit.h>
+#import "Authentication.h"
 
 @interface User : NSObject {
     NSString *userId;
@@ -20,7 +21,7 @@
     
     NSArray *location;
     
-    NSMutableDictionary *auths;
+    NSMutableArray *auths;
     
     Photo *profilePic;
     NSNumber *placeCount;
@@ -41,7 +42,7 @@
 @property (nonatomic, retain) NSString *email;
 @property (nonatomic, retain) NSString *url;
 @property (nonatomic, retain) NSArray *location;
-@property (nonatomic, retain) NSMutableDictionary *auths;
+@property (nonatomic, retain) NSMutableArray *auths;
 
 @property (nonatomic, retain) Photo *profilePic;
 @property (nonatomic, retain) NSNumber *placeCount;

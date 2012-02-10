@@ -213,6 +213,7 @@
 		2895EBE814E1DBA2009F43F6 /* action_sheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2895EBE614E1DBA2009F43F6 /* action_sheet.png */; };
 		2895EBE914E1DBA2009F43F6 /* action_sheet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2895EBE714E1DBA2009F43F6 /* action_sheet@2x.png */; };
 		2895EBF714E46CC7009F43F6 /* iPhoneDefaultShare_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2895EBF614E46CC7009F43F6 /* iPhoneDefaultShare_Button.png */; };
+		2895EBFA14E5B9D6009F43F6 /* Authentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 2895EBF914E5B9D4009F43F6 /* Authentication.m */; };
 		2899261D13D8D0C3004EFF81 /* PerspectivePlaceMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 2899261C13D8D0C3004EFF81 /* PerspectivePlaceMark.m */; };
 		289BCEED147EFE8100B89C25 /* UnReMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 289BCEEC147EFE8100B89C25 /* UnReMark.png */; };
 		289EAD6B13EAF0950072EAD5 /* ASIFormDataRequest+OAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 289EAD6213EAF0950072EAD5 /* ASIFormDataRequest+OAuth.m */; };
@@ -705,6 +706,8 @@
 		2895EBE614E1DBA2009F43F6 /* action_sheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = action_sheet.png; sourceTree = "<group>"; };
 		2895EBE714E1DBA2009F43F6 /* action_sheet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action_sheet@2x.png"; sourceTree = "<group>"; };
 		2895EBF614E46CC7009F43F6 /* iPhoneDefaultShare_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneDefaultShare_Button.png; sourceTree = "<group>"; };
+		2895EBF814E5B9D3009F43F6 /* Authentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Authentication.h; sourceTree = "<group>"; };
+		2895EBF914E5B9D4009F43F6 /* Authentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Authentication.m; sourceTree = "<group>"; };
 		2899261B13D8D0C3004EFF81 /* PerspectivePlaceMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectivePlaceMark.h; sourceTree = "<group>"; };
 		2899261C13D8D0C3004EFF81 /* PerspectivePlaceMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerspectivePlaceMark.m; sourceTree = "<group>"; };
 		289BCEEC147EFE8100B89C25 /* UnReMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnReMark.png; sourceTree = "<group>"; };
@@ -932,6 +935,8 @@
 				28086B4C13EC7F9400790404 /* Place.m */,
 				2867ABC514CE4DF4003994DB /* Advertisement.h */,
 				2867ABC614CE4DF4003994DB /* Advertisement.m */,
+				2895EBF814E5B9D3009F43F6 /* Authentication.h */,
+				2895EBF914E5B9D4009F43F6 /* Authentication.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2154,6 +2159,7 @@
 				2867ABCA14CE540E003994DB /* AdTableViewCell.m in Sources */,
 				2867AC3814D888BB003994DB /* CMPopTipView.m in Sources */,
 				2867AC3B14D8B579003994DB /* UIPlaceHolderTextView.m in Sources */,
+				2895EBFA14E5B9D6009F43F6 /* Authentication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
