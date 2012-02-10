@@ -74,7 +74,6 @@
     [super viewWillAppear:animated];
     [StyleHelper styleBackgroundView:self.tableView];
     
-    self.profileImageView.layer.cornerRadius = 4.0f;
     [profileImageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
     [profileImageView.layer setBorderWidth: 5.0];
     self.profileImageView.layer.masksToBounds = YES; 

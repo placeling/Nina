@@ -168,7 +168,6 @@
     
     [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"profile.png"]];
     
-    cell.userImage.layer.cornerRadius = 2.0f;
     [cell.userImage.layer setBorderColor: [[UIColor whiteColor] CGColor]];
     [cell.userImage.layer setBorderWidth: 2.0];
     cell.userImage.layer.masksToBounds = YES;
