@@ -274,6 +274,8 @@
             
             cell.accessoryView.tag = indexPath.row;
             
+            [cell.imageView.layer setBorderColor:[UIColor whiteColor].CGColor];
+            [cell.imageView.layer setBorderWidth:2.0];
             cell.imageView.contentMode = UIViewContentModeScaleToFill;
             // Here we use the new provided setImageWithURL: method to load the web image
             [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
