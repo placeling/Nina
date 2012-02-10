@@ -231,6 +231,32 @@
 }
 
 
+#pragma mark - Unregistered experience methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 2 && buttonIndex == 1) {
+        DLog(@"Resending confirmation email to : %@", savedUsername);
+        NSString *actionURL = [NSString stringWithFormat:@"%@/v1/users/resend", [NinaHelper getHostname] ];
+        
+        NSURL *url = [NSURL URLWithString:actionURL];
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setPostValue:savedUsername forKey:@"username"];
+        [request setRequestMethod:@"POST"];
+        
+        [request setCompletionBlock:^{
+            DLog(@"Successfully sent Resend confirmation email");
+        }];
+        [request setFailedBlock:^{
+            DLog(@"Error on triggering Resend");
+        }];
+        [NinaHelper signRequest:request];
+        [request startAsynchronous];
+        
+        [self.navigationController dismissModalViewControllerAnimated:TRUE];
+    }
+}
+
+
 #pragma mark ASIhttprequest
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
@@ -242,8 +268,15 @@
     
     if (statusCode == 401){
         UIAlertView *alert;
+        
         if ( [[NSString stringWithString:@"unconfirmed"] isEqualToString:[[component objectAtIndex:0] lowercaseString] ] ){
-            alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:[component objectAtIndex:1] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            
+            NSString *alertMessage = @"We can't let you log back in until you confirm your email, would you like to resend the confirmation email?";
+            alert = [[UIAlertView alloc] 
+                     initWithTitle:@"Unconfirmed Email" message:alertMessage 
+                     delegate:self cancelButtonTitle:@"Not Now" 
+                     otherButtonTitles:@"Resend Email", nil];
+            alert.tag = 2;
         } else {
             alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Incorrect Username/Password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         }

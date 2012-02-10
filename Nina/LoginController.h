@@ -15,7 +15,7 @@
 
 @protocol LoginControllerDelegate;
 
-@interface LoginController : UIViewController<UITextFieldDelegate, ASIHTTPRequestDelegate, UITextFieldDelegate, FBRequestDelegate,FBSessionDelegate, UIGestureRecognizerDelegate, MBProgressHUDDelegate>{
+@interface LoginController : UIViewController<UITextFieldDelegate, ASIHTTPRequestDelegate, UITextFieldDelegate, FBRequestDelegate,FBSessionDelegate, UIGestureRecognizerDelegate, MBProgressHUDDelegate, UIAlertViewDelegate>{
     IBOutlet UITextField *username;
     IBOutlet UITextField *password;
     IBOutlet UIButton *submitButton;
