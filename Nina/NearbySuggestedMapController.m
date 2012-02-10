@@ -237,11 +237,14 @@
     //without dataLoaded, the first time this runs it will get a whole world map
     if ( (fabs(uLat - mLat) > region.span.latitudeDelta/2 || fabs(uLng - mLng) > region.span.longitudeDelta/2 || region.span.latitudeDelta > 2.5*lastLatSpan) ){
         
-        if ( viewLoaded ){
+        if ( viewLoaded ){        
+            
+            
+            
             self.myLoaded = false;
             self.followingLoaded = false;
             self.popularLoaded = false;
-        
+            
             [self.spinnerView stopAnimating];
             self.spinnerView.hidden = true;
             [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
@@ -375,6 +378,10 @@
 #pragma mark - Login delegate methods
 - (void) loadContent {
     timer = nil;
+    
+    self.myLoaded = false;
+    self.followingLoaded = false;
+    
     lastCoordinate = self.mapView.region.center;
     lastLatSpan = self.mapView.region.span.latitudeDelta;
     self.origin = lastCoordinate;
