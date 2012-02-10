@@ -125,7 +125,7 @@
         for (Place *place in self.places){
             if ( [place.pid isEqualToString:mark.place.pid] ){
                 [toAdd removeObject:place];
-                mark.place = place; //change reference to newer version of object
+                //mark.place = place; //change reference to newer version of object
                 keeper = true;
                 break;
             }
@@ -287,16 +287,16 @@
         // try to dequeue an existing pin view first
         static NSString* annotationIdentifier = @"placeAnnotationIdentifier";
         
-        MKPinAnnotationView* pinView = (MKPinAnnotationView *)        
-        [self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+        MKPinAnnotationView* pinView;// = (MKPinAnnotationView *)        
+        //[self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
         
-        if (!pinView) {            
+        //if (!pinView) {            
             // if an existing pin view was not available, create one
             pinView = [[[MKPinAnnotationView alloc]
                         initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
-        } else {           
-            pinView.annotation = annotation;            
-        }
+        //} else {           
+        //    pinView.annotation = annotation;            
+        //}
         pinView.canShowCallout = YES;
         
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
