@@ -117,17 +117,20 @@
             if ([p.perspectiveId isEqualToString:self.perspectiveId]){
                 p.starred = false;
                 [self.place.homePerspectives removeObject:p];
+                break;
             }
         }
         
         for (Perspective *p in self.place.followingPerspectives){
             if ([p.perspectiveId isEqualToString:self.perspectiveId]){
                 p.starred = false;
+                break;
             }
         }
         for (Perspective *p in self.place.everyonePerspectives){
             if ([p.perspectiveId isEqualToString:self.perspectiveId]){
                 p.starred = false;
+                break;
             }
         }        
     }
