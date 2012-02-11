@@ -269,7 +269,7 @@
         NSString *alertMessage = @"Sign up or log in to share or flag this placemark";
         baseAlert = [[UIAlertView alloc] 
                      initWithTitle:nil message:alertMessage 
-                     delegate:self cancelButtonTitle:@"Not Now" 
+                     delegate:self.requestDelegate cancelButtonTitle:@"Not Now" 
                      otherButtonTitles:@"Let's Go", nil];
         baseAlert.tag = 778;        
         [baseAlert show];
