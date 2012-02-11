@@ -313,6 +313,9 @@ typedef enum {
 #pragma mark LoginController Delegate Methods
 -(void) loadContent {
     // Go back through navigation stack
+    UIButton *segment = [[self.segmentedControl buttons] objectAtIndex:0];
+    [segment sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
     for (int i=[[[self navigationController] viewControllers] count] - 2; i > 0; i--) {
         NSObject *parentController = [[[self navigationController] viewControllers] objectAtIndex:i];
         
