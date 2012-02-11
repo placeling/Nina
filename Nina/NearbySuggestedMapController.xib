@@ -89,7 +89,6 @@
 						<string key="NSFrame">{{152, 384}, {20, 20}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<bool key="IBUIHidesWhenStopped">NO</bool>
@@ -302,12 +301,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">reloadMap</string>
+						<string key="label">changeTab</string>
 						<reference key="source" ref="10428548"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">13</int>
 					</object>
-					<int key="connectionID">20</int>
+					<int key="connectionID">34</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -457,7 +456,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">33</int>
+			<int key="maxID">34</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -465,18 +464,18 @@
 					<string key="className">NearbySuggestedMapController</string>
 					<string key="superclassName">SuggestedPlaceController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="changeTab">id</string>
 						<string key="recenter">id</string>
-						<string key="reloadMap">id</string>
 						<string key="showNearbyPlaces">id</string>
 						<string key="showPeople">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="recenter">
-							<string key="name">recenter</string>
+						<object class="IBActionInfo" key="changeTab">
+							<string key="name">changeTab</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="reloadMap">
-							<string key="name">reloadMap</string>
+						<object class="IBActionInfo" key="recenter">
+							<string key="name">recenter</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showNearbyPlaces">

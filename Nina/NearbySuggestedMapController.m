@@ -21,7 +21,7 @@
 #import "NearbyPlacesViewController.h"
 
 @interface NearbySuggestedMapController (Private)
--(void)mapPlaces;
+-(void)drawMapPlaces;
 -(void)updateMapView;
 -(Perspective*)closestPoint:(CLLocation*)referenceLocation fromArray:(NSArray*)array;
 @end
@@ -107,12 +107,19 @@
     [visiblePlaces release];
 }
 
+-(IBAction)changeTab{
+    [placeSuperset removeAllObjects];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    
+    [self reloadMap];
+}
 
--(IBAction)mapPlaces{    
+
+-(void)drawMapPlaces{    
     //[self.mapView removeAnnotations:self.mapView.annotations];
     
     NSArray *existing = self.mapView.annotations;
-    NSMutableArray *toAdd = [[NSMutableArray alloc] initWithArray:self.places];
+    NSMutableArray *toAdd = [[NSMutableArray alloc] initWithArray:placeSuperset];
     
     for ( PlaceMark *mark in existing ){
         if ( ![mark isKindOfClass:[PlaceMark class]] ){
@@ -120,29 +127,18 @@
             continue;
         }
         
-        bool keeper = false;
-        
-        for (Place *place in self.places){
+        for (Place *place in placeSuperset){
             if ( [place.pid isEqualToString:mark.place.pid] ){
                 [toAdd removeObject:place];
-                //mark.place = place; //change reference to newer version of object
-                keeper = true;
                 break;
             }
-        }
-        
-        if ( !keeper ){
-            [self.mapView removeAnnotation:mark];
         }
     }
     
     for (Place *place in toAdd){        
-        DLog(@"putting on point for: %@", place);
+        DLog(@"putting on point for: %@", place.name);
         
         PlaceMark *placemark=[[PlaceMark alloc] initWithPlace:place];
-        
-        placemark.title = place.name;
-        //placemark.subtitle = subTitle;
         [self.mapView addAnnotation:placemark];
         [placemark release];
     }
@@ -152,9 +148,25 @@
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     [super objectLoader:objectLoader didLoadObjects:objects];
         
+    
+    for ( Place *place in [self places] ){
+        bool found = false;
+        for ( Place *sPlace in placeSuperset ){
+            if ( [sPlace.pid isEqualToString:place.pid] ){
+                found = true;
+                break;
+            }
+        }
+        
+        if (!found){
+            [placeSuperset addObject:place];
+        }
+    }
+    
+    
     [self.spinnerView stopAnimating];
     self.spinnerView.hidden = true;
-    [self mapPlaces];
+    [self drawMapPlaces];
     
     if (userChild){
         NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
@@ -175,6 +187,7 @@
     [locationManager release];
     [spinnerView release];
     [placemarkButton release];
+    [placeSuperset release];
     [super dealloc];
 }
 
@@ -182,7 +195,7 @@
 -(IBAction)reloadMap{
     
     NSString *currentUser = [NinaHelper getUsername];
-    
+        
     if ( !currentUser && self.segmentedControl.selectedSegmentIndex != 2 ) {
         [self.mapView removeAnnotations:self.mapView.annotations];
         UIAlertView *baseAlert;
@@ -204,6 +217,7 @@
     } else {
         //called on interaction for changing segment
         [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
+
         if ( self.segmentedControl.selectedSegmentIndex == 0 && !self.myLoaded ){
             [self.spinnerView startAnimating];
             self.spinnerView.hidden = false;
@@ -216,8 +230,10 @@
             [self.spinnerView startAnimating];
             self.spinnerView.hidden = false;
             [super findNearbyPlaces];
+        } else {
+            [placeSuperset addObjectsFromArray:[self places]];
         }
-        [self mapPlaces];
+        [self drawMapPlaces];
     }
 }
 
@@ -287,20 +303,20 @@
         // try to dequeue an existing pin view first
         static NSString* annotationIdentifier = @"placeAnnotationIdentifier";
         
-        MKPinAnnotationView* pinView;// = (MKPinAnnotationView *)        
-        //[self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+        MKPinAnnotationView* pinView = (MKPinAnnotationView *)        
+        [self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
         
-        //if (!pinView) {            
+        if (!pinView) {            
             // if an existing pin view was not available, create one
             pinView = [[[MKPinAnnotationView alloc]
                         initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
-        //} else {           
-        //    pinView.annotation = annotation;            
-        //}
+        } else {           
+            pinView.annotation = annotation;            
+        }
         pinView.canShowCallout = YES;
         
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        rightButton.tag = [[self places] indexOfObjectIdenticalTo:annotation.place];
+        rightButton.tag = [placeSuperset indexOfObjectIdenticalTo:annotation.place];
         [rightButton addTarget:self action:@selector(showPlaceDetails:) 
               forControlEvents:UIControlEventTouchUpInside];
         
@@ -334,23 +350,10 @@
     }
 }
 
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
-    if (false){
-        for (MKAnnotationView * annView in views) {
-            if ([annView tag] == 1) {
-                [[annView superview] bringSubviewToFront:annView];
-            } else {
-                [[annView superview] sendSubviewToBack:annView];
-            }
-        }
-    }
-}
-
-
 - (void)showPlaceDetails:(UIButton*)sender{
-    
+    DLog(@"Showing place details for button tag: %i", sender.tag);
     // the detail view does not want a toolbar so hide it
-    Place* place = [[self places] objectAtIndex:sender.tag];    
+    Place* place = [placeSuperset objectAtIndex:sender.tag];    
     PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:place];
     
     placePageViewController.place = place;
@@ -371,7 +374,7 @@
     
     userFilter = username;
     [self.mapView removeAnnotations:self.mapView.annotations];
-    [self mapPlaces];
+    [self drawMapPlaces];
     
     if ( userFilter ){
         self.usernameButton = [[[CMPopTipView alloc] initWithMessage:[NSString stringWithFormat:@"%@", userFilter]]autorelease];
@@ -386,7 +389,7 @@
 - (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
     userFilter = nil;
     [self.mapView removeAnnotations:self.mapView.annotations];
-    [self mapPlaces];
+    [self drawMapPlaces];
 }
 
 
@@ -424,6 +427,8 @@
     
     lastCoordinate = self.mapView.region.center;
     lastLatSpan = self.mapView.region.span.latitudeDelta;
+    
+    placeSuperset = [[NSMutableArray alloc] init];
     
     UIImage *mapImage = [UIImage imageNamed:@"listIcon.png"];
     
@@ -464,7 +469,7 @@
         //if a set of places hasn't already been set, get them for current location
         [self loadContent];
     } else {
-        [self mapPlaces];
+        [self drawMapPlaces];
     }
 }
 

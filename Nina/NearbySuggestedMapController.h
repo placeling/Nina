@@ -42,6 +42,8 @@
     
     CMPopTipView *usernameButton;
     
+    NSMutableArray *placeSuperset;
+    
     bool viewLoaded;
 }
 
@@ -54,7 +56,8 @@
 @property(nonatomic, retain) IBOutlet UIButton *placemarkButton;
 
 -(IBAction)recenter;
--(IBAction)reloadMap;
+-(void)reloadMap;
+-(IBAction)changeTab;
 
 -(IBAction)showPeople;
 -(IBAction)showNearbyPlaces;
