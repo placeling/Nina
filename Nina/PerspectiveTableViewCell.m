@@ -14,6 +14,7 @@
 #import "asyncimageview.h"
 #import "NinaAppDelegate.h"
 #import "GenericWebViewController.h"
+#import "FlurryAnalytics.h"
 
 #define hardMaxCellHeight 5000
 
@@ -253,6 +254,9 @@
 
 -(IBAction)onWeb{
     GenericWebViewController *webController = [[GenericWebViewController alloc] initWithUrl:perspective.url];
+    
+    [FlurryAnalytics logEvent:@"ON_WEB_CLICK" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"url", perspective.url, nil]];
+    
     [self.requestDelegate.navigationController pushViewController:webController animated:true];
     [webController release];
 }
