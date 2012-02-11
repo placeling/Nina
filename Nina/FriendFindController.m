@@ -17,6 +17,7 @@
 @interface FriendFindController ()
 -(BOOL) searchResults;
 -(void) performUsernameSearch:(NSString*) username;
+-(IBAction)showInviteSheet;
 @end
 
 
@@ -52,6 +53,10 @@
     
     RKObjectManager* objectManager = [RKObjectManager sharedManager];
     //NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+    
+    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Invite Friend" style:UIBarButtonItemStylePlain target:self action:@selector(showInviteSheet)];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    [shareButton release];
     
     [FlurryAnalytics logEvent:@"FIND_FRIEND_VIEW"];
     
@@ -168,6 +173,54 @@
     [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
     DLog(@"Encountered an error: %@", error); 
 }
+
+
+-(IBAction)showInviteSheet{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Invite Friend by Email", nil];
+    
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if (buttonIndex == 0){
+        DLog(@"Invite Friends by Email");
+        
+        MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+        controller.mailComposeDelegate = self;
+        [controller setSubject:@"Join me on Placeling"];
+        
+        NSString *message;
+        
+        if ( currentUser ){
+            message = [NSString stringWithFormat:@"I'm using Placeling to discover new places around me - and I want to share them with you.<br/><br/>You can download Placeling at:<br/><a href=\"http://www.placeling.com\">http://www.placeling.com</a><br/><br/>You can see my places by following me. My username is \"%@\".", currentUser];
+            
+                        
+        } else {
+            message = [NSString stringWithFormat:@"I'm using Placeling to discover new places around me - and I want to share them with you.<br/><br/>You can download Placeling at:<br/><a href=\"http://www.placeling.com\">http://www.placeling.com</a>"];
+        }
+        
+        [controller setMessageBody:message isHTML:TRUE];
+        
+        if (controller) [self presentModalViewController:controller animated:YES];
+        [controller release];	
+        
+    }
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller  
+          didFinishWithResult:(MFMailComposeResult)result 
+                        error:(NSError*)error;
+{
+
+    if (result == MFMailComposeResultSaved || result == MFMailComposeResultSent){
+        [FlurryAnalytics logEvent:@"MAIL_INVITE_SENT_LINDSAY_RIGHT"];
+    }
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 
 
 #pragma mark - Table view data source

@@ -9,8 +9,9 @@
 #import "NinaHelper.h"
 #import <UIKit/UIKit.h>
 #import <RestKit/RestKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface FriendFindController : UIViewController<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, RKObjectLoaderDelegate>{
+@interface FriendFindController : UIViewController<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, UIActionSheetDelegate>{
     NSMutableArray *searchUsers; 
     NSMutableArray *suggestedUsers; 
     NSMutableArray *recentSearches;
