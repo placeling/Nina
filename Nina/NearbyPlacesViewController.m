@@ -445,15 +445,20 @@
         
         if ([self showPredictive]){
             NSDictionary *place = [predictivePlaces objectAtIndex:indexPath.row];
-            NSMutableArray *terms = [place objectForKey:@"terms"];
-            cell.textLabel.text = [[terms objectAtIndex:0] objectForKey:@"value"];
             
-            NSString *subtitle = @"";
-            for (int i =1; i < MIN([terms count], 3); i++){
-                subtitle = [NSString stringWithFormat:@"%@ %@", subtitle, [[terms objectAtIndex:i] objectForKey:@"value"]];
+            if ( ![place objectForKey:@"terms"] || [[place objectForKey:@"terms"] count] == 0 ){
+                cell.textLabel.text = [place objectForKey:@"description"];
+            } else {
+                NSMutableArray *terms = [place objectForKey:@"terms"];
+                cell.textLabel.text = [[terms objectAtIndex:0] objectForKey:@"value"];
+                NSString *subtitle = @"";
+                for (int i =1; i < MIN([terms count], 3); i++){
+                    subtitle = [NSString stringWithFormat:@"%@ %@", subtitle, [[terms objectAtIndex:i] objectForKey:@"value"]];
+                }
+                
+                cell.detailTextLabel.text = subtitle;
             }
             
-            cell.detailTextLabel.text = subtitle;
         }else if ( loading ){
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
             
