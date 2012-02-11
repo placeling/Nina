@@ -430,6 +430,8 @@
     
     placeSuperset = [[NSMutableArray alloc] init];
     
+    [placeSuperset addObjectsFromArray: [self places]];
+    
     UIImage *mapImage = [UIImage imageNamed:@"listIcon.png"];
     
     UIBarButtonItem *flipButton =  [[UIBarButtonItem alloc] initWithImage:mapImage style:UIBarButtonItemStylePlain target:self action:@selector(toggleMapList)];
