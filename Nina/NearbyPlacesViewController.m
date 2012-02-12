@@ -458,6 +458,7 @@
                 
                 cell.detailTextLabel.text = subtitle;
             }
+            [StyleHelper styleGenericTableCell:cell];
             
         }else if ( loading ){
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
