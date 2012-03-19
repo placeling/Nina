@@ -515,7 +515,7 @@
     NSString *searchTerm  = [NinaHelper encodeForUrl:searchBar.text];
     
     if ([searchText length] > 0){
-        urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f&input=%@", urlString, lat, lon, 500.0, searchTerm];
+        urlString = [NSString stringWithFormat:@"%@&location=%@,%@&input=%@", urlString, lat, lon, searchTerm];
         NSURL *url = [NSURL URLWithString:urlString];
         
         ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
