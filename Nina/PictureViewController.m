@@ -8,6 +8,7 @@
 
 #import "PictureViewController.h"
 #import "ASIDownloadCache.h"
+#import "FlurryAnalytics.h"
 
 @implementation PictureViewController
 
@@ -78,6 +79,11 @@
 
 	NSURL *url = [NSURL URLWithString:photo.mainUrl];
         
+    if ( url == nil ){
+        //edge case where the url was not valid
+        [FlurryAnalytics logEvent:@"INVALID_URL" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:   @"photo",@"model", photo.photoId, @"id",  photo.mainUrl, @"url",  nil]];
+    }
+    
     if ( photo.mine ){
         UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showAccountSheet)];
         self.navigationItem.rightBarButtonItem = shareButton;

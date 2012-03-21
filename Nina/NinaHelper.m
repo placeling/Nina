@@ -122,7 +122,11 @@
         errorMessage = @""; //prevents a "nil" error on dictionary creation
     }
     
-    NSRange textRange =[[[NinaHelper getHostname] lowercaseString] rangeOfString:[host lowercaseString]];
+    NSRange textRange; 
+    
+    if ( host ){
+        textRange =[[[NinaHelper getHostname] lowercaseString] rangeOfString:[host lowercaseString]];
+    }
     
     if(textRange.location == NSNotFound){
         DLog(@"Error for which host isn't a placeling server");
@@ -146,8 +150,7 @@
         //non-401 400 series server error
         NSNumber *code = [NSNumber numberWithInt:statusCode];
         [FlurryAnalytics logEvent:@"400_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                               @"status_code", 
-                                                               code, @"message", errorMessage, nil]];
+                                         code,@"status_code",   errorMessage,@"message", nil]];
         
         NSString *alertMessage = [NSString stringWithFormat:@"%@ Error", code];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertMessage message:errorMessage
@@ -158,8 +161,7 @@
         //500 series server error
         NSNumber *code = [NSNumber numberWithInt:statusCode];
         [FlurryAnalytics logEvent:@"500_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                        @"status_code", 
-                                                        code, @"message", errorMessage, nil]];
+                                        code, @"status_code",  errorMessage,@"message", nil]];
         
         NSString *alertMessage = [NSString stringWithFormat:@"Server Error\n %@", errorMessage];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
@@ -169,8 +171,7 @@
     } else if ([error code] == 0 || [error code] == 1){
         //can't connect to server
         [FlurryAnalytics logEvent:@"CONNECT_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   @"message", 
-                                                                   errorMessage, nil]];
+                                        errorMessage, @"message", nil]];
         NSString *alertMessage = [NSString stringWithFormat:@"We can't connect to Placeling servers right now"];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
                                                        delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
@@ -187,8 +188,7 @@
     } else {
         DLog(@"Untested error: %@", errorMessage );
         [FlurryAnalytics logEvent:@"UNKNOWN_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                  @"message", 
-                                                                  errorMessage, nil]];
+                                    errorMessage,@"message", nil]];
         NSString *alertMessage = [NSString stringWithFormat:@"Request returned: %@", errorMessage];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
                                                        delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
