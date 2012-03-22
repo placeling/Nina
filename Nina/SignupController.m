@@ -156,7 +156,9 @@
             }
         } 
         
-        [NinaHelper setUsername:((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField.text];
+        NSString *userName = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField.text;
+        
+        [NinaHelper setUsername:[userName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
         
         UIViewController *root = [self.navigationController.viewControllers objectAtIndex:0];
         
