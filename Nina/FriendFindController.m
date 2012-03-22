@@ -195,7 +195,7 @@
         NSString *message;
         
         if ( currentUser ){
-            message = [NSString stringWithFormat:@"I'm using Placeling to discover new places around me - and I want to share them with you.<br/><br/>You can download Placeling at:<br/><a href=\"http://www.placeling.com\">http://www.placeling.com</a><br/><br/>You can see my places by following me. My username is \"%@\".", currentUser];
+            message = [NSString stringWithFormat:@"I'm using Placeling to discover new places around me - and I want to share them with you.<br/><br/>You can download Placeling at:<br/><a href=\"http://www.placeling.com\">http://www.placeling.com</a><br/><br/>You can see my places by following me. My username is \"%@\", and you can see my placees on the web at <a href='http://www.placeling.com/%@'>http://www.placeling.com/%@</a>", currentUser, currentUser, currentUser];
             
                         
         } else {
