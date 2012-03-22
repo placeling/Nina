@@ -284,7 +284,8 @@
         // Here we use the new provided setImageWithURL: method to load the web image
         [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
                        placeholderImage:[UIImage imageNamed:@"profile.png"]];
-        
+        [cell.imageView.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [cell.imageView.layer setBorderWidth:2.0];
         [StyleHelper styleGenericTableCell:cell];
         
     }else if ( tableView.numberOfSections == 2 && indexPath.section == 1 && loading ){
