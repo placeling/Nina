@@ -13,9 +13,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import "NinaHelper.h"
 #import "FlurryAnalytics.h"
+#import "Crittercism.h"
 
-
-@interface NearbyPlacesViewController (Private)
+@interface NearbyPlacesViewController ()
     -(void)dataSourceDidFinishLoadingNewData;
     -(void)findNearbyPlaces;
     -(void)findNearbyPlaces:(NSString*)searchTerm;
@@ -167,6 +167,7 @@
     [_location release];
     [hardLocation release];
     [hardAccuracy release];
+    [HUD release];
     [super dealloc];
     
 }
@@ -355,6 +356,8 @@
 		[jsonDict release];
 	}
     
+    NSString *crumb = [NSString stringWithFormat:@"NearbyPlaces360:%@:%i", self, request.tag];
+    [Crittercism leaveBreadcrumb:crumb];
     [self dataSourceDidFinishLoadingNewData];
 }
 
