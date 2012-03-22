@@ -130,14 +130,14 @@
         [self performUsernameSearch:self.searchBar.text];
     } else {
         showSearchResults = false;
-        [self.tableView reloadData];
+        [self.tableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
     }
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
     searchBar.text = @"";
     [searchBar resignFirstResponder];
-    [self.tableView reloadData];
+    [self.tableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
@@ -166,7 +166,7 @@
         }
     }
     
-    [self.tableView reloadData]; 
+    [self.tableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
 }
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {

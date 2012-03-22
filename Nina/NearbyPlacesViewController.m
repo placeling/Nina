@@ -183,7 +183,6 @@
 
 - (void)reloadTableViewDataSource{
 	[self findNearbyPlaces];
-	//[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
 }
 
 
@@ -352,7 +351,9 @@
                 }
             }
         }
-		[self.placesTableView  reloadData];
+        
+		[self.placesTableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
+        
 		[jsonDict release];
 	}
     
@@ -532,7 +533,7 @@
         if ( [nearbyPlaces count] == 0 ){
             [self findNearbyPlaces];
         } else {
-            [self.placesTableView  reloadData];
+            [self.placesTableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
         }
     }
 }
