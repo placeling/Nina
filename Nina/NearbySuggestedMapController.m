@@ -361,6 +361,10 @@
     
     if (place.google_ref){
         placePageViewController.google_ref = place.google_ref;
+        
+    }
+    
+    if ( !place.perspectiveCount || place.perspectiveCount == 0){
         placePageViewController.initialSelectedIndex = [NSNumber numberWithInt:0];
     }
     
