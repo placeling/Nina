@@ -136,22 +136,30 @@
     NSString* lat = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
     NSString* lon = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
     
-    NSString *urlString = @"https://maps.googleapis.com/maps/api/place/search/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y";		
-    
     searchTerm  = [NinaHelper encodeForUrl:searchTerm];
     
+    ASIHTTPRequest  *request;
+    
     if ([searchTerm length] > 0){
-        accuracy = 15000.0;
-        urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f&name=%@", urlString, lat, lon, accuracy, searchTerm];
+        float accuracy = accuracy= pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/search?lat=%@&lng=%@&accuracy=%@&query=%@", [NinaHelper getHostname], lat, lon,[NSString stringWithFormat:@"%f", accuracy], searchTerm];
+        
+        NSURL *url = [NSURL URLWithString:urlString];
+        request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
+        request.tag = 22;
+        [NinaHelper signRequest:request];
     } else {
+        NSString *urlString = @"https://maps.googleapis.com/maps/api/place/search/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y";	
         urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f", urlString, lat, lon, accuracy];
+        NSURL *url = [NSURL URLWithString:urlString];
+        request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
+        request.tag = 20;
+        
     }
     
-    NSURL *url = [NSURL URLWithString:urlString];
     loading = true;
-    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-    request.tag = 20;
-    //[NinaHelper signRequest:request]; //don't sign for Google
+    
     [request setDelegate:self];
     [request startAsynchronous];
 }
@@ -323,7 +331,6 @@
             [nearbyPlaces release];
             nearbyPlaces = [[NSMutableArray alloc] init];
         
-        
             //remove results we don't really care about
             for (NSDictionary *place in [jsonDict objectForKey:@"results"]){
                 NSMutableArray *types = [place objectForKey:@"types"];
@@ -332,6 +339,10 @@
                 }
                 if ([types indexOfObject:@"political"] == NSNotFound && 
                      [types indexOfObject:@"route"] == NSNotFound){
+                    
+                    [place setValue:[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lat"] forKey:@"lat"];
+                    [place setValue:[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lng"] forKey:@"lng"];
+                    
                     [nearbyPlaces addObject:place];                
                 }
             }
@@ -349,6 +360,14 @@
                     [types indexOfObject:@"route"] == NSNotFound){
                     [predictivePlaces addObject:place];                
                 }
+            }
+        }else if (request.tag == 22) {
+            [nearbyPlaces release];
+            nearbyPlaces = [[NSMutableArray alloc] init];
+            
+            //remove results we don't really care about
+            for (NSDictionary *place in [jsonDict objectForKey:@"places"]){
+                [nearbyPlaces addObject:place];                
             }
         }
         
@@ -483,8 +502,8 @@
                 cell.textLabel.text = @"n/a";
             }
             
-            float lat =   [[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lat"] floatValue];
-            float lng =   [[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lng"] floatValue];
+            float lat =   [[place objectForKey:@"lat"] floatValue];
+            float lng =   [[place objectForKey:@"lng"] floatValue];
             
             CLLocation *loc = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
             
