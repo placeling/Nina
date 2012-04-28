@@ -147,6 +147,8 @@
 +(NSString*) getAccessToken;
 +(NSString*) getAccessTokenSecret;
 
++(void) uploadNotificationToken:(NSString*)notificationToken;
+
 +(NSString*) getConsumerKey;
 +(NSString*) getConsumerSecret;
 

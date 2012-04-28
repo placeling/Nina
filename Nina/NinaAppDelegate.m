@@ -110,6 +110,14 @@ void uncaughtExceptionHandler(NSException *exception) {
         facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
     }
     
+    
+    if ( [NinaHelper getUsername] ){
+        [application registerForRemoteNotificationTypes: 
+         UIRemoteNotificationTypeBadge |
+         UIRemoteNotificationTypeAlert |             
+         UIRemoteNotificationTypeSound];
+    }
+    
     [FlurryAnalytics logAllPageViews:self.navigationController];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
@@ -144,6 +152,23 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 -(void)fbDidLogout{
     
+}
+
+- (void)application:(UIApplication *)application 
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {    
+    
+    DLog(@"Registered with device token %@", newDeviceToken);
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if ( [defaults objectForKey:@"ios_notification_token"] ){
+        if ( [[NSString stringWithFormat:@"%@", newDeviceToken] isEqualToString:[defaults objectForKey:@"ios_notification_token"]] ){
+            return;            
+        }            
+    }
+    [defaults setObject:[NSString stringWithFormat:@"%@", newDeviceToken] forKey:@"ios_notification_token"];
+    
+    [NinaHelper uploadNotificationToken:[NSString stringWithFormat:@"%@", newDeviceToken]];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -83,7 +83,10 @@
     
     NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
     Facebook *facebook = appDelegate.facebook;
-    [facebook logout];   
+    [facebook logout]; 
+    
+    [defaults setObject:@"" forKey:@"ios_notification_token"];
+    [NinaHelper uploadNotificationToken:@""];
 }
 
 +(void) showLoginController:(UIViewController<LoginControllerDelegate>*)sender{
@@ -402,6 +405,14 @@
     
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     
+    if ( accessTokenSecret && [accessTokenSecret length] > 0 ){
+        [[UIApplication sharedApplication] 
+         registerForRemoteNotificationTypes:
+         (UIRemoteNotificationTypeAlert | 
+          UIRemoteNotificationTypeBadge | 
+          UIRemoteNotificationTypeSound)];
+    }
+    
     if (standardUserDefaults ){
         [standardUserDefaults setObject:accessTokenSecret forKey:@"access_token_secret"];
     } else {
@@ -425,6 +436,28 @@
     }
     [standardUserDefaults synchronize];
 }
+
++(void) uploadNotificationToken:(NSString*)notificationToken{
+    NSString *urlString = [NSString stringWithFormat:@"%@/v1/ios/update_token", [NinaHelper getHostname]];	
+	NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request =  [[ASIFormDataRequest  alloc]  initWithURL:url];
+    [request setPostValue:notificationToken forKey:@"ios_notification_token"];
+    
+    [request setCompletionBlock:^{
+        // Use when fetching text data
+        NSString *responseString = [request responseString];
+        DLog( @"Got %@ back from token set", responseString );
+    }];
+    [request setFailedBlock:^{
+        NSError *error = [request error];
+        DLog( @"%@", [error localizedDescription] );
+    }];
+    
+    [NinaHelper signRequest:request];
+    [request startAsynchronous];    
+}
+
+
 
 
 +(NSString*) getConsumerKey{
