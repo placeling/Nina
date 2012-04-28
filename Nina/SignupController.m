@@ -166,6 +166,13 @@
             id<LoginControllerDelegate> delegate = ((LoginController*)root).delegate;
             [delegate loadContent];
         }
+        
+        [[UIApplication sharedApplication] 
+         registerForRemoteNotificationTypes:
+         (UIRemoteNotificationTypeAlert | 
+          UIRemoteNotificationTypeBadge | 
+          UIRemoteNotificationTypeSound)];
+        
         [self.navigationController dismissModalViewControllerAnimated:YES];
   
     } else {

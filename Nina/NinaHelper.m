@@ -61,6 +61,12 @@
 }
 
 +(void) clearCredentials{
+    
+    //this needs to go first since it's an authenticated call
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"" forKey:@"ios_notification_token"];
+    [NinaHelper uploadNotificationToken:@""];
+    
     [NinaHelper setAccessToken:nil];
     [NinaHelper setAccessTokenSecret:nil];
     [NinaHelper setUsername:nil];
@@ -70,7 +76,6 @@
     [[objectManager client] setOAuth1AccessToken:nil];
     [[objectManager client] setOAuth1AccessTokenSecret:nil];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:@"FBAccessTokenKey"];
     [defaults removeObjectForKey:@"FBExpirationDateKey"];
     
@@ -84,9 +89,6 @@
     NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
     Facebook *facebook = appDelegate.facebook;
     [facebook logout]; 
-    
-    [defaults setObject:@"" forKey:@"ios_notification_token"];
-    [NinaHelper uploadNotificationToken:@""];
 }
 
 +(void) showLoginController:(UIViewController<LoginControllerDelegate>*)sender{
@@ -404,14 +406,6 @@
     [[objectManager client] setOAuth1AccessTokenSecret:accessTokenSecret];
     
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
-    if ( accessTokenSecret && [accessTokenSecret length] > 0 ){
-        [[UIApplication sharedApplication] 
-         registerForRemoteNotificationTypes:
-         (UIRemoteNotificationTypeAlert | 
-          UIRemoteNotificationTypeBadge | 
-          UIRemoteNotificationTypeSound)];
-    }
     
     if (standardUserDefaults ){
         [standardUserDefaults setObject:accessTokenSecret forKey:@"access_token_secret"];

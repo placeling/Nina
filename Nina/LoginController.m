@@ -322,6 +322,12 @@
             exit(-1);
         }
         [standardUserDefaults synchronize];
+
+        [[UIApplication sharedApplication] 
+             registerForRemoteNotificationTypes:
+             (UIRemoteNotificationTypeAlert | 
+              UIRemoteNotificationTypeBadge | 
+              UIRemoteNotificationTypeSound)];
         
         //[delegate viewDidLoad];
         [self close];
