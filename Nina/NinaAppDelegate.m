@@ -17,6 +17,9 @@
 #import "Perspective.h"
 #import "Advertisement.h"
 #import "Crittercism.h"
+#import "PlacePageViewController.h"
+#import "MemberProfileViewController.h"
+
 
 //#import "DBManagedObjectCache.h"
 
@@ -34,7 +37,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
-
+    DLog(@"Launching with options %@", launchOptions);
     
     //Restkit initialization  
     RKObjectManager* objectManager = [RKObjectManager objectManagerWithBaseURL:[NinaHelper getHostname]];
@@ -120,12 +123,40 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     [FlurryAnalytics logAllPageViews:self.navigationController];
     self.window.rootViewController = self.navigationController;
-    [self.window makeKeyAndVisible];
+    [self.window makeKeyAndVisible];    
+    
+    if ( [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey] ){
+        NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+        NSURL *url = [NSURL URLWithString:[userInfo objectForKey:@"url"]];
+        [self application:application handleOpenURL:url];
+    }
+    
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [facebook handleOpenURL:url]; 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {   
+    DLog(@"handling open url: %@", url);
+    
+    if ( [[url scheme] isEqualToString:@"fb280758755284342"] ){    
+        return [facebook handleOpenURL:url]; 
+    } else {
+        if ( [[url host] isEqualToString:@"users"] ){
+            NSString *username = [[url path] stringByReplacingOccurrencesOfString:@"/" withString:@""];
+            MemberProfileViewController *userProfile = [[MemberProfileViewController alloc] init];
+            userProfile.username = username;
+            [self.navigationController pushViewController:userProfile animated:false];
+            [userProfile release];
+            
+        } else if ( [[url host] isEqualToString:@"places"] ){
+            NSString *placeId = [[url path] stringByReplacingOccurrencesOfString:@"/" withString:@""];
+            PlacePageViewController *placeView = [[PlacePageViewController alloc] init];
+            placeView.place_id = placeId;
+            [self.navigationController pushViewController:placeView animated:false];
+            [placeView release];
+            
+        }
+        return true;
+    }
 }
 
 - (void)fbDidLogin {
@@ -152,6 +183,15 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 -(void)fbDidLogout{
     
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    if ( application.applicationState == UIApplicationStateActive ){
+        DLog(@"ACTIVE - received notification of %@", userInfo);
+    } else {
+        NSURL *url = [NSURL URLWithString:[userInfo objectForKey:@"url"]];
+        [self application:application handleOpenURL:url];
+    }
 }
 
 - (void)application:(UIApplication *)application 
