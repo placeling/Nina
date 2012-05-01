@@ -13,6 +13,7 @@
 #import "UIImageView+WebCache.h"
 #import "Photo.h"
 #import "FlurryAnalytics.h"
+#import "FindFacebookFriendsController.h"
 
 @interface FriendFindController ()
 -(BOOL) searchResults;
@@ -23,7 +24,7 @@
 
 @implementation FriendFindController
 @synthesize searchUsers, suggestedUsers, recentSearches;
-@synthesize searchBar=_searchBar, tableView=_tableView;
+@synthesize searchBar=_searchBar, tableView=_tableView, toolbar=_toolbar;
 
 
 -(BOOL) searchResults{
@@ -36,6 +37,7 @@
     [suggestedUsers release];;
     [_searchBar release];
     [_tableView release];
+    [_toolbar release];
     [super dealloc];
 }
 
@@ -90,6 +92,7 @@
 -(void) viewWillAppear:(BOOL)animated{
     [StyleHelper styleSearchBar:self.searchBar];
     [StyleHelper styleBackgroundView:self.tableView];
+    [StyleHelper styleToolBar:self.toolbar];
     [super viewWillAppear:animated];
 }
 
@@ -148,6 +151,15 @@
 	[searchBar setShowsCancelButton:FALSE animated:true];
 }
 
+
+-(IBAction)findFacebookFriends{
+    FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
+    
+    [self.navigationController pushViewController:findFacebookFriendsController animated:true];
+    [findFacebookFriendsController release];
+    
+    
+}
 
 #pragma mark - RKObjectLoaderDelegate methods
 

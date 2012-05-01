@@ -20,6 +20,7 @@
     bool loading;
     UITableView *_tableView;
     UISearchBar *_searchBar;
+    UIToolbar *_toolbar;
 }
 
 @property (nonatomic, retain) NSMutableArray *searchUsers; 
@@ -27,5 +28,8 @@
 @property (nonatomic, retain) NSMutableArray *recentSearches;
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
+
+-(IBAction)findFacebookFriends;
 
 @end
