@@ -7,8 +7,12 @@
 //
 
 #import "FindFacebookFriendsController.h"
+#import "MemberProfileViewController.h"
+#import "UIImageView+WebCache.h"
+#import "User.h"
 
 @implementation FindFacebookFriendsController
+@synthesize  facebookFriends;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -29,15 +33,23 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.title = @"Facbook Friends";
+    self.facebookFriends = [[[NSMutableArray alloc]init] autorelease];
+
+    RKObjectManager* objectManager = [RKObjectManager sharedManager];
+    //NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+    
+    NSString *targetURL = [NSString stringWithFormat:@"/v1/auth/facebook/friends"]; 
+    
+    loading = true;
+    
+    [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+        loader.cacheTimeoutInterval = 60;
+        loader.userData = [NSNumber numberWithInt:100]; //use as a tag
+    }];
 }
 
 - (void)viewDidUnload
@@ -55,6 +67,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [StyleHelper styleBackgroundView:self.tableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -73,65 +86,89 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - RKObjectLoaderDelegate methods
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+    loading = false;
+
+    [self.facebookFriends removeAllObjects];
+    for (User* user in objects){
+        [self.facebookFriends addObject:user];
+    }    
+    [self.tableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
+}
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
+    DLog(@"Encountered an error: %@", error); 
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Return the number of rows in the section.
-    return 0;
+    return MAX([self.facebookFriends count], 1);
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
+    static NSString *InfoCellIdentifier = @"InfoCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    UITableViewCell *cell;
+    if ( loading ){
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
+        
+        for(id item in objects){
+            if ( [item isKindOfClass:[UITableViewCell class]]){
+                cell = item;
+            }
+        }    
+        
+    }else {
+        
+        if (indexPath.row ==0 && [self.facebookFriends count] ==0){
+            
+            cell = [tableView dequeueReusableCellWithIdentifier:InfoCellIdentifier];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:InfoCellIdentifier] autorelease];
+            }
+            
+            cell.textLabel.textColor = [UIColor grayColor];
+            cell.textLabel.text = @"You don't have any facebook friends on Placeling";
+            [cell setUserInteractionEnabled:NO];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        } else {    
+            User *user = [self.facebookFriends objectAtIndex:indexPath.row];
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            }
+            
+            cell.textLabel.text = user.fullname;
+            cell.detailTextLabel.text = user.username;
+            
+            cell.accessoryView.tag = indexPath.row;
+            
+            [cell.imageView.layer setBorderColor:[UIColor whiteColor].CGColor];
+            [cell.imageView.layer setBorderWidth:2.0];
+            cell.imageView.contentMode = UIViewContentModeScaleToFill;
+            // Here we use the new provided setImageWithURL: method to load the web image
+            [cell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
+                           placeholderImage:[UIImage imageNamed:@"profile.png"]];
+            [StyleHelper styleGenericTableCell:cell];
+        }
     }
-    
-    // Configure the cell...
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
 
 /*
 // Override to support conditional rearranging of the table view.
@@ -146,14 +183,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    User *user = [self.facebookFriends objectAtIndex:indexPath.row];
+    MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
+    memberProfileViewController.user = user;
+    [self.navigationController pushViewController:memberProfileViewController animated:YES];
+    [memberProfileViewController release];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

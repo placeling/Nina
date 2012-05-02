@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <RestKit/RestKit.h>
 
-@interface FindFacebookFriendsController : UITableViewController
+@interface FindFacebookFriendsController : UITableViewController<RKObjectLoaderDelegate>{
+    bool loading;
+    NSMutableArray *searchUsers; 
+}
+
+@property(nonatomic, retain) NSMutableArray *facebookFriends; 
+
+
 
 @end
