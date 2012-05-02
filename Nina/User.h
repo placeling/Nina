@@ -15,6 +15,8 @@
     NSString *userId;
     NSString *city;
     NSString *username;
+    NSString *fullname; //transient, from server, for displaying with facebook friends
+    
     NSString *userDescription;
     NSString *email;
     NSString *url;
@@ -52,6 +54,7 @@
 @property (nonatomic, retain) NSNumber *following;
 @property (nonatomic, retain) NSNumber *follows_you;
 @property (nonatomic, assign) bool modified;
+@property (nonatomic, retain) NSString *fullname;
 
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 

@@ -14,7 +14,7 @@
 @implementation User
 
 @synthesize userId, city, userDescription;
-@synthesize username, profilePic, placeCount;
+@synthesize username, fullname, profilePic, placeCount;
 @synthesize followingCount, followerCount;
 @synthesize following, follows_you;
 @synthesize email, url; 
@@ -23,6 +23,7 @@
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
     self.userId = [jsonDict objectForKeyNotNull:@"id"];
     self.username = [jsonDict objectForKeyNotNull:@"username"];
+    self.fullname = [jsonDict objectForKeyNotNull:@"fullname"];
     self.city = [jsonDict objectForKeyNotNull:@"city"];
     self.placeCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"perspectives_count"] intValue]];
     self.followerCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"follower_count"] intValue]];
@@ -93,6 +94,7 @@
     [userMapping mapKeyPathsToAttributes:
      @"id", @"userId",
      @"username", @"username",
+     @"fullname", @"fullname",
      @"city", @"city",
      @"perspectives_count", @"placeCount",
      @"follower_count", @"followerCount",
@@ -126,6 +128,7 @@
     [auths release];
     [placeCount release];
     [followingCount release];
+    [fullname release];
     [followerCount release]; 
     
     [super dealloc];
