@@ -153,12 +153,34 @@
 
 
 -(IBAction)findFacebookFriends{
+    
+    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+    Facebook *facebook = appDelegate.facebook;
+    
+    if (![facebook isSessionValid]) {
+        NSArray* permissions =  [[NSArray arrayWithObjects:
+                                  @"email", @"publish_stream",@"offline_access", nil] retain];
+        
+        facebook.sessionDelegate = self;
+        [facebook authorize:permissions];
+        
+        [permissions release];
+    } else {    
+        FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
+        
+        [self.navigationController pushViewController:findFacebookFriendsController animated:true];
+        [findFacebookFriendsController release];
+    }    
+    
+}
+
+-(void)fbDidLogin{
+    [super fbDidLogin];
+    
     FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
     
     [self.navigationController pushViewController:findFacebookFriendsController animated:true];
-    [findFacebookFriendsController release];
-    
-    
+    [findFacebookFriendsController release];    
 }
 
 #pragma mark - RKObjectLoaderDelegate methods

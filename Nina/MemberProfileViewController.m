@@ -35,7 +35,7 @@
 @implementation MemberProfileViewController
 
 @synthesize username, perspectives;
-@synthesize user=_user, profileImageView, headerView;
+@synthesize user=_user, profileImageView, headerView, tableView=_tableView;
 @synthesize usernameLabel, userDescriptionLabel;
 @synthesize followButton, locationLabel;
 @synthesize followersButton, followingButton, placeMarkButton;
@@ -57,7 +57,7 @@
 
 -(IBAction)editUser{
     
-    EditProfileViewController *editProfileViewController = [[EditProfileViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    EditProfileViewController *editProfileViewController = [[EditProfileViewController alloc] init];
     editProfileViewController.user = self.user;
     editProfileViewController.delegate = self;
     
@@ -212,7 +212,10 @@
         NSString *targetURL = [NSString stringWithFormat:@"/v1/users/%@", self.username];
         
         [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
-            loader.objectMapping = [User getObjectMapping];
+            RKObjectMapping *userMapping = [User getObjectMapping];
+            [userMapping mapKeyPath:@"perspectives" toRelationship:@"perspectives" withMapping:[Perspective getObjectMapping]];
+            loader.objectMapping = userMapping;
+            
             loader.userData = [NSNumber numberWithInt:10]; //use as a tag
         }];
 
@@ -352,25 +355,41 @@
         
         
     }else if (buttonIndex == 1) {
-        DLog(@"share on facebook");
+        DLog(@"share on facebook");        
         
         NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
         Facebook *facebook = appDelegate.facebook;
         
-        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       [NinaHelper getFacebookAppId], @"app_id",
-                                       urlString, @"link",
-                                       self.user.city ? self.user.city : @"", @"caption",
-                                       self.user.userThumbUrl, @"picture",
-                                       [NSString stringWithFormat:@"%@'s profile on Placeling", self.user.username], @"name",
-                                       self.user.userDescription, @"description",
-                                       nil];
-        
-        [facebook dialog:@"feed" andParams:params andDelegate:self];
+        if (![facebook isSessionValid]) {
+            NSArray* permissions =  [[NSArray arrayWithObjects:
+                                      @"email", @"publish_stream",@"offline_access", nil] retain];
+            
+            facebook.sessionDelegate = self;
+            [facebook authorize:permissions];
+            
+            [permissions release];
+        } else {    
+            NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           [NinaHelper getFacebookAppId], @"app_id",
+                                           urlString, @"link",
+                                           self.user.city ? self.user.city : @"", @"caption",
+                                           self.user.userThumbUrl, @"picture",
+                                           [NSString stringWithFormat:@"%@'s profile on Placeling", self.user.username], @"name",
+                                           self.user.userDescription, @"description",
+                                           nil];
+            
+            [facebook dialog:@"feed" andParams:params andDelegate:self];
+        }
     } else if (([actionSheet numberOfButtons] ==4) && buttonIndex ==2){
         DLog(@"edit my profile");
         [self editUser];
     }
+}
+
+-(void) fbDidLogin{
+    [super fbDidLogin];
+    [self actionSheet:nil clickedButtonAtIndex:1];
+    
 }
 
 
@@ -401,11 +420,22 @@
         User* user = [objects objectAtIndex:0];
         DLog(@"Loaded User: %@", user.username);        
         self.user = user;
+        
+        self.perspectives = [[[NSMutableArray alloc] init] autorelease];
+        
+        if ( [self.user.perspectives count] == 0 ){
+            hasMore = false;
+        } else {        
+            for (Perspective *perspective in self.user.perspectives){
+                perspective.user = self.user;
+                [perspectives addObject:perspective]; 
+            }
+        }
+        
         [self loadData];
         [self.tableView reloadData]; 
     } else if ( [(NSNumber*)objectLoader.userData intValue] == 13){     
         // get initial perspectives
-        loadingMore = false;
         if ( [objects count] == 0 ){
             hasMore = false;
         }

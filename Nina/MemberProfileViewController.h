@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 #import "NinaHelper.h"
+#import "ApplicationController.h"
 #import "ASIHTTPRequestDelegate.h"
 #import "ProfileDetailBadge.h"
 #import "LoginController.h"
@@ -16,7 +17,7 @@
 #import <RestKit/RestKit.h>
 #import "PerspectiveDisplayProtocol.h"
 
-@interface MemberProfileViewController : UITableViewController<ASIHTTPRequestDelegate, LoginControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol> {
+@interface MemberProfileViewController : ApplicationController<ASIHTTPRequestDelegate, LoginControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol> {
 	NSString *username;
 	User *_user;
     BOOL loadingMore;
@@ -36,6 +37,7 @@
     IBOutlet ProfileDetailBadge *placeMarkButton;
     
     IBOutlet UIView *headerView;
+    UITableView *_tableView;
     
     NSMutableSet *expandedIndexPaths;
     
@@ -53,6 +55,7 @@
 
 @property (nonatomic, retain) IBOutlet UIButton *followButton;
 @property (nonatomic, retain) IBOutlet UIView *headerView;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 
 @property (nonatomic, retain) IBOutlet ProfileDetailBadge *followersButton;
 @property (nonatomic, retain) IBOutlet ProfileDetailBadge *followingButton;

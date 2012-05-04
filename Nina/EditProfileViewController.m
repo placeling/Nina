@@ -23,7 +23,7 @@
 
 
 @implementation EditProfileViewController
-@synthesize user, lat, lng, delegate, currentLocation;
+@synthesize user, lat, lng, delegate, currentLocation, tableView = _tableView;
 
 
 
@@ -34,15 +34,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
-}
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 -(IBAction)showActionSheet{
@@ -181,6 +172,27 @@
     self.user.modified = true;
 }
 
+- (void)hudWasHidden{
+    
+}
+
+-(void) fbDidLogin{
+    [super fbDidLogin];    
+    
+    Authentication *auth = [[Authentication alloc] init];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    auth.provider = @"facebook";
+    auth.token = [defaults objectForKey:@"FBAccessTokenKey"];
+    auth.expiry = [defaults objectForKey:@"FBExpirationDateKey"];
+    
+    [self.user.auths addObject:auth];
+    [auth release];
+    
+    [self.tableView reloadData];
+}
+
 
 -(void)requestFailed:(ASIHTTPRequest *)request{
     [HUD hide:TRUE];
@@ -292,6 +304,7 @@
     [user release];
     [lat release];
     [lng release];
+    [_tableView release];
     [super dealloc];
     
 }
@@ -426,112 +439,6 @@
 }
 
 
-- (void)request:(FBRequest *)request didFailWithError:(NSError *)error{
-    [HUD hide:TRUE];
-    DLog(@"got facebook response: %@", [error localizedDescription]);
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    NSDictionary *details = [error userInfo];
-    
-    [FlurryAnalytics logEvent:@"UNKNOWN_FB_FAIL" withParameters:details];
-    
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    
-    facebook.expirationDate = nil;
-    facebook.accessToken = nil;
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:@"FBAccessTokenKey"];
-    [defaults removeObjectForKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR" 
-                                                    message:@"Facebook returned a credential error, try again" 
-                                                   delegate:nil 
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
-    [alert release];
-    
-}
-- (void)request:(FBRequest *)fbRequest didLoad:(id)result{
-    DLog(@"got facebook response: %@", result);
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
-    NSDictionary *fbDict = (NSDictionary*)result;
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/facebook/add", [NinaHelper getHostname]];
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [request setPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"token" ];
-    [request setPostValue:[defaults objectForKey:@"FBExpirationDateKey"] forKey:@"expiry" ];
-    [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"uid"];
-    
-    [NinaHelper signRequest:request];
-    
-    [request startSynchronous];
-    
-    if ([request responseStatusCode] != 200 && [request responseStatusCode] != 400){
-        [NinaHelper handleBadRequest:request sender:self];
-    } else if ([request responseStatusCode] == 400){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR" 
-                                                        message:[request responseString] 
-                                                       delegate:nil 
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        [alert release];
-    } else {
-        NSString *body = [request responseString];
-        NSDictionary *jsonDict =  [body JSONValue];
-        
-        if ([jsonDict objectForKey:@"user"]){
-            [self.user updateFromJsonDict:[jsonDict objectForKey:@"user"]];
-        }
-        [self.tableView reloadData];
-    }
-    [HUD hide:TRUE];    
-}
-
-- (void)fbDidLogin {
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    facebook.sessionDelegate = appDelegate; //put back where found
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
-    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
-    
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-    
-    HUD.delegate = self;
-    HUD.labelText = @"Authenticating";
-    HUD.detailsLabelText = @"Getting Facebook Stuff";
-    
-    [HUD show:TRUE];
-    
-    [facebook requestWithGraphPath:@"me" andDelegate:self];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-}
-
-- (void)fbDidNotLogin:(BOOL)cancelled{
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    facebook.sessionDelegate = appDelegate; //put back where found
-    [FlurryAnalytics logEvent:@"REJECTED_PERMISSIONS"];
-} 
-
-- (void)hudWasHidden {
-    // Remove HUD from screen when the HUD was hidded
-    [HUD removeFromSuperview];
-    [HUD release];
-	HUD = nil;
-}
-
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -571,16 +478,5 @@
     }
 }
 
--(void)fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt{
-    
-}
-
--(void)fbSessionInvalidated{
-    
-}
-
--(void)fbDidLogout{
-    
-}
 
 @end

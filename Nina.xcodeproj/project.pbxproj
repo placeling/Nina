@@ -140,6 +140,7 @@
 		2878E824140C294500F2A666 /* MyPerspectiveCellViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2878E822140C294500F2A666 /* MyPerspectiveCellViewController.xib */; };
 		2878E828140C2A3900F2A666 /* EditPerspectiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2878E826140C2A3900F2A666 /* EditPerspectiveViewController.m */; };
 		2878E829140C2A3900F2A666 /* EditPerspectiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2878E827140C2A3900F2A666 /* EditPerspectiveViewController.xib */; };
+		287CDF9F155471B5007E99D5 /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 287CDF9E155471B5007E99D5 /* ApplicationController.m */; };
 		28865C951491B65400F20280 /* facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 28865C941491B65400F20280 /* facebook_icon.png */; };
 		28865C981491C28B00F20280 /* facebook_icon_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 28865C971491C28B00F20280 /* facebook_icon_bw.png */; };
 		28865C9F14966CBF00F20280 /* Museo500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28865C9E14966CBF00F20280 /* Museo500.otf */; };
@@ -589,6 +590,8 @@
 		2878E825140C2A3900F2A666 /* EditPerspectiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPerspectiveViewController.h; sourceTree = "<group>"; };
 		2878E826140C2A3900F2A666 /* EditPerspectiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPerspectiveViewController.m; sourceTree = "<group>"; };
 		2878E827140C2A3900F2A666 /* EditPerspectiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditPerspectiveViewController.xib; sourceTree = "<group>"; };
+		287CDF9D155471B4007E99D5 /* ApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationController.h; sourceTree = "<group>"; };
+		287CDF9E155471B5007E99D5 /* ApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationController.m; sourceTree = "<group>"; };
 		28865C941491B65400F20280 /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
 		28865C971491C28B00F20280 /* facebook_icon_bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon_bw.png; sourceTree = "<group>"; };
 		28865C9E14966CBF00F20280 /* Museo500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Museo500.otf; sourceTree = "<group>"; };
@@ -1223,6 +1226,8 @@
 				284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */,
 				284A35351402D3C3009C8C28 /* PlaceMark.h */,
 				284A35361402D3C3009C8C28 /* PlaceMark.m */,
+				287CDF9D155471B4007E99D5 /* ApplicationController.h */,
+				287CDF9E155471B5007E99D5 /* ApplicationController.m */,
 			);
 			path = Nina;
 			sourceTree = "<group>";
@@ -2122,6 +2127,7 @@
 				2867AC3B14D8B579003994DB /* UIPlaceHolderTextView.m in Sources */,
 				2895EBFA14E5B9D6009F43F6 /* Authentication.m in Sources */,
 				285B8B0615508C600019426E /* FindFacebookFriendsController.m in Sources */,
+				287CDF9F155471B5007E99D5 /* ApplicationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

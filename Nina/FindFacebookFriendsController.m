@@ -12,16 +12,8 @@
 #import "User.h"
 
 @implementation FindFacebookFriendsController
-@synthesize  facebookFriends;
+@synthesize  facebookFriends, tableView=_tableView;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -41,6 +33,10 @@
 
     RKObjectManager* objectManager = [RKObjectManager sharedManager];
     //NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
+        
+    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:self action:@selector(showFacebookInvite)];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    [shareButton release];
     
     NSString *targetURL = [NSString stringWithFormat:@"/v1/auth/facebook/friends"]; 
     
@@ -64,9 +60,8 @@
     [super viewWillAppear:animated];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated]; 
     [StyleHelper styleBackgroundView:self.tableView];
 }
 
@@ -85,6 +80,31 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+
+-(IBAction)showFacebookInvite{
+    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+    Facebook *facebook = appDelegate.facebook;
+    
+    NSString *username = [NinaHelper getUsername];
+    
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [NinaHelper getFacebookAppId], @"app_id",
+                                   @"https://www.placeling.com", @"link",
+                                   [NSString stringWithFormat:@"Join %@ on Placeling", username], @"name",
+                                   nil];
+    
+    [facebook dialog:@"feed" andParams:params andDelegate:self];    
+}
+
+- (void)dialogDidComplete:(FBDialog *)dialog{
+    DLog(@"Share on Facebook Dialog completed %@", dialog)
+}
+
+- (void)dialogDidNotComplete:(FBDialog *)dialog{
+    DLog(@"Share on Facebook Dialog completed %@", dialog)
+}
+
 
 #pragma mark - RKObjectLoaderDelegate methods
 
@@ -156,6 +176,19 @@
             
             cell.accessoryView.tag = indexPath.row;
             
+            DLog(@"%@ is %@", user.username, user.following);
+            if ( user.following == [NSNumber numberWithBool:false] ){
+                
+                UIButton* accessory = [UIButton buttonWithType:UIButtonTypeCustom];
+                [accessory setImage:[UIImage imageNamed:@"followButton.png"] forState:UIControlStateNormal];
+                accessory.frame = CGRectMake(0, 0, 40, 40);
+                accessory.userInteractionEnabled = YES;
+                [accessory addTarget:self action:@selector(accessoryButtonTapped:withEvent:) forControlEvents:UIControlEventTouchUpInside];
+                cell.accessoryView = accessory;
+                cell.accessoryView.frame = CGRectMake(cell.accessoryView.frame.origin.x-10, cell.accessoryView.frame.origin.y, cell.accessoryView.frame.size.width, cell.accessoryView.frame.size.height);
+                
+            }
+            
             [cell.imageView.layer setBorderColor:[UIColor whiteColor].CGColor];
             [cell.imageView.layer setBorderWidth:2.0];
             cell.imageView.contentMode = UIViewContentModeScaleToFill;
@@ -170,16 +203,30 @@
 }
 
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Table view delegate
+
+
+- (void) accessoryButtonTapped: (UIControl *) button withEvent: (UIEvent *) event
+{
+    NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint: [[[event touchesForView: button] anyObject] locationInView: self.tableView]];
+    if ( indexPath == nil )
+        return;
+    
+    User *user = [self.facebookFriends objectAtIndex:indexPath.row];
+    
+    user.following = [NSNumber numberWithBool:false];
+    NSString *actionURL = [NSString stringWithFormat:@"%@/v1/users/%@/follow", [NinaHelper getHostname], user.username];
+    DLog(@"Follow/unfollow url is: %@", actionURL);
+    NSURL *url = [NSURL URLWithString:actionURL];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setRequestMethod:@"POST"];
+    
+    [NinaHelper signRequest:request];
+    [request startAsynchronous];
+    
+    [self.tableView cellForRowAtIndexPath:indexPath].accessoryView = nil;
+}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

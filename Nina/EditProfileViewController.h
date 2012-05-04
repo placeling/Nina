@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 #import "MemberProfileViewController.h"
+#import "ApplicationController.h"
 #import "NinaHelper.h"
 #import "MBProgressHUD.h"
 
-@interface EditProfileViewController : UITableViewController<UIActionSheetDelegate, ASIHTTPRequestDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate,FBRequestDelegate,FBSessionDelegate, MBProgressHUDDelegate>{
+@interface EditProfileViewController : ApplicationController<UITableViewDelegate, UITableViewDataSource,UIActionSheetDelegate, ASIHTTPRequestDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, MBProgressHUDDelegate>{
     
     NSNumber *lat;
     NSNumber *lng;
@@ -23,6 +24,7 @@
     UIImage *uploadingImage;
     
     CLLocation *currentLocation;
+    UITableView *_tableView;
 }
 
 
@@ -32,6 +34,8 @@
 @property(nonatomic, retain) NSNumber *lng;
 @property(nonatomic, assign) MemberProfileViewController *delegate;
 @property(nonatomic, retain) CLLocation *currentLocation;
+
+@property(nonatomic, retain) IBOutlet UITableView *tableView;
 
 -(IBAction)saveUser;
 -(IBAction)updateHomeLocation;
