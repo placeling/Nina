@@ -72,7 +72,7 @@ typedef enum {
 @synthesize segmentedControl, tagScrollView;
 @synthesize mapButtonView, googlePlacesButton, bookmarkButton;
 @synthesize tableHeaderView, tableFooterView, perspectiveType, topofHeaderView;
-@synthesize homePerspectives, followingPerspectives, everyonePerspectives;
+@synthesize homePerspectives, followingPerspectives, everyonePerspectives, tableView=_tableView;
 
 - (id) initWithPlace:(Place *)place{
     if(self = [super init]){
@@ -387,7 +387,7 @@ typedef enum {
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [StyleHelper styleBackgroundView:self.view];
+    [StyleHelper styleBackgroundView:self.tableView];
     [StyleHelper styleInfoView:self.topofHeaderView];
     [StyleHelper styleInfoView:self.tableFooterView];
     [StyleHelper styleMapImage:self.mapButtonView];
@@ -436,17 +436,32 @@ typedef enum {
         NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
         Facebook *facebook = appDelegate.facebook;
         
-        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       [NinaHelper getFacebookAppId], @"app_id",
-                                       urlString, @"link",
-                                       self.place.placeThumbUrl, @"picture",
-                                       self.place.name, @"name",
-                                       (self.place.streetAddress && self.place.city) ? [NSString stringWithFormat:@"%@ %@", self.place.streetAddress, self.place.city] : @"", @"caption",
-                                       [NSString stringWithFormat:@"Check out %@ on Placeling!", self.place.name], @"description",
-                                       nil];
-        
-        [facebook dialog:@"feed" andParams:params andDelegate:self];
+        if (![facebook isSessionValid]) {
+            NSArray* permissions =  [[NSArray arrayWithObjects:
+                                      @"email", @"publish_stream",@"offline_access", nil] retain];
+            
+            facebook.sessionDelegate = self;
+            [facebook authorize:permissions];
+            
+            [permissions release];
+        } else {    
+            NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           [NinaHelper getFacebookAppId], @"app_id",
+                                           urlString, @"link",
+                                           self.place.placeThumbUrl, @"picture",
+                                           self.place.name, @"name",
+                                           (self.place.streetAddress && self.place.city) ? [NSString stringWithFormat:@"%@ %@", self.place.streetAddress, self.place.city] : @"", @"caption",
+                                           [NSString stringWithFormat:@"Check out %@ on Placeling!", self.place.name], @"description",
+                                           nil];
+            
+            [facebook dialog:@"feed" andParams:params andDelegate:self];
+        }    
     } 
+}
+
+-(void) fbDidLogin{
+    [super fbDidLogin];        
+    [self actionSheet:nil clickedButtonAtIndex:1];
 }
 
 - (void)dialogDidComplete:(FBDialog *)dialog{
@@ -1249,6 +1264,7 @@ typedef enum {
     [bookmarkButton release];
     [topofHeaderView release];
     [expandedCells release];
+    [_tableView release];
     
     [super dealloc];
 }

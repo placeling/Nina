@@ -12,6 +12,7 @@
 #import "User.h"
 #import "ASIHTTPRequestDelegate.h"
 #import "NinaHelper.h"
+#import "ApplicationController.h"
 #import "BookmarkTableViewCell.h"
 #import "EditPerspectiveViewController.h"
 #import "CustomSegmentedControl.h"
@@ -30,7 +31,7 @@ typedef enum {
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : UITableViewController <UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol> {        
+@interface PlacePageViewController : ApplicationController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol> {        
     NSString *place_id; 
     NSString *perspective_id; 
     NSString *google_ref;
@@ -56,6 +57,7 @@ typedef enum {
     IBOutlet UIView *tableHeaderView;
     IBOutlet UIView *topofHeaderView;
     IBOutlet UIView *tableFooterView;
+    UITableView *_tableView;
     
     NSMutableArray *homePerspectives;
     NSMutableArray *followingPerspectives;
@@ -88,6 +90,7 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet UIView *tableHeaderView;
 @property (nonatomic, retain) IBOutlet UIView *tableFooterView;
 @property (nonatomic, retain) IBOutlet UIView *topofHeaderView;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 
 @property (nonatomic, retain) IBOutlet CustomSegmentedControl *segmentedControl;
 @property (nonatomic, assign) PerspectiveTypes perspectiveType;

@@ -24,7 +24,7 @@
     UILabel *titleLabel;
     UILabel *createdAtLabel;
     UILabel *remarkersLabel;
-    UITableViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, PerspectiveDisplayProtocol> *requestDelegate;
+    UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, PerspectiveDisplayProtocol> *requestDelegate;
     UIScrollView *scrollView;
     UIButton *showMoreButton;
     
@@ -34,7 +34,7 @@
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
-@property(nonatomic,assign) UITableViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate,PerspectiveDisplayProtocol> *requestDelegate;
+@property(nonatomic,assign) UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate,PerspectiveDisplayProtocol> *requestDelegate;
 @property(nonatomic,retain) IBOutlet UIImageView *userImage;
 @property(nonatomic,retain) IBOutlet UIImageView *savedIndicator;
 @property(nonatomic,retain) IBOutlet UIButton *shareSheetButton;
