@@ -11,6 +11,8 @@
 #import <RestKit/RestKit.h>
 #import "Authentication.h"
 
+@class Perspective;
+
 @interface User : NSObject {
     NSString *userId;
     NSString *city;
@@ -24,6 +26,8 @@
     NSArray *location;
     
     NSMutableArray *auths;
+    
+    NSMutableArray *perspectives;
     
     Photo *profilePic;
     NSNumber *placeCount;
@@ -45,6 +49,7 @@
 @property (nonatomic, retain) NSString *url;
 @property (nonatomic, retain) NSArray *location;
 @property (nonatomic, retain) NSMutableArray *auths;
+@property (nonatomic, retain) NSMutableArray *perspectives;
 
 @property (nonatomic, retain) Photo *profilePic;
 @property (nonatomic, retain) NSNumber *placeCount;

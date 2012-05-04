@@ -15,7 +15,7 @@
 
 @synthesize userId, city, userDescription;
 @synthesize username, fullname, profilePic, placeCount;
-@synthesize followingCount, followerCount;
+@synthesize followingCount, followerCount, perspectives;
 @synthesize following, follows_you;
 @synthesize email, url; 
 @synthesize auths, modified, location;
@@ -130,6 +130,7 @@
     [followingCount release];
     [fullname release];
     [followerCount release]; 
+    [perspectives release];
     
     [super dealloc];
 }
