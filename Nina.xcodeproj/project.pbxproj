@@ -48,7 +48,6 @@
 		2827F26714BACB7B002B4B7E /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827F25E14BACB7B002B4B7E /* SBJsonBase.m */; };
 		2827F26814BACB7B002B4B7E /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827F26014BACB7B002B4B7E /* SBJsonParser.m */; };
 		2827F26914BACB7B002B4B7E /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827F26214BACB7B002B4B7E /* SBJsonWriter.m */; };
-		2833C099140D66980076A398 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 2833C098140D66980076A398 /* facebook.png */; };
 		2833C09B140D66B20076A398 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 2833C09A140D66B20076A398 /* twitter.png */; };
 		283FBB511454BD5700F6C50A /* QuickPickButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 283FBB501454BD5700F6C50A /* QuickPickButton.m */; };
 		28417F91148354EA00CA6D4D /* PeopleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417F8F148354EA00CA6D4D /* PeopleIcon.png */; };
@@ -444,7 +443,6 @@
 		2827F26014BACB7B002B4B7E /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		2827F26114BACB7B002B4B7E /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		2827F26214BACB7B002B4B7E /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		2833C098140D66980076A398 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
 		2833C09A140D66B20076A398 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
 		283FBB4F1454BD5700F6C50A /* QuickPickButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickPickButton.h; sourceTree = "<group>"; };
 		283FBB501454BD5700F6C50A /* QuickPickButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickPickButton.m; sourceTree = "<group>"; };
@@ -942,7 +940,6 @@
 				286FA15E143CC68700EDAE84 /* 30-key.png */,
 				286FA15B143CC67D00EDAE84 /* 19-gear.png */,
 				2833C09A140D66B20076A398 /* twitter.png */,
-				2833C098140D66980076A398 /* facebook.png */,
 				28086B8613ECA9B900790404 /* add_photo_button.png */,
 				28086B8713ECA9B900790404 /* crosshairs.png */,
 				28086B8813ECA9B900790404 /* crosshairs@2x.png */,
@@ -1824,7 +1821,6 @@
 				2822BDAC1406EE720077868C /* PlaceFooterView.xib in Resources */,
 				2878E824140C294500F2A666 /* MyPerspectiveCellViewController.xib in Resources */,
 				2878E829140C2A3900F2A666 /* EditPerspectiveViewController.xib in Resources */,
-				2833C099140D66980076A398 /* facebook.png in Resources */,
 				2833C09B140D66B20076A398 /* twitter.png in Resources */,
 				286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */,
 				280EA87D14114C300045B296 /* NearbyPlacesFooterView.xib in Resources */,
