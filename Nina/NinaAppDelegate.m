@@ -165,6 +165,20 @@ void uncaughtExceptionHandler(NSException *exception) {
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
     [defaults synchronize];
     
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if ( currentUser ){
+        NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/facebook/add", [NinaHelper getHostname]];
+        NSURL *url = [NSURL URLWithString:urlString];
+        
+        ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
+        [request setPostValue:[facebook accessToken] forKey:@"token" ];
+        [request setPostValue:[facebook expirationDate] forKey:@"expiry" ];
+        
+        [NinaHelper signRequest:request];
+        
+        [request startAsynchronous];//fire and forget        
+    }    
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled{

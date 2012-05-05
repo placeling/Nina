@@ -322,16 +322,25 @@
         NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
         Facebook *facebook = appDelegate.facebook;
         
-        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       [NinaHelper getFacebookAppId], @"app_id",
-                                       urlString, @"link",
-                                       [NSString stringWithFormat:@"%@'s Placemark on %@", perspective.user.username, perspective.place.name], @"caption",
-                                       self.perspective.thumbUrl, @"picture",
-                                       [NSString stringWithFormat:@"%@'s on Placeling", self.perspective.place.name], @"name",
-                                       self.perspective.notes, @"description",
-                                       nil];
-        
-        [facebook dialog:@"feed" andParams:params andDelegate:self.requestDelegate];
+        if (![facebook isSessionValid]) {
+            NSArray* permissions =  [[NSArray arrayWithObjects:
+                                      @"email", @"publish_stream",@"offline_access", nil] retain];
+            
+            [facebook authorize:permissions];
+            
+            [permissions release];
+        } else {            
+            NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           [NinaHelper getFacebookAppId], @"app_id",
+                                           urlString, @"link",
+                                           [NSString stringWithFormat:@"%@'s Placemark on %@", perspective.user.username, perspective.place.name], @"caption",
+                                           self.perspective.thumbUrl, @"picture",
+                                           [NSString stringWithFormat:@"%@'s on Placeling", self.perspective.place.name], @"name",
+                                           self.perspective.notes, @"description",
+                                           nil];
+            
+            [facebook dialog:@"feed" andParams:params andDelegate:self.requestDelegate];
+        }
          
     } else if (buttonIndex == 3 && actionSheet.numberOfButtons == 5) {
         DLog(@"Add perspective to my map");
