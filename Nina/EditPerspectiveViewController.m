@@ -225,6 +225,7 @@
 }
 
 -(void) fbDidLogin{
+    [super fbDidLogin];
     facebookEnabled = false; //will be forced to true
     [self facebookToggle];
 }
