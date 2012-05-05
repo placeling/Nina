@@ -16,7 +16,7 @@
 @synthesize dirty, name, pid, user;
 @synthesize streetAddress, city, perspectiveCount, bookmarked, followingPerspectiveCount;
 @synthesize lat, lng, usersBookmarking;
-@synthesize googleId, phone, googlePlacesUrl, google_ref, thumbUrl;
+@synthesize googleId, phone, googlePlacesUrl, google_ref, thumbUrl, mapUrl;
 @synthesize categories, icon, tags;
 @synthesize homePerspectives,followingPerspectives,everyonePerspectives, placemarks;
 
@@ -53,6 +53,7 @@
     self.usersBookmarking = [jsonDict objectForKey:@"users_bookmarking"];        
     self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
     self.tags = [jsonDict objectForKeyNotNull:@"tags"];
+    self.mapUrl = [jsonDict objectForKey:@"map_url"];
     
 }
 
@@ -85,6 +86,7 @@
      @"following_perspective_count", @"followingPerspectiveCount",
      @"tags", @"tags",
      @"thumb_url", @"thumbUrl",
+     @"map_url", @"mapUrl",
      nil];
     
     [placeMapping mapKeyPath:@"lat" toAttribute:@"lat"];
@@ -171,6 +173,7 @@
     [categories release];
     [icon release];
     [thumbUrl release];
+    [mapUrl release];
     
     [homePerspectives release];
     [followingPerspectives release];

@@ -10,6 +10,7 @@
 #import "NinaAppDelegate.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
+#import "UIButton+WebCache.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -498,15 +499,6 @@ typedef enum {
 	} else {
   
         switch( [request tag] ){
-            case 1:{
-                //map download
-                NSData *responseData = [request responseData];
-                self.mapButtonView.contentMode = UIViewContentModeScaleToFill;
-                self.mapImage = [UIImage imageWithData:responseData];
-                
-                [self.mapButtonView setImage:self.mapImage forState:UIControlStateNormal];
-                break;
-            }
             case 4:{
                 //bookmarked
                 NSString *responseString = [request responseString];        
@@ -642,14 +634,7 @@ typedef enum {
     }
     
     NSURL *url = [NSURL URLWithString:mapURL];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setDelegate:self];
-    [request setTag:1];
-    [request setDownloadCache:[ASIDownloadCache sharedCache]];
-    [request startAsynchronous];
-    
-    mapRequested = true;
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [self.mapButtonView setImageWithURL:url];
 }
 
 -(IBAction)tagSearch:(id)sender{
