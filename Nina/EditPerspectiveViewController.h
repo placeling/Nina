@@ -18,6 +18,7 @@
 //so long as it can accept the returned request, its all good.
 -(void)requestFailed:(ASIHTTPRequest *)request;
 -(void)requestFinished:(ASIHTTPRequest *)request;
+-(void)updatePerspective:(Perspective *)perspective;
 @end
 
 @interface EditPerspectiveViewController : ApplicationController<UITextViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, ASIHTTPRequestDelegate>{

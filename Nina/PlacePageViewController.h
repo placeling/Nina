@@ -12,7 +12,6 @@
 #import "User.h"
 #import "ASIHTTPRequestDelegate.h"
 #import "NinaHelper.h"
-#import "ApplicationController.h"
 #import "BookmarkTableViewCell.h"
 #import "EditPerspectiveViewController.h"
 #import "CustomSegmentedControl.h"

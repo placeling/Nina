@@ -162,7 +162,12 @@
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     
-    [request setPostValue:self.memoTextView.text forKey:@"memo"];
+    if (facebookEnabled){    
+        [request setPostValue:self.memoTextView.text forKey:@"memo"];
+        [request setPostValue:@"true" forKey:@"fb_post"];
+    }
+    self.perspective.notes = self.memoTextView.text;
+    self.perspective.mine = true;
     
     [request setRequestMethod:@"POST"];
     [request setDelegate:delegate]; //whatever called this should handle it
@@ -172,6 +177,8 @@
     [request setUploadProgressDelegate:hud];
     
     [request startAsynchronous];
+    
+    [delegate updatePerspective:self.perspective];
     
     [self.navigationController dismissModalViewControllerAnimated:YES];
     

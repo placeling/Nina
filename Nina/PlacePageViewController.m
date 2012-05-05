@@ -163,6 +163,15 @@ typedef enum {
     self.navigationController.title = self.place.name;
 }
 
+-(void)updatePerspective:(Perspective *)perspective{
+    self.place.bookmarked = true;
+    [homePerspectives removeAllObjects]; 
+    [homePerspectives addObject:perspective];
+    myPerspective = perspective;
+    
+    [self.tableView reloadData];
+}
+
 
 -(UIImage*)image:(UIImage*)image withCap:(CapLocation)location capWidth:(NSUInteger)capWidth buttonWidth:(NSUInteger)buttonWidth
 {
@@ -499,33 +508,6 @@ typedef enum {
 	} else {
   
         switch( [request tag] ){
-            case 4:{
-                //bookmarked
-                NSString *responseString = [request responseString];        
-                DLog(@"%@", responseString);
-                NSDictionary *jsonString = [responseString JSONValue];
-                
-                if (myPerspective){
-                    [myPerspective updateFromJsonDict:jsonString];
-                } else {
-                    myPerspective = [[Perspective alloc]initFromJsonDict:jsonString];
-                    [homePerspectives insertObject:myPerspective atIndex:0];
-                }
-                
-                //handles updates tags, etc
-                [self.place updateFromJsonDict:[jsonString objectForKey:@"place"]];
-                
-                myPerspective.place = self.place;                
-                
-                self.place.bookmarked = true;
-                [self.tableView reloadData];      
-                [self loadData];
-                
-                [self editPerspective]; //popup after bookmark
-                
-                break;
-            }
-
             case 6:{
                 //deleted perspective
                 NSString *responseString = [request responseString];        
@@ -703,8 +685,17 @@ typedef enum {
 
 -(IBAction)editPerspective{
     DLog(@"modifying on perspective on %@", self.place.name);
-    myPerspective.place = self.place;
-    EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
+    EditPerspectiveViewController *editPerspectiveViewController;
+    
+    if ( myPerspective ){
+        myPerspective.place = self.place;
+        editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
+    } else {
+        Perspective *newPerspective = [[Perspective alloc] init];
+        newPerspective.place = self.place;
+        editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:newPerspective];
+        [newPerspective release];
+    }
     
     editPerspectiveViewController.delegate = self;
     
@@ -845,21 +836,7 @@ typedef enum {
         [baseAlert show];
         [baseAlert release];
     } else {
-        NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives", [NinaHelper getHostname], self.place.pid];
-        
-        NSURL *url = [NSURL URLWithString:urlText];
-        
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-        
-        [request setRequestMethod:@"POST"];
-        [request setDelegate:self];
-        [request setTag:4];
-        self.place.perspectiveCount += 1;
-        
-        [NinaHelper signRequest:request];
-        [request startAsynchronous];
-        
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        [self editPerspective];
     }
 }
 
