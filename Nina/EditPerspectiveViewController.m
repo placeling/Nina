@@ -7,6 +7,7 @@
 //
 
 #import "EditPerspectiveViewController.h"
+#import "NinaAppDelegate.h"
 #import "UIImage+Resize.h"
 #import "ASIFormDataRequest+OAuth.h"
 #import "ASIHTTPRequest+OAuth.h"
@@ -27,7 +28,7 @@
 @synthesize photoButton;
 @synthesize delegate, queue;
 @synthesize existingButton;
-@synthesize takeButton, uploadingPics;
+@synthesize takeButton, uploadingPics, facebookButton;
 
 - (id) initWithPerspective:(Perspective *)perspective{
     self = [super init];
@@ -96,6 +97,15 @@
     [saveButton release];
     
     [self.memoTextView becomeFirstResponder];
+    
+    
+    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+    Facebook *facebook = appDelegate.facebook;
+    facebookEnabled = false;
+    
+    if ( [facebook isSessionValid] ) {
+        [self facebookToggle];
+    }
     
     [self refreshImages];
     
@@ -188,6 +198,37 @@
 	[imgPicker release];
 }
 
+-(IBAction)facebookToggle{
+    
+    if (facebookEnabled){
+        facebookEnabled = false;
+        [self.facebookButton setImage:[UIImage imageNamed:@"facebook_icon_bw.png"] forState:UIControlStateNormal];
+        
+    } else {
+        NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+        Facebook *facebook = appDelegate.facebook;
+        
+        if ( [facebook isSessionValid] ){
+            facebookEnabled = true;
+            [self.facebookButton setImage:[UIImage imageNamed:@"facebook_icon.png"] forState:UIControlStateNormal];
+        } else {
+            NSArray* permissions =  [[NSArray arrayWithObjects:
+                                      @"email", @"publish_stream",@"offline_access", nil] retain];
+            
+            facebook.sessionDelegate = self;
+            [facebook authorize:permissions];
+            
+            [permissions release];            
+        }
+    }
+    
+}
+
+-(void) fbDidLogin{
+    facebookEnabled = false; //will be forced to true
+    [self facebookToggle];
+}
+        
 -(void) refreshImages{
     
     //[self.scrollView setBackgroundColor:[UIColor blackColor]];
@@ -256,38 +297,6 @@
     [picker dismissModalViewControllerAnimated:YES];
     DLog(@"Cancelled image picking");
 }
-
-/*
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    [picker dismissModalViewControllerAnimated:YES];
-    [picker release];
-    
-    UIImage *img = [info objectForKey:UIImagePickerControllerEditedImage];
-    // AND the original image works great
-    
-    if (!img){
-        img = [info objectForKey:UIImagePickerControllerEditedImage];
-    }
-    
-    if (!img){
-        DLog(@"ERROR:Null pic returned");
-        return;
-    }
-
-    NSNumber *tag = [self uploadImageAndReturnTag:img];
-    
-    Photo *photo = [[Photo alloc] init];
-    photo.thumb_image = img;
-    
-    [uploadingPics setObject:photo forKey:tag];
-    
-    [self.perspective.photos addObject:photo];
-    [photo release];
-    
-    //create an image for upload, bounded by 960, since that's the max the thing will take anyway
-    [self refreshImages];
-}
- */
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img editingInfo:(NSDictionary *)editingInfo{
     [picker dismissModalViewControllerAnimated:YES];
@@ -397,6 +406,7 @@
     [scrollView release];
     [uploadingPics release];
     [updatedMemo release];
+    [facebookButton release];
     
     [super dealloc];
 }

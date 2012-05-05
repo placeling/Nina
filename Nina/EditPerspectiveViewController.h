@@ -11,6 +11,7 @@
 #import "NinaHelper.h"
 #import "MBProgressHUD.h"
 #import "UIPlaceHolderTextView.h"
+#import "ApplicationController.h"
 
 
 @protocol EditPerspectiveDelegate
@@ -19,15 +20,16 @@
 -(void)requestFinished:(ASIHTTPRequest *)request;
 @end
 
-@interface EditPerspectiveViewController : UIViewController<UITextViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, ASIHTTPRequestDelegate>{
+@interface EditPerspectiveViewController : ApplicationController<UITextViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, ASIHTTPRequestDelegate>{
     Perspective *_perspective;
     id<EditPerspectiveDelegate> delegate;
     
     IBOutlet UIPlaceHolderTextView *memoTextView;
-    IBOutlet UIButton *photoButton;
+    UIButton *photoButton;
+    UIButton *facebookButton;
     
-    IBOutlet UIButton *existingButton;
-	IBOutlet UIButton *takeButton;
+    UIButton *existingButton;
+	UIButton *takeButton;
     
     IBOutlet UIScrollView *scrollView;
     
@@ -38,6 +40,8 @@
     NSString *updatedMemo;
     
     NSOperationQueue *queue;
+    
+    bool facebookEnabled;
 }
 
 @property(nonatomic,retain) Perspective *perspective;
@@ -46,6 +50,8 @@
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic,retain) IBOutlet UIButton *existingButton;
 @property(nonatomic,retain) IBOutlet UIButton *takeButton;
+@property(nonatomic,retain) IBOutlet UIButton *facebookButton;
+
 @property(nonatomic,retain) IBOutlet NSOperationQueue *queue;
 @property(nonatomic,retain) IBOutlet NSString *updatedMemo;
 
@@ -59,6 +65,8 @@
 
 -(IBAction)existingImage;
 -(IBAction)takeImage;
+
+-(IBAction)facebookToggle;
 
 
 @end
