@@ -195,8 +195,7 @@
 }
 
 -(IBAction)takeImage{
-    self.updatedMemo = self.memoTextView.text;
-    
+    self.updatedMemo = self.memoTextView.text;  
     
 	UIImagePickerController *imgPicker = [[UIImagePickerController alloc] init];
 	imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
