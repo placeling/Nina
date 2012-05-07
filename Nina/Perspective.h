@@ -29,6 +29,7 @@
     BOOL mine;
     
     BOOL modified;
+    BOOL hidden;
 }
 
 @property (nonatomic, retain) User *user;
@@ -43,6 +44,7 @@
 @property (nonatomic, assign) BOOL share;
 @property (nonatomic, assign) BOOL modified;
 @property (nonatomic, assign) BOOL mine;
+@property (nonatomic, assign) BOOL hidden;
 @property (nonatomic, retain) NSString* perspectiveId;
 @property (nonatomic, retain) NSString *lastModified;
 @property (nonatomic, retain) NSString *url;

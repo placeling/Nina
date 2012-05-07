@@ -95,7 +95,9 @@
     NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
     NSSet *visiblePlacemarks = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
     for ( PlaceMark *mark in visiblePlacemarks ){
-        [visiblePlaces addObject:mark.place];             
+        if (mark.tag == 1){
+            [visiblePlaces addObject:mark.place];
+        }
     }
     
     PerspectiveUserTableViewController *peopleController = [[PerspectiveUserTableViewController alloc] initWithPlaces:visiblePlaces];
@@ -308,7 +310,9 @@
     NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
     NSSet *visiblePlacemarks = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
     for ( PlaceMark *mark in visiblePlacemarks ){
-        [visiblePlaces addObject:mark.place];             
+        if (mark.tag == 1){
+            [visiblePlaces addObject:mark.place];
+        }      
     }
     
     PerspectiveTagTableViewController *tagController = [[PerspectiveTagTableViewController alloc] initWithPlaces:visiblePlaces];
@@ -356,11 +360,18 @@
                     pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
                 }
                 pinView.tag =1;
+                annotation.tag =1;
+                perspective.hidden = false;
+            } else {
+                perspective.hidden = true;
+            }
+            if (annotation.tag == 1){
                 return pinView;
             }
         }
         pinView.image = [UIImage imageNamed:@"GreyedMarker.png"];
         pinView.tag = 0;
+        annotation.tag = 0;
         return pinView;
 
     } else {

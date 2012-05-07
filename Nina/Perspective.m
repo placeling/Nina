@@ -12,7 +12,7 @@
 
 @implementation Perspective
 @synthesize user, place, notes, tags, photos, starred, lastModified, remarkers;
-@synthesize dateAdded, visited, share, mine, perspectiveId, modified, url;
+@synthesize dateAdded, visited, share, mine, perspectiveId, modified, url, hidden;
 
 -(id) initFromJsonDict:(NSDictionary *)jsonDict{
     if(self = [super init]){

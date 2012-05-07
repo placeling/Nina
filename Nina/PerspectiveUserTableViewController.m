@@ -70,9 +70,10 @@
     NSMutableArray *unsortedUsers = [[[NSMutableArray alloc] init] autorelease];
     self.perspectiveTally = [[[NSMutableDictionary alloc] init] autorelease];
     
-    
     for (Place *place in self.places){
         for (Perspective *perspective in place.placemarks){
+            if (perspective.hidden == true){ continue; }
+            
             DLog(@"%@", perspective.user.username);
             
             bool found = false;

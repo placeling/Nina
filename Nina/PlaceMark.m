@@ -14,10 +14,12 @@
 @synthesize title;
 @synthesize subtitle;
 @synthesize place=_place;
+@synthesize tag;
 
 -(id)initWithCoordinate:(CLLocationCoordinate2D) c{
 	coordinate=c;
 	DLog(@"%f,%f",c.latitude,c.longitude);
+    self.tag = 0;
 	return self;
 }
 
@@ -30,6 +32,7 @@
         coordinate = place.location.coordinate;
         self.place = place;
     }
+    self.tag = 0;
     return self;
 }
 

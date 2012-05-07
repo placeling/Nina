@@ -71,6 +71,8 @@
     
     for (Place *place in self.places){
         for (Perspective *perspective in place.placemarks){
+            if (perspective.hidden == true){ continue; }
+            
             for (NSString *tag in perspective.tags){
                 DLog(@"checking tag %@", tag);
                 
