@@ -55,14 +55,13 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [StyleHelper styleBackgroundView:self.tableView];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated]; 
-    [StyleHelper styleBackgroundView:self.tableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -151,8 +150,7 @@
             }
         }    
         
-    }else {
-        
+    }else {        
         if (indexPath.row ==0 && [self.facebookFriends count] ==0){
             
             cell = [tableView dequeueReusableCellWithIdentifier:InfoCellIdentifier];
@@ -187,6 +185,8 @@
                 cell.accessoryView = accessory;
                 cell.accessoryView.frame = CGRectMake(cell.accessoryView.frame.origin.x-10, cell.accessoryView.frame.origin.y, cell.accessoryView.frame.size.width, cell.accessoryView.frame.size.height);
                 
+            } else {
+                cell.accessoryView = nil;
             }
             
             [cell.imageView.layer setBorderColor:[UIColor whiteColor].CGColor];
