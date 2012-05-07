@@ -81,7 +81,7 @@
 								<string key="NSFrame">{{15, 0}, {44, 44}}</string>
 								<reference key="NSSuperview" ref="287540930"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="214541261"/>
 								<reference key="IBUIBackgroundColor" ref="201436561"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -119,7 +119,7 @@
 								<string key="NSFrame">{{262, 0}, {44, 44}}</string>
 								<reference key="NSSuperview" ref="287540930"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="824931611"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
@@ -140,7 +140,7 @@
 							</object>
 							<object class="IBUIButton" id="214541261">
 								<reference key="NSNextResponder" ref="287540930"/>
-								<int key="NSvFlags">-2147483356</int>
+								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{140, 0}, {44, 44}}</string>
 								<reference key="NSSuperview" ref="287540930"/>
 								<reference key="NSWindow"/>
@@ -150,18 +150,22 @@
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<int key="IBUIButtonType">1</int>
+								<string key="IBUITitleShadowOffset">{1, 1}</string>
 								<reference key="IBUIHighlightedTitleColor" ref="789192779"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+									<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="531452649"/>
-								<object class="NSCustomResource" key="IBUINormalImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">162-receipt.png</string>
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
+									<int key="type">2</int>
+									<int key="size">2</int>
 								</object>
-								<reference key="IBUIFontDescription" ref="159189609"/>
-								<reference key="IBUIFont" ref="1065866582"/>
+								<object class="NSFont" key="IBUIFont">
+									<string key="NSName">Helvetica-Bold</string>
+									<double key="NSSize">18</double>
+									<int key="NSfFlags">16</int>
+								</object>
 							</object>
 						</object>
 						<string key="NSFrame">{{0, 156}, {320, 45}}</string>
@@ -212,6 +216,7 @@
 						<string key="NSFrame">{{15, 352}, {280, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -305,6 +310,14 @@
 					<int key="connectionID">22</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delayButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="214541261"/>
+					</object>
+					<int key="connectionID">24</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">showPhotos</string>
 						<reference key="source" ref="833811198"/>
@@ -339,6 +352,15 @@
 						<int key="IBEventType">7</int>
 					</object>
 					<int key="connectionID">19</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">toggleDelayedAction</string>
+						<reference key="source" ref="214541261"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">25</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -476,7 +498,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">23</int>
+			<int key="maxID">25</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -501,9 +523,11 @@
 							<string>savePerspective</string>
 							<string>showPhotos</string>
 							<string>takeImage</string>
+							<string>toggleDelayedAction</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -520,6 +544,7 @@
 							<string>savePerspective</string>
 							<string>showPhotos</string>
 							<string>takeImage</string>
+							<string>toggleDelayedAction</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -543,12 +568,17 @@
 								<string key="name">takeImage</string>
 								<string key="candidateClassName">id</string>
 							</object>
+							<object class="IBActionInfo">
+								<string key="name">toggleDelayedAction</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>delayButton</string>
 							<string>existingButton</string>
 							<string>facebookButton</string>
 							<string>memoTextView</string>
@@ -560,6 +590,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UIButton</string>
 							<string>UIButton</string>
 							<string>UIButton</string>
 							<string>UIPlaceHolderTextView</string>
@@ -574,6 +605,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>delayButton</string>
 							<string>existingButton</string>
 							<string>facebookButton</string>
 							<string>memoTextView</string>
@@ -585,6 +617,10 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">delayButton</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">existingButton</string>
 								<string key="candidateClassName">UIButton</string>
@@ -654,13 +690,11 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>162-receipt.png</string>
 				<string>camera.png</string>
 				<string>facebook_icon_bw.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{17, 23}</string>
 				<string>{50, 50}</string>
 				<string>{44, 43}</string>
 			</object>

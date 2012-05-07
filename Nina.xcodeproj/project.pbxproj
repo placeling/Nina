@@ -140,6 +140,8 @@
 		2878E828140C2A3900F2A666 /* EditPerspectiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2878E826140C2A3900F2A666 /* EditPerspectiveViewController.m */; };
 		2878E829140C2A3900F2A666 /* EditPerspectiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2878E827140C2A3900F2A666 /* EditPerspectiveViewController.xib */; };
 		287CDF9F155471B5007E99D5 /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 287CDF9E155471B5007E99D5 /* ApplicationController.m */; };
+		287CDFA21556F79D007E99D5 /* 11-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 287CDFA01556F79D007E99D5 /* 11-clock.png */; };
+		287CDFA31556F79D007E99D5 /* 11-clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 287CDFA11556F79D007E99D5 /* 11-clock@2x.png */; };
 		28865C951491B65400F20280 /* facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 28865C941491B65400F20280 /* facebook_icon.png */; };
 		28865C981491C28B00F20280 /* facebook_icon_bw.png in Resources */ = {isa = PBXBuildFile; fileRef = 28865C971491C28B00F20280 /* facebook_icon_bw.png */; };
 		28865C9F14966CBF00F20280 /* Museo500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28865C9E14966CBF00F20280 /* Museo500.otf */; };
@@ -590,6 +592,8 @@
 		2878E827140C2A3900F2A666 /* EditPerspectiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditPerspectiveViewController.xib; sourceTree = "<group>"; };
 		287CDF9D155471B4007E99D5 /* ApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationController.h; sourceTree = "<group>"; };
 		287CDF9E155471B5007E99D5 /* ApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationController.m; sourceTree = "<group>"; };
+		287CDFA01556F79D007E99D5 /* 11-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock.png"; sourceTree = "<group>"; };
+		287CDFA11556F79D007E99D5 /* 11-clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11-clock@2x.png"; sourceTree = "<group>"; };
 		28865C941491B65400F20280 /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
 		28865C971491C28B00F20280 /* facebook_icon_bw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon_bw.png; sourceTree = "<group>"; };
 		28865C9E14966CBF00F20280 /* Museo500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Museo500.otf; sourceTree = "<group>"; };
@@ -926,6 +930,8 @@
 		28086B8513ECA9B900790404 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				287CDFA01556F79D007E99D5 /* 11-clock.png */,
+				287CDFA11556F79D007E99D5 /* 11-clock@2x.png */,
 				288CAF1F14C4D05200004962 /* 103-map.png */,
 				288CAF2014C4D05300004962 /* 103-map@2x.png */,
 				288CAF1B14C4A9BF00004962 /* 112-group.png */,
@@ -1990,6 +1996,8 @@
 				2895EBE914E1DBA2009F43F6 /* action_sheet@2x.png in Resources */,
 				2895EBF714E46CC7009F43F6 /* iPhoneDefaultShare_Button.png in Resources */,
 				285B8B0715508C600019426E /* FindFacebookFriendsController.xib in Resources */,
+				287CDFA21556F79D007E99D5 /* 11-clock.png in Resources */,
+				287CDFA31556F79D007E99D5 /* 11-clock@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,6 +20,8 @@
 -(NSNumber*) uploadImageAndReturnTag:(UIImage*)mainImage;
 -(void) refreshImages;
 -(void) close;
+-(void) updateDelayed;
+-(void) showDelayPopup;
 @end
 
 @implementation EditPerspectiveViewController
@@ -28,7 +30,7 @@
 @synthesize photoButton;
 @synthesize delegate, queue;
 @synthesize existingButton;
-@synthesize takeButton, uploadingPics, facebookButton;
+@synthesize takeButton, uploadingPics, facebookButton, delayButton;
 
 - (id) initWithPerspective:(Perspective *)perspective{
     self = [super init];
@@ -58,6 +60,89 @@
 -(void)close{
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
+
+
+-(void)updateDelayed{
+    if (delayedPost){
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if ( ![defaults objectForKey:@"delay_perspective_tip"] || [defaults objectForKey:@"delay_perspective_tip"] == false){ 
+            CMPopTipView *delayTip = [[CMPopTipView alloc] initWithMessage:@"Enabling the timer delay for post protects your privacy when you're still near the venue."];
+            delayTip.backgroundColor = [UIColor colorWithRed:185/255.0 green:43/255.0 blue:52/255.0 alpha:1.0];
+            //delayTip.delegate = self;
+            [delayTip presentPointingAtView:self.delayButton inView:self.memoTextView animated:true];
+        }
+        [self.delayButton setImage:[UIImage imageNamed:@"11-clock.png"] forState:UIControlStateNormal];
+        [defaults setObject:[NSNumber numberWithBool:true] forKey:@"delay_perspective_tip"];
+        [defaults synchronize];
+    } else {
+        [self.delayButton setImage:nil forState:UIControlStateNormal]; 
+    }    
+}
+
+
+-(IBAction)toggleDelayedAction{
+    delayedPost = !delayedPost; 
+    
+    if (delayedPost){
+        //show timer popup
+        [self showDelayPopup];
+        
+    }
+    
+    [self updateDelayed];
+}
+
+
+-(void) showDelayPopup{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Delay Post by How Long?" 
+                                                             delegate:nil
+                                                    cancelButtonTitle:nil
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:nil];
+    
+    [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    
+    CGRect pickerFrame = CGRectMake(0, 40, 0, 0);
+    
+    UIDatePicker *pickerView = [[UIDatePicker alloc] initWithFrame:pickerFrame];
+    [pickerView setDatePickerMode:UIDatePickerModeCountDownTimer];
+    [pickerView setCountDownDuration:delayTime*60 ];
+    [pickerView setTag:1];
+    
+    [actionSheet addSubview:pickerView];
+    [pickerView release];
+    
+    UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Close"]];
+    closeButton.momentary = YES; 
+    closeButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
+    closeButton.segmentedControlStyle = UISegmentedControlStyleBar;
+    closeButton.tintColor = [UIColor blackColor];
+    [closeButton addTarget:self action:@selector(updateValue:) forControlEvents:UIControlEventValueChanged];
+    [actionSheet addSubview:closeButton];
+    [closeButton release];
+    
+    [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
+    
+    [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
+}
+
+// returns the # of rows in each component..
+-(void) updateValue:(id)sender {
+    UISegmentedControl *closeButton = (UISegmentedControl*)sender;
+    UIActionSheet *actionSheet = (UIActionSheet*)[closeButton superview];
+    
+    UIDatePicker *pickerView;
+    for (UIView *view in actionSheet.subviews){        
+        if (view.tag == 1){
+            pickerView = (UIDatePicker *)view;
+            break;
+        }
+        
+    }
+    delayTime = pickerView.countDownDuration/60;    
+    [actionSheet dismissWithClickedButtonIndex:0 animated:true];
+}
+
 
 #pragma mark - View lifecycle
 
@@ -98,6 +183,18 @@
     
     [self.memoTextView becomeFirstResponder];
     
+    CLLocationManager* locationManager = [LocationManagerManager sharedCLLocationManager];
+    CLLocation *currentLocation = locationManager.location;
+    float distance = [self.perspective.place.location distanceFromLocation:currentLocation];
+    
+    if (distance < 100){        
+        delayedPost = true;
+    } else {
+        delayedPost = false;
+    }
+    delayTime = 120; //default minutes to delay a delayed post
+    
+    [self updateDelayed];
     
     NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
     Facebook *facebook = appDelegate.facebook;
@@ -119,7 +216,6 @@
     [StyleHelper styleSubmitTypeButton:self.takeButton];
     [StyleHelper styleSubmitTypeButton:self.existingButton];
     [self refreshImages];
-    
 }
 
 
@@ -166,6 +262,11 @@
         [request setPostValue:self.memoTextView.text forKey:@"memo"];
         [request setPostValue:@"true" forKey:@"fb_post"];
     }
+    
+    if ( delayedPost ){
+        [request setPostValue:[NSNumber numberWithInt:delayTime] forKey:@"delay_post"];
+    }
+    
     self.perspective.notes = self.memoTextView.text;
     self.perspective.mine = true;
     
@@ -414,6 +515,7 @@
     [uploadingPics release];
     [updatedMemo release];
     [facebookButton release];
+    [delayButton release];
     
     [super dealloc];
 }

@@ -12,6 +12,7 @@
 #import "MBProgressHUD.h"
 #import "UIPlaceHolderTextView.h"
 #import "ApplicationController.h"
+#import "CMPopTipView.h"
 
 
 @protocol EditPerspectiveDelegate
@@ -28,6 +29,7 @@
     IBOutlet UIPlaceHolderTextView *memoTextView;
     UIButton *photoButton;
     UIButton *facebookButton;
+    UIButton *delayButton;
     
     UIButton *existingButton;
 	UIButton *takeButton;
@@ -43,6 +45,9 @@
     NSOperationQueue *queue;
     
     bool facebookEnabled;
+    bool delayedPost;
+    int delayTime;
+    
 }
 
 @property(nonatomic,retain) Perspective *perspective;
@@ -52,6 +57,7 @@
 @property(nonatomic,retain) IBOutlet UIButton *existingButton;
 @property(nonatomic,retain) IBOutlet UIButton *takeButton;
 @property(nonatomic,retain) IBOutlet UIButton *facebookButton;
+@property(nonatomic,retain) IBOutlet UIButton *delayButton;
 
 @property(nonatomic,retain) IBOutlet NSOperationQueue *queue;
 @property(nonatomic,retain) IBOutlet NSString *updatedMemo;
@@ -68,6 +74,8 @@
 -(IBAction)takeImage;
 
 -(IBAction)facebookToggle;
+
+-(IBAction)toggleDelayedAction;
 
 
 @end
