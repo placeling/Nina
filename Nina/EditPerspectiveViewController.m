@@ -85,8 +85,7 @@
     
     if (delayedPost){
         //show timer popup
-        [self showDelayPopup];
-        
+        [self showDelayPopup];        
     }
     
     [self updateDelayed];
@@ -264,7 +263,7 @@
     }
     
     if ( delayedPost ){
-        [request setPostValue:[NSNumber numberWithInt:delayTime] forKey:@"delay_post"];
+        [request setPostValue:[NSNumber numberWithInt:delayTime] forKey:@"post_delay"];
     }
     
     self.perspective.notes = self.memoTextView.text;
