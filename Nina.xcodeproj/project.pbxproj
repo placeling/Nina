@@ -227,6 +227,8 @@
 		28AC956314B2428C00CB73FD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC956114B2428C00CB73FD /* CoreData.framework */; };
 		28AC956414B2428C00CB73FD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC956214B2428C00CB73FD /* Security.framework */; };
 		28AC956514B2438200CB73FD /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC955714B2417D00CB73FD /* libRestKit.a */; };
+		28AE64091558545700E60EE1 /* PerspectiveTagTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28AE64071558545600E60EE1 /* PerspectiveTagTableViewController.m */; };
+		28AE640A1558545700E60EE1 /* PerspectiveTagTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AE64081558545700E60EE1 /* PerspectiveTagTableViewController.xib */; };
 		28B17C1D1462215D008C98E8 /* pan_here.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B17C1B1462215D008C98E8 /* pan_here.png */; };
 		28B17C1E1462215D008C98E8 /* pan_here@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B17C1C1462215D008C98E8 /* pan_here@2x.png */; };
 		28B17C3014622477008C98E8 /* profilePattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B17C2D14622477008C98E8 /* profilePattern.png */; };
@@ -723,6 +725,9 @@
 		28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		28AC956114B2428C00CB73FD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		28AC956214B2428C00CB73FD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		28AE64061558545600E60EE1 /* PerspectiveTagTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectiveTagTableViewController.h; sourceTree = "<group>"; };
+		28AE64071558545600E60EE1 /* PerspectiveTagTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerspectiveTagTableViewController.m; sourceTree = "<group>"; };
+		28AE64081558545700E60EE1 /* PerspectiveTagTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PerspectiveTagTableViewController.xib; sourceTree = "<group>"; };
 		28B17C1B1462215D008C98E8 /* pan_here.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pan_here.png; sourceTree = "<group>"; };
 		28B17C1C1462215D008C98E8 /* pan_here@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pan_here@2x.png"; sourceTree = "<group>"; };
 		28B17C2D14622477008C98E8 /* profilePattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profilePattern.png; sourceTree = "<group>"; };
@@ -1107,6 +1112,9 @@
 				288CAF0A14C3E91400004962 /* PerspectiveUserTableViewController.h */,
 				288CAF0B14C3E91500004962 /* PerspectiveUserTableViewController.m */,
 				288CAF0C14C3E91500004962 /* PerspectiveUserTableViewController.xib */,
+				28AE64061558545600E60EE1 /* PerspectiveTagTableViewController.h */,
+				28AE64071558545600E60EE1 /* PerspectiveTagTableViewController.m */,
+				28AE64081558545700E60EE1 /* PerspectiveTagTableViewController.xib */,
 			);
 			name = QuickPick;
 			sourceTree = "<group>";
@@ -1998,6 +2006,7 @@
 				285B8B0715508C600019426E /* FindFacebookFriendsController.xib in Resources */,
 				287CDFA21556F79D007E99D5 /* 11-clock.png in Resources */,
 				287CDFA31556F79D007E99D5 /* 11-clock@2x.png in Resources */,
+				28AE640A1558545700E60EE1 /* PerspectiveTagTableViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2132,6 +2141,7 @@
 				2895EBFA14E5B9D6009F43F6 /* Authentication.m in Sources */,
 				285B8B0615508C600019426E /* FindFacebookFriendsController.m in Sources */,
 				287CDF9F155471B5007E99D5 /* ApplicationController.m in Sources */,
+				28AE64091558545700E60EE1 /* PerspectiveTagTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

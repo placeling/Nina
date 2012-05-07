@@ -16,15 +16,20 @@
 #import "CMPopTipView.h"
 
 @class PerspectiveUserTableViewController;
+@class PerspectiveTagTableViewController;
 
 @protocol SuggestedMapUserFilterProtocol
 -(void) setUserFilter:(NSString*)username;
 @end
 
+@protocol SuggestedMapTagFilterProtocol
+-(void) setTagFilter:(NSString*)hashTag;
+@end
 
-@interface NearbySuggestedMapController : SuggestedPlaceController<MKMapViewDelegate, SuggestedMapUserFilterProtocol, CMPopTipViewDelegate> {
+@interface NearbySuggestedMapController : SuggestedPlaceController<MKMapViewDelegate, SuggestedMapUserFilterProtocol, SuggestedMapTagFilterProtocol, CMPopTipViewDelegate> {
     
     PerspectiveUserTableViewController *userChild;
+    PerspectiveTagTableViewController *tagChild;
     
     MKMapView *_mapView;    
     CLLocationManager *locationManager;
@@ -34,13 +39,16 @@
     UIToolbar *bottomToolBar;
     
     UIBarButtonItem *showPeopleButton;
+    UIBarButtonItem *showTagsButton;
     
     UIButton *placemarkButton;
     
     NSTimer *timer;
     NSString *userFilter;
+    NSString *tagFilter;
     
     CMPopTipView *usernameButton;
+    CMPopTipView *hashtagButton;
     
     NSMutableArray *placeSuperset;
     
@@ -52,14 +60,16 @@
 @property(nonatomic, retain) CLLocationManager *locationManager;
 @property(nonatomic, retain) IBOutlet UIToolbar *bottomToolBar;
 @property(nonatomic, retain) IBOutlet UIBarButtonItem *showPeopleButton;
+@property(nonatomic, retain) IBOutlet UIBarButtonItem *showTagsButton;
 @property(nonatomic, retain) CMPopTipView *usernameButton;
+@property(nonatomic, retain) CMPopTipView *hashtagButton;
 @property(nonatomic, retain) IBOutlet UIButton *placemarkButton;
 
--(IBAction)recenter;
 -(void)reloadMap;
 -(IBAction)changeTab;
 
 -(IBAction)showPeople;
+-(IBAction)showTags;
 -(IBAction)showNearbyPlaces;
 
 @end

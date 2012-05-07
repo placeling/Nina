@@ -8,6 +8,7 @@
 
 #import "NSString+SBJSON.h"
 #import "PerspectiveUserTableViewController.h"
+#import "PerspectiveTagTableViewController.h"
 #import "PerspectivePlaceMark.h"
 #import "PlaceMark.h"
 #import "Perspective.h"
@@ -29,7 +30,8 @@
 @implementation NearbySuggestedMapController
 
 @synthesize mapView=_mapView, spinnerView;
-@synthesize locationManager, bottomToolBar, showPeopleButton, usernameButton, placemarkButton;
+@synthesize locationManager, bottomToolBar, usernameButton,hashtagButton, placemarkButton;
+@synthesize showTagsButton, showPeopleButton;
 
 -(IBAction)toggleMapList{
     NearbySuggestedPlaceController *nsController = [[NearbySuggestedPlaceController alloc] init];        
@@ -179,6 +181,17 @@
         [visiblePlaces release];
     }
     
+    if (tagChild){
+        NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
+        NSSet *visiblePlacemarks = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
+        for ( PlaceMark *mark in visiblePlacemarks ){
+            [visiblePlaces addObject:mark.place];             
+        }
+        tagChild.places = visiblePlaces;
+        [tagChild refreshTable];
+        [visiblePlaces release];
+    }
+    
     
 }
 
@@ -188,6 +201,8 @@
     [spinnerView release];
     [placemarkButton release];
     [placeSuperset release];
+    [hashtagButton release];
+    [showTagsButton release];
     [super dealloc];
 }
 
@@ -287,13 +302,24 @@
 }
 
 
--(IBAction)recenter{
-    MKCoordinateRegion region = self.mapView.region;
+-(IBAction)showTags{
+    [hashtagButton dismissAnimated:true];
     
-	CLLocation *location = locationManager.location;
-    region.center = location.coordinate;  
+    NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
+    NSSet *visiblePlacemarks = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
+    for ( PlaceMark *mark in visiblePlacemarks ){
+        [visiblePlaces addObject:mark.place];             
+    }
     
-    [self.mapView setRegion:region animated:YES];
+    PerspectiveTagTableViewController *tagController = [[PerspectiveTagTableViewController alloc] initWithPlaces:visiblePlaces];
+    tagController.delegate = self;
+    tagChild = tagController;
+    
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:tagController];
+    [self.navigationController presentModalViewController:navBar animated:YES];
+    [navBar release];
+    [tagController release];
+    [visiblePlaces release];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)_annotation{
@@ -322,29 +348,21 @@
         
         pinView.rightCalloutAccessoryView = rightButton;
         
-        
-        if (userFilter){
-            for (Perspective *perspective in annotation.place.placemarks){
-                if ([perspective.user.username isEqualToString:userFilter]){
-                    if (annotation.place.bookmarked){
-                        pinView.image = [UIImage imageNamed:@"MyMarker.png"];
-                    } else {
-                        pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
-                    }
-                    pinView.tag =1;
-                    return pinView;
+        for (Perspective *perspective in annotation.place.placemarks){
+            if ( (!userFilter || [perspective.user.username isEqualToString:userFilter]) && (!tagFilter || [perspective.tags indexOfObject:tagFilter] != NSNotFound ) ){
+                if (annotation.place.bookmarked){
+                    pinView.image = [UIImage imageNamed:@"MyMarker.png"];
+                } else {
+                    pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
                 }
+                pinView.tag =1;
+                return pinView;
             }
-            pinView.image = [UIImage imageNamed:@"GreyedMarker.png"];
-            pinView.tag = 0;
-            return pinView;
         }
-        if (annotation.place.bookmarked){
-            pinView.image = [UIImage imageNamed:@"MyMarker.png"];
-        } else {
-            pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
-        }
+        pinView.image = [UIImage imageNamed:@"GreyedMarker.png"];
+        pinView.tag = 0;
         return pinView;
+
     } else {
         return nil;
     }
@@ -388,10 +406,27 @@
     }
 }
 
+-(void)setTagFilter:(NSString*)hashTag{
+    
+    tagFilter = hashTag;
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self drawMapPlaces];
+    
+    if ( tagFilter ){
+        self.hashtagButton = [[[CMPopTipView alloc] initWithMessage:[NSString stringWithFormat:@"#%@", tagFilter]]autorelease];
+        self.hashtagButton.backgroundColor = [UIColor colorWithRed:185/255.0 green:43/255.0 blue:52/255.0 alpha:1.0];
+        self.hashtagButton.delegate = self;
+        [self.hashtagButton presentPointingAtBarButtonItem:self.showTagsButton animated:true];
+    }
+}
 
 // CMPopTipViewDelegate method
 - (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
-    userFilter = nil;
+    if ( popTipView == self.hashtagButton ){
+        tagFilter = nil;
+    } else {
+        userFilter = nil;
+    }
     [self.mapView removeAnnotations:self.mapView.annotations];
     [self drawMapPlaces];
 }
@@ -425,9 +460,15 @@
     self.mapView.delegate = self;
     
     self.spinnerView.hidden = true;
-    [self recenter];
+    
     self.placemarkButton.hidden = true;
     viewLoaded = false;
+    MKCoordinateRegion region = self.mapView.region;
+    
+	CLLocation *location = locationManager.location;
+    region.center = location.coordinate;  
+    
+    [self.mapView setRegion:region animated:YES];
     
     lastCoordinate = self.mapView.region.center;
     lastLatSpan = self.mapView.region.span.latitudeDelta;
@@ -460,6 +501,7 @@
     
     MKCoordinateSpan span; 
     userChild = nil;
+    tagChild = nil;
     
     span.latitudeDelta  = self.latitudeDelta;
     span.longitudeDelta  = self.latitudeDelta;

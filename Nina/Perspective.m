@@ -78,6 +78,7 @@
      @"updated_at", @"lastModified",
      @"url", @"url",
      @"remarkers", @"remarkers",
+     @"tags", @"tags",
      nil];
     
     [perspectiveMapping mapKeyPath:@"place" toRelationship:@"place" withMapping:[Place getObjectMappingNoPerspectives]];

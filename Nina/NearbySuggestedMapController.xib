@@ -15,9 +15,8 @@
 			<string>IBUIBarButtonItem</string>
 			<string>IBUIButton</string>
 			<string>IBUIToolbar</string>
-			<string>IBUIActivityIndicatorView</string>
-			<string>IBMKMapView</string>
 			<string>IBUISegmentedControl</string>
+			<string>IBMKMapView</string>
 			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -46,16 +45,12 @@
 						<string key="NSFrame">{{0, 372}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="148571112"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<array class="NSMutableArray" key="IBUIItems">
 							<object class="IBUIBarButtonItem" id="512950514">
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">pan_here.png</string>
-								</object>
+								<string key="IBUITitle"> # </string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="806454853"/>
@@ -82,17 +77,6 @@
 								<reference key="IBUIToolbar" ref="806454853"/>
 							</object>
 						</array>
-					</object>
-					<object class="IBUIActivityIndicatorView" id="148571112">
-						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{152, 384}, {20, 20}}</string>
-						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<bool key="IBUIHidesWhenStopped">NO</bool>
-						<int key="IBUIStyle">2</int>
 					</object>
 					<object class="IBMKMapView" id="341782952">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -237,14 +221,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">spinnerView</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="148571112"/>
-					</object>
-					<int key="connectionID">13</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">mapView</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="341782952"/>
@@ -292,12 +268,20 @@
 					<int key="connectionID">32</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">showTagsButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="512950514"/>
+					</object>
+					<int key="connectionID">36</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">recenter</string>
+						<string key="label">showTags</string>
 						<reference key="source" ref="512950514"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
-					<int key="connectionID">18</int>
+					<int key="connectionID">35</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -340,9 +324,8 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="341782952"/>
 							<reference ref="965576721"/>
-							<reference ref="148571112"/>
-							<reference ref="806454853"/>
 							<reference ref="514852380"/>
+							<reference ref="806454853"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -372,11 +355,6 @@
 						<int key="objectID">5</int>
 						<reference key="object" ref="512950514"/>
 						<reference key="parent" ref="806454853"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">7</int>
-						<reference key="object" ref="148571112"/>
-						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">8</int>
@@ -447,7 +425,6 @@
 				<string key="31.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<integer value="1" key="9.IUISegmentedControlInspectorSelectedSegmentMetadataKey"/>
@@ -456,7 +433,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">34</int>
+			<int key="maxID">36</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -465,17 +442,13 @@
 					<string key="superclassName">SuggestedPlaceController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="changeTab">id</string>
-						<string key="recenter">id</string>
 						<string key="showNearbyPlaces">id</string>
 						<string key="showPeople">id</string>
+						<string key="showTags">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="changeTab">
 							<string key="name">changeTab</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="recenter">
-							<string key="name">recenter</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showNearbyPlaces">
@@ -486,12 +459,17 @@
 							<string key="name">showPeople</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="showTags">
+							<string key="name">showTags</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="bottomToolBar">UIToolbar</string>
 						<string key="mapView">MKMapView</string>
 						<string key="placemarkButton">UIButton</string>
 						<string key="showPeopleButton">UIBarButtonItem</string>
+						<string key="showTagsButton">UIBarButtonItem</string>
 						<string key="spinnerView">UIActivityIndicatorView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -509,6 +487,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="showPeopleButton">
 							<string key="name">showPeopleButton</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="showTagsButton">
+							<string key="name">showTagsButton</string>
 							<string key="candidateClassName">UIBarButtonItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="spinnerView">
@@ -563,7 +545,6 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="112-group.png">{32, 21}</string>
 			<string key="PlaceMarkIt.png">{670, 173}</string>
-			<string key="pan_here.png">{21, 21}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">933</string>
 	</data>
