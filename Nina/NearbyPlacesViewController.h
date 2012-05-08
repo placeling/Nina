@@ -34,6 +34,7 @@
 
     BOOL locationEnabled;
     BOOL _reloading;
+    BOOL promptAdd;
     MBProgressHUD *HUD;
     bool searchLogged;
     NSTimer *timer;

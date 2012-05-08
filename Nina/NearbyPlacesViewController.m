@@ -14,6 +14,7 @@
 #import "NinaHelper.h"
 #import "FlurryAnalytics.h"
 #import "Crittercism.h"
+#import "NewPlaceController.h"
 
 @interface NearbyPlacesViewController ()
     -(void)dataSourceDidFinishLoadingNewData;
@@ -264,6 +265,7 @@
     
     self.searchBar.delegate = self;
     [self findNearbyPlaces];
+    promptAdd = false;
     
 }
 
@@ -311,6 +313,7 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
     loading = false;
+    promptAdd = false;
     self.placesTableView.tableFooterView = self.tableFooterView;
     
 	if (200 != [request responseStatusCode]){
@@ -369,6 +372,7 @@
             for (NSDictionary *place in [jsonDict objectForKey:@"places"]){
                 [nearbyPlaces addObject:place];                
             }
+            promptAdd = true;
         }
         
 		[self.placesTableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
@@ -396,14 +400,14 @@
     DLog(@"%i", self.dataLoaded);
     DLog(@"%i", [nearbyPlaces count]);
     if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
-        return 1;
+        return 1 + promptAdd;
     } else if (loading){
         return 1;
     }else {
         if ([self showPredictive]){
             return [predictivePlaces count];
         } else {
-            return [nearbyPlaces count];
+            return [nearbyPlaces count] + promptAdd;
         }
     }
 }
@@ -420,12 +424,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier;
+    static NSString *AddPlaceCell=@"AddPlaceCell";
     
     if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
-        tableView.allowsSelection = NO;
         CellIdentifier = @"CopyCell";
     } else {
-        tableView.allowsSelection = YES;
         CellIdentifier = @"DataCell";
     }
     
@@ -436,7 +439,7 @@
     }
     
     
-    if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
+    if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0 && indexPath.row == 0) {
         cell.detailTextLabel.text = @"";
         cell.textLabel.text = @"";
         
@@ -461,6 +464,7 @@
         
         errorText.tag = 778;
         [cell addSubview:errorText];
+        [cell setUserInteractionEnabled:NO];
         [errorText release];
     } else {
         DLog(@"Search bar text is: %@", _searchBar.text);
@@ -493,31 +497,46 @@
             }               
             
         } else {
-            NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
-            
-            if ( [place objectForKey:@"name"] != [NSNull null] ){
-                cell.textLabel.text = [place objectForKey:@"name"];
-            } else {
-                DLog(@"got a place with no-name: %@", [place objectForKey:@"google_id"]);
-                cell.textLabel.text = @"n/a";
+            if ( indexPath.row >= [nearbyPlaces count] ) {
+                UITableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:AddPlaceCell];
+                if (aCell == nil) {
+                    aCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:AddPlaceCell] autorelease];
+                }
+                
+                aCell.detailTextLabel.text = [NSString stringWithFormat:@"Add \"%@\" to location Database", self.searchBar.text]; 
+                
+                [aCell.imageView setImage:[UIImage imageNamed:@"ReMark.png"]];
+                [aCell setUserInteractionEnabled:YES];
+                [StyleHelper styleGenericTableCell:aCell];
+                cell = aCell;
+                
+            }else {
+                NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
+                
+                if ( [place objectForKey:@"name"] != [NSNull null] ){
+                    cell.textLabel.text = [place objectForKey:@"name"];
+                } else {
+                    DLog(@"got a place with no-name: %@", [place objectForKey:@"google_id"]);
+                    cell.textLabel.text = @"n/a";
+                }
+                
+                float lat =   [[place objectForKey:@"lat"] floatValue];
+                float lng =   [[place objectForKey:@"lng"] floatValue];
+                
+                CLLocation *loc = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
+                
+                CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
+                CLLocation *userLocation = manager.location;
+                
+                if (userLocation != nil){ 
+                    float target = [userLocation distanceFromLocation:loc];
+                    cell.detailTextLabel.text = [NinaHelper metersToLocalizedDistance:target];
+                } else {
+                    cell.detailTextLabel.text = @"Can't get location";
+                }
+                [loc release];
+                [StyleHelper styleGenericTableCell:cell];
             }
-            
-            float lat =   [[place objectForKey:@"lat"] floatValue];
-            float lng =   [[place objectForKey:@"lng"] floatValue];
-            
-            CLLocation *loc = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
-            
-            CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
-            CLLocation *userLocation = manager.location;
-            
-            if (userLocation != nil){ 
-                float target = [userLocation distanceFromLocation:loc];
-                cell.detailTextLabel.text = [NinaHelper metersToLocalizedDistance:target];
-            } else {
-                cell.detailTextLabel.text = @"Can't get location";
-            }
-            [loc release];
-            [StyleHelper styleGenericTableCell:cell];
         }
     }
     
@@ -619,18 +638,29 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *place;
-    if ([self showPredictive]){
-        place = [predictivePlaces objectAtIndex:indexPath.row];
-    } else {
-        place = [nearbyPlaces objectAtIndex:indexPath.row];
-    }
-    PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] init];
-    
-    placePageViewController.place_id = [place objectForKey:@"id"];
-    placePageViewController.google_ref = [place objectForKey:@"reference"];
-	[[self navigationController] pushViewController:placePageViewController animated:YES];
-	[placePageViewController release];
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if ( ! [self showPredictive] && indexPath.row >= [nearbyPlaces count] ) {
+        NewPlaceController *newPlaceController = [[NewPlaceController alloc] initWithName:self.searchBar.text];
+        [[self navigationController] pushViewController:newPlaceController animated:YES];
+        [newPlaceController release];
+    } else {
+        
+        if ([self showPredictive]){
+            place = [predictivePlaces objectAtIndex:indexPath.row];
+        } else {
+            place = [nearbyPlaces objectAtIndex:indexPath.row];
+        }
+        
+        PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] init];
+        
+        placePageViewController.place_id = [place objectForKey:@"id"];
+        placePageViewController.google_ref = [place objectForKey:@"reference"];
+        [[self navigationController] pushViewController:placePageViewController animated:YES];
+        [placePageViewController release];
+        
+    }
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {

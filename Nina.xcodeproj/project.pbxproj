@@ -157,6 +157,10 @@
 		2887B8DB144F92C100CBBF1B /* ActiveFoodPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8DA144F92C100CBBF1B /* ActiveFoodPick.png */; };
 		2887B8DD144F92EF00CBBF1B /* ActiveTouristyPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8DC144F92EF00CBBF1B /* ActiveTouristyPick.png */; };
 		2887B8DF144F930D00CBBF1B /* ActiveTouristyPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887B8DE144F930D00CBBF1B /* ActiveTouristyPick@2x.png */; };
+		2887EFA415598D540086F433 /* NewPlaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2887EFA215598D540086F433 /* NewPlaceController.m */; };
+		2887EFA515598D540086F433 /* NewPlaceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2887EFA315598D540086F433 /* NewPlaceController.xib */; };
+		2887EFA915598FCC0086F433 /* ConfirmNewPlaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2887EFA715598FCC0086F433 /* ConfirmNewPlaceController.m */; };
+		2887EFAA15598FCC0086F433 /* ConfirmNewPlaceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2887EFA815598FCC0086F433 /* ConfirmNewPlaceController.xib */; };
 		288CAF0D14C3E91600004962 /* PerspectiveUserTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 288CAF0B14C3E91500004962 /* PerspectiveUserTableViewController.m */; };
 		288CAF0E14C3E91600004962 /* PerspectiveUserTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 288CAF0C14C3E91500004962 /* PerspectiveUserTableViewController.xib */; };
 		288CAF1D14C4A9BF00004962 /* 112-group.png in Resources */ = {isa = PBXBuildFile; fileRef = 288CAF1B14C4A9BF00004962 /* 112-group.png */; };
@@ -612,6 +616,12 @@
 		2887B8DA144F92C100CBBF1B /* ActiveFoodPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ActiveFoodPick.png; sourceTree = "<group>"; };
 		2887B8DC144F92EF00CBBF1B /* ActiveTouristyPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ActiveTouristyPick.png; sourceTree = "<group>"; };
 		2887B8DE144F930D00CBBF1B /* ActiveTouristyPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActiveTouristyPick@2x.png"; sourceTree = "<group>"; };
+		2887EFA115598D540086F433 /* NewPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPlaceController.h; sourceTree = "<group>"; };
+		2887EFA215598D540086F433 /* NewPlaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPlaceController.m; sourceTree = "<group>"; };
+		2887EFA315598D540086F433 /* NewPlaceController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPlaceController.xib; sourceTree = "<group>"; };
+		2887EFA615598FCC0086F433 /* ConfirmNewPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmNewPlaceController.h; sourceTree = "<group>"; };
+		2887EFA715598FCC0086F433 /* ConfirmNewPlaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmNewPlaceController.m; sourceTree = "<group>"; };
+		2887EFA815598FCC0086F433 /* ConfirmNewPlaceController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmNewPlaceController.xib; sourceTree = "<group>"; };
 		288CAF0A14C3E91400004962 /* PerspectiveUserTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectiveUserTableViewController.h; sourceTree = "<group>"; };
 		288CAF0B14C3E91500004962 /* PerspectiveUserTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerspectiveUserTableViewController.m; sourceTree = "<group>"; };
 		288CAF0C14C3E91500004962 /* PerspectiveUserTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PerspectiveUserTableViewController.xib; sourceTree = "<group>"; };
@@ -1151,6 +1161,19 @@
 			name = Profile;
 			sourceTree = "<group>";
 		};
+		2887EFA015598C5B0086F433 /* NewPlace */ = {
+			isa = PBXGroup;
+			children = (
+				2887EFA115598D540086F433 /* NewPlaceController.h */,
+				2887EFA215598D540086F433 /* NewPlaceController.m */,
+				2887EFA315598D540086F433 /* NewPlaceController.xib */,
+				2887EFA615598FCC0086F433 /* ConfirmNewPlaceController.h */,
+				2887EFA715598FCC0086F433 /* ConfirmNewPlaceController.m */,
+				2887EFA815598FCC0086F433 /* ConfirmNewPlaceController.xib */,
+			);
+			name = NewPlace;
+			sourceTree = "<group>";
+		};
 		2895002F13D64559009E1BD7 = {
 			isa = PBXGroup;
 			children = (
@@ -1202,6 +1225,7 @@
 		2895004413D64559009E1BD7 /* Nina */ = {
 			isa = PBXGroup;
 			children = (
+				2887EFA015598C5B0086F433 /* NewPlace */,
 				284D1CD9147C29A9001F80D1 /* FriendFind */,
 				280EA87A14114BE90045B296 /* NearbyPlaces */,
 				286FA144143AB5B300EDAE84 /* QuickPick */,
@@ -2007,6 +2031,8 @@
 				287CDFA21556F79D007E99D5 /* 11-clock.png in Resources */,
 				287CDFA31556F79D007E99D5 /* 11-clock@2x.png in Resources */,
 				28AE640A1558545700E60EE1 /* PerspectiveTagTableViewController.xib in Resources */,
+				2887EFA515598D540086F433 /* NewPlaceController.xib in Resources */,
+				2887EFAA15598FCC0086F433 /* ConfirmNewPlaceController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2142,6 +2168,8 @@
 				285B8B0615508C600019426E /* FindFacebookFriendsController.m in Sources */,
 				287CDF9F155471B5007E99D5 /* ApplicationController.m in Sources */,
 				28AE64091558545700E60EE1 /* PerspectiveTagTableViewController.m in Sources */,
+				2887EFA415598D540086F433 /* NewPlaceController.m in Sources */,
+				2887EFA915598FCC0086F433 /* ConfirmNewPlaceController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
