@@ -20,8 +20,8 @@
 
 @implementation PerspectiveTableViewCell
 
-@synthesize perspective, userImage, savedIndicator, memoText,titleLabel, scrollView, remarkersLabel;
-@synthesize tapGesture, requestDelegate, showMoreButton, shareSheetButton;
+@synthesize perspective, userImage, memoText,titleLabel, scrollView, remarkersLabel;
+@synthesize tapGesture, requestDelegate, showMoreButton, loveButton, shareSheetButton;
 @synthesize createdAtLabel, expanded, indexpath;
 
 
@@ -213,7 +213,7 @@
     
     if ( perspective.remarkers && [perspective.remarkers length] > 0 ) {
         [cell.remarkersLabel setFrame:CGRectMake(cell.remarkersLabel.frame.origin.x, verticalCursor, cell.remarkersLabel.frame.size.width, cell.remarkersLabel.frame.size.height)];
-        cell.remarkersLabel.text = [NSString stringWithFormat:@"ReMarked By: %@", perspective.remarkers  ];
+        cell.remarkersLabel.text = [NSString stringWithFormat:@"Liked By: %@", perspective.remarkers  ];
          verticalCursor += cell.remarkersLabel.frame.size.height;
     } else {
         cell.remarkersLabel.hidden = true;
@@ -222,21 +222,26 @@
     if ( !hasContent ){
         //can't star own perspective
         [cell.shareSheetButton setHidden:true];
-        [cell.savedIndicator setHidden:true];
+        [cell.loveButton setHidden:true];
     } else {
         [cell.shareSheetButton setHidden:false];
-        [cell.savedIndicator setHidden:false];
+        [cell.loveButton setHidden:false];
         if(perspective.starred){            
-            [cell.savedIndicator setImage:[UIImage imageNamed:@"ReMark.png"]];
+            [cell.loveButton setImage:[UIImage imageNamed:@"AddPlace_Hover2.png"] forState:UIControlStateNormal];
         } else {
-            [cell.savedIndicator setImage:[UIImage imageNamed:@"UnReMark.png"]];
+            [cell.loveButton setImage:[UIImage imageNamed:@"AddPlace_Added.png"] forState:UIControlStateNormal];
+        }
+        if (perspective.mine) {
+            [cell.loveButton setHidden:true];
+        } else {
+            [cell.loveButton setHidden:false];
         }
     }
     
     cell.createdAtLabel.text = [NSString stringWithFormat:@"Updated: %@", [NinaHelper dateDiff:perspective.lastModified]  ];
     
     [cell.createdAtLabel setFrame:CGRectMake(cell.createdAtLabel.frame.origin.x, verticalCursor, cell.createdAtLabel.frame.size.width, cell.createdAtLabel.frame.size.height)];
-    [cell.savedIndicator setFrame:CGRectMake(cell.savedIndicator.frame.origin.x, verticalCursor, cell.savedIndicator.frame.size.width, cell.savedIndicator.frame.size.height)];
+    [cell.shareSheetButton setFrame:CGRectMake(cell.shareSheetButton.frame.origin.x, verticalCursor, cell.shareSheetButton.frame.size.width, cell.shareSheetButton.frame.size.height)];
     
     [StyleHelper colourTextLabel:cell.createdAtLabel];
     [StyleHelper colourTextLabel:cell.titleLabel];
@@ -283,10 +288,8 @@
         
         if ( self.perspective.mine ){
             actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
-        } else if (self.perspective.starred){
-            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"DeMark from My Map", nil];
         } else {
-            actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"ReMark on My Map", nil];
+            actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
         }
 
         [actionSheet showInView:self.requestDelegate.view];
@@ -341,30 +344,29 @@
             
             [facebook dialog:@"feed" andParams:params andDelegate:self.requestDelegate];
         }
-         
-    } else if (buttonIndex == 3 && actionSheet.numberOfButtons == 5) {
-        DLog(@"Add perspective to my map");
+    }
+}
+
+-(IBAction)toggleFavourite{
+    // Call url to get profile details                
+    RKObjectManager* objectManager = [RKObjectManager sharedManager];       
+    
+    if (self.perspective.starred){
+        [self.perspective unstar];
         
-        // Call url to get profile details                
-        RKObjectManager* objectManager = [RKObjectManager sharedManager];       
+        NSString *urlText = [NSString stringWithFormat:@"/v1/perspectives/%@/unstar", self.perspective.perspectiveId];
         
-        if (self.perspective.starred){
-            [self.perspective unstar];
-            
-            NSString *urlText = [NSString stringWithFormat:@"/v1/perspectives/%@/unstar", self.perspective.perspectiveId];
-            
-            [[RKClient sharedClient] post:urlText params:nil delegate:self.requestDelegate]; 
-            self.perspective.starred = false;
-            [self.savedIndicator setImage:[UIImage imageNamed:@"UnReMark.png"]];
-        } else {            
-            [self.perspective star];
-            [objectManager postObject:nil delegate:self.requestDelegate block:^(RKObjectLoader* loader) {  
-                loader.resourcePath = [NSString stringWithFormat:@"/v1/perspectives/%@/star", self.perspective.perspectiveId];
-                loader.userData = [NSNumber numberWithInt:5]; //use as a tag
-            }];
-            [self.savedIndicator setImage:[UIImage imageNamed:@"ReMark.png"]];
-        }
-    } 
+        [[RKClient sharedClient] post:urlText params:nil delegate:self.requestDelegate]; 
+        self.perspective.starred = false;
+        [self.loveButton setImage:[UIImage imageNamed:@"AddPlace_Added.png"] forState:UIControlStateNormal];
+    } else {            
+        [self.perspective star];
+        [objectManager postObject:nil delegate:self.requestDelegate block:^(RKObjectLoader* loader) {  
+            loader.resourcePath = [NSString stringWithFormat:@"/v1/perspectives/%@/star", self.perspective.perspectiveId];
+            loader.userData = [NSNumber numberWithInt:5]; //use as a tag
+        }];
+        [self.loveButton setImage:[UIImage imageNamed:@"AddPlace_Hover2.png"] forState:UIControlStateNormal];
+    }
 }
 
 
@@ -403,7 +405,7 @@
     [titleLabel release];
     [scrollView release];
     [tapGesture release];
-    [savedIndicator release];
+    [loveButton release];
     [createdAtLabel release];
     
     [super dealloc];

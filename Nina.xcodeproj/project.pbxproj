@@ -161,6 +161,9 @@
 		2887EFA515598D540086F433 /* NewPlaceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2887EFA315598D540086F433 /* NewPlaceController.xib */; };
 		2887EFA915598FCC0086F433 /* ConfirmNewPlaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2887EFA715598FCC0086F433 /* ConfirmNewPlaceController.m */; };
 		2887EFAA15598FCC0086F433 /* ConfirmNewPlaceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2887EFA815598FCC0086F433 /* ConfirmNewPlaceController.xib */; };
+		2887EFAE1559D5450086F433 /* AddPlace_Added.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887EFAB1559D5450086F433 /* AddPlace_Added.png */; };
+		2887EFAF1559D5450086F433 /* AddPlace_Hover2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887EFAC1559D5450086F433 /* AddPlace_Hover2.png */; };
+		2887EFB01559D5450086F433 /* AddPlace_OnPress2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2887EFAD1559D5450086F433 /* AddPlace_OnPress2.png */; };
 		288CAF0D14C3E91600004962 /* PerspectiveUserTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 288CAF0B14C3E91500004962 /* PerspectiveUserTableViewController.m */; };
 		288CAF0E14C3E91600004962 /* PerspectiveUserTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 288CAF0C14C3E91500004962 /* PerspectiveUserTableViewController.xib */; };
 		288CAF1D14C4A9BF00004962 /* 112-group.png in Resources */ = {isa = PBXBuildFile; fileRef = 288CAF1B14C4A9BF00004962 /* 112-group.png */; };
@@ -622,6 +625,9 @@
 		2887EFA615598FCC0086F433 /* ConfirmNewPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmNewPlaceController.h; sourceTree = "<group>"; };
 		2887EFA715598FCC0086F433 /* ConfirmNewPlaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmNewPlaceController.m; sourceTree = "<group>"; };
 		2887EFA815598FCC0086F433 /* ConfirmNewPlaceController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmNewPlaceController.xib; sourceTree = "<group>"; };
+		2887EFAB1559D5450086F433 /* AddPlace_Added.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddPlace_Added.png; sourceTree = "<group>"; };
+		2887EFAC1559D5450086F433 /* AddPlace_Hover2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddPlace_Hover2.png; sourceTree = "<group>"; };
+		2887EFAD1559D5450086F433 /* AddPlace_OnPress2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddPlace_OnPress2.png; sourceTree = "<group>"; };
 		288CAF0A14C3E91400004962 /* PerspectiveUserTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectiveUserTableViewController.h; sourceTree = "<group>"; };
 		288CAF0B14C3E91500004962 /* PerspectiveUserTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerspectiveUserTableViewController.m; sourceTree = "<group>"; };
 		288CAF0C14C3E91500004962 /* PerspectiveUserTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PerspectiveUserTableViewController.xib; sourceTree = "<group>"; };
@@ -1574,6 +1580,9 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				2887EFAB1559D5450086F433 /* AddPlace_Added.png */,
+				2887EFAC1559D5450086F433 /* AddPlace_Hover2.png */,
+				2887EFAD1559D5450086F433 /* AddPlace_OnPress2.png */,
 				2895EBF614E46CC7009F43F6 /* iPhoneDefaultShare_Button.png */,
 				2895EBE614E1DBA2009F43F6 /* action_sheet.png */,
 				2895EBE714E1DBA2009F43F6 /* action_sheet@2x.png */,
@@ -2033,6 +2042,9 @@
 				28AE640A1558545700E60EE1 /* PerspectiveTagTableViewController.xib in Resources */,
 				2887EFA515598D540086F433 /* NewPlaceController.xib in Resources */,
 				2887EFAA15598FCC0086F433 /* ConfirmNewPlaceController.xib in Resources */,
+				2887EFAE1559D5450086F433 /* AddPlace_Added.png in Resources */,
+				2887EFAF1559D5450086F433 /* AddPlace_Hover2.png in Resources */,
+				2887EFB01559D5450086F433 /* AddPlace_OnPress2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
