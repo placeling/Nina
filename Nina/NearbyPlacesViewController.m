@@ -372,7 +372,9 @@
             for (NSDictionary *place in [jsonDict objectForKey:@"places"]){
                 [nearbyPlaces addObject:place];                
             }
-            promptAdd = true;
+            if ( [NinaHelper getUsername] ){
+                promptAdd = true;
+            }
         }
         
 		[self.placesTableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
