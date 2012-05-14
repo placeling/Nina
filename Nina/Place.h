@@ -40,6 +40,7 @@
     NSInteger followingPerspectiveCount;
     
     BOOL bookmarked;
+    BOOL highlighted;
     
     NSMutableArray *placemarks;
     NSMutableArray *homePerspectives;
@@ -76,6 +77,7 @@
 
 @property (nonatomic, retain) UIImage *icon;
 @property (nonatomic, assign) BOOL bookmarked;
+@property (nonatomic, assign) BOOL highlighted;
 
 @property (nonatomic, assign) NSMutableArray *homePerspectives;
 @property (nonatomic, assign) NSMutableArray *followingPerspectives;

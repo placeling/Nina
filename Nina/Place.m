@@ -14,8 +14,8 @@
 @implementation Place
 
 @synthesize dirty, name, pid, user;
-@synthesize streetAddress, city, perspectiveCount, bookmarked, followingPerspectiveCount;
-@synthesize lat, lng, usersBookmarking;
+@synthesize streetAddress, city, perspectiveCount, followingPerspectiveCount;
+@synthesize lat, lng, usersBookmarking, bookmarked, highlighted;
 @synthesize googleId, phone, googlePlacesUrl, google_ref, thumbUrl, mapUrl;
 @synthesize categories, icon, tags;
 @synthesize homePerspectives,followingPerspectives,everyonePerspectives, placemarks;
@@ -46,6 +46,7 @@
     
     self.perspectiveCount = [[jsonDict objectForKeyNotNull:@"perspective_count"] intValue];
     self.bookmarked = [[jsonDict objectForKeyNotNull:@"bookmarked"] boolValue] ;
+    self.highlighted = [[jsonDict objectForKeyNotNull:@"highlighted"] boolValue] ;
     self.categories = [jsonDict objectForKeyNotNull:@"venue_types"];
     
     self.thumbUrl = [jsonDict objectForKey:@"thumb_url"];
@@ -82,6 +83,7 @@
      @"google_url", @"googlePlacesUrl",
      @"google_id", @"googleId",
      @"bookmarked", @"bookmarked",
+     @"highlighted", @"highlighted",
      @"users_bookmarking", @"usersBookmarking",
      @"following_perspective_count", @"followingPerspectiveCount",
      @"tags", @"tags",

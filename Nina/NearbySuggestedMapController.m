@@ -355,7 +355,11 @@
         for (Perspective *perspective in annotation.place.placemarks){
             if ( (!userFilter || [perspective.user.username isEqualToString:userFilter]) && (!tagFilter || [perspective.tags indexOfObject:tagFilter] != NSNotFound ) ){
                 if (annotation.place.bookmarked){
-                    pinView.image = [UIImage imageNamed:@"MyMarker.png"];
+                    if ( annotation.place.highlighted ) {
+                        pinView.image = [UIImage imageNamed:@"HilightMarker.png"];
+                    } else {
+                        pinView.image = [UIImage imageNamed:@"MyMarker.png"];
+                    }
                 } else {
                     pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
                 }

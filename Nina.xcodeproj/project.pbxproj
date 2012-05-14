@@ -277,6 +277,8 @@
 		28C05A9614BE0EA4004C7DF6 /* NearbySuggestedMapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C05A9414BE0EA3004C7DF6 /* NearbySuggestedMapController.m */; };
 		28C05A9714BE0EA4004C7DF6 /* NearbySuggestedMapController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C05A9514BE0EA3004C7DF6 /* NearbySuggestedMapController.xib */; };
 		28C4F535144262C700A66F32 /* NSDictionary+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C4F534144262C700A66F32 /* NSDictionary+Utility.m */; };
+		28C7311A1561AE7300E27DCA /* HilightMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C731181561AE7300E27DCA /* HilightMarker.png */; };
+		28C7311B1561AE7300E27DCA /* HilightMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C731191561AE7300E27DCA /* HilightMarker@2x.png */; };
 		28CA838C155DD57000E09B5C /* 74-location.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CA838B155DD57000E09B5C /* 74-location.png */; };
 		28E1372213EB12DF00C17A68 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E1372013EB12DF00C17A68 /* HomeViewController.m */; };
 		28E1372313EB12DF00C17A68 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28E1372113EB12DF00C17A68 /* HomeViewController.xib */; };
@@ -821,6 +823,8 @@
 		28C05A9514BE0EA3004C7DF6 /* NearbySuggestedMapController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbySuggestedMapController.xib; sourceTree = "<group>"; };
 		28C4F533144262C700A66F32 /* NSDictionary+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Utility.h"; sourceTree = "<group>"; };
 		28C4F534144262C700A66F32 /* NSDictionary+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Utility.m"; sourceTree = "<group>"; };
+		28C731181561AE7300E27DCA /* HilightMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HilightMarker.png; sourceTree = "<group>"; };
+		28C731191561AE7300E27DCA /* HilightMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HilightMarker@2x.png"; sourceTree = "<group>"; };
 		28CA838B155DD57000E09B5C /* 74-location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "74-location.png"; sourceTree = "<group>"; };
 		28E1371F13EB12DF00C17A68 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		28E1372013EB12DF00C17A68 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
@@ -1614,6 +1618,8 @@
 				2867ABEA14D0D3AF003994DB /* GasPick@2x.png */,
 				2867ABEB14D0D3AF003994DB /* GovernmentPick.png */,
 				2867ABEC14D0D3AF003994DB /* GovernmentPick@2x.png */,
+				28C731181561AE7300E27DCA /* HilightMarker.png */,
+				28C731191561AE7300E27DCA /* HilightMarker@2x.png */,
 				2867ABED14D0D3AF003994DB /* NightlifePick.png */,
 				2867ABEE14D0D3AF003994DB /* NightlifePick@2x.png */,
 				2867ABEF14D0D3B0003994DB /* ServicesPick.png */,
@@ -2062,6 +2068,8 @@
 				288540F6155AE50D00592D9F /* CategoryController.xib in Resources */,
 				28CA838C155DD57000E09B5C /* 74-location.png in Resources */,
 				28019A7B155ED11900489EAB /* google_place_mapping.json in Resources */,
+				28C7311A1561AE7300E27DCA /* HilightMarker.png in Resources */,
+				28C7311B1561AE7300E27DCA /* HilightMarker@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

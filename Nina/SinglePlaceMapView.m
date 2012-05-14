@@ -56,7 +56,11 @@
         //customPinView.rightCalloutAccessoryView = rightButton;
         
         if (annotation.place.bookmarked){
-            customPinView.image = [UIImage imageNamed:@"MyMarker.png"];
+            if ( annotation.place.highlighted ) {
+                customPinView.image = [UIImage imageNamed:@"HilightMarker.png"];
+            } else {
+                customPinView.image = [UIImage imageNamed:@"MyMarker.png"];
+            }
         } else {
             customPinView.image = [UIImage imageNamed:@"FriendMarker.png"];
         }
