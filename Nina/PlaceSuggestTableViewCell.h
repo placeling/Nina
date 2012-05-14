@@ -15,6 +15,7 @@
     IBOutlet UILabel *addressLabel;
     IBOutlet UILabel *distanceLabel;
     IBOutlet UILabel *usersLabel; 
+    UIImageView *hilightedView;
 }
 
 @property(nonatomic, retain) IBOutlet UIImageView *imageView;
@@ -22,5 +23,6 @@
 @property(nonatomic, retain) IBOutlet UILabel *addressLabel;
 @property(nonatomic, retain) IBOutlet UILabel *distanceLabel;
 @property(nonatomic, retain) IBOutlet UILabel *usersLabel; 
+@property(nonatomic, retain) IBOutlet UIImageView *hilightedView;
 
 @end

@@ -376,9 +376,14 @@
         pCell.addressLabel.text = place.streetAddress;
         pCell.distanceLabel.text = [NinaHelper metersToLocalizedDistance:place.distance];
         pCell.usersLabel.text = place.usersBookmarkingString;   
-        [StyleHelper styleQuickPickCell:pCell];    
+        [StyleHelper styleQuickPickCell:pCell]; 
         
-        pCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if ( place.highlighted ){
+            [pCell.hilightedView setHidden:false];
+        } else {
+            [pCell.hilightedView setHidden:true];
+        }
+        
         cell = pCell;
         
     }   
