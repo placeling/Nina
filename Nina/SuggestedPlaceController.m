@@ -144,6 +144,14 @@
                 [myPlaces addObject:object];
             }
         }
+        //check for highlighted places
+        for (int i=0; i < [myPlaces count]; i++){
+            if ( ((Place*)[myPlaces objectAtIndex:i]).highlighted ){
+                Place *place = [myPlaces objectAtIndex:i];
+                [myPlaces removeObjectAtIndex:i];
+                [myPlaces insertObject:place atIndex:0];
+            }
+        }
     } else if ( [(NSNumber*)objectLoader.userData intValue] == 81 ){
         self.followingLoaded = TRUE;
         [followingPlaces removeAllObjects];
@@ -154,6 +162,14 @@
                 [followingPlaces addObject:object];
             }
         }
+        //check for highlighted places
+        for (int i=0; i < [followingPlaces count]; i++){
+            if ( ((Place*)[followingPlaces objectAtIndex:i]).highlighted ){
+                Place *place = [followingPlaces objectAtIndex:i];
+                [followingPlaces removeObjectAtIndex:i];
+                [followingPlaces insertObject:place atIndex:0];
+            }
+        }
     } else if ( [(NSNumber*)objectLoader.userData intValue] == 82 ){
         self.popularLoaded = TRUE;
         [popularPlaces removeAllObjects];
@@ -162,6 +178,14 @@
                 self.ad = (Advertisement*)object;
             } else {
                 [popularPlaces addObject:object];
+            }
+        }
+        //check for highlighted places
+        for (int i=0; i < [popularPlaces count]; i++){
+            if ( ((Place*)[popularPlaces objectAtIndex:i]).highlighted ){
+                Place *place = [popularPlaces objectAtIndex:i];
+                [popularPlaces removeObjectAtIndex:i];
+                [popularPlaces insertObject:place atIndex:0];
             }
         }
     }
