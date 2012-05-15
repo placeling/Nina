@@ -10,13 +10,16 @@
 #import "EditPerspectiveViewController.h"
 #import "asyncimageview.h"
 #import <QuartzCore/QuartzCore.h>
+#import "GenericWebViewController.h"
+#import "FlurryAnalytics.h"
 
 @implementation MyPerspectiveCellViewController
 
-@synthesize imageScroll, footerView;
+@synthesize imageScroll, footerView, requestDelegate;
 @synthesize memoLabel, editPromptLabel;
 @synthesize perspective=_perspective;
 @synthesize footerLabel,modifyPicsButton,modifyNotesButton;
+@synthesize showMoreButton, highlightButton;
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
@@ -30,8 +33,12 @@
     
     heightCalc += textSize.height;
 
-    if (perspective.photos && perspective.photos.count > 0){
+    if ( perspective.photos && perspective.photos.count > 0 ){
         heightCalc += 160;
+    }
+    
+    if ( perspective.url ){
+        heightCalc += 17;
     }
     
     return heightCalc;
@@ -60,6 +67,18 @@
         cell.memoLabel.text = @""; //get rid of hipster lorem
         cell.memoLabel.hidden = TRUE;
     }
+    
+    if (perspective.url){
+        cell.showMoreButton.hidden = false;
+        verticalCursor += 5;
+        [cell.showMoreButton setTitle:@"More on Web" forState:UIControlStateNormal];
+        [cell.showMoreButton setFrame:CGRectMake(cell.showMoreButton.frame.origin.x, verticalCursor, cell.showMoreButton.frame.size.width , cell.showMoreButton.frame.size.height)];
+        [cell.showMoreButton addTarget:cell action:@selector(onWeb) forControlEvents:UIControlEventTouchUpInside];
+        verticalCursor += cell.showMoreButton.frame.size.height + 5;
+    } else {
+        cell.showMoreButton.hidden = true; 
+    }
+    
     
     if(perspective.photos && perspective.photos.count > 0){
         emptyPerspective = false;
@@ -102,11 +121,44 @@
         cell.editPromptLabel.hidden = false;
     }
     
+    if ( perspective.place.highlighted ){
+        [cell.highlightButton setImage:[UIImage imageNamed:@"HilightMarker.png"] forState:UIControlStateNormal];
+    } else {
+        [cell.highlightButton setImage:[UIImage imageNamed:@"MyMarker.png"] forState:UIControlStateNormal];
+    }
+    [cell.highlightButton addTarget:cell action:@selector(toggleHighlight:) forControlEvents:UIControlEventTouchUpInside];
+    
     [cell.footerView setFrame:CGRectMake(0, verticalCursor, cell.footerView.frame.size.width, cell.footerView.frame.size.height)];
     
 }
 
+-(IBAction)toggleHighlight:(id)sender{
+    if ( self.perspective.place.highlighted ){
+        [sender setImage:[UIImage imageNamed:@"MyMarker.png"] forState:UIControlStateNormal];
+        self.perspective.place.highlighted = false;
+        NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/unhighlight", self.perspective.place.pid];
+        
+        [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
+        
+    } else {
+        [sender setImage:[UIImage imageNamed:@"HilightMarker.png"] forState:UIControlStateNormal];
+        self.perspective.place.highlighted = true;
+        NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/highlight", self.perspective.place.pid];
+        
+        [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
 
+    }
+}
+
+
+-(IBAction)onWeb{
+    GenericWebViewController *webController = [[GenericWebViewController alloc] initWithUrl:self.perspective.url];
+    
+    [FlurryAnalytics logEvent:@"ON_WEB_CLICK" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"url", self.perspective.url, nil]];
+    
+    [self.requestDelegate.navigationController pushViewController:webController animated:true];
+    [webController release];
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -121,6 +173,8 @@
     [footerLabel release];
     [modifyPicsButton release];
     [modifyNotesButton release];
+    [showMoreButton release];
+    [highlightButton release];
     
     [super dealloc];
 }

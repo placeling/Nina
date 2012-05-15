@@ -13,16 +13,21 @@
 
 @interface MyPerspectiveCellViewController : UITableViewCell{
 
-    IBOutlet UIScrollView *imageScroll;
-    IBOutlet UILabel *memoLabel;
+    UIScrollView *imageScroll;
+    UILabel *memoLabel;
     Perspective *_perspective;
     
-    IBOutlet UIView *footerView;
+    UIView *footerView;
     
-    IBOutlet UILabel *footerLabel;
-    IBOutlet UILabel *editPromptLabel;
-    IBOutlet UIButton *modifyPicsButton;
-    IBOutlet UIButton *modifyNotesButton;
+    UILabel *footerLabel;
+    UILabel *editPromptLabel;
+    UIButton *modifyPicsButton;
+    UIButton *modifyNotesButton;
+    UIButton *showMoreButton;
+    UIButton *highlightButton;
+    
+    UIViewController *requestDelegate;
+    
 }
 
 @property(nonatomic,retain) IBOutlet UIScrollView *imageScroll;
@@ -35,6 +40,10 @@
 @property(nonatomic,retain) IBOutlet UIButton *modifyNotesButton;
 
 @property(nonatomic,retain) IBOutlet UIView *footerView;
+@property(nonatomic,retain) IBOutlet UIButton *showMoreButton;
+@property(nonatomic,retain) IBOutlet UIButton *highlightButton;
+
+@property(nonatomic,assign) UIViewController *requestDelegate;
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective;
 +(void) setupCell:(MyPerspectiveCellViewController*)cell forPerspective:(Perspective*)perspective;
