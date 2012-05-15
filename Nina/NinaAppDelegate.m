@@ -202,7 +202,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground){
         NSString *currentUser = [NinaHelper getUsername];
         if ( currentUser ){ //only update location if logged in
-            
+            [self localNotification];
             [self sendBackgroundLocationToServer:newLocation];
         }
     }
