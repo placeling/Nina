@@ -589,7 +589,7 @@ typedef enum {
         self.addressLabel.text = self.place.streetAddress;
         self.cityLabel.text = self.place.city;
 
-        self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@","];
+        self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@", "];
     } else {
         //puts empty values to show while data being downloaded
         self.nameLabel.text = @"";
