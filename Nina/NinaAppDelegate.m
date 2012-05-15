@@ -19,9 +19,7 @@
 #import "Crittercism.h"
 #import "PlacePageViewController.h"
 #import "MemberProfileViewController.h"
-
-
-//#import "DBManagedObjectCache.h"
+#import "ASIHTTPRequest.h"
 
 @implementation NinaAppDelegate
 
@@ -199,6 +197,38 @@ void uncaughtExceptionHandler(NSException *exception) {
     
 }
 
+-(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground){
+        NSString *currentUser = [NinaHelper getUsername];
+        if ( currentUser ){ //only update location if logged in
+            [self sendBackgroundLocationToServer:newLocation];
+        }
+    }
+}
+
+-(void) sendBackgroundLocationToServer:(CLLocation *)location
+{
+    // REMEMBER. We are running in the background if this is being executed.
+    // We can't assume normal network access.
+    // bgTask is defined as an instance variable of type UIBackgroundTaskIdentifier
+    
+    // Note that the expiration handler block simply ends the task. It is important that we always
+    // end tasks that we have started.
+    DLog(@"ACTIVE - updating server with location: %@", location);
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/v1/ios/update_location", [NinaHelper getHostname]];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
+    [request setPostValue:[NSString stringWithFormat:@"%f", location.coordinate.latitude] forKey:@"lat" ];
+    [request setPostValue:[NSString stringWithFormat:@"%f", location.coordinate.longitude] forKey:@"lng" ];
+    
+    [NinaHelper signRequest:request];
+    [request startAsynchronous];//fire and forget    
+    
+}
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
     if ( application.applicationState == UIApplicationStateActive ){
         DLog(@"ACTIVE - received notification of %@", userInfo);
@@ -233,12 +263,16 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
      */
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
+-(void) applicationDidEnterBackground:(UIApplication *) application
 {
-    /*
-     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-     If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-     */
+    // You will also want to check if the user would like background location
+    // tracking and check that you are on a device that supports this feature.
+    // Also you will want to see if location services are enabled at all.
+    // All this code is stripped back to the bare bones to show the structure
+    // of what is needed.
+    CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
+    [locationManager startMonitoringSignificantLocationChanges];
+    locationManager.delegate = self;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -248,11 +282,12 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
      */
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
+-(void) applicationDidBecomeActive:(UIApplication *) application
 {
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
+    CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
+    [locationManager stopMonitoringSignificantLocationChanges];
+    [locationManager startUpdatingLocation];
+    locationManager.delegate = nil;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
