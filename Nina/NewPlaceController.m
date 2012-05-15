@@ -233,7 +233,7 @@
 
 
 -(void)requestFailed:(ASIHTTPRequest *)request{
-    [NinaHelper handleBadRequest:request sender:self];
+    //[NinaHelper handleBadRequest:request sender:self];
 }
 
 
