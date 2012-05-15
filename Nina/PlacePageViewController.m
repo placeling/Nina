@@ -1129,6 +1129,7 @@ typedef enum {
                     if ( [item isKindOfClass:[UITableViewCell class]]){
                         MyPerspectiveCellViewController *mCell = (MyPerspectiveCellViewController*) item;                        
                         [MyPerspectiveCellViewController setupCell:mCell forPerspective:perspective];
+                        mCell.requestDelegate = self;
                         cell = mCell;
                     }
                 }
