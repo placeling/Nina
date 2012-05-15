@@ -256,9 +256,9 @@
     NSURL *url = [NSURL URLWithString:urlText];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:self.memoTextView.text forKey:@"memo"];
     
     if (facebookEnabled){    
-        [request setPostValue:self.memoTextView.text forKey:@"memo"];
         [request setPostValue:@"true" forKey:@"fb_post"];
     }
     
