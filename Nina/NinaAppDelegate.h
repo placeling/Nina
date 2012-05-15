@@ -21,6 +21,6 @@
 @property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
 
 -(void) sendBackgroundLocationToServer:(CLLocation*)location;
--(void)localNotification;
+-(void)localNotification:(CLLocation *)newLocation;
 
 @end

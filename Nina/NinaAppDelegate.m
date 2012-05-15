@@ -202,16 +202,16 @@ void uncaughtExceptionHandler(NSException *exception) {
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground){
         NSString *currentUser = [NinaHelper getUsername];
         if ( currentUser ){ //only update location if logged in
-            [self localNotification];
+            [self localNotification:newLocation];
             [self sendBackgroundLocationToServer:newLocation];
         }
     }
 }
 
--(void)localNotification{
+-(void)localNotification:(CLLocation *)newLocation{
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     
-    localNotification.alertBody = @"LOCAL: new location";
+    localNotification.alertBody = [NSString stringWithFormat:@"LOCAL: new location with accuracy %f", newLocation.horizontalAccuracy];
     localNotification.soundName = UILocalNotificationDefaultSoundName;
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
@@ -234,6 +234,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
     [request setPostValue:[NSString stringWithFormat:@"%f", location.coordinate.latitude] forKey:@"lat" ];
     [request setPostValue:[NSString stringWithFormat:@"%f", location.coordinate.longitude] forKey:@"lng" ];
+        [request setPostValue:[NSString stringWithFormat:@"%f", location.horizontalAccuracy] forKey:@"accuracy" ];
     
     [NinaHelper signRequest:request];
     [request startAsynchronous];//fire and forget    
@@ -281,9 +282,11 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
     // Also you will want to see if location services are enabled at all.
     // All this code is stripped back to the bare bones to show the structure
     // of what is needed.
-    CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
-    [locationManager startMonitoringSignificantLocationChanges];
-    locationManager.delegate = self;
+    if ( [NinaHelper getUsername] ){
+        CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
+        [locationManager startMonitoringSignificantLocationChanges];
+        locationManager.delegate = self;
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -291,14 +294,16 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
     /*
      Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
      */
-}
-
--(void) applicationDidBecomeActive:(UIApplication *) application
-{
+    DLog(@"App Became foreground with statw %@", [UIApplication sharedApplication].applicationState);
     CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
     [locationManager stopMonitoringSignificantLocationChanges];
     [locationManager startUpdatingLocation];
     locationManager.delegate = nil;
+}
+
+-(void) applicationDidBecomeActive:(UIApplication *) application
+{
+    DLog(@"App Became active with statw %@", [UIApplication sharedApplication].applicationState);
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
