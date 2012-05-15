@@ -167,6 +167,15 @@
         cell.expanded = true;
     }
     
+    if ( [cell.requestDelegate isKindOfClass:[MemberProfileViewController class]] ){
+        //profile view, don't show images
+        cell.userImage.hidden = true;
+        [cell.loveButton setFrame:CGRectMake(cell.loveButton.frame.origin.x, 16, cell.loveButton.frame.size.width, cell.loveButton.frame.size.height)];
+    } else { 
+        cell.userImage.hidden = false; 
+        [cell.loveButton setFrame:CGRectMake(cell.loveButton.frame.origin.x, 56, cell.loveButton.frame.size.width, cell.loveButton.frame.size.height)];
+    }
+    
     [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"profile.png"]];
     
     [cell.userImage.layer setBorderColor: [[UIColor whiteColor] CGColor]];
@@ -219,22 +228,28 @@
         cell.remarkersLabel.hidden = true;
     }
     
-    if ( !hasContent ){
-        //can't star own perspective
-        [cell.shareSheetButton setHidden:true];
-        [cell.loveButton setHidden:true];
-    } else {
-        [cell.shareSheetButton setHidden:false];
+    if ( perspective.mine ){
         [cell.loveButton setHidden:false];
-        if(perspective.starred){            
-            [cell.loveButton setImage:[UIImage imageNamed:@"AddPlace_Hover2.png"] forState:UIControlStateNormal];
+        if (perspective.place && perspective.place.highlighted && cell.userImage.hidden){
+            [cell.loveButton setImage:[UIImage imageNamed:@"HilightMarker.png"] forState:UIControlStateNormal];
         } else {
-            [cell.loveButton setImage:[UIImage imageNamed:@"AddPlace_Added.png"] forState:UIControlStateNormal];
+            [cell.loveButton setImage:[UIImage imageNamed:@"MyMarker.png"] forState:UIControlStateNormal];
         }
-        if (perspective.mine) {
+        [cell.loveButton addTarget:cell action:@selector(toggleHighlight:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        if ( !hasContent ){
+            //can't star own perspective
+            [cell.shareSheetButton setHidden:true];
             [cell.loveButton setHidden:true];
         } else {
+            [cell.loveButton addTarget:cell action:@selector(toggleFavourite:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.shareSheetButton setHidden:false];
             [cell.loveButton setHidden:false];
+            if(perspective.starred){            
+                [cell.loveButton setImage:[UIImage imageNamed:@"AddPlace_Hover2.png"] forState:UIControlStateNormal];
+            } else {
+                [cell.loveButton setImage:[UIImage imageNamed:@"AddPlace_Added.png"] forState:UIControlStateNormal];
+            }
         }
     }
     
@@ -347,7 +362,7 @@
     }
 }
 
--(IBAction)toggleFavourite{
+-(IBAction)toggleFavourite:(id)sender{
     // Call url to get profile details                
     RKObjectManager* objectManager = [RKObjectManager sharedManager];       
     
@@ -366,6 +381,23 @@
             loader.userData = [NSNumber numberWithInt:5]; //use as a tag
         }];
         [self.loveButton setImage:[UIImage imageNamed:@"AddPlace_Hover2.png"] forState:UIControlStateNormal];
+    }
+}
+
+-(IBAction)toggleHighlight:(id)sender{
+    if ( self.perspective.place.highlighted ){
+        [sender setImage:[UIImage imageNamed:@"MyMarker.png"] forState:UIControlStateNormal];
+        self.perspective.place.highlighted = false;
+        NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/unhighlight", self.perspective.place.pid];
+        
+        [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
+        
+    } else {
+        [sender setImage:[UIImage imageNamed:@"HilightMarker.png"] forState:UIControlStateNormal];
+        self.perspective.place.highlighted = true;
+        NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/highlight", self.perspective.place.pid];
+        
+        [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
     }
 }
 

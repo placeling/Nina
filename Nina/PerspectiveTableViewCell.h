@@ -50,7 +50,9 @@
 @property(nonatomic, assign) bool expanded;
 
 -(IBAction)showActionSheet;
--(IBAction)toggleFavourite;
+-(IBAction)toggleFavourite:(id)sender;
+-(IBAction)toggleHighlight:(id)sender;
+    
 -(IBAction)expandCell;
 -(IBAction)onWeb;
 
@@ -60,5 +62,6 @@
 +(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective  userSource:(BOOL)userSource;
 
 -(IBAction) showAuthoringUser;
+
 
 @end

@@ -204,7 +204,7 @@
             self.username = self.user.username;
         }
         
-        self.navigationItem.title = @"Profile";
+        self.navigationItem.title = self.username;
         loadingMore = true;
         
         // Call url to get profile details                
