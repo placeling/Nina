@@ -17,7 +17,7 @@
 #import <RestKit/RestKit.h>
 #import "PerspectiveDisplayProtocol.h"
 
-@interface MemberProfileViewController : ApplicationController<ASIHTTPRequestDelegate, LoginControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol> {
+@interface MemberProfileViewController : ApplicationController<ASIHTTPRequestDelegate, LoginControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol, UIAlertViewDelegate> {
 	NSString *username;
 	User *_user;
     BOOL loadingMore;

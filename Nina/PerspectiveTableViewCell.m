@@ -295,7 +295,7 @@
                      initWithTitle:nil message:alertMessage 
                      delegate:self.requestDelegate cancelButtonTitle:@"Not Now" 
                      otherButtonTitles:@"Let's Go", nil];
-        baseAlert.tag = 778;        
+        baseAlert.tag = 0;        
         [baseAlert show];
         [baseAlert release];
     } else {
@@ -363,7 +363,23 @@
 }
 
 -(IBAction)toggleFavourite:(id)sender{
-    // Call url to get profile details                
+    // Call url to get profile details   
+    
+    NSString *currentUser = [NinaHelper getUsername];
+    
+    if ( !currentUser ) {
+        UIAlertView *baseAlert;
+        NSString *alertMessage = @"Sign up or log in to share or flag this placemark";
+        baseAlert = [[UIAlertView alloc] 
+                     initWithTitle:nil message:alertMessage 
+                     delegate:self.requestDelegate cancelButtonTitle:@"Not Now" 
+                     otherButtonTitles:@"Let's Go", nil];
+        baseAlert.tag = 0; 
+        [baseAlert show];
+        [baseAlert release];
+        return;
+    } 
+    
     RKObjectManager* objectManager = [RKObjectManager sharedManager];       
     
     if (self.perspective.starred){
