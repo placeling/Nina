@@ -29,7 +29,7 @@
 
 @implementation NearbySuggestedMapController
 
-@synthesize mapView=_mapView, spinnerView;
+@synthesize mapView=_mapView, spinnerView, place_id;
 @synthesize locationManager, bottomToolBar, usernameButton,hashtagButton, placemarkButton;
 @synthesize showTagsButton, showPeopleButton;
 
@@ -144,7 +144,18 @@
         
         PlaceMark *placemark=[[PlaceMark alloc] initWithPlace:place];
         [self.mapView addAnnotation:placemark];
+        
         [placemark release];
+        
+        if ( self.place_id && [place.pid isEqualToString:self.place_id] ){
+            [self.mapView selectAnnotation:placemark animated:FALSE];
+            CLLocationCoordinate2D coord;
+            coord.latitude = [place.lat floatValue];
+            coord.longitude = [place.lng floatValue];
+            self.mapView.centerCoordinate = coord;
+            
+            self.place_id = nil;
+        }
     }
     [toAdd release];
 }
@@ -152,6 +163,15 @@
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     [super objectLoader:objectLoader didLoadObjects:objects];
         
+    
+    if ( [(NSNumber*)objectLoader.userData intValue] == 83 ){
+        [myPlaces removeAllObjects];
+        for (Place* object in objects){
+            object.placemarks = object.homePerspectives;
+            [myPlaces addObject:object];
+        }
+        [self findNearbyPlaces];
+    }
     
     for ( Place *place in [self places] ){
         bool found = false;
@@ -166,7 +186,6 @@
             [placeSuperset addObject:place];
         }
     }
-    
     
     [self.spinnerView stopAnimating];
     self.spinnerView.hidden = true;
@@ -205,6 +224,7 @@
     [placeSuperset release];
     [hashtagButton release];
     [showTagsButton release];
+    [place_id release];
     [super dealloc];
 }
 
@@ -508,6 +528,8 @@
     MKCoordinateRegion region = self.mapView.region;
     CLLocation *location = locationManager.location;    
     
+    RKObjectManager* objectManager = [RKObjectManager sharedManager];
+    
     if ( origin.latitude == 0.0 && origin.longitude == 0.0 ){
         region.center = location.coordinate;  
     } else {
@@ -527,12 +549,20 @@
     
     [self.mapView setRegion:region animated:YES];
     
+    if ( self.place_id ){
+        NSString *requestUrl = [NSString stringWithFormat:@"/v1/places/%@", self.place_id];
+        [objectManager loadObjectsAtResourcePath:requestUrl delegate:self block:^(RKObjectLoader* loader) {     
+            loader.objectMapping = [Place getObjectMapping];
+            loader.userData = [NSNumber numberWithInt:83];
+        }];
     
-    if ( ![self dataLoaded] ){
-        //if a set of places hasn't already been set, get them for current location
-        [self loadContent];
-    } else {
-        [self drawMapPlaces];
+    } else {    
+        if ( ![self dataLoaded] ){
+            //if a set of places hasn't already been set, get them for current location
+            [self loadContent];
+        } else {
+            [self drawMapPlaces];
+        }
     }
 }
 

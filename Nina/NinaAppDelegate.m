@@ -19,6 +19,7 @@
 #import "Crittercism.h"
 #import "PlacePageViewController.h"
 #import "MemberProfileViewController.h"
+#import "NearbySuggestedMapController.h"
 #import "ASIHTTPRequest.h"
 
 @implementation NinaAppDelegate
@@ -147,11 +148,15 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         } else if ( [[url host] isEqualToString:@"places"] ){
             NSString *placeId = [[url path] stringByReplacingOccurrencesOfString:@"/" withString:@""];
-            PlacePageViewController *placeView = [[PlacePageViewController alloc] init];
-            placeView.place_id = placeId;
-            [self.navigationController pushViewController:placeView animated:false];
-            [placeView release];
             
+            NearbySuggestedMapController *nearbySuggestedMapController = [[NearbySuggestedMapController alloc] init];    
+            nearbySuggestedMapController.category = @"";
+            nearbySuggestedMapController.place_id = placeId;
+            nearbySuggestedMapController.navTitle = @"My Map";
+            nearbySuggestedMapController.initialIndex = 0; //start on my bookmarks
+            [self.navigationController popToRootViewControllerAnimated:false];
+            [self.navigationController pushViewController:nearbySuggestedMapController animated:false];
+            [nearbySuggestedMapController release];
         }
         return true;
     }
@@ -294,7 +299,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
     /*
      Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
      */
-    DLog(@"App Became foreground with statw %@", [UIApplication sharedApplication].applicationState);
 }
 
 -(void) applicationDidBecomeActive:(UIApplication *) application

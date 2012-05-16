@@ -47,6 +47,8 @@
     NSString *userFilter;
     NSString *tagFilter;
     
+    NSString *place_id;
+    
     CMPopTipView *usernameButton;
     CMPopTipView *hashtagButton;
     
@@ -55,6 +57,7 @@
     bool viewLoaded;
 }
 
+@property(nonatomic, retain) NSString *place_id;
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;
 @property(nonatomic, retain) IBOutlet UIActivityIndicatorView *spinnerView;
 @property(nonatomic, retain) CLLocationManager *locationManager;
