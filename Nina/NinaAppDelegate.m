@@ -157,6 +157,10 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self.navigationController popToRootViewControllerAnimated:false];
             [self.navigationController pushViewController:nearbySuggestedMapController animated:false];
             [nearbySuggestedMapController release];
+            
+            NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/unhighlight", placeId]; //unhilight, so we don't send again
+            
+            [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
         }
         return true;
     }
