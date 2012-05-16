@@ -295,15 +295,17 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
      Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
      */
     DLog(@"App Became foreground with statw %@", [UIApplication sharedApplication].applicationState);
-    CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
-    [locationManager stopMonitoringSignificantLocationChanges];
-    [locationManager startUpdatingLocation];
-    locationManager.delegate = nil;
 }
 
 -(void) applicationDidBecomeActive:(UIApplication *) application
 {
     DLog(@"App Became active with statw %@", [UIApplication sharedApplication].applicationState);
+    if ( [UIApplication sharedApplication].applicationState != UIApplicationStateBackground ){
+        CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
+        [locationManager stopMonitoringSignificantLocationChanges];
+        [locationManager startUpdatingLocation];
+        locationManager.delegate = nil;
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
