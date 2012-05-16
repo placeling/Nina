@@ -212,7 +212,12 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSString *currentUser = [NinaHelper getUsername];
         if ( currentUser ){ //only update location if logged in
             [self localNotification:newLocation];
-            [self sendBackgroundLocationToServer:newLocation];
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];            
+            if ( [defaults objectForKey:@"ios_notification_token"] ){
+                //only send if possible
+                [self sendBackgroundLocationToServer:newLocation];            
+            }
         }
     }
 }
