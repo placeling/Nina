@@ -228,7 +228,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 -(void)localNotification:(CLLocation *)newLocation{
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     
-    localNotification.alertBody = [NSString stringWithFormat:@"LOCAL: new location with accuracy %f", newLocation.horizontalAccuracy];
+    localNotification.alertBody = [NSString stringWithFormat:@"LOCAL: new location with accuracy %f, and speed %f", newLocation.horizontalAccuracy, newLocation.speed];
     localNotification.soundName = UILocalNotificationDefaultSoundName;
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
