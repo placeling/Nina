@@ -363,6 +363,8 @@
         } else {           
             pinView.annotation = annotation;            
         }
+        pinView.hidden = false;
+        
         pinView.canShowCallout = YES;
         
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -394,6 +396,9 @@
             }
         }
         pinView.image = [UIImage imageNamed:@"GreyedMarker.png"];
+        if ( tagFilter || userFilter ){
+            pinView.hidden = true;
+        }
         pinView.tag = 0;
         annotation.tag = 0;
         return pinView;
