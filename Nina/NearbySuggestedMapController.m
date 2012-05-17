@@ -353,19 +353,19 @@
         // try to dequeue an existing pin view first
         static NSString* annotationIdentifier = @"placeAnnotationIdentifier";
         
-        MKPinAnnotationView* pinView = (MKPinAnnotationView *)        
+        MKAnnotationView* pinView = (MKAnnotationView *)        
         [self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
         
         if (!pinView) {            
             // if an existing pin view was not available, create one
-            pinView = [[[MKPinAnnotationView alloc]
+            pinView = [[[MKAnnotationView alloc]
                         initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
         } else {           
             pinView.annotation = annotation;            
         }
         pinView.hidden = false;
-        
         pinView.canShowCallout = YES;
+        pinView.centerOffset = CGPointMake(10, -20);
         
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         rightButton.tag = [placeSuperset indexOfObjectIdenticalTo:annotation.place];

@@ -44,9 +44,10 @@
     // try to dequeue an existing pin view first
     static NSString* AnnotationIdentifier = @"placeAnnotationIdentifier";
 
-    MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
+    MKAnnotationView* customPinView = [[[MKAnnotationView alloc]
                                            initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier] autorelease];
     customPinView.canShowCallout = YES;
+    customPinView.draggable = false;
     
     if( [annotation isKindOfClass:[PlaceMark class]] ){
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -64,6 +65,7 @@
         } else {
             customPinView.image = [UIImage imageNamed:@"FriendMarker.png"];
         }
+        customPinView.centerOffset = CGPointMake(10, -20);
         return customPinView;
     }else {
         return nil;

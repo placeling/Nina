@@ -146,17 +146,18 @@
         // try to dequeue an existing pin view first
         static NSString* annotationIdentifier = @"placeAnnotationIdentifier";
         
-        MKPinAnnotationView* pinView = (MKPinAnnotationView *)        
+        MKAnnotationView* pinView = (MKAnnotationView *)        
         [self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
 
         if (!pinView) {            
             // if an existing pin view was not available, create one
-            pinView = [[[MKPinAnnotationView alloc]
+            pinView = [[[MKAnnotationView alloc]
                                                    initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
         } else {           
             pinView.annotation = annotation;            
         }
         pinView.canShowCallout = YES;
+        pinView.draggable = false;
         
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         rightButton.tag = [nearbyMarks indexOfObjectIdenticalTo:annotation.place];
@@ -170,6 +171,7 @@
         } else {
             pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
         }
+        pinView.centerOffset = CGPointMake(10, -20);
         return pinView;
     } else {
         return nil;
