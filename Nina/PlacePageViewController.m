@@ -932,9 +932,9 @@ typedef enum {
     if ( [self numberOfSectionBookmarks] == 0 ){
         //label.textColor = [UIColor grayColor];
         if (self.segmentedControl.selectedSegmentIndex == 1) {
-            return [NSString stringWithFormat:@"No one you follow has placemarks here"];
+            return [NSString stringWithFormat:@"No one you follow has a placemark here"];
         } else {
-            return [NSString stringWithFormat:@"No one has placemarks here yet"];
+            return [NSString stringWithFormat:@"No one has a placemark here yet"];
         }
         //label.text = [NSString stringWithFormat:@"0 bookmarks so far"];
     } else if ( [self numberOfSectionBookmarks] == 1) {
