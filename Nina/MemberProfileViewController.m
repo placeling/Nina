@@ -28,6 +28,7 @@
 -(void) blankLoad;
 -(void) toggleFollow;
 -(IBAction)editUser;
+-(void) deletePerspective:(Perspective*)perspective;
 
 @end
 
@@ -687,6 +688,7 @@
                     break;
                 }
             }    
+            
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
@@ -719,6 +721,30 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath 
+{
+    if ( [self.perspectives count] >= indexPath.row ){
+        Perspective *perspective = [[self perspectives] objectAtIndex:indexPath.row];
+        return perspective.mine;
+    } else {
+        return false;
+    }
+    
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Perspective *perspective = [[self perspectives] objectAtIndex:indexPath.row];
+        DLog(@"Deleting perspective");
+        
+        [self deletePerspective:perspective];
+        self.user.placeCount = [NSNumber numberWithInt:[self.user.placeCount intValue] -1];
+        [self.tableView reloadData];        
+    }    
+}
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     CGPoint offset = aScrollView.contentOffset;
@@ -744,6 +770,36 @@
     }
 }
 
+
+-(void) deletePerspective:(Perspective*)perspective{
+    
+    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/", [NinaHelper getHostname], perspective.place.pid];
+    
+    NSURL *url = [NSURL URLWithString:urlText];
+    
+    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
+    
+    request.delegate = self;
+    request.tag = 6;
+    
+    for (Perspective *p in self.user.perspectives){
+        if ( [p.perspectiveId isEqualToString:perspective.perspectiveId] ){
+            [self.user.perspectives removeObject:p];
+            break;
+        }
+    }
+    
+    for (Perspective *p in perspectives){
+        if ( [p.perspectiveId isEqualToString:perspective.perspectiveId] ){
+            [perspectives removeObject:p];
+            break;
+        }
+    }
+    
+    [request setRequestMethod:@"DELETE"];
+    [NinaHelper signRequest:request];
+    [request startAsynchronous];
+}
 
 
 - (void)dealloc{
