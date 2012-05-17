@@ -48,10 +48,8 @@
 }
 
 +(void) styleMapImage:(UIButton*)button{
-    [button.layer setCornerRadius:4.0f];
-    [button.layer setMasksToBounds:YES];
-    button.layer.borderWidth = 1.0f;
-    button.layer.borderColor = [UIColor colorWithRed:203.0f/255.0f green:196.0f/255.0f blue:151.0f/255.0f alpha:1.0f].CGColor;
+    [button.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+    [button.layer setBorderWidth: 3.0];
 }
 
 +(void) styleTagButton:(UIButton*)button{
