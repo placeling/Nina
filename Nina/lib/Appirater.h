@@ -103,7 +103,7 @@ extern NSString *const kAppiraterDeclinedToRate;
  Users need to 'use' the same version of the app this many times before
  before they will be prompted to rate it.
  */
-#define APPIRATER_USES_UNTIL_PROMPT		1		// integer
+#define APPIRATER_USES_UNTIL_PROMPT		6		// integer
 
 /*
  A significant event can be anything you want to be in your app. In a
@@ -123,13 +123,13 @@ extern NSString *const kAppiraterDeclinedToRate;
  'Remind me later'. This value specifies how long (in days) Appirater
  will wait before reminding them.
  */
-#define APPIRATER_TIME_BEFORE_REMINDING		2	// double
+#define APPIRATER_TIME_BEFORE_REMINDING		3	// double
 
 /*
  'YES' will show the Appirater alert everytime. Useful for testing how your message
  looks and making sure the link to your app's review page works.
  */
-#define APPIRATER_DEBUG				YES
+#define APPIRATER_DEBUG				NO
 
 @interface Appirater : NSObject <UIAlertViewDelegate, FBDialogDelegate> {
 
