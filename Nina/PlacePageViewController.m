@@ -601,22 +601,19 @@ typedef enum {
 
 -(void) loadMap{    
     // Call asychronously to get image
-    NSString* lat = [NSString stringWithFormat:@"%f",self.place.location.coordinate.latitude];
-    NSString* lng = [NSString stringWithFormat:@"%f",self.place.location.coordinate.longitude];    
-    
+    NSString *mapURL = self.place.mapUrl;
     NSString* imageMapWidth = [NSString stringWithFormat:@"%i", (int)self.mapButtonView.frame.size.width ];
     NSString* imageMapHeight = [NSString stringWithFormat:@"%i", (int)self.mapButtonView.frame.size.height ];
     
-    NSString *mapURL;
+    mapURL = [mapURL stringByReplacingOccurrencesOfString:@"size=100x100" withString:[NSString stringWithFormat:@"size=%@x%@", imageMapHeight, imageMapWidth]];
     
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
-        mapURL = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@,%@&zoom=15&size=%@x%@&&markers=color:red%%7C%@,%@&sensor=false&scale=2", lat, lng, imageMapWidth, imageMapHeight, lat, lng];
-    } else {
-        mapURL = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@,%@&zoom=15&size=%@x%@&&markers=color:red%%7C%@,%@&sensor=false", lat, lng, imageMapWidth, imageMapHeight, lat, lng];
+        mapURL = [NSString stringWithFormat:@"%@&scale=2", mapURL];
     }
     
+    //want to resize the map to what we have
     NSURL *url = [NSURL URLWithString:mapURL];
-    [self.mapButtonView setImageWithURL:url];
+    [self.mapButtonView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"profilePattern.png@2x"]];
 }
 
 -(IBAction)tagSearch:(id)sender{
