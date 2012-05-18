@@ -189,6 +189,11 @@
     }
     
     placePageViewController.place = place;
+    
+    if ( ![self.user.username isEqualToString:[NinaHelper getUsername]] ){
+        placePageViewController.initialSelectedIndex = [NSNumber numberWithInt:2];
+        placePageViewController.referrer = self.user.username;
+    }
         
     [self.navigationController pushViewController:placePageViewController animated:YES];
     [placePageViewController release];
