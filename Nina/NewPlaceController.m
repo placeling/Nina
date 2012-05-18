@@ -117,15 +117,15 @@
 -(void)confirmPlace{
     
     
-    if ( [self.placeCategoryField.text length] == 0){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"error" message:@"Please give a place name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    if ( [self.placeNameField.text length] == 0){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Please give a place name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alertView show];
         [alertView release];
         return;
     } 
     
-    if ( [self.placeNameField.text length] ==0 ){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"error" message:@"Please select a category for the place" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    if ( [self.placeCategoryField.text length] ==0 ){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Please select a category for the place" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alertView show];
         [alertView release];
         return;
