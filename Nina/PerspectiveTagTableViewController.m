@@ -187,7 +187,7 @@
         }
         [pCell.textLabel setFont:[UIFont systemFontOfSize:12]];
         pCell.textLabel.textAlignment = UITextAlignmentCenter;
-        pCell.textLabel.text = @"No one has placemarked a location around here yet";
+        pCell.textLabel.text = @"No one has put a hashtag on a location around here yet";
         [StyleHelper styleGenericTableCell:pCell];
         pCell.userInteractionEnabled = false;
         self.tableView.userInteractionEnabled = false;
