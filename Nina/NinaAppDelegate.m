@@ -212,8 +212,22 @@ void uncaughtExceptionHandler(NSException *exception) {
 -(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground){
+        DLog(@"Got background location update: %@", newLocation);
         NSString *currentUser = [NinaHelper getUsername];
+        NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        if ( [defaults objectForKey:@"last_location_update"]  ){
+            NSNumber *timestamp = [defaults objectForKey:@"last_location_update"];
+            if ( currentTime + (60*5) > [timestamp floatValue] ){
+                return; //skip if last was sent less than 5 min ago
+            }
+        }
+        
+        
         if ( currentUser ){ //only update location if logged in
+            DLog(@"Processing updated location");
             [self localNotification:newLocation];
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];            
@@ -221,6 +235,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                 //only send if possible
                 [self sendBackgroundLocationToServer:newLocation];            
             }
+            
+            [defaults setObject:[NSNumber numberWithDouble: currentTime] forKey:@"last_location_update"];
+            [defaults synchronize];
+            
         }
     }
 }
