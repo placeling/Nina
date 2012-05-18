@@ -15,6 +15,7 @@
 #import "NSString+SBJSON.h"
 #import "asyncimageview.h"
 #import <QuartzCore/QuartzCore.h>
+#import <AssetsLibrary/ALAssetsLibrary.h>
 
 @interface EditPerspectiveViewController()
 -(NSNumber*) uploadImageAndReturnTag:(UIImage*)mainImage;
@@ -405,8 +406,12 @@
     DLog(@"Cancelled image picking");
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img editingInfo:(NSDictionary *)editingInfo{
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     [picker dismissModalViewControllerAnimated:YES];
+    UIImage *img = [[info objectForKey:UIImagePickerControllerOriginalImage] retain];
+    
+    ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
+    [library writeImageToSavedPhotosAlbum:[img CGImage] metadata:[info objectForKey:UIImagePickerControllerMediaMetadata]  completionBlock:nil];
     
     NSNumber *tag = [self uploadImageAndReturnTag:img];
     
@@ -433,6 +438,7 @@
     [self.perspective.photos addObject:photo];
     self.perspective.modified = TRUE;
     [photo release];
+    [img release];
     
     //create an image for upload, bounded by 960, since that's the max the thing will take anyway
     [self refreshImages];
