@@ -1089,6 +1089,7 @@ typedef enum {
             cell.textLabel.textColor = self.addressLabel.textColor;
             cell.textLabel.font = [UIFont fontWithName:self.nameLabel.font.fontName size:13];
             cell.textLabel.textAlignment = UITextAlignmentCenter;
+            cell.userInteractionEnabled = false;
         }
    
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -1106,6 +1107,7 @@ typedef enum {
             cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
         }
     } 
+    cell.userInteractionEnabled = true;
    
     
     if (cell == nil) {
@@ -1117,6 +1119,7 @@ typedef enum {
                     cell = item;
                 }
             }             
+            cell.userInteractionEnabled = false;
         }else {
             if ( self.perspectiveType == home && perspective.mine){
                 myPerspective = perspective;
