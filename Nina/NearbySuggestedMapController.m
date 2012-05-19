@@ -391,9 +391,9 @@
             } else {
                 perspective.hidden = true;
             }
-            if (annotation.tag == 1){
-                return pinView;
-            }
+        }
+        if (annotation.tag == 1){
+            return pinView;
         }
         pinView.image = [UIImage imageNamed:@"GreyedMarker.png"];
         if ( tagFilter || userFilter ){
