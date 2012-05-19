@@ -195,7 +195,7 @@
     }
     
     NSString *currentUser = [NinaHelper getUsername];
-    if ( !currentUser ){
+    if ( !currentUser  && self.initialIndex != 0){
         //not logged in, show popular
         self.myLoaded = true;
         self.followingLoaded = true;
