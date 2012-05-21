@@ -225,7 +225,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         }
         
-        
         if ( currentUser ){ //only update location if logged in
             DLog(@"Processing updated location");
             [self localNotification:newLocation];
@@ -246,7 +245,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 -(void)localNotification:(CLLocation *)newLocation{
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     
-    localNotification.alertBody = [NSString stringWithFormat:@"LOCAL: new location with accuracy %f, and speed %f", newLocation.horizontalAccuracy, newLocation.speed];
+    localNotification.alertBody = [NSString stringWithFormat:@"LOCAL: background location update with accuracy %f", newLocation.horizontalAccuracy];
     localNotification.soundName = UILocalNotificationDefaultSoundName;
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
@@ -334,7 +333,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
 
 -(void) applicationDidBecomeActive:(UIApplication *) application
 {
-    DLog(@"App Became active with statw %@", [UIApplication sharedApplication].applicationState);
+    DLog(@"App Became active with state %@", [UIApplication sharedApplication].applicationState);
     if ( [UIApplication sharedApplication].applicationState != UIApplicationStateBackground ){
         CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
         [locationManager stopMonitoringSignificantLocationChanges];
