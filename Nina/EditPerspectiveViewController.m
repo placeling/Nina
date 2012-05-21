@@ -72,7 +72,7 @@
             //delayTip.delegate = self;
             [delayTip presentPointingAtView:self.delayButton inView:self.memoTextView animated:true];
         }
-        [self.delayButton setImage:[UIImage imageNamed:@"11-clock.png"] forState:UIControlStateNormal];
+        [self.delayButton setImage:[UIImage imageNamed:@"TimerIcon.png"] forState:UIControlStateNormal];
         [defaults setObject:[NSNumber numberWithBool:true] forKey:@"delay_perspective_tip"];
         [defaults synchronize];
     } else {
