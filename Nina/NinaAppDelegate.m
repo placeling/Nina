@@ -16,12 +16,12 @@
 #import "Place.h"
 #import "Perspective.h"
 #import "Advertisement.h"
-#import "Crittercism.h"
 #import "PlacePageViewController.h"
 #import "MemberProfileViewController.h"
 #import "NearbySuggestedMapController.h"
 #import "ASIHTTPRequest.h"
 #import "Appirater.h"
+#import "TestFlight.h"
 
 @implementation NinaAppDelegate
 
@@ -30,10 +30,6 @@
 @synthesize facebook;
 
 @synthesize navigationController=_navigationController;
-
-void uncaughtExceptionHandler(NSException *exception) {
-    [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
@@ -83,12 +79,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     
     if ([NinaHelper isProductionRun]){
-        NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
         [FlurryAnalytics startSession:@"TF6YH8QMRQDXBXR9APF9"];
         
-        [Crittercism initWithAppID: @"4f2892c1b093157f7200076d"
-                            andKey:@"4f2892c1b093157f7200076dhknlm6lr"
-                         andSecret:@"bdrh0sax6ofnuwjq8zvl47omwirpe9sq"];
+        [TestFlight takeOff:@"d001684b760a9ddd2273aa77d0f478e6_MjUwNjQyMDExLTA5LTE0IDIwOjQyOjMzLjY3MTg4OA"];
     }
     
     // Override point for customization after application launch.
