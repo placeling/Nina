@@ -18,7 +18,7 @@
 @synthesize followingCount, followerCount, perspectives;
 @synthesize following, follows_you;
 @synthesize email, url; 
-@synthesize auths, modified, location;
+@synthesize auths, modified, location, blocked;
 
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
     self.userId = [jsonDict objectForKeyNotNull:@"id"];
@@ -38,6 +38,7 @@
     self.follows_you = [NSNumber numberWithBool:[[jsonDict objectForKeyNotNull:@"follows_you"] boolValue]]; 
     
     self.auths = [[[NSMutableArray alloc] init] autorelease];
+    self.blocked = [[jsonDict objectForKeyNotNull:@"blocked"] boolValue] ;
     
     for ( NSDictionary *authDict in [jsonDict objectForKey:@"auths"] ){
         
@@ -105,6 +106,7 @@
      @"location", @"location",
      @"following", @"following",
      @"follows_you", @"follows_you",
+     @"blocked", @"blocked",
      nil];
     
     //userMapping.primaryKeyAttribute = @"username";

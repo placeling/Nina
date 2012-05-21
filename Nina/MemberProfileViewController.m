@@ -329,10 +329,16 @@
 #pragma mark - Share Sheet
 -(void) showShareSheet{
     UIActionSheet *actionSheet;
-    if ([self.username isEqualToString:[NinaHelper getUsername]]){
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Edit My Profile", nil];
+    if ([self.username isEqualToString:[NinaHelper getUsername]]){        
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles: @"Edit My Profile", @"Share by Email", @"Share on Facebook", nil];
+        actionSheet.tag = 0;
     } else {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+        if ( self.user.blocked ){
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Unblock User" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];  
+        } else {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Block User" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+        }
+        actionSheet.tag = 1;
     } 
     
     [actionSheet showInView:self.view];
@@ -343,7 +349,38 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString *urlString = [NSString stringWithFormat:@"https://www.placeling.com/%@", self.user.username];
 
-    if (buttonIndex == 0){
+    if (actionSheet.tag == 0 && buttonIndex == 0){
+        DLog(@"edit my profile");
+        
+        [self editUser];
+    } else if (actionSheet.tag == 1 && buttonIndex == 0){
+        DLog(@"blocking/unblocking user");
+        
+        if ( [NinaHelper getUsername] ){
+            if ( self.user.blocked ){
+                self.user.blocked = false;
+                NSString *urlText = [NSString stringWithFormat:@"/v1/users/%@/unblock", self.user.username];
+                [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
+            } else {
+                self.user.blocked = true;
+                NSString *urlText = [NSString stringWithFormat:@"/v1/users/%@/block", self.user.username];
+                [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
+            }
+            
+        } else {
+            UIAlertView *baseAlert;
+            NSString *alertMessage = @"Sign up or log in to block suckas";
+            baseAlert = [[UIAlertView alloc] 
+                         initWithTitle:nil message:alertMessage 
+                         delegate:self cancelButtonTitle:@"Not Now" 
+                         otherButtonTitles:@"Let's Go", nil];
+            baseAlert.tag = 0;
+            
+            [baseAlert show];
+            [baseAlert release];
+        }
+        
+    } else if (buttonIndex == 1) {
         DLog(@"share member by email");
         
         MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
@@ -355,7 +392,7 @@
         [controller release];	
         
         
-    }else if (buttonIndex == 1) {
+    }else if (buttonIndex == 2) {
         DLog(@"share on facebook");        
         
         NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -381,10 +418,7 @@
             
             [facebook dialog:@"feed" andParams:params andDelegate:self];
         }
-    } else if (([actionSheet numberOfButtons] ==4) && buttonIndex ==2){
-        DLog(@"edit my profile");
-        [self editUser];
-    }
+    } 
 }
 
 -(void) fbDidLogin{

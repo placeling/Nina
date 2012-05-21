@@ -37,6 +37,7 @@
     NSNumber *follows_you;
     
     bool modified;    
+    BOOL blocked;
 }
 
 +(RKObjectMapping*)getObjectMapping;
@@ -60,6 +61,7 @@
 @property (nonatomic, retain) NSNumber *follows_you;
 @property (nonatomic, assign) bool modified;
 @property (nonatomic, retain) NSString *fullname;
+@property (nonatomic, assign) BOOL blocked;
 
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
