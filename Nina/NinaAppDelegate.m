@@ -22,6 +22,7 @@
 #import "ASIHTTPRequest.h"
 #import "Appirater.h"
 #import "TestFlight.h"
+#import "FindFacebookFriendsController.h"
 
 @implementation NinaAppDelegate
 
@@ -157,6 +158,11 @@
             NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/unhighlight", placeId]; //unhilight, so we don't send again
             
             [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
+        } else if ( [[url host] isEqualToString:@"facebookfriends"] ){
+            FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
+            
+            [self.navigationController pushViewController:findFacebookFriendsController animated:true];
+            [findFacebookFriendsController release];        
         }
         return true;
     }
