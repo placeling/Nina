@@ -53,7 +53,6 @@
 							<bool key="IBUIPrompted">NO</bool>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<bool key="IBUIPagingEnabled">YES</bool>
 						<bool key="IBUIBouncesZoom">NO</bool>
 						<int key="IBUISeparatorStyle">1</int>
 						<int key="IBUISectionIndexMinimumDisplayRowCount">0</int>
@@ -168,13 +167,13 @@
 					<string key="className">FindFacebookFriendsController</string>
 					<string key="superclassName">UIViewController</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">fbShare</string>
+						<string key="NS.key.0">showFacebookInvite</string>
 						<string key="NS.object.0">id</string>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">fbShare</string>
+						<string key="NS.key.0">showFacebookInvite</string>
 						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">fbShare</string>
+							<string key="name">showFacebookInvite</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</object>
