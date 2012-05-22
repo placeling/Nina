@@ -213,7 +213,7 @@
         
         if ( [defaults objectForKey:@"last_location_update"]  ){
             NSNumber *timestamp = [defaults objectForKey:@"last_location_update"];
-            if ( currentTime + (60*5) > [timestamp floatValue] ){
+            if ( currentTime - (60*5) < [timestamp floatValue] ){
                 return; //skip if last was sent less than 5 min ago
             }
         }
