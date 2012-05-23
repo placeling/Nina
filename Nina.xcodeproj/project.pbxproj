@@ -144,6 +144,8 @@
 		2878E828140C2A3900F2A666 /* EditPerspectiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2878E826140C2A3900F2A666 /* EditPerspectiveViewController.m */; };
 		2878E829140C2A3900F2A666 /* EditPerspectiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2878E827140C2A3900F2A666 /* EditPerspectiveViewController.xib */; };
 		287CDF9F155471B5007E99D5 /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 287CDF9E155471B5007E99D5 /* ApplicationController.m */; };
+		2880347D156BF2F000414F6D /* PostSignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2880347B156BF2F000414F6D /* PostSignupViewController.m */; };
+		2880347E156BF2F000414F6D /* PostSignupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2880347C156BF2F000414F6D /* PostSignupViewController.xib */; };
 		288540F5155AE50D00592D9F /* CategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 288540F3155AE50D00592D9F /* CategoryController.m */; };
 		288540F6155AE50D00592D9F /* CategoryController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 288540F4155AE50D00592D9F /* CategoryController.xib */; };
 		28865C951491B65400F20280 /* facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 28865C941491B65400F20280 /* facebook_icon.png */; };
@@ -584,6 +586,9 @@
 		2878E827140C2A3900F2A666 /* EditPerspectiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditPerspectiveViewController.xib; sourceTree = "<group>"; };
 		287CDF9D155471B4007E99D5 /* ApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationController.h; sourceTree = "<group>"; };
 		287CDF9E155471B5007E99D5 /* ApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationController.m; sourceTree = "<group>"; };
+		2880347A156BF2F000414F6D /* PostSignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostSignupViewController.h; sourceTree = "<group>"; };
+		2880347B156BF2F000414F6D /* PostSignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostSignupViewController.m; sourceTree = "<group>"; };
+		2880347C156BF2F000414F6D /* PostSignupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostSignupViewController.xib; sourceTree = "<group>"; };
 		288540F2155AE50D00592D9F /* CategoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryController.h; sourceTree = "<group>"; };
 		288540F3155AE50D00592D9F /* CategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryController.m; sourceTree = "<group>"; };
 		288540F4155AE50D00592D9F /* CategoryController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryController.xib; sourceTree = "<group>"; };
@@ -1444,6 +1449,9 @@
 				2893959013E9F8F300B71FA4 /* LoginController.h */,
 				2893959113E9F8F300B71FA4 /* LoginController.m */,
 				2893959213E9F8F300B71FA4 /* LoginController.xib */,
+				2880347A156BF2F000414F6D /* PostSignupViewController.h */,
+				2880347B156BF2F000414F6D /* PostSignupViewController.m */,
+				2880347C156BF2F000414F6D /* PostSignupViewController.xib */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -2019,6 +2027,7 @@
 				28C7311B1561AE7300E27DCA /* HilightMarker@2x.png in Resources */,
 				2852B7B5156ABBB400D9775E /* TimerIcon.png in Resources */,
 				2852B7B6156ABBB400D9775E /* TimerIcon@2x.png in Resources */,
+				2880347E156BF2F000414F6D /* PostSignupViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2158,6 +2167,7 @@
 				2887EFA915598FCC0086F433 /* ConfirmNewPlaceController.m in Sources */,
 				288540F5155AE50D00592D9F /* CategoryController.m in Sources */,
 				28C7312215643B1700E27DCA /* Appirater.m in Sources */,
+				2880347D156BF2F000414F6D /* PostSignupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
