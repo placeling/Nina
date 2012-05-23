@@ -19,7 +19,7 @@
 
 
 @implementation PostSignupViewController
-@synthesize delegate, username, user, uploadingImage, textView, profileImageView, scrollView, HUD;
+@synthesize delegate, username, user, uploadingImage, textView, profileImageView, scrollView, HUD, changeImageButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -78,6 +78,12 @@
     [super viewDidLoad];
     
     [StyleHelper styleInfoView:self.view];
+    [StyleHelper styleTagButton:self.changeImageButton];
+    
+    [profileImageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+    [profileImageView.layer setBorderWidth: 5.0];
+    self.profileImageView.layer.masksToBounds = YES; 
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -95,19 +101,14 @@
     
     NSURL *url = [NSURL URLWithString:urlText];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    NSString *description = textView.text;
+    NSString *description = self.textView.text;
     
-    //[request setPostValue:self.memoTextView.text forKey:@"avatar"];
-    
+    [self.textView resignFirstResponder];
     [request setPostValue:description forKey:@"description"];
 
     self.user.userDescription = description;
 
     if (uploadingImage){
-        Photo *photo = [[Photo alloc] init];
-        photo.thumb_image = uploadingImage;
-        self.user.profilePic = photo;
-        [photo release];
         NSData* imgData = UIImageJPEGRepresentation(uploadingImage, 0.5);
         [request setData:imgData withFileName:@"image.jpg" andContentType:@"image/jpeg"  forKey:@"image"];
     }
@@ -205,7 +206,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     [picker dismissModalViewControllerAnimated:YES];
-    UIImage *img = [[info objectForKey:UIImagePickerControllerOriginalImage] retain];
+    UIImage *img = [[info objectForKey:UIImagePickerControllerEditedImage] retain];
     
     if (img.size.width > 960 || img.size.height > 960){
         img = [img
@@ -231,7 +232,7 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request{    
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+    [self.HUD hide:true];
     
     if (200 != [request responseStatusCode]){
 		[NinaHelper handleBadRequest:request sender:self];
@@ -241,8 +242,7 @@
         DLog(@"%@", responseString);
         NSDictionary *userDict = [responseString JSONValue];
         
-        [self.user updateFromJsonDict:[userDict objectForKey:@"user"]];
-        
+        [self.user updateFromJsonDict:[userDict objectForKey:@"user"]];        
         [self.navigationController dismissModalViewControllerAnimated:TRUE];
 	}
 }
@@ -270,7 +270,7 @@
 		self.scrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, paddingNeeded, 0.0);
 		self.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, paddingNeeded, 0.0);
 		self.scrollView.contentSize = CGSizeMake(scrollView.frame.size.width , scrollView.frame.size.height);
-        [self.scrollView setContentOffset:CGPointMake(0, paddingNeeded)];
+        [self.scrollView setContentOffset:CGPointMake(0, paddingNeeded) animated:TRUE];
 	}
 }
 
@@ -302,6 +302,7 @@
     [textView release];
     [profileImageView release];
     [HUD release];
+    [changeImageButton release];
 }
 
 

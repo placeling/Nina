@@ -24,7 +24,8 @@
     UIImage *uploadingImage;
     
     UITextView *textView;
-    UIImageView *profileImageView;    
+    UIImageView *profileImageView;
+    UIButton *changeImageButton;
 }
 
 @property(nonatomic, assign) id <LoginControllerDelegate> delegate;
@@ -34,6 +35,7 @@
 @property(nonatomic, retain) IBOutlet UITextView *textView;
 @property(nonatomic, retain) IBOutlet UIImageView *profileImageView;
 @property(nonatomic, retain) IBOutlet UIScrollView *scrollView;
+@property(nonatomic, retain) IBOutlet UIButton *changeImageButton;
 @property(nonatomic, retain) MBProgressHUD *HUD;
 
 
