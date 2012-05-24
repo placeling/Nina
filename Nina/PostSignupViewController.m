@@ -19,7 +19,7 @@
 
 
 @implementation PostSignupViewController
-@synthesize delegate, username, user, uploadingImage, textView, profileImageView, scrollView, HUD, changeImageButton;
+@synthesize delegate, username, user, uploadingImage, textView, profileImageView, scrollView, HUD, changeImageButton, cityField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,7 +59,7 @@
     [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
         RKObjectMapping *userMapping = [User getObjectMapping];
         loader.objectMapping = userMapping;
-        loader.userData = [NSNumber numberWithInt:10]; //use as a tag
+        loader.userData = [NSNumber numberWithInt:110]; //use as a tag
     }];
     self.HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     // Set determinate mode
@@ -101,12 +101,10 @@
     
     NSURL *url = [NSURL URLWithString:urlText];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    NSString *description = self.textView.text;
     
     [self.textView resignFirstResponder];
-    [request setPostValue:description forKey:@"description"];
-
-    self.user.userDescription = description;
+    [request setPostValue:self.textView.text forKey:@"description"];
+    [request setPostValue:self.cityField.text forKey:@"city"];
 
     if (uploadingImage){
         NSData* imgData = UIImageJPEGRepresentation(uploadingImage, 0.5);
@@ -135,12 +133,13 @@
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     [self.HUD hide:TRUE];
     
-    if ( [(NSNumber*)objectLoader.userData intValue] == 10){
+    if ( [(NSNumber*)objectLoader.userData intValue] == 110){
         User* newUser = [objects objectAtIndex:0];
         DLog(@"Loaded User: %@", newUser.username);        
         self.user = newUser;
         
         self.textView.text = self.user.userDescription;
+        self.cityField.text = self.user.city;
         [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumbUrl]];
     }
 }
@@ -153,6 +152,7 @@
 }
 
 -(void)close{
+    [self.delegate loadContent];
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
@@ -242,7 +242,8 @@
         DLog(@"%@", responseString);
         NSDictionary *userDict = [responseString JSONValue];
         
-        [self.user updateFromJsonDict:[userDict objectForKey:@"user"]];        
+        [self.user updateFromJsonDict:[userDict objectForKey:@"user"]]; 
+        [self.delegate loadContent];
         [self.navigationController dismissModalViewControllerAnimated:TRUE];
 	}
 }
@@ -303,6 +304,7 @@
     [profileImageView release];
     [HUD release];
     [changeImageButton release];
+    [cityField release];
 }
 
 

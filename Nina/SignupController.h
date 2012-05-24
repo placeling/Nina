@@ -10,6 +10,9 @@
 #import "NinaHelper.h"
 #import "ASIHTTPRequest.h"
 #import "Facebook.h"
+#import "MBProgressHUD.h"
+
+@protocol LoginControllerDelegate;
 
 @interface SignupController : UITableViewController<ASIHTTPRequestDelegate, UITextFieldDelegate>{
     NSDictionary *fbDict;
@@ -22,7 +25,10 @@
     UIButton *termsButton;
     UIButton *privacyButton;
 
+    id <LoginControllerDelegate> delegate;
+    
     UILabel *urlLabel;
+    MBProgressHUD *HUD;
 }
 
 
@@ -34,6 +40,8 @@
 @property(nonatomic,retain) IBOutlet UIButton *termsButton;
 @property(nonatomic,retain) IBOutlet UIButton *privacyButton;
 @property(nonatomic,retain) IBOutlet UILabel *urlLabel;
+@property(nonatomic,retain) MBProgressHUD *HUD;
+@property(nonatomic, assign) id <LoginControllerDelegate> delegate;
 
 -(IBAction)signup;
 -(IBAction)showTerms;

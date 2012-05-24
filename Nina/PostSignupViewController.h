@@ -11,8 +11,8 @@
 #import "NinaHelper.h"
 #import "User.h"
 #import "MBProgressHUD.h"
+#import "LoginController.h"
 
-@protocol LoginControllerDelegate;
 
 @interface PostSignupViewController : UIViewController<UIActionSheetDelegate, ASIHTTPRequestDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, RKObjectLoaderDelegate> {
     id <LoginControllerDelegate> delegate;
@@ -24,6 +24,7 @@
     UIImage *uploadingImage;
     
     UITextView *textView;
+    UITextField *cityField;
     UIImageView *profileImageView;
     UIButton *changeImageButton;
 }
@@ -36,6 +37,8 @@
 @property(nonatomic, retain) IBOutlet UIImageView *profileImageView;
 @property(nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic, retain) IBOutlet UIButton *changeImageButton;
+@property(nonatomic, retain) IBOutlet UITextField *cityField;
+
 @property(nonatomic, retain) MBProgressHUD *HUD;
 
 

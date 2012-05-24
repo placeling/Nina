@@ -12,11 +12,12 @@
 #import "NSString+SBJSON.h"
 #import "GenericWebViewController.h"
 #import "LoginController.h"
+#import "PostSignupViewController.h"
 
 @implementation SignupController
 
 
-@synthesize fbDict, accessKey, accessSecret, tableFooterView, tableHeaderView, termsButton, privacyButton, urlLabel;
+@synthesize fbDict, accessKey, accessSecret, tableFooterView, tableHeaderView, termsButton, privacyButton, urlLabel, HUD, delegate;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -97,9 +98,10 @@
     [NinaHelper signRequest:request];
     
     DLog(@"Sending request");
-    
+    [self.view endEditing:TRUE];
     [request startAsynchronous];
-    
+    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.HUD.labelText = @"Signing Up...";
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
 }
@@ -114,7 +116,7 @@
 
 
 -(void)requestFailed:(ASIHTTPRequest *)request{
-    
+    [self.HUD hide:true];
     int statusCode = [request responseStatusCode];
     NSError *error = [request error];
     NSString *errorMessage = [error localizedDescription];
@@ -126,7 +128,8 @@
 
 
 - (void)requestFinished:(ASIHTTPRequest *)request{    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO]; 
+    [self.HUD hide:true];
     
     if (request.responseStatusCode != 200){
         int statusCode = [request responseStatusCode];
@@ -158,22 +161,16 @@
         
         NSString *userName = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField.text;
         
-        [NinaHelper setUsername:[userName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+        userName = [userName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        [NinaHelper setUsername:userName];
         
-        UIViewController *root = [self.navigationController.viewControllers objectAtIndex:0];
+        PostSignupViewController *postSignupViewController = [[PostSignupViewController alloc] init];
+        postSignupViewController.username = userName;
+        postSignupViewController.delegate = self.delegate;
+        [self.navigationController pushViewController:postSignupViewController animated:true];
         
-        if ([root isKindOfClass:[LoginController class]]){
-            id<LoginControllerDelegate> delegate = ((LoginController*)root).delegate;
-            [delegate loadContent];
-        }
-        
-        [[UIApplication sharedApplication] 
-         registerForRemoteNotificationTypes:
-         (UIRemoteNotificationTypeAlert | 
-          UIRemoteNotificationTypeBadge | 
-          UIRemoteNotificationTypeSound)];
-        
-        [self.navigationController dismissModalViewControllerAnimated:YES];
+        NSArray * newViewControllers = [NSArray arrayWithObjects:postSignupViewController,nil];
+        [self.navigationController setViewControllers:newViewControllers];
   
     } else {
         NSDictionary *errors = [jsonDict objectForKey:@"message"];
@@ -244,6 +241,7 @@
     [tableFooterView release];
     [termsButton release];
     [privacyButton release];
+    [HUD release];
     [super dealloc];
 }
 

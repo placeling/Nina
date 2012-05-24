@@ -207,6 +207,7 @@
         SignupController *signupController = [[SignupController alloc ] initWithStyle:UITableViewStyleGrouped];
                                               
         signupController.fbDict = fbDict;
+        signupController.delegate = delegate;
         
         [self.navigationController pushViewController:signupController animated:true];
         
@@ -220,6 +221,7 @@
 -(IBAction) signupOldSchool{
     
     SignupController *signupController = [[SignupController alloc]initWithStyle:UITableViewStyleGrouped];
+    signupController.delegate = delegate;
     [self.navigationController pushViewController:signupController animated: true];
     [signupController release];
     
