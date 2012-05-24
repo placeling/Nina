@@ -13,6 +13,8 @@
 #import "FlurryAnalytics.h"
 #import "NinaAppDelegate.h"
 #import <RestKit/RestKit.h>
+#import "WBNoticeView.h"
+#import "MTPopupWindow.h"
 
 
 @interface NinaHelper()
@@ -105,10 +107,6 @@
 +(void) handleBadRKRequest:(RKResponse *)response sender:(UIViewController*)sender{
     int statusCode = response.statusCode;
     NSString *host = [[response.request URL] host];
-    if (host == nil){
-        //this seems to happen, make non-nil
-        host = @"http";
-    }
     NSError *error = response.failureError;
     
     [NinaHelper handleBadRequest:statusCode host:host error:error sender:sender];  
@@ -127,31 +125,27 @@
         errorMessage = @""; //prevents a "nil" error on dictionary creation
     }
     
-    NSRange textRange; 
-    
     if ( host ){
-        textRange =[[[NinaHelper getHostname] lowercaseString] rangeOfString:[host lowercaseString]];
+        NSRange textRange =[[[NinaHelper getHostname] lowercaseString] rangeOfString:[host lowercaseString]];
+        
+        if (textRange.location == NSNotFound){
+            DLog(@"Error for which host isn't a placeling server");
+            [FlurryAnalytics logEvent:@"ERROR_NOT_OUR_FAULT"];
+            return; //Issue with server we can't really help, likely google
+        }
     }
-    
-    if(textRange.location == NSNotFound){
-        DLog(@"Error for which host isn't a placeling server");
-        [FlurryAnalytics logEvent:@"ERROR_NOT_OUR_FAULT"];
-        return; //Issue with server we can't really help, likely google
-    }
-    
+
     if (statusCode == 401){
         DLog(@"Got a 401, with access_token: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
         if([[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]){
             //only send event on a hard reset
             [FlurryAnalytics logEvent:@"401_CREDENTIAL_RESET"];
         }
-       //[self clearCredentials];
+        WBNoticeView *nm = [WBNoticeView defaultManager];
+        [nm showErrorNoticeInView:sender.view title:@"Unauthorized" message:@"Token fail, please re-login"];
         
-        //if ([request.responseString rangeOfString:@"BAD_PASS"].location != NSNotFound){
-            //[NinaHelper showLoginController:sender];    
-        //}
-    }  
-    if (400 <= statusCode && statusCode <= 499){
+       [self clearCredentials];
+    }else if (400 <= statusCode && statusCode <= 499){
         //non-401 400 series server error
         NSNumber *code = [NSNumber numberWithInt:statusCode];
         [FlurryAnalytics logEvent:@"400_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -162,7 +156,11 @@
                                                        delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
         [alert release];	
-    } else if (500 <= statusCode && statusCode <= 599){
+    } else if (statusCode == 503){
+        DLog(@"Got a 503, Maintenance mode");
+        [MTPopupWindow showWindowWithHTMLFile:@"https://www.placeling.com/503.html" insideView:sender.navigationController.view];
+        //[self clearCredentials];
+    }else if (500 <= statusCode && statusCode <= 599){
         //500 series server error
         NSNumber *code = [NSNumber numberWithInt:statusCode];
         [FlurryAnalytics logEvent:@"500_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -177,11 +175,10 @@
         //can't connect to server
         [FlurryAnalytics logEvent:@"CONNECT_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                         errorMessage, @"message", nil]];
-        NSString *alertMessage = [NSString stringWithFormat:@"We can't connect to Placeling servers right now"];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
-                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        [alert release];	
+        
+        WBNoticeView *nm = [WBNoticeView defaultManager];
+        [nm showErrorNoticeInView:sender.view title:@"Network Error" message:@"We can't connect to Placeling servers right now."];
+        
     } else if ([error code] == 2){
         //timed out
         [FlurryAnalytics logEvent:@"TIMEOUT" ];
@@ -247,8 +244,6 @@
 
 +(void) clearActiveRequests:(NSInteger) range{
     //for nil'ing out active asi request to prevent exc_bad_acces on their return
-    
-    
     for (ASIHTTPRequest *req in ASIHTTPRequest.sharedQueue.operations){
         NSInteger tag = req.tag;
         
