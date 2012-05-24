@@ -67,7 +67,10 @@
     //this needs to go first since it's an authenticated call
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:@"" forKey:@"ios_notification_token"];
-    [NinaHelper uploadNotificationToken:@""];
+    
+    if ( [NinaHelper getUsername] ){
+        [NinaHelper uploadNotificationToken:@""];
+    }
     
     [NinaHelper setAccessToken:nil];
     [NinaHelper setAccessTokenSecret:nil];
