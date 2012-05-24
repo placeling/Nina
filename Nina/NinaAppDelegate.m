@@ -226,7 +226,7 @@
         
         if ( currentUser ){ //only update location if logged in
             DLog(@"Processing updated location");
-            [self localNotification:newLocation];
+            // [self localNotification:newLocation]; only for testing
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];            
             if ( [defaults objectForKey:@"ios_notification_token"] ){
@@ -239,16 +239,6 @@
             
         }
     }
-}
-
--(void)localNotification:(CLLocation *)newLocation{
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    
-    localNotification.alertBody = [NSString stringWithFormat:@"LOCAL: background location update with accuracy %f", newLocation.horizontalAccuracy];
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-    [localNotification release];
 }
 
 -(void) sendBackgroundLocationToServer:(CLLocation *)location
