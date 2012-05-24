@@ -23,13 +23,14 @@
 #import "UIImageView+WebCache.h"
 #import "NinaAppDelegate.h"
 #import "FlurryAnalytics.h"
+#import "PictureViewController.h"
 
 @interface MemberProfileViewController() 
 -(void) blankLoad;
 -(void) toggleFollow;
 -(IBAction)editUser;
 -(void) deletePerspective:(Perspective*)perspective;
-
+-(void) showProfileImage;
 @end
 
 
@@ -53,6 +54,12 @@
     expandedIndexPaths = [[NSMutableSet alloc] init];
     self.tableView.tableHeaderView = self.headerView;
     
+    self.profileImageView.userInteractionEnabled = true;
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showProfileImage)];
+    [self.profileImageView addGestureRecognizer:tapRecognizer];
+    [tapRecognizer release];
+
 	[self blankLoad];
 }
 
@@ -297,7 +304,22 @@
     }	
 }
 
+
+
 #pragma mark - Unregistered experience methods
+
+-(void)showProfileImage{
+    if ( self.profileImageView && self.user ) {
+        PictureViewController *pictureViewController = [[PictureViewController alloc] init];
+        pictureViewController.photo = self.user.profilePic;
+        
+        [self.navigationController pushViewController:pictureViewController animated:true];
+        [pictureViewController release];
+    }
+    
+}
+
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 0 && buttonIndex == 1) {
@@ -757,7 +779,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-    if ( [self.perspectives count] >= indexPath.row ){
+    if ( [self.perspectives count] > indexPath.row ){
         Perspective *perspective = [[self perspectives] objectAtIndex:indexPath.row];
         return perspective.mine;
     } else {
