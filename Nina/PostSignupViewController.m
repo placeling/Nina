@@ -271,7 +271,7 @@
 		self.scrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, paddingNeeded, 0.0);
 		self.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, paddingNeeded, 0.0);
 		self.scrollView.contentSize = CGSizeMake(scrollView.frame.size.width , scrollView.frame.size.height);
-        [self.scrollView setContentOffset:CGPointMake(0, paddingNeeded) animated:TRUE];
+        [self.scrollView scrollRectToVisible:self.textView.frame animated:true];   
 	}
 }
 
