@@ -168,10 +168,15 @@
         pinView.rightCalloutAccessoryView = rightButton;
 
         if (annotation.place.bookmarked){
-            pinView.image = [UIImage imageNamed:@"MyMarker.png"];
+            if ( annotation.place.highlighted ) {
+                pinView.image = [UIImage imageNamed:@"HilightMarker.png"];
+            } else {
+                pinView.image = [UIImage imageNamed:@"MyMarker.png"];
+            }
         } else {
             pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
         }
+        
         pinView.centerOffset = CGPointMake(10, -20);
         return pinView;
     } else {
