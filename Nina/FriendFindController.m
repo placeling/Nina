@@ -153,24 +153,39 @@
 
 
 -(IBAction)findFacebookFriends{
+    NSString *currentUser = [NinaHelper getUsername];
     
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    
-    if (![facebook isSessionValid]) {
-        NSArray* permissions =  [[NSArray arrayWithObjects:
-                                  @"email", @"publish_stream",@"offline_access", nil] retain];
+    if ( !currentUser  ) {
+        UIAlertView *baseAlert;
+        NSString *alertMessage =  @"Sign up or log in to see your\nFacebook friends who are on Placeling";
         
-        facebook.sessionDelegate = self;
-        [facebook authorize:permissions];
+        baseAlert = [[UIAlertView alloc] 
+                     initWithTitle:nil message:alertMessage 
+                     delegate:self cancelButtonTitle:@"Not Now" 
+                     otherButtonTitles:@"Let's Go", nil];
+        baseAlert.tag = 0;
         
-        [permissions release];
-    } else {    
-        FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
+        [baseAlert show];
+        [baseAlert release];
+    } else {
+        NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+        Facebook *facebook = appDelegate.facebook;
         
-        [self.navigationController pushViewController:findFacebookFriendsController animated:true];
-        [findFacebookFriendsController release];
-    }    
+        if (![facebook isSessionValid]) {
+            NSArray* permissions =  [[NSArray arrayWithObjects:
+                                      @"email", @"publish_stream",@"offline_access", nil] retain];
+            
+            facebook.sessionDelegate = self;
+            [facebook authorize:permissions];
+            
+            [permissions release];
+        } else {    
+            FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
+            
+            [self.navigationController pushViewController:findFacebookFriendsController animated:true];
+            [findFacebookFriendsController release];
+        }    
+    }
     
 }
 
@@ -255,7 +270,24 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
 
+#pragma mark - Unregistered experience methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        LoginController *loginController = [[LoginController alloc] init];
+        loginController.delegate = self;
+        
+        UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
+        [self.navigationController presentModalViewController:navBar animated:YES];
+        [navBar release];
+        [loginController release];
+    }
+}
 
+-(void)loadContent{
+    //required to be a login controller delegate
+    [self findFacebookFriends];
+}
 
 #pragma mark - Table view data source
 

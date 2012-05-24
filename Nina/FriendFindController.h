@@ -11,8 +11,9 @@
 #import <UIKit/UIKit.h>
 #import <RestKit/RestKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import "LoginController.h"
 
-@interface FriendFindController : ApplicationController<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, UIActionSheetDelegate>{
+@interface FriendFindController : ApplicationController<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, UIActionSheetDelegate, LoginControllerDelegate, UIAlertViewDelegate>{
     NSMutableArray *searchUsers; 
     NSMutableArray *suggestedUsers; 
     NSMutableArray *recentSearches;
