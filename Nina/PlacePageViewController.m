@@ -644,7 +644,7 @@ typedef enum {
         [self loadMap];
     } 
     
-    self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@","];
+    self.categoriesLabel.text = [self.place.categories componentsJoinedByString:@", "];
     
     UIButton *button = [self.segmentedControl.buttons objectAtIndex:1];
     
