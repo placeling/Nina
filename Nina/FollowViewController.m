@@ -224,6 +224,7 @@
         [cell.imageView.layer setBorderWidth: 2.0];
     }
     
+    [StyleHelper styleGenericTableCell:cell];    
     return cell;
 }
 
