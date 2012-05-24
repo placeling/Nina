@@ -182,11 +182,8 @@
     } else if ([error code] == 2){
         //timed out
         [FlurryAnalytics logEvent:@"TIMEOUT" ];
-        NSString *alertMessage = [NSString stringWithFormat:@"Request Timed Out"];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage
-                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        [alert release];	
+        WBNoticeView *nm = [WBNoticeView defaultManager];
+        [nm showErrorNoticeInView:sender.view title:@"Whoops" message:@"Request Timed Out"];
     } else {
         DLog(@"Untested error: %@", errorMessage );
         [FlurryAnalytics logEvent:@"UNKNOWN_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
