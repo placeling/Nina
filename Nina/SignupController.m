@@ -89,7 +89,7 @@
     }
                                    
     [request setPostValue:lat forKey:@"lat"];
-    [request setPostValue:lng forKey:@"long"];                                   
+    [request setPostValue:lng forKey:@"lng"];                                   
     
     [request setRequestMethod:@"POST"];
     [request setDelegate:self]; //whatever called this should handle it
