@@ -110,7 +110,7 @@
 - (void)usernameChanged:(id)sender {
     NSString *username = ((UITextField*)sender).text;
     
-    self.urlLabel.text = [NSString stringWithFormat:@"http://placeling.com/%@", username];
+    self.urlLabel.text = [NSString stringWithFormat:@"placeling.com/%@", username];
 }
 
 
@@ -334,7 +334,7 @@
                     eCell.textField.delegate = self;
                     eCell.textField.tag = 3;
                     [eCell.textField addTarget:self action:@selector(usernameChanged:) forControlEvents:UIControlEventEditingChanged];
-                    self.urlLabel.text = [NSString stringWithFormat:@"http://placeling.com/%@", username];
+                    self.urlLabel.text = [NSString stringWithFormat:@"placeling.com/%@", username];
                 }
                 
                 //[eCell.textField becomeFirstResponder];
