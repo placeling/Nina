@@ -365,6 +365,7 @@
         }
         pinView.hidden = false;
         pinView.canShowCallout = YES;
+        pinView.calloutOffset = CGPointMake(-7, 0);
         pinView.centerOffset = CGPointMake(10, -20);
         
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];

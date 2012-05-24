@@ -157,6 +157,7 @@
             pinView.annotation = annotation;            
         }
         pinView.canShowCallout = YES;
+        pinView.calloutOffset = CGPointMake(-7, 0);
         pinView.draggable = false;
         
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];

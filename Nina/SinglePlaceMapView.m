@@ -66,6 +66,7 @@
             customPinView.image = [UIImage imageNamed:@"FriendMarker.png"];
         }
         customPinView.centerOffset = CGPointMake(10, -20);
+        customPinView.calloutOffset = CGPointMake(-7, 0);
         return customPinView;
     }else {
         return nil;
