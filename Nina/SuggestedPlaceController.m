@@ -107,17 +107,17 @@
     NSNumber *requestTag;
     
     if ( currentUser &&  self.segmentedControl.selectedSegmentIndex == 0 ){
-        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=me&barrie=true&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
+        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=me&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
 
         requestTag = [NSNumber numberWithInt:80];
         self.myLoaded = false;
     } else if ( currentUser &&  self.segmentedControl.selectedSegmentIndex == 1 ){
-        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=following&barrie=true&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
+        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=following&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
         
         requestTag = [NSNumber numberWithInt:81];
         self.followingLoaded = false;
     } else {
-        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=popular&barrie=true&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
+        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=popular&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
         requestTag = [NSNumber numberWithInt:82];
         self.popularLoaded = false;
     }
