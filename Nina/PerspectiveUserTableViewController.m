@@ -218,6 +218,9 @@
         [pCell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
                        placeholderImage:[UIImage imageNamed:@"profile.png"]];
         
+        [pCell.imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+        [pCell.imageView.layer setBorderWidth: 2.0];
+        
         [StyleHelper styleGenericTableCell:pCell];
         cell = pCell;
     }
