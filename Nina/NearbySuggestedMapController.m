@@ -92,9 +92,21 @@
 -(IBAction)showPeople{
     [usernameButton dismissAnimated:true];
     
+    userFilter = nil;
+    //reset the hiddenness based on tags
+    
     NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
     NSSet *visiblePlacemarks = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
     for ( PlaceMark *mark in visiblePlacemarks ){
+        mark.tag = 0;
+        for (Perspective *perspective in mark.place.placemarks){
+            if (!tagFilter || [perspective.tags indexOfObject:tagFilter] != NSNotFound ){
+                perspective.hidden = false;
+                mark.tag = 1;
+            } else {
+                perspective.hidden = true;
+            }
+        }
         if (mark.tag == 1){
             [visiblePlaces addObject:mark.place];
         }
@@ -326,10 +338,20 @@
 
 -(IBAction)showTags{
     [hashtagButton dismissAnimated:true];
+    tagFilter = nil;
     
     NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
     NSSet *visiblePlacemarks = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
     for ( PlaceMark *mark in visiblePlacemarks ){
+        mark.tag = 0;        
+        for (Perspective *perspective in mark.place.placemarks){
+            if ( !userFilter || [perspective.user.username isEqualToString:userFilter] ){
+                perspective.hidden = false;
+                mark.tag =1;
+            } else {
+                perspective.hidden = true;
+            }
+        }
         if (mark.tag == 1){
             [visiblePlaces addObject:mark.place];
         }      
