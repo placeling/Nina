@@ -445,9 +445,6 @@
 
 - (void)viewDidUnload
 {
-    [username release];
-    [password release];
-    [submitButton release];
     //[delegate release];
     [super viewDidUnload];
     // Release any retained subviews of the main view.

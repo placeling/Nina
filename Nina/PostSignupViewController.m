@@ -78,8 +78,7 @@
     [super viewDidLoad];
     
     [StyleHelper styleInfoView:self.view];
-    [StyleHelper styleTagButton:self.changeImageButton];
-    
+    [StyleHelper styleSubmitTypeButton:changeImageButton];
     [profileImageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
     [profileImageView.layer setBorderWidth: 5.0];
     self.profileImageView.layer.masksToBounds = YES; 
