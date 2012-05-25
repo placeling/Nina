@@ -307,9 +307,9 @@
                 }
             } else if (self.segmentedControl.selectedSegmentIndex == 1) {
                 if ([self.searchTerm isEqualToString:@""]) {
-                    errorText.text = [NSString stringWithFormat:@"Your network hasn't placemarked anything nearby."];
+                    errorText.text = [NSString stringWithFormat:@"No one you follow has placemarked anywhere nearby."];
                 } else {
-                    errorText.text = [NSString stringWithFormat:@"Your network hasn't placemarked anything nearby tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+                    errorText.text = [NSString stringWithFormat:@"No one you follow has placemarked anywhere nearby tagged '%@'.", [self.searchTerm stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
                 }
             }else {
                 if ([self.searchTerm isEqualToString:@""]) {
