@@ -418,7 +418,7 @@
         if (annotation.tag == 1){
             return pinView;
         }
-        pinView.image = [UIImage imageNamed:@"GreyedMarker.png"];
+        pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
         if ( tagFilter || userFilter ){
             pinView.hidden = true;
         }

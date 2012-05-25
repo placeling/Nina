@@ -106,8 +106,6 @@
 		2867AC0814D0D3B0003994DB /* TouristyPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABF414D0D3B0003994DB /* TouristyPick@2x.png */; };
 		2867AC0914D0D3B0003994DB /* TravelPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABF514D0D3B0003994DB /* TravelPick.png */; };
 		2867AC0A14D0D3B0003994DB /* TravelPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABF614D0D3B0003994DB /* TravelPick@2x.png */; };
-		2867AC2F14D87009003994DB /* GreyedMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867AC2D14D87009003994DB /* GreyedMarker.png */; };
-		2867AC3014D87009003994DB /* GreyedMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867AC2E14D87009003994DB /* GreyedMarker@2x.png */; };
 		2867AC3814D888BB003994DB /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2867AC3714D888BB003994DB /* CMPopTipView.m */; };
 		2867AC3B14D8B579003994DB /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2867AC3A14D8B579003994DB /* UIPlaceHolderTextView.m */; };
 		2867ACFE14DB845B003994DB /* listIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ACFC14DB845A003994DB /* listIcon.png */; };
@@ -541,8 +539,6 @@
 		2867ABF514D0D3B0003994DB /* TravelPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TravelPick.png; sourceTree = "<group>"; };
 		2867ABF614D0D3B0003994DB /* TravelPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TravelPick@2x.png"; sourceTree = "<group>"; };
 		2867AC2C14D73C0F003994DB /* PerspectiveDisplayProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectiveDisplayProtocol.h; sourceTree = "<group>"; };
-		2867AC2D14D87009003994DB /* GreyedMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreyedMarker.png; sourceTree = "<group>"; };
-		2867AC2E14D87009003994DB /* GreyedMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GreyedMarker@2x.png"; sourceTree = "<group>"; };
 		2867AC3614D888BB003994DB /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
 		2867AC3714D888BB003994DB /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
 		2867AC3914D8B578003994DB /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
@@ -1591,8 +1587,6 @@
 				2895EBE714E1DBA2009F43F6 /* action_sheet@2x.png */,
 				2867ACFC14DB845A003994DB /* listIcon.png */,
 				2867ACFD14DB845B003994DB /* listIcon@2x.png */,
-				2867AC2D14D87009003994DB /* GreyedMarker.png */,
-				2867AC2E14D87009003994DB /* GreyedMarker@2x.png */,
 				2867ABE314D0D3AE003994DB /* BeautyPick.png */,
 				2867ABE414D0D3AE003994DB /* BeautyPick@2x.png */,
 				2867ABE514D0D3AE003994DB /* EverythingPick.png */,
@@ -2044,8 +2038,6 @@
 				2867AC0814D0D3B0003994DB /* TouristyPick@2x.png in Resources */,
 				2867AC0914D0D3B0003994DB /* TravelPick.png in Resources */,
 				2867AC0A14D0D3B0003994DB /* TravelPick@2x.png in Resources */,
-				2867AC2F14D87009003994DB /* GreyedMarker.png in Resources */,
-				2867AC3014D87009003994DB /* GreyedMarker@2x.png in Resources */,
 				2867ACFE14DB845B003994DB /* listIcon.png in Resources */,
 				2867ACFF14DB845B003994DB /* listIcon@2x.png in Resources */,
 				2895EBE814E1DBA2009F43F6 /* action_sheet.png in Resources */,
