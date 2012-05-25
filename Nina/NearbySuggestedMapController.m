@@ -396,18 +396,18 @@
               forControlEvents:UIControlEventTouchUpInside];
         
         pinView.rightCalloutAccessoryView = rightButton;
+        if (annotation.place.bookmarked){
+            if ( annotation.place.highlighted ) {
+                pinView.image = [UIImage imageNamed:@"HilightMarker.png"];
+            } else {
+                pinView.image = [UIImage imageNamed:@"MyMarker.png"];
+            }
+        } else {
+            pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
+        }
         
         for (Perspective *perspective in annotation.place.placemarks){
             if ( (!userFilter || [perspective.user.username isEqualToString:userFilter]) && (!tagFilter || [perspective.tags indexOfObject:tagFilter] != NSNotFound ) ){
-                if (annotation.place.bookmarked){
-                    if ( annotation.place.highlighted ) {
-                        pinView.image = [UIImage imageNamed:@"HilightMarker.png"];
-                    } else {
-                        pinView.image = [UIImage imageNamed:@"MyMarker.png"];
-                    }
-                } else {
-                    pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
-                }
                 pinView.tag =1;
                 annotation.tag =1;
                 perspective.hidden = false;
