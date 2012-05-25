@@ -79,8 +79,6 @@
 
 #pragma mark - Login delegate methods
 - (void) loadContent {
-    self.myLoaded = false;
-    self.followingLoaded = false;
     [super findNearbyPlaces];
     [self.placesTableView reloadData];
 }
