@@ -408,7 +408,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     [picker dismissModalViewControllerAnimated:YES];
-    UIImage *img = [[info objectForKey:UIImagePickerControllerEditedImage] retain];
+    UIImage *img = [[info objectForKey:UIImagePickerControllerOriginalImage] retain];
     
     ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
     [library writeImageToSavedPhotosAlbum:[img CGImage] metadata:[info objectForKey:UIImagePickerControllerMediaMetadata]  completionBlock:nil];
