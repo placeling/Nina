@@ -489,6 +489,8 @@ typedef enum {
                         error:(NSError*)error;
 {
 	[self dismissModalViewControllerAnimated:YES];
+    
+    [FlurryAnalytics logEvent:@"EMAIL_SHARE_PLACE"];
 }
 
 
