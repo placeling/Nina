@@ -167,7 +167,6 @@
         PostSignupViewController *postSignupViewController = [[PostSignupViewController alloc] init];
         postSignupViewController.username = userName;
         postSignupViewController.delegate = self.delegate;
-        [self.navigationController pushViewController:postSignupViewController animated:true];
         
         NSArray * newViewControllers = [NSArray arrayWithObjects:postSignupViewController,nil];
         [self.navigationController setViewControllers:newViewControllers];

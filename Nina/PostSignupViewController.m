@@ -19,7 +19,7 @@
 
 
 @implementation PostSignupViewController
-@synthesize delegate, username, user, uploadingImage, textView, profileImageView, scrollView, HUD, changeImageButton, cityField;
+@synthesize delegate, username, user, uploadingImage, textView, profileImageView, scrollView, HUD, changeImageButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -104,7 +104,6 @@
     
     [self.textView resignFirstResponder];
     [request setPostValue:self.textView.text forKey:@"description"];
-    [request setPostValue:self.cityField.text forKey:@"city"];
 
     if (uploadingImage){
         NSData* imgData = UIImageJPEGRepresentation(uploadingImage, 0.5);
@@ -139,7 +138,6 @@
         self.user = newUser;
         
         self.textView.text = self.user.userDescription;
-        self.cityField.text = self.user.city;
         [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumbUrl]];
     }
 }
@@ -265,13 +263,18 @@
 		keyboardOffset = kbSize.width;
 	}
     
-	CGFloat paddingNeeded = (self.textView.frame.origin.y + self.textView.frame.size.height + keyboardOffset) - self.view.frame.size.height + 5;
+	CGFloat paddingNeeded = (self.textView.frame.origin.y + self.textView.frame.size.height + keyboardOffset + 5) - (self.view.frame.size.height);
     
 	if (paddingNeeded > 0) {
 		self.scrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, paddingNeeded, 0.0);
 		self.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, paddingNeeded, 0.0);
 		self.scrollView.contentSize = CGSizeMake(scrollView.frame.size.width , scrollView.frame.size.height);
-        [self.scrollView scrollRectToVisible:self.textView.frame animated:false];   
+        CGRect centeredRect = CGRectMake(self.textView.frame.origin.x,
+                                         self.textView.frame.origin.y,
+                                         self.scrollView.frame.size.width,
+                                         self.textView.frame.origin.y + self.textView.frame.size.height/2);
+        [self.scrollView scrollRectToVisible:centeredRect
+                         animated:TRUE];
 	}
 }
 
@@ -304,7 +307,6 @@
     [profileImageView release];
     [HUD release];
     [changeImageButton release];
-    [cityField release];
 }
 
 

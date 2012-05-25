@@ -134,11 +134,13 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     
     NSString *user_url = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]]).textField.text;
-    NSString *description = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]]).textField.text;
+    NSString *city = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]]).textField.text;
+    NSString *description = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]]).textField.text;
     
     //[request setPostValue:self.memoTextView.text forKey:@"avatar"];
     
     [request setPostValue:description forKey:@"description"];
+    [request setPostValue:city forKey:@"city"];
     [request setPostValue:user_url forKey:@"url"];
     
     self.user.userDescription = description;
@@ -322,7 +324,7 @@
     if (section == 0){
         return 1;
     } else if (section == 1){
-        return 2;
+        return 3;
     } else if (section ==2){
         return 1;
     } else {
@@ -393,6 +395,10 @@
             eCell.textField.text = self.user.url;
             eCell.textField.delegate = self;
         }else if (indexPath.row == 1){
+            eCell.textLabel.text = @"city";
+            eCell.textField.text = self.user.city;
+            eCell.textField.delegate = self;
+        }else if (indexPath.row == 2){
             eCell.textLabel.text = @"description";
             eCell.textField.text = self.user.userDescription;
             eCell.textField.delegate = self;
@@ -412,7 +418,7 @@
         
         CLLocationDistance distance = [self.currentLocation distanceFromLocation:homeLocation];
         DLog(@"%f", distance);
-        cell.textLabel.text = [NSString stringWithFormat:@"Your map is centered %@ from here.", [NinaHelper metersToLocalizedDistance:distance]];
+        cell.textLabel.text = [NSString stringWithFormat:@"Your map is centered %@ from here (private)", [NinaHelper metersToLocalizedDistance:distance]];
         
         cell.textLabel.textAlignment = UITextAlignmentCenter;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

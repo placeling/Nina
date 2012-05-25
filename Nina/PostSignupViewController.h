@@ -24,7 +24,6 @@
     UIImage *uploadingImage;
     
     UITextView *textView;
-    UITextField *cityField;
     UIImageView *profileImageView;
     UIButton *changeImageButton;
 }
@@ -37,7 +36,6 @@
 @property(nonatomic, retain) IBOutlet UIImageView *profileImageView;
 @property(nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic, retain) IBOutlet UIButton *changeImageButton;
-@property(nonatomic, retain) IBOutlet UITextField *cityField;
 
 @property(nonatomic, retain) MBProgressHUD *HUD;
 
