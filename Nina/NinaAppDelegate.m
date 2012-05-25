@@ -229,7 +229,7 @@
             // [self localNotification:newLocation]; only for testing
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];            
-            if ( [defaults objectForKey:@"ios_notification_token"] ){
+            if ( [defaults objectForKey:@"ios_notification_token"] && newLocation.horizontalAccuracy < 500 ){
                 //only send if possible
                 [self sendBackgroundLocationToServer:newLocation];            
             }
