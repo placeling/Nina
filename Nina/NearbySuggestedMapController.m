@@ -91,7 +91,7 @@
 
 -(IBAction)showPeople{
     [usernameButton dismissAnimated:true];
-    
+    [FlurryAnalytics logEvent:@"QUICKPICK_USER_FILTER"];
     userFilter = nil;
     //reset the hiddenness based on tags
     
@@ -339,7 +339,7 @@
 -(IBAction)showTags{
     [hashtagButton dismissAnimated:true];
     tagFilter = nil;
-    
+    [FlurryAnalytics logEvent:@"QUICKPICK_TAG_FILTER"];
     NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
     NSSet *visiblePlacemarks = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
     for ( PlaceMark *mark in visiblePlacemarks ){

@@ -180,6 +180,7 @@
             
             [permissions release];
         } else {    
+            [FlurryAnalytics logEvent:@"Facebook_friend_finder"];
             FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
             
             [self.navigationController pushViewController:findFacebookFriendsController animated:true];

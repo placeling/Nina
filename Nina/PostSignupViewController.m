@@ -10,6 +10,7 @@
 #import "UIImage+Resize.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+SBJSON.h"
+#import "FlurryAnalytics.h"
 
 
 @interface PostSignupViewController(Private)
@@ -102,6 +103,13 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     
     [self.textView resignFirstResponder];
+    
+    if ( [self.textView.text length] > 0){
+        [FlurryAnalytics logEvent:@"NEW_USER_ADDED_DESCRIPTION"];
+    } else {
+        [FlurryAnalytics logEvent:@"NEW_USER_SKIPPED_DESCRIPTION"];
+    }
+    
     [request setPostValue:self.textView.text forKey:@"description"];
 
     if (uploadingImage){
