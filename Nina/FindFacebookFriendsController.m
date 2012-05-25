@@ -159,9 +159,10 @@
             }
             
             cell.textLabel.textColor = [UIColor grayColor];
-            cell.textLabel.text = @"You don't have any facebook friends on Placeling";
-            [cell setUserInteractionEnabled:NO];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
+            cell.textLabel.text = @"None of your Facebook friends are using Placeling.";
+            [cell.detailTextLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
+            cell.detailTextLabel.text = @"Click to Invite them";
         } else {    
             User *user = [self.facebookFriends objectAtIndex:indexPath.row];
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -230,12 +231,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    User *user = [self.facebookFriends objectAtIndex:indexPath.row];
-    MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
-    memberProfileViewController.user = user;
-    [self.navigationController pushViewController:memberProfileViewController animated:YES];
-    [memberProfileViewController release];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row ==0 && [self.facebookFriends count] ==0){
+        [self showFacebookInvite];
+    } else {
+        User *user = [self.facebookFriends objectAtIndex:indexPath.row];
+        MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
+        memberProfileViewController.user = user;
+        [self.navigationController pushViewController:memberProfileViewController animated:YES];
+        [memberProfileViewController release];
+    }
 }
 
 @end
