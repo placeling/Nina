@@ -167,7 +167,7 @@
         if (self.perspective.notes && [self.perspective.notes length] > 0){
             self.memoTextView.text = self.perspective.notes;
         }else {
-            self.memoTextView.placeholder = @"Add notes and photos to tell people why you placemarked this location!";
+            self.memoTextView.placeholder = @"Use #hashtags in your notes to add another way to explore your places.";
         }
     }
     
