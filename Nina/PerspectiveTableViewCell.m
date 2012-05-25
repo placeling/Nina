@@ -369,7 +369,7 @@
     
     if ( !currentUser ) {
         UIAlertView *baseAlert;
-        NSString *alertMessage = @"Sign up or log in to share or flag this placemark";
+        NSString *alertMessage = @"Sign up or log in to like this placemark";
         baseAlert = [[UIAlertView alloc] 
                      initWithTitle:nil message:alertMessage 
                      delegate:self.requestDelegate cancelButtonTitle:@"Not Now" 
