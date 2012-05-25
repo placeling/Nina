@@ -13,6 +13,8 @@
 #import "User.h"
 #import "LoginController.h"
 #import "FlurryAnalytics.h"
+#import "FriendFindController.h"
+
 
 @interface ActivityFeedViewController (Private)
 -(void)dataSourceDidFinishLoadingNewData;
@@ -43,6 +45,7 @@
         [NinaHelper signRequest:request];
         [request setDelegate:self];
         [request startAsynchronous];   
+        loadingMore = true;
     } 
 }
 
@@ -145,7 +148,7 @@
     
     [FlurryAnalytics logEvent:@"ACTIVITY_FEED_VIEW"];
     
-    self.navigationItem.title = @"Recent activity";
+    self.navigationItem.title = @"Recent Activity";
     
     if (refreshHeaderView == nil) {
 		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.activityTableView.bounds.size.height, 320.0f, self.activityTableView.bounds.size.height)];
@@ -161,7 +164,6 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [StyleHelper styleBackgroundView:self.activityTableView];
-    self.navigationController.title = @"Activity Feed";
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -299,7 +301,7 @@
     if (cell == nil) {
         NSString *currentUser = [NinaHelper getUsername];
         
-        if (!currentUser || currentUser.length == 0) {
+        if ( !currentUser ) {
             cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:LoginCellIdentifier] autorelease];
             
             UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 90)];
@@ -307,53 +309,44 @@
             loginText.text = @"Sign up or log in to check out what people you follow have placemarked lately.\n\nTap here to get started.";
             
             loginText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+            
             loginText.tag = 778;
-            [loginText setUserInteractionEnabled:NO];
             [loginText setBackgroundColor:[UIColor clearColor]];
             
             [cell addSubview:loginText];
             [loginText release];
+            [cell setUserInteractionEnabled:YES];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            return cell;
+        } else if ([recentActivities count] <= indexPath.row && !loadingMore){
+            cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:LoginCellIdentifier] autorelease];
+            
+            UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 90)];
+            
+            loginText.text = @"Nothing to show you right now";
+            
+            loginText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+            loginText.tag = 778;
+            [loginText setBackgroundColor:[UIColor clearColor]];
+            [loginText setUserInteractionEnabled:FALSE];
+            
+            [cell addSubview:loginText];
+            [loginText release];
+            [cell setUserInteractionEnabled:YES];
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
-            
-            /*
-        } else if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {            
-            cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:NoActivityCellIdentifier] autorelease];
-            
-            UITextView *existingText = (UITextView *)[cell viewWithTag:778];
-            if (existingText) {
-                [existingText removeFromSuperview];
-            }
-            
-            UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
-            
-            if (user.followingCount == 0) {
-                errorText.text = @"Start following people and you'll see what they do here";
-            } else {
-                errorText.text = @"There's no recent activity by people you follow";
-            }
-            
-            errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
-            errorText.tag = 778;
-            [errorText setUserInteractionEnabled:NO];
-            [errorText setBackgroundColor:[UIColor clearColor]];
-            
-            [cell addSubview:errorText];
-            [errorText release];
-            
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            return cell;*/
-        } else if ([recentActivities count] <= indexPath.row){
+        } else if ([recentActivities count] <= indexPath.row && loadingMore){
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
             
             for(id item in objects){
                 if ( [item isKindOfClass:[UITableViewCell class]]){
                     cell = item;
                 }
-            }      
+            }    
+            [cell setUserInteractionEnabled:NO];
         } else {
             UITextView *existingText = (UITextView *)[cell viewWithTag:778];
             if (existingText) {
@@ -373,6 +366,7 @@
                     break;
                 }
             }   
+            [cell setUserInteractionEnabled:YES];
         }        
     }    
     
@@ -382,7 +376,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+    if ( !currentUser ) {
         LoginController *loginController = [[LoginController alloc] init];
         loginController.delegate = self;
         
@@ -390,6 +384,10 @@
         [self.navigationController presentModalViewController:navBar animated:YES];
         [navBar release];
         [loginController release];
+    } else if ([recentActivities count] <= indexPath.row && !loadingMore){
+        FriendFindController *friendFindController = [[FriendFindController alloc] init];
+        [self.navigationController pushViewController:friendFindController animated:YES];
+        [friendFindController release]; 
     } else {
         NSDictionary *activity = [recentActivities objectAtIndex:indexPath.row];
         
