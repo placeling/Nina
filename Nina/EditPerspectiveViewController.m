@@ -181,7 +181,7 @@
     self.navigationItem.rightBarButtonItem = saveButton;
     [saveButton release];
     
-    [self.memoTextView becomeFirstResponder];
+    //[self.memoTextView becomeFirstResponder];
     
     CLLocationManager* locationManager = [LocationManagerManager sharedCLLocationManager];
     CLLocation *currentLocation = locationManager.location;

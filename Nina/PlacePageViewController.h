@@ -108,7 +108,6 @@ typedef enum {
 -(void) showShareSheet;
 
 -(IBAction)editPerspective;
--(IBAction)editPerspectivePhotos;
 
 -(IBAction)showSingleAnnotatedMap;
 

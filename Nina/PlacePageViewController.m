@@ -692,6 +692,7 @@ typedef enum {
         newPerspective.place = self.place;
         newPerspective.photos = [[[NSMutableArray alloc] initWithCapacity:0] autorelease];
         editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:newPerspective];
+        [editPerspectiveViewController.memoTextView resignFirstResponder];
         [newPerspective release];
     }
     
@@ -704,25 +705,6 @@ typedef enum {
     [self.navigationController presentModalViewController:navBar animated:YES];
     [navBar release];
     
-    [editPerspectiveViewController release];       
-}
-
-
--(IBAction)editPerspectivePhotos{
-    DLog(@"modifying on perspective on %@", self.place.name);
-    myPerspective.place = self.place;
-    
-    EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
-    
-    editPerspectiveViewController.delegate = self;
-    
-    [FlurryAnalytics logEvent:@"EDIT_PERSPECTIVE_PHOTO" ];
-    
-    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editPerspectiveViewController];
-    [StyleHelper styleNavigationBar:navBar.navigationBar];
-    [self.navigationController presentModalViewController:navBar animated:YES];
-    [navBar release];
-    [editPerspectiveViewController.memoTextView resignFirstResponder];
     [editPerspectiveViewController release];       
 }
 
