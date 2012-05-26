@@ -72,11 +72,11 @@
             //delayTip.delegate = self;
             [delayTip presentPointingAtView:self.delayButton inView:self.memoTextView animated:true];
         }
-        [self.delayButton setImage:[UIImage imageNamed:@"TimerIcon.png"] forState:UIControlStateNormal];
+        [self.delayButton setImage:[UIImage imageNamed:@"DelayPost_selected.png"] forState:UIControlStateNormal];
         [defaults setObject:[NSNumber numberWithBool:true] forKey:@"delay_perspective_tip"];
         [defaults synchronize];
     } else {
-        [self.delayButton setImage:nil forState:UIControlStateNormal]; 
+        [self.delayButton setImage:[UIImage imageNamed:@"DelayPost_unselected.png"] forState:UIControlStateNormal]; 
     }    
 }
 
@@ -309,7 +309,7 @@
     
     if (facebookEnabled){
         facebookEnabled = false;
-        [self.facebookButton setImage:[UIImage imageNamed:@"facebook_icon_bw.png"] forState:UIControlStateNormal];
+        [self.facebookButton setImage:[UIImage imageNamed:@"facebook_unselected.png"] forState:UIControlStateNormal];
         
     } else {
         NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -317,7 +317,7 @@
         
         if ( [facebook isSessionValid] ){
             facebookEnabled = true;
-            [self.facebookButton setImage:[UIImage imageNamed:@"facebook_icon.png"] forState:UIControlStateNormal];
+            [self.facebookButton setImage:[UIImage imageNamed:@"facebook_selected.png"] forState:UIControlStateNormal];
         } else {
             NSArray* permissions =  [[NSArray arrayWithObjects:
                                       @"email", @"publish_stream",@"offline_access", nil] retain];

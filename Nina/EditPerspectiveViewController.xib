@@ -116,7 +116,7 @@
 							<object class="IBUIButton" id="306848248">
 								<reference key="NSNextResponder" ref="287540930"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{262, 0}, {44, 44}}</string>
+								<string key="NSFrame">{{262, 4}, {37, 41}}</string>
 								<reference key="NSSuperview" ref="287540930"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="824931611"/>
@@ -133,7 +133,7 @@
 								<reference key="IBUINormalTitleShadowColor" ref="531452649"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">facebook_icon_bw.png</string>
+									<string key="NSResourceName">facebook_unselected.png</string>
 								</object>
 								<reference key="IBUIFontDescription" ref="159189609"/>
 								<reference key="IBUIFont" ref="1065866582"/>
@@ -141,7 +141,7 @@
 							<object class="IBUIButton" id="214541261">
 								<reference key="NSNextResponder" ref="287540930"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{140, 0}, {44, 44}}</string>
+								<string key="NSFrame">{{220, 5}, {42, 38}}</string>
 								<reference key="NSSuperview" ref="287540930"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="306848248"/>
@@ -158,7 +158,7 @@
 								<reference key="IBUINormalTitleShadowColor" ref="531452649"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">TimerIcon.png</string>
+									<string key="NSResourceName">DelayPost_unselected.png</string>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">2</int>
@@ -219,6 +219,7 @@
 						<string key="NSFrame">{{15, 352}, {280, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -692,15 +693,15 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>TimerIcon.png</string>
+				<string>DelayPost_unselected.png</string>
 				<string>camera.png</string>
-				<string>facebook_icon_bw.png</string>
+				<string>facebook_unselected.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{70, 70}</string>
+				<string>{42, 38}</string>
 				<string>{50, 50}</string>
-				<string>{44, 43}</string>
+				<string>{37, 40}</string>
 			</object>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">933</string>
