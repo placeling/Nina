@@ -51,7 +51,10 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<array class="NSMutableArray" key="IBUIItems">
 							<object class="IBUIBarButtonItem" id="512950514">
-								<string key="IBUITitle"> # </string>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">TagIcon.png</string>
+								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="806454853"/>
@@ -64,7 +67,7 @@
 							</object>
 							<object class="IBUIBarButtonItem" id="238120769">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<float key="IBUIWidth">111</float>
+								<float key="IBUIWidth">98</float>
 								<reference key="IBUIToolbar" ref="806454853"/>
 								<int key="IBUISystemItemIdentifier">6</int>
 							</object>
@@ -344,8 +347,8 @@
 							<reference ref="341782952"/>
 							<reference ref="965576721"/>
 							<reference ref="514852380"/>
-							<reference ref="806454853"/>
 							<reference ref="119700418"/>
+							<reference ref="806454853"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -571,6 +574,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="112-group.png">{32, 21}</string>
 			<string key="PlaceMarkIt.png">{670, 173}</string>
+			<string key="TagIcon.png">{31, 19}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">933</string>
 	</data>
