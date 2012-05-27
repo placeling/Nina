@@ -62,7 +62,7 @@
     self.perspectiveId = [jsonDict objectForKeyNotNull:@"_id"];
     self.notes = [jsonDict objectForKeyNotNull:@"memo"];
     self.starred = [[jsonDict objectForKeyNotNull:@"starred"] boolValue];
-    self.lastModified =[jsonDict objectForKeyNotNull:@"updated_at"];
+    self.lastModified =[jsonDict objectForKeyNotNull:@"modified_at"];
     self.url = [jsonDict objectForKeyNotNull:@"url"];    
 }
 
@@ -75,9 +75,9 @@
      @"mine", @"mine",
      @"memo", @"notes",     
      @"starred", @"starred",
-     @"updated_at", @"lastModified",
+     @"modified_at", @"lastModified",
      @"url", @"url",
-     @"remarkers", @"remarkers",
+     @"liked_by", @"remarkers",
      @"tags", @"tags",
      nil];
     
