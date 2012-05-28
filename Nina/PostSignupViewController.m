@@ -220,6 +220,7 @@
     
     uploadingImage = img;
     [self.profileImageView setImage:img];
+    [img release];
 }
 
 

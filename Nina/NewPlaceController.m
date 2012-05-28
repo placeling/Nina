@@ -98,6 +98,7 @@
         NSString *fileContent = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];  
         
         self.categories = [fileContent JSONValue];
+        [fileContent release];
     }
     CategoryController *categoryController = [[CategoryController alloc] initWithCategory:self.categories];
     categoryController.newPlaceController= self;

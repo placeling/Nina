@@ -347,7 +347,7 @@
         [imageView release];                    
         cell = aCell;     
         
-    } else if ( indexPath.section == 1 && [[self places] count] > 0) {
+    } else {//if ( indexPath.section == 1 && [[self places] count] > 0) {
         PlaceSuggestTableViewCell *pCell;
         pCell = [tableView dequeueReusableCellWithIdentifier:placeCellIdentifier];
         if (pCell == nil) {

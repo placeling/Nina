@@ -72,6 +72,7 @@
             delayTip.backgroundColor = [UIColor colorWithRed:185/255.0 green:43/255.0 blue:52/255.0 alpha:1.0];
             //delayTip.delegate = self;
             [delayTip presentPointingAtView:self.delayButton inView:self.memoTextView animated:true];
+            [delayTip release];
         }
         [self.delayButton setImage:[UIImage imageNamed:@"DelayPost_selected.png"] forState:UIControlStateNormal];
         [defaults setObject:[NSNumber numberWithBool:true] forKey:@"delay_perspective_tip"];
@@ -125,6 +126,7 @@
     [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
     
     [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
+    [actionSheet release];
 }
 
 // returns the # of rows in each component..
@@ -136,11 +138,12 @@
     for (UIView *view in actionSheet.subviews){        
         if (view.tag == 1){
             pickerView = (UIDatePicker *)view;
+            delayTime = pickerView.countDownDuration/60;  
             break;
         }
         
     }
-    delayTime = pickerView.countDownDuration/60;    
+      
     [actionSheet dismissWithClickedButtonIndex:0 animated:true];
 }
 
