@@ -126,7 +126,7 @@
     } 
     
     if ( [self.placeCategoryField.text length] ==0 ){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Please select a category for the place" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Please select a category \nfor the place" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alertView show];
         [alertView release];
         return;
