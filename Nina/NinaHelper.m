@@ -15,7 +15,7 @@
 #import <RestKit/RestKit.h>
 #import "WBNoticeView.h"
 #import "MTPopupWindow.h"
-
+#import "UserManager.h"
 
 @interface NinaHelper()
 +(void) handleBadRequest:(int)statuscode host:(NSString*)host error:(NSError *)error sender:(UIViewController*)sender;
@@ -77,6 +77,7 @@
     [NinaHelper setUsername:nil];
     [ASIHTTPRequest clearSession];
     
+    
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     [[objectManager client] setOAuth1AccessToken:nil];
     [[objectManager client] setOAuth1AccessTokenSecret:nil];
@@ -84,6 +85,7 @@
     [defaults removeObjectForKey:@"FBAccessTokenKey"];
     [defaults removeObjectForKey:@"FBExpirationDateKey"];
     
+    [UserManager setUser:nil];
     
     for (int i=0; i< 3; i++){
         [defaults removeObjectForKey:[NSString stringWithFormat:@"recent_search_%i", i]];                 

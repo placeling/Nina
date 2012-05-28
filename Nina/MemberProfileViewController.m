@@ -485,7 +485,7 @@
             self.user.perspectives = perspectives;
         }
         
-        if ( [self.username isEqualToString:user.username] ){
+        if ( [self.username isEqualToString:[NinaHelper getUsername]] ){
             [UserManager setUser:self.user];
         }
         
@@ -502,6 +502,11 @@
         for (Perspective *perspective in objects){
             perspective.user = self.user;
             [perspectives addObject:perspective]; 
+        }
+        self.user.perspectives = perspectives;
+        
+        if ( [self.username isEqualToString:[NinaHelper getUsername]] ){
+            [UserManager setUser:self.user];
         }
         
         [self loadData];
