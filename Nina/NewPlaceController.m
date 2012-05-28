@@ -50,7 +50,7 @@
     self.placeNameField.text = self.placeName;
         
     CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
-    self.mapView.showsUserLocation = false;
+    //self.mapView.showsUserLocation = false;
     self.mapView.delegate = self;
     
     MKCoordinateRegion region = self.mapView.region;
