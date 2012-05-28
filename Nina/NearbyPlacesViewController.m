@@ -503,7 +503,7 @@
                     aCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:AddPlaceCell] autorelease];
                 }
                 
-                aCell.detailTextLabel.text = [NSString stringWithFormat:@"Add \"%@\" to location Database", self.searchBar.text]; 
+                aCell.detailTextLabel.text = [NSString stringWithFormat:@"Create a new place called \"%@\"", [self.searchBar.text capitalizedString]]; 
                 
                 [aCell.imageView setImage:[UIImage imageNamed:@"ReMark.png"]];
                 [aCell setUserInteractionEnabled:YES];
@@ -642,7 +642,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if ( ! [self showPredictive] && indexPath.row >= [nearbyPlaces count] ) {
-        NewPlaceController *newPlaceController = [[NewPlaceController alloc] initWithName:self.searchBar.text];
+        NewPlaceController *newPlaceController = [[NewPlaceController alloc] initWithName:[self.searchBar.text capitalizedString]];
         [[self navigationController] pushViewController:newPlaceController animated:YES];
         [newPlaceController release];
     } else {
