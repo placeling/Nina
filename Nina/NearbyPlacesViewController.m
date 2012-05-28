@@ -504,6 +504,7 @@
                 }
                 
                 aCell.detailTextLabel.text = [NSString stringWithFormat:@"Create a new place called \"%@\"", [self.searchBar.text capitalizedString]]; 
+                aCell.detailTextLabel.numberOfLines = 2;
                 
                 [aCell.imageView setImage:[UIImage imageNamed:@"ReMark.png"]];
                 [aCell setUserInteractionEnabled:YES];
