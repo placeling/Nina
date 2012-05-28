@@ -12,6 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "GenericWebViewController.h"
 #import "FlurryAnalytics.h"
+#import "UserManager.h"
 
 @implementation MyPerspectiveCellViewController
 
@@ -148,6 +149,7 @@
         [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
 
     }
+    [UserManager updatePerspective:self.perspective];
 }
 
 

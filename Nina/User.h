@@ -35,8 +35,7 @@
     NSNumber *followerCount;
     NSNumber *following;
     NSNumber *follows_you;
-    
-    bool modified;    
+     
     BOOL blocked;
 }
 
@@ -59,7 +58,6 @@
 
 @property (nonatomic, retain) NSNumber *following;
 @property (nonatomic, retain) NSNumber *follows_you;
-@property (nonatomic, assign) bool modified;
 @property (nonatomic, retain) NSString *fullname;
 @property (nonatomic, assign) BOOL blocked;
 

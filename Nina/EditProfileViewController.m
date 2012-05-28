@@ -15,6 +15,7 @@
 #import "UIImageView+WebCache.h"
 #import "NinaAppDelegate.h"
 #import "FlurryAnalytics.h"
+#import "UserManager.h"
 
 @interface EditProfileViewController(Private)
 -(IBAction)showActionSheet;
@@ -170,8 +171,6 @@
     // Set determinate mode
     HUD.labelText = @"Saving...";
     [HUD retain];
-    
-    self.user.modified = true;
 }
 
 - (void)hudWasHidden{
@@ -216,6 +215,7 @@
         
         [self.user updateFromJsonDict:[userDict objectForKey:@"user"]];
 
+        [UserManager setUser:self.user];
         [self.delegate loadData];
         [self.navigationController dismissModalViewControllerAnimated:TRUE];
 	}

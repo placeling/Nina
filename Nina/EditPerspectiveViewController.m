@@ -16,6 +16,7 @@
 #import "asyncimageview.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AssetsLibrary/ALAssetsLibrary.h>
+#import "UserManager.h"
 
 @interface EditPerspectiveViewController()
 -(NSNumber*) uploadImageAndReturnTag:(UIImage*)mainImage;
@@ -280,6 +281,7 @@
     [request startAsynchronous];
     
     [delegate updatePerspective:self.perspective];
+    [UserManager updatePerspective:self.perspective];
     
     [self.navigationController dismissModalViewControllerAnimated:YES];
     

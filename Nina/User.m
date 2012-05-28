@@ -18,7 +18,7 @@
 @synthesize followingCount, followerCount, perspectives;
 @synthesize following, follows_you;
 @synthesize email, url; 
-@synthesize auths, modified, location, blocked;
+@synthesize auths, location, blocked;
 
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
     self.userId = [jsonDict objectForKeyNotNull:@"id"];

@@ -129,8 +129,6 @@
     self.HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     // Set determinate mode
     self.HUD.labelText = @"Saving...";
-    
-    self.user.modified = true;
 }
 
 

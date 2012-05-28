@@ -24,6 +24,7 @@
 #import "NinaAppDelegate.h"
 #import "FlurryAnalytics.h"
 #import "PictureViewController.h"
+#import "UserManager.h"
 
 @interface MemberProfileViewController() 
 -(void) blankLoad;
@@ -88,17 +89,10 @@
     
     [StyleHelper styleInfoView:self.headerView];
     
-    if (self.user.modified){
-        self.user.modified = false;
-        [self loadData];
-    } else {
-        for (Perspective *perspective in perspectives){
-            if (perspective.modified){
-                perspective.modified = false;            
-                [self.tableView reloadData];
-                break;
-            }
-        }
+    if ( [self.username isEqualToString:[NinaHelper getUsername] ]){
+        self.user = [UserManager sharedMeUser];
+        self.perspectives = self.user.perspectives;
+        [self.tableView reloadData];
     }
 }
 
@@ -488,6 +482,11 @@
                 perspective.user = self.user;
                 [perspectives addObject:perspective]; 
             }
+            self.user.perspectives = perspectives;
+        }
+        
+        if ( [self.username isEqualToString:user.username] ){
+            [UserManager setUser:self.user];
         }
         
         [self loadData];
