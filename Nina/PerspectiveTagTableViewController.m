@@ -187,7 +187,7 @@
         }
         [pCell.textLabel setFont:[UIFont systemFontOfSize:12]];
         pCell.textLabel.textAlignment = UITextAlignmentCenter;
-        pCell.textLabel.text = @"No places have a #hashtag around here yet";
+        pCell.textLabel.text = @"No places around here have a #hashtag yet";
         [StyleHelper styleGenericTableCell:pCell];
         pCell.userInteractionEnabled = false;
         self.tableView.userInteractionEnabled = false;
