@@ -58,6 +58,7 @@
     MKCoordinateSpan span; 
     
     span.latitudeDelta  = 0.01;
+    span.longitudeDelta  = 0.01;
     
     region.span = span;
 	CLLocation *location = locationManager.location;
@@ -119,14 +120,14 @@
     
     
     if ( [self.placeNameField.text length] == 0){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Please give a place name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"This place needs a name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alertView show];
         [alertView release];
         return;
     } 
     
     if ( [self.placeCategoryField.text length] ==0 ){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Please select a category \nfor the place" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"This place needs a category" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alertView show];
         [alertView release];
         return;
