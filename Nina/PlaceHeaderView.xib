@@ -65,7 +65,8 @@
 								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
-								<float key="IBUIMinimumFontSize">10</float>
+								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+								<float key="IBUIMinimumFontSize">16</float>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">2</int>
 									<double key="pointSize">16</double>
@@ -457,14 +458,12 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>bookmark</string>
 							<string>editPerspective</string>
-							<string>editPerspectivePhotos</string>
 							<string>googlePlacePage</string>
 							<string>showSingleAnnotatedMap</string>
 							<string>tagSearch:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -478,7 +477,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>bookmark</string>
 							<string>editPerspective</string>
-							<string>editPerspectivePhotos</string>
 							<string>googlePlacePage</string>
 							<string>showSingleAnnotatedMap</string>
 							<string>tagSearch:</string>
@@ -491,10 +489,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">editPerspective</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">editPerspectivePhotos</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
