@@ -379,6 +379,8 @@ NSString *facebookUrl = @"fb://page/APP_ID";
 +(void) likeApp {   
     NSString *likeURL = [facebookUrl stringByReplacingOccurrencesOfString:@"APP_ID" withString:FACEBOOK_PAGE_ID];
     NSURL *fanPageURL = [NSURL URLWithString:likeURL];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults synchronize];
     
     if (![[UIApplication sharedApplication] openURL: fanPageURL]) {
         //fanPageURL failed to open.  Open the website in Safari instead
