@@ -34,9 +34,10 @@ static User *sharedMeUser = nil;
         for ( int i =0; i < [sharedMeUser.perspectives count]; i++){
             Perspective *perspective  = [sharedMeUser.perspectives objectAtIndex:i];
             if ( [perspective.perspectiveId isEqualToString:newPerspective.perspectiveId] ){
-                [sharedMeUser.perspectives replaceObjectAtIndex:i withObject:newPerspective]; 
+                [sharedMeUser.perspectives removeObjectAtIndex:i];
             }
         }
+        [sharedMeUser.perspectives insertObject:newPerspective atIndex:0];
         sharedMeUser.timestamp = [[NSDate date] timeIntervalSince1970];
     }
 }

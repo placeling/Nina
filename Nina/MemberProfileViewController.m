@@ -25,6 +25,7 @@
 #import "FlurryAnalytics.h"
 #import "PictureViewController.h"
 #import "UserManager.h"
+#import "NearbyPlacesViewController.h"
 
 @interface MemberProfileViewController() 
 -(void) blankLoad;
@@ -100,7 +101,7 @@
     UIImage *profileImage = [UIImage imageNamed:@"profile.png"];
     self.profileImageView.image = profileImage;
     
-    if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
+    if ( !self.user.username && !self.username ) {
         self.usernameLabel.text = @"Your Name Here";
     } else {
         self.usernameLabel.text = @"";
@@ -615,7 +616,7 @@
         return 100;
     } else {
         if ((perspectives) && [perspectives count] == 0) {
-            return 70;
+            return 100;
         } else if (indexPath.row >= [perspectives count]){
             return 44;
         } else {
@@ -637,14 +638,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if ( (!self.user.username || self.user.username.length == 0) && (!self.username || self.username.length == 0)) {
+    if ( !self.user.username && !self.username ) {
         return 1;
     } else {
         if (perspectives) {
-            if (loadingMore){   
+            if (loadingMore){
                 return [perspectives count] +1;
-            }else{
-                return [perspectives count];
+            } else {
+                return MAX([perspectives count], 1);
             }
         } else {
             return 1;
@@ -660,7 +661,7 @@
     
     UITableViewCell *cell;
     
-    if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
+    if ( !self.user.username && !self.username ) {
         cell = [tableView dequeueReusableCellWithIdentifier:loginCellIdentifier];
     } else if ((perspectives) && [perspectives count] == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:noActivityCellIdentifier];
@@ -668,14 +669,10 @@
         cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
     }
     
-    if ((perspectives) && [perspectives count] == 0) {
-        tableView.allowsSelection = NO;
-    } else {
-        tableView.allowsSelection = YES;
-    }
+    tableView.allowsSelection = YES;
     
     if (cell == nil) {
-        if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
+        if ( !self.user.username && !self.username ) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:loginCellIdentifier] autorelease];
             
             cell.detailTextLabel.text = @"";
@@ -702,15 +699,26 @@
             cell.detailTextLabel.text = @"";
             cell.textLabel.text = @"";
             
-            UITextView *errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
+            UITextView *errorText;
             
             if ([self.username isEqualToString:[NinaHelper getUsername]]) {
-                errorText.text = @"You haven't bookmarked any places yet";
+                errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
+                errorText.textAlignment = UITextAlignmentCenter;
+                errorText.text = @"Let's add a place to your map";
+                UIImageView *placemarkImage = [[UIImageView alloc] initWithFrame:CGRectMake(42, 40, 235, 60)];
+                errorText.font = [UIFont fontWithName:@"Helvetica" size:16.0];
+                [placemarkImage setUserInteractionEnabled:NO];
+                [placemarkImage setImage:[UIImage imageNamed:@"PlaceMarkIt.png"]];
+                [cell addSubview:placemarkImage];
+                [placemarkImage release];
             } else {
+                errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
                 errorText.text = [NSString stringWithFormat:@"%@ hasn't bookmarked any places yet", self.username];
+                errorText.font = [UIFont fontWithName:@"Helvetica" size:15.0];
+                errorText.textAlignment = UITextAlignmentCenter;
+                tableView.allowsSelection = NO;
             }
 
-            errorText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
             [errorText setUserInteractionEnabled:NO];
             [errorText setBackgroundColor:[UIColor clearColor]];
             
@@ -722,7 +730,7 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
             
-        } else if ( indexPath.row >= [perspectives count] ){
+        } else if ( indexPath.row >= [perspectives count] && loadingMore ){
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
             
             for(id item in objects){
@@ -759,8 +767,8 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if ((self.user.username == (id)[NSNull null] || self.user.username.length == 0) && (self.username == (id)[NSNull null] || self.username.length == 0)) {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if ( !self.user.username  &&  !self.username ) {
         LoginController *loginController = [[LoginController alloc] init];
         loginController.delegate = self;
         
@@ -778,7 +786,11 @@
         }
         [[self navigationController] pushViewController:placePageViewController animated:YES];
         [placePageViewController release];
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+    } else if (indexPath.row <= [perspectives count] && [self.username isEqualToString:[NinaHelper getUsername]]){
+        NearbyPlacesViewController *nearbyPlacesViewController = [[NearbyPlacesViewController alloc] init];
+        [self.navigationController pushViewController:nearbyPlacesViewController animated:YES];
+        [nearbyPlacesViewController release];
     }
 }
 
