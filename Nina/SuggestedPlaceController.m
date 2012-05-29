@@ -13,12 +13,13 @@
 #import "Place.h"
 #import "LoginController.h"
 #import "UIImageView+WebCache.h"
+#import "UserManager.h"
 
 @implementation SuggestedPlaceController
 
 @synthesize popularLoaded, followingLoaded, myLoaded, locationEnabled;
 @synthesize searchTerm, category, navTitle, initialIndex;
-@synthesize origin, latitudeDelta;
+@synthesize origin, latitudeDelta, userTime;
 @synthesize followingPlaces, popularPlaces, myPlaces;
 @synthesize toolbar, segmentedControl;
 @synthesize ad;
@@ -42,6 +43,10 @@
         myLoaded = FALSE;
         initialIndex = 1;
         self.latitudeDelta = 0.005;
+        User *user = [UserManager sharedMeUser];
+        if (user) {
+            self.userTime = user.timestamp;
+        }
     }
     return self;
 }

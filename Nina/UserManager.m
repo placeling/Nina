@@ -14,6 +14,11 @@ static User *sharedMeUser = nil;
 
 #pragma mark Singleton Methods
 + (id)sharedMeUser {
+    
+    @synchronized(self) {
+        if(sharedMeUser == nil)
+            sharedMeUser = [[User alloc] init];
+    }
     return sharedMeUser;
 }
 
@@ -32,6 +37,7 @@ static User *sharedMeUser = nil;
                 [sharedMeUser.perspectives replaceObjectAtIndex:i withObject:newPerspective]; 
             }
         }
+        sharedMeUser.timestamp = [[NSDate date] timeIntervalSince1970];
     }
 }
 

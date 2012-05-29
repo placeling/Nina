@@ -36,6 +36,7 @@
     NSNumber *following;
     NSNumber *follows_you;
      
+    NSTimeInterval timestamp;
     BOOL blocked;
 }
 
@@ -60,6 +61,7 @@
 @property (nonatomic, retain) NSNumber *follows_you;
 @property (nonatomic, retain) NSString *fullname;
 @property (nonatomic, assign) BOOL blocked;
+@property (nonatomic, assign) NSTimeInterval timestamp;
 
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 

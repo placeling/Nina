@@ -20,6 +20,7 @@
 #import "NearbySuggestedMapController.h"
 #import "FlurryAnalytics.h"
 #import "NearbyPlacesViewController.h"
+#import "UserManager.h"
 
 @interface NearbySuggestedMapController (Private)
 -(void)drawMapPlaces;
@@ -589,7 +590,15 @@
             //if a set of places hasn't already been set, get them for current location
             [self loadContent];
         } else {
-            [self drawMapPlaces];
+            User *user = [UserManager sharedMeUser];
+            if ( user && user.timestamp  > self.userTime ){
+                self.userTime = user.timestamp;
+                [self.mapView removeAnnotations:self.mapView.annotations];
+                [placeSuperset removeAllObjects];
+                [self loadContent];
+            } else {
+                [self drawMapPlaces];
+            }
         }
     }
 }

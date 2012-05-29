@@ -34,6 +34,7 @@
     NSString *navTitle;
     
     Advertisement *ad;
+    NSTimeInterval userTime;
 }
 
 @property(nonatomic, assign) BOOL followingLoaded;
@@ -50,6 +51,7 @@
 
 @property(nonatomic,assign) CLLocationCoordinate2D origin;
 @property(nonatomic,assign) float latitudeDelta;
+@property (nonatomic, assign) NSTimeInterval userTime;
 
 @property(nonatomic,retain) NSMutableArray  *followingPlaces;
 @property(nonatomic,retain) NSMutableArray  *popularPlaces;

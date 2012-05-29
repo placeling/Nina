@@ -18,7 +18,15 @@
 @synthesize followingCount, followerCount, perspectives;
 @synthesize following, follows_you;
 @synthesize email, url; 
-@synthesize auths, location, blocked;
+@synthesize auths, location, blocked, timestamp;
+
+- (id) init
+{
+    if (self = [super init]){
+        timestamp = [[NSDate date] timeIntervalSince1970];
+    }
+    return self;
+}
 
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
     self.userId = [jsonDict objectForKeyNotNull:@"id"];

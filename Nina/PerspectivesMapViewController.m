@@ -14,6 +14,7 @@
 #import "Perspective.h"
 #import "PlacePageViewController.h"
 #import "LoginController.h"
+#import "UserManager.h"
 
 @interface PerspectivesMapViewController (Private)
 -(void)mapUserPlaces;
@@ -25,12 +26,16 @@
 
 @synthesize mapView=_mapView, toolbar, spinnerView;
 @synthesize username=_username, user;
-@synthesize nearbyMarks;
+@synthesize nearbyMarks, userTime;
 @synthesize locationManager;
 
 - (id) initForUserName:(NSString *)username{
     if(self = [super init]){
         self.username = username;
+        User *sharedUser = [UserManager sharedMeUser];
+        if (sharedUser) {
+            self.userTime = sharedUser.timestamp;
+        }
 	}
 	return self;    
 }
@@ -294,6 +299,7 @@
     self.mapView.delegate = self;
     self.spinnerView.hidden = true;
     [self recenter];
+    [self loadContent];
     
 }
 
@@ -305,7 +311,14 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self loadContent];
+    
+    User *sharedUser = [UserManager sharedMeUser];
+    if ( sharedUser && sharedUser.timestamp  > self.userTime ){
+        self.userTime = sharedUser.timestamp;
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        [nearbyMarks removeAllObjects]; 
+        [self loadContent];
+    }
 }
 
 

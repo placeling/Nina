@@ -24,6 +24,7 @@
     User *user; //user this is representing
     UIActivityIndicatorView *spinnerView;  
     BOOL mapLoaded;
+    NSTimeInterval userTime;
 }
 
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;
@@ -33,6 +34,7 @@
 @property(nonatomic, retain) NSMutableArray *nearbyMarks;
 @property(nonatomic, retain) CLLocationManager *locationManager;
 @property(nonatomic, retain) User *user;
+@property(nonatomic, assign) NSTimeInterval userTime;
 
 -(IBAction)recenter;
 -(IBAction)refreshMap;
