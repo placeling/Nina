@@ -415,8 +415,10 @@
     [picker dismissModalViewControllerAnimated:YES];
     UIImage *img = [[info objectForKey:UIImagePickerControllerOriginalImage] retain];
     
-    ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
-    [library writeImageToSavedPhotosAlbum:[img CGImage] metadata:[info objectForKey:UIImagePickerControllerMediaMetadata]  completionBlock:nil];
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera){
+        ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
+        [library writeImageToSavedPhotosAlbum:[img CGImage] metadata:[info objectForKey:UIImagePickerControllerMediaMetadata]  completionBlock:nil];
+    }
     
     NSNumber *tag = [self uploadImageAndReturnTag:img];
     
