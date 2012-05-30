@@ -11,7 +11,7 @@
 #import "Photo.h"
 
 @implementation Perspective
-@synthesize user, place, notes, tags, photos, starred, lastModified, remarkers;
+@synthesize user, place, notes, tags, photos, starred, lastModified, likers;
 @synthesize dateAdded, visited, share, mine, perspectiveId, modified, url, hidden;
 
 -(id) initFromJsonDict:(NSDictionary *)jsonDict{
@@ -64,6 +64,7 @@
     self.starred = [[jsonDict objectForKeyNotNull:@"starred"] boolValue];
     self.lastModified =[jsonDict objectForKeyNotNull:@"modified_at"];
     self.url = [jsonDict objectForKeyNotNull:@"url"];    
+    self.likers = [jsonDict objectForKeyNotNull:@"likers"];
 }
 
 
@@ -79,6 +80,7 @@
      @"url", @"url",
      @"liked_by", @"remarkers",
      @"tags", @"tags",
+     @"likers", @"likers",
      nil];
     
     [perspectiveMapping mapKeyPath:@"place" toRelationship:@"place" withMapping:[Place getObjectMappingNoPerspectives]];
@@ -159,7 +161,7 @@
     [dateAdded release];
     [perspectiveId release];
     [lastModified release];
-    [remarkers release];
+    [likers release];
     [super dealloc];
 }
 
