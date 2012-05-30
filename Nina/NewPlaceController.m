@@ -248,7 +248,11 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [StyleHelper styleInfoView:self.view];
+    self.navigationItem.title = @"Pick Place";
+    [StyleHelper styleBackgroundView:self.view];
+    self.mapView.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.mapView.layer.borderWidth = 5.0;
+    
 }
 
 
