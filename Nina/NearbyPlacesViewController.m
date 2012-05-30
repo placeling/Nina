@@ -307,7 +307,12 @@
 #pragma mark ASIhttprequest
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
+    loading = false;
+    promptAdd = false;
+    self.dataLoaded = true;
     [NinaHelper handleBadRequest:request sender:self];
+    [self dataSourceDidFinishLoadingNewData];
+    [self.placesTableView reloadData];
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{

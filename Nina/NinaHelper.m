@@ -139,7 +139,7 @@
         if (textRange.location == NSNotFound){
             DLog(@"Error for which host isn't a placeling server");
             [FlurryAnalytics logEvent:@"ERROR_NOT_OUR_FAULT"];
-            return; //Issue with server we can't really help, likely google
+            //return; //Issue with server we can't really help, likely google
         }
     }
 
