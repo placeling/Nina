@@ -17,6 +17,8 @@
 #import "GenericWebViewController.h"
 #import "MBProgressHUD.h"
 #import "FlurryAnalytics.h"
+#import "User.h"
+#import "UserManager.h"
 
 @interface LoginController (Private)
     -(void)close;
@@ -38,7 +40,7 @@
     NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
     NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/oauth/access_token", [plistData objectForKey:@"server_url"]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/oauth/access_token?newlogin=true", [plistData objectForKey:@"server_url"]];
     NSURL *url = [NSURL URLWithString:urlString];
     
     [NinaHelper clearCredentials];
@@ -103,7 +105,7 @@
 
 -(BOOL)testAlreadyLoggedInFacebook:(NSDictionary*)fbDict{
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/facebook/login", [NinaHelper getHostname]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/facebook/login?newlogin=true", [NinaHelper getHostname]];
     NSURL *url = [NSURL URLWithString:urlString];
     
     ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
@@ -117,20 +119,36 @@
     [request startSynchronous];
     
     NSString *body = [request responseString];
-
-    NSArray *tokens = [body componentsSeparatedByString:@"&"];
     
-    if ([tokens count] > 1){
+    DLog(@"got response back: %@", body);
+    
+    NSDictionary *jsonDict = [body JSONValue];  
+    
+    if ( [@"success" isEqualToString:(NSString*)[jsonDict objectForKey:@"status"] ]){
+        NSArray *tokens = [[jsonDict objectForKey:@"token"] componentsSeparatedByString:@"&"];
+        
         for (NSString* token in tokens){
             NSArray *component = [token componentsSeparatedByString:@"="];
             if ( [[NSString stringWithString:@"oauth_token"] isEqualToString:[component objectAtIndex:0]] ){
                 [NinaHelper setAccessToken:[component objectAtIndex:1]];
             } else if ( [[NSString stringWithString:@"oauth_token_secret"] isEqualToString:[component objectAtIndex:0]] ){
                 [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
-            } else if ( [[NSString stringWithString:@"username"] isEqualToString:[component objectAtIndex:0]] ){
-                [NinaHelper setUsername:[component objectAtIndex:1]];
             }
         } 
+        
+        User *user = [[User alloc] init];
+        [user updateFromJsonDict:[jsonDict objectForKey:@"user"]];    
+        
+        NSString *userName = user.username;
+        [NinaHelper setUsername:userName];
+        [UserManager setUser:user];
+        
+        [user release];
+        [[UIApplication sharedApplication] 
+         registerForRemoteNotificationTypes:
+         (UIRemoteNotificationTypeAlert | 
+          UIRemoteNotificationTypeBadge | 
+          UIRemoteNotificationTypeSound)];
         return true;
     } else {
         return false;
@@ -305,31 +323,35 @@
         NSString *body = [request responseString];
         DLog(@"got response back: %@", body);
         
-        NSArray *tokens = [body componentsSeparatedByString:@"&"];
         
-        for (NSString* token in tokens){
-            NSArray *component = [token componentsSeparatedByString:@"="];
-            if ( [[NSString stringWithString:@"oauth_token"] isEqualToString:[component objectAtIndex:0]] ){
-                [NinaHelper setAccessToken:[component objectAtIndex:1]];
-            } else if ( [[NSString stringWithString:@"oauth_token_secret"] isEqualToString:[component objectAtIndex:0]] ){
-                [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
-            }
-        } 
-        NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary *jsonDict = [body JSONValue];  
         
-        if (standardUserDefaults && savedUsername){
-            [standardUserDefaults setObject:savedUsername forKey:@"current_username"];
-        } else {
-            DLog(@"FATAL ERROR, NULL standardUserDefaults");
-            exit(-1);
-        }
-        [standardUserDefaults synchronize];
-
-        [[UIApplication sharedApplication] 
+        if ( [@"success" isEqualToString:(NSString*)[jsonDict objectForKey:@"status"] ]){
+            NSArray *tokens = [[jsonDict objectForKey:@"token"] componentsSeparatedByString:@"&"];
+            
+            for (NSString* token in tokens){
+                NSArray *component = [token componentsSeparatedByString:@"="];
+                if ( [[NSString stringWithString:@"oauth_token"] isEqualToString:[component objectAtIndex:0]] ){
+                    [NinaHelper setAccessToken:[component objectAtIndex:1]];
+                } else if ( [[NSString stringWithString:@"oauth_token_secret"] isEqualToString:[component objectAtIndex:0]] ){
+                    [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
+                }
+            } 
+            
+            User *user = [[User alloc] init];
+            [user updateFromJsonDict:[jsonDict objectForKey:@"user"]];    
+            
+            NSString *userName = user.username;
+            [NinaHelper setUsername:userName];
+            [UserManager setUser:user];
+            
+            [user release];
+            [[UIApplication sharedApplication] 
              registerForRemoteNotificationTypes:
              (UIRemoteNotificationTypeAlert | 
               UIRemoteNotificationTypeBadge | 
               UIRemoteNotificationTypeSound)];
+        }
         
         //[delegate viewDidLoad];
         [self close];

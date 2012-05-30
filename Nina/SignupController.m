@@ -13,6 +13,7 @@
 #import "GenericWebViewController.h"
 #import "LoginController.h"
 #import "PostSignupViewController.h"
+#import "UserManager.h"
 
 @implementation SignupController
 
@@ -159,15 +160,18 @@
             }
         } 
         
-        NSString *userName = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).textField.text;
+        User *user = [[User alloc] init];
+        [user updateFromJsonDict:[jsonDict objectForKey:@"user"]];    
         
-        userName = [userName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        NSString *userName = user.username;
         [NinaHelper setUsername:userName];
+        [UserManager setUser:user];
         
         PostSignupViewController *postSignupViewController = [[PostSignupViewController alloc] init];
         postSignupViewController.username = userName;
+        postSignupViewController.user = user;
         postSignupViewController.delegate = self.delegate;
-        
+        [user release];
         NSArray * newViewControllers = [NSArray arrayWithObjects:postSignupViewController,nil];
         [self.navigationController setViewControllers:newViewControllers];
   

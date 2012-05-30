@@ -52,22 +52,31 @@
         
         if ([[authDict objectForKey:@"provider"] isEqualToString:@"facebook"] ){
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *expiry = [authDict objectForKey:@"expiry"];
+            NSDateFormatter *jsonFormatter = [RKObjectMapping preferredDateFormatter];
+            
             if ( ![defaults objectForKey:@"FBAccessTokenKey"] ){
                 [defaults setObject:[authDict objectForKey:@"token"] forKey:@"FBAccessTokenKey"];
-                [defaults setObject:[authDict objectForKey:@"expiry"] forKey:@"FBExpirationDateKey"];
+                DLog(@"Parsing Auth Expirty Date %@",[jsonFormatter dateFromString:expiry]);
+                [defaults setObject:[jsonFormatter dateFromString:expiry] forKey:@"FBExpirationDateKey"];
                 [defaults synchronize];
+                NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+                
+                appDelegate.facebook = [[[Facebook alloc] initWithAppId:[NinaHelper getFacebookAppId] andDelegate:appDelegate] autorelease];
+                
+                appDelegate.facebook.accessToken = [authDict objectForKey:@"token"];
+                appDelegate.facebook.expirationDate = [jsonFormatter dateFromString:expiry];
             } 
+
+            Authentication *auth = [[Authentication alloc] init];
+            auth.provider = [authDict objectForKey:@"provider"];
+            auth.uid = [authDict objectForKey:@"uid"];
+            auth.expiry = [jsonFormatter dateFromString:expiry];
+            auth.token = [authDict objectForKey:@"token"];
+            
+            [self.auths addObject:auth];
+            [auth release];
         }
-        
-        Authentication *auth = [[Authentication alloc] init];
-        auth.provider = [authDict objectForKey:@"provider"];
-        auth.uid = [authDict objectForKey:@"uid"];
-        auth.expiry = [authDict objectForKey:@"expiry"];
-        auth.token = [authDict objectForKey:@"token"];
-        
-        [self.auths addObject:auth];
-        [auth release];
-        
     }
     
     Photo *photo = [[[Photo alloc] init] autorelease];

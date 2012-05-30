@@ -57,14 +57,20 @@
     RKObjectManager* objectManager = [RKObjectManager sharedManager];   
     NSString *targetURL = [NSString stringWithFormat:@"/v1/users/me"];
     
-    [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
-        RKObjectMapping *userMapping = [User getObjectMapping];
-        loader.objectMapping = userMapping;
-        loader.userData = [NSNumber numberWithInt:110]; //use as a tag
-    }];
-    self.HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    // Set determinate mode
-    self.HUD.labelText = @"Retrieving Your Profile...";
+    
+    if ( !self.user ){
+        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+            RKObjectMapping *userMapping = [User getObjectMapping];
+            loader.objectMapping = userMapping;
+            loader.userData = [NSNumber numberWithInt:110]; //use as a tag
+        }];
+        self.HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        // Set determinate mode
+        self.HUD.labelText = @"Retrieving Your Profile...";
+    } else {
+        self.textView.text = self.user.userDescription;
+        [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumbUrl]];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(keyboardWasShown:)

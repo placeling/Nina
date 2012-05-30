@@ -23,8 +23,8 @@ static User *sharedMeUser = nil;
 }
 
 +(void) setUser:(User*)user{
-    if (user){
-        [user release];
+    if (sharedMeUser){
+        [sharedMeUser release];
     }
     sharedMeUser = [user retain];
 }
