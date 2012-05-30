@@ -30,11 +30,8 @@
 @implementation LoginController
 
 
-@synthesize username;
-@synthesize password;
-@synthesize submitButton;
-@synthesize forgotPasswordButton;
-@synthesize delegate;
+@synthesize username, password, submitButton;
+@synthesize forgotPasswordButton, delegate;
 
 -(IBAction) submitLogin{
     NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
@@ -57,6 +54,17 @@
                              tokenIdentifier:nil secret:nil
                                  usingMethod:ASIOAuthHMAC_SHA1SignatureMethod];
     [request startAsynchronous];
+    
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
+    
+    [self.username resignFirstResponder];
+    [self.password resignFirstResponder];
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Logging in";
+    
+    [HUD show:TRUE];
 }
 
 -(IBAction) forgotPassword {
@@ -478,7 +486,8 @@
     [username release];
     [password release];
     [submitButton release];
-    [forgotPasswordButton release];    
+    [forgotPasswordButton release];  
+    
     
     [super dealloc];
 }
