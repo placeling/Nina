@@ -694,7 +694,6 @@ typedef enum {
         newPerspective.place = self.place;
         newPerspective.photos = [[[NSMutableArray alloc] initWithCapacity:0] autorelease];
         editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:newPerspective];
-        [editPerspectiveViewController.memoTextView resignFirstResponder];
         [newPerspective release];
     }
     
