@@ -55,7 +55,7 @@
     
     // Call url to get profile details                
     RKObjectManager* objectManager = [RKObjectManager sharedManager];   
-    NSString *targetURL = [NSString stringWithFormat:@"/v1/users/%@", self.username];
+    NSString *targetURL = [NSString stringWithFormat:@"/v1/users/me"];
     
     [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
         RKObjectMapping *userMapping = [User getObjectMapping];
@@ -76,14 +76,13 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    [super viewDidLoad];
+    [super viewWillAppear:animated];
     
-    [StyleHelper styleInfoView:self.view];
-    [StyleHelper styleSubmitTypeButton:changeImageButton];
+    [StyleHelper styleBackgroundView:self.view];
     [profileImageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
     [profileImageView.layer setBorderWidth: 5.0];
     self.profileImageView.layer.masksToBounds = YES; 
-    
+    self.navigationItem.title = @"Welcome";
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -275,11 +274,7 @@
 		self.scrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, paddingNeeded, 0.0);
 		self.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, paddingNeeded, 0.0);
 		self.scrollView.contentSize = CGSizeMake(scrollView.frame.size.width , scrollView.frame.size.height);
-        CGRect centeredRect = CGRectMake(self.textView.frame.origin.x,
-                                         self.textView.frame.origin.y,
-                                         self.scrollView.frame.size.width,
-                                         self.textView.frame.origin.y + self.textView.frame.size.height/2);
-        [self.scrollView scrollRectToVisible:centeredRect
+        [self.scrollView scrollRectToVisible:self.textView.frame
                          animated:TRUE];
 	}
 }
