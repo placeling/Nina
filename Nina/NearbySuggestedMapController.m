@@ -244,6 +244,12 @@
     
 }
 
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    [super objectLoader:objectLoader didFailWithError:error];
+    [self.spinnerView stopAnimating];
+    self.spinnerView.hidden = true;
+}
+
 - (void)dealloc{
     [_mapView release];
     [locationManager release];
