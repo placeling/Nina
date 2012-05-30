@@ -26,6 +26,7 @@
 -(void)drawMapPlaces;
 -(void)updateMapView;
 -(Perspective*)closestPoint:(CLLocation*)referenceLocation fromArray:(NSArray*)array;
+-(void)showHelperPopup;
 @end
 
 @implementation NearbySuggestedMapController
@@ -236,6 +237,10 @@
         [visiblePlaces release];
     }
     
+    NSString *currentUser = [NinaHelper getUsername];    
+    if ( self.segmentedControl.selectedSegmentIndex == 0 && currentUser){
+        [self showHelperPopup];
+    }
     
 }
 
@@ -626,7 +631,7 @@
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    viewLoaded = true;
+    viewLoaded = true;    
 }
 
 
@@ -638,7 +643,7 @@
 #pragma mark - Unregistered experience methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
+    if (alertView.tag == 0 && buttonIndex == 1) {
         LoginController *loginController = [[LoginController alloc] init];
         loginController.delegate = self;
         
@@ -646,7 +651,33 @@
         [self.navigationController presentModalViewController:navBar animated:YES];
         [navBar release];
         [loginController release];
+    } else if (alertView.tag == 1 && buttonIndex == 1){
+        NearbyPlacesViewController *nearbyPlacesViewController = [[NearbyPlacesViewController alloc] init];
+        [self.navigationController pushViewController:nearbyPlacesViewController animated:YES];
+        [nearbyPlacesViewController release];
     }
 }
+
+-(void)showHelperPopup{
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ( (![defaults objectForKey:@"map_add_place_tip"] || [defaults objectForKey:@"map_add_place_tip"] == false) && [self.myPlaces count] ==0){ 
+        UIAlertView *baseAlert;
+        NSString *alertMessage = @"You haven't yet added a place to your map. Add one now?";
+        
+        baseAlert = [[UIAlertView alloc] 
+                     initWithTitle:nil message:alertMessage 
+                     delegate:self cancelButtonTitle:@"Not Now" 
+                     otherButtonTitles:@"Let's Go", nil];
+        baseAlert.tag = 1;
+        
+        [baseAlert show];
+        [baseAlert release];
+    }
+    
+    [defaults setObject:[NSNumber numberWithBool:true] forKey:@"map_add_place_tip"];
+    [defaults synchronize];
+}
+
 
 @end
