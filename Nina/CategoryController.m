@@ -43,7 +43,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [StyleHelper styleInfoView:self.view];
+    [StyleHelper styleBackgroundView:self.view];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

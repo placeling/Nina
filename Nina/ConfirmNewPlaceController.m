@@ -67,6 +67,7 @@
     [self.mapView setImageWithURL:url];
     
     
+    
     UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Create Place" style:UIBarButtonItemStylePlain target:self action:@selector(confirmPlace)];
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
@@ -192,7 +193,11 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [StyleHelper styleInfoView:self.view];
+    [StyleHelper styleBackgroundView:self.view];
+    self.navigationItem.title = @"Confirm";
+    
+    self.mapView.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.mapView.layer.borderWidth = 3.0;
 }
 
 - (void)viewDidUnload
