@@ -68,7 +68,7 @@
     if (delayedPost){
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         if ( ![defaults objectForKey:@"delay_perspective_tip"] || [defaults objectForKey:@"delay_perspective_tip"] == false){ 
-            CMPopTipView *delayTip = [[CMPopTipView alloc] initWithMessage:@"Use the timer delay to share your experience without disclosing where you currently are."];
+            CMPopTipView *delayTip = [[CMPopTipView alloc] initWithMessage:@"For privacy, the timer will delay sharing, since you are nearby this place"];
             delayTip.backgroundColor = [UIColor colorWithRed:185/255.0 green:43/255.0 blue:52/255.0 alpha:1.0];
             //delayTip.delegate = self;
             [delayTip presentPointingAtView:self.delayButton inView:self.memoTextView animated:true];
@@ -96,7 +96,7 @@
 
 
 -(void) showDelayPopup{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Delay Post by How Long?" 
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Delay sharing for how long?" 
                                                              delegate:nil
                                                     cancelButtonTitle:nil
                                                destructiveButtonTitle:nil
