@@ -246,9 +246,9 @@
             [cell.shareSheetButton setHidden:false];
             [cell.loveButton setHidden:false];
             if(perspective.starred){            
-                [cell.loveButton setImage:[UIImage imageNamed:@"AddPlace_Hover2.png"] forState:UIControlStateNormal];
+                [cell.loveButton setImage:[UIImage imageNamed:@"liked.png"] forState:UIControlStateNormal];
             } else {
-                [cell.loveButton setImage:[UIImage imageNamed:@"AddPlace_Added.png"] forState:UIControlStateNormal];
+                [cell.loveButton setImage:[UIImage imageNamed:@"unliked.png"] forState:UIControlStateNormal];
             }
         }
     }
@@ -389,14 +389,14 @@
         
         [[RKClient sharedClient] post:urlText params:nil delegate:self.requestDelegate]; 
         self.perspective.starred = false;
-        [self.loveButton setImage:[UIImage imageNamed:@"AddPlace_Added.png"] forState:UIControlStateNormal];
+        [self.loveButton setImage:[UIImage imageNamed:@"unliked.png"] forState:UIControlStateNormal];
     } else {            
         [self.perspective star];
         [objectManager postObject:nil delegate:self.requestDelegate block:^(RKObjectLoader* loader) {  
             loader.resourcePath = [NSString stringWithFormat:@"/v1/perspectives/%@/star", self.perspective.perspectiveId];
             loader.userData = [NSNumber numberWithInt:5]; //use as a tag
         }];
-        [self.loveButton setImage:[UIImage imageNamed:@"AddPlace_Hover2.png"] forState:UIControlStateNormal];
+        [self.loveButton setImage:[UIImage imageNamed:@"liked.png"] forState:UIControlStateNormal];
     }
 }
 
