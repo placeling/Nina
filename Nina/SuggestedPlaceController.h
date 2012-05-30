@@ -13,6 +13,12 @@
 #import "Place.h"
 #import "Advertisement.h"
 
+
+@protocol SuggestedFilterProtocol
+-(void) setUserFilter:(NSString*)username;
+-(void) setTagFilter:(NSString*)hashTag;
+@end
+
 @interface SuggestedPlaceController : UIViewController<LoginControllerDelegate, RKObjectLoaderDelegate>{
     BOOL locationEnabled;
     
@@ -32,6 +38,9 @@
     NSString *searchTerm;
     NSString *category;
     NSString *navTitle;
+    
+    NSString *userFilter;
+    NSString *tagFilter;
     
     Advertisement *ad;
     NSTimeInterval userTime;
@@ -60,6 +69,9 @@
 @property(nonatomic,retain) Advertisement *ad;
 
 @property(nonatomic, retain) NSString *navTitle;
+
+@property(nonatomic, retain) NSString *userFilter;
+@property(nonatomic, retain) NSString *tagFilter;
 
 -(void)findNearbyPlaces;
 -(IBAction)toggleMapList;

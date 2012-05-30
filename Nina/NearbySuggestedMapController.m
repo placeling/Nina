@@ -53,6 +53,13 @@
     nsController.latitudeDelta = self.latitudeDelta;
     nsController.origin = self.origin;
     
+    if ( self.userFilter ){
+        [nsController setUserFilter:self.userFilter];
+    }
+    if ( self.tagFilter ){
+        [nsController setTagFilter:self.tagFilter];
+    }
+    
     UINavigationController *navController = self.navigationController;
     [UIView beginAnimations:@"View Flip" context:nil];
     [UIView setAnimationDuration:0.50];
@@ -110,6 +117,9 @@
         }
         if (mark.tag == 1){
             [visiblePlaces addObject:mark.place];
+            mark.place.hidden = false;
+        } else {
+            mark.place.hidden = true;
         }
     }
     
@@ -355,7 +365,10 @@
         }
         if (mark.tag == 1){
             [visiblePlaces addObject:mark.place];
-        }      
+            mark.place.hidden = false;
+        } else {
+            mark.place.hidden = true;
+        } 
     }
     
     PerspectiveTagTableViewController *tagController = [[PerspectiveTagTableViewController alloc] initWithPlaces:visiblePlaces];
@@ -406,6 +419,7 @@
         } else {
             pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
         }
+        annotation.tag = 0;
         
         for (Perspective *perspective in annotation.place.placemarks){
             if ( (!userFilter || [perspective.user.username isEqualToString:userFilter]) && (!tagFilter || [perspective.tags indexOfObject:tagFilter] != NSNotFound ) ){
@@ -416,6 +430,13 @@
                 perspective.hidden = true;
             }
         }
+        
+        if (annotation.tag == 1){
+            annotation.place.hidden = false;
+        } else {
+            annotation.place.hidden = true;
+        }
+        
         if (annotation.tag == 1){
             return pinView;
         }
@@ -443,7 +464,6 @@
     
     if (place.google_ref){
         placePageViewController.google_ref = place.google_ref;
-        
     }
     
     if ( !place.perspectiveCount || place.perspectiveCount == 0){

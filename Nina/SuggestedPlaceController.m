@@ -22,6 +22,7 @@
 @synthesize origin, latitudeDelta, userTime;
 @synthesize followingPlaces, popularPlaces, myPlaces;
 @synthesize toolbar, segmentedControl;
+@synthesize userFilter, tagFilter;
 @synthesize ad;
 
 - (void)didReceiveMemoryWarning{

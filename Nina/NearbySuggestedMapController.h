@@ -18,15 +18,7 @@
 @class PerspectiveUserTableViewController;
 @class PerspectiveTagTableViewController;
 
-@protocol SuggestedMapUserFilterProtocol
--(void) setUserFilter:(NSString*)username;
-@end
-
-@protocol SuggestedMapTagFilterProtocol
--(void) setTagFilter:(NSString*)hashTag;
-@end
-
-@interface NearbySuggestedMapController : SuggestedPlaceController<MKMapViewDelegate, SuggestedMapUserFilterProtocol, SuggestedMapTagFilterProtocol, CMPopTipViewDelegate> {
+@interface NearbySuggestedMapController : SuggestedPlaceController<MKMapViewDelegate, SuggestedFilterProtocol, CMPopTipViewDelegate> {
     
     PerspectiveUserTableViewController *userChild;
     PerspectiveTagTableViewController *tagChild;
@@ -44,9 +36,6 @@
     UIButton *placemarkButton;
     
     NSTimer *timer;
-    NSString *userFilter;
-    NSString *tagFilter;
-    
     NSString *place_id;
     
     CMPopTipView *usernameButton;

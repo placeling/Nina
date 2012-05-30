@@ -17,7 +17,7 @@
 @synthesize streetAddress, city, perspectiveCount, followingPerspectiveCount;
 @synthesize lat, lng, usersBookmarking, bookmarked, highlighted;
 @synthesize googleId, phone, googlePlacesUrl, google_ref, thumbUrl, mapUrl;
-@synthesize categories, icon, tags;
+@synthesize categories, icon, tags, hidden;
 @synthesize homePerspectives,followingPerspectives,everyonePerspectives, placemarks;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{

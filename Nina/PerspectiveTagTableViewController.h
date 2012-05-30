@@ -14,14 +14,14 @@
     NSMutableArray *_places;
     NSArray *tags;
     NSMutableDictionary *perspectiveTally;
-    id<SuggestedMapTagFilterProtocol> delegate;
+    id<SuggestedFilterProtocol> delegate;
 }
 
 
 @property(nonatomic, retain) NSMutableArray *places;
 @property(nonatomic, retain) NSArray *tags;
 @property(nonatomic, retain) NSMutableDictionary *perspectiveTally;
-@property(nonatomic, assign) id<SuggestedMapTagFilterProtocol> delegate;
+@property(nonatomic, assign) id<SuggestedFilterProtocol> delegate;
 
 - (id)initWithPlaces:(NSMutableArray*)newPlaces;
 - (void) refreshTable;

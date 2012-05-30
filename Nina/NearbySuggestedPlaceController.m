@@ -59,6 +59,13 @@
     [navController pushViewController:nsController animated: YES];
     [UIView commitAnimations];
     [nsController release];
+    
+    if ( self.userFilter ){
+        [nsController setUserFilter:self.userFilter];
+    }
+    if ( self.tagFilter ){
+        [nsController setTagFilter:self.tagFilter];
+    }
 
 }
 
@@ -112,7 +119,20 @@
     
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     [StyleHelper styleBackgroundView:self.placesTableView];
+    [self.placesTableView reloadData];
 }
+
+
+-(void)setUserFilter:(NSString*)username{
+    
+    userFilter = username;
+}
+
+-(void)setTagFilter:(NSString*)hashTag{
+    
+    tagFilter = hashTag;
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
     // Return YES for supported orientations
@@ -200,7 +220,13 @@
             return 0;
         }
     } else {
-        return 70;
+        if ( [[self places] count] > indexPath.row ){
+            Place *place = [[self places] objectAtIndex:indexPath.row];
+            if ( place.hidden ){
+                return 0;
+            } 
+        }
+        return 70;        
     }
 }
 
@@ -328,8 +354,6 @@
         [pCell addSubview:errorText];
         [errorText release];
         cell = pCell;
-
-        
     
     } else if (indexPath.section == 0 && self.ad){
         AdTableViewCell *aCell;
@@ -383,6 +407,10 @@
         }
         
         cell = pCell;
+        
+        if (place.hidden){
+            cell.hidden = true;
+        }
         
     }   
     
