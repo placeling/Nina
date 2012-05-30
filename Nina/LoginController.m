@@ -290,6 +290,7 @@
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
 	//NSError *error = [request error];
+    [HUD hide:TRUE];
     
     int statusCode = [request responseStatusCode];
     NSString *error = [request responseString];
@@ -321,6 +322,7 @@
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
+    [HUD hide:TRUE];
 	int statusCode = [request responseStatusCode];
 	if (200 != statusCode){
         NSString *body = [request responseString];
