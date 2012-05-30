@@ -129,6 +129,8 @@
     NSString *errorMessage = [error localizedDescription];
     if (errorMessage == nil){
         errorMessage = @""; //prevents a "nil" error on dictionary creation
+    } else {
+        DLog(@"ERROR: %@", errorMessage);
     }
     
     if ( host ){
