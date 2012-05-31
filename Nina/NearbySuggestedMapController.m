@@ -667,7 +667,9 @@
 -(void)showHelperPopup{
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ( (![defaults objectForKey:@"map_add_place_tip"] || [defaults objectForKey:@"map_add_place_tip"] == false) && [self.myPlaces count] ==0){ 
+    User *user = [UserManager sharedMeUser];
+    if ( (![defaults objectForKey:@"map_add_place_tip"] || [defaults objectForKey:@"map_add_place_tip"] == false) && [self.myPlaces count] ==0 && (!user || [user.placeCount intValue] ==0) ){ 
+        
         UIAlertView *baseAlert;
         NSString *alertMessage = @"You haven't yet added a place to your map. Add one now?";
         
@@ -680,7 +682,6 @@
         [baseAlert show];
         [baseAlert release];
     }
-    
     [defaults setObject:[NSNumber numberWithBool:true] forKey:@"map_add_place_tip"];
     [defaults synchronize];
 }
