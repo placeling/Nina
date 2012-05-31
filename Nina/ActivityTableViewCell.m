@@ -9,6 +9,7 @@
 #import "ActivityTableViewCell.h"
 #import "NinaHelper.h"
 #import "UIImageView+WebCache.h"
+#import "NSDictionary+Utility.h"
 
 @interface ActivityTableViewCell (Private) 
 +(NSString*) getTitleText:(NSDictionary*)dict;
@@ -79,7 +80,9 @@
     cell.timeAgo.frame = CGRectMake(cell.timeAgo.frame.origin.x, verticalCursor, cell.timeAgo.frame.size.width, cell.timeAgo.frame.size.height);    
     cell.timeAgo.backgroundColor = [UIColor clearColor];
     
-    NSString *timeGap = [NinaHelper dateDiff:[activity objectForKey:@"updated_at"]];
+    NSDateFormatter *jsonFormatter = [[RKObjectMapping defaultDateFormatters] objectAtIndex:0];
+    NSDate *lastModified = [jsonFormatter dateFromString:[activity objectForKeyNotNull:@"updated_at"] ];
+    NSString *timeGap = [NinaHelper dateDiff:lastModified];
 
     
     cell.timeAgo.text = timeGap;
