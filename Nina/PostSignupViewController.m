@@ -117,8 +117,8 @@
     
     [request setPostValue:self.textView.text forKey:@"description"];
 
-    if (uploadingImage){
-        NSData* imgData = UIImageJPEGRepresentation(uploadingImage, 0.5);
+    if (self.uploadingImage){
+        NSData* imgData = UIImageJPEGRepresentation(self.uploadingImage, 0.5);
         [request setData:imgData withFileName:@"image.jpg" andContentType:@"image/jpeg"  forKey:@"image"];
     }
     [request setTimeOutSeconds:120];
@@ -223,7 +223,7 @@
                interpolationQuality:kCGInterpolationHigh];
     } 
     
-    uploadingImage = img;
+    self.uploadingImage = img;
     [self.profileImageView setImage:img];
     [img release];
 }
