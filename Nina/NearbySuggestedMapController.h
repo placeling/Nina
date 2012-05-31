@@ -44,6 +44,7 @@
     NSMutableArray *placeSuperset;
     
     bool viewLoaded;
+    bool shownPopup;
 }
 
 @property(nonatomic, retain) NSString *place_id;

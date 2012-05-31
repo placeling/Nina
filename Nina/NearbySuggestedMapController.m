@@ -267,7 +267,7 @@
     
     NSString *currentUser = [NinaHelper getUsername];
         
-    if ( !currentUser && self.segmentedControl.selectedSegmentIndex != 2 ) {
+    if ( !currentUser && self.segmentedControl.selectedSegmentIndex != 2 && !shownPopup ) {
         [self.mapView removeAnnotations:self.mapView.annotations];
         UIAlertView *baseAlert;
         NSString *alertMessage;
@@ -285,6 +285,7 @@
         
         [baseAlert show];
         [baseAlert release];
+        shownPopup = true;
     } else {
         //called on interaction for changing segment
         [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
