@@ -21,8 +21,7 @@
     NSArray *tags;
     NSMutableArray *photos; // Array of Photo objects
     BOOL starred;
-    NSString *dateAdded;
-    NSString *lastModified;
+    NSDate *lastModified;
     NSString *likers;
     BOOL visited;
     BOOL share;
@@ -38,7 +37,6 @@
 @property (nonatomic, retain) NSArray *tags;
 @property (nonatomic, retain) NSMutableArray *photos;
 @property (nonatomic, assign) BOOL starred;
-@property (nonatomic, retain) NSString *dateAdded;
 @property (nonatomic, retain) NSString *likers;
 @property (nonatomic, assign) BOOL visited;
 @property (nonatomic, assign) BOOL share;
@@ -46,7 +44,7 @@
 @property (nonatomic, assign) BOOL mine;
 @property (nonatomic, assign) BOOL hidden;
 @property (nonatomic, retain) NSString* perspectiveId;
-@property (nonatomic, retain) NSString *lastModified;
+@property (nonatomic, retain) NSDate *lastModified;
 @property (nonatomic, retain) NSString *url;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;

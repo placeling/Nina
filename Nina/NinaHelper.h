@@ -134,7 +134,7 @@
 
 +(void) clearActiveRequests:(NSInteger) range;
 
-+(NSString *)dateDiff:(NSString *)origStamp;
++(NSString *)dateDiff:(NSDate *)convertedDate;
 
 +(NSString*) getHostname;
 +(BOOL) isProductionRun;

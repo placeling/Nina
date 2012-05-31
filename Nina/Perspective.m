@@ -12,7 +12,7 @@
 
 @implementation Perspective
 @synthesize user, place, notes, tags, photos, starred, lastModified, likers;
-@synthesize dateAdded, visited, share, mine, perspectiveId, modified, url, hidden;
+@synthesize visited, share, mine, perspectiveId, modified, url, hidden;
 
 -(id) initFromJsonDict:(NSDictionary *)jsonDict{
     if(self = [super init]){
@@ -62,7 +62,9 @@
     self.perspectiveId = [jsonDict objectForKeyNotNull:@"_id"];
     self.notes = [jsonDict objectForKeyNotNull:@"memo"];
     self.starred = [[jsonDict objectForKeyNotNull:@"starred"] boolValue];
-    self.lastModified =[jsonDict objectForKeyNotNull:@"modified_at"];
+    
+    NSDateFormatter *jsonFormatter = [[RKObjectMapping defaultDateFormatters] objectAtIndex:0];
+    self.lastModified = [jsonFormatter dateFromString:[jsonDict objectForKeyNotNull:@"modified_at"]];
     self.url = [jsonDict objectForKeyNotNull:@"url"];    
     self.likers = [jsonDict objectForKeyNotNull:@"likers"];
 }
@@ -78,11 +80,11 @@
      @"starred", @"starred",
      @"modified_at", @"lastModified",
      @"url", @"url",
-     @"liked_by", @"remarkers",
      @"tags", @"tags",
      @"likers", @"likers",
      nil];
     
+    // perspectiveMapping.dateFormatters = [NSArray arrayWithObjects:[RKObjectMapping preferredDateFormatter], nil];
     [perspectiveMapping mapKeyPath:@"place" toRelationship:@"place" withMapping:[Place getObjectMappingNoPerspectives]];
     
     [perspectiveMapping mapKeyPath:@"photos" toRelationship:@"photos" withMapping:[Photo getObjectMapping]];
@@ -158,7 +160,6 @@
     [notes release];
     [tags release];
     [photos release];
-    [dateAdded release];
     [perspectiveId release];
     [lastModified release];
     [likers release];

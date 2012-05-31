@@ -259,14 +259,7 @@
     }
 }
 
-
-+(NSString *)dateDiff:(NSString *)origDate {
-    
-    NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    NSDate *convertedDate = [dateFormatter dateFromString:origDate];
-    
++(NSString *)dateDiff:(NSDate *)convertedDate {
     NSDate *todayDate = [NSDate date];
     double ti = [convertedDate timeIntervalSinceDate:todayDate];
     ti = fabs(ti);
