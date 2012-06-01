@@ -62,7 +62,7 @@
 						<string key="NSFrame">{{18, 238}, {279, 42}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="316332442"/>
+						<reference key="NSNextKeyView" ref="29429899"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -88,7 +88,7 @@
 							<int key="traits">2</int>
 							<double key="pointSize">15</double>
 						</object>
-						<object class="NSFont" key="IBUIFont">
+						<object class="NSFont" key="IBUIFont" id="352349799">
 							<string key="NSName">Helvetica-Bold</string>
 							<double key="NSSize">15</double>
 							<int key="NSfFlags">16</int>
@@ -135,6 +135,7 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 						<string key="NSFrame">{{25, 395}, {280, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="148267754"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -164,6 +165,7 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 						<string key="NSFrame">{{2, 396}, {81, 17}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="316332442"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -193,6 +195,7 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 						<string key="NSFrame">{{259, 397}, {41, 17}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -207,8 +210,30 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 						<reference key="IBUIFontDescription" ref="634476771"/>
 						<reference key="IBUIFont" ref="1055155483"/>
 					</object>
+					<object class="IBUIButton" id="97289124">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{276, 103}, {29, 25}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<reference key="IBUIHighlightedTitleColor" ref="375153907"/>
+						<object class="NSColor" key="IBUINormalTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+						</object>
+						<reference key="IBUINormalTitleShadowColor" ref="552778581"/>
+						<object class="IBUIFontDescription" key="IBUIFontDescription">
+							<int key="type">2</int>
+							<double key="pointSize">15</double>
+						</object>
+						<reference key="IBUIFont" ref="352349799"/>
+					</object>
 				</object>
-				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
+				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="597479840"/>
@@ -220,6 +245,9 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 					</object>
 				</object>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
+				<object class="IBUISimulatedNavigationBarMetrics" key="IBUISimulatedTopBarMetrics">
+					<bool key="IBUIPrompted">NO</bool>
+				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 		</object>
@@ -269,6 +297,15 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 					</object>
 					<int key="connectionID">13</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">crashPressed:</string>
+						<reference key="source" ref="97289124"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">16</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -292,6 +329,7 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 							<reference ref="316332442"/>
 							<reference ref="29429899"/>
 							<reference ref="148267754"/>
+							<reference ref="97289124"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -336,6 +374,11 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 						<reference key="object" ref="148267754"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">15</int>
+						<reference key="object" ref="97289124"/>
+						<reference key="parent" ref="191373211"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -349,6 +392,7 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 					<string>1.IBPluginDependency</string>
 					<string>11.IBPluginDependency</string>
 					<string>12.IBPluginDependency</string>
+					<string>15.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
 					<string>5.IBPluginDependency</string>
 					<string>7.IBPluginDependency</string>
@@ -359,6 +403,7 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 					<string>AboutUsController</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>UIResponder</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -381,7 +426,7 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">14</int>
+			<int key="maxID">16</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -394,11 +439,13 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>contactUs:</string>
+							<string>crashPressed:</string>
 							<string>showPrivacy</string>
 							<string>showTerms</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -409,6 +456,7 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>contactUs:</string>
+							<string>crashPressed:</string>
 							<string>showPrivacy</string>
 							<string>showTerms</string>
 						</object>
@@ -416,6 +464,10 @@ aW5nIGFuZCBob3cgd2UgY2FuIG1ha2UgaXQgYmV0dGVyIGZvciB5b3UuA</string>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">contactUs:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">crashPressed:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

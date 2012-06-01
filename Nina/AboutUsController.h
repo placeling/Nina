@@ -26,4 +26,6 @@
 -(IBAction)showTerms;
 -(IBAction)showPrivacy;
 
+-(IBAction) crashPressed:(id) sender;
+
 @end

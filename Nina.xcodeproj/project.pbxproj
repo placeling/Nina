@@ -38,6 +38,7 @@
 		2817988E1423C0D300406E78 /* iphone_connect.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2817988D1423C0D300406E78 /* iphone_connect.jpg */; };
 		2822BDAA1406E1200077868C /* PlaceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDA91406E11F0077868C /* PlaceHeaderView.xib */; };
 		2822BDAC1406EE720077868C /* PlaceFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDAB1406EE710077868C /* PlaceFooterView.xib */; };
+		2827EF7E15783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2827EF6415783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a */; };
 		2827F24A14BAB189002B4B7E /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827F24114BAB189002B4B7E /* Facebook.m */; };
 		2827F24B14BAB189002B4B7E /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2827F24214BAB189002B4B7E /* FBDialog.bundle */; };
 		2827F24C14BAB189002B4B7E /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827F24414BAB189002B4B7E /* FBDialog.m */; };
@@ -73,7 +74,6 @@
 		284D1CDE147C29DE001F80D1 /* FriendFindController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284D1CDC147C29DE001F80D1 /* FriendFindController.m */; };
 		284D1CDF147C29DE001F80D1 /* FriendFindController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284D1CDD147C29DE001F80D1 /* FriendFindController.xib */; };
 		2852B7B2156715AC00D9775E /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2852B7B1156715AB00D9775E /* AssetsLibrary.framework */; };
-		2852B7BC156AFB5E00D9775E /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2852B7B8156AFB5E00D9775E /* libTestFlight.a */; };
 		285B8B0615508C600019426E /* FindFacebookFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 285B8B0415508C600019426E /* FindFacebookFriendsController.m */; };
 		285B8B0715508C600019426E /* FindFacebookFriendsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 285B8B0515508C600019426E /* FindFacebookFriendsController.xib */; };
 		285BE74E142CFFFA00898FDF /* asyncimageview.m in Sources */ = {isa = PBXBuildFile; fileRef = 285BE74D142CFFF900898FDF /* asyncimageview.m */; };
@@ -457,6 +457,36 @@
 		2817988D1423C0D300406E78 /* iphone_connect.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone_connect.jpg; sourceTree = "<group>"; };
 		2822BDA91406E11F0077868C /* PlaceHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceHeaderView.xib; sourceTree = "<group>"; };
 		2822BDAB1406EE710077868C /* PlaceFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceFooterView.xib; sourceTree = "<group>"; };
+		2827EF6015783F7600EB529A /* CrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashReporter.h; sourceTree = "<group>"; };
+		2827EF6115783F7600EB529A /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
+		2827EF6215783F7600EB529A /* CrittercismJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismJSONKit.h; sourceTree = "<group>"; };
+		2827EF6315783F7600EB529A /* CrittercismReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismReachability.h; sourceTree = "<group>"; };
+		2827EF6415783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercismCrashOnly_v3_1_5.a; sourceTree = "<group>"; };
+		2827EF6515783F7600EB529A /* PLCrashAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashAsync.h; sourceTree = "<group>"; };
+		2827EF6615783F7600EB529A /* PLCrashAsyncImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashAsyncImage.h; sourceTree = "<group>"; };
+		2827EF6715783F7600EB529A /* PLCrashAsyncSignalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashAsyncSignalInfo.h; sourceTree = "<group>"; };
+		2827EF6815783F7600EB529A /* PLCrashFrameWalker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker.h; sourceTree = "<group>"; };
+		2827EF6915783F7600EB529A /* PLCrashFrameWalker_arm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_arm.h; sourceTree = "<group>"; };
+		2827EF6A15783F7600EB529A /* PLCrashFrameWalker_i386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_i386.h; sourceTree = "<group>"; };
+		2827EF6B15783F7600EB529A /* PLCrashFrameWalker_ppc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_ppc.h; sourceTree = "<group>"; };
+		2827EF6C15783F7600EB529A /* PLCrashFrameWalker_x86_64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_x86_64.h; sourceTree = "<group>"; };
+		2827EF6D15783F7600EB529A /* PLCrashLogWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashLogWriter.h; sourceTree = "<group>"; };
+		2827EF6E15783F7600EB529A /* PLCrashLogWriterEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashLogWriterEncoding.h; sourceTree = "<group>"; };
+		2827EF6F15783F7600EB529A /* PLCrashReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReport.h; sourceTree = "<group>"; };
+		2827EF7015783F7600EB529A /* PLCrashReportApplicationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportApplicationInfo.h; sourceTree = "<group>"; };
+		2827EF7115783F7600EB529A /* PLCrashReportBinaryImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportBinaryImageInfo.h; sourceTree = "<group>"; };
+		2827EF7215783F7600EB529A /* PLCrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReporter.h; sourceTree = "<group>"; };
+		2827EF7315783F7600EB529A /* PLCrashReportExceptionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportExceptionInfo.h; sourceTree = "<group>"; };
+		2827EF7415783F7600EB529A /* PLCrashReportFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportFormatter.h; sourceTree = "<group>"; };
+		2827EF7515783F7600EB529A /* PLCrashReportMachineInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportMachineInfo.h; sourceTree = "<group>"; };
+		2827EF7615783F7600EB529A /* PLCrashReportProcessInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportProcessInfo.h; sourceTree = "<group>"; };
+		2827EF7715783F7600EB529A /* PLCrashReportProcessorInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportProcessorInfo.h; sourceTree = "<group>"; };
+		2827EF7815783F7600EB529A /* PLCrashReportSignalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportSignalInfo.h; sourceTree = "<group>"; };
+		2827EF7915783F7600EB529A /* PLCrashReportSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportSystemInfo.h; sourceTree = "<group>"; };
+		2827EF7A15783F7600EB529A /* PLCrashReportTextFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportTextFormatter.h; sourceTree = "<group>"; };
+		2827EF7B15783F7600EB529A /* PLCrashReportThreadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportThreadInfo.h; sourceTree = "<group>"; };
+		2827EF7C15783F7600EB529A /* PLCrashSignalHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashSignalHandler.h; sourceTree = "<group>"; };
+		2827EF7D15783F7600EB529A /* PLCrashSysctl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashSysctl.h; sourceTree = "<group>"; };
 		2827F24014BAB189002B4B7E /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		2827F24114BAB189002B4B7E /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
 		2827F24214BAB189002B4B7E /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBDialog.bundle; sourceTree = "<group>"; };
@@ -511,8 +541,6 @@
 		284D1CDC147C29DE001F80D1 /* FriendFindController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendFindController.m; sourceTree = "<group>"; };
 		284D1CDD147C29DE001F80D1 /* FriendFindController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendFindController.xib; sourceTree = "<group>"; };
 		2852B7B1156715AB00D9775E /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
-		2852B7B8156AFB5E00D9775E /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		2852B7BB156AFB5E00D9775E /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		285B8B0315508C600019426E /* FindFacebookFriendsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFacebookFriendsController.h; sourceTree = "<group>"; };
 		285B8B0415508C600019426E /* FindFacebookFriendsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFacebookFriendsController.m; sourceTree = "<group>"; };
 		285B8B0515508C600019426E /* FindFacebookFriendsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindFacebookFriendsController.xib; sourceTree = "<group>"; };
@@ -944,7 +972,7 @@
 				2895003F13D64559009E1BD7 /* UIKit.framework in Frameworks */,
 				2895004113D64559009E1BD7 /* Foundation.framework in Frameworks */,
 				28B6191514213E0C00B0A7E5 /* libFlurryAnalytics.a in Frameworks */,
-				2852B7BC156AFB5E00D9775E /* libTestFlight.a in Frameworks */,
+				2827EF7E15783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1030,6 +1058,43 @@
 			name = NearbyPlaces;
 			sourceTree = "<group>";
 		};
+		2827EF5F15783F7600EB529A /* CrittercismSDK-crashonly */ = {
+			isa = PBXGroup;
+			children = (
+				2827EF6015783F7600EB529A /* CrashReporter.h */,
+				2827EF6115783F7600EB529A /* Crittercism.h */,
+				2827EF6215783F7600EB529A /* CrittercismJSONKit.h */,
+				2827EF6315783F7600EB529A /* CrittercismReachability.h */,
+				2827EF6415783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a */,
+				2827EF6515783F7600EB529A /* PLCrashAsync.h */,
+				2827EF6615783F7600EB529A /* PLCrashAsyncImage.h */,
+				2827EF6715783F7600EB529A /* PLCrashAsyncSignalInfo.h */,
+				2827EF6815783F7600EB529A /* PLCrashFrameWalker.h */,
+				2827EF6915783F7600EB529A /* PLCrashFrameWalker_arm.h */,
+				2827EF6A15783F7600EB529A /* PLCrashFrameWalker_i386.h */,
+				2827EF6B15783F7600EB529A /* PLCrashFrameWalker_ppc.h */,
+				2827EF6C15783F7600EB529A /* PLCrashFrameWalker_x86_64.h */,
+				2827EF6D15783F7600EB529A /* PLCrashLogWriter.h */,
+				2827EF6E15783F7600EB529A /* PLCrashLogWriterEncoding.h */,
+				2827EF6F15783F7600EB529A /* PLCrashReport.h */,
+				2827EF7015783F7600EB529A /* PLCrashReportApplicationInfo.h */,
+				2827EF7115783F7600EB529A /* PLCrashReportBinaryImageInfo.h */,
+				2827EF7215783F7600EB529A /* PLCrashReporter.h */,
+				2827EF7315783F7600EB529A /* PLCrashReportExceptionInfo.h */,
+				2827EF7415783F7600EB529A /* PLCrashReportFormatter.h */,
+				2827EF7515783F7600EB529A /* PLCrashReportMachineInfo.h */,
+				2827EF7615783F7600EB529A /* PLCrashReportProcessInfo.h */,
+				2827EF7715783F7600EB529A /* PLCrashReportProcessorInfo.h */,
+				2827EF7815783F7600EB529A /* PLCrashReportSignalInfo.h */,
+				2827EF7915783F7600EB529A /* PLCrashReportSystemInfo.h */,
+				2827EF7A15783F7600EB529A /* PLCrashReportTextFormatter.h */,
+				2827EF7B15783F7600EB529A /* PLCrashReportThreadInfo.h */,
+				2827EF7C15783F7600EB529A /* PLCrashSignalHandler.h */,
+				2827EF7D15783F7600EB529A /* PLCrashSysctl.h */,
+			);
+			path = "CrittercismSDK-crashonly";
+			sourceTree = "<group>";
+		};
 		2827F23C14BAB188002B4B7E /* facebook-ios-sdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -1098,15 +1163,6 @@
 				285B8B0515508C600019426E /* FindFacebookFriendsController.xib */,
 			);
 			name = FriendFind;
-			sourceTree = "<group>";
-		};
-		2852B7B7156AFB5E00D9775E /* TestFlightSDK1.0 */ = {
-			isa = PBXGroup;
-			children = (
-				2852B7B8156AFB5E00D9775E /* libTestFlight.a */,
-				2852B7BB156AFB5E00D9775E /* TestFlight.h */,
-			);
-			path = TestFlightSDK1.0;
 			sourceTree = "<group>";
 		};
 		2867AC3514D888BB003994DB /* CMPopTipView */ = {
@@ -1322,8 +1378,8 @@
 		2895017713D67896009E1BD7 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				2827EF5F15783F7600EB529A /* CrittercismSDK-crashonly */,
 				28EB2654156EB5CC006568E7 /* WBNoticeView */,
-				2852B7B7156AFB5E00D9775E /* TestFlightSDK1.0 */,
 				2867AC3514D888BB003994DB /* CMPopTipView */,
 				2827F23C14BAB188002B4B7E /* facebook-ios-sdk */,
 				28B5D8B9149096CB00763D0C /* SDWebImage */,
