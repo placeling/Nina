@@ -1072,7 +1072,11 @@ typedef enum {
             cell.textLabel.textColor = self.addressLabel.textColor;
             cell.textLabel.font = [UIFont fontWithName:self.nameLabel.font.fontName size:13];
             cell.textLabel.textAlignment = UITextAlignmentCenter;
-            cell.userInteractionEnabled = false;
+            if ( [self numberOfSectionBookmarks] > 0 ){
+                cell.userInteractionEnabled = true;
+            } else {
+                cell.userInteractionEnabled = false;
+            }
         }
    
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
