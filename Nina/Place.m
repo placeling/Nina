@@ -39,8 +39,7 @@
     
     self.googleId = [jsonDict objectForKeyNotNull:@"google_id"];
     self.googlePlacesUrl = [jsonDict objectForKeyNotNull:@"google_url"];
-    self.google_ref = [jsonDict objectForKey:@"google_ref"];
-    
+
     self.lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
     self.lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1]; 
     
@@ -79,7 +78,6 @@
      @"city_data", @"city",     
      @"perspective_count", @"perspectiveCount",
      @"venue_types", @"categories",
-     @"google_ref", @"google_ref",
      @"google_url", @"googlePlacesUrl",
      @"google_id", @"googleId",
      @"bookmarked", @"bookmarked",
