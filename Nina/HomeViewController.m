@@ -31,7 +31,7 @@
 
 
 @implementation HomeViewController
-@synthesize pickScroll, scrollFooter;
+@synthesize pickScroll, scrollFooter, placemarkButton;
 @synthesize mapLabel, feedLabel, profileLabel, peopleLabel;
 
 #pragma mark - View lifecycle
@@ -128,6 +128,8 @@
         self.navigationItem.leftBarButtonItem = loginButton;
         [loginButton release];
     }
+    
+    [placemarkButton setImage:[UIImage imageNamed:@"PlaceMarkIt_Pressed.png"] forState:UIControlStateHighlighted];
     
     UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
     [infoButton addTarget:self action:@selector(aboutUs) forControlEvents:UIControlEventTouchUpInside];
@@ -258,6 +260,7 @@
     [profileLabel release];
     [peopleLabel release];
     [scrollFooter release];
+    [placemarkButton release];
     [super dealloc];
 }
 

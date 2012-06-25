@@ -17,6 +17,8 @@
     UILabel *feedLabel;
     UILabel *profileLabel;
     UILabel *peopleLabel;
+    
+    UIButton *placemarkButton;
 }
 
 @property (nonatomic, retain) IBOutlet UIScrollView *pickScroll;
@@ -25,7 +27,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *feedLabel;
 @property (nonatomic, retain) IBOutlet UILabel *profileLabel;
 @property (nonatomic, retain) IBOutlet UILabel *peopleLabel;
-
+@property (nonatomic, retain) IBOutlet UIButton *placemarkButton;
 
 -(IBAction) activityFeed;
 

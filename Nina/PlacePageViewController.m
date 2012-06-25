@@ -983,7 +983,7 @@ typedef enum {
     int heightval = 0;
     if (indexPath.section == 0){
         if (self.perspectiveType == home && self.place.bookmarked == false){
-            heightval = 64;
+            heightval = 69;
         }else{
             heightval = 44;
         }
@@ -1058,6 +1058,7 @@ typedef enum {
                     if ( [item isKindOfClass:[UITableViewCell class]]){
                         BookmarkTableViewCell *mCell = (BookmarkTableViewCell*) item;  
                         mCell.backgroundColor = [UIColor clearColor];
+                        [mCell.bookmarkButton setImage:[UIImage imageNamed:@"PlaceMarkIt_Pressed.png"] forState:UIControlStateHighlighted];
                         cell = mCell;
                     }
                 }
