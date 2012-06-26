@@ -12,6 +12,7 @@
 #import "NSString+SBJSON.h"
 #import "PlacePageViewController.h"
 
+
 @implementation ConfirmNewPlaceController
 
 @synthesize categories, addressComponents, location, placeName, selectedCategory;
@@ -72,10 +73,10 @@
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
     
-    NSString *number;
-    NSString *street;
-    NSString *cityName;
-    NSString *province;
+    NSString *number = @"";
+    NSString *street = @"";
+    NSString *cityName = @"";
+    NSString *province = @"";
     
     for (NSDictionary* adComponent in self.addressComponents){
         if ([[adComponent objectForKey:@"types"] containsObject:@"locality"]){
@@ -90,11 +91,11 @@
     }
     
     if ( number || street ){
-        self.address.text = [NSString stringWithFormat:@"%@ %@", number ? number : @"", street ? street : @""];
+        self.address.text = [NSString stringWithFormat:@"%@ %@", number, street];
     }
     
     if ( cityName || province ){
-        self.city.text = [NSString stringWithFormat:@"%@, %@", cityName ? cityName : @"", province ? province: @""]; 
+        self.city.text = [NSString stringWithFormat:@"%@, %@", cityName, province]; 
     }
     
 }
