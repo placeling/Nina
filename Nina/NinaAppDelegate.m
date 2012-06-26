@@ -113,6 +113,7 @@
          UIRemoteNotificationTypeBadge |
          UIRemoteNotificationTypeAlert |             
          UIRemoteNotificationTypeSound];
+        [Crittercism setUsername:[NinaHelper getUsername]];
     }
     
     [FlurryAnalytics logAllPageViews:self.navigationController];

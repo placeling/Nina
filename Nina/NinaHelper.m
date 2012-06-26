@@ -16,6 +16,7 @@
 #import "WBNoticeView.h"
 #import "MTPopupWindow.h"
 #import "UserManager.h"
+#import "Crittercism.h"
 
 @interface NinaHelper()
 +(void) handleBadRequest:(int)statuscode host:(NSString*)host error:(NSError *)error sender:(UIViewController*)sender;
@@ -288,6 +289,7 @@
 
 +(void) setUsername:(NSString*)username{
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    [Crittercism setUsername:username];
     
     if (standardUserDefaults ){
         [standardUserDefaults setObject:username forKey:@"current_username"];
