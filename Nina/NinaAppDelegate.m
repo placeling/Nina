@@ -120,8 +120,8 @@
     [self.window makeKeyAndVisible];    
     
     if ( [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey] ){
-        NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
-        NSURL *url = [NSURL URLWithString:[userInfo objectForKey:@"url"]];
+        NSURL *url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+        DLog(@"GOT url %@", url);
         [self application:application handleOpenURL:url];
     }
     
