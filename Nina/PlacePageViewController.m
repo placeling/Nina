@@ -1174,27 +1174,6 @@ typedef enum {
             return;
         }
         
-        BOOL emptyPerspective = true;
-        
-        if(perspective.notes && perspective.notes.length > 0){
-            emptyPerspective = false;
-        }
-        if(perspective.photos && perspective.photos.count > 0){
-            emptyPerspective = false;
-        }
-        if(emptyPerspective && perspective.mine){
-            EditPerspectiveViewController *editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
-            
-            editPerspectiveViewController.delegate = self;
-            
-            UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editPerspectiveViewController];
-            [StyleHelper styleNavigationBar:navBar.navigationBar];
-            [self.navigationController presentModalViewController:navBar animated:YES];
-            [navBar release];
-            
-            [editPerspectiveViewController release];         
-
-        } 
     }
 }
 
