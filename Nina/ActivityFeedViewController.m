@@ -192,10 +192,24 @@
             NSString *jsonString = [request responseString];
             DLog(@"Got JSON BACK: %@", jsonString);
             // Create a dictionary from the JSON string
-            
             NSDictionary *jsonDict = [[jsonString JSONValue] retain];
             NSArray *rawActivities = [jsonDict objectForKey:@"home_feed"];
-            [recentActivities addObjectsFromArray:rawActivities];
+            
+            if ( [recentActivities count] > 0){
+                //case where we have to worry about overlap
+                NSString *mostRecentId = [[recentActivities objectAtIndex:0]objectForKey:@"id"];
+                for (NSDictionary *activity in rawActivities){
+                    if ( [mostRecentId isEqualToString:[activity objectForKey:@"id"]] ){
+                        break;
+                    } else {
+                        [recentActivities insertObject:activity atIndex:[rawActivities indexOfObject:activity]];
+                    }
+                }
+                        
+            } else {
+                [recentActivities addObjectsFromArray:rawActivities];
+            }
+
             
             [self.activityTableView  reloadData];
             [jsonDict release];
