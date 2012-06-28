@@ -15,12 +15,14 @@
     NSArray *tags;
     NSMutableDictionary *perspectiveTally;
     id<SuggestedFilterProtocol> delegate;
+    NSString *filteringUser;
 }
 
 
 @property(nonatomic, retain) NSMutableArray *places;
 @property(nonatomic, retain) NSArray *tags;
 @property(nonatomic, retain) NSMutableDictionary *perspectiveTally;
+@property(nonatomic, retain) NSString *filteringUser;
 @property(nonatomic, assign) id<SuggestedFilterProtocol> delegate;
 
 - (id)initWithPlaces:(NSMutableArray*)newPlaces;

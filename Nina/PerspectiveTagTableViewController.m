@@ -21,7 +21,7 @@
 
 @implementation PerspectiveTagTableViewController
 
-@synthesize places=_places, tags, perspectiveTally, delegate;
+@synthesize places=_places, tags, perspectiveTally, delegate, filteringUser;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -59,6 +59,7 @@
 
 -(void) dealloc{
     [perspectiveTally release];
+    [filteringUser release];
     [_places release];
     [super dealloc];
 }
@@ -187,7 +188,12 @@
         }
         [pCell.textLabel setFont:[UIFont systemFontOfSize:12]];
         pCell.textLabel.textAlignment = UITextAlignmentCenter;
-        pCell.textLabel.text = @"No places around here have a #hashtag yet";
+        
+        if (filteringUser){
+            pCell.textLabel.text = [NSString stringWithFormat:@"%@ hasn't tagged any nearby places", filteringUser];
+        } else {
+            pCell.textLabel.text = @"No places around here have a #hashtag yet";
+        }
         [StyleHelper styleGenericTableCell:pCell];
         pCell.userInteractionEnabled = false;
         self.tableView.userInteractionEnabled = false;

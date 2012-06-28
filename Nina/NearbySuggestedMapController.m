@@ -385,6 +385,9 @@
     
     PerspectiveTagTableViewController *tagController = [[PerspectiveTagTableViewController alloc] initWithPlaces:visiblePlaces];
     tagController.delegate = self;
+    if ( userFilter ){
+        tagController.filteringUser = userFilter;
+    }
     tagChild = tagController;
     
     UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:tagController];
