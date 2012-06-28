@@ -138,6 +138,8 @@
 -(IBAction)changeTab{
     [placeSuperset removeAllObjects];
     [self.mapView removeAnnotations:self.mapView.annotations];
+    [self setUserFilter:nil];
+    [self.usernameButton dismissAnimated:true];
     
     [self reloadMap];
 }
