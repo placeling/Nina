@@ -17,6 +17,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AssetsLibrary/ALAssetsLibrary.h>
 #import "UserManager.h"
+#import "Reachability.h"
+
 
 @interface EditPerspectiveViewController()
 -(NSNumber*) uploadImageAndReturnTag:(UIImage*)mainImage;
@@ -190,8 +192,9 @@
     CLLocationManager* locationManager = [LocationManagerManager sharedCLLocationManager];
     CLLocation *currentLocation = locationManager.location;
     float distance = [self.perspective.place.location distanceFromLocation:currentLocation];
+    float accuracy = currentLocation.horizontalAccuracy;
     
-    if (distance < 100){        
+    if (accuracy +100 > distance){        
         delayedPost = true;
     } else {
         delayedPost = false;
