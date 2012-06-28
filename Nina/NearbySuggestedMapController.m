@@ -412,6 +412,7 @@
             pinView.annotation = annotation;            
         }
         pinView.hidden = false;
+        pinView.enabled = true;
         pinView.canShowCallout = YES;
         pinView.calloutOffset = CGPointMake(-7, 0);
         pinView.centerOffset = CGPointMake(10, -20);
@@ -452,9 +453,10 @@
         if (annotation.tag == 1){
             return pinView;
         }
-        pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
+        
         if ( tagFilter || userFilter ){
             pinView.hidden = true;
+            pinView.enabled = false;
         }
         pinView.tag = 0;
         annotation.tag = 0;
