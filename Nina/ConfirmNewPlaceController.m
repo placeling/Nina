@@ -115,7 +115,8 @@
 
 
 -(void) confirmPlace{
-
+    [self dismissKeyboard:nil];
+     
     NSString *urlText = [NSString stringWithFormat:@"%@/v1/places", [NinaHelper getHostname]];
     
     NSURL *url = [NSURL URLWithString:urlText];
