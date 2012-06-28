@@ -17,7 +17,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AssetsLibrary/ALAssetsLibrary.h>
 #import "UserManager.h"
-#import "Reachability.h"
 
 
 @interface EditPerspectiveViewController()
