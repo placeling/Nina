@@ -380,7 +380,11 @@
             }
             
             cell.textLabel.textColor = [UIColor grayColor];
-            cell.textLabel.text = [NSString stringWithFormat:@"No user called %@", self.searchBar.text];
+            if ([self.searchBar.text length] > 0){
+                cell.textLabel.text = [NSString stringWithFormat:@"No user called %@", self.searchBar.text];
+            } else {
+                cell.textLabel.text = @"No locals yet";
+            }
             [cell setUserInteractionEnabled:NO];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         } else {    
