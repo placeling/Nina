@@ -400,12 +400,6 @@
         pCell.usersLabel.text = place.usersBookmarkingString;   
         [StyleHelper styleQuickPickCell:pCell]; 
         
-        if ( place.highlighted ){
-            [pCell.hilightedView setHidden:false];
-        } else {
-            [pCell.hilightedView setHidden:true];
-        }
-        
         cell = pCell;
         
         if (place.hidden){

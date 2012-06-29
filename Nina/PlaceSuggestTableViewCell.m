@@ -10,7 +10,7 @@
 
 @implementation PlaceSuggestTableViewCell
 
-@synthesize imageView, titleLabel, addressLabel, distanceLabel, usersLabel, hilightedView; 
+@synthesize imageView, titleLabel, addressLabel, distanceLabel, usersLabel; 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -25,7 +25,6 @@
     [addressLabel release];
     [distanceLabel release];
     [usersLabel release];
-    [hilightedView release];
     [super dealloc];
 }
 
