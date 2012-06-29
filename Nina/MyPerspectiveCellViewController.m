@@ -123,9 +123,9 @@
     }
     
     if ( perspective.place.highlighted ){
-        [cell.highlightButton setImage:[UIImage imageNamed:@"HilightMarker.png"] forState:UIControlStateNormal];
+        [cell.highlightButton setImage:[UIImage imageNamed:@"SelectedButton.png"] forState:UIControlStateNormal];
     } else {
-        [cell.highlightButton setImage:[UIImage imageNamed:@"MyMarker.png"] forState:UIControlStateNormal];
+        [cell.highlightButton setImage:[UIImage imageNamed:@"unselectedButton.png"] forState:UIControlStateNormal];
     }
     [cell.highlightButton addTarget:cell action:@selector(toggleHighlight:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -135,14 +135,14 @@
 
 -(IBAction)toggleHighlight:(id)sender{
     if ( self.perspective.place.highlighted ){
-        [sender setImage:[UIImage imageNamed:@"MyMarker.png"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"unselectedButton.png"] forState:UIControlStateNormal];
         self.perspective.place.highlighted = false;
         NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/unhighlight", self.perspective.place.pid];
         
         [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
         
     } else {
-        [sender setImage:[UIImage imageNamed:@"HilightMarker.png"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"SelectedButton.png"] forState:UIControlStateNormal];
         self.perspective.place.highlighted = true;
         NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/highlight", self.perspective.place.pid];
         
