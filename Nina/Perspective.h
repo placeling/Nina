@@ -22,7 +22,7 @@
     NSMutableArray *photos; // Array of Photo objects
     BOOL starred;
     NSDate *lastModified;
-    NSString *likers;
+    NSArray *likers;
     BOOL visited;
     BOOL share;
     BOOL mine;
@@ -37,7 +37,7 @@
 @property (nonatomic, retain) NSArray *tags;
 @property (nonatomic, retain) NSMutableArray *photos;
 @property (nonatomic, assign) BOOL starred;
-@property (nonatomic, retain) NSString *likers;
+@property (nonatomic, retain) NSArray *likers;
 @property (nonatomic, assign) BOOL visited;
 @property (nonatomic, assign) BOOL share;
 @property (nonatomic, assign) BOOL modified;

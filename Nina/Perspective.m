@@ -66,7 +66,7 @@
     NSDateFormatter *jsonFormatter = [[RKObjectMapping defaultDateFormatters] objectAtIndex:0];
     self.lastModified = [jsonFormatter dateFromString:[jsonDict objectForKeyNotNull:@"modified_at"]];
     self.url = [jsonDict objectForKeyNotNull:@"url"];    
-    self.likers = [jsonDict objectForKeyNotNull:@"likers"];
+    self.likers = [jsonDict objectForKeyNotNull:@"liking_users"];
 }
 
 
@@ -81,7 +81,7 @@
      @"modified_at", @"lastModified",
      @"url", @"url",
      @"tags", @"tags",
-     @"likers", @"likers",
+     @"liking_users", @"likers",
      nil];
     
     // perspectiveMapping.dateFormatters = [NSArray arrayWithObjects:[RKObjectMapping preferredDateFormatter], nil];

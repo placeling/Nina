@@ -44,7 +44,7 @@
         heightCalc += 17;
     }
     
-    if ( perspective.likers && [perspective.likers length] > 0 ) {
+    if ( perspective.likers && [perspective.likers count] > 0 ) {
         heightCalc += 17;
     }
     
@@ -83,7 +83,7 @@
         heightCalc += 17;
     }
     
-    if ( perspective.likers && [perspective.likers length] > 0 ) {
+    if ( perspective.likers && [perspective.likers count] > 0 ) {
         heightCalc += 17;
     }
     
@@ -220,9 +220,9 @@
         cell.scrollView.hidden = TRUE; //remove from view
     }
     
-    if ( perspective.likers && [perspective.likers length] > 0 ) {
+    if ( perspective.likers && [perspective.likers count] > 0 ) {
         [cell.remarkersLabel setFrame:CGRectMake(cell.remarkersLabel.frame.origin.x, verticalCursor, cell.remarkersLabel.frame.size.width, cell.remarkersLabel.frame.size.height)];
-        cell.remarkersLabel.text = [NSString stringWithFormat:@"Liked By: %@", perspective.likers  ];
+        cell.remarkersLabel.text = [NSString stringWithFormat:@"Liked By: %@", [perspective.likers componentsJoinedByString:@"-"]  ];
          verticalCursor += cell.remarkersLabel.frame.size.height;
     } else {
         cell.remarkersLabel.hidden = true;
