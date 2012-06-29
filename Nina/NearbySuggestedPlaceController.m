@@ -392,7 +392,13 @@
             [errorText removeFromSuperview];
         }
         
-        [pCell.imageView setImageWithURL:[NSURL URLWithString:place.placeThumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
+        if (place.highlighted){
+            [pCell.imageView setImageWithURL:[NSURL URLWithString:place.highlightUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
+        } else {
+            [pCell.imageView setImageWithURL:[NSURL URLWithString:place.placeThumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultPhoto.png"]];
+        }
+        
+        
         
         pCell.titleLabel.text = place.name;
         pCell.addressLabel.text = place.streetAddress;

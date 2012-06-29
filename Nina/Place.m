@@ -16,7 +16,7 @@
 @synthesize dirty, name, pid, user;
 @synthesize streetAddress, city, perspectiveCount, followingPerspectiveCount;
 @synthesize lat, lng, usersBookmarking, bookmarked, highlighted;
-@synthesize googleId, phone, googlePlacesUrl, google_ref, thumbUrl, mapUrl;
+@synthesize googleId, phone, googlePlacesUrl, google_ref, thumbUrl, mapUrl, highlightUrl;
 @synthesize categories, icon, tags, hidden;
 @synthesize homePerspectives,followingPerspectives,everyonePerspectives, placemarks;
 
@@ -88,6 +88,7 @@
      @"following_perspective_count", @"followingPerspectiveCount",
      @"tags", @"tags",
      @"thumb_url", @"thumbUrl",
+     @"highlight_url", @"highlightUrl",
      @"map_url", @"mapUrl",
      nil];
     
@@ -175,6 +176,7 @@
     [categories release];
     [icon release];
     [thumbUrl release];
+    [highlightUrl release];
     [mapUrl release];
     
     [homePerspectives release];

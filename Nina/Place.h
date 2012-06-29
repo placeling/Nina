@@ -24,6 +24,7 @@
     NSString *googleId;
     NSString *google_ref;
     NSString *thumbUrl;
+    NSString *highlightUrl;
     
     NSString *mapUrl;
     
@@ -61,6 +62,7 @@
 @property (nonatomic, retain) NSString *googlePlacesUrl;
 @property (nonatomic, retain) NSString *google_ref;
 @property (nonatomic, retain) NSString *thumbUrl;
+@property (nonatomic, retain) NSString *highlightUrl;
 @property (nonatomic, retain) NSString *mapUrl;
 
 @property (nonatomic, retain) NSString *streetAddress;
