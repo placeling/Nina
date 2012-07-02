@@ -311,8 +311,14 @@
     promptAdd = false;
     self.dataLoaded = true;
     [NinaHelper handleBadRequest:request sender:self];
+    
+    [nearbyPlaces release];
+    nearbyPlaces = [[NSMutableArray alloc] init];
+    [predictivePlaces release];
+    predictivePlaces = [[NSMutableArray alloc] init];    
+    
     [self dataSourceDidFinishLoadingNewData];
-    [self.placesTableView reloadData];
+    [self.placesTableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
@@ -475,7 +481,16 @@
         DLog(@"Search bar text is: %@", _searchBar.text);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
-        if ([self showPredictive]){
+        if ( loading ){
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    cell = item;
+                }
+            }               
+            
+        } else if ([self showPredictive]){
             NSDictionary *place = [predictivePlaces objectAtIndex:indexPath.row];
             
             if ( ![place objectForKey:@"terms"] || [[place objectForKey:@"terms"] count] == 0 ){
@@ -492,16 +507,7 @@
             }
             [StyleHelper styleGenericTableCell:cell];
             
-        }else if ( loading ){
-            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
-            
-            for(id item in objects){
-                if ( [item isKindOfClass:[UITableViewCell class]]){
-                    cell = item;
-                }
-            }               
-            
-        } else {
+        }else {
             if ( indexPath.row >= [nearbyPlaces count] ) {
                 UITableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:AddPlaceCell];
                 if (aCell == nil) {
