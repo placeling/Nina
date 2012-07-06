@@ -58,7 +58,7 @@
 @property(nonatomic, retain) CMPopTipView *hashtagButton;
 @property(nonatomic, retain) IBOutlet UIButton *placemarkButton;
 
--(void)reloadMap;
+-(IBAction)reloadMap;
 -(IBAction)changeTab;
 
 -(IBAction)showPeople;
