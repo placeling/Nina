@@ -42,6 +42,18 @@ static User *sharedMeUser = nil;
     }
 }
 
++(void) updatePerspectiveNoOrderChange:(Perspective*)newPerspective{
+    if ( sharedMeUser){
+        for ( int i =0; i < [sharedMeUser.perspectives count]; i++){
+            Perspective *perspective  = [sharedMeUser.perspectives objectAtIndex:i];
+            if ( [perspective.perspectiveId isEqualToString:newPerspective.perspectiveId] ){
+                [sharedMeUser.perspectives replaceObjectAtIndex:i withObject:newPerspective];
+            }
+        }
+        
+    }
+}
+
 + (id)allocWithZone:(NSZone *)zone {
     return [[self sharedMeUser] retain];
 }

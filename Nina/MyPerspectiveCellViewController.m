@@ -149,7 +149,7 @@
         [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
 
     }
-    [UserManager updatePerspective:self.perspective];
+    [UserManager updatePerspectiveNoOrderChange:self.perspective];
 }
 
 
