@@ -17,6 +17,5 @@
 +(void) setUser:(User*)user;
 
 +(void) updatePerspective:(Perspective*)perspective;
-+(void) updatePerspectiveNoOrderChange:(Perspective*)newPerspective;
 
 @end
