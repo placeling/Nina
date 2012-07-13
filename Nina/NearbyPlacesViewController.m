@@ -14,6 +14,7 @@
 #import "NinaHelper.h"
 #import "FlurryAnalytics.h"
 #import "NewPlaceController.h"
+#import "Crittercism.h"
 
 @interface NearbyPlacesViewController ()
     -(void)dataSourceDidFinishLoadingNewData;
@@ -388,11 +389,11 @@
         }
         
 		[self.placesTableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
-        
 		[jsonDict release];
 	}
     
-    //NSString *crumb = [NSString stringWithFormat:@"NearbyPlaces360:%@:%i", self, request.tag];
+    NSString *crumb = [NSString stringWithFormat:@"NearbyPlaces360:%@:%i", self, request.tag];
+    [Crittercism leaveBreadcrumb:crumb];
     [self dataSourceDidFinishLoadingNewData];
 }
 
