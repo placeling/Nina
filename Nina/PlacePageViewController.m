@@ -539,7 +539,13 @@ typedef enum {
                 }
                 
                 //handles updates tags, etc
-                [self.place updateFromJsonDict:[jsonString objectForKey:@"place"]];
+                if ( self.place.highlighted ){
+                    [self.place updateFromJsonDict:[jsonString objectForKey:@"place"]];
+                    self.place.highlighted = true;
+                } else {
+                    [self.place updateFromJsonDict:[jsonString objectForKey:@"place"]];
+                    self.place.highlighted = false;
+                }
                 
                 myPerspective.place = self.place;                
                 
