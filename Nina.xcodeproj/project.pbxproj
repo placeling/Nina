@@ -243,6 +243,8 @@
 		28A437941432E5AF005F192B /* canvas@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A437921432E5AF005F192B /* canvas@2x.png */; };
 		28A9FB1115A7B29000986881 /* HilightMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A9FB0F15A7B29000986881 /* HilightMarker.png */; };
 		28A9FB1215A7B29000986881 /* HilightMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A9FB1015A7B29000986881 /* HilightMarker@2x.png */; };
+		28A9FB1815B0BDC500986881 /* FacebookRegetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A9FB1615B0BDC500986881 /* FacebookRegetViewController.m */; };
+		28A9FB1915B0BDC500986881 /* FacebookRegetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A9FB1715B0BDC500986881 /* FacebookRegetViewController.xib */; };
 		28AC956314B2428C00CB73FD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC956114B2428C00CB73FD /* CoreData.framework */; };
 		28AC956414B2428C00CB73FD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC956214B2428C00CB73FD /* Security.framework */; };
 		28AC956514B2438200CB73FD /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC955714B2417D00CB73FD /* libRestKit.a */; };
@@ -785,6 +787,9 @@
 		28A437921432E5AF005F192B /* canvas@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "canvas@2x.png"; sourceTree = "<group>"; };
 		28A9FB0F15A7B29000986881 /* HilightMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HilightMarker.png; sourceTree = "<group>"; };
 		28A9FB1015A7B29000986881 /* HilightMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HilightMarker@2x.png"; sourceTree = "<group>"; };
+		28A9FB1515B0BDC500986881 /* FacebookRegetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookRegetViewController.h; sourceTree = "<group>"; };
+		28A9FB1615B0BDC500986881 /* FacebookRegetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookRegetViewController.m; sourceTree = "<group>"; };
+		28A9FB1715B0BDC500986881 /* FacebookRegetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookRegetViewController.xib; sourceTree = "<group>"; };
 		28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		28AC956114B2428C00CB73FD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		28AC956214B2428C00CB73FD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1565,6 +1570,9 @@
 				2880347A156BF2F000414F6D /* PostSignupViewController.h */,
 				2880347B156BF2F000414F6D /* PostSignupViewController.m */,
 				2880347C156BF2F000414F6D /* PostSignupViewController.xib */,
+				28A9FB1515B0BDC500986881 /* FacebookRegetViewController.h */,
+				28A9FB1615B0BDC500986881 /* FacebookRegetViewController.m */,
+				28A9FB1715B0BDC500986881 /* FacebookRegetViewController.xib */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -2188,6 +2196,7 @@
 				28F2A6F9159E227600C6F698 /* unselectedButton@2x.png in Resources */,
 				28A9FB1115A7B29000986881 /* HilightMarker.png in Resources */,
 				28A9FB1215A7B29000986881 /* HilightMarker@2x.png in Resources */,
+				28A9FB1915B0BDC500986881 /* FacebookRegetViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2332,6 +2341,7 @@
 				28EB265C156EB5CC006568E7 /* WBNoticeView.m in Sources */,
 				28EB265F156EBA08006568E7 /* MTPopupWindow.m in Sources */,
 				2899A63A1572E83D00C2D7C5 /* UserManager.m in Sources */,
+				28A9FB1815B0BDC500986881 /* FacebookRegetViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
