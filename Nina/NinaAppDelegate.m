@@ -158,7 +158,7 @@
             
             //NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/unhighlight", placeId]; //unhilight, so we don't send again
             
-            [[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
+            //[[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
         } else if ( [[url host] isEqualToString:@"facebookfriends"] ){
             FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
             
