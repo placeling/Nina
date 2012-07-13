@@ -36,13 +36,13 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUIImageView" id="885296788">
+					<object class="IBUIImageView" id="937201547">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{-1, 0}, {320, 460}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="837133762"/>
+						<reference key="NSNextKeyView" ref="748776129"/>
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -51,13 +51,13 @@
 							<string key="NSResourceName">canvas.png</string>
 						</object>
 					</object>
-					<object class="IBUIButton" id="837133762">
+					<object class="IBUIButton" id="748776129">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 20}, {280, 36}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="233674616"/>
+						<reference key="NSNextKeyView" ref="863329691"/>
 						<string key="NSReuseIdentifierKey">_NS:225</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -65,7 +65,7 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUILineBreakMode">0</int>
 						<string key="IBUINormalTitle">Facebook Token Expired, We Need You to Login</string>
-						<object class="NSColor" key="IBUIHighlightedTitleColor" id="549579611">
+						<object class="NSColor" key="IBUIHighlightedTitleColor" id="503894613">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
@@ -73,7 +73,7 @@
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4yOTgwMzkyMjc3IDAuMjk4MDM5MjI3NyAwLjI5ODAzOTIyNzcAA</bytes>
 						</object>
-						<object class="NSColor" key="IBUINormalTitleShadowColor" id="42266442">
+						<object class="NSColor" key="IBUINormalTitleShadowColor" id="72475813">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
@@ -87,26 +87,26 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUIButton" id="139895850">
+					<object class="IBUIButton" id="828042313">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{98, 69}, {111, 129}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="334936226"/>
+						<reference key="NSNextKeyView" ref="388609918"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIHighlightedTitleColor" ref="549579611"/>
+						<reference key="IBUIHighlightedTitleColor" ref="503894613"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
-						<reference key="IBUINormalTitleShadowColor" ref="42266442"/>
+						<reference key="IBUINormalTitleShadowColor" ref="72475813"/>
 						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">facebook_signup.png</string>
+							<string key="NSResourceName">connect_with_facebook.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">1</int>
@@ -118,13 +118,13 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="233674616">
+					<object class="IBUIImageView" id="863329691">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 77}, {46, 19}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="139895850"/>
+						<reference key="NSNextKeyView" ref="828042313"/>
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -133,7 +133,7 @@
 							<string key="NSResourceName">cloud1.png</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="428023694">
+					<object class="IBUIImageView" id="541892158">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{287, 396}, {33, 20}}</string>
@@ -147,7 +147,7 @@
 							<string key="NSResourceName">cloud2.png</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="334936226">
+					<object class="IBUIImageView" id="388609918">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{217, 184}, {83, 31}}</string>
@@ -162,13 +162,13 @@
 							<string key="NSResourceName">cloud3.png</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="243108548">
+					<object class="IBUIImageView" id="870198121">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{30, 297}, {83, 31}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="688357729"/>
+						<reference key="NSNextKeyView" ref="721677963"/>
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -177,13 +177,13 @@
 							<string key="NSResourceName">cloud4.png</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="688357729">
+					<object class="IBUIImageView" id="721677963">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 378}, {66, 38}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="428023694"/>
+						<reference key="NSNextKeyView" ref="541892158"/>
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -196,7 +196,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="885296788"/>
+				<reference key="NSNextKeyView" ref="937201547"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -221,7 +221,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">signupFacebook</string>
-						<reference key="source" ref="139895850"/>
+						<reference key="source" ref="828042313"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -240,14 +240,14 @@
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="885296788"/>
-							<reference ref="688357729"/>
-							<reference ref="428023694"/>
-							<reference ref="334936226"/>
-							<reference ref="139895850"/>
-							<reference ref="243108548"/>
-							<reference ref="233674616"/>
-							<reference ref="837133762"/>
+							<reference ref="937201547"/>
+							<reference ref="721677963"/>
+							<reference ref="541892158"/>
+							<reference ref="388609918"/>
+							<reference ref="828042313"/>
+							<reference ref="870198121"/>
+							<reference ref="863329691"/>
+							<reference ref="748776129"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -264,42 +264,42 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">20</int>
-						<reference key="object" ref="885296788"/>
+						<reference key="object" ref="937201547"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">19</int>
-						<reference key="object" ref="233674616"/>
+						<reference key="object" ref="863329691"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">18</int>
-						<reference key="object" ref="428023694"/>
+						<reference key="object" ref="541892158"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">10</int>
-						<reference key="object" ref="334936226"/>
+						<reference key="object" ref="388609918"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">11</int>
-						<reference key="object" ref="243108548"/>
+						<reference key="object" ref="870198121"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">15</int>
-						<reference key="object" ref="688357729"/>
+						<reference key="object" ref="721677963"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">17</int>
-						<reference key="object" ref="139895850"/>
+						<reference key="object" ref="828042313"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">21</int>
-						<reference key="object" ref="837133762"/>
+						<reference key="object" ref="748776129"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
@@ -374,7 +374,7 @@
 			<string key="cloud3.png">{83, 31}</string>
 			<string key="cloud4.png">{83, 31}</string>
 			<string key="cloud5.png">{66, 38}</string>
-			<string key="facebook_signup.png">{111, 129}</string>
+			<string key="connect_with_facebook.png">{111, 129}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>
