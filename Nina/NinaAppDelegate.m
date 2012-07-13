@@ -23,6 +23,7 @@
 #import "Appirater.h"
 #import "FindFacebookFriendsController.h"
 #import "Crittercism.h"
+#import "FacebookRegetViewController.h"
 
 @implementation NinaAppDelegate
 
@@ -330,6 +331,21 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
         [locationManager startUpdatingLocation];
         locationManager.delegate = nil;
     }
+    
+    NSString *current_user = [NinaHelper getUsername];
+    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
+    Facebook *_facebook = appDelegate.facebook;
+
+    if ( current_user && _facebook && ![_facebook isSessionValid] ){
+        FacebookRegetViewController *regetController = [[FacebookRegetViewController alloc] init];
+        
+        UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:regetController];
+        [FlurryAnalytics logAllPageViews:navBar];
+        [self.navigationController presentModalViewController:navBar animated:YES];
+        [navBar release];
+        [regetController release];
+    }    
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
