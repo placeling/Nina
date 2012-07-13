@@ -245,6 +245,8 @@
 		28A9FB1215A7B29000986881 /* HilightMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A9FB1015A7B29000986881 /* HilightMarker@2x.png */; };
 		28A9FB1815B0BDC500986881 /* FacebookRegetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A9FB1615B0BDC500986881 /* FacebookRegetViewController.m */; };
 		28A9FB1915B0BDC500986881 /* FacebookRegetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A9FB1715B0BDC500986881 /* FacebookRegetViewController.xib */; };
+		28A9FB1C15B0D4FD00986881 /* connect_with_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A9FB1A15B0D4FD00986881 /* connect_with_facebook.png */; };
+		28A9FB1D15B0D4FD00986881 /* connect_with_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A9FB1B15B0D4FD00986881 /* connect_with_facebook@2x.png */; };
 		28AC956314B2428C00CB73FD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC956114B2428C00CB73FD /* CoreData.framework */; };
 		28AC956414B2428C00CB73FD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC956214B2428C00CB73FD /* Security.framework */; };
 		28AC956514B2438200CB73FD /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC955714B2417D00CB73FD /* libRestKit.a */; };
@@ -363,8 +365,6 @@
 		6CE40046145B67BD00101082 /* cloud5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE4003C145B67BB00101082 /* cloud5@2x.png */; };
 		6CE4004C145B6BB400101082 /* email_signup.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE40048145B6BAD00101082 /* email_signup.png */; };
 		6CE4004D145B6BB400101082 /* email_signup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE40049145B6BAF00101082 /* email_signup@2x.png */; };
-		6CE4004E145B6BB400101082 /* facebook_signup.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE4004A145B6BB000101082 /* facebook_signup.png */; };
-		6CE4004F145B6BB400101082 /* facebook_signup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE4004B145B6BB200101082 /* facebook_signup@2x.png */; };
 		6CE40056145B750A00101082 /* texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE40054145B750700101082 /* texture.png */; };
 		6CE40057145B750A00101082 /* texture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE40055145B750900101082 /* texture@2x.png */; };
 		6CE40059145B77F700101082 /* inbetween.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE40058145B77F500101082 /* inbetween.png */; };
@@ -790,6 +790,8 @@
 		28A9FB1515B0BDC500986881 /* FacebookRegetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookRegetViewController.h; sourceTree = "<group>"; };
 		28A9FB1615B0BDC500986881 /* FacebookRegetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookRegetViewController.m; sourceTree = "<group>"; };
 		28A9FB1715B0BDC500986881 /* FacebookRegetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookRegetViewController.xib; sourceTree = "<group>"; };
+		28A9FB1A15B0D4FD00986881 /* connect_with_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect_with_facebook.png; sourceTree = "<group>"; };
+		28A9FB1B15B0D4FD00986881 /* connect_with_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connect_with_facebook@2x.png"; sourceTree = "<group>"; };
 		28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		28AC956114B2428C00CB73FD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		28AC956214B2428C00CB73FD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -951,8 +953,6 @@
 		6CE4003C145B67BB00101082 /* cloud5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cloud5@2x.png"; sourceTree = "<group>"; };
 		6CE40048145B6BAD00101082 /* email_signup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = email_signup.png; sourceTree = "<group>"; };
 		6CE40049145B6BAF00101082 /* email_signup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "email_signup@2x.png"; sourceTree = "<group>"; };
-		6CE4004A145B6BB000101082 /* facebook_signup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_signup.png; sourceTree = "<group>"; };
-		6CE4004B145B6BB200101082 /* facebook_signup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_signup@2x.png"; sourceTree = "<group>"; };
 		6CE40054145B750700101082 /* texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture.png; sourceTree = "<group>"; };
 		6CE40055145B750900101082 /* texture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "texture@2x.png"; sourceTree = "<group>"; };
 		6CE40058145B77F500101082 /* inbetween.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inbetween.png; sourceTree = "<group>"; };
@@ -1680,6 +1680,8 @@
 			children = (
 				28A9FB0F15A7B29000986881 /* HilightMarker.png */,
 				28A9FB1015A7B29000986881 /* HilightMarker@2x.png */,
+				28A9FB1A15B0D4FD00986881 /* connect_with_facebook.png */,
+				28A9FB1B15B0D4FD00986881 /* connect_with_facebook@2x.png */,
 				28CA79301576C8460031606E /* liked.png */,
 				28CA79311576C8460031606E /* liked@2x.png */,
 				28CA792C1576C1AA0031606E /* unliked.png */,
@@ -1767,8 +1769,6 @@
 				6CE4003C145B67BB00101082 /* cloud5@2x.png */,
 				6CE40048145B6BAD00101082 /* email_signup.png */,
 				6CE40049145B6BAF00101082 /* email_signup@2x.png */,
-				6CE4004A145B6BB000101082 /* facebook_signup.png */,
-				6CE4004B145B6BB200101082 /* facebook_signup@2x.png */,
 				6CE40054145B750700101082 /* texture.png */,
 				6CE40055145B750900101082 /* texture@2x.png */,
 				6CE40058145B77F500101082 /* inbetween.png */,
@@ -2067,8 +2067,6 @@
 				6CE40046145B67BD00101082 /* cloud5@2x.png in Resources */,
 				6CE4004C145B6BB400101082 /* email_signup.png in Resources */,
 				6CE4004D145B6BB400101082 /* email_signup@2x.png in Resources */,
-				6CE4004E145B6BB400101082 /* facebook_signup.png in Resources */,
-				6CE4004F145B6BB400101082 /* facebook_signup@2x.png in Resources */,
 				6CE40056145B750A00101082 /* texture.png in Resources */,
 				6CE40057145B750A00101082 /* texture@2x.png in Resources */,
 				6CE40059145B77F700101082 /* inbetween.png in Resources */,
@@ -2197,6 +2195,8 @@
 				28A9FB1115A7B29000986881 /* HilightMarker.png in Resources */,
 				28A9FB1215A7B29000986881 /* HilightMarker@2x.png in Resources */,
 				28A9FB1915B0BDC500986881 /* FacebookRegetViewController.xib in Resources */,
+				28A9FB1C15B0D4FD00986881 /* connect_with_facebook.png in Resources */,
+				28A9FB1D15B0D4FD00986881 /* connect_with_facebook@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
