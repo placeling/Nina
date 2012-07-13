@@ -17,7 +17,7 @@
 @synthesize streetAddress, city, perspectiveCount, followingPerspectiveCount;
 @synthesize lat, lng, usersBookmarking, bookmarked, highlighted;
 @synthesize googleId, phone, googlePlacesUrl, google_ref, thumbUrl, mapUrl, highlightUrl;
-@synthesize categories, icon, tags, hidden;
+@synthesize categories, icon, tags, hidden, slug;
 @synthesize homePerspectives,followingPerspectives,everyonePerspectives, placemarks;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
@@ -55,6 +55,7 @@
     self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
     self.tags = [jsonDict objectForKeyNotNull:@"tags"];
     self.mapUrl = [jsonDict objectForKey:@"map_url"];
+    self.slug = [jsonDict objectForKey:@"slug"];
     
 }
 
@@ -90,6 +91,7 @@
      @"thumb_url", @"thumbUrl",
      @"highlight_url", @"highlightUrl",
      @"map_url", @"mapUrl",
+     @"slug", @"slug",
      nil];
     
     [placeMapping mapKeyPath:@"lat" toAttribute:@"lat"];
@@ -166,6 +168,7 @@
     [city release];
     [googleId release];
     [google_ref release];
+    [slug release];
     
     [phone release];
     [lat release];

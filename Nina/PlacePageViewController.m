@@ -426,7 +426,7 @@ typedef enum {
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSString *urlString = [NSString stringWithFormat:@"https://www.placeling.com/places/%@", self.place.pid];
+    NSString *urlString = [NSString stringWithFormat:@"https://www.placeling.com/places/%@", self.place.slug];
     
     if (buttonIndex == 0){
         DLog(@"share by email");

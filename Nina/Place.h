@@ -27,6 +27,7 @@
     NSString *highlightUrl;
     
     NSString *mapUrl;
+    NSString *slug;
     
     NSArray *usersBookmarking;
     NSArray *tags;
@@ -64,6 +65,7 @@
 @property (nonatomic, retain) NSString *thumbUrl;
 @property (nonatomic, retain) NSString *highlightUrl;
 @property (nonatomic, retain) NSString *mapUrl;
+@property (nonatomic, retain) NSString *slug;
 
 @property (nonatomic, retain) NSString *streetAddress;
 @property (nonatomic, retain) NSString *city;
