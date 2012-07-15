@@ -336,7 +336,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
     NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
     Facebook *_facebook = appDelegate.facebook;
 
-    if ( current_user && _facebook && ![_facebook isSessionValid] ){
+    if ( current_user && _facebook.accessToken != nil && ![_facebook isSessionValid] ){
         FacebookRegetViewController *regetController = [[FacebookRegetViewController alloc] init];
         
         UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:regetController];
