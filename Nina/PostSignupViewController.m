@@ -69,7 +69,7 @@
         self.HUD.labelText = @"Retrieving Your Profile...";
     } else {
         self.textView.text = self.user.userDescription;
-        [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumbUrl]];
+        [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"profile.png"]];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -277,11 +277,8 @@
 	CGFloat paddingNeeded = (self.textView.frame.origin.y + self.textView.frame.size.height + keyboardOffset + 5) - (self.view.frame.size.height);
     
 	if (paddingNeeded > 0) {
-		self.scrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, paddingNeeded, 0.0);
-		self.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, paddingNeeded, 0.0);
-		self.scrollView.contentSize = CGSizeMake(scrollView.frame.size.width , scrollView.frame.size.height);
-        [self.scrollView scrollRectToVisible:self.textView.frame
-                         animated:TRUE];
+        self.scrollView.contentSize = CGSizeMake(scrollView.frame.size.width , scrollView.frame.size.height + paddingNeeded);
+        [self.scrollView setContentOffset:CGPointMake(0, scrollView.contentSize.height - self.scrollView.bounds.size.height) animated:TRUE];
 	}
 }
 
