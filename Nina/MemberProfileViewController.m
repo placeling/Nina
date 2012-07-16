@@ -616,7 +616,7 @@
         return 100;
     } else {
         if ((perspectives) && [perspectives count] == 0) {
-            return 100;
+            return 120;
         } else if (indexPath.row >= [perspectives count]){
             return 44;
         } else {
@@ -705,7 +705,7 @@
                 errorText = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 50)];
                 errorText.textAlignment = UITextAlignmentCenter;
                 errorText.text = @"Let's add a place to your map";
-                UIImageView *placemarkImage = [[UIImageView alloc] initWithFrame:CGRectMake(42, 40, 235, 60)];
+                UIImageView *placemarkImage = [[UIImageView alloc] initWithFrame:CGRectMake(61, 40, 197, 69)];
                 errorText.font = [UIFont fontWithName:@"Helvetica" size:16.0];
                 [placemarkImage setUserInteractionEnabled:NO];
                 [placemarkImage setImage:[UIImage imageNamed:@"PlaceMarkIt.png"]];
