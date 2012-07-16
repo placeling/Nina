@@ -22,7 +22,7 @@
 
 @synthesize perspective, userImage, memoText,titleLabel, scrollView, remarkersLabel;
 @synthesize tapGesture, requestDelegate, showMoreButton, loveButton, shareSheetButton;
-@synthesize createdAtLabel, expanded, indexpath;
+@synthesize createdAtLabel, expanded, indexpath, likeImage;
 
 
 +(CGFloat) cellHeightUnboundedForPerspective:(Perspective*)perspective{
@@ -222,10 +222,13 @@
     
     if ( perspective.likers && [perspective.likers count] > 0 ) {
         [cell.remarkersLabel setFrame:CGRectMake(cell.remarkersLabel.frame.origin.x, verticalCursor, cell.remarkersLabel.frame.size.width, cell.remarkersLabel.frame.size.height)];
-        cell.remarkersLabel.text = [NSString stringWithFormat:@"Liked By: %@", [perspective.likers componentsJoinedByString:@"-"]  ];
+        cell.remarkersLabel.text = [NSString stringWithFormat:@"by: %@", [perspective.likers componentsJoinedByString:@"-"]  ];
+        [cell.likeImage setFrame:CGRectMake(cell.likeImage.frame.origin.x, cell.remarkersLabel.frame.origin.y, cell.likeImage.frame.size.width, cell.likeImage.frame.size.height)];
+        
          verticalCursor += cell.remarkersLabel.frame.size.height;
     } else {
         cell.remarkersLabel.hidden = true;
+        cell.likeImage.hidden = true;
     }
     
     if ( perspective.mine ){
@@ -455,6 +458,7 @@
     [tapGesture release];
     [loveButton release];
     [createdAtLabel release];
+    [likeImage release];
     
     [super dealloc];
 }
