@@ -265,7 +265,6 @@
 		28B38E2C14170D5B00D4025F /* SignupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B38E2A14170D5B00D4025F /* SignupController.xib */; };
 		28B5D8B314907E0000763D0C /* DefaultPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8B114907E0000763D0C /* DefaultPhoto.png */; };
 		28B5D8B414907E0000763D0C /* DefaultPhoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8B214907E0000763D0C /* DefaultPhoto@2x.png */; };
-		28B5D8D5149096CC00763D0C /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8BA149096CC00763D0C /* .gitignore */; };
 		28B5D8D6149096CC00763D0C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8BB149096CC00763D0C /* LICENSE */; };
 		28B5D8D7149096CC00763D0C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8BC149096CC00763D0C /* README.md */; };
 		28B5D8D8149096CC00763D0C /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B5D8BE149096CC00763D0C /* SDImageCache.m */; };
@@ -825,7 +824,6 @@
 		28B38E3C1417D26A00D4025F /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		28B5D8B114907E0000763D0C /* DefaultPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultPhoto.png; sourceTree = "<group>"; };
 		28B5D8B214907E0000763D0C /* DefaultPhoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DefaultPhoto@2x.png"; sourceTree = "<group>"; };
-		28B5D8BA149096CC00763D0C /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		28B5D8BB149096CC00763D0C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		28B5D8BC149096CC00763D0C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		28B5D8BD149096CC00763D0C /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
@@ -1630,7 +1628,6 @@
 		28B5D8B9149096CB00763D0C /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
-				28B5D8BA149096CC00763D0C /* .gitignore */,
 				28B5D8BB149096CC00763D0C /* LICENSE */,
 				28B5D8BC149096CC00763D0C /* README.md */,
 				28B5D8BD149096CC00763D0C /* SDImageCache.h */,
@@ -2109,7 +2106,6 @@
 				28417FC6148CA9AF00CA6D4D /* ActiveShoppingPick@2x.png in Resources */,
 				28B5D8B314907E0000763D0C /* DefaultPhoto.png in Resources */,
 				28B5D8B414907E0000763D0C /* DefaultPhoto@2x.png in Resources */,
-				28B5D8D5149096CC00763D0C /* .gitignore in Resources */,
 				28B5D8D6149096CC00763D0C /* LICENSE in Resources */,
 				28B5D8D7149096CC00763D0C /* README.md in Resources */,
 				28865C9F14966CBF00F20280 /* Museo500.otf in Resources */,
