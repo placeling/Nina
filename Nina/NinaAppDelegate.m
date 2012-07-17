@@ -121,10 +121,10 @@
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];    
     
-    if ( [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey] ){
-        NSURL *url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
-        DLog(@"GOT url %@", url);
-        [self application:application handleOpenURL:url];
+    if ( [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] ){        
+        NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        
+        [self application:application didReceiveRemoteNotification:userInfo];
     }
     
     [Appirater appLaunched:YES];
