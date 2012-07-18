@@ -221,8 +221,8 @@
     }
     
     if ( perspective.likers && [perspective.likers count] > 0 ) {
-        [cell.remarkersLabel setFrame:CGRectMake(cell.remarkersLabel.frame.origin.x, verticalCursor, cell.remarkersLabel.frame.size.width, cell.remarkersLabel.frame.size.height)];
-        cell.remarkersLabel.text = [NSString stringWithFormat:@"by: %@", [perspective.likers componentsJoinedByString:@"-"]  ];
+        [cell.remarkersLabel setFrame:CGRectMake(cell.remarkersLabel.frame.origin.x, verticalCursor+2, cell.remarkersLabel.frame.size.width, cell.remarkersLabel.frame.size.height)];
+        cell.remarkersLabel.text = [perspective.likers componentsJoinedByString:@"-"];
         [cell.likeImage setFrame:CGRectMake(cell.likeImage.frame.origin.x, cell.remarkersLabel.frame.origin.y, cell.likeImage.frame.size.width, cell.likeImage.frame.size.height)];
         
          verticalCursor += cell.remarkersLabel.frame.size.height;
