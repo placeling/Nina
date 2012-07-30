@@ -71,6 +71,7 @@
 		284A354F1404574F009C8C28 /* PerspectiveTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A354D1404574F009C8C28 /* PerspectiveTableViewCell.xib */; };
 		284A355F14048DCD009C8C28 /* BookmarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A355D14048DCD009C8C28 /* BookmarkTableViewCell.m */; };
 		284A356014048DCD009C8C28 /* BookmarkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A355E14048DCD009C8C28 /* BookmarkTableViewCell.xib */; };
+		284D15CA15C73BE400698777 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284D15C915C73BE400698777 /* Twitter.framework */; };
 		284D1CDE147C29DE001F80D1 /* FriendFindController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284D1CDC147C29DE001F80D1 /* FriendFindController.m */; };
 		284D1CDF147C29DE001F80D1 /* FriendFindController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284D1CDD147C29DE001F80D1 /* FriendFindController.xib */; };
 		2852B7B2156715AC00D9775E /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2852B7B1156715AB00D9775E /* AssetsLibrary.framework */; };
@@ -544,6 +545,7 @@
 		284A355C14048DCC009C8C28 /* BookmarkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkTableViewCell.h; sourceTree = "<group>"; };
 		284A355D14048DCD009C8C28 /* BookmarkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkTableViewCell.m; sourceTree = "<group>"; };
 		284A355E14048DCD009C8C28 /* BookmarkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkTableViewCell.xib; sourceTree = "<group>"; };
+		284D15C915C73BE400698777 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		284D1CDB147C29DE001F80D1 /* FriendFindController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendFindController.h; sourceTree = "<group>"; };
 		284D1CDC147C29DE001F80D1 /* FriendFindController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendFindController.m; sourceTree = "<group>"; };
 		284D1CDD147C29DE001F80D1 /* FriendFindController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendFindController.xib; sourceTree = "<group>"; };
@@ -970,6 +972,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				284D15CA15C73BE400698777 /* Twitter.framework in Frameworks */,
 				2852B7B2156715AC00D9775E /* AssetsLibrary.framework in Frameworks */,
 				28AC956514B2438200CB73FD /* libRestKit.a in Frameworks */,
 				28AC956314B2428C00CB73FD /* CoreData.framework in Frameworks */,
@@ -1264,6 +1267,7 @@
 		2895002F13D64559009E1BD7 = {
 			isa = PBXGroup;
 			children = (
+				284D15C915C73BE400698777 /* Twitter.framework */,
 				28B619461422942B00B0A7E5 /* Default@2x.png */,
 				28B619441422942200B0A7E5 /* Default.png */,
 				28B61942142292E500B0A7E5 /* icon@2x.png */,
