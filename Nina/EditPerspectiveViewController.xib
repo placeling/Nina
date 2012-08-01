@@ -105,7 +105,7 @@
 							<object class="IBUIButton" id="306848248">
 								<reference key="NSNextResponder" ref="287540930"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{265, 4}, {35, 33}}</string>
+								<string key="NSFrame">{{266, 4}, {35, 33}}</string>
 								<reference key="NSSuperview" ref="287540930"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="833811198"/>
@@ -144,10 +144,10 @@
 							<object class="IBUIButton" id="214541261">
 								<reference key="NSNextResponder" ref="287540930"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{187, 4}, {38, 33}}</string>
+								<string key="NSFrame">{{185, 4}, {38, 33}}</string>
 								<reference key="NSSuperview" ref="287540930"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="318784563"/>
+								<reference key="NSNextKeyView" ref="712665889"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
@@ -174,7 +174,7 @@
 									<int key="NSfFlags">16</int>
 								</object>
 							</object>
-							<object class="IBUIButton" id="318784563">
+							<object class="IBUIButton" id="712665889">
 								<reference key="NSNextResponder" ref="287540930"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{224, 4}, {42, 33}}</string>
@@ -380,7 +380,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">twitterButton</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="318784563"/>
+						<reference key="destination" ref="712665889"/>
 					</object>
 					<int key="connectionID">29</int>
 				</object>
@@ -432,7 +432,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">twitterToggle</string>
-						<reference key="source" ref="318784563"/>
+						<reference key="source" ref="712665889"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -488,7 +488,7 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="214541261"/>
-							<reference ref="318784563"/>
+							<reference ref="712665889"/>
 							<reference ref="306848248"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
@@ -538,7 +538,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">28</int>
-						<reference key="object" ref="318784563"/>
+						<reference key="object" ref="712665889"/>
 						<reference key="parent" ref="287540930"/>
 					</object>
 				</object>
@@ -820,7 +820,7 @@
 				<string>{50, 50}</string>
 				<string>{103, 45}</string>
 				<string>{35, 33}</string>
-				<string>{42, 33}</string>
+				<string>{43, 33}</string>
 			</object>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
