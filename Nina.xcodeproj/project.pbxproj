@@ -37,6 +37,10 @@
 		280EA88714117B0B0045B296 /* GenericWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280EA88514117B0A0045B296 /* GenericWebViewController.xib */; };
 		2817988E1423C0D300406E78 /* iphone_connect.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2817988D1423C0D300406E78 /* iphone_connect.jpg */; };
 		281B182B15C748950015ECBB /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 281B182A15C748950015ECBB /* Accounts.framework */; };
+		281B1C0015C8D4EF0015ECBB /* twitter_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1BFC15C8D4EF0015ECBB /* twitter_selected.png */; };
+		281B1C0115C8D4EF0015ECBB /* twitter_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1BFD15C8D4EF0015ECBB /* twitter_selected@2x.png */; };
+		281B1C0215C8D4EF0015ECBB /* twitter_unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1BFE15C8D4EF0015ECBB /* twitter_unselected.png */; };
+		281B1C0315C8D4EF0015ECBB /* twitter_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1BFF15C8D4EF0015ECBB /* twitter_unselected@2x.png */; };
 		2822BDAA1406E1200077868C /* PlaceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDA91406E11F0077868C /* PlaceHeaderView.xib */; };
 		2822BDAC1406EE720077868C /* PlaceFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDAB1406EE710077868C /* PlaceFooterView.xib */; };
 		2827EF7E15783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2827EF6415783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a */; };
@@ -465,6 +469,10 @@
 		280EA88514117B0A0045B296 /* GenericWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericWebViewController.xib; sourceTree = "<group>"; };
 		2817988D1423C0D300406E78 /* iphone_connect.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone_connect.jpg; sourceTree = "<group>"; };
 		281B182A15C748950015ECBB /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		281B1BFC15C8D4EF0015ECBB /* twitter_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter_selected.png; sourceTree = "<group>"; };
+		281B1BFD15C8D4EF0015ECBB /* twitter_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter_selected@2x.png"; sourceTree = "<group>"; };
+		281B1BFE15C8D4EF0015ECBB /* twitter_unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter_unselected.png; sourceTree = "<group>"; };
+		281B1BFF15C8D4EF0015ECBB /* twitter_unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter_unselected@2x.png"; sourceTree = "<group>"; };
 		2822BDA91406E11F0077868C /* PlaceHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceHeaderView.xib; sourceTree = "<group>"; };
 		2822BDAB1406EE710077868C /* PlaceFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceFooterView.xib; sourceTree = "<group>"; };
 		2827EF6015783F7600EB529A /* CrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashReporter.h; sourceTree = "<group>"; };
@@ -1683,6 +1691,10 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				281B1BFC15C8D4EF0015ECBB /* twitter_selected.png */,
+				281B1BFD15C8D4EF0015ECBB /* twitter_selected@2x.png */,
+				281B1BFE15C8D4EF0015ECBB /* twitter_unselected.png */,
+				281B1BFF15C8D4EF0015ECBB /* twitter_unselected@2x.png */,
 				28A9FB0F15A7B29000986881 /* HilightMarker.png */,
 				28A9FB1015A7B29000986881 /* HilightMarker@2x.png */,
 				28A9FB1A15B0D4FD00986881 /* connect_with_facebook.png */,
@@ -2201,6 +2213,10 @@
 				28A9FB1915B0BDC500986881 /* FacebookRegetViewController.xib in Resources */,
 				28A9FB1C15B0D4FD00986881 /* connect_with_facebook.png in Resources */,
 				28A9FB1D15B0D4FD00986881 /* connect_with_facebook@2x.png in Resources */,
+				281B1C0015C8D4EF0015ECBB /* twitter_selected.png in Resources */,
+				281B1C0115C8D4EF0015ECBB /* twitter_selected@2x.png in Resources */,
+				281B1C0215C8D4EF0015ECBB /* twitter_unselected.png in Resources */,
+				281B1C0315C8D4EF0015ECBB /* twitter_unselected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2450,6 +2466,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2483,6 +2501,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
