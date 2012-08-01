@@ -30,11 +30,12 @@
     UIButton *photoButton;
     UIButton *facebookButton;
     UIButton *delayButton;
+    UIButton *twitterButton;
     
     UIButton *existingButton;
 	UIButton *takeButton;
     
-    IBOutlet UIScrollView *scrollView;
+    UIScrollView *scrollView;
     
     MBProgressHUD *hud;
     
@@ -45,6 +46,7 @@
     NSOperationQueue *queue;
     
     bool facebookEnabled;
+    bool twitterEnabled;
     bool delayedPost;
     int delayTime;
     
@@ -58,6 +60,7 @@
 @property(nonatomic,retain) IBOutlet UIButton *takeButton;
 @property(nonatomic,retain) IBOutlet UIButton *facebookButton;
 @property(nonatomic,retain) IBOutlet UIButton *delayButton;
+@property(nonatomic,retain) IBOutlet UIButton *twitterButton;
 
 @property(nonatomic,retain) IBOutlet NSOperationQueue *queue;
 @property(nonatomic,retain) IBOutlet NSString *updatedMemo;
@@ -74,6 +77,7 @@
 -(IBAction)takeImage;
 
 -(IBAction)facebookToggle;
+-(IBAction)twitterToggle;
 
 -(IBAction)toggleDelayedAction;
 

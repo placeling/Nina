@@ -33,7 +33,7 @@
 @synthesize photoButton;
 @synthesize delegate, queue;
 @synthesize existingButton;
-@synthesize takeButton, uploadingPics, facebookButton, delayButton;
+@synthesize takeButton, uploadingPics, facebookButton, delayButton, twitterButton;
 
 - (id) initWithPerspective:(Perspective *)perspective{
     self = [super init];
@@ -206,6 +206,9 @@
     Facebook *facebook = appDelegate.facebook;
     facebookEnabled = false;
     
+    twitterEnabled = true;
+    [self twitterToggle];
+    
     if ( [facebook isSessionValid] ) {
         [self facebookToggle];
     }
@@ -311,6 +314,20 @@
 	[self presentModalViewController:imgPicker animated:YES];
 	[imgPicker release];
 }
+
+-(IBAction) twitterToggle{
+    
+    if (twitterEnabled){
+        twitterEnabled = false;
+        [self.twitterButton setImage:[UIImage imageNamed:@"twitter_unselected.png"] forState:UIControlStateNormal];
+        
+    } else {        
+        twitterEnabled = true;
+        [self.twitterButton setImage:[UIImage imageNamed:@"twitter_selected.png"] forState:UIControlStateNormal];
+    }
+    
+}
+
 
 -(IBAction)facebookToggle{
     
@@ -530,6 +547,7 @@
     [updatedMemo release];
     [facebookButton release];
     [delayButton release];
+    [twitterButton release];
     
     [super dealloc];
 }
