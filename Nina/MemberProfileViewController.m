@@ -23,7 +23,6 @@
 #import "UIImageView+WebCache.h"
 #import "NinaAppDelegate.h"
 #import "FlurryAnalytics.h"
-#import "PictureViewController.h"
 #import "UserManager.h"
 #import "NearbyPlacesViewController.h"
 
@@ -305,11 +304,11 @@
 
 -(void)showProfileImage{
     if ( self.profileImageView && self.user ) {
-        PictureViewController *pictureViewController = [[PictureViewController alloc] init];
-        pictureViewController.photo = self.user.profilePic;
         
-        [self.navigationController pushViewController:pictureViewController animated:true];
-        [pictureViewController release];
+        FGalleryViewController *networkGallery = [[FGalleryViewController alloc] initWithPhotoSource:self.user];
+        
+        [self.navigationController pushViewController:networkGallery animated:true];
+        [networkGallery release];
     }
     
 }

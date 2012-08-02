@@ -251,8 +251,6 @@
 		28A327621498290B003CB659 /* UnfollowButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A3275E1498290B003CB659 /* UnfollowButton.png */; };
 		28A4377B14327EFA005F192B /* ActivityFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A4377914327EFA005F192B /* ActivityFeedViewController.m */; };
 		28A4377C14327EFA005F192B /* ActivityFeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A4377A14327EFA005F192B /* ActivityFeedViewController.xib */; };
-		28A43785143295E4005F192B /* PictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A43783143295E4005F192B /* PictureViewController.m */; };
-		28A43786143295E4005F192B /* PictureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A43784143295E4005F192B /* PictureViewController.xib */; };
 		28A437891432E1EF005F192B /* StyleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A437881432E1EE005F192B /* StyleHelper.m */; };
 		28A437931432E5AF005F192B /* canvas.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A437911432E5AF005F192B /* canvas.png */; };
 		28A437941432E5AF005F192B /* canvas@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A437921432E5AF005F192B /* canvas@2x.png */; };
@@ -810,9 +808,6 @@
 		28A4377814327EFA005F192B /* ActivityFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityFeedViewController.h; sourceTree = "<group>"; };
 		28A4377914327EFA005F192B /* ActivityFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityFeedViewController.m; sourceTree = "<group>"; };
 		28A4377A14327EFA005F192B /* ActivityFeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityFeedViewController.xib; sourceTree = "<group>"; };
-		28A43782143295E4005F192B /* PictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureViewController.h; sourceTree = "<group>"; };
-		28A43783143295E4005F192B /* PictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureViewController.m; sourceTree = "<group>"; };
-		28A43784143295E4005F192B /* PictureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PictureViewController.xib; sourceTree = "<group>"; };
 		28A437871432E1EE005F192B /* StyleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleHelper.h; sourceTree = "<group>"; };
 		28A437881432E1EE005F192B /* StyleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleHelper.m; sourceTree = "<group>"; };
 		28A437911432E5AF005F192B /* canvas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canvas.png; sourceTree = "<group>"; };
@@ -1650,9 +1645,6 @@
 				280EA88314117B080045B296 /* GenericWebViewController.h */,
 				280EA88414117B090045B296 /* GenericWebViewController.m */,
 				280EA88514117B0A0045B296 /* GenericWebViewController.xib */,
-				28A43782143295E4005F192B /* PictureViewController.h */,
-				28A43783143295E4005F192B /* PictureViewController.m */,
-				28A43784143295E4005F192B /* PictureViewController.xib */,
 				2867ABC814CE540E003994DB /* AdTableViewCell.h */,
 				2867ABC914CE540E003994DB /* AdTableViewCell.m */,
 				2867AC2C14D73C0F003994DB /* PerspectiveDisplayProtocol.h */,
@@ -2068,7 +2060,6 @@
 				28B619471422942C00B0A7E5 /* Default@2x.png in Resources */,
 				2817988E1423C0D300406E78 /* iphone_connect.jpg in Resources */,
 				28A4377C14327EFA005F192B /* ActivityFeedViewController.xib in Resources */,
-				28A43786143295E4005F192B /* PictureViewController.xib in Resources */,
 				28A437931432E5AF005F192B /* canvas.png in Resources */,
 				28A437941432E5AF005F192B /* canvas@2x.png in Resources */,
 				28EE54E51433D1EB00E36686 /* leather.png in Resources */,
@@ -2360,7 +2351,6 @@
 				28F189FD1427F072005DE786 /* UIImage+RoundedCorner.m in Sources */,
 				285BE74E142CFFFA00898FDF /* asyncimageview.m in Sources */,
 				28A4377B14327EFA005F192B /* ActivityFeedViewController.m in Sources */,
-				28A43785143295E4005F192B /* PictureViewController.m in Sources */,
 				28A437891432E1EF005F192B /* StyleHelper.m in Sources */,
 				28EE54F71434DDC600E36686 /* ActivityTableViewCell.m in Sources */,
 				286FA149143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m in Sources */,

@@ -10,10 +10,11 @@
 #import "Photo.h"
 #import <RestKit/RestKit.h>
 #import "Authentication.h"
+#import "FGalleryViewController.h"
 
 @class Perspective;
 
-@interface User : NSObject {
+@interface User : NSObject<FGalleryViewControllerDelegate> {
     NSString *userId;
     NSString *city;
     NSString *username;

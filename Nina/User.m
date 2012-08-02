@@ -134,6 +134,27 @@
     return userMapping;
 }
 
+#pragma mark Fgallerydelegate
+
+
+- (int)numberOfPhotosForPhotoGallery:(FGalleryViewController*)gallery{
+    return 1;
+}
+
+- (FGalleryPhotoSourceType)photoGallery:(FGalleryViewController*)gallery sourceTypeForPhotoAtIndex:(NSUInteger)index{
+    return FGalleryPhotoSourceTypeNetwork;//always network for these
+}
+
+
+- (NSString*)photoGallery:(FGalleryViewController*)gallery urlForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index{
+    if (size == FGalleryPhotoSizeFullsize){
+        return  self.profilePic.mainUrl;
+    } else {
+        return self.profilePic.thumbUrl;
+    }
+}
+
+
 
 - (void)dealloc{    
     [userId release];
