@@ -42,6 +42,7 @@
     nsController.ad = self.ad;
     nsController.latitudeDelta = self.latitudeDelta;
     nsController.origin = self.origin;
+    nsController.quickpick = self.quickpick;
     
     UINavigationController *navController = self.navigationController;
     [UIView beginAnimations:@"View Flip" context:nil];
@@ -73,12 +74,18 @@
     //[self.spinnerView startAnimating];
     //self.spinnerView.hidden = false;
     
-    if ( self.segmentedControl.selectedSegmentIndex == 0 && !self.myLoaded ){
-        [super findNearbyPlaces];
-    } else if ( self.segmentedControl.selectedSegmentIndex == 1 && !self.followingLoaded ){
-        [super findNearbyPlaces];
-    } else if ( self.segmentedControl.selectedSegmentIndex == 2 && !self.popularLoaded ){
-        [super findNearbyPlaces];
+    if ( self.quickpick ){
+        if (!self.popularLoaded){
+            [super findNearbyPlaces];
+        }        
+    } else {
+        if ( self.segmentedControl.selectedSegmentIndex == 0 && !self.myLoaded ){
+            [super findNearbyPlaces];
+        } else if ( self.segmentedControl.selectedSegmentIndex == 1 && !self.followingLoaded ){
+            [super findNearbyPlaces];
+        } else if ( self.segmentedControl.selectedSegmentIndex == 2 && !self.popularLoaded ){
+            [super findNearbyPlaces];
+        }
     }
     
     [self.placesTableView reloadData];
@@ -105,6 +112,12 @@
     UIBarButtonItem *shareButton =  [[UIBarButtonItem alloc] initWithImage:mapImage style:UIBarButtonItemStylePlain target:self action:@selector(toggleMapList)];
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
+    
+    if ( quickpick ){
+        [self.placesTableView setFrame:CGRectMake(self.toolbar.frame.origin.x, self.toolbar.frame.origin.y, self.placesTableView.frame.size.width, self.placesTableView.frame.size.height + self.toolbar.frame.size.height)];
+        self.toolbar.hidden = true;
+        self.segmentedControl.enabled = false;        
+    }
     
     self.placesTableView.delegate = self;
     

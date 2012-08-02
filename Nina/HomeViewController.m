@@ -147,7 +147,7 @@
     NearbySuggestedPlaceController *nearbyPlaceController = [[NearbySuggestedPlaceController alloc] init];    
     
     nearbyPlaceController.category = buttonClicked.category;
-    
+    nearbyPlaceController.quickpick = true;
     if ( [buttonClicked.titleLabel.text isEqualToString:@"Gas"] ){
         //special case where we initialize to popular since few people will bookmark gas stations
         nearbyPlaceController.initialIndex = 2;

@@ -23,7 +23,7 @@
 @synthesize followingPlaces, popularPlaces, myPlaces;
 @synthesize toolbar, segmentedControl;
 @synthesize userFilter, tagFilter;
-@synthesize ad;
+@synthesize ad, quickpick;
 
 - (void)didReceiveMemoryWarning{
     // Releases the view if it doesn't have a superview.
@@ -43,6 +43,7 @@
         popularLoaded = FALSE;
         myLoaded = FALSE;
         initialIndex = 1;
+        quickpick = false;
         self.latitudeDelta = 0.005;
         User *user = [UserManager sharedMeUser];
         if (user) {
@@ -53,22 +54,30 @@
 }
 
 -(bool)dataLoaded{
-    if ( self.segmentedControl.selectedSegmentIndex == 0 ){
-        return myLoaded;
-    } else if ( self.segmentedControl.selectedSegmentIndex == 1 ){
-        return followingLoaded;
-    } else {
+    if ( quickpick ){
         return popularLoaded;
+    } else {
+        if ( self.segmentedControl.selectedSegmentIndex == 0 ){
+            return myLoaded;
+        } else if ( self.segmentedControl.selectedSegmentIndex == 1 ){
+            return followingLoaded;
+        } else {
+            return popularLoaded;
+        }
     }
 }
 
 -(NSMutableArray*)places{
-    if( self.segmentedControl.selectedSegmentIndex == 0 ){
-        return self.myPlaces;
-    } else if ( self.segmentedControl.selectedSegmentIndex == 1 ){
-        return self.followingPlaces;
+    if (quickpick){
+        return popularPlaces;
     } else {
-        return self.popularPlaces;
+        if( self.segmentedControl.selectedSegmentIndex == 0 ){
+            return self.myPlaces;
+        } else if ( self.segmentedControl.selectedSegmentIndex == 1 ){
+            return self.followingPlaces;
+        } else {
+            return self.popularPlaces;
+        }
     }
 }
 
@@ -112,20 +121,27 @@
     NSString *requestUrl;
     NSNumber *requestTag;
     
-    if ( currentUser &&  self.segmentedControl.selectedSegmentIndex == 0 ){
-        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=me&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
-
-        requestTag = [NSNumber numberWithInt:80];
-        self.myLoaded = false;
-    } else if ( currentUser &&  self.segmentedControl.selectedSegmentIndex == 1 ){
-        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=following&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
-        
-        requestTag = [NSNumber numberWithInt:81];
-        self.followingLoaded = false;
+    
+    if ( quickpick ){
+        requestUrl = [NSString stringWithFormat:@"/v1/places/quickpick?&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
+        requestTag = [NSNumber numberWithInt:83];
+        self.popularLoaded = false;     
     } else {
-        requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=popular&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
-        requestTag = [NSNumber numberWithInt:82];
-        self.popularLoaded = false;
+        if ( currentUser &&  self.segmentedControl.selectedSegmentIndex == 0 ){
+            requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=me&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
+
+            requestTag = [NSNumber numberWithInt:80];
+            self.myLoaded = false;
+        } else if ( currentUser &&  self.segmentedControl.selectedSegmentIndex == 1 ){
+            requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=following&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
+            
+            requestTag = [NSNumber numberWithInt:81];
+            self.followingLoaded = false;
+        } else {
+            requestUrl = [NSString stringWithFormat:@"/v1/places/suggested?query_type=popular&lat=%f&lng=%f&span=%f&query=%@&category=%@", origin.latitude, origin.longitude, self.latitudeDelta, queryString, categoryString];
+            requestTag = [NSNumber numberWithInt:82];
+            self.popularLoaded = false;
+        }
     }
    
     [objectManager loadObjectsAtResourcePath:requestUrl delegate:self block:^(RKObjectLoader* loader) {        
@@ -161,6 +177,16 @@
             }
         }
     } else if ( [(NSNumber*)objectLoader.userData intValue] == 82 ){
+        self.popularLoaded = TRUE;
+        [popularPlaces removeAllObjects];
+        for (NSObject* object in objects){
+            if ([object isKindOfClass:[Advertisement class]]){
+                self.ad = (Advertisement*)object;
+            } else {
+                [popularPlaces addObject:object];
+            }
+        }
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 83 ){
         self.popularLoaded = TRUE;
         [popularPlaces removeAllObjects];
         for (NSObject* object in objects){

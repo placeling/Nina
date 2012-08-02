@@ -44,6 +44,7 @@
     
     Advertisement *ad;
     NSTimeInterval userTime;
+    BOOL quickpick;
 }
 
 @property(nonatomic, assign) BOOL followingLoaded;
@@ -72,6 +73,8 @@
 
 @property(nonatomic, retain) NSString *userFilter;
 @property(nonatomic, retain) NSString *tagFilter;
+
+@property(nonatomic, assign) BOOL quickpick;
 
 -(void)findNearbyPlaces;
 -(IBAction)toggleMapList;

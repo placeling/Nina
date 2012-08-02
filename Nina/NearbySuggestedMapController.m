@@ -53,6 +53,7 @@
     nsController.ad = self.ad;
     nsController.latitudeDelta = self.latitudeDelta;
     nsController.origin = self.origin;
+    nsController.quickpick = self.quickpick;
     
     if ( self.userFilter ){
         [nsController setUserFilter:self.userFilter];
@@ -579,6 +580,12 @@
     placeSuperset = [[NSMutableArray alloc] init];
     
     [placeSuperset addObjectsFromArray: [self places]];
+    
+    if ( quickpick ){
+        [self.mapView setFrame:CGRectMake(self.toolbar.frame.origin.x, self.toolbar.frame.origin.y, self.mapView.frame.size.width, self.mapView.frame.size.height + self.toolbar.frame.size.height)];
+        self.toolbar.hidden = true;
+        self.segmentedControl.enabled = false;        
+    }
     
     UIImage *mapImage = [UIImage imageNamed:@"listIcon.png"];
     
