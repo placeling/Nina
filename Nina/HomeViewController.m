@@ -219,7 +219,7 @@
     NearbySuggestedMapController *nearbySuggestedMapController = [[NearbySuggestedMapController alloc] init];    
     nearbySuggestedMapController.category = @"";
     nearbySuggestedMapController.navTitle = @"My Map";
-    nearbySuggestedMapController.initialIndex = 0; //start on my bookmarks
+    nearbySuggestedMapController.initialIndex = 1; //start on following
     [self.navigationController pushViewController:nearbySuggestedMapController animated:TRUE];
     [nearbySuggestedMapController release];
 }

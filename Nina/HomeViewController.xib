@@ -181,13 +181,13 @@
 						<string key="NSFrame">{{35, 91}, {86, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="15055512"/>
+						<reference key="NSNextKeyView" ref="1012198046"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">My Map</string>
+						<string key="IBUIText">Map</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
@@ -234,6 +234,7 @@
 								<string key="NSFrame">{{0, 64}, {320, 30}}</string>
 								<reference key="NSSuperview" ref="286212048"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">2</int>
 									<bytes key="NSRGB">MC43MDE5NjA4MDIxIDAuNjM5MjE1NzA3OCAwLjYwNzg0MzE2MDYAA</bytes>
@@ -279,12 +280,13 @@
 						<reference key="IBUIFontDescription" ref="330832871"/>
 						<reference key="IBUIFont" ref="646591182"/>
 					</object>
-					<object class="IBUIButton" id="123538564">
+					<object class="IBUIButton" id="1012198046">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{167, 5}, {102, 110}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="15055512"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -424,7 +426,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">questions</string>
-						<reference key="source" ref="123538564"/>
+						<reference key="source" ref="1012198046"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -456,7 +458,7 @@
 							<reference ref="322693303"/>
 							<reference ref="86865012"/>
 							<reference ref="934564687"/>
-							<reference ref="123538564"/>
+							<reference ref="1012198046"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -527,7 +529,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">63</int>
-						<reference key="object" ref="123538564"/>
+						<reference key="object" ref="1012198046"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</object>
