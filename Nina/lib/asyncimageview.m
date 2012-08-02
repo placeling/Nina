@@ -9,12 +9,13 @@
 
 #import "AsyncImageView.h"
 #import "ASIDownloadCache.h"
-#import "PictureViewController.h"
 #import "UIImageView+WebCache.h"
+#import "FGalleryViewController.h"
+
 
 @implementation AsyncImageView
 
-@synthesize photo=_photo;
+@synthesize photo=_photo, cell;
 
 
 - (id) initWithPhoto:(Photo *)photo{
@@ -66,28 +67,26 @@
 
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    
     UITouch *touch = [touches anyObject];
     
     if ([touch view] == self){
         DLog(@"TOUCH ON IMAGEVIEW"); 
         
-        PictureViewController *pictureViewController = [[PictureViewController alloc] init];
-        pictureViewController.photo = self.photo;
-        
+        FGalleryViewController *networkGallery = [[FGalleryViewController alloc] initWithPhotoSource:self.photo.perspective];
+
+        networkGallery.startingIndex = [self.photo.perspective.photos count] - [self.photo.perspective.photos indexOfObject:self.photo] -1;
         id nextResponder = [self nextResponder];
         while (nextResponder != nil){
             if ([nextResponder isKindOfClass:[UIViewController class]]) {
-                [[(UIViewController*)nextResponder navigationController] pushViewController:pictureViewController animated:TRUE];
+                [[(UIViewController*)nextResponder navigationController] pushViewController:networkGallery animated:TRUE];
             }
             nextResponder = [nextResponder nextResponder];
         }
         
-        [pictureViewController release];
-        
-    }
-    
+        [networkGallery release];
+    }    
 }
+
 
 #pragma mark ASIhttprequest
 

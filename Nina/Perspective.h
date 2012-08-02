@@ -10,8 +10,9 @@
 #import "User.h"
 #import "Place.h"
 #import <RestKit/RestKit.h>
+#import "FGalleryViewController.h"
 
-@interface Perspective : NSObject {
+@interface Perspective : NSObject<FGalleryViewControllerDelegate> {
     User *user;
     Place *place;
 

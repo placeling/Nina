@@ -153,6 +153,29 @@
     }
 }
 
+#pragma mark Fgallerydelegate
+
+
+- (int)numberOfPhotosForPhotoGallery:(FGalleryViewController*)gallery{
+    return [self.photos count];     
+}
+
+- (FGalleryPhotoSourceType)photoGallery:(FGalleryViewController*)gallery sourceTypeForPhotoAtIndex:(NSUInteger)index{
+    return FGalleryPhotoSourceTypeNetwork;//always network for these
+}
+
+
+- (NSString*)photoGallery:(FGalleryViewController*)gallery urlForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index{
+    if (size == FGalleryPhotoSizeFullsize){
+        return  [[self.photos objectAtIndex:([self.photos count] - index -1)] mainUrl];
+    } else {
+        return [[self.photos objectAtIndex:([self.photos count] - index -1)] thumbUrl];
+    }
+}
+
+
+
+
 - (void) dealloc {
     [user release];
     [url release];
