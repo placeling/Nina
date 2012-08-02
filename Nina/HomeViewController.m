@@ -91,6 +91,11 @@
     self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_script.png"]] autorelease];
     self.navigationItem.title = @"Placeling";
     
+    UITapGestureRecognizer *navSingleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(aboutUs)];
+    navSingleTap.numberOfTapsRequired = 1;
+    [[self.navigationController.navigationBar.subviews objectAtIndex:1] setUserInteractionEnabled:YES];
+    [[self.navigationController.navigationBar.subviews objectAtIndex:1] addGestureRecognizer:navSingleTap];
+    
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocation *location = manager.location;
     
@@ -128,15 +133,10 @@
         self.navigationItem.leftBarButtonItem = loginButton;
         [loginButton release];
     }
-    
-    [placemarkButton setImage:[UIImage imageNamed:@"PlaceMarkIt_Pressed.png"] forState:UIControlStateHighlighted];
-    
-    UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    [infoButton addTarget:self action:@selector(aboutUs) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *modalButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
-    
     self.pickScroll.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pickBackground.png"]];
-    
+    [placemarkButton setImage:[UIImage imageNamed:@"PlaceMarkIt_Pressed.png"] forState:UIControlStateHighlighted];
+
+    UIBarButtonItem *modalButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"08-chat.png"] style:UIBarButtonItemStylePlain target:self action:@selector(activityFeed) ];    
     self.navigationItem.rightBarButtonItem = modalButton;
     [modalButton release];
 }
@@ -195,6 +195,19 @@
 
 
 #pragma mark -IBActions
+
+-(IBAction) questions{
+    UIAlertView *baseAlert;
+    NSString *alertTitle = @"Questions";
+    NSString *alertMessage = @"You didn't seriously think I had this done yet, did you?";
+    baseAlert = [[UIAlertView alloc] 
+                 initWithTitle:alertTitle message:alertMessage 
+                 delegate:self cancelButtonTitle:nil 
+                 otherButtonTitles:@"OK", nil];
+    [baseAlert show];
+    [baseAlert release];
+    
+}
 
 -(IBAction) everythingList{
     NearbySuggestedPlaceController *nearbySuggestedPlaceController = [[NearbySuggestedPlaceController alloc] init];

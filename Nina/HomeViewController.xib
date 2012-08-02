@@ -127,30 +127,6 @@
 						<reference key="IBUIFontDescription" ref="330832871"/>
 						<reference key="IBUIFont" ref="646591182"/>
 					</object>
-					<object class="IBUIButton" id="47310288">
-						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{168, 15}, {107, 89}}</string>
-						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="15055512"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<int key="IBUIContentHorizontalAlignment">0</int>
-						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIHighlightedTitleColor" ref="594783251"/>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
-						</object>
-						<reference key="IBUINormalTitleShadowColor" ref="839236553"/>
-						<object class="NSCustomResource" key="IBUINormalImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">feed@2x.png</string>
-						</object>
-						<reference key="IBUIFontDescription" ref="330832871"/>
-						<reference key="IBUIFont" ref="646591182"/>
-					</object>
 					<object class="IBUILabel" id="15055512">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
@@ -163,7 +139,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">My Feed</string>
+						<string key="IBUIText">Questions</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
@@ -205,7 +181,7 @@
 						<string key="NSFrame">{{35, 91}, {86, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="47310288"/>
+						<reference key="NSNextKeyView" ref="15055512"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -299,6 +275,29 @@
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">PeopleIcon.png</string>
+						</object>
+						<reference key="IBUIFontDescription" ref="330832871"/>
+						<reference key="IBUIFont" ref="646591182"/>
+					</object>
+					<object class="IBUIButton" id="123538564">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{167, 5}, {102, 110}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<reference key="IBUIHighlightedTitleColor" ref="594783251"/>
+						<object class="NSColor" key="IBUINormalTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+						</object>
+						<reference key="IBUINormalTitleShadowColor" ref="839236553"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">QuestionLightbulb.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="330832871"/>
 						<reference key="IBUIFont" ref="646591182"/>
@@ -415,21 +414,21 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">activityFeed</string>
-						<reference key="source" ref="47310288"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">44</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">findFriends</string>
 						<reference key="source" ref="699192188"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
 					<int key="connectionID">57</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">questions</string>
+						<reference key="source" ref="123538564"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">65</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -450,7 +449,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="286212048"/>
 							<reference ref="931022643"/>
-							<reference ref="47310288"/>
 							<reference ref="15055512"/>
 							<reference ref="713298254"/>
 							<reference ref="295301298"/>
@@ -458,6 +456,7 @@
 							<reference ref="322693303"/>
 							<reference ref="86865012"/>
 							<reference ref="934564687"/>
+							<reference ref="123538564"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -485,11 +484,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">38</int>
 						<reference key="object" ref="713298254"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">39</int>
-						<reference key="object" ref="47310288"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -531,6 +525,11 @@
 						<reference key="object" ref="322693303"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">63</int>
+						<reference key="object" ref="123538564"/>
+						<reference key="parent" ref="191373211"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -544,7 +543,6 @@
 					<string>1.IBPluginDependency</string>
 					<string>36.IBPluginDependency</string>
 					<string>38.IBPluginDependency</string>
-					<string>39.IBPluginDependency</string>
 					<string>45.IBPluginDependency</string>
 					<string>46.IBPluginDependency</string>
 					<string>47.IBPluginDependency</string>
@@ -552,6 +550,7 @@
 					<string>52.IBPluginDependency</string>
 					<string>54.IBPluginDependency</string>
 					<string>56.IBPluginDependency</string>
+					<string>63.IBPluginDependency</string>
 					<string>9.IBPluginDependency</string>
 				</object>
 				<object class="NSArray" key="dict.values">
@@ -586,7 +585,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">62</int>
+			<int key="maxID">65</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -606,11 +605,13 @@
 							<string>logout</string>
 							<string>myProfile</string>
 							<string>nearbyPerspectives</string>
+							<string>questions</string>
 							<string>showAccountSheet</string>
 							<string>showLogin</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -635,6 +636,7 @@
 							<string>logout</string>
 							<string>myProfile</string>
 							<string>nearbyPerspectives</string>
+							<string>questions</string>
 							<string>showAccountSheet</string>
 							<string>showLogin</string>
 						</object>
@@ -670,6 +672,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">nearbyPerspectives</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">questions</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -774,7 +780,7 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>PeopleIcon.png</string>
 				<string>PlaceMarkIt.png</string>
-				<string>feed@2x.png</string>
+				<string>QuestionLightbulb.png</string>
 				<string>mymap@2x.png</string>
 				<string>profile.png</string>
 			</object>
@@ -782,7 +788,7 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{616, 332}</string>
 				<string>{241, 93}</string>
-				<string>{150, 150}</string>
+				<string>{32, 51}</string>
 				<string>{178, 178}</string>
 				<string>{89, 89}</string>
 			</object>

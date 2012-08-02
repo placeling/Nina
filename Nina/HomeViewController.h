@@ -41,6 +41,7 @@
 
 -(IBAction) logout;
 -(IBAction) myProfile;
+-(IBAction) questions;
 
 -(IBAction) findFriends;
 
