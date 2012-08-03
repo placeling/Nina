@@ -199,7 +199,7 @@
     [FlurryAnalytics logEvent:@"ACTIVITY_FEED_VIEW"];
     self.segmentControl.selectedSegmentIndex = 1;
     
-    self.navigationItem.title = @"Recent Activity";
+    self.navigationItem.title = @"Updates";
     
     if (refreshHeaderView == nil) {
 		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.activityTableView.bounds.size.height, 320.0f, self.activityTableView.bounds.size.height)];
