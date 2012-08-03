@@ -201,7 +201,6 @@
             CGRect rect = CGRectMake(cx, 3, 152, 152);
             AsyncImageView *imageView = [[AsyncImageView alloc] initWithFrame:rect];
             photo.perspective = cell.perspective;
-            imageView.cell = cell;
             [imageView setPhoto:photo]; 
             [imageView loadImageFromPhoto:photo]; 
             imageView.userInteractionEnabled = TRUE;

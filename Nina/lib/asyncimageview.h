@@ -22,11 +22,9 @@
 	ASIHTTPRequest *_request; 	
     NSMutableData* data; 
     Photo *_photo;
-    UITableViewCell<FGalleryViewControllerDelegate> *cell;
 }
 
 @property(nonatomic, retain) Photo *photo;
-@property(nonatomic, assign) UITableViewCell<FGalleryViewControllerDelegate> *cell;
 
 - (id) initWithPhoto:(Photo *)photo;
 

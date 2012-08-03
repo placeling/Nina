@@ -15,7 +15,7 @@
 
 @implementation AsyncImageView
 
-@synthesize photo=_photo, cell;
+@synthesize photo=_photo;
 
 
 - (id) initWithPhoto:(Photo *)photo{
