@@ -38,6 +38,8 @@
 
 #import "FlurryAnalytics.h"
 
+#import <Twitter/Twitter.h>
+
 
 #define kMinCellHeight 60
 
@@ -418,8 +420,12 @@ typedef enum {
 #pragma mark - Share Sheet
 
 -(void) showShareSheet{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
-    
+    UIActionSheet *actionSheet;
+    if ([TWTweetComposeViewController canSendTweet]){  
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Share on Twitter", nil];
+    } else {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+    }
     [actionSheet showInView:self.view];
     [actionSheet release];
     
@@ -466,7 +472,28 @@ typedef enum {
             
             [facebook dialog:@"feed" andParams:params andDelegate:self];
         }    
-    } 
+    } else if (buttonIndex == 2){
+        DLog(@"share on twitter");        
+        
+        //Create the tweet sheet
+        TWTweetComposeViewController *tweetSheet = [[TWTweetComposeViewController alloc] init];
+        
+        //Customize the tweet sheet here
+        //Add a tweet message
+        [tweetSheet setInitialText:[NSString stringWithFormat:@"Check out %@ on @placeling",self.place.name]];
+        
+        //Add a link
+        //Don't worry, Twitter will handle turning this into a t.co link
+        [tweetSheet addURL:[NSURL URLWithString:urlString]];
+        
+        //Set a blocking handler for the tweet sheet
+        tweetSheet.completionHandler = ^(TWTweetComposeViewControllerResult result){
+            [self dismissModalViewControllerAnimated:YES];
+        };
+        
+        //Show the tweet sheet!
+        [self presentModalViewController:tweetSheet animated:YES];
+    }
 }
 
 -(void) fbDidLogin{

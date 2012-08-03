@@ -25,6 +25,7 @@
 #import "FlurryAnalytics.h"
 #import "UserManager.h"
 #import "NearbyPlacesViewController.h"
+#import <Twitter/Twitter.h>
 
 @interface MemberProfileViewController() 
 -(void) blankLoad;
@@ -345,8 +346,12 @@
 #pragma mark - Share Sheet
 -(void) showShareSheet{
     UIActionSheet *actionSheet;
-    if ([self.username isEqualToString:[NinaHelper getUsername]]){        
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles: @"Edit My Profile", @"Share by Email", @"Share on Facebook", nil];
+    if ([TWTweetComposeViewController canSendTweet]){  
+        if ( self.user.blocked ){
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Unblock User" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Share on Twitter", nil];  
+        } else {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Block User" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Share on Twitter", nil];
+        }
         actionSheet.tag = 0;
     } else {
         if ( self.user.blocked ){
@@ -365,11 +370,8 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString *urlString = [NSString stringWithFormat:@"https://www.placeling.com/%@", self.user.username];
 
-    if (actionSheet.tag == 0 && buttonIndex == 0){
-        DLog(@"edit my profile");
-        
-        [self editUser];
-    } else if (actionSheet.tag == 1 && buttonIndex == 0){
+
+    if (actionSheet.tag == 1 && buttonIndex == 0){
         DLog(@"blocking/unblocking user");
         
         if ( [NinaHelper getUsername] ){
@@ -434,6 +436,27 @@
             
             [facebook dialog:@"feed" andParams:params andDelegate:self];
         }
+    } else if (buttonIndex == 3) {
+        DLog(@"share on twitter");        
+        
+        //Create the tweet sheet
+        TWTweetComposeViewController *tweetSheet = [[TWTweetComposeViewController alloc] init];
+        
+        //Customize the tweet sheet here
+        //Add a tweet message
+        [tweetSheet setInitialText:[NSString stringWithFormat:@"%@'s profile on @placeling",self.user.username]];
+
+        //Add a link
+        //Don't worry, Twitter will handle turning this into a t.co link
+        [tweetSheet addURL:[NSURL URLWithString:urlString]];
+        
+        //Set a blocking handler for the tweet sheet
+        tweetSheet.completionHandler = ^(TWTweetComposeViewControllerResult result){
+            [self dismissModalViewControllerAnimated:YES];
+        };
+        
+        //Show the tweet sheet!
+        [self presentModalViewController:tweetSheet animated:YES];
     } 
 }
 

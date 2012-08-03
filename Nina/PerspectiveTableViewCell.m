@@ -15,6 +15,7 @@
 #import "NinaAppDelegate.h"
 #import "GenericWebViewController.h"
 #import "FlurryAnalytics.h"
+#import <Twitter/Twitter.h>
 
 #define hardMaxCellHeight 5000
 
@@ -304,12 +305,19 @@
     } else {
         UIActionSheet *actionSheet;
         
-        if ( self.perspective.mine ){
-            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+        if ([TWTweetComposeViewController canSendTweet]){  
+            if ( self.perspective.mine ){
+                actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Share on Twitter", nil];
+            } else {
+                actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook",  @"Share on Twitter", nil];
+            }
         } else {
-            actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+            if ( self.perspective.mine ){
+                actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+            } else {
+                actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+            }
         }
-
         [actionSheet showInView:self.requestDelegate.view];
         [actionSheet release];
     }
@@ -362,6 +370,27 @@
             
             [facebook dialog:@"feed" andParams:params andDelegate:self.requestDelegate];
         }
+    } else if (buttonIndex == 3){
+        DLog(@"share on twitter");        
+        
+        //Create the tweet sheet
+        TWTweetComposeViewController *tweetSheet = [[TWTweetComposeViewController alloc] init];
+        
+        //Customize the tweet sheet here
+        //Add a tweet message
+        [tweetSheet setInitialText:[NSString stringWithFormat:@"Check out %@'s placemark on %@ on @placeling",self.perspective.user.username, self.perspective.place.name]];
+        
+        //Add a link
+        //Don't worry, Twitter will handle turning this into a t.co link
+        [tweetSheet addURL:[NSURL URLWithString:urlString]];
+        
+        //Set a blocking handler for the tweet sheet
+        tweetSheet.completionHandler = ^(TWTweetComposeViewControllerResult result){
+            [self.requestDelegate dismissModalViewControllerAnimated:YES];
+        };
+        
+        //Show the tweet sheet!
+        [self.requestDelegate presentModalViewController:tweetSheet animated:YES];
     }
 }
 
