@@ -247,7 +247,7 @@
     _reloading = NO;
 
     self.navigationItem.title = @"Nearby";
-    self.searchBar.placeholder = @"eg. \"Statue of Liberty\"";
+    self.searchBar.placeholder = @"e.g. \"Statue of Liberty\"";
 
     [[NSBundle mainBundle] loadNibNamed:@"NearbyPlacesFooterView" owner:self options:nil];
     
