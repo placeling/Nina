@@ -6,29 +6,29 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "ActivityTableViewCell.h"
+#import "NotificationTableViewCell.h"
 #import "NinaHelper.h"
 #import "UIImageView+WebCache.h"
 #import "NSDictionary+Utility.h"
 
-@interface ActivityTableViewCell (Private) 
-+(NSString*) getTitleText:(Activity*)dict;
+@interface NotificationTableViewCell (Private) 
++(NSString*) getTitleText:(Notification*)dict;
 
 @end
 
 
-@implementation ActivityTableViewCell
-@synthesize activity, userImage, detailText, titleLabel, timeAgo;
+@implementation NotificationTableViewCell
+@synthesize notification, userImage, detailText, titleLabel, timeAgo;
 
 #pragma mark - View lifecycle
 
-+(CGFloat) cellHeightForActivity:(Activity*)activity{
++(CGFloat) cellHeightForNotification:(Notification *)notification{
 
     CGSize textAreaSize;
     textAreaSize.height = 500;
     textAreaSize.width = 265;
     
-    CGSize textSize = [[self getTitleText:activity] sizeWithFont:[UIFont systemFontOfSize:14.0] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize textSize = [[self getTitleText:notification] sizeWithFont:[UIFont systemFontOfSize:14.0] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
     CGFloat heightCalc = 21 + 8;
     
@@ -41,19 +41,19 @@
     }
 }
 
-+(void) setupCell:(ActivityTableViewCell*)cell forActivity:(Activity*)activity{
++(void) setupCell:(NotificationTableViewCell*)cell forNotification:(Notification *)notification{
     CGFloat verticalCursor = cell.titleLabel.frame.origin.y;
     
-    cell.activity = activity;
+    cell.notification = notification;
     
     cell.detailText.text = @"";
-    cell.titleLabel.text = [self getTitleText:activity];
+    cell.titleLabel.text = [self getTitleText:notification];
     
     CGSize textAreaSize;
     textAreaSize.height = 500;
     textAreaSize.width = 265;
     
-    CGSize textSize = [[self getTitleText:activity] sizeWithFont:[UIFont systemFontOfSize:14.0] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize textSize = [[self getTitleText:notification] sizeWithFont:[UIFont systemFontOfSize:14.0] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
     CGRect detailFrame = CGRectMake(cell.titleLabel.frame.origin.x, cell.titleLabel.frame.origin.y, textSize.width, textSize.height);
     
@@ -70,10 +70,9 @@
     cell.userImage.layer.cornerRadius = 1.0f;
     cell.userImage.layer.masksToBounds = YES;
     
-    
-    if ( activity.thumb1 ){
+    if ( notification.thumb1 ){
         // Here we use the new provided setImageWithURL: method to load the web image
-        [cell.userImage setImageWithURL:[NSURL URLWithString:activity.thumb1]
+        [cell.userImage setImageWithURL:[NSURL URLWithString:notification.thumb1]
                        placeholderImage:[UIImage imageNamed:@"profile.png"]];
     }
         
@@ -81,15 +80,17 @@
     cell.timeAgo.backgroundColor = [UIColor clearColor];
     
     //NSDateFormatter *jsonFormatter = [[RKObjectMapping defaultDateFormatters] objectAtIndex:0];
-    NSString *timeGap = [NinaHelper dateDiff:activity.updatedAt];
+    NSString *timeGap = [NinaHelper dateDiff:notification.createdAt];
     
     cell.timeAgo.text = timeGap;
 }
 
-+(NSString*) getTitleText:(Activity*)activity{
++(NSString*) getTitleText:(Notification*)notification{
     
-    NSString *activityType = activity.activityType;
+    //NSString *activityType = notification.activityType;
     
+    return notification.subjectName;
+    /*
     if ([activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
         return [NSString stringWithFormat:@"%@ updated placemark on %@", activity.username1, activity.subjectTitle];
     }else if ([activityType isEqualToString:@"NEW_PERSPECTIVE"]){
@@ -103,12 +104,12 @@
     } else {
         DLog(@"ERROR: unknown activity story type");
         return @"";
-    }
+    }*/
 }
 
 
 -(void) dealloc{
-    [activity release];
+    [notification release];
     [userImage release];
     [detailText release];
     [titleLabel release];

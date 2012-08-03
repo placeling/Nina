@@ -24,6 +24,9 @@
 #import "FindFacebookFriendsController.h"
 #import "Crittercism.h"
 #import "FacebookRegetViewController.h"
+#import "Notification.h"
+#import "Activity.h"
+
 
 @implementation NinaAppDelegate
 
@@ -77,6 +80,9 @@
     [objectManager.mappingProvider setMapping:[Perspective getObjectMapping] forKeyPath:@"referring_perspectives"];
     
     [objectManager.mappingProvider setMapping:[Advertisement getObjectMapping] forKeyPath:@"ad"];
+    
+    [objectManager.mappingProvider setMapping:[Activity getObjectMapping] forKeyPath:@"home_feed"];
+    [objectManager.mappingProvider setMapping:[Notification getObjectMapping] forKeyPath:@"notifications"];
     
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     

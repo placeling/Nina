@@ -54,6 +54,10 @@
 		281B1CDD15CB2F480015ECBB /* QuestionLightbulb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1CDB15CB2F480015ECBB /* QuestionLightbulb@2x.png */; };
 		281B1CE015CB323D0015ECBB /* 08-chat.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1CDE15CB323D0015ECBB /* 08-chat.png */; };
 		281B1CE115CB323D0015ECBB /* 08-chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1CDF15CB323D0015ECBB /* 08-chat@2x.png */; };
+		281B1CE415CB4AC90015ECBB /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CE315CB4AC90015ECBB /* Notification.m */; };
+		281B1CE715CB52030015ECBB /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CE615CB52030015ECBB /* Activity.m */; };
+		281B1CEB15CB6B900015ECBB /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CE915CB6B8F0015ECBB /* NotificationTableViewCell.m */; };
+		281B1CEC15CB6B900015ECBB /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 281B1CEA15CB6B900015ECBB /* NotificationTableViewCell.xib */; };
 		2822BDAA1406E1200077868C /* PlaceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDA91406E11F0077868C /* PlaceHeaderView.xib */; };
 		2822BDAC1406EE720077868C /* PlaceFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDAB1406EE710077868C /* PlaceFooterView.xib */; };
 		2827EF7E15783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2827EF6415783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a */; };
@@ -500,6 +504,13 @@
 		281B1CDB15CB2F480015ECBB /* QuestionLightbulb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QuestionLightbulb@2x.png"; sourceTree = "<group>"; };
 		281B1CDE15CB323D0015ECBB /* 08-chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "08-chat.png"; sourceTree = "<group>"; };
 		281B1CDF15CB323D0015ECBB /* 08-chat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "08-chat@2x.png"; sourceTree = "<group>"; };
+		281B1CE215CB4AC90015ECBB /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		281B1CE315CB4AC90015ECBB /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
+		281B1CE515CB52030015ECBB /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
+		281B1CE615CB52030015ECBB /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
+		281B1CE815CB6B8F0015ECBB /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewCell.h; sourceTree = "<group>"; };
+		281B1CE915CB6B8F0015ECBB /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewCell.m; sourceTree = "<group>"; };
+		281B1CEA15CB6B900015ECBB /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		2822BDA91406E11F0077868C /* PlaceHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceHeaderView.xib; sourceTree = "<group>"; };
 		2822BDAB1406EE710077868C /* PlaceFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceFooterView.xib; sourceTree = "<group>"; };
 		2827EF6015783F7600EB529A /* CrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashReporter.h; sourceTree = "<group>"; };
@@ -1057,6 +1068,10 @@
 				2867ABC614CE4DF4003994DB /* Advertisement.m */,
 				2895EBF814E5B9D3009F43F6 /* Authentication.h */,
 				2895EBF914E5B9D4009F43F6 /* Authentication.m */,
+				281B1CE215CB4AC90015ECBB /* Notification.h */,
+				281B1CE315CB4AC90015ECBB /* Notification.m */,
+				281B1CE515CB52030015ECBB /* Activity.h */,
+				281B1CE615CB52030015ECBB /* Activity.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1596,6 +1611,9 @@
 		28A4377614327ED5005F192B /* ActivityFeed */ = {
 			isa = PBXGroup;
 			children = (
+				281B1CE815CB6B8F0015ECBB /* NotificationTableViewCell.h */,
+				281B1CE915CB6B8F0015ECBB /* NotificationTableViewCell.m */,
+				281B1CEA15CB6B900015ECBB /* NotificationTableViewCell.xib */,
 				28A4377814327EFA005F192B /* ActivityFeedViewController.h */,
 				28A4377914327EFA005F192B /* ActivityFeedViewController.m */,
 				28A4377A14327EFA005F192B /* ActivityFeedViewController.xib */,
@@ -2272,6 +2290,7 @@
 				281B1CDD15CB2F480015ECBB /* QuestionLightbulb@2x.png in Resources */,
 				281B1CE015CB323D0015ECBB /* 08-chat.png in Resources */,
 				281B1CE115CB323D0015ECBB /* 08-chat@2x.png in Resources */,
+				281B1CEC15CB6B900015ECBB /* NotificationTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2419,6 +2438,9 @@
 				281B1CCA15C9AC9E0015ECBB /* FGalleryPhoto.m in Sources */,
 				281B1CCB15C9AC9E0015ECBB /* FGalleryPhotoView.m in Sources */,
 				281B1CCC15C9AC9E0015ECBB /* FGalleryViewController.m in Sources */,
+				281B1CE415CB4AC90015ECBB /* Notification.m in Sources */,
+				281B1CE715CB52030015ECBB /* Activity.m in Sources */,
+				281B1CEB15CB6B900015ECBB /* NotificationTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

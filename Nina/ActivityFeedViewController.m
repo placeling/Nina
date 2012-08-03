@@ -14,16 +14,20 @@
 #import "LoginController.h"
 #import "FlurryAnalytics.h"
 #import "FriendFindController.h"
-
+#import "Activity.h"
+#import "Notification.h"
+#import "NotificationTableViewCell.h"
 
 @interface ActivityFeedViewController (Private)
 -(void)dataSourceDidFinishLoadingNewData;
 -(void)getActivities;
+-(void)getNotifications;
+-(NSMutableArray*) presentedValues;
 @end
 
 @implementation ActivityFeedViewController
 @synthesize reloading=_reloading;
-@synthesize activityTableView;
+@synthesize activityTableView, segmentControl, toolbar;
 
 - (void)didReceiveMemoryWarning{
     // Releases the view if it doesn't have a superview.
@@ -37,15 +41,41 @@
     NSString *currentUser = [NinaHelper getUsername];
     //cover not logged in situation
     if (currentUser && currentUser.length > 0){
-        NSString *urlString = [NSString stringWithFormat:@"%@/v1/feeds/home_timeline", [NinaHelper getHostname]];		
-        NSURL *url = [NSURL URLWithString:urlString];
-        
-        ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-        request.tag = 70;
-        [NinaHelper signRequest:request];
-        [request setDelegate:self];
-        [request startAsynchronous];   
         loadingMore = true;
+        
+        RKObjectManager* objectManager = [RKObjectManager sharedManager];
+        
+        NSString *targetURL = [NSString stringWithFormat:@"/v1/feeds/home_timeline"];
+        
+        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {  
+            loader.userData = [NSNumber numberWithInt:70]; //use as a tag
+        }];        
+    } 
+}
+
+-(NSMutableArray*) presentedValues{
+    if (self.segmentControl.selectedSegmentIndex == 0){
+        return recentNotifications;
+    } else {
+        return recentActivities;
+    }                                                
+}
+
+
+-(void)getNotifications{
+
+    NSString *currentUser = [NinaHelper getUsername];
+    //cover not logged in situation
+    if (currentUser && currentUser.length > 0){
+        loadingMore = true;
+        
+        RKObjectManager* objectManager = [RKObjectManager sharedManager];
+        
+        NSString *targetURL = [NSString stringWithFormat:@"/v1/users/notifications"];
+        
+        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+            loader.userData = [NSNumber numberWithInt:72]; //use as a tag
+        }];        
     } 
 }
 
@@ -54,14 +84,22 @@
     NSString *currentUser = [NinaHelper getUsername];
     
     if (currentUser && currentUser.length > 0) {
-        [self getActivities];   
+        if ( self.segmentControl.selectedSegmentIndex == 1 ){
+            [self getActivities];   
+        } else {
+            [self getNotifications];
+        }
     }    
 
 }
 
 #pragma mark - View lifecycle
 - (void)reloadTableViewDataSource{
-	[self getActivities];
+    if ( self.segmentControl.selectedSegmentIndex == 1 ){
+        [self getActivities];   
+    } else {
+        [self getNotifications];
+    }
 	//[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
 }
 
@@ -89,22 +127,32 @@
 		}
 	}
     
-
-    if(hasMore && y > h + reload_distance && loadingMore == false) {
-        loadingMore = true;
-        
-        // Call url to get profile details
-        NSString *urlText = [NSString stringWithFormat:@"%@/v1/feeds/home_timeline?start=%i", [NinaHelper getHostname], [recentActivities count]];
-        
-        NSURL *url = [NSURL URLWithString:urlText];
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-        [request setDelegate:self];
-        [request setTag:71];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        [NinaHelper signRequest:request];
-        [request startAsynchronous];
-        [self.activityTableView reloadData];
-        
+    if ( self.segmentControl.selectedSegmentIndex ==0 ){
+        if(hasMore && y > h + reload_distance && loadingMore == false) {
+            loadingMore = true;        
+            
+            RKObjectManager* objectManager = [RKObjectManager sharedManager];        
+            NSString *targetURL = [NSString stringWithFormat:@"/v1/feeds/home_timeline?start=%", [recentActivities count]];
+            
+            [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {  
+                loader.userData = [NSNumber numberWithInt:71]; //use as a tag
+            }];    
+            
+            [self.activityTableView reloadData];        
+        }
+    } else {
+        if(hasMoreNotifications && y > h + reload_distance && loadingMore == false) {
+            loadingMore = true;        
+            
+            RKObjectManager* objectManager = [RKObjectManager sharedManager];        
+            NSString *targetURL = [NSString stringWithFormat:@"/v1/users/notifications?start=%", [recentNotifications count]];
+            
+            [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {  
+                loader.userData = [NSNumber numberWithInt:73]; //use as a tag
+            }];    
+            
+            [self.activityTableView reloadData];        
+        }        
     }
 }
 
@@ -144,9 +192,12 @@
     
     loadingMore = true;
     hasMore = true;
+    hasMoreNotifications = true;
     recentActivities = [[NSMutableArray alloc] init];
+    recentNotifications = [[NSMutableArray alloc] init];
     
     [FlurryAnalytics logEvent:@"ACTIVITY_FEED_VIEW"];
+    self.segmentControl.selectedSegmentIndex = 1;
     
     self.navigationItem.title = @"Recent Activity";
     
@@ -164,6 +215,8 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [StyleHelper styleBackgroundView:self.activityTableView];
+    [StyleHelper styleBackgroundView:self.view];
+    [StyleHelper styleToolBar:self.toolbar];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -172,74 +225,61 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
-#pragma mark ASIhttprequest
-
-- (void)requestFailed:(ASIHTTPRequest *)request{
-	[NinaHelper handleBadRequest:request sender:self];
+-(IBAction)toggleType{
+    if ( self.segmentControl.selectedSegmentIndex == 0){
+        if ( [recentNotifications count] == 0){
+            [self getNotifications];
+        } 
+    } else {
+        if ( [recentActivities count] == 0){
+            [self getActivities];
+        }
+    
+    }
+    
+    [self.activityTableView reloadData];
 }
 
-- (void)requestFinished:(ASIHTTPRequest *)request{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	if (200 != [request responseStatusCode]){
-		[NinaHelper handleBadRequest:request sender:self];
-        return;
-	} 
 
-    switch (request.tag){
-        case 70:{
-            // Store incoming data into a string
-            NSString *jsonString = [request responseString];
-            DLog(@"Got JSON BACK: %@", jsonString);
-            // Create a dictionary from the JSON string
-            NSDictionary *jsonDict = [[jsonString JSONValue] retain];
-            NSArray *rawActivities = [jsonDict objectForKey:@"home_feed"];
-            
-            if ( [recentActivities count] > 0){
-                //case where we have to worry about overlap
-                NSString *mostRecentId = [[recentActivities objectAtIndex:0]objectForKey:@"id"];
-                for (NSDictionary *activity in rawActivities){
-                    if ( [mostRecentId isEqualToString:[activity objectForKey:@"id"]] ){
-                        break;
-                    } else {
-                        [recentActivities insertObject:activity atIndex:[rawActivities indexOfObject:activity]];
-                    }
-                }
-                        
-            } else {
-                [recentActivities addObjectsFromArray:rawActivities];
-            }
+#pragma mark - RKObjectLoaderDelegate methods
 
-            
-            [self.activityTableView  reloadData];
-            [jsonDict release];
-            loadingMore = false;
-            break;
-        }
-        case 71:
-        {
-            NSString *responseString = [request responseString];            
-            DLog(@"activites got returned: %@", responseString);
-            
-            NSDictionary *jsonDict =  [responseString JSONValue];            
-            
-            if ([jsonDict objectForKey:@"home_feed"]){
-                //has perspectives in call, seed with to make quicker
-                NSMutableArray *rawActivities = [jsonDict objectForKey:@"home_feed"];               
-                if ([rawActivities count] == 0){
-                    hasMore = false;
-                } else {
-                    [recentActivities addObjectsFromArray:rawActivities];
-                }
-            }
-            
-            loadingMore = false;
-            [self.activityTableView  reloadData];
-            break;
-        }
-	}
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+    loadingMore = false;
     
-    [self dataSourceDidFinishLoadingNewData];
+    if ( [(NSNumber*)objectLoader.userData intValue] == 70){
+        [recentActivities removeAllObjects];
+        [recentActivities addObjectsFromArray:objects];
+        [self.activityTableView reloadData];
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 71){
+        [recentActivities addObjectsFromArray:objects];
+        [self.activityTableView reloadData];
+        
+        if ( [objects count] == 0 ) {
+            hasMore = false;
+        }
+        
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 72){
+        [recentNotifications removeAllObjects];
+        [recentNotifications addObjectsFromArray:objects];
+        [self.activityTableView reloadData];
+        
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 73){
+        [recentNotifications addObjectsFromArray:objects];
+        [self.activityTableView reloadData];
+        
+        if ( [objects count] == 0 ) {
+            hasMoreNotifications = false;
+        }
+        
+    } 
+    
+}
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    //objectLoader.response.
+    loadingMore = false;
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
+    DLog(@"Encountered an error: %@", error);
 }
 
 
@@ -256,13 +296,13 @@
     
     if ( !currentUser || currentUser.length == 0) {
         return 1;
-    } else if ( currentUser && [recentActivities count] == 0) {
+    } else if ( currentUser && [[self presentedValues] count] == 0) {
         return 1;
     } else {
         if (loadingMore){
-            return [recentActivities count] +1;
+            return [[self presentedValues] count] +1;
         }else{ 
-            return [recentActivities count];
+            return [[self presentedValues] count];
         }
     }
 }
@@ -270,17 +310,21 @@
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{    
     NSString *currentUser = [NinaHelper getUsername];
     
-    if (currentUser == (id)[NSNull null] || currentUser.length == 0) {
+    if ( !currentUser ) {
         return 90;
         /*
     } else if ((user) && (user.followingCount == 0 || [recentActivities count] == 0)) {
         return 54; */
-    }else if (indexPath.row >= [recentActivities count]){
+    }else if (indexPath.row >= [[self presentedValues] count]){
         return 44;
     } else {
-        NSDictionary *activity;
-        activity = [recentActivities objectAtIndex:indexPath.row];
-        return [ActivityTableViewCell cellHeightForActivity:activity];
+        if ( self.segmentControl.selectedSegmentIndex == 1){
+            Activity *activity = [recentActivities objectAtIndex:indexPath.row];
+            return [ActivityTableViewCell cellHeightForActivity:activity];
+        } else {
+            Notification *notification = [recentNotifications objectAtIndex:indexPath.row];
+            return [NotificationTableViewCell cellHeightForNotification:notification];            
+        }
     }
 }
 
@@ -288,13 +332,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"ActivityCell";
+    static NSString *NotificationCellIdentifier = @"NotificationCell";
     static NSString *LoginCellIdentifier = @"LoginCell";
     static NSString *NoActivityCellIdentifier = @"NoActivityCell";
     
-    ActivityTableViewCell *cell;
-    if ([recentActivities count] > 0) {
+    UITableViewCell *cell;
+    
+    if ( self.segmentControl.selectedSegmentIndex == 1 && [recentActivities count] > 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    } else {
+    } else if ( self.segmentControl.selectedSegmentIndex == 0 && [recentNotifications count] > 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:NotificationCellIdentifier];
+    }  else {
         NSString *currentUser = [NinaHelper getUsername];
         
         if ( !currentUser || currentUser.length == 0) {
@@ -306,9 +354,11 @@
     
     NSString *currentUser = [NinaHelper getUsername];
     
-    if ( currentUser && [recentActivities count] == 0 ) {
+    if ( currentUser &&  self.segmentControl.selectedSegmentIndex == 1 && [recentActivities count] == 0 ) {
         tableView.allowsSelection = FALSE;
-    } else {
+    } else if ( currentUser &&  self.segmentControl.selectedSegmentIndex == 0 && [recentNotifications count] == 0 ) {
+        tableView.allowsSelection = FALSE;
+    }else {
         tableView.allowsSelection = TRUE;
     }
     
@@ -333,7 +383,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
-        } else if ([recentActivities count] <= indexPath.row && !loadingMore){
+        } else if ( ( ( self.segmentControl.selectedSegmentIndex == 1 && [recentActivities count] <= indexPath.row ) ||  ( self.segmentControl.selectedSegmentIndex == 0 && [recentNotifications count] <= indexPath.row ) ) && !loadingMore){
             cell = [[[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:LoginCellIdentifier] autorelease];
             
             UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 90)];
@@ -352,7 +402,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
-        } else if ([recentActivities count] <= indexPath.row && loadingMore){
+        } else if ( ((self.segmentControl.selectedSegmentIndex == 1 && [recentActivities count] <= indexPath.row) || (self.segmentControl.selectedSegmentIndex == 0 && [recentNotifications count] <= indexPath.row) )  && loadingMore){
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"SpinnerTableCell" owner:self options:nil];
             
             for(id item in objects){
@@ -361,14 +411,14 @@
                 }
             }    
             [cell setUserInteractionEnabled:NO];
-        } else {
+        } else if (self.segmentControl.selectedSegmentIndex == 1) {
             UITextView *existingText = (UITextView *)[cell viewWithTag:778];
             if (existingText) {
                 [existingText removeFromSuperview];
                 [existingText release];
             }
             
-            NSDictionary *activity = [recentActivities objectAtIndex:indexPath.row];
+            Activity *activity = [recentActivities objectAtIndex:indexPath.row];
             
             NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"ActivityTableViewCell" owner:self options:nil];
             
@@ -376,6 +426,26 @@
                 if ( [item isKindOfClass:[UITableViewCell class]]){
                     ActivityTableViewCell *pcell = (ActivityTableViewCell *)item;                  
                     [ActivityTableViewCell setupCell:pcell forActivity:activity];
+                    cell = pcell;
+                    break;
+                }
+            }   
+            [cell setUserInteractionEnabled:YES];
+        } else {
+            UITextView *existingText = (UITextView *)[cell viewWithTag:778];
+            if (existingText) {
+                [existingText removeFromSuperview];
+                [existingText release];
+            }
+            
+            Notification *notification = [recentNotifications objectAtIndex:indexPath.row];
+            
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"NotificationTableViewCell" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    NotificationTableViewCell *pcell = (NotificationTableViewCell *)item;                  
+                    [NotificationTableViewCell setupCell:pcell forNotification:notification];
                     cell = pcell;
                     break;
                 }
@@ -403,34 +473,32 @@
         [self.navigationController pushViewController:friendFindController animated:YES];
         [friendFindController release]; 
     } else {
-        NSDictionary *activity = [recentActivities objectAtIndex:indexPath.row];
-        
-        NSString *activityType = [activity objectForKey:@"activity_type"];
-        
+        Activity *activity = [recentActivities objectAtIndex:indexPath.row];
+
         UIViewController *viewController;
         
         
-        if ([activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
+        if ([activity.activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
             PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
-            placeController.perspective_id = [activity objectForKey:@"subject"];
-            placeController.referrer = [activity objectForKey:@"username1"];
+            placeController.perspective_id = activity.subjectId;
+            placeController.referrer = activity.username1;
             //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
             viewController = placeController;
-        }else if ([activityType isEqualToString:@"NEW_PERSPECTIVE"]){
+        }else if ([activity.activityType isEqualToString:@"NEW_PERSPECTIVE"]){
             PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
-            placeController.perspective_id = [activity objectForKey:@"subject"];
-            placeController.referrer = [activity objectForKey:@"username1"];
+            placeController.perspective_id = activity.subjectId;
+            placeController.referrer = activity.username1;
             //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
             viewController = placeController;
-        } else if ([activityType isEqualToString:@"STAR_PERSPECTIVE"]){
+        } else if ([activity.activityType isEqualToString:@"STAR_PERSPECTIVE"]){
             PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
-            placeController.perspective_id = [activity objectForKey:@"subject"];
-            placeController.referrer = [activity objectForKey:@"username1"];
+            placeController.perspective_id = activity.subjectId;
+            placeController.referrer = activity.username1;
             //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
             viewController = placeController;
-        }  else if ([activityType isEqualToString:@"FOLLOW"]){
+        }  else if ([activity.activityType isEqualToString:@"FOLLOW"]){
             MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];
-            memberView.username = [activity objectForKey:@"username2"];
+            memberView.username = activity.username2;
             viewController = memberView;
         } else {
             PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
@@ -447,9 +515,12 @@
 
 
 - (void)dealloc{
-    [NinaHelper clearActiveRequests:70];
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [recentActivities release];
     [activityTableView release];
+    [segmentControl release];
+    [recentNotifications release];
+    [toolbar release];
     [super dealloc];
     
 }

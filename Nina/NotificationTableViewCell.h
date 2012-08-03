@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "Activity.h"
+#import "Notification.h"
 
-@interface ActivityTableViewCell : UITableViewCell{
-    Activity *activity;
+@interface NotificationTableViewCell : UITableViewCell{
+    Notification *notification;
     IBOutlet UIImageView *userImage;
     IBOutlet UITextView *detailText;
     IBOutlet UILabel *titleLabel;
@@ -19,7 +19,7 @@
 }
 
 
-@property(nonatomic,retain) Activity *activity;
+@property(nonatomic,retain) Notification *notification;
 @property(nonatomic,retain) IBOutlet UIImageView *userImage;
 @property(nonatomic,retain) IBOutlet UITextView *detailText;
 @property(nonatomic,retain) IBOutlet UILabel *titleLabel;
@@ -27,8 +27,8 @@
 
 
 //for calculating heights
-+(CGFloat) cellHeightForActivity:(Activity*)activity;
-+(void) setupCell:(ActivityTableViewCell*)cell forActivity:(Activity*)activity;
++(CGFloat) cellHeightForNotification:(Notification*)notification;
++(void) setupCell:(NotificationTableViewCell*)cell forNotification:(Notification*)notification;
 
 
 @end
