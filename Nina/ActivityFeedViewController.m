@@ -132,7 +132,7 @@
             loadingMore = true;        
             
             RKObjectManager* objectManager = [RKObjectManager sharedManager];        
-            NSString *targetURL = [NSString stringWithFormat:@"/v1/feeds/home_timeline?start=%", [recentActivities count]];
+            NSString *targetURL = [NSString stringWithFormat:@"/v1/feeds/home_timeline?start=%i", [recentActivities count]];
             
             [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {  
                 loader.userData = [NSNumber numberWithInt:71]; //use as a tag
@@ -145,7 +145,7 @@
             loadingMore = true;        
             
             RKObjectManager* objectManager = [RKObjectManager sharedManager];        
-            NSString *targetURL = [NSString stringWithFormat:@"/v1/users/notifications?start=%", [recentNotifications count]];
+            NSString *targetURL = [NSString stringWithFormat:@"/v1/users/notifications?start=%i", [recentNotifications count]];
             
             [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {  
                 loader.userData = [NSNumber numberWithInt:73]; //use as a tag
