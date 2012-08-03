@@ -127,7 +127,7 @@
 		}
 	}
     
-    if ( self.segmentControl.selectedSegmentIndex ==0 ){
+    if ( self.segmentControl.selectedSegmentIndex ==1 ){
         if(hasMore && y > h + reload_distance && loadingMore == false) {
             loadingMore = true;        
             
@@ -197,7 +197,7 @@
     recentNotifications = [[NSMutableArray alloc] init];
     
     [FlurryAnalytics logEvent:@"ACTIVITY_FEED_VIEW"];
-    self.segmentControl.selectedSegmentIndex = 1;
+    [self.segmentControl setSelectedSegmentIndex:0];
     
     self.navigationItem.title = @"Updates";
     
@@ -468,42 +468,61 @@
         [self.navigationController presentModalViewController:navBar animated:YES];
         [navBar release];
         [loginController release];
-    } else if ([recentActivities count] <= indexPath.row && !loadingMore){
+    } else if (((self.segmentControl.selectedSegmentIndex == 1 && [recentActivities count] <= indexPath.row) || (self.segmentControl.selectedSegmentIndex == 0 && [recentNotifications count] <= indexPath.row) ) && !loadingMore){
         FriendFindController *friendFindController = [[FriendFindController alloc] init];
         [self.navigationController pushViewController:friendFindController animated:YES];
         [friendFindController release]; 
     } else {
-        Activity *activity = [recentActivities objectAtIndex:indexPath.row];
-
         UIViewController *viewController;
         
-        
-        if ([activity.activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
-            PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
-            placeController.perspective_id = activity.subjectId;
-            placeController.referrer = activity.username1;
-            //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
-            viewController = placeController;
-        }else if ([activity.activityType isEqualToString:@"NEW_PERSPECTIVE"]){
-            PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
-            placeController.perspective_id = activity.subjectId;
-            placeController.referrer = activity.username1;
-            //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
-            viewController = placeController;
-        } else if ([activity.activityType isEqualToString:@"STAR_PERSPECTIVE"]){
-            PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
-            placeController.perspective_id = activity.subjectId;
-            placeController.referrer = activity.username1;
-            //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
-            viewController = placeController;
-        }  else if ([activity.activityType isEqualToString:@"FOLLOW"]){
-            MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];
-            memberView.username = activity.username2;
-            viewController = memberView;
+        if (self.segmentControl.selectedSegmentIndex == 1){
+            Activity *activity = [recentActivities objectAtIndex:indexPath.row];        
+            
+            if ([activity.activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
+                PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+                placeController.perspective_id = activity.subjectId;
+                placeController.referrer = activity.username1;
+                //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
+                viewController = placeController;
+            }else if ([activity.activityType isEqualToString:@"NEW_PERSPECTIVE"]){
+                PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+                placeController.perspective_id = activity.subjectId;
+                placeController.referrer = activity.username1;
+                //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
+                viewController = placeController;
+            } else if ([activity.activityType isEqualToString:@"STAR_PERSPECTIVE"]){
+                PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+                placeController.perspective_id = activity.subjectId;
+                placeController.referrer = activity.username1;
+                //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
+                viewController = placeController;
+            }  else if ([activity.activityType isEqualToString:@"FOLLOW"]){
+                MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];
+                memberView.username = activity.username2;
+                viewController = memberView;
+            } else {
+                PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+                viewController = placeController;
+                DLog(@"ERROR: unknown activity story type");
+            }
         } else {
-            PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
-            viewController = placeController;
-            DLog(@"ERROR: unknown activity story type");
+            Notification *notification = [recentNotifications objectAtIndex:indexPath.row];  
+            
+            if ([notification.notificationType isEqualToString:@"STAR_PERSPECTIVE"]){
+                PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+                placeController.perspective_id = notification.subjectId;
+                placeController.referrer = notification.actor.username;
+                //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
+                viewController = placeController;
+            }  else if ([notification.notificationType isEqualToString:@"FOLLOW"]){
+                MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];
+                memberView.user = notification.actor;
+                viewController = memberView;
+            } else if ( [notification.notificationType isEqualToString:@"FACEBOOK_FRIEND"] ){
+                MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];
+                memberView.user = notification.actor;
+                viewController = memberView;  
+            }
         }
         
         [self.navigationController pushViewController:viewController animated:TRUE];

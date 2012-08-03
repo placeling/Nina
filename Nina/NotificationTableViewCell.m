@@ -89,22 +89,16 @@
     
     //NSString *activityType = notification.activityType;
     
-    return notification.subjectName;
-    /*
-    if ([activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
-        return [NSString stringWithFormat:@"%@ updated placemark on %@", activity.username1, activity.subjectTitle];
-    }else if ([activityType isEqualToString:@"NEW_PERSPECTIVE"]){
-        return [NSString stringWithFormat:@"%@ placemarked %@", activity.username1, activity.subjectTitle];    
-        
-    } else if ([activityType isEqualToString:@"STAR_PERSPECTIVE"]){
-        return [NSString stringWithFormat:@"%@ favorited %@'s placemark for %@", activity.username1, activity.username2, activity.subjectTitle];    
-        
-    }  else if ([activityType isEqualToString:@"FOLLOW"]){
-        return [NSString stringWithFormat:@"%@ started following %@", activity.username1, activity.username2];    
+    if ([notification.notificationType isEqualToString:@"STAR_PERSPECTIVE"]){
+        return [NSString stringWithFormat:@"%@ favorited your placemark for %@", notification.actor.username, notification.subjectName];    
+    }  else if ([notification.notificationType isEqualToString:@"FOLLOW"]){
+        return [NSString stringWithFormat:@"%@ started following you", notification.actor.username]; 
+    } else if ( [notification.notificationType isEqualToString:@"FACEBOOK_FRIEND"] ){
+        return [NSString stringWithFormat:@"Your Facebook friend %@ joined Placeling as %@", notification.subjectName, notification.actor.username]; 
     } else {
-        DLog(@"ERROR: unknown activity story type");
+        DLog(@"ERROR: unknown notification story type");
         return @"";
-    }*/
+    }
 }
 
 
