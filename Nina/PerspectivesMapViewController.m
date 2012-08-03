@@ -24,7 +24,7 @@
 
 @implementation PerspectivesMapViewController
 
-@synthesize mapView=_mapView, toolbar, spinnerView;
+@synthesize mapView=_mapView, toolbar, spinnerView, showMineButton;
 @synthesize username=_username, user;
 @synthesize nearbyMarks, userTime;
 @synthesize locationManager;
@@ -38,6 +38,20 @@
         }
 	}
 	return self;    
+}
+
+-(IBAction)showMine{
+    PerspectivesMapViewController *userPerspectives = [[PerspectivesMapViewController alloc] init];
+    
+    User *currentUser = [UserManager sharedMeUser];
+        
+    userPerspectives.username = currentUser.username;
+    userPerspectives.user = currentUser;
+    
+    [self.navigationController pushViewController:userPerspectives animated:YES];
+    
+    [userPerspectives.mapView setRegion:self.mapView.region];
+    [userPerspectives release];
 }
 
 -(void)updateMapView{    
@@ -91,6 +105,8 @@
     [locationManager release];
     [nearbyMarks release];
     [toolbar release];
+    [showMineButton release];
+    
     [super dealloc];
 }
 
@@ -300,6 +316,15 @@
     self.spinnerView.hidden = true;
     [self recenter];
     [self loadContent];
+    
+    User *currentUser = [UserManager sharedMeUser];
+    
+    if ( currentUser && currentUser.userId != self.user.userId ){
+        self.showMineButton.enabled = true;
+    } else {
+        self.showMineButton.enabled = false;
+    }
+    
     
 }
 

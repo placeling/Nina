@@ -25,6 +25,8 @@
     UIActivityIndicatorView *spinnerView;  
     BOOL mapLoaded;
     NSTimeInterval userTime;
+    
+    UIBarButtonItem *showMineButton;
 }
 
 @property(nonatomic, retain) IBOutlet MKMapView *mapView;
@@ -35,9 +37,11 @@
 @property(nonatomic, retain) CLLocationManager *locationManager;
 @property(nonatomic, retain) User *user;
 @property(nonatomic, assign) NSTimeInterval userTime;
+@property(nonatomic, retain) IBOutlet UIBarButtonItem *showMineButton;
 
 -(IBAction)recenter;
 -(IBAction)refreshMap;
+-(IBAction)showMine;
 
 - (id) initForUserName:(NSString *)username;
 
