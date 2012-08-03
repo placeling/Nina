@@ -10,18 +10,19 @@
 
 @implementation Notification
 
-@synthesize actor, notificationType, subjectName, createdAt, thumb1;
+@synthesize actor, notificationType, subjectName, createdAt, thumb1, subjectId;
 
 
 +(RKObjectMapping*)getObjectMapping{
     RKObjectMapping* userMapping = [RKObjectMapping mappingForClass:[Notification class]];
     [userMapping mapKeyPathsToAttributes:
-     @"notification_type", @"notificationType",
+     @"type", @"notificationType",
      @"created_at", @"createdAt",
      @"subject_name", @"subjectName",
+     @"subject", @"subjectId",
      nil];
     
-    [userMapping mapKeyPath:@"actor" toRelationship:@"actor" withMapping:[User getObjectMapping]];
+    [userMapping mapKeyPath:@"actor1" toRelationship:@"actor" withMapping:[User getObjectMapping]];
     
     return userMapping;
 }
@@ -34,6 +35,7 @@
     [subjectName release];
     [createdAt release];
     [thumb1 release];
+    [subjectId release];
     
     [super dealloc];
 }

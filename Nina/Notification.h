@@ -14,6 +14,7 @@
     User *actor;
     NSString *notificationType;
     NSString *subjectName;
+    NSString *subjectId;
     
     NSDate *createdAt;
     NSString *thumb1;
@@ -25,6 +26,7 @@
 @property (nonatomic, retain) NSString *notificationType;
 @property (nonatomic, retain) NSString *subjectName;
 @property (nonatomic, retain) NSString *thumb1;
+@property (nonatomic, retain) NSString *subjectId;
 
 @property (nonatomic, retain) NSDate *createdAt;
 

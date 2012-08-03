@@ -70,12 +70,10 @@
     cell.userImage.layer.cornerRadius = 1.0f;
     cell.userImage.layer.masksToBounds = YES;
     
-    if ( notification.thumb1 ){
-        // Here we use the new provided setImageWithURL: method to load the web image
-        [cell.userImage setImageWithURL:[NSURL URLWithString:notification.thumb1]
+    // Here we use the new provided setImageWithURL: method to load the web image
+    [cell.userImage setImageWithURL:[NSURL URLWithString:notification.actor.profilePic.thumbUrl]
                        placeholderImage:[UIImage imageNamed:@"profile.png"]];
-    }
-        
+
     cell.timeAgo.frame = CGRectMake(cell.timeAgo.frame.origin.x, verticalCursor, cell.timeAgo.frame.size.width, cell.timeAgo.frame.size.height);    
     cell.timeAgo.backgroundColor = [UIColor clearColor];
     
