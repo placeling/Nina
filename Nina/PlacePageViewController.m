@@ -26,7 +26,6 @@
 #import "GenericWebViewController.h"
 #import "MyPerspectiveCellViewController.h"
 
-#import "SinglePlaceMapView.h"
 #import "ASIDownloadCache.h"
 
 #import "NearbySuggestedPlaceController.h"
@@ -744,16 +743,6 @@ typedef enum {
 
 
 #pragma mark - IBActions
-
--(IBAction)showSingleAnnotatedMap{
-    DLog(@"Spawning map for place: %@", self.place.name);
-    [FlurryAnalytics logEvent:@"GOOGLE_SINGLE_PLACE_MAP"];
-    SinglePlaceMapView *singlePlaceMapView = [[SinglePlaceMapView alloc] initWithPlace:self.place];
-    
-    [self.navigationController pushViewController:singlePlaceMapView animated:TRUE];
-    [singlePlaceMapView release];
-    
-}
 
 
 - (void) touchUpInsideSegmentIndex:(NSUInteger)segmentIndex{

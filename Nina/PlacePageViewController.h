@@ -109,8 +109,6 @@ typedef enum {
 
 -(IBAction)editPerspective;
 
--(IBAction)showSingleAnnotatedMap;
-
 -(IBAction)tagSearch:(id)sender;
 
 - (id) initWithPlace:(Place *)place;
