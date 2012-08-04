@@ -258,7 +258,7 @@
         }
     }
     
-    cell.createdAtLabel.text = [NSString stringWithFormat:@"Updated: %@", [NinaHelper dateDiff:perspective.lastModified]  ];
+    cell.createdAtLabel.text = [NinaHelper dateDiff:perspective.lastModified];
     
     [cell.createdAtLabel setFrame:CGRectMake(cell.createdAtLabel.frame.origin.x, verticalCursor, cell.createdAtLabel.frame.size.width, cell.createdAtLabel.frame.size.height)];
     [cell.shareSheetButton setFrame:CGRectMake(cell.shareSheetButton.frame.origin.x, verticalCursor, cell.shareSheetButton.frame.size.width, cell.shareSheetButton.frame.size.height)];
