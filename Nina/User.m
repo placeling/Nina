@@ -16,7 +16,7 @@
 @synthesize userId, city, userDescription;
 @synthesize username, fullname, profilePic, placeCount;
 @synthesize followingCount, followerCount, perspectives;
-@synthesize following, follows_you;
+@synthesize following, follows_you, lat, lng;
 @synthesize email, url; 
 @synthesize auths, location, blocked, timestamp;
 
@@ -106,6 +106,12 @@
     }    
 }
 
+-(CLLocationCoordinate2D)homeLocation{
+    CLLocationCoordinate2D loc;
+    loc.latitude = [lat floatValue];
+    loc.longitude = [lng floatValue];
+    return loc;
+}
 
 +(RKObjectMapping*)getObjectMapping{
     RKObjectMapping* userMapping = [RKObjectMapping mappingForClass:[User class]];
@@ -120,6 +126,8 @@
      @"description", @"userDescription",
      @"url", @"url",
      @"email", @"email",
+     @"lat", @"lat",
+     @"lng", @"lng",
      @"location", @"location",
      @"following", @"following",
      @"follows_you", @"follows_you",
@@ -171,6 +179,8 @@
     [fullname release];
     [followerCount release]; 
     [perspectives release];
+    [lat release];
+    [lng release];
     
     [super dealloc];
 }

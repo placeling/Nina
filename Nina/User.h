@@ -36,6 +36,9 @@
     NSNumber *followerCount;
     NSNumber *following;
     NSNumber *follows_you;
+    
+    NSNumber *lat;
+    NSNumber *lng;
      
     NSTimeInterval timestamp;
     BOOL blocked;
@@ -61,6 +64,10 @@
 @property (nonatomic, retain) NSNumber *following;
 @property (nonatomic, retain) NSNumber *follows_you;
 @property (nonatomic, retain) NSString *fullname;
+
+@property (nonatomic, retain) NSNumber *lat;
+@property (nonatomic, retain) NSNumber *lng;
+
 @property (nonatomic, assign) BOOL blocked;
 @property (nonatomic, assign) NSTimeInterval timestamp;
 
@@ -68,5 +75,7 @@
 
 -(NSDictionary*) facebook;
 -(NSString*) userThumbUrl;
+
+-(CLLocationCoordinate2D) homeLocation;
 
 @end

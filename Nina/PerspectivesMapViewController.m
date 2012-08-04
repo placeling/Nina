@@ -19,6 +19,7 @@
 @interface PerspectivesMapViewController (Private)
 -(void)mapUserPlaces;
 -(void)updateMapView;
+-(IBAction)recenterHome;
 -(Perspective*)closestPoint:(CLLocation*)referenceLocation fromArray:(NSArray*)array;
 @end
 
@@ -65,6 +66,17 @@
         [self.mapView addAnnotation:placemark];
         [placemark release];
     }
+}
+
+-(IBAction)recenterHome{
+    MKCoordinateRegion region;
+    
+    region.center = self.user.homeLocation; 
+    
+    MKCoordinateSpan span = self.mapView.region.span;
+    region.span = span;
+    
+    [self.mapView setRegion:region animated:YES];
 }
 
 -(void)mapUserPlaces {
@@ -325,6 +337,10 @@
         self.showMineButton.enabled = false;
     }
     
+    
+    UIBarButtonItem *modalButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"53-house.png"] style:UIBarButtonItemStylePlain target:self action:@selector(recenterHome) ];    
+    self.navigationItem.rightBarButtonItem = modalButton;
+    [modalButton release];
     
 }
 

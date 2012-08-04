@@ -82,12 +82,12 @@
 							</object>
 							<object class="IBUIBarButtonItem" id="264766466">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<float key="IBUIWidth">57</float>
+								<float key="IBUIWidth">93</float>
 								<reference key="IBUIToolbar" ref="225250902"/>
 								<int key="IBUISystemItemIdentifier">6</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="1052409826">
-								<string key="IBUITitle">Show My Map</string>
+								<string key="IBUITitle">My Map</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="225250902"/>
