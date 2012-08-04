@@ -13,6 +13,7 @@
 #import "NinaHelper.h"
 #import "UIImageView+WebCache.h"
 #import "TDBadgedCell.h"
+#import "MemberProfileViewController.h"
 
 @interface PerspectiveUserTableViewController()
 -(void) close;
@@ -200,6 +201,8 @@
         if (pCell == nil) {
             pCell = [[[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         }
+        
+        [pCell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
         self.tableView.userInteractionEnabled = true;
         User* user = [users objectAtIndex:indexPath.row];
         
@@ -209,7 +212,6 @@
         pCell.detailTextLabel.text = user.userDescription;
         pCell.detailTextLabel.font = [UIFont systemFontOfSize:13];
         
-        pCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         NSNumber *tally = [self.perspectiveTally objectForKey:user.userId];
         pCell.badgeString = [tally stringValue];
 
@@ -226,6 +228,18 @@
     }
     
     return cell;
+}
+
+-(void) tableView:(UITableView*)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath*)indexPath{
+    
+    User *user = [self.users objectAtIndex:indexPath.row];
+    MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
+    
+    memberProfileViewController.user = user;
+    
+    [self.navigationController pushViewController:memberProfileViewController animated:true];
+    [memberProfileViewController release];
+    
 }
 
 /*
