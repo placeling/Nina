@@ -29,6 +29,7 @@
 #import "ASIDownloadCache.h"
 
 #import "NearbySuggestedPlaceController.h"
+#import "NearbySuggestedMapController.h"
 #import "CustomSegmentedControl.h"
 #import "FollowViewController.h"
 
@@ -63,6 +64,7 @@ typedef enum {
 -(NSString*) getRestUrl;
 -(int) paddingRowHeight:(NSIndexPath *)indexPath;
 -(NSMutableArray*)perspectives;
+-(IBAction)nearbySearch;
 @end
 
 @implementation PlacePageViewController
@@ -650,6 +652,19 @@ typedef enum {
     [self.mapButtonView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"profilePattern.png@2x"]];
 }
 
+-(IBAction)nearbySearch{    
+    NearbySuggestedMapController *nearbySuggestedMapController = [[NearbySuggestedMapController alloc] init];    
+
+    nearbySuggestedMapController.origin = self.place.location.coordinate;
+    nearbySuggestedMapController.initialIndex = 2;
+    nearbySuggestedMapController.navTitle = [NSString stringWithFormat:@"Near %@",self.place.name];
+    nearbySuggestedMapController.title = [NSString stringWithFormat:@"Near %@",self.place.name];
+    
+    [self.navigationController pushViewController:nearbySuggestedMapController animated:TRUE];
+    [nearbySuggestedMapController release];
+    
+}
+
 -(IBAction)tagSearch:(id)sender{
     
     UIButton *button = (UIButton*)sender;
@@ -657,6 +672,7 @@ typedef enum {
     
     NearbySuggestedPlaceController *suggestedPlaceController = [[NearbySuggestedPlaceController alloc] init];
     
+    suggestedPlaceController.origin = self.place.location.coordinate;
     suggestedPlaceController.searchTerm = searchString;
     
     [self.navigationController pushViewController:suggestedPlaceController animated:TRUE];
@@ -693,6 +709,23 @@ typedef enum {
         [view removeFromSuperview];
     }
      
+    UIButton *nearbyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [nearbyButton setTitle:@"Nearby" forState:UIControlStateNormal];
+    
+    CGSize textsize = [nearbyButton.titleLabel.text sizeWithFont:nearbyButton.titleLabel.font forWidth:100.0 lineBreakMode: nearbyButton.titleLabel.lineBreakMode];
+    CGRect rect = CGRectMake(cx, 13, textsize.width+4, 26);       
+    
+    nearbyButton.frame = rect;
+    [nearbyButton setTitle:@"Nearby" forState:UIControlStateNormal];
+    [StyleHelper styleTagButton:nearbyButton];
+    nearbyButton.layer.backgroundColor = [UIColor purpleColor].CGColor;
+    
+    [nearbyButton addTarget:self action:@selector(nearbySearch) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.tagScrollView addSubview:nearbyButton];        
+    cx += nearbyButton.frame.size.width+7;
+    
+    
     for ( NSString* tag in self.place.tags ){        
         UIButton *tagButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
