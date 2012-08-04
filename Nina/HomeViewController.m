@@ -23,6 +23,8 @@
 #import "QuickPickButton.h"
 #import "FriendFindController.h"
 #import "NearbySuggestedMapController.h"
+#import "EditProfileViewController.h"
+#import "UserManager.h"
 
 
 @interface HomeViewController (Private) 
@@ -179,7 +181,7 @@
 #pragma mark -ActionSheet 
 
 -(IBAction)showAccountSheet{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles:@"Edit My Profile",nil];
     [actionSheet showInView:self.view];
     [actionSheet release];
 }
@@ -187,7 +189,20 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0){
         [self logout];
-    } else {
+    } else if (buttonIndex == 1){
+        
+        EditProfileViewController *editProfileViewController = [[EditProfileViewController alloc] init];
+        editProfileViewController.user = [UserManager sharedMeUser];
+        
+        UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editProfileViewController];
+        [StyleHelper styleNavigationBar:navBar.navigationBar];
+        [self.navigationController presentModalViewController:navBar animated:YES];
+        [navBar release];
+        
+        [editProfileViewController release]; 
+        
+        
+    }else {
         DLog(@"WARNING - Invalid actionsheet button pressed: %i", buttonIndex);
     }
     

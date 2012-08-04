@@ -24,7 +24,7 @@
 
 
 @implementation EditProfileViewController
-@synthesize user, lat, lng, delegate, currentLocation, tableView = _tableView;
+@synthesize user, lat, lng, currentLocation, tableView = _tableView;
 
 
 
@@ -216,7 +216,6 @@
         [self.user updateFromJsonDict:[userDict objectForKey:@"user"]];
 
         [UserManager setUser:self.user];
-        [self.delegate loadData];
         [self.navigationController dismissModalViewControllerAnimated:TRUE];
 	}
 }

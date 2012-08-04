@@ -18,7 +18,6 @@
     NSNumber *lat;
     NSNumber *lng;
     User *user;
-    MemberProfileViewController *delegate;
     
     MBProgressHUD *HUD;
     UIImage *uploadingImage;
@@ -32,7 +31,6 @@
 
 @property(nonatomic, retain) NSNumber *lat;
 @property(nonatomic, retain) NSNumber *lng;
-@property(nonatomic, assign) MemberProfileViewController *delegate;
 @property(nonatomic, retain) CLLocation *currentLocation;
 
 @property(nonatomic, retain) IBOutlet UITableView *tableView;

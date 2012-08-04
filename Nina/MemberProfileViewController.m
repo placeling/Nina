@@ -18,7 +18,6 @@
 #import "PerspectivesMapViewController.h"
 #import "ASIDownloadCache.h"
 #import "NinaHelper.h"
-#import "EditProfileViewController.h"
 #import "LoginController.h"
 #import "UIImageView+WebCache.h"
 #import "NinaAppDelegate.h"
@@ -30,7 +29,6 @@
 @interface MemberProfileViewController() 
 -(void) blankLoad;
 -(void) toggleFollow;
--(IBAction)editUser;
 -(void) deletePerspective:(Perspective*)perspective;
 -(void) showProfileImage;
 @end
@@ -63,21 +61,6 @@
     [tapRecognizer release];
 
 	[self blankLoad];
-}
-
--(IBAction)editUser{
-    
-    EditProfileViewController *editProfileViewController = [[EditProfileViewController alloc] init];
-    editProfileViewController.user = self.user;
-    editProfileViewController.delegate = self;
-    
-    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editProfileViewController];
-    [StyleHelper styleNavigationBar:navBar.navigationBar];
-    [self.navigationController presentModalViewController:navBar animated:YES];
-    [navBar release];
-    
-    [editProfileViewController release]; 
-    
 }
 
 -(void) viewWillAppear:(BOOL)animated{
