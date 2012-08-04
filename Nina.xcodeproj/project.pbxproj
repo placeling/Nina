@@ -58,6 +58,8 @@
 		281B1CE715CB52030015ECBB /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CE615CB52030015ECBB /* Activity.m */; };
 		281B1CEB15CB6B900015ECBB /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CE915CB6B8F0015ECBB /* NotificationTableViewCell.m */; };
 		281B1CEC15CB6B900015ECBB /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 281B1CEA15CB6B900015ECBB /* NotificationTableViewCell.xib */; };
+		281B1CF015CC85B50015ECBB /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CEF15CC85B50015ECBB /* Question.m */; };
+		281B1CF315CC85C30015ECBB /* Answer.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CF215CC85C30015ECBB /* Answer.m */; };
 		2822BDAA1406E1200077868C /* PlaceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDA91406E11F0077868C /* PlaceHeaderView.xib */; };
 		2822BDAC1406EE720077868C /* PlaceFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDAB1406EE710077868C /* PlaceFooterView.xib */; };
 		2827EF7E15783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2827EF6415783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a */; };
@@ -511,6 +513,10 @@
 		281B1CE815CB6B8F0015ECBB /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewCell.h; sourceTree = "<group>"; };
 		281B1CE915CB6B8F0015ECBB /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewCell.m; sourceTree = "<group>"; };
 		281B1CEA15CB6B900015ECBB /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
+		281B1CEE15CC85B40015ECBB /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
+		281B1CEF15CC85B50015ECBB /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
+		281B1CF115CC85C30015ECBB /* Answer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Answer.h; sourceTree = "<group>"; };
+		281B1CF215CC85C30015ECBB /* Answer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Answer.m; sourceTree = "<group>"; };
 		2822BDA91406E11F0077868C /* PlaceHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceHeaderView.xib; sourceTree = "<group>"; };
 		2822BDAB1406EE710077868C /* PlaceFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceFooterView.xib; sourceTree = "<group>"; };
 		2827EF6015783F7600EB529A /* CrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashReporter.h; sourceTree = "<group>"; };
@@ -1148,6 +1154,13 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		281B1CED15CC74550015ECBB /* Questions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Questions;
+			sourceTree = "<group>";
+		};
 		2827EF5F15783F7600EB529A /* CrittercismSDK-crashonly */ = {
 			isa = PBXGroup;
 			children = (
@@ -1390,6 +1403,7 @@
 		2895004413D64559009E1BD7 /* Nina */ = {
 			isa = PBXGroup;
 			children = (
+				281B1CED15CC74550015ECBB /* Questions */,
 				2887EFA015598C5B0086F433 /* NewPlace */,
 				284D1CD9147C29A9001F80D1 /* FriendFind */,
 				280EA87A14114BE90045B296 /* NearbyPlaces */,
@@ -1408,6 +1422,10 @@
 				6CB5B143144CC5D700A278AC /* AboutUsController.xib */,
 				287483AE13D698EF005C11EF /* localizations */,
 				2895004D13D64559009E1BD7 /* NinaAppDelegate.h */,
+				281B1CEE15CC85B40015ECBB /* Question.h */,
+				281B1CEF15CC85B50015ECBB /* Question.m */,
+				281B1CF115CC85C30015ECBB /* Answer.h */,
+				281B1CF215CC85C30015ECBB /* Answer.m */,
 				2895004E13D6455A009E1BD7 /* NinaAppDelegate.m */,
 				2895005013D6455A009E1BD7 /* MainWindow.xib */,
 				2895004513D64559009E1BD7 /* Supporting Files */,
@@ -2441,6 +2459,8 @@
 				281B1CE415CB4AC90015ECBB /* Notification.m in Sources */,
 				281B1CE715CB52030015ECBB /* Activity.m in Sources */,
 				281B1CEB15CB6B900015ECBB /* NotificationTableViewCell.m in Sources */,
+				281B1CF015CC85B50015ECBB /* Question.m in Sources */,
+				281B1CF315CC85C30015ECBB /* Answer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

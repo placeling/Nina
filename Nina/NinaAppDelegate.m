@@ -26,6 +26,8 @@
 #import "FacebookRegetViewController.h"
 #import "Notification.h"
 #import "Activity.h"
+#import "Question.h"
+#import "Answer.h"
 
 
 @implementation NinaAppDelegate
@@ -83,6 +85,9 @@
     
     [objectManager.mappingProvider setMapping:[Activity getObjectMapping] forKeyPath:@"home_feed"];
     [objectManager.mappingProvider setMapping:[Notification getObjectMapping] forKeyPath:@"notifications"];
+    
+    [objectManager.mappingProvider setMapping:[Question getObjectMapping] forKeyPath:@"questions"];
+    [objectManager.mappingProvider setMapping:[Answer getObjectMapping] forKeyPath:@"answers"];
     
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     
