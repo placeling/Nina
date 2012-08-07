@@ -25,6 +25,7 @@
 #import "NearbySuggestedMapController.h"
 #import "EditProfileViewController.h"
 #import "UserManager.h"
+#import "QuestionListViewController.h"
 
 
 @interface HomeViewController (Private) 
@@ -212,16 +213,9 @@
 #pragma mark -IBActions
 
 -(IBAction) questions{
-    UIAlertView *baseAlert;
-    NSString *alertTitle = @"Questions";
-    NSString *alertMessage = @"You didn't seriously think I had this done yet, did you?";
-    baseAlert = [[UIAlertView alloc] 
-                 initWithTitle:alertTitle message:alertMessage 
-                 delegate:self cancelButtonTitle:nil 
-                 otherButtonTitles:@"OK", nil];
-    [baseAlert show];
-    [baseAlert release];
-    
+    QuestionListViewController *questionList = [[QuestionListViewController alloc] init];
+    [self.navigationController pushViewController:questionList animated:YES];
+    [questionList release];
 }
 
 -(IBAction) everythingList{

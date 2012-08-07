@@ -307,6 +307,8 @@
 		28B619451422942300B0A7E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B619441422942200B0A7E5 /* Default.png */; };
 		28B619471422942C00B0A7E5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B619461422942B00B0A7E5 /* Default@2x.png */; };
 		28BA237113F0925900463234 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28BA237013F0925900463234 /* MessageUI.framework */; };
+		28BFF7CE15D18D340086EBF5 /* QuestionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BFF7CC15D18D340086EBF5 /* QuestionListViewController.m */; };
+		28BFF7CF15D18D340086EBF5 /* QuestionListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28BFF7CD15D18D340086EBF5 /* QuestionListViewController.xib */; };
 		28C05A9214BE055E004C7DF6 /* SuggestedPlaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C05A9114BE055D004C7DF6 /* SuggestedPlaceController.m */; };
 		28C05A9614BE0EA4004C7DF6 /* NearbySuggestedMapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C05A9414BE0EA3004C7DF6 /* NearbySuggestedMapController.m */; };
 		28C05A9714BE0EA4004C7DF6 /* NearbySuggestedMapController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C05A9514BE0EA3004C7DF6 /* NearbySuggestedMapController.xib */; };
@@ -909,6 +911,9 @@
 		28B619441422942200B0A7E5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		28B619461422942B00B0A7E5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		28BA237013F0925900463234 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		28BFF7CB15D18D340086EBF5 /* QuestionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionListViewController.h; sourceTree = "<group>"; };
+		28BFF7CC15D18D340086EBF5 /* QuestionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionListViewController.m; sourceTree = "<group>"; };
+		28BFF7CD15D18D340086EBF5 /* QuestionListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuestionListViewController.xib; sourceTree = "<group>"; };
 		28C05A9014BE055D004C7DF6 /* SuggestedPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuggestedPlaceController.h; sourceTree = "<group>"; };
 		28C05A9114BE055D004C7DF6 /* SuggestedPlaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestedPlaceController.m; sourceTree = "<group>"; };
 		28C05A9314BE0EA2004C7DF6 /* NearbySuggestedMapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbySuggestedMapController.h; sourceTree = "<group>"; };
@@ -1069,6 +1074,10 @@
 				28086B4A13EC7F9400790404 /* Perspective.m */,
 				28086B4B13EC7F9400790404 /* Place.h */,
 				28086B4C13EC7F9400790404 /* Place.m */,
+				281B1CF115CC85C30015ECBB /* Answer.h */,
+				281B1CF215CC85C30015ECBB /* Answer.m */,
+				281B1CEE15CC85B40015ECBB /* Question.h */,
+				281B1CEF15CC85B50015ECBB /* Question.m */,
 				2867ABC514CE4DF4003994DB /* Advertisement.h */,
 				2867ABC614CE4DF4003994DB /* Advertisement.m */,
 				2895EBF814E5B9D3009F43F6 /* Authentication.h */,
@@ -1158,6 +1167,9 @@
 		281B1CED15CC74550015ECBB /* Questions */ = {
 			isa = PBXGroup;
 			children = (
+				28BFF7CB15D18D340086EBF5 /* QuestionListViewController.h */,
+				28BFF7CC15D18D340086EBF5 /* QuestionListViewController.m */,
+				28BFF7CD15D18D340086EBF5 /* QuestionListViewController.xib */,
 			);
 			name = Questions;
 			sourceTree = "<group>";
@@ -1423,10 +1435,6 @@
 				6CB5B143144CC5D700A278AC /* AboutUsController.xib */,
 				287483AE13D698EF005C11EF /* localizations */,
 				2895004D13D64559009E1BD7 /* NinaAppDelegate.h */,
-				281B1CEE15CC85B40015ECBB /* Question.h */,
-				281B1CEF15CC85B50015ECBB /* Question.m */,
-				281B1CF115CC85C30015ECBB /* Answer.h */,
-				281B1CF215CC85C30015ECBB /* Answer.m */,
 				2895004E13D6455A009E1BD7 /* NinaAppDelegate.m */,
 				2895005013D6455A009E1BD7 /* MainWindow.xib */,
 				2895004513D64559009E1BD7 /* Supporting Files */,
@@ -2308,6 +2316,7 @@
 				281B1CEC15CB6B900015ECBB /* NotificationTableViewCell.xib in Resources */,
 				281B1D0215CDDD4F0015ECBB /* 53-house.png in Resources */,
 				281B1D0315CDDD4F0015ECBB /* 53-house@2x.png in Resources */,
+				28BFF7CF15D18D340086EBF5 /* QuestionListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2459,6 +2468,7 @@
 				281B1CEB15CB6B900015ECBB /* NotificationTableViewCell.m in Sources */,
 				281B1CF015CC85B50015ECBB /* Question.m in Sources */,
 				281B1CF315CC85C30015ECBB /* Answer.m in Sources */,
+				28BFF7CE15D18D340086EBF5 /* QuestionListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

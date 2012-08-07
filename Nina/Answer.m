@@ -14,7 +14,7 @@
 
 
 +(RKObjectMapping*)getObjectMapping{
-    RKObjectMapping* questionMapping = [RKObjectMapping mappingForClass:[Question class]];
+    RKObjectMapping* questionMapping = [RKObjectMapping mappingForClass:[Answer class]];
     [questionMapping mapKeyPathsToAttributes:
      @"id", @"answerId",
      @"upvotes", @"upvotes",
