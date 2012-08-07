@@ -19,6 +19,9 @@
 #import "UIImageView+WebCache.h"
 #import "GenericWebViewController.h"
 
+@interface NearbySuggestedMapController(Private)
+-(void)makeFilteredPlaces;
+@end
 
 @implementation NearbySuggestedPlaceController
 
@@ -60,7 +63,7 @@
     [navController pushViewController:nsController animated: YES];
     [UIView commitAnimations];
     [nsController release];
-    
+        
     if ( self.userFilter ){
         [nsController setUserFilter:self.userFilter];
     }
@@ -68,6 +71,10 @@
         [nsController setTagFilter:self.tagFilter];
     }
 
+}
+
+-(NSMutableArray*)visiblePlaces{
+    return self.places;
 }
 
 -(IBAction)reloadList{    
@@ -135,18 +142,6 @@
     [self.placesTableView reloadData];
 }
 
-
--(void)setUserFilter:(NSString*)username{
-    
-    userFilter = username;
-}
-
--(void)setTagFilter:(NSString*)hashTag{
-    
-    tagFilter = hashTag;
-}
-
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -186,6 +181,43 @@
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     [super objectLoader:objectLoader didLoadObjects:objects];
+    [self makeFilteredPlaces];
+    [self.placesTableView reloadData];
+}
+
+// CMPopTipViewDelegate method
+- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
+    [super popTipViewWasDismissedByUser:popTipView];
+    [self makeFilteredPlaces];
+    [self.placesTableView reloadData]; 
+}
+
+-(void)makeFilteredPlaces{
+    
+    for (Place *place in self.places){
+        place.hidden = true;
+        for (Perspective *perspective in place.placemarks){
+            if ( (!userFilter || [perspective.user.username isEqualToString:userFilter]) && (!tagFilter || [perspective.tags indexOfObject:tagFilter] != NSNotFound ) ){
+                perspective.hidden = false;
+                place.hidden = false;
+            } else {
+                perspective.hidden = true;
+            }
+        }
+    }
+}
+
+
+
+-(void)setTagFilter:(NSString*)hashTag{
+    [super setTagFilter:hashTag];    
+    [self makeFilteredPlaces];
+    [self.placesTableView reloadData]; 
+}
+
+-(void)setUserFilter:(NSString*)username{
+    [super setUserFilter:username];
+    [self makeFilteredPlaces];
     [self.placesTableView reloadData]; 
 }
 
@@ -211,7 +243,7 @@
         }
     } else {
         if ( [self dataLoaded] ){
-            return [[self places] count];
+           return [[self places] count];
         } else {
             return 1;
         }
@@ -397,7 +429,6 @@
             }
         }
         tableView.allowsSelection = YES;
-        
         place = [[self places] objectAtIndex:indexPath.row];
         
         UITextView *errorText = (UITextView *)[pCell viewWithTag:778];

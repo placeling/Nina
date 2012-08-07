@@ -14,6 +14,11 @@
 #import "LoginController.h"
 #import "UIImageView+WebCache.h"
 #import "UserManager.h"
+#import "PlaceMark.h"
+
+#import "FlurryAnalytics.h"
+#import "PerspectiveUserTableViewController.h"
+#import "PerspectiveTagTableViewController.h"
 
 @implementation SuggestedPlaceController
 
@@ -24,6 +29,12 @@
 @synthesize toolbar, segmentedControl;
 @synthesize userFilter, tagFilter;
 @synthesize ad, quickpick;
+
+@synthesize bottomToolBar, showPeopleButton, showTagsButton, usernameButton, hashtagButton;
+
+-(NSSet*)visiblePlaces{
+    return nil; //shouldn't be directly called
+}
 
 - (void)didReceiveMemoryWarning{
     // Releases the view if it doesn't have a superview.
@@ -204,6 +215,108 @@
     DLog(@"Encountered an error: %@", error); 
 }
 
+// CMPopTipViewDelegate method
+- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
+    if ( popTipView == self.hashtagButton ){
+        tagFilter = nil;
+    } else {
+        userFilter = nil;
+    }
+}
+
+-(void)setUserFilter:(NSString*)username{
+    
+    userFilter = username;
+    
+    if ( userFilter ){
+        self.usernameButton = [[[CMPopTipView alloc] initWithMessage:[NSString stringWithFormat:@"%@", userFilter]]autorelease];
+        self.usernameButton.backgroundColor = [UIColor colorWithRed:185/255.0 green:43/255.0 blue:52/255.0 alpha:1.0];
+        self.usernameButton.delegate = self;
+        [self.usernameButton presentPointingAtBarButtonItem:self.showPeopleButton animated:true];
+    }
+}
+
+-(void)setTagFilter:(NSString*)hashTag{
+    
+    tagFilter = hashTag;
+    
+    if ( tagFilter ){
+        self.hashtagButton = [[[CMPopTipView alloc] initWithMessage:[NSString stringWithFormat:@"#%@", tagFilter]]autorelease];
+        self.hashtagButton.backgroundColor = [UIColor colorWithRed:185/255.0 green:43/255.0 blue:52/255.0 alpha:1.0];
+        self.hashtagButton.delegate = self;
+        [self.hashtagButton presentPointingAtBarButtonItem:self.showTagsButton animated:true];
+    }
+}
+
+-(IBAction)showPeople{
+    [usernameButton dismissAnimated:true];
+    [FlurryAnalytics logEvent:@"QUICKPICK_USER_FILTER"];
+    userFilter = nil;
+    //reset the hiddenness based on tags
+    
+    NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
+    for ( Place *place in [self visiblePlaces]  ){
+        place.hidden = true;
+        for (Perspective *perspective in place.placemarks){
+            if (!tagFilter || [perspective.tags indexOfObject:tagFilter] != NSNotFound ){
+                perspective.hidden = false;
+                place.hidden = false;
+            } else {
+                perspective.hidden = true;
+            }
+        }
+        if ( !place.hidden ){
+            [visiblePlaces addObject:place];
+            place.hidden = false;
+        } 
+    }
+    
+    PerspectiveUserTableViewController *peopleController = [[PerspectiveUserTableViewController alloc] initWithPlaces:visiblePlaces];
+    peopleController.delegate = self;
+    userChild = peopleController;
+    
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:peopleController];
+    [self.navigationController presentModalViewController:navBar animated:YES];
+    [navBar release];
+    [peopleController release];
+    [visiblePlaces release];
+}
+
+
+-(IBAction)showTags{
+    [hashtagButton dismissAnimated:true];
+    tagFilter = nil;
+    [FlurryAnalytics logEvent:@"QUICKPICK_TAG_FILTER"];
+    NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
+    
+    for ( Place *place in [self visiblePlaces] ){
+        place.hidden = true;        
+        for (Perspective *perspective in place.placemarks){
+            if ( !userFilter || [perspective.user.username isEqualToString:userFilter] ){
+                perspective.hidden = false;
+                place.hidden = false;
+            } else {
+                perspective.hidden = true;
+            }
+        }
+        if (!place.hidden){
+            [visiblePlaces addObject:place];
+        } 
+    }
+    
+    PerspectiveTagTableViewController *tagController = [[PerspectiveTagTableViewController alloc] initWithPlaces:visiblePlaces];
+    tagController.delegate = self;
+    if ( userFilter ){
+        tagController.filteringUser = userFilter;
+    }
+    tagChild = tagController;
+    
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:tagController];
+    [self.navigationController presentModalViewController:navBar animated:YES];
+    [navBar release];
+    [tagController release];
+    [visiblePlaces release];
+}
 
 #pragma mark - View lifecycle
 
@@ -241,6 +354,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [StyleHelper styleToolBar:self.toolbar];
+    [StyleHelper styleToolBar:self.bottomToolBar];
     
     if ( self.navTitle){
         self.navigationItem.title = self.navTitle;
@@ -275,6 +389,12 @@
     [popularPlaces release];
     [navTitle release];
     [ad release];
+    
+    [hashtagButton release];
+    [showTagsButton release];
+    
+    [bottomToolBar release];
+    
     [super dealloc];
 }
 

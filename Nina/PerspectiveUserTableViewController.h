@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NearbySuggestedMapController.h"
+#import "SuggestedPlaceController.h"
 
 @interface PerspectiveUserTableViewController : UITableViewController{
     

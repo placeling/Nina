@@ -7,8 +7,6 @@
 //
 
 #import "NSString+SBJSON.h"
-#import "PerspectiveUserTableViewController.h"
-#import "PerspectiveTagTableViewController.h"
 #import "PerspectivePlaceMark.h"
 #import "PlaceMark.h"
 #import "Perspective.h"
@@ -18,9 +16,9 @@
 #import "Place.h"
 #import "NearbySuggestedPlaceController.h"
 #import "NearbySuggestedMapController.h"
-#import "FlurryAnalytics.h"
 #import "NearbyPlacesViewController.h"
 #import "UserManager.h"
+#import "FlurryAnalytics.h"
 
 @interface NearbySuggestedMapController (Private)
 -(void)drawMapPlaces;
@@ -31,9 +29,7 @@
 
 @implementation NearbySuggestedMapController
 
-@synthesize mapView=_mapView, spinnerView, place_id;
-@synthesize locationManager, bottomToolBar, usernameButton,hashtagButton, placemarkButton;
-@synthesize showTagsButton, showPeopleButton;
+@synthesize mapView=_mapView, spinnerView, place_id, locationManager, placemarkButton;
 
 -(IBAction)toggleMapList{
     NearbySuggestedPlaceController *nsController = [[NearbySuggestedPlaceController alloc] init];        
@@ -55,13 +51,6 @@
     nsController.origin = self.origin;
     nsController.quickpick = self.quickpick;
     
-    if ( self.userFilter ){
-        [nsController setUserFilter:self.userFilter];
-    }
-    if ( self.tagFilter ){
-        [nsController setTagFilter:self.tagFilter];
-    }
-    
     UINavigationController *navController = self.navigationController;
     [UIView beginAnimations:@"View Flip" context:nil];
     [UIView setAnimationDuration:0.50];
@@ -78,6 +67,13 @@
     [navController pushViewController:nsController animated: YES];
     [UIView commitAnimations];
     [nsController release];
+    
+    if ( self.userFilter ){
+        [nsController setUserFilter:self.userFilter];
+    }
+    if ( self.tagFilter ){
+        [nsController setTagFilter:self.tagFilter];
+    }
 }
 
 -(IBAction)showNearbyPlaces{
@@ -99,42 +95,6 @@
 }
 
 
--(IBAction)showPeople{
-    [usernameButton dismissAnimated:true];
-    [FlurryAnalytics logEvent:@"QUICKPICK_USER_FILTER"];
-    userFilter = nil;
-    //reset the hiddenness based on tags
-    
-    NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
-    NSSet *visiblePlacemarks = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
-    for ( PlaceMark *mark in visiblePlacemarks ){
-        mark.tag = 0;
-        for (Perspective *perspective in mark.place.placemarks){
-            if (!tagFilter || [perspective.tags indexOfObject:tagFilter] != NSNotFound ){
-                perspective.hidden = false;
-                mark.tag = 1;
-            } else {
-                perspective.hidden = true;
-            }
-        }
-        if (mark.tag == 1){
-            [visiblePlaces addObject:mark.place];
-            mark.place.hidden = false;
-        } else {
-            mark.place.hidden = true;
-        }
-    }
-    
-    PerspectiveUserTableViewController *peopleController = [[PerspectiveUserTableViewController alloc] initWithPlaces:visiblePlaces];
-    peopleController.delegate = self;
-    userChild = peopleController;
-    
-    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:peopleController];
-    [self.navigationController presentModalViewController:navBar animated:YES];
-    [navBar release];
-    [peopleController release];
-    [visiblePlaces release];
-}
 
 -(IBAction)changeTab{
     [placeSuperset removeAllObjects];
@@ -224,7 +184,7 @@
         for ( PlaceMark *mark in visiblePlacemarks ){
             [visiblePlaces addObject:mark.place];             
         }
-        userChild.places = visiblePlaces;
+        [userChild setPlaces:visiblePlaces];
         [userChild refreshTable];
         [visiblePlaces release];
     }
@@ -235,7 +195,7 @@
         for ( PlaceMark *mark in visiblePlacemarks ){
             [visiblePlaces addObject:mark.place];             
         }
-        tagChild.places = visiblePlaces;
+        [tagChild setPlaces:visiblePlaces];
         [tagChild refreshTable];
         [visiblePlaces release];
     }
@@ -245,6 +205,16 @@
         [self showHelperPopup];
     }
     
+}
+
+-(NSMutableArray*)visiblePlaces{
+    NSMutableArray *visPlaces = [[NSMutableArray alloc] init];
+    
+    for (PlaceMark *placeMark in [self.mapView annotationsInMapRect:self.mapView.visibleMapRect] ){
+        [visPlaces addObject:placeMark.place];
+        
+    }
+    return visPlaces;
 }
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
@@ -259,8 +229,6 @@
     [spinnerView release];
     [placemarkButton release];
     [placeSuperset release];
-    [hashtagButton release];
-    [showTagsButton release];
     [place_id release];
     [super dealloc];
 }
@@ -362,44 +330,6 @@
 }
 
 
--(IBAction)showTags{
-    [hashtagButton dismissAnimated:true];
-    tagFilter = nil;
-    [FlurryAnalytics logEvent:@"QUICKPICK_TAG_FILTER"];
-    NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
-    NSSet *visiblePlacemarks = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
-    for ( PlaceMark *mark in visiblePlacemarks ){
-        mark.tag = 0;        
-        for (Perspective *perspective in mark.place.placemarks){
-            if ( !userFilter || [perspective.user.username isEqualToString:userFilter] ){
-                perspective.hidden = false;
-                mark.tag =1;
-            } else {
-                perspective.hidden = true;
-            }
-        }
-        if (mark.tag == 1){
-            [visiblePlaces addObject:mark.place];
-            mark.place.hidden = false;
-        } else {
-            mark.place.hidden = true;
-        } 
-    }
-    
-    PerspectiveTagTableViewController *tagController = [[PerspectiveTagTableViewController alloc] initWithPlaces:visiblePlaces];
-    tagController.delegate = self;
-    if ( userFilter ){
-        tagController.filteringUser = userFilter;
-    }
-    tagChild = tagController;
-    
-    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:tagController];
-    [self.navigationController presentModalViewController:navBar animated:YES];
-    [navBar release];
-    [tagController release];
-    [visiblePlaces release];
-}
-
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)_annotation{
     
     if( [_annotation isKindOfClass:[PlaceMark class]] ){
@@ -496,41 +426,9 @@
 }
 
 
--(void)setUserFilter:(NSString*)username{
-    
-    userFilter = username;
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    [self drawMapPlaces];
-    
-    if ( userFilter ){
-        self.usernameButton = [[[CMPopTipView alloc] initWithMessage:[NSString stringWithFormat:@"%@", userFilter]]autorelease];
-        self.usernameButton.backgroundColor = [UIColor colorWithRed:185/255.0 green:43/255.0 blue:52/255.0 alpha:1.0];
-        self.usernameButton.delegate = self;
-        [self.usernameButton presentPointingAtBarButtonItem:self.showPeopleButton animated:true];
-    }
-}
-
--(void)setTagFilter:(NSString*)hashTag{
-    
-    tagFilter = hashTag;
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    [self drawMapPlaces];
-    
-    if ( tagFilter ){
-        self.hashtagButton = [[[CMPopTipView alloc] initWithMessage:[NSString stringWithFormat:@"#%@", tagFilter]]autorelease];
-        self.hashtagButton.backgroundColor = [UIColor colorWithRed:185/255.0 green:43/255.0 blue:52/255.0 alpha:1.0];
-        self.hashtagButton.delegate = self;
-        [self.hashtagButton presentPointingAtBarButtonItem:self.showTagsButton animated:true];
-    }
-}
-
 // CMPopTipViewDelegate method
 - (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
-    if ( popTipView == self.hashtagButton ){
-        tagFilter = nil;
-    } else {
-        userFilter = nil;
-    }
+    [super popTipViewWasDismissedByUser:popTipView];
     [self.mapView removeAnnotations:self.mapView.annotations];
     [self drawMapPlaces];
 }
@@ -598,7 +496,6 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [StyleHelper styleToolBar:self.toolbar];
-    [StyleHelper styleToolBar:self.bottomToolBar];
     
     MKCoordinateRegion region = self.mapView.region;
     CLLocation *location = locationManager.location;    
@@ -659,6 +556,18 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(void)setTagFilter:(NSString*)hashTag{
+    [super setTagFilter:hashTag];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self drawMapPlaces];
+}
+
+-(void)setUserFilter:(NSString*)username{
+    [super setUserFilter:username];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self drawMapPlaces];
 }
 
 #pragma mark - Unregistered experience methods

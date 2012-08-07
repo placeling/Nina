@@ -12,14 +12,17 @@
 #import <RestKit/RestKit.h>
 #import "Place.h"
 #import "Advertisement.h"
+#import "CMPopTipView.h"
 
+@class PerspectiveUserTableViewController;
+@class PerspectiveTagTableViewController;
 
 @protocol SuggestedFilterProtocol
 -(void) setUserFilter:(NSString*)username;
 -(void) setTagFilter:(NSString*)hashTag;
 @end
 
-@interface SuggestedPlaceController : UIViewController<LoginControllerDelegate, RKObjectLoaderDelegate>{
+@interface SuggestedPlaceController : UIViewController<LoginControllerDelegate, RKObjectLoaderDelegate, CMPopTipViewDelegate, SuggestedFilterProtocol>{
     BOOL locationEnabled;
     
     BOOL myLoaded;
@@ -45,6 +48,17 @@
     Advertisement *ad;
     NSTimeInterval userTime;
     BOOL quickpick;
+    
+    UIToolbar *bottomToolBar;
+    
+    UIBarButtonItem *showPeopleButton;
+    UIBarButtonItem *showTagsButton;
+    
+    CMPopTipView *usernameButton;
+    CMPopTipView *hashtagButton;    
+    
+    PerspectiveUserTableViewController *userChild;
+    PerspectiveTagTableViewController *tagChild;
 }
 
 @property(nonatomic, assign) BOOL followingLoaded;
@@ -76,10 +90,21 @@
 
 @property(nonatomic, assign) BOOL quickpick;
 
+@property(nonatomic, retain) IBOutlet UIToolbar *bottomToolBar;
+@property(nonatomic, retain) IBOutlet UIBarButtonItem *showPeopleButton;
+@property(nonatomic, retain) IBOutlet UIBarButtonItem *showTagsButton;
+
+@property(nonatomic, retain) CMPopTipView *usernameButton;
+@property(nonatomic, retain) CMPopTipView *hashtagButton;
+
+-(IBAction)showPeople;
+-(IBAction)showTags;
+
 -(void)findNearbyPlaces;
 -(IBAction)toggleMapList;
 
 -(bool)dataLoaded;
 -(NSMutableArray*)places;
+-(NSMutableArray*)visiblePlaces;
 
 @end
