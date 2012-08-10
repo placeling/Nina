@@ -804,7 +804,7 @@ typedef enum {
             if (self.referrer){
                 urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/following?rf=%@", self.place_id, self.referrer];
             } else {
-                urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/following", self.place_id, self.google_ref];
+                urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/following", self.place_id];
             }
             
             // Call url to get profile details                
@@ -819,14 +819,14 @@ typedef enum {
         } 
     } else if (index == 2){
         self.perspectiveType = everyone;
-        if (([self.initialSelectedIndex intValue] == 2 && self.everyonePerspectives.count ==0) || (self.place.perspectiveCount > 0 && (self.everyonePerspectives.count ==0 ) ) ){          
+        if (([self.initialSelectedIndex intValue] == 2 && self.everyonePerspectives.count ==0) || (self.place.perspectiveCount > 0 && (self.everyonePerspectives.count ==0 ) ) ){
             //only call if we know something there
             
             NSString *urlText;
             if (self.referrer){
                 urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/all?rf=%@", self.place_id, self.referrer];
             } else {
-                urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/all", self.place_id, self.google_ref];
+                urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/all", self.place_id];
             }
 
             // Call url to get profile details                
