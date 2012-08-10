@@ -16,14 +16,16 @@
 #import "GenericWebViewController.h"
 #import "FlurryAnalytics.h"
 #import <Twitter/Twitter.h>
+#import "CommentViewController.h"
 
 #define hardMaxCellHeight 5000
 
 @implementation PerspectiveTableViewCell
 
-@synthesize perspective, userImage, memoText,titleLabel, scrollView, remarkersLabel;
+@synthesize perspective, userImage, memoText,titleLabel, scrollView;
 @synthesize tapGesture, requestDelegate, showMoreButton, loveButton, shareSheetButton;
-@synthesize createdAtLabel, expanded, indexpath, likeImage;
+@synthesize createdAtLabel, expanded, indexpath;
+@synthesize showLikeButton,showCommentsButton;
 
 
 +(CGFloat) cellHeightUnboundedForPerspective:(Perspective*)perspective{
@@ -222,16 +224,6 @@
         cell.scrollView.hidden = TRUE; //remove from view
     }
     
-    if ( perspective.likers && [perspective.likers count] > 0 ) {
-        [cell.remarkersLabel setFrame:CGRectMake(cell.remarkersLabel.frame.origin.x, verticalCursor+2, cell.remarkersLabel.frame.size.width, cell.remarkersLabel.frame.size.height)];
-        cell.remarkersLabel.text = [perspective.likers componentsJoinedByString:@"-"];
-        [cell.likeImage setFrame:CGRectMake(cell.likeImage.frame.origin.x, cell.remarkersLabel.frame.origin.y, cell.likeImage.frame.size.width, cell.likeImage.frame.size.height)];
-        
-         verticalCursor += cell.remarkersLabel.frame.size.height;
-    } else {
-        cell.remarkersLabel.hidden = true;
-        cell.likeImage.hidden = true;
-    }
     
     if ( perspective.mine ){
         [cell.loveButton setHidden:false];
@@ -263,6 +255,10 @@
     [cell.createdAtLabel setFrame:CGRectMake(cell.createdAtLabel.frame.origin.x, verticalCursor, cell.createdAtLabel.frame.size.width, cell.createdAtLabel.frame.size.height)];
     [cell.shareSheetButton setFrame:CGRectMake(cell.shareSheetButton.frame.origin.x, verticalCursor, cell.shareSheetButton.frame.size.width, cell.shareSheetButton.frame.size.height)];
     
+    [cell.showCommentsButton setFrame:CGRectMake(cell.showCommentsButton.frame.origin.x, verticalCursor, cell.showCommentsButton.frame.size.width, cell.showCommentsButton.frame.size.height)];
+    
+    [cell.showLikeButton setFrame:CGRectMake(cell.showLikeButton.frame.origin.x, verticalCursor, cell.showLikeButton.frame.size.width, cell.showLikeButton.frame.size.height)];
+    
     [StyleHelper colourTextLabel:cell.createdAtLabel];
     [StyleHelper colourTextLabel:cell.titleLabel];
     [StyleHelper colourTextLabel:cell.memoText];
@@ -286,7 +282,20 @@
     [webController release];
 }
 
-#pragma mark - Share Sheet
+#pragma mark - actions
+
+-(IBAction) showLikers{
+    
+    
+}
+
+-(IBAction) showComments{
+    CommentViewController *commentViewController = [[CommentViewController alloc] init];
+    commentViewController.perspective = self.perspective;
+    [self.requestDelegate.navigationController pushViewController:commentViewController animated:YES];
+    [commentViewController release];
+    
+}
 
 -(IBAction) showActionSheet{
     
@@ -487,7 +496,8 @@
     [tapGesture release];
     [loveButton release];
     [createdAtLabel release];
-    [likeImage release];
+    [showLikeButton release];
+    [showCommentsButton release];
     
     [super dealloc];
 }
