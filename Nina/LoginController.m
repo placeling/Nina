@@ -137,9 +137,9 @@
         
         for (NSString* token in tokens){
             NSArray *component = [token componentsSeparatedByString:@"="];
-            if ( [[NSString stringWithString:@"oauth_token"] isEqualToString:[component objectAtIndex:0]] ){
+            if ( [@"oauth_token" isEqualToString:[component objectAtIndex:0]] ){
                 [NinaHelper setAccessToken:[component objectAtIndex:1]];
-            } else if ( [[NSString stringWithString:@"oauth_token_secret"] isEqualToString:[component objectAtIndex:0]] ){
+            } else if ( [@"oauth_token_secret" isEqualToString:[component objectAtIndex:0]] ){
                 [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
             }
         } 
@@ -299,7 +299,7 @@
     if (statusCode == 401){
         UIAlertView *alert;
         
-        if ( [[NSString stringWithString:@"unconfirmed"] isEqualToString:[[component objectAtIndex:0] lowercaseString] ] ){
+        if ( [@"unconfirmed" isEqualToString:[[component objectAtIndex:0] lowercaseString] ] ){
             
             NSString *alertMessage = @"We can't let you log back in until you confirm your email, would you like to resend the confirmation email?";
             alert = [[UIAlertView alloc] 
@@ -341,9 +341,9 @@
             
             for (NSString* token in tokens){
                 NSArray *component = [token componentsSeparatedByString:@"="];
-                if ( [[NSString stringWithString:@"oauth_token"] isEqualToString:[component objectAtIndex:0]] ){
+                if ( [@"oauth_token" isEqualToString:[component objectAtIndex:0]] ){
                     [NinaHelper setAccessToken:[component objectAtIndex:1]];
-                } else if ( [[NSString stringWithString:@"oauth_token_secret"] isEqualToString:[component objectAtIndex:0]] ){
+                } else if ( [@"oauth_token_secret" isEqualToString:[component objectAtIndex:0]] ){
                     [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
                 }
             } 
