@@ -272,7 +272,6 @@
 		28A9FB1D15B0D4FD00986881 /* connect_with_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28A9FB1B15B0D4FD00986881 /* connect_with_facebook@2x.png */; };
 		28AC956314B2428C00CB73FD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC956114B2428C00CB73FD /* CoreData.framework */; };
 		28AC956414B2428C00CB73FD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC956214B2428C00CB73FD /* Security.framework */; };
-		28AC956514B2438200CB73FD /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AC955714B2417D00CB73FD /* libRestKit.a */; };
 		28AE64091558545700E60EE1 /* PerspectiveTagTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28AE64071558545600E60EE1 /* PerspectiveTagTableViewController.m */; };
 		28AE640A1558545700E60EE1 /* PerspectiveTagTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AE64081558545700E60EE1 /* PerspectiveTagTableViewController.xib */; };
 		28B17C1D1462215D008C98E8 /* pan_here.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B17C1B1462215D008C98E8 /* pan_here.png */; };
@@ -286,6 +285,20 @@
 		28B17C671462249C008C98E8 /* unloaded_profile_pic.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B17C471462249C008C98E8 /* unloaded_profile_pic.png */; };
 		28B38E2B14170D5B00D4025F /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B38E2914170D5B00D4025F /* SignupController.m */; };
 		28B38E2C14170D5B00D4025F /* SignupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B38E2A14170D5B00D4025F /* SignupController.xib */; };
+		28B4255615D4C6E70025957A /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B4255415D4C6E70025957A /* CommentViewController.m */; };
+		28B4255715D4C6E70025957A /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B4255515D4C6E70025957A /* CommentViewController.xib */; };
+		28B4256015D4C7050025957A /* MessageEntryBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B4255815D4C7040025957A /* MessageEntryBackground.png */; };
+		28B4256115D4C7050025957A /* MessageEntryBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B4255915D4C7040025957A /* MessageEntryBackground@2x.png */; };
+		28B4256215D4C7050025957A /* MessageEntryInputField.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B4255A15D4C7040025957A /* MessageEntryInputField.png */; };
+		28B4256315D4C7050025957A /* MessageEntryInputField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B4255B15D4C7040025957A /* MessageEntryInputField@2x.png */; };
+		28B4256415D4C7050025957A /* MessageEntrySendButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B4255C15D4C7040025957A /* MessageEntrySendButton.png */; };
+		28B4256515D4C7050025957A /* MessageEntrySendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B4255D15D4C7040025957A /* MessageEntrySendButton@2x.png */; };
+		28B4256615D4C7050025957A /* MessageEntrySendButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B4255E15D4C7040025957A /* MessageEntrySendButtonPressed.png */; };
+		28B4256715D4C7050025957A /* MessageEntrySendButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B4255F15D4C7040025957A /* MessageEntrySendButtonPressed@2x.png */; };
+		28B4256C15D4C72B0025957A /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B4256915D4C72B0025957A /* HPGrowingTextView.m */; };
+		28B4256D15D4C72B0025957A /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B4256B15D4C72B0025957A /* HPTextViewInternal.m */; };
+		28B4257015D4C9420025957A /* PlacemarkComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B4256F15D4C9420025957A /* PlacemarkComment.m */; };
+		28B4258B15D4D4EB0025957A /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28B4257F15D4D4CB0025957A /* libRestKit.a */; };
 		28B5D8B314907E0000763D0C /* DefaultPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8B114907E0000763D0C /* DefaultPhoto.png */; };
 		28B5D8B414907E0000763D0C /* DefaultPhoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8B214907E0000763D0C /* DefaultPhoto@2x.png */; };
 		28B5D8D6149096CC00763D0C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8BB149096CC00763D0C /* LICENSE */; };
@@ -411,37 +424,37 @@
 			remoteGlobalIDString = 2895003913D64559009E1BD7;
 			remoteInfo = Nina;
 		};
-		28AC955614B2417D00CB73FD /* PBXContainerItemProxy */ = {
+		28B4257E15D4D4CB0025957A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */;
+			containerPortal = 28B4257415D4D4CB0025957A /* RestKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 25160D1614564E810060A5C5;
 			remoteInfo = RestKit;
 		};
-		28AC955814B2417D00CB73FD /* PBXContainerItemProxy */ = {
+		28B4258015D4D4CB0025957A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */;
+			containerPortal = 28B4257415D4D4CB0025957A /* RestKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 25160D2614564E820060A5C5;
 			remoteInfo = RestKitTests;
 		};
-		28AC955A14B2417D00CB73FD /* PBXContainerItemProxy */ = {
+		28B4258215D4D4CB0025957A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */;
+			containerPortal = 28B4257415D4D4CB0025957A /* RestKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 25160E62145651060060A5C5;
 			remoteInfo = RestKitFramework;
 		};
-		28AC955C14B2417D00CB73FD /* PBXContainerItemProxy */ = {
+		28B4258415D4D4CB0025957A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */;
+			containerPortal = 28B4257415D4D4CB0025957A /* RestKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 25160E78145651060060A5C5;
 			remoteInfo = RestKitFrameworkTests;
 		};
-		28AC955F14B2424A00CB73FD /* PBXContainerItemProxy */ = {
+		28B4258915D4D4E00025957A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */;
+			containerPortal = 28B4257415D4D4CB0025957A /* RestKit.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 25160D1514564E810060A5C5;
 			remoteInfo = RestKit;
@@ -845,7 +858,6 @@
 		28A9FB1715B0BDC500986881 /* FacebookRegetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookRegetViewController.xib; sourceTree = "<group>"; };
 		28A9FB1A15B0D4FD00986881 /* connect_with_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect_with_facebook.png; sourceTree = "<group>"; };
 		28A9FB1B15B0D4FD00986881 /* connect_with_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connect_with_facebook@2x.png"; sourceTree = "<group>"; };
-		28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		28AC956114B2428C00CB73FD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		28AC956214B2428C00CB73FD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		28AE64061558545600E60EE1 /* PerspectiveTagTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectiveTagTableViewController.h; sourceTree = "<group>"; };
@@ -876,6 +888,24 @@
 		28B38E3A1417D26A00D4025F /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		28B38E3B1417D26A00D4025F /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		28B38E3C1417D26A00D4025F /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		28B4255315D4C6E70025957A /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		28B4255415D4C6E70025957A /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
+		28B4255515D4C6E70025957A /* CommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentViewController.xib; sourceTree = "<group>"; };
+		28B4255815D4C7040025957A /* MessageEntryBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntryBackground.png; sourceTree = "<group>"; };
+		28B4255915D4C7040025957A /* MessageEntryBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntryBackground@2x.png"; sourceTree = "<group>"; };
+		28B4255A15D4C7040025957A /* MessageEntryInputField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntryInputField.png; sourceTree = "<group>"; };
+		28B4255B15D4C7040025957A /* MessageEntryInputField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntryInputField@2x.png"; sourceTree = "<group>"; };
+		28B4255C15D4C7040025957A /* MessageEntrySendButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntrySendButton.png; sourceTree = "<group>"; };
+		28B4255D15D4C7040025957A /* MessageEntrySendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntrySendButton@2x.png"; sourceTree = "<group>"; };
+		28B4255E15D4C7040025957A /* MessageEntrySendButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntrySendButtonPressed.png; sourceTree = "<group>"; };
+		28B4255F15D4C7040025957A /* MessageEntrySendButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntrySendButtonPressed@2x.png"; sourceTree = "<group>"; };
+		28B4256815D4C72B0025957A /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		28B4256915D4C72B0025957A /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		28B4256A15D4C72B0025957A /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		28B4256B15D4C72B0025957A /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
+		28B4256E15D4C9420025957A /* PlacemarkComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacemarkComment.h; sourceTree = "<group>"; };
+		28B4256F15D4C9420025957A /* PlacemarkComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacemarkComment.m; sourceTree = "<group>"; };
+		28B4257415D4D4CB0025957A /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = SOURCE_ROOT; };
 		28B5D8B114907E0000763D0C /* DefaultPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultPhoto.png; sourceTree = "<group>"; };
 		28B5D8B214907E0000763D0C /* DefaultPhoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DefaultPhoto@2x.png"; sourceTree = "<group>"; };
 		28B5D8BB149096CC00763D0C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -1027,10 +1057,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28B4258B15D4D4EB0025957A /* libRestKit.a in Frameworks */,
 				281B182B15C748950015ECBB /* Accounts.framework in Frameworks */,
 				284D15CA15C73BE400698777 /* Twitter.framework in Frameworks */,
 				2852B7B2156715AC00D9775E /* AssetsLibrary.framework in Frameworks */,
-				28AC956514B2438200CB73FD /* libRestKit.a in Frameworks */,
 				28AC956314B2428C00CB73FD /* CoreData.framework in Frameworks */,
 				28AC956414B2428C00CB73FD /* Security.framework in Frameworks */,
 				287483C213D764F9005C11EF /* CFNetwork.framework in Frameworks */,
@@ -1086,6 +1116,8 @@
 				281B1CE315CB4AC90015ECBB /* Notification.m */,
 				281B1CE515CB52030015ECBB /* Activity.h */,
 				281B1CE615CB52030015ECBB /* Activity.m */,
+				28B4256E15D4C9420025957A /* PlacemarkComment.h */,
+				28B4256F15D4C9420025957A /* PlacemarkComment.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1093,6 +1125,14 @@
 		28086B8513ECA9B900790404 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				28B4255815D4C7040025957A /* MessageEntryBackground.png */,
+				28B4255915D4C7040025957A /* MessageEntryBackground@2x.png */,
+				28B4255A15D4C7040025957A /* MessageEntryInputField.png */,
+				28B4255B15D4C7040025957A /* MessageEntryInputField@2x.png */,
+				28B4255C15D4C7040025957A /* MessageEntrySendButton.png */,
+				28B4255D15D4C7040025957A /* MessageEntrySendButton@2x.png */,
+				28B4255E15D4C7040025957A /* MessageEntrySendButtonPressed.png */,
+				28B4255F15D4C7040025957A /* MessageEntrySendButtonPressed@2x.png */,
 				281B1CAF15C9AC620015ECBB /* photo-gallery-edit-caption.png */,
 				281B1CB015C9AC620015ECBB /* photo-gallery-left.png */,
 				281B1CB115C9AC620015ECBB /* photo-gallery-left@2x.png */,
@@ -1373,7 +1413,7 @@
 				2895006A13D6455A009E1BD7 /* NinaTests */,
 				2895003D13D64559009E1BD7 /* Frameworks */,
 				2895003B13D64559009E1BD7 /* Products */,
-				28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */,
+				28B4257415D4D4CB0025957A /* RestKit.xcodeproj */,
 				28B6192614226E4300B0A7E5 /* Placeling_AdHoc.mobileprovision */,
 			);
 			sourceTree = "<group>";
@@ -1497,6 +1537,10 @@
 		2895017713D67896009E1BD7 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				28B4256815D4C72B0025957A /* HPGrowingTextView.h */,
+				28B4256915D4C72B0025957A /* HPGrowingTextView.m */,
+				28B4256A15D4C72B0025957A /* HPTextViewInternal.h */,
+				28B4256B15D4C72B0025957A /* HPTextViewInternal.m */,
 				281B1CBE15C9AC9E0015ECBB /* FGallery */,
 				2827EF5F15783F7600EB529A /* CrittercismSDK-crashonly */,
 				28EB2654156EB5CC006568E7 /* WBNoticeView */,
@@ -1651,17 +1695,6 @@
 			name = ActivityFeed;
 			sourceTree = "<group>";
 		};
-		28AC954D14B2417D00CB73FD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				28AC955714B2417D00CB73FD /* libRestKit.a */,
-				28AC955914B2417D00CB73FD /* RestKitTests.octest */,
-				28AC955B14B2417D00CB73FD /* RestKit.framework */,
-				28AC955D14B2417D00CB73FD /* RestKitFrameworkTests.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		28B38E2D14170E6800D4025F /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -1686,6 +1719,9 @@
 		28B38E2E14170ED800D4025F /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				28B4255315D4C6E70025957A /* CommentViewController.h */,
+				28B4255415D4C6E70025957A /* CommentViewController.m */,
+				28B4255515D4C6E70025957A /* CommentViewController.xib */,
 				2877A09D14183CE400850530 /* EditableTableCell.h */,
 				2877A09E14183CE400850530 /* EditableTableCell.m */,
 				284A354B1404574F009C8C28 /* PerspectiveTableViewCell.h */,
@@ -1725,6 +1761,17 @@
 			);
 			name = JSON;
 			path = Facebook/JSON;
+			sourceTree = "<group>";
+		};
+		28B4257515D4D4CB0025957A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				28B4257F15D4D4CB0025957A /* libRestKit.a */,
+				28B4258115D4D4CB0025957A /* RestKitTests.octest */,
+				28B4258315D4D4CB0025957A /* RestKit.framework */,
+				28B4258515D4D4CB0025957A /* RestKitFrameworkTests.octest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		28B5D8B9149096CB00763D0C /* SDWebImage */ = {
@@ -1971,7 +2018,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				28AC956014B2424A00CB73FD /* PBXTargetDependency */,
+				28B4258A15D4D4E00025957A /* PBXTargetDependency */,
 			);
 			name = Nina;
 			productName = Nina;
@@ -2018,8 +2065,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 28AC954D14B2417D00CB73FD /* Products */;
-					ProjectRef = 28AC954C14B2417D00CB73FD /* RestKit.xcodeproj */;
+					ProductGroup = 28B4257515D4D4CB0025957A /* Products */;
+					ProjectRef = 28B4257415D4D4CB0025957A /* RestKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -2031,32 +2078,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		28AC955714B2417D00CB73FD /* libRestKit.a */ = {
+		28B4257F15D4D4CB0025957A /* libRestKit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRestKit.a;
-			remoteRef = 28AC955614B2417D00CB73FD /* PBXContainerItemProxy */;
+			remoteRef = 28B4257E15D4D4CB0025957A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		28AC955914B2417D00CB73FD /* RestKitTests.octest */ = {
+		28B4258115D4D4CB0025957A /* RestKitTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = RestKitTests.octest;
-			remoteRef = 28AC955814B2417D00CB73FD /* PBXContainerItemProxy */;
+			remoteRef = 28B4258015D4D4CB0025957A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		28AC955B14B2417D00CB73FD /* RestKit.framework */ = {
+		28B4258315D4D4CB0025957A /* RestKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = RestKit.framework;
-			remoteRef = 28AC955A14B2417D00CB73FD /* PBXContainerItemProxy */;
+			remoteRef = 28B4258215D4D4CB0025957A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		28AC955D14B2417D00CB73FD /* RestKitFrameworkTests.octest */ = {
+		28B4258515D4D4CB0025957A /* RestKitFrameworkTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = RestKitFrameworkTests.octest;
-			remoteRef = 28AC955C14B2417D00CB73FD /* PBXContainerItemProxy */;
+			remoteRef = 28B4258415D4D4CB0025957A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -2317,6 +2364,15 @@
 				281B1D0215CDDD4F0015ECBB /* 53-house.png in Resources */,
 				281B1D0315CDDD4F0015ECBB /* 53-house@2x.png in Resources */,
 				28BFF7CF15D18D340086EBF5 /* QuestionListViewController.xib in Resources */,
+				28B4255715D4C6E70025957A /* CommentViewController.xib in Resources */,
+				28B4256015D4C7050025957A /* MessageEntryBackground.png in Resources */,
+				28B4256115D4C7050025957A /* MessageEntryBackground@2x.png in Resources */,
+				28B4256215D4C7050025957A /* MessageEntryInputField.png in Resources */,
+				28B4256315D4C7050025957A /* MessageEntryInputField@2x.png in Resources */,
+				28B4256415D4C7050025957A /* MessageEntrySendButton.png in Resources */,
+				28B4256515D4C7050025957A /* MessageEntrySendButton@2x.png in Resources */,
+				28B4256615D4C7050025957A /* MessageEntrySendButtonPressed.png in Resources */,
+				28B4256715D4C7050025957A /* MessageEntrySendButtonPressed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2469,6 +2525,10 @@
 				281B1CF015CC85B50015ECBB /* Question.m in Sources */,
 				281B1CF315CC85C30015ECBB /* Answer.m in Sources */,
 				28BFF7CE15D18D340086EBF5 /* QuestionListViewController.m in Sources */,
+				28B4255615D4C6E70025957A /* CommentViewController.m in Sources */,
+				28B4256C15D4C72B0025957A /* HPGrowingTextView.m in Sources */,
+				28B4256D15D4C72B0025957A /* HPTextViewInternal.m in Sources */,
+				28B4257015D4C9420025957A /* PlacemarkComment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2488,10 +2548,10 @@
 			target = 2895003913D64559009E1BD7 /* Nina */;
 			targetProxy = 2895006813D6455A009E1BD7 /* PBXContainerItemProxy */;
 		};
-		28AC956014B2424A00CB73FD /* PBXTargetDependency */ = {
+		28B4258A15D4D4E00025957A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = RestKit;
-			targetProxy = 28AC955F14B2424A00CB73FD /* PBXContainerItemProxy */;
+			targetProxy = 28B4258915D4D4E00025957A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
