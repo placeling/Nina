@@ -25,6 +25,7 @@
 #import "UserManager.h"
 #import "NearbyPlacesViewController.h"
 #import <Twitter/Twitter.h>
+#import <RestKit/RestKit.h>
 
 @interface MemberProfileViewController() 
 -(void) blankLoad;
@@ -158,8 +159,9 @@
         RKObjectManager* objectManager = [RKObjectManager sharedManager];        
         NSString *targetURL = [NSString stringWithFormat:@"/v1/users/%@/perspectives", self.username];
         
-        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+        [objectManager loadObjectsAtResourcePath:targetURL usingBlock:^(RKObjectLoader* loader) {
             loader.userData = [NSNumber numberWithInt:13]; //use as a tag
+            loader.delegate = self;
         }];
 
     } else {
@@ -197,11 +199,11 @@
         RKObjectManager* objectManager = [RKObjectManager sharedManager];   
         NSString *targetURL = [NSString stringWithFormat:@"/v1/users/%@", self.username];
         
-        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+        [objectManager loadObjectsAtResourcePath:targetURL usingBlock:^(RKObjectLoader* loader) {
             RKObjectMapping *userMapping = [User getObjectMapping];
             [userMapping mapKeyPath:@"perspectives" toRelationship:@"perspectives" withMapping:[Perspective getObjectMapping]];
             loader.objectMapping = userMapping;
-            
+            loader.delegate = self;
             loader.userData = [NSNumber numberWithInt:10]; //use as a tag
         }];
 
@@ -840,8 +842,9 @@
         
         NSString *targetURL = [NSString stringWithFormat:@"/v1/users/%@/perspectives?start=%i", self.username, [perspectives count]];
         
-        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+        [objectManager loadObjectsAtResourcePath:targetURL usingBlock:^(RKObjectLoader* loader) {
             loader.userData = [NSNumber numberWithInt:14]; //use as a tag
+            loader.delegate = self;
         }];
         
         [self.tableView reloadData];

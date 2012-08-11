@@ -47,8 +47,9 @@
         
         NSString *targetURL = [NSString stringWithFormat:@"/v1/feeds/home_timeline"];
         
-        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {  
+        [objectManager loadObjectsAtResourcePath:targetURL usingBlock:^(RKObjectLoader* loader) {
             loader.userData = [NSNumber numberWithInt:70]; //use as a tag
+            loader.delegate = self;
         }];        
     } 
 }
@@ -73,8 +74,9 @@
         
         NSString *targetURL = [NSString stringWithFormat:@"/v1/users/notifications"];
         
-        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+        [objectManager loadObjectsAtResourcePath:targetURL usingBlock:^(RKObjectLoader* loader) {
             loader.userData = [NSNumber numberWithInt:72]; //use as a tag
+            loader.delegate = self;
         }];        
     } 
 }
@@ -134,8 +136,9 @@
             RKObjectManager* objectManager = [RKObjectManager sharedManager];        
             NSString *targetURL = [NSString stringWithFormat:@"/v1/feeds/home_timeline?start=%i", [recentActivities count]];
             
-            [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {  
+            [objectManager loadObjectsAtResourcePath:targetURL usingBlock:^(RKObjectLoader* loader) {
                 loader.userData = [NSNumber numberWithInt:71]; //use as a tag
+                loader.delegate = self;
             }];    
             
             [self.activityTableView reloadData];        
@@ -147,8 +150,9 @@
             RKObjectManager* objectManager = [RKObjectManager sharedManager];        
             NSString *targetURL = [NSString stringWithFormat:@"/v1/users/notifications?start=%i", [recentNotifications count]];
             
-            [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {  
+            [objectManager loadObjectsAtResourcePath:targetURL  usingBlock:^(RKObjectLoader* loader) {
                 loader.userData = [NSNumber numberWithInt:73]; //use as a tag
+                loader.delegate = self;
             }];    
             
             [self.activityTableView reloadData];        

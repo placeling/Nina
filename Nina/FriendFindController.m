@@ -82,8 +82,9 @@
     loading = true;
     NSString *targetURL = [NSString stringWithFormat:@"/v1/users/suggested?lat=%f&lng=%f", location.latitude, location.longitude];    
     
-    [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+    [objectManager loadObjectsAtResourcePath:targetURL usingBlock:^(RKObjectLoader* loader) {
         loader.cacheTimeoutInterval = 60*60;
+        loader.delegate = self;
         loader.userData = [NSNumber numberWithInt:100]; //use as a tag
     }];
     

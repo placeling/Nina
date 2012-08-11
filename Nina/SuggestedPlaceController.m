@@ -155,8 +155,9 @@
         }
     }
    
-    [objectManager loadObjectsAtResourcePath:requestUrl delegate:self block:^(RKObjectLoader* loader) {        
+    [objectManager loadObjectsAtResourcePath:requestUrl usingBlock:^(RKObjectLoader* loader) {
         loader.userData = requestTag;
+        loader.delegate = self;
     }];
 
 }

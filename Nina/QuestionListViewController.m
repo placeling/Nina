@@ -79,8 +79,9 @@
     
     self.dataLoaded = false;
     
-    [objectManager loadObjectsAtResourcePath:requestUrl delegate:self block:^(RKObjectLoader* loader) {      
+    [objectManager loadObjectsAtResourcePath:requestUrl usingBlock:^(RKObjectLoader* loader) {
         loader.userData = [NSNumber numberWithInt:120];
+        loader.delegate = self;
     }];
 }
 

@@ -42,8 +42,9 @@
     
     loading = true;
     
-    [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+    [objectManager loadObjectsAtResourcePath:targetURL usingBlock:^(RKObjectLoader* loader) {
         loader.cacheTimeoutInterval = 60;
+        loader.delegate = self;
         loader.userData = [NSNumber numberWithInt:100]; //use as a tag
     }];
 }
