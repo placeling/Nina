@@ -28,6 +28,7 @@
 #import "Activity.h"
 #import "Question.h"
 #import "Answer.h"
+#import "PlacemarkComment.h"
 
 
 @implementation NinaAppDelegate
@@ -43,7 +44,7 @@
     DLog(@"Launching with options %@", launchOptions);
     
     //Restkit initialization  
-    RKObjectManager* objectManager = [RKObjectManager objectManagerWithBaseURL:[NinaHelper getHostname]];
+    RKObjectManager* objectManager = [RKObjectManager objectManagerWithBaseURL:[NSURL URLWithString:[NinaHelper getHostname] ] ];
     [[objectManager client] setOAuth1AccessToken:[NinaHelper getAccessToken]];
     [[objectManager client] setOAuth1AccessTokenSecret:[NinaHelper getAccessTokenSecret]];
     [[objectManager client] setOAuth1ConsumerKey:[NinaHelper getConsumerKey]];
@@ -57,6 +58,8 @@
                             stringByAppendingPathComponent:@"Documents"] 
                            stringByAppendingPathComponent:@"NinaRestCache.sqlite"];        
     [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+    
+    DLog(@"Initializing restkit with base url: %@", objectManager.client.baseURL);
     
     //RKManagedObjectStore* objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:@"NinaRestCache.sqlite"];
     //objectManager.objectStore = objectStore;
@@ -88,6 +91,11 @@
     
     [objectManager.mappingProvider setMapping:[Question getObjectMapping] forKeyPath:@"questions"];
     [objectManager.mappingProvider setMapping:[Answer getObjectMapping] forKeyPath:@"answers"];
+    
+    RKObjectRouter *router = [RKObjectManager sharedManager].router;
+    
+    [router routeClass:[PlacemarkComment class] toResourcePath:@"/v1/perspectives/:perspectiveId/placemark_comments" forMethod:RKRequestMethodPOST];
+    
     
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     
@@ -335,7 +343,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
 
 -(void) applicationDidBecomeActive:(UIApplication *) application
 {
-    DLog(@"App Became active with state %@", [UIApplication sharedApplication].applicationState);
     if ( [UIApplication sharedApplication].applicationState != UIApplicationStateBackground ){
         CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
         [locationManager stopMonitoringSignificantLocationChanges];
