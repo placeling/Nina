@@ -16,12 +16,14 @@
     NSString *comment;
     NSDate *createdAt;
     User *user;
+    NSString *perspectiveId;
 }
 
 @property (nonatomic, retain) NSString *commentId;
 @property (nonatomic, retain) NSString *comment;
 @property (nonatomic, retain) NSDate *createdAt;
 @property (nonatomic, retain) User *user;
+@property (nonatomic, retain) NSString *perspectiveId;
 
 +(RKObjectMapping*)getObjectMapping;
 

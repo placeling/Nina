@@ -11,7 +11,7 @@
 
 @implementation PlacemarkComment
 
-@synthesize commentId, comment, createdAt, user;
+@synthesize commentId, comment, createdAt, user, perspectiveId;
 
 +(RKObjectMapping*)getObjectMapping{
     RKObjectMapping* commentMapping = [RKObjectMapping mappingForClass:[PlacemarkComment class]];
@@ -33,6 +33,7 @@
     [comment release];
     [createdAt release];
     [user release];
+    [perspectiveId release];
     
     [super dealloc];
 }

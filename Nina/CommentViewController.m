@@ -96,6 +96,8 @@
     
     dataLoaded = false;
     [self loadComments];
+    
+    self.navigationItem.title = @"Comments";
 }
 
 -(void)loadComments{
@@ -104,8 +106,9 @@
     NSString *targetURL = [NSString stringWithFormat:@"/v1/perspectives/%@/placemark_comments", self.perspective.perspectiveId];
     
     [objectManager.mappingProvider setMapping:[PlacemarkComment getObjectMapping] forKeyPath:@"placemark_comments"];
-    [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {
+    [objectManager loadObjectsAtResourcePath:targetURL usingBlock:^(RKObjectLoader* loader) {
         loader.userData = [NSNumber numberWithInt:130]; //use as a tag
+        loader.delegate = self;
     }];
     
     loadingMore = true;
@@ -127,11 +130,10 @@
     [[RKObjectManager sharedManager].mappingProvider setSerializationMapping:commentSerializationMapping forClass:[PlacemarkComment class] ];
     
     PlacemarkComment *comment = [PlacemarkComment new];
-    
+    comment.perspectiveId = self.perspective.perspectiveId;
     comment.comment = self.textView.text;
     
-     [[RKObjectManager sharedManager] postObject:comment delegate:self block:^(RKObjectLoader *loader){
-        loader.resourcePath = [NSString stringWithFormat:@"/v1/perspectives/%@/placemark_comments", perspective.perspectiveId ];
+     [[RKObjectManager sharedManager] postObject:comment usingBlock:^(RKObjectLoader *loader){
         loader.delegate = self;
     }];
 }
@@ -150,9 +152,10 @@
     dataLoaded = true;
     
     if ( [(NSNumber*)objectLoader.userData intValue] == 130){
-        
         [self.comments removeAllObjects];
-        [self.comments addObjectsFromArray:objects];
+        for (PlacemarkComment *comment in objects){
+            [self.comments addObject:comment];
+        }
     }
     
     [self.tableView reloadData];
