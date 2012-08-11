@@ -231,9 +231,10 @@ typedef enum {
     // Call url to get profile details                
     RKObjectManager* objectManager = [RKObjectManager sharedManager];       
     
-    [objectManager loadObjectsAtResourcePath:[self getRestUrl] delegate:self block:^(RKObjectLoader* loader) {     
+    [objectManager loadObjectsAtResourcePath:[self getRestUrl] usingBlock:^(RKObjectLoader* loader) {
         loader.objectMapping = [Place getObjectMapping];
         loader.userData = [NSNumber numberWithInt:0]; //use as a tag
+        loader.delegate = self;
     }];
     
     //secondary loaf of other information
@@ -789,10 +790,11 @@ typedef enum {
             // Call url to get profile details                
             RKObjectManager* objectManager = [RKObjectManager sharedManager];       
             
-            [objectManager loadObjectsAtResourcePath:[self getRestUrl] delegate:self block:^(RKObjectLoader* loader) {     
+            [objectManager loadObjectsAtResourcePath:[self getRestUrl] usingBlock:^(RKObjectLoader* loader) {
                 //loader
                 loader.objectMapping = [Place getObjectMapping];
                 loader.userData = [NSNumber numberWithInt:0]; //use as a tag
+                loader.delegate = self;
             }];
         } 
     } else if (index == 1){
@@ -810,9 +812,10 @@ typedef enum {
             // Call url to get profile details                
             RKObjectManager* objectManager = [RKObjectManager sharedManager];       
             
-            [objectManager loadObjectsAtResourcePath:urlText delegate:self block:^(RKObjectLoader* loader) {     
+            [objectManager loadObjectsAtResourcePath:urlText usingBlock:^(RKObjectLoader* loader) {
                 //loader.objectMapping = [Perspective getObjectMapping];
                 loader.userData = [NSNumber numberWithInt:2]; //use as a tag
+                loader.delegate = self;
             }];
             
             [followingPerspectives addObject:@"Loading"]; //marker for spinner cell
@@ -832,9 +835,10 @@ typedef enum {
             // Call url to get profile details                
             RKObjectManager* objectManager = [RKObjectManager sharedManager];       
             
-            [objectManager loadObjectsAtResourcePath:urlText delegate:self block:^(RKObjectLoader* loader) {     
+            [objectManager loadObjectsAtResourcePath:urlText usingBlock:^(RKObjectLoader* loader) {
                 //loader.objectMapping = [Perspective getObjectMapping];
                 loader.userData = [NSNumber numberWithInt:3]; //use as a tag
+                loader.delegate = self;
             }];
             
             [everyonePerspectives addObject:@"Loading"]; //marker for spinner cell
