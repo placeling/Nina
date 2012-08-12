@@ -153,7 +153,7 @@
         WBNoticeView *nm = [WBNoticeView defaultManager];
         [nm showErrorNoticeInView:sender.view title:@"Unauthorized" message:@"Token fail, please re-login"];
         
-       [self clearCredentials];
+       //[self clearCredentials];
     }else if (400 <= statusCode && statusCode <= 499){
         //non-401 400 series server error
         NSNumber *code = [NSNumber numberWithInt:statusCode];

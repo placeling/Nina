@@ -19,6 +19,7 @@
     
     UITableView *_tableView;
     UIView *containerView;
+    UIButton *doneButton;
     
     HPGrowingTextView *textView;
     

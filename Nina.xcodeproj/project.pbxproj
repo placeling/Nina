@@ -299,6 +299,8 @@
 		28B4256D15D4C72B0025957A /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B4256B15D4C72B0025957A /* HPTextViewInternal.m */; };
 		28B4257015D4C9420025957A /* PlacemarkComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B4256F15D4C9420025957A /* PlacemarkComment.m */; };
 		28B4258B15D4D4EB0025957A /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28B4257F15D4D4CB0025957A /* libRestKit.a */; };
+		28B425B615D6DF370025957A /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425B415D6DF370025957A /* CommentTableViewCell.m */; };
+		28B425B715D6DF370025957A /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B425B515D6DF370025957A /* CommentTableViewCell.xib */; };
 		28B5D8B314907E0000763D0C /* DefaultPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8B114907E0000763D0C /* DefaultPhoto.png */; };
 		28B5D8B414907E0000763D0C /* DefaultPhoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8B214907E0000763D0C /* DefaultPhoto@2x.png */; };
 		28B5D8D6149096CC00763D0C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8BB149096CC00763D0C /* LICENSE */; };
@@ -458,6 +460,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 25160D1514564E810060A5C5;
 			remoteInfo = RestKit;
+		};
+		28B4259F15D586990025957A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 28B4257415D4D4CB0025957A /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 259C301615128079003066A2;
+			remoteInfo = RestKitResources;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -906,6 +915,9 @@
 		28B4256E15D4C9420025957A /* PlacemarkComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacemarkComment.h; sourceTree = "<group>"; };
 		28B4256F15D4C9420025957A /* PlacemarkComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacemarkComment.m; sourceTree = "<group>"; };
 		28B4257415D4D4CB0025957A /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = SOURCE_ROOT; };
+		28B425B315D6DF370025957A /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
+		28B425B415D6DF370025957A /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
+		28B425B515D6DF370025957A /* CommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
 		28B5D8B114907E0000763D0C /* DefaultPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultPhoto.png; sourceTree = "<group>"; };
 		28B5D8B214907E0000763D0C /* DefaultPhoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DefaultPhoto@2x.png"; sourceTree = "<group>"; };
 		28B5D8BB149096CC00763D0C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -1682,15 +1694,15 @@
 		28A4377614327ED5005F192B /* ActivityFeed */ = {
 			isa = PBXGroup;
 			children = (
+				28EE54F41434DDC600E36686 /* ActivityTableViewCell.h */,
+				28EE54F51434DDC600E36686 /* ActivityTableViewCell.m */,
+				28EE54F61434DDC600E36686 /* ActivityTableViewCell.xib */,
 				281B1CE815CB6B8F0015ECBB /* NotificationTableViewCell.h */,
 				281B1CE915CB6B8F0015ECBB /* NotificationTableViewCell.m */,
 				281B1CEA15CB6B900015ECBB /* NotificationTableViewCell.xib */,
 				28A4377814327EFA005F192B /* ActivityFeedViewController.h */,
 				28A4377914327EFA005F192B /* ActivityFeedViewController.m */,
 				28A4377A14327EFA005F192B /* ActivityFeedViewController.xib */,
-				28EE54F41434DDC600E36686 /* ActivityTableViewCell.h */,
-				28EE54F51434DDC600E36686 /* ActivityTableViewCell.m */,
-				28EE54F61434DDC600E36686 /* ActivityTableViewCell.xib */,
 			);
 			name = ActivityFeed;
 			sourceTree = "<group>";
@@ -1719,6 +1731,9 @@
 		28B38E2E14170ED800D4025F /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				28B425B315D6DF370025957A /* CommentTableViewCell.h */,
+				28B425B415D6DF370025957A /* CommentTableViewCell.m */,
+				28B425B515D6DF370025957A /* CommentTableViewCell.xib */,
 				28B4255315D4C6E70025957A /* CommentViewController.h */,
 				28B4255415D4C6E70025957A /* CommentViewController.m */,
 				28B4255515D4C6E70025957A /* CommentViewController.xib */,
@@ -1770,6 +1785,7 @@
 				28B4258115D4D4CB0025957A /* RestKitTests.octest */,
 				28B4258315D4D4CB0025957A /* RestKit.framework */,
 				28B4258515D4D4CB0025957A /* RestKitFrameworkTests.octest */,
+				28B425A015D586990025957A /* RestKitResources.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2106,6 +2122,13 @@
 			remoteRef = 28B4258415D4D4CB0025957A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		28B425A015D586990025957A /* RestKitResources.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitResources.bundle;
+			remoteRef = 28B4259F15D586990025957A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -2373,6 +2396,7 @@
 				28B4256515D4C7050025957A /* MessageEntrySendButton@2x.png in Resources */,
 				28B4256615D4C7050025957A /* MessageEntrySendButtonPressed.png in Resources */,
 				28B4256715D4C7050025957A /* MessageEntrySendButtonPressed@2x.png in Resources */,
+				28B425B715D6DF370025957A /* CommentTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2529,6 +2553,7 @@
 				28B4256C15D4C72B0025957A /* HPGrowingTextView.m in Sources */,
 				28B4256D15D4C72B0025957A /* HPTextViewInternal.m in Sources */,
 				28B4257015D4C9420025957A /* PlacemarkComment.m in Sources */,
+				28B425B615D6DF370025957A /* CommentTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

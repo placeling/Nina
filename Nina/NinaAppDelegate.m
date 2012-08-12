@@ -91,6 +91,7 @@
     
     [objectManager.mappingProvider setMapping:[Question getObjectMapping] forKeyPath:@"questions"];
     [objectManager.mappingProvider setMapping:[Answer getObjectMapping] forKeyPath:@"answers"];
+    [objectManager.mappingProvider setMapping:[PlacemarkComment getObjectMapping] forKeyPath:@"placemark_comment"];
     
     RKObjectRouter *router = [RKObjectManager sharedManager].router;
     

@@ -7,6 +7,7 @@
 //
 
 #import "CommentViewController.h"
+#import "CommentTableViewCell.h"
 
 @interface CommentViewController ()
 -(void) loadComments;
@@ -78,26 +79,27 @@
     UIImage *sendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
     UIImage *selectedSendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
     
-	UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-	doneBtn.frame = CGRectMake(self.containerView.frame.size.width - 69, 8, 63, 27);
-    doneBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
-	[doneBtn setTitle:@"Done" forState:UIControlStateNormal];
+	doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	doneButton.frame = CGRectMake(self.containerView.frame.size.width - 69, 8, 63, 27);
+    doneButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
+	[doneButton setTitle:@"Send" forState:UIControlStateNormal];
     
-    [doneBtn setTitleShadowColor:[UIColor colorWithWhite:0 alpha:0.4] forState:UIControlStateNormal];
-    doneBtn.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
-    doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+    [doneButton setTitleShadowColor:[UIColor colorWithWhite:0 alpha:0.4] forState:UIControlStateNormal];
+    doneButton.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
+    doneButton.titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     
-    [doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[doneBtn addTarget:self action:@selector(submitComment) forControlEvents:UIControlEventTouchUpInside];
-    [doneBtn setBackgroundImage:sendBtnBackground forState:UIControlStateNormal];
-    [doneBtn setBackgroundImage:selectedSendBtnBackground forState:UIControlStateSelected];
-	[self.containerView addSubview:doneBtn];
+    [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	[doneButton addTarget:self action:@selector(submitComment) forControlEvents:UIControlEventTouchUpInside];
+    [doneButton setBackgroundImage:sendBtnBackground forState:UIControlStateNormal];
+    [doneButton setBackgroundImage:selectedSendBtnBackground forState:UIControlStateSelected];
+	[self.containerView addSubview:doneButton];
     self.containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     
     dataLoaded = false;
     [self loadComments];
     
     self.navigationItem.title = @"Comments";
+    
 }
 
 -(void)loadComments{
@@ -133,9 +135,12 @@
     comment.perspectiveId = self.perspective.perspectiveId;
     comment.comment = self.textView.text;
     
+    [doneButton setEnabled:false];
+    
      [[RKObjectManager sharedManager] postObject:comment usingBlock:^(RKObjectLoader *loader){
         loader.delegate = self;
-    }];
+        loader.userData = [NSNumber numberWithInt:131]; //use as a tag
+     }];
 }
 
 - (void)viewDidUnload
@@ -150,21 +155,27 @@
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     loadingMore = false;
     dataLoaded = true;
+    [doneButton setEnabled:true];
     
     if ( [(NSNumber*)objectLoader.userData intValue] == 130){
         [self.comments removeAllObjects];
         for (PlacemarkComment *comment in objects){
             [self.comments addObject:comment];
         }
+        [self.tableView reloadData];
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 131){
+        [self.comments addObjectsFromArray:objects]; //should just be one
+        self.textView.text = @"";
+        [self.tableView reloadData];
+        NSIndexPath* ipath = [NSIndexPath indexPathForRow: [self.comments count]-1 inSection:0];
+        [self.tableView scrollToRowAtIndexPath: ipath atScrollPosition: UITableViewScrollPositionTop animated: YES];
     }
-    
-    [self.tableView reloadData];
-    
 }
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
     //objectLoader.response.
     loadingMore = false;
+    [doneButton setEnabled:true];
     dataLoaded = true;
     [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
     DLog(@"Encountered an error: %@", error);
@@ -194,9 +205,18 @@
 	
 	// set views with new info
 	containerView.frame = containerFrame;
-	
-	// commit animations
+    
+    CGSize kbSize = [[[note userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+    
 	[UIView commitAnimations];
+    
+    NSIndexPath* ipath = [NSIndexPath indexPathForRow:[self.comments count]-1 inSection:0];
+    [self.tableView scrollToRowAtIndexPath: ipath atScrollPosition:UITableViewScrollPositionBottom animated: YES];
+
 }
 
 -(void) keyboardWillHide:(NSNotification *)note{
@@ -215,6 +235,10 @@
     
 	// set views with new info
 	containerView.frame = containerFrame;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
 	
 	// commit animations
 	[UIView commitAnimations];
@@ -230,7 +254,9 @@
 	containerView.frame = r;
 }
 
-
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    // [self.textView resignFirstResponder];
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -257,7 +283,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *questionCellIdentifier = @"CommentCell";
+    static NSString *commentCellIdentifier = @"CommentCell";
     
     PlacemarkComment *comment;
     UITableViewCell *cell;
@@ -275,24 +301,23 @@
         }
         
     } else {
-        UITableViewCell *pCell;
-        pCell = [tableView dequeueReusableCellWithIdentifier:questionCellIdentifier];
-        if (pCell == nil){
-            pCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:questionCellIdentifier] autorelease];
-        }
         comment = [[self comments] objectAtIndex:indexPath.row];
         
-        //[pCell.imageView setImage:[UIImage imageNamed:@"QuestionLightbulb.png"]];
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"CommentTableViewCell" owner:self options:nil];
         
-        
-        pCell.textLabel.text = comment.comment;
-        
-        cell = pCell;
+        for(id item in objects){
+            if ( [item isKindOfClass:[UITableViewCell class]]){
+                CommentTableViewCell *pcell = (CommentTableViewCell *)item;
+                [CommentTableViewCell setupCell:pcell forComment:comment];
+                cell = pcell;
+                break;
+            }
+        }
+        [cell setUserInteractionEnabled:false];
     }
     
     return cell;
 }
-
 
 -(void)dealloc{
     [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
