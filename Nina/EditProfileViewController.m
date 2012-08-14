@@ -429,7 +429,7 @@
         
         cell.textLabel.text = @"Twitter";
         
-        if (user.facebook){
+        if (user.twitter){
             [cell.imageView setImage:[UIImage imageNamed:@"twitter_icon.png"]];
             [cell.detailTextLabel setText: @"You are connected via Twitter"];
         } else {
