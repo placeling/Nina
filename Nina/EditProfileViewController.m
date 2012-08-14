@@ -314,7 +314,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -325,6 +325,8 @@
     } else if (section == 1){
         return 3;
     } else if (section ==2){
+        return 1;
+    } else if (section ==3){
         return 1;
     } else {
         return 1;
@@ -404,7 +406,37 @@
         }
         
         cell = eCell;
-    } else if (indexPath.section == 3){
+    } else if (indexPath.section == 2){
+        cell = [tableView dequeueReusableCellWithIdentifier:authCellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:authCellIdentifier] autorelease];
+        }
+        
+        cell.textLabel.text = @"Facebook";
+        
+        if (user.facebook){
+            [cell.imageView setImage:[UIImage imageNamed:@"facebook_icon.png"]];
+            [cell.detailTextLabel setText: @"You are connected via Facebook"];
+        } else {
+            [cell.imageView setImage:[UIImage imageNamed:@"facebook_icon_bw.png"]];
+            [cell.detailTextLabel setText: @"Tap to connect with Facebook"];
+        }
+    }  else if (indexPath.section == 3){
+        cell = [tableView dequeueReusableCellWithIdentifier:authCellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:authCellIdentifier] autorelease];
+        }
+        
+        cell.textLabel.text = @"Twitter";
+        
+        if (user.facebook){
+            [cell.imageView setImage:[UIImage imageNamed:@"twitter_icon.png"]];
+            [cell.detailTextLabel setText: @"You are connected via Twitter"];
+        } else {
+            [cell.imageView setImage:[UIImage imageNamed:@"twitter_icon_bw.png"]];
+            [cell.detailTextLabel setText: @"Tap to connect with Twitter"];
+        }
+    } else if (indexPath.section == 4){
         cell = [tableView dequeueReusableCellWithIdentifier:homeCellIdentifier];
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:homeCellIdentifier] autorelease];
@@ -422,23 +454,7 @@
         cell.textLabel.textAlignment = UITextAlignmentCenter;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [homeLocation release];
-    } else{ // if (indexPath.section == 2){
-        //if (indexPath.row == 0){
-        cell = [tableView dequeueReusableCellWithIdentifier:authCellIdentifier];
-        if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:authCellIdentifier] autorelease];
-        }   
-        
-        cell.textLabel.text = @"Facebook";
-        
-        if (user.facebook){
-            [cell.imageView setImage:[UIImage imageNamed:@"facebook_icon.png"]];
-            [cell.detailTextLabel setText: @"You are connected via Facebook"];
-        } else {
-            [cell.imageView setImage:[UIImage imageNamed:@"facebook_icon_bw.png"]];
-            [cell.detailTextLabel setText: @"Tap to connect with Facebook"];
-        }
-    }
+    } 
     
     return cell;
 }
@@ -480,7 +496,18 @@
             }
         }
         
+    } else if (indexPath.section == 3 && indexPath.row == 0){
+        
+        if (self.user.twitter == nil){
+            [self authorizeTwitter];
+        }
+        
     }
+}
+
+-(void) handleTwitterCredentials:(NSDictionary *)creds{
+    [super handleTwitterCredentials:creds];
+    [self.tableView reloadData];
 }
 
 

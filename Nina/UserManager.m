@@ -7,6 +7,7 @@
 //
 
 #import "UserManager.h"
+#import <RestKit/RestKit.h>
 
 @implementation UserManager
 
@@ -16,8 +17,18 @@ static User *sharedMeUser = nil;
 + (id)sharedMeUser {
     
     @synchronized(self) {
-        if(sharedMeUser == nil)
-            sharedMeUser = [[User alloc] init];
+        if(sharedMeUser == nil){        
+            [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/v1/users/me.json" usingBlock:^(RKObjectLoader* loader) {
+                RKObjectMapping *userMapping = [User getObjectMapping];
+                loader.objectMapping = userMapping;
+                [loader setOnDidLoadObjects:^(NSArray *objects){
+                    User *user = [objects objectAtIndex:0];
+                    [UserManager setUser:user];
+                }];
+                [loader sendSynchronously];
+            }];
+            
+        }
     }
     return sharedMeUser;
 }
