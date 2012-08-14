@@ -159,4 +159,10 @@
 
 +(NSString*) getFacebookAppId;
 
++(BOOL) twitterEnabled;
+
++(NSString*) getTwitterKey;
+
++(NSString*) getTwitterSecret;
+
 @end

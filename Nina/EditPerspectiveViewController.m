@@ -204,13 +204,18 @@
     
     NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
     Facebook *facebook = appDelegate.facebook;
-    facebookEnabled = false;
     
-    twitterEnabled = true;
-    [self twitterToggle];
+    facebookEnabled = false;
+    twitterEnabled = false;
     
     if ( [facebook isSessionValid] ) {
         [self facebookToggle];
+    }
+    
+    User *user = [UserManager sharedMeUser];
+    
+    if ( user.twitter ){
+        [self twitterToggle];
     }
     
     [self refreshImages];
@@ -272,6 +277,10 @@
         [request setPostValue:@"true" forKey:@"fb_post"];
     }
     
+    if (twitterEnabled){
+        [request setPostValue:@"true" forKey:@"twitter_post"];
+    }
+    
     if ( delayedPost ){
         [request setPostValue:[NSNumber numberWithInt:delayTime] forKey:@"post_delay"];
     }
@@ -315,6 +324,14 @@
 	[imgPicker release];
 }
 
+
+-(void)handleTwitterCredentials:(NSDictionary *)creds{
+    [super handleTwitterCredentials:creds];
+    twitterEnabled = true;
+    [self.twitterButton setImage:[UIImage imageNamed:@"twitter_selected.png"] forState:UIControlStateNormal];
+    
+}
+
 -(IBAction) twitterToggle{
     
     if (twitterEnabled){
@@ -322,15 +339,18 @@
         [self.twitterButton setImage:[UIImage imageNamed:@"twitter_unselected.png"] forState:UIControlStateNormal];
         
     } else {        
-        twitterEnabled = true;
-        [self.twitterButton setImage:[UIImage imageNamed:@"twitter_selected.png"] forState:UIControlStateNormal];
+        if ( [NinaHelper twitterEnabled] ){
+            twitterEnabled = true;
+            [self.twitterButton setImage:[UIImage imageNamed:@"twitter_selected.png"] forState:UIControlStateNormal];
+        } else {
+            [self authorizeTwitter];
+        }
     }
     
 }
 
 
--(IBAction)facebookToggle{
-    
+-(IBAction)facebookToggle{    
     if (facebookEnabled){
         facebookEnabled = false;
         [self.facebookButton setImage:[UIImage imageNamed:@"facebook_unselected.png"] forState:UIControlStateNormal];

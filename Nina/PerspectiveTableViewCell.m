@@ -189,7 +189,11 @@
     if(perspective.photos && perspective.photos.count > 0){
         CGRect scrollFrame = cell.scrollView.frame;
         
-        [cell.scrollView setFrame:CGRectMake(scrollFrame.origin.x, verticalCursor, scrollFrame.size.width, 160)];
+        if (perspective.photos.count == 1) {//special case where it isn't actually wide enough
+            [cell.scrollView setFrame:CGRectMake(scrollFrame.origin.x, verticalCursor,160 , 160)];
+        } else {
+            [cell.scrollView setFrame:CGRectMake(scrollFrame.origin.x, verticalCursor, scrollFrame.size.width, 160)];
+        }
         
         [cell.scrollView setCanCancelContentTouches:NO];
         

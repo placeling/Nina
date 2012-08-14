@@ -473,4 +473,20 @@
     return @"280758755284342";
 }
 
+
++(BOOL) twitterEnabled {    
+    User *user = [UserManager sharedMeUser];
+    
+    return ( user && user.twitter ); 
+}
+
+
++(NSString*) getTwitterKey{
+    return @"xPkAq3QvMxR4Py1OuI0Mw";
+}
+
++(NSString*) getTwitterSecret{
+    return @"23nCVVsBPLfYxjLSnqiR7LML93rv1MVXOUjeJyOWU";
+}
+
 @end

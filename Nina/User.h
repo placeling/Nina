@@ -73,7 +73,9 @@
 
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;
 
--(NSDictionary*) facebook;
+-(Authentication*) facebook;
+-(Authentication*) twitter;
+
 -(NSString*) userThumbUrl;
 
 -(CLLocationCoordinate2D) homeLocation;

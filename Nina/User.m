@@ -97,13 +97,24 @@
     }
 }
 
--(NSDictionary*) facebook{
+-(Authentication*) facebook{    
+    for (Authentication *auth in self.auths){
+        if ([auth.provider isEqualToString:@"facebook"]){
+            return auth;
+        }
+    }
     
-    if ([self.auths count] > 0){
-        return [self.auths objectAtIndex:0];        
-    } else {
-        return nil;
-    }    
+    return nil;
+}
+
+-(Authentication*) twitter{
+    for (Authentication *auth in self.auths){
+        if ([auth.provider isEqualToString:@"twitter"]){
+            return auth;
+        }
+    }
+    
+    return nil;
 }
 
 -(CLLocationCoordinate2D)homeLocation{

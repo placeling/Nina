@@ -301,6 +301,13 @@
 		28B4258B15D4D4EB0025957A /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28B4257F15D4D4CB0025957A /* libRestKit.a */; };
 		28B425B615D6DF370025957A /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425B415D6DF370025957A /* CommentTableViewCell.m */; };
 		28B425B715D6DF370025957A /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B425B515D6DF370025957A /* CommentTableViewCell.xib */; };
+		28B425C315D8AD0F0025957A /* TWSignedRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425C215D8AD0F0025957A /* TWSignedRequest.m */; };
+		28B425C915D8AD720025957A /* OAuth+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425C615D8AD720025957A /* OAuth+Additions.m */; };
+		28B425CA15D8AD720025957A /* OAuthCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425C815D8AD720025957A /* OAuthCore.m */; };
+		28B425CF15D988390025957A /* TWSignedRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425C215D8AD0F0025957A /* TWSignedRequest.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		28B425D015D988BE0025957A /* OAuth+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425C615D8AD720025957A /* OAuth+Additions.m */; };
+		28B425D115D988BE0025957A /* OAuthCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425C815D8AD720025957A /* OAuthCore.m */; };
+		28B425D815D989140025957A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425D715D989140025957A /* NSData+Base64.m */; };
 		28B5D8B314907E0000763D0C /* DefaultPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8B114907E0000763D0C /* DefaultPhoto.png */; };
 		28B5D8B414907E0000763D0C /* DefaultPhoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8B214907E0000763D0C /* DefaultPhoto@2x.png */; };
 		28B5D8D6149096CC00763D0C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8BB149096CC00763D0C /* LICENSE */; };
@@ -918,6 +925,14 @@
 		28B425B315D6DF370025957A /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
 		28B425B415D6DF370025957A /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
 		28B425B515D6DF370025957A /* CommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		28B425C115D8AD0F0025957A /* TWSignedRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWSignedRequest.h; sourceTree = "<group>"; };
+		28B425C215D8AD0F0025957A /* TWSignedRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWSignedRequest.m; sourceTree = "<group>"; };
+		28B425C515D8AD720025957A /* OAuth+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OAuth+Additions.h"; sourceTree = "<group>"; };
+		28B425C615D8AD720025957A /* OAuth+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OAuth+Additions.m"; sourceTree = "<group>"; };
+		28B425C715D8AD720025957A /* OAuthCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthCore.h; sourceTree = "<group>"; };
+		28B425C815D8AD720025957A /* OAuthCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAuthCore.m; sourceTree = "<group>"; };
+		28B425D615D989140025957A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		28B425D715D989140025957A /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		28B5D8B114907E0000763D0C /* DefaultPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultPhoto.png; sourceTree = "<group>"; };
 		28B5D8B214907E0000763D0C /* DefaultPhoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DefaultPhoto@2x.png"; sourceTree = "<group>"; };
 		28B5D8BB149096CC00763D0C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -1549,8 +1564,11 @@
 		2895017713D67896009E1BD7 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				28B425C415D8AD590025957A /* ABAUTHCORE */,
 				28B4256815D4C72B0025957A /* HPGrowingTextView.h */,
 				28B4256915D4C72B0025957A /* HPGrowingTextView.m */,
+				28B425C115D8AD0F0025957A /* TWSignedRequest.h */,
+				28B425C215D8AD0F0025957A /* TWSignedRequest.m */,
 				28B4256A15D4C72B0025957A /* HPTextViewInternal.h */,
 				28B4256B15D4C72B0025957A /* HPTextViewInternal.m */,
 				281B1CBE15C9AC9E0015ECBB /* FGallery */,
@@ -1788,6 +1806,19 @@
 				28B425A015D586990025957A /* RestKitResources.bundle */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		28B425C415D8AD590025957A /* ABAUTHCORE */ = {
+			isa = PBXGroup;
+			children = (
+				28B425D615D989140025957A /* NSData+Base64.h */,
+				28B425D715D989140025957A /* NSData+Base64.m */,
+				28B425C515D8AD720025957A /* OAuth+Additions.h */,
+				28B425C615D8AD720025957A /* OAuth+Additions.m */,
+				28B425C715D8AD720025957A /* OAuthCore.h */,
+				28B425C815D8AD720025957A /* OAuthCore.m */,
+			);
+			name = ABAUTHCORE;
 			sourceTree = "<group>";
 		};
 		28B5D8B9149096CB00763D0C /* SDWebImage */ = {
@@ -2432,6 +2463,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28B425D015D988BE0025957A /* OAuth+Additions.m in Sources */,
+				28B425D115D988BE0025957A /* OAuthCore.m in Sources */,
+				28B425CF15D988390025957A /* TWSignedRequest.m in Sources */,
 				2895004C13D64559009E1BD7 /* main.m in Sources */,
 				2895004F13D6455A009E1BD7 /* NinaAppDelegate.m in Sources */,
 				289501CF13D67896009E1BD7 /* ASIAuthenticationDialog.m in Sources */,
@@ -2554,6 +2588,7 @@
 				28B4256D15D4C72B0025957A /* HPTextViewInternal.m in Sources */,
 				28B4257015D4C9420025957A /* PlacemarkComment.m in Sources */,
 				28B425B615D6DF370025957A /* CommentTableViewCell.m in Sources */,
+				28B425D815D989140025957A /* NSData+Base64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2562,6 +2597,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2895007413D6455A009E1BD7 /* NinaTests.m in Sources */,
+				28B425C315D8AD0F0025957A /* TWSignedRequest.m in Sources */,
+				28B425C915D8AD720025957A /* OAuth+Additions.m in Sources */,
+				28B425CA15D8AD720025957A /* OAuthCore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
