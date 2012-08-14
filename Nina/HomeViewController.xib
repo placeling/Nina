@@ -3,20 +3,20 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1296</int>
 		<string key="IBDocument.SystemVersion">11E2620</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2549</string>
 		<string key="IBDocument.AppKitVersion">1138.47</string>
 		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1181</string>
+			<string key="NS.object.0">1498</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<string>IBUIScrollView</string>
-			<string>IBUIButton</string>
-			<string>IBUIView</string>
-			<string>IBUILabel</string>
 			<string>IBProxyObject</string>
+			<string>IBUIButton</string>
+			<string>IBUILabel</string>
+			<string>IBUIScrollView</string>
+			<string>IBUIView</string>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -130,7 +130,7 @@
 					<object class="IBUILabel" id="15055512">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{180, 91}, {77, 21}}</string>
+						<string key="NSFrame">{{160, 89}, {111, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="295301298"/>
@@ -139,7 +139,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Questions</string>
+						<string key="IBUIText">Activity Feed</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
@@ -283,7 +283,7 @@
 					<object class="IBUIButton" id="1012198046">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{167, 5}, {102, 110}}</string>
+						<string key="NSFrame">{{166, 7}, {99, 108}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="15055512"/>
@@ -299,7 +299,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="839236553"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">QuestionLightbulb.png</string>
+							<string key="NSResourceName">feed@2x.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="330832871"/>
 						<reference key="IBUIFont" ref="646591182"/>
@@ -425,12 +425,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">questions</string>
+						<string key="label">activityFeed</string>
 						<reference key="source" ref="1012198046"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">65</int>
+					<int key="connectionID">66</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -451,7 +451,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="286212048"/>
 							<reference ref="931022643"/>
-							<reference ref="15055512"/>
 							<reference ref="713298254"/>
 							<reference ref="295301298"/>
 							<reference ref="699192188"/>
@@ -459,6 +458,7 @@
 							<reference ref="86865012"/>
 							<reference ref="934564687"/>
 							<reference ref="1012198046"/>
+							<reference ref="15055512"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -587,7 +587,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">65</int>
+			<int key="maxID">66</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -782,7 +782,7 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>PeopleIcon.png</string>
 				<string>PlaceMarkIt.png</string>
-				<string>QuestionLightbulb.png</string>
+				<string>feed@2x.png</string>
 				<string>mymap@2x.png</string>
 				<string>profile.png</string>
 			</object>
@@ -790,11 +790,11 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{616, 332}</string>
 				<string>{241, 93}</string>
-				<string>{32, 51}</string>
+				<string>{150, 150}</string>
 				<string>{178, 178}</string>
 				<string>{89, 89}</string>
 			</object>
 		</object>
-		<string key="IBCocoaTouchPluginVersion">1181</string>
+		<string key="IBCocoaTouchPluginVersion">1498</string>
 	</data>
 </archive>

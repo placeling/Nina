@@ -251,6 +251,7 @@
     ActivityFeedViewController *activityFeedViewController = [[ActivityFeedViewController alloc] init];
     
     [self.navigationController pushViewController:activityFeedViewController animated:true];
+    activityFeedViewController.segmentControl.selectedSegmentIndex = 1;
     [activityFeedViewController release];
 }
 
