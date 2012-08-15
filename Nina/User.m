@@ -14,7 +14,7 @@
 @implementation User
 
 @synthesize userId, city, userDescription;
-@synthesize username, fullname, profilePic, placeCount;
+@synthesize username, fullname, profilePic, placeCount, highlightedCount;
 @synthesize followingCount, followerCount, perspectives;
 @synthesize following, follows_you, lat, lng;
 @synthesize email, url; 
@@ -36,6 +36,7 @@
     self.placeCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"perspectives_count"] intValue]];
     self.followerCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"follower_count"] intValue]];
     self.followingCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"following_count"] intValue]];
+    self.highlightedCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"highlighted_count"] intValue]];
     self.userDescription = [jsonDict objectForKeyNotNull:@"description"];
     self.url = [jsonDict objectForKeyNotNull:@"url"];
     self.email = [jsonDict objectForKeyNotNull:@"email"];
@@ -134,6 +135,7 @@
      @"perspectives_count", @"placeCount",
      @"follower_count", @"followerCount",
      @"following_count", @"followingCount",
+     @"highlighted_count", @"highlightedCount",
      @"description", @"userDescription",
      @"url", @"url",
      @"email", @"email",
@@ -188,7 +190,8 @@
     [placeCount release];
     [followingCount release];
     [fullname release];
-    [followerCount release]; 
+    [followerCount release];
+    [highlightedCount release];
     [perspectives release];
     [lat release];
     [lng release];

@@ -339,7 +339,9 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
     // Also you will want to see if location services are enabled at all.
     // All this code is stripped back to the bare bones to show the structure
     // of what is needed.
-    if ( [NinaHelper getUsername] ){
+    User *user = [UserManager sharedMeUser];
+    
+    if ( [NinaHelper getUsername] && user && [user.highlightedCount intValue] > 0 ){
         CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
         [locationManager startMonitoringSignificantLocationChanges];
         locationManager.delegate = self;
