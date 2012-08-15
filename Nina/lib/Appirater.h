@@ -1,7 +1,7 @@
 /*
  This file is part of Appirater.
  
- Copyright (c) 2010, Arash Payan
+ Copyright (c) 2012, Arash Payan
  All rights reserved.
  
  Permission is hereby granted, free of charge, to any person
@@ -31,13 +31,10 @@
  *
  * Created by Arash Payan on 9/5/09.
  * http://arashpayan.com
- * Copyright 2010 Arash Payan. All rights reserved.
+ * Copyright 2012 Arash Payan. All rights reserved.
  */
 
 #import <Foundation/Foundation.h>
-#import "FlurryAnalytics.h"
-#import "NinaHelper.h"
-#import "NinaAppDelegate.h"
 
 extern NSString *const kAppiraterFirstUseDate;
 extern NSString *const kAppiraterUseCount;
@@ -45,53 +42,58 @@ extern NSString *const kAppiraterSignificantEventCount;
 extern NSString *const kAppiraterCurrentVersion;
 extern NSString *const kAppiraterRatedCurrentVersion;
 extern NSString *const kAppiraterDeclinedToRate;
+extern NSString *const kAppiraterReminderRequestDate;
 
 /*
  Place your Apple generated software id here.
  */
 #define APPIRATER_APP_ID				434088944
-#define FACEBOOK_PAGE_ID                @"156318701112719"
+
+
+/*
+ Your localized app's name.
+ */
+#define APPIRATER_LOCALIZED_APP_NAME    @"Placeling"
 
 /*
  Your app's name.
  */
-#define APPIRATER_APP_NAME				@"Placeling"
+#define APPIRATER_APP_NAME				APPIRATER_LOCALIZED_APP_NAME ? APPIRATER_LOCALIZED_APP_NAME : [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey]
 
 /*
  This is the message your users will see once they've passed the day+launches
  threshold.
  */
-#define APPIRATER_MESSAGE				[NSString stringWithFormat:@"If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!", APPIRATER_APP_NAME]
-
-#define FACEBOOK_MESSAGE				[NSString stringWithFormat:@"If you enjoy using %@, would you mind liking us on Facebook?", APPIRATER_APP_NAME]
+#define APPIRATER_LOCALIZED_MESSAGE     NSLocalizedString(@"If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!", nil)
+#define APPIRATER_MESSAGE				[NSString stringWithFormat:APPIRATER_LOCALIZED_MESSAGE, APPIRATER_APP_NAME]
 
 /*
  This is the title of the message alert that users will see.
  */
-#define APPIRATER_MESSAGE_TITLE			[NSString stringWithFormat:@"Rate %@", APPIRATER_APP_NAME]
-#define FACEBOOK_MESSAGE_TITLE			[NSString stringWithFormat:@"Like %@ on Facebook", APPIRATER_APP_NAME]
+#define APPIRATER_LOCALIZED_MESSAGE_TITLE   NSLocalizedString(@"Rate %@", nil)
+#define APPIRATER_MESSAGE_TITLE             [NSString stringWithFormat:APPIRATER_LOCALIZED_MESSAGE_TITLE, APPIRATER_APP_NAME]
 
 /*
  The text of the button that rejects reviewing the app.
  */
-#define APPIRATER_CANCEL_BUTTON			@"No, Thanks"
+#define APPIRATER_CANCEL_BUTTON			NSLocalizedString(@"No, Thanks", nil)
 
 /*
  Text of button that will send user to app review page.
  */
-#define APPIRATER_RATE_BUTTON			[NSString stringWithFormat:@"Rate %@", APPIRATER_APP_NAME]
-#define LIKE_BUTTON			[NSString stringWithFormat:@"Like %@", APPIRATER_APP_NAME]
+#define APPIRATER_LOCALIZED_RATE_BUTTON NSLocalizedString(@"Rate %@", nil)
+#define APPIRATER_RATE_BUTTON			[NSString stringWithFormat:APPIRATER_LOCALIZED_RATE_BUTTON, APPIRATER_APP_NAME]
 
 /*
  Text for button to remind the user to review later.
  */
-#define APPIRATER_RATE_LATER			@"Remind me later"
+#define APPIRATER_RATE_LATER			NSLocalizedString(@"Remind me later", nil)
 
 /*
  Users will need to have the same version of your app installed for this many
  days before they will be prompted to rate it.
  */
-#define APPIRATER_DAYS_UNTIL_PROMPT		3		// double
+#define APPIRATER_DAYS_UNTIL_PROMPT		7		// double
 
 /*
  An example of a 'use' would be if the user launched the app. Bringing the app
@@ -103,7 +105,7 @@ extern NSString *const kAppiraterDeclinedToRate;
  Users need to 'use' the same version of the app this many times before
  before they will be prompted to rate it.
  */
-#define APPIRATER_USES_UNTIL_PROMPT		6		// integer
+#define APPIRATER_USES_UNTIL_PROMPT		5		// integer
 
 /*
  A significant event can be anything you want to be in your app. In a
@@ -123,7 +125,7 @@ extern NSString *const kAppiraterDeclinedToRate;
  'Remind me later'. This value specifies how long (in days) Appirater
  will wait before reminding them.
  */
-#define APPIRATER_TIME_BEFORE_REMINDING		3	// double
+#define APPIRATER_TIME_BEFORE_REMINDING		1	// double
 
 /*
  'YES' will show the Appirater alert everytime. Useful for testing how your message
@@ -131,8 +133,8 @@ extern NSString *const kAppiraterDeclinedToRate;
  */
 #define APPIRATER_DEBUG				NO
 
-@interface Appirater : NSObject <UIAlertViewDelegate, FBDialogDelegate> {
-
+@interface Appirater : NSObject <UIAlertViewDelegate> {
+    
 	UIAlertView		*ratingAlert;
 }
 
@@ -195,7 +197,7 @@ extern NSString *const kAppiraterDeclinedToRate;
  Tells Appirater to open the App Store page where the user can specify a
  rating for the app. Also records the fact that this has happened, so the
  user won't be prompted again to rate the app.
-
+ 
  The only case where you should call this directly is if your app has an
  explicit "Rate this app" command somewhere.  In all other cases, don't worry
  about calling this -- instead, just call the other functions listed above,
@@ -203,7 +205,5 @@ extern NSString *const kAppiraterDeclinedToRate;
  whether to rate the app.
  */
 + (void)rateApp;
-
-+ (void)likeApp;
 
 @end

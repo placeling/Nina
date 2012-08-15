@@ -1,7 +1,7 @@
 /*
  This file is part of Appirater.
  
- Copyright (c) 2010, Arash Payan
+ Copyright (c) 2012, Arash Payan
  All rights reserved.
  
  Permission is hereby granted, free of charge, to any person
@@ -31,7 +31,7 @@
  *
  * Created by Arash Payan on 9/5/09.
  * http://arashpayan.com
- * Copyright 2010 Arash Payan. All rights reserved.
+ * Copyright 2012 Arash Payan. All rights reserved.
  */
 
 #import "Appirater.h"
@@ -47,18 +47,19 @@ NSString *const kAppiraterDeclinedToRate			= @"kAppiraterDeclinedToRate";
 NSString *const kAppiraterReminderRequestDate		= @"kAppiraterReminderRequestDate";
 
 NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=APP_ID";
-NSString *facebookUrl = @"fb://page/APP_ID";
 
-
-@interface Appirater (hidden)
+@interface Appirater ()
 - (BOOL)connectedToNetwork;
 + (Appirater*)sharedInstance;
 - (void)showRatingAlert;
 - (BOOL)ratingConditionsHaveBeenMet;
 - (void)incrementUseCount;
+- (void)hideRatingAlert;
 @end
 
-@implementation Appirater (hidden)
+@implementation Appirater
+
+@synthesize ratingAlert;
 
 - (BOOL)connectedToNetwork {
     // Create zero addy
@@ -76,7 +77,7 @@ NSString *facebookUrl = @"fb://page/APP_ID";
 	
     if (!didRetrieveFlags)
     {
-        DLog(@"Error. Could not recover network reachability flags");
+        NSLog(@"Error. Could not recover network reachability flags");
         return NO;
     }
 	
@@ -95,52 +96,23 @@ NSString *facebookUrl = @"fb://page/APP_ID";
 	static Appirater *appirater = nil;
 	if (appirater == nil)
 	{
-		@synchronized(self) {
-			if (appirater == nil) {
-				appirater = [[Appirater alloc] init];
-                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive) name:@"UIApplicationWillResignActiveNotification" object:nil];
-            }
-        }
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            appirater = [[Appirater alloc] init];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive) name:
+             UIApplicationWillResignActiveNotification object:nil];
+        });
 	}
 	
 	return appirater;
 }
 
 - (void)showRatingAlert {
-    
-    int r = [[NSDate date] timeIntervalSince1970];
-    UIAlertView *alertView;
-    
-    
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    
-    if ( r %2 == 1 && [facebook isSessionValid] ){
-        //prompt for Facebook like
-        [FlurryAnalytics logEvent:@"APPIRATER_PROMPT_LIKE"];
-        alertView = [[[UIAlertView alloc] initWithTitle:FACEBOOK_MESSAGE_TITLE
-                                                message:FACEBOOK_MESSAGE
-                                               delegate:self
-                                      cancelButtonTitle:APPIRATER_CANCEL_BUTTON
-                                      otherButtonTitles:LIKE_BUTTON, APPIRATER_RATE_LATER, nil] autorelease];
-        alertView.tag = 2;
-
-        
-    } else {
-        //prompt for rating
-        if ( [facebook isSessionValid] ){
-            //only track if facebook was an option
-            [FlurryAnalytics logEvent:@"APPIRATER_PROMPT_RATING"];
-        }
-        alertView = [[[UIAlertView alloc] initWithTitle:APPIRATER_MESSAGE_TITLE
-                                                message:APPIRATER_MESSAGE
-                                               delegate:self
-                                      cancelButtonTitle:APPIRATER_CANCEL_BUTTON
-                                      otherButtonTitles:APPIRATER_RATE_BUTTON, APPIRATER_RATE_LATER, nil] autorelease];
-        alertView.tag = 1;
-    }
-    
-	
+	UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:APPIRATER_MESSAGE_TITLE
+														 message:APPIRATER_MESSAGE
+														delegate:self
+											   cancelButtonTitle:APPIRATER_CANCEL_BUTTON
+											   otherButtonTitles:APPIRATER_RATE_BUTTON, APPIRATER_RATE_LATER, nil] autorelease];
 	self.ratingAlert = alertView;
 	[alertView show];
 }
@@ -199,7 +171,7 @@ NSString *facebookUrl = @"fb://page/APP_ID";
 	}
 	
 	if (APPIRATER_DEBUG)
-		DLog(@"APPIRATER Tracking version: %@", trackingVersion);
+		NSLog(@"APPIRATER Tracking version: %@", trackingVersion);
 	
 	if ([trackingVersion isEqualToString:version])
 	{
@@ -216,7 +188,7 @@ NSString *facebookUrl = @"fb://page/APP_ID";
 		useCount++;
 		[userDefaults setInteger:useCount forKey:kAppiraterUseCount];
 		if (APPIRATER_DEBUG)
-			DLog(@"APPIRATER Use count: %d", useCount);
+			NSLog(@"APPIRATER Use count: %d", useCount);
 	}
 	else
 	{
@@ -247,7 +219,7 @@ NSString *facebookUrl = @"fb://page/APP_ID";
 	}
 	
 	if (APPIRATER_DEBUG)
-		DLog(@"APPIRATER Tracking version: %@", trackingVersion);
+		NSLog(@"APPIRATER Tracking version: %@", trackingVersion);
 	
 	if ([trackingVersion isEqualToString:version])
 	{
@@ -264,7 +236,7 @@ NSString *facebookUrl = @"fb://page/APP_ID";
 		sigEventCount++;
 		[userDefaults setInteger:sigEventCount forKey:kAppiraterSignificantEventCount];
 		if (APPIRATER_DEBUG)
-			DLog(@"APPIRATER Significant event count: %d", sigEventCount);
+			NSLog(@"APPIRATER Significant event count: %d", sigEventCount);
 	}
 	else
 	{
@@ -281,45 +253,32 @@ NSString *facebookUrl = @"fb://page/APP_ID";
 	[userDefaults synchronize];
 }
 
-@end
-
-
-@interface Appirater ()
-- (void)hideRatingAlert;
-@end
-
-@implementation Appirater
-
-@synthesize ratingAlert;
-
-- (void)incrementAndRate:(NSNumber*)_canPromptForRating {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
+- (void)incrementAndRate:(BOOL)canPromptForRating {
 	[self incrementUseCount];
 	
-	if ([_canPromptForRating boolValue] == YES &&
+	if (canPromptForRating &&
 		[self ratingConditionsHaveBeenMet] &&
 		[self connectedToNetwork])
 	{
-		[self performSelectorOnMainThread:@selector(showRatingAlert) withObject:nil waitUntilDone:NO];
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{
+                           [self showRatingAlert];
+                       });
 	}
-	
-	[pool release];
 }
 
-- (void)incrementSignificantEventAndRate:(NSNumber*)_canPromptForRating {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
+- (void)incrementSignificantEventAndRate:(BOOL)canPromptForRating {
 	[self incrementSignificantEventCount];
 	
-	if ([_canPromptForRating boolValue] == YES &&
+	if (canPromptForRating &&
 		[self ratingConditionsHaveBeenMet] &&
 		[self connectedToNetwork])
 	{
-		[self performSelectorOnMainThread:@selector(showRatingAlert) withObject:nil waitUntilDone:NO];
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{
+                           [self showRatingAlert];
+                       });
 	}
-	
-	[pool release];
 }
 
 + (void)appLaunched {
@@ -327,46 +286,43 @@ NSString *facebookUrl = @"fb://page/APP_ID";
 }
 
 + (void)appLaunched:(BOOL)canPromptForRating {
-	NSNumber *_canPromptForRating = [[NSNumber alloc] initWithBool:canPromptForRating];
-	[NSThread detachNewThreadSelector:@selector(incrementAndRate:)
-							 toTarget:[Appirater sharedInstance]
-						   withObject:_canPromptForRating];
-	[_canPromptForRating release];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
+                   ^{
+                       [[Appirater sharedInstance] incrementAndRate:canPromptForRating];
+                   });
 }
 
 - (void)hideRatingAlert {
 	if (self.ratingAlert.visible) {
 		if (APPIRATER_DEBUG)
-			DLog(@"APPIRATER Hiding Alert");
+			NSLog(@"APPIRATER Hiding Alert");
 		[self.ratingAlert dismissWithClickedButtonIndex:-1 animated:NO];
-	}	
+	}
 }
 
 + (void)appWillResignActive {
 	if (APPIRATER_DEBUG)
-		DLog(@"APPIRATER appWillResignActive");
+		NSLog(@"APPIRATER appWillResignActive");
 	[[Appirater sharedInstance] hideRatingAlert];
 }
 
 + (void)appEnteredForeground:(BOOL)canPromptForRating {
-	NSNumber *_canPromptForRating = [[NSNumber alloc] initWithBool:canPromptForRating];
-	[NSThread detachNewThreadSelector:@selector(incrementAndRate:)
-							 toTarget:[Appirater sharedInstance]
-						   withObject:_canPromptForRating];
-	[_canPromptForRating release];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
+                   ^{
+                       [[Appirater sharedInstance] incrementAndRate:canPromptForRating];
+                   });
 }
 
 + (void)userDidSignificantEvent:(BOOL)canPromptForRating {
-	NSNumber *_canPromptForRating = [[NSNumber alloc] initWithBool:canPromptForRating];
-	[NSThread detachNewThreadSelector:@selector(incrementSignificantEventAndRate:)
-							 toTarget:[Appirater sharedInstance]
-						   withObject:_canPromptForRating];
-	[_canPromptForRating release];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
+                   ^{
+                       [[Appirater sharedInstance] incrementSignificantEventAndRate:canPromptForRating];
+                   });
 }
 
 + (void)rateApp {
 #if TARGET_IPHONE_SIMULATOR
-	DLog(@"APPIRATER NOTE: iTunes App Store is not supported on the iOS simulator. Unable to open App Store page.");
+	NSLog(@"APPIRATER NOTE: iTunes App Store is not supported on the iOS simulator. Unable to open App Store page.");
 #else
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	NSString *reviewURL = [templateReviewURL stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%d", APPIRATER_APP_ID]];
@@ -375,22 +331,6 @@ NSString *facebookUrl = @"fb://page/APP_ID";
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
 #endif
 }
-
-+(void) likeApp {   
-    NSString *likeURL = [facebookUrl stringByReplacingOccurrencesOfString:@"APP_ID" withString:FACEBOOK_PAGE_ID];
-    NSURL *fanPageURL = [NSURL URLWithString:likeURL];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults synchronize];
-    
-    if (![[UIApplication sharedApplication] openURL: fanPageURL]) {
-        //fanPageURL failed to open.  Open the website in Safari instead
-        likeURL = [@"https://m.facebook.com/pages/Placeling/APP_ID" stringByReplacingOccurrencesOfString:@"APP_ID" withString:FACEBOOK_PAGE_ID];
-        NSURL *webURL = [NSURL URLWithString:likeURL];
-        [[UIApplication sharedApplication] openURL: webURL];
-    }   
-    
-}
-
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -405,17 +345,9 @@ NSString *facebookUrl = @"fb://page/APP_ID";
 		}
 		case 1:
 		{
-            if ( alertView.tag == 1 ){
-                [FlurryAnalytics logEvent:@"APPIRATER_WILL_RATING"];
-                // they want to rate it
-                [Appirater rateApp];
-            } else {
-                //they want to like it
-                [FlurryAnalytics logEvent:@"APPIRATER_WILL_LIKE"];
-                [Appirater likeApp];
-            }
+			// they want to rate it
+			[Appirater rateApp];
 			break;
-                
 		}
 		case 2:
 			// remind them later
