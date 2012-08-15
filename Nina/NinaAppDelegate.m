@@ -29,6 +29,7 @@
 #import "Question.h"
 #import "Answer.h"
 #import "PlacemarkComment.h"
+#import "UserManager.h"
 
 
 @implementation NinaAppDelegate
@@ -149,10 +150,21 @@
     
     [Appirater appLaunched:YES];
     
+    //refresh the local "me" from servers    
+    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/v1/users/me.json" usingBlock:^(RKObjectLoader* loader) {
+        RKObjectMapping *userMapping = [User getObjectMapping];
+        loader.objectMapping = userMapping;
+        [loader setOnDidLoadObjects:^(NSArray *objects){
+            User *user = [objects objectAtIndex:0];
+            [UserManager setUser:user];
+        }];
+    }];
+    
+    
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {   
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     DLog(@"handling open url: %@", url);
     
     if ( [[url scheme] isEqualToString:@"fb280758755284342"] ){    
