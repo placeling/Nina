@@ -30,6 +30,7 @@
 #import "Answer.h"
 #import "PlacemarkComment.h"
 #import "UserManager.h"
+#import "Suggestion.h"
 
 
 @implementation NinaAppDelegate
@@ -98,6 +99,10 @@
     
     [router routeClass:[PlacemarkComment class] toResourcePath:@"/v1/perspectives/:perspectiveId/placemark_comments" forMethod:RKRequestMethodPOST];
     
+    [objectManager.mappingProvider setMapping:[Suggestion getObjectMapping] forKeyPath:@"suggestion"];
+    [objectManager.mappingProvider setMapping:[Suggestion getObjectMapping] forKeyPath:@"suggestions"];
+    
+    [router routeClass:[Suggestion class] toResourcePath:@"/v1/users/:userId/suggestions" forMethod:RKRequestMethodPOST];
     
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     
