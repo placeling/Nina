@@ -12,8 +12,10 @@
 #import "ApplicationController.h"
 #import "NinaHelper.h"
 #import "MBProgressHUD.h"
+#import "YIPopupTextView.h"
 
-@interface EditProfileViewController : ApplicationController<UITableViewDelegate, UITableViewDataSource,UIActionSheetDelegate, ASIHTTPRequestDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, MBProgressHUDDelegate>{
+
+@interface EditProfileViewController : ApplicationController<UITableViewDelegate, UITableViewDataSource,UIActionSheetDelegate, ASIHTTPRequestDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, MBProgressHUDDelegate,YIPopupTextViewDelegate>{
     
     NSNumber *lat;
     NSNumber *lng;

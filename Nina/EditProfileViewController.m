@@ -390,6 +390,7 @@
         }
 
         eCell.textField.text = @"";
+        eCell.textField.userInteractionEnabled = true;
 
         if (indexPath.row == 0){
             eCell.textLabel.text = @"url";
@@ -403,6 +404,7 @@
             eCell.textLabel.text = @"description";
             eCell.textField.text = self.user.userDescription;
             eCell.textField.delegate = self;
+            eCell.textField.userInteractionEnabled = false;
         }
         
         cell = eCell;
@@ -460,6 +462,14 @@
 }
 
 
+- (void)popupTextView:(YIPopupTextView *)textView didDismissWithText:(NSString *)text
+{
+    self.user.userDescription = text;
+    [self.tableView reloadData];
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+}
+
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -468,6 +478,16 @@
     
     if (indexPath.section == 0 && indexPath.row == 0){
         [self showActionSheet];
+    } else if (indexPath.section == 1 && indexPath.row == 2){
+        // NOTE: maxCount = 0 to hide count
+        YIPopupTextView* popupTextView = [[YIPopupTextView alloc] initWithPlaceHolder:@"input here" maxCount:0];
+        popupTextView.delegate = self;
+        popupTextView.showCloseButton = YES;
+        popupTextView.caretShiftGestureEnabled = YES;   // default = NO
+        popupTextView.text = self.user.userDescription;        
+        [[self navigationController] setNavigationBarHidden:YES animated:YES];
+        [popupTextView showInView:self.view];
+        
     } else if (indexPath.section == 3 && indexPath.row == 1){
         [self updateHomeLocation];
     } else if (indexPath.section == 2 && indexPath.row == 0){

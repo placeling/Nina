@@ -60,7 +60,7 @@
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
-    CGFloat heightCalc = 65; //covers header and footer
+    CGFloat heightCalc = 90; //covers header and footer
     
     CGSize textAreaSize;
     textAreaSize.height = 140;
@@ -257,6 +257,8 @@
     cell.createdAtLabel.text = [NinaHelper dateDiff:perspective.lastModified];
     
     [cell.createdAtLabel setFrame:CGRectMake(cell.createdAtLabel.frame.origin.x, verticalCursor, cell.createdAtLabel.frame.size.width, cell.createdAtLabel.frame.size.height)];
+    
+    verticalCursor += cell.createdAtLabel.frame.size.height;
     [cell.shareSheetButton setFrame:CGRectMake(cell.shareSheetButton.frame.origin.x, verticalCursor, cell.shareSheetButton.frame.size.width, cell.shareSheetButton.frame.size.height)];
     
     [cell.showCommentsButton setFrame:CGRectMake(cell.showCommentsButton.frame.origin.x, verticalCursor, cell.showCommentsButton.frame.size.width, cell.showCommentsButton.frame.size.height)];
