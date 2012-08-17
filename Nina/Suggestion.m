@@ -30,6 +30,10 @@
     return receiver.userId;
 }
 
+-(NSString*)getPlace_id{
+    return self.place.pid;
+}
+
 
 -(void) dealloc{    
     [createdAt release];

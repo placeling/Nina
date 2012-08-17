@@ -35,6 +35,7 @@
 
 #import "LoginController.h"
 #import "MemberProfileViewController.h"
+#import "CreateSuggestionViewController.h"
 
 #import "FlurryAnalytics.h"
 
@@ -424,10 +425,11 @@ typedef enum {
 -(void) showShareSheet{
     UIActionSheet *actionSheet;
     if ([TWTweetComposeViewController canSendTweet]){  
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Share on Twitter", nil];
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Suggest It", @"Email It", @"Facebook It", @"Tweet It", nil];
     } else {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Suggest It", @"Email It", @"Facebook It", nil];
     }
+    
     [actionSheet showInView:self.view];
     [actionSheet release];
     
@@ -437,6 +439,19 @@ typedef enum {
     NSString *urlString = [NSString stringWithFormat:@"https://www.placeling.com/places/%@", self.place.slug];
     
     if (buttonIndex == 0){
+        DLog(@"suggest it");
+        
+        CreateSuggestionViewController *createSuggestionViewController = [[CreateSuggestionViewController alloc] init];
+        createSuggestionViewController.place = self.place;
+        
+        UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:createSuggestionViewController];
+        [StyleHelper styleNavigationBar:navBar.navigationBar];
+        [self.navigationController presentModalViewController:navBar animated:YES];
+        [navBar release];
+        
+        [createSuggestionViewController release];
+        
+    } else if (buttonIndex == 1){
         DLog(@"share by email");
         
         MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
@@ -448,7 +463,7 @@ typedef enum {
         [controller release];	
         
         
-    }else if (buttonIndex == 1) {
+    }else if (buttonIndex == 2) {
         DLog(@"share on facebook");
         
         NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -474,7 +489,7 @@ typedef enum {
             
             [facebook dialog:@"feed" andParams:params andDelegate:self];
         }    
-    } else if (buttonIndex == 2){
+    } else if (buttonIndex == 3){
         DLog(@"share on twitter");        
         
         //Create the tweet sheet

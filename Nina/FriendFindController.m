@@ -116,9 +116,10 @@
 
     NSString *targetURL = [NSString stringWithFormat:@"/v1/users/search?q=%@", username];
     
-    [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+    [objectManager loadObjectsAtResourcePath:targetURL usingBlock:^(RKObjectLoader* loader) {
         loader.cacheTimeoutInterval = 60*5;
         loader.userData = [NSNumber numberWithInt:101]; //use as a tag
+        loader.delegate = self;
     }];
 }
 

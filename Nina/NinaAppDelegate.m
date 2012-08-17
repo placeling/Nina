@@ -97,17 +97,29 @@
     
     RKObjectRouter *router = [RKObjectManager sharedManager].router;
     
+    RKObjectMapping* commentSerializationMapping = [RKObjectMapping mappingForClass:[PlacemarkComment class] ];
+    [commentSerializationMapping mapAttributes:@"comment", nil];
+    
+    // Now register the mapping with the provider
+    [objectManager.mappingProvider setSerializationMapping:commentSerializationMapping forClass:[PlacemarkComment class] ];
+    
     [router routeClass:[PlacemarkComment class] toResourcePath:@"/v1/perspectives/:perspectiveId/placemark_comments" forMethod:RKRequestMethodPOST];
     
     [objectManager.mappingProvider setMapping:[Suggestion getObjectMapping] forKeyPath:@"suggestion"];
     [objectManager.mappingProvider setMapping:[Suggestion getObjectMapping] forKeyPath:@"suggestions"];
+    
+    RKObjectMapping* suggestionSerializationMapping = [RKObjectMapping mappingForClass:[Suggestion class] ];
+    [suggestionSerializationMapping mapAttributes:@"message", @"place_id", nil];
+    
+    // Now register the mapping with the provider
+    [objectManager.mappingProvider setSerializationMapping:suggestionSerializationMapping forClass:[Suggestion class] ];
     
     [router routeClass:[Suggestion class] toResourcePath:@"/v1/users/:userId/suggestions" forMethod:RKRequestMethodPOST];
     
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     
     if ([NinaHelper isProductionRun]){
-        [FlurryAnalytics startSession:@"TF6YH8QMRQDXBXR9APF9"];            
+        [FlurryAnalytics startSession:@"TF6YH8QMRQDXBXR9APF9"];
     
         [Crittercism initWithAppID: @"4f2892c1b093157f7200076d" andKey:@"4f2892c1b093157f7200076dhknlm6lr" andSecret:@"bdrh0sax6ofnuwjq8zvl47omwirpe9sq"];
     }

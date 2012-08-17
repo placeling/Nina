@@ -125,12 +125,6 @@
 -(IBAction)submitComment{
     DLog(@"Posting comment: %@", self.textView.text);
     
-    RKObjectMapping* commentSerializationMapping = [RKObjectMapping mappingForClass:[PlacemarkComment class] ];
-    [commentSerializationMapping mapAttributes:@"comment", nil];
-    
-    // Now register the mapping with the provider
-    [[RKObjectManager sharedManager].mappingProvider setSerializationMapping:commentSerializationMapping forClass:[PlacemarkComment class] ];
-    
     PlacemarkComment *comment = [PlacemarkComment new];
     comment.perspectiveId = self.perspective.perspectiveId;
     comment.comment = self.textView.text;

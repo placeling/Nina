@@ -17,6 +17,8 @@
 #import "FlurryAnalytics.h"
 #import <Twitter/Twitter.h>
 #import "CommentViewController.h"
+#import "CreateSuggestionViewController.h"
+
 
 #define hardMaxCellHeight 5000
 
@@ -321,17 +323,9 @@
         UIActionSheet *actionSheet;
         
         if ([TWTweetComposeViewController canSendTweet]){  
-            if ( self.perspective.mine ){
-                actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Share on Twitter", nil];
-            } else {
-                actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook",  @"Share on Twitter", nil];
-            }
+            actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Suggest It", @"Email It", @"Facebook It",  @"Tweet It", nil];
         } else {
-            if ( self.perspective.mine ){
-                actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
-            } else {
-                actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
-            }
+            actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Flag" otherButtonTitles:@"Suggest It", @"Email It", @"Facebook It", nil];
         }
         [actionSheet showInView:self.requestDelegate.view];
         [actionSheet release];
@@ -346,9 +340,22 @@
         
         NSString *urlText = [NSString stringWithFormat:@"/v1/perspectives/%@/flag", self.perspective.perspectiveId];
         
-        [[RKClient sharedClient] post:urlText params:nil delegate:self.requestDelegate]; 
+        [[RKClient sharedClient] post:urlText params:nil delegate:self.requestDelegate];
         
     }else if (buttonIndex == 1){
+        DLog(@"Suggest It");
+        
+        CreateSuggestionViewController *createSuggestionViewController = [[CreateSuggestionViewController alloc] init];
+        createSuggestionViewController.place = self.perspective.place;
+        
+        UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:createSuggestionViewController];
+        [StyleHelper styleNavigationBar:navBar.navigationBar];
+        [self.requestDelegate.navigationController presentModalViewController:navBar animated:YES];
+        [navBar release];
+        
+        [createSuggestionViewController release];
+        
+    }else if (buttonIndex == 2){
         DLog(@"share member by email");
         
         MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
@@ -360,7 +367,7 @@
         [controller release];	
         
         
-    }else if (buttonIndex == 2) {
+    }else if (buttonIndex == 3) {
         DLog(@"share on facebook");
         
         NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -385,7 +392,7 @@
             
             [facebook dialog:@"feed" andParams:params andDelegate:self.requestDelegate];
         }
-    } else if (buttonIndex == 3){
+    } else if (buttonIndex == 4){
         DLog(@"share on twitter");        
         
         //Create the tweet sheet

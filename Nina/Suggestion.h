@@ -28,5 +28,6 @@
 @property (nonatomic, retain) Place *place;
 
 -(NSString*)getUserId;
+-(NSString*)getPlace_id;
 
 @end
