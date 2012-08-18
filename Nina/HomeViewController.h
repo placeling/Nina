@@ -29,7 +29,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *peopleLabel;
 @property (nonatomic, retain) IBOutlet UIButton *placemarkButton;
 
--(IBAction) activityFeed;
+-(IBAction) activityFeed:(id)sender;
 
 -(IBAction) bookmarkSpot;
 -(IBAction) nearbyPerspectives;

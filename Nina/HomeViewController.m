@@ -139,7 +139,7 @@
     self.pickScroll.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pickBackground.png"]];
     [placemarkButton setImage:[UIImage imageNamed:@"PlaceMarkIt_Pressed.png"] forState:UIControlStateHighlighted];
 
-    UIBarButtonItem *modalButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"08-chat.png"] style:UIBarButtonItemStylePlain target:self action:@selector(activityFeed) ];    
+    UIBarButtonItem *modalButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"08-chat.png"] style:UIBarButtonItemStylePlain target:self action:@selector(activityFeed:) ];
     self.navigationItem.rightBarButtonItem = modalButton;
     [modalButton release];
 }
@@ -247,11 +247,16 @@
     [nearbyPlacesViewController release];
 }
 
--(IBAction) activityFeed{
+-(IBAction) activityFeed:(id)sender{
     ActivityFeedViewController *activityFeedViewController = [[ActivityFeedViewController alloc] init];
     
     [self.navigationController pushViewController:activityFeedViewController animated:true];
-    activityFeedViewController.segmentControl.selectedSegmentIndex = 1;
+    if ( [sender class] == [UIBarButtonItem class] ){
+        activityFeedViewController.segmentControl.selectedSegmentIndex = 0;
+    } else {
+        activityFeedViewController.segmentControl.selectedSegmentIndex = 1;
+    }
+    
     [activityFeedViewController release];
 }
 

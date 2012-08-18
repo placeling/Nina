@@ -93,6 +93,8 @@
         return [NSString stringWithFormat:@"%@ started following you", notification.actor.username]; 
     } else if ( [notification.notificationType isEqualToString:@"FACEBOOK_FRIEND"] ){
         return [NSString stringWithFormat:@"Your Facebook friend %@ joined Placeling as %@", notification.subjectName, notification.actor.username]; 
+    } else if ( [notification.notificationType isEqualToString:@"SUGGESTED_PLACE"] ){
+        return [NSString stringWithFormat:@"%@ suggested you try %@", notification.actor.username, notification.subjectName];
     } else {
         DLog(@"ERROR: unknown notification story type");
         return @"";

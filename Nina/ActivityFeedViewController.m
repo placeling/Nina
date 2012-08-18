@@ -17,6 +17,7 @@
 #import "Activity.h"
 #import "Notification.h"
 #import "NotificationTableViewCell.h"
+#import "SuggestionViewController.h"
 
 @interface ActivityFeedViewController (Private)
 -(void)dataSourceDidFinishLoadingNewData;
@@ -526,6 +527,10 @@
                 MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];
                 memberView.user = notification.actor;
                 viewController = memberView;  
+            } else if ( [notification.notificationType isEqualToString:@"SUGGESTED_PLACE"] ){
+                SuggestionViewController *suggestionView = [[SuggestionViewController alloc]init];
+                suggestionView.suggestionId = notification.subjectId;
+                viewController = suggestionView;
             }
         }
         

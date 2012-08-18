@@ -322,6 +322,10 @@
 		28B425FF15DC582B0025957A /* CreateSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425FC15DC582B0025957A /* CreateSuggestionViewController.m */; };
 		28B4260015DC582B0025957A /* CreateSuggestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B425FD15DC582B0025957A /* CreateSuggestionViewController.xib */; };
 		28B4260115DC582B0025957A /* CreateSuggestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B425FD15DC582B0025957A /* CreateSuggestionViewController.xib */; };
+		28B4269C15DF02980025957A /* SuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B4269A15DF02980025957A /* SuggestionViewController.m */; };
+		28B4269D15DF02980025957A /* SuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B4269A15DF02980025957A /* SuggestionViewController.m */; };
+		28B4269E15DF02980025957A /* SuggestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B4269B15DF02980025957A /* SuggestionViewController.xib */; };
+		28B4269F15DF02980025957A /* SuggestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B4269B15DF02980025957A /* SuggestionViewController.xib */; };
 		28B5D8B314907E0000763D0C /* DefaultPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8B114907E0000763D0C /* DefaultPhoto.png */; };
 		28B5D8B414907E0000763D0C /* DefaultPhoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8B214907E0000763D0C /* DefaultPhoto@2x.png */; };
 		28B5D8D6149096CC00763D0C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 28B5D8BB149096CC00763D0C /* LICENSE */; };
@@ -960,6 +964,9 @@
 		28B425FB15DC582B0025957A /* CreateSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSuggestionViewController.h; sourceTree = "<group>"; };
 		28B425FC15DC582B0025957A /* CreateSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSuggestionViewController.m; sourceTree = "<group>"; };
 		28B425FD15DC582B0025957A /* CreateSuggestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateSuggestionViewController.xib; sourceTree = "<group>"; };
+		28B4269915DF02980025957A /* SuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuggestionViewController.h; sourceTree = "<group>"; };
+		28B4269A15DF02980025957A /* SuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestionViewController.m; sourceTree = "<group>"; };
+		28B4269B15DF02980025957A /* SuggestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestionViewController.xib; sourceTree = "<group>"; };
 		28B5D8B114907E0000763D0C /* DefaultPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultPhoto.png; sourceTree = "<group>"; };
 		28B5D8B214907E0000763D0C /* DefaultPhoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DefaultPhoto@2x.png"; sourceTree = "<group>"; };
 		28B5D8BB149096CC00763D0C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -1869,6 +1876,9 @@
 				28B425FB15DC582B0025957A /* CreateSuggestionViewController.h */,
 				28B425FC15DC582B0025957A /* CreateSuggestionViewController.m */,
 				28B425FD15DC582B0025957A /* CreateSuggestionViewController.xib */,
+				28B4269915DF02980025957A /* SuggestionViewController.h */,
+				28B4269A15DF02980025957A /* SuggestionViewController.m */,
+				28B4269B15DF02980025957A /* SuggestionViewController.xib */,
 			);
 			name = Suggestions;
 			sourceTree = "<group>";
@@ -2489,6 +2499,7 @@
 				28B425E215DAE02F0025957A /* twitter_icon_bw@2x.png in Resources */,
 				28B425E415DAE0640025957A /* twitter_icon_bw.png in Resources */,
 				28B4260015DC582B0025957A /* CreateSuggestionViewController.xib in Resources */,
+				28B4269E15DF02980025957A /* SuggestionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2499,6 +2510,7 @@
 				2895006F13D6455A009E1BD7 /* InfoPlist.strings in Resources */,
 				2895007213D6455A009E1BD7 /* NinaTests.h in Resources */,
 				28B4260115DC582B0025957A /* CreateSuggestionViewController.xib in Resources */,
+				28B4269F15DF02980025957A /* SuggestionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2655,6 +2667,7 @@
 				28B425F015DB2EB60025957A /* SSTextView.m in Sources */,
 				28B425F415DC500E0025957A /* Suggestion.m in Sources */,
 				28B425FE15DC582B0025957A /* CreateSuggestionViewController.m in Sources */,
+				28B4269C15DF02980025957A /* SuggestionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2670,6 +2683,7 @@
 				28B425F115DB2EB60025957A /* SSTextView.m in Sources */,
 				28B425F515DC500E0025957A /* Suggestion.m in Sources */,
 				28B425FF15DC582B0025957A /* CreateSuggestionViewController.m in Sources */,
+				28B4269D15DF02980025957A /* SuggestionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
