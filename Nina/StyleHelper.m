@@ -89,6 +89,12 @@
     [button.titleLabel setTextColor:[UIColor colorWithRed:194.0f/255.0f green:106.0f/255.0f blue:86.0f/255.0f alpha:1.0]];
 }
 
++(void) styleUserProfilePic:(UIImageView*)imageView{
+    [imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+    [imageView.layer setBorderWidth: 5.0];
+    imageView.layer.masksToBounds = YES;
+}
+
 
 +(void) styleFollowButtonCommon:(UIButton*)button{
     //button.layer.borderWidth = 2.0f;

@@ -17,6 +17,7 @@
 
 @protocol EditPerspectiveDelegate
 //so long as it can accept the returned request, its all good.
+@optional
 -(void)requestFailed:(ASIHTTPRequest *)request;
 -(void)requestFinished:(ASIHTTPRequest *)request;
 -(void)updatePerspective:(Perspective *)perspective;

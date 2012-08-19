@@ -68,9 +68,7 @@
     [super viewWillAppear:animated];
     [StyleHelper styleBackgroundView:self.tableView];
     
-    [profileImageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
-    [profileImageView.layer setBorderWidth: 5.0];
-    self.profileImageView.layer.masksToBounds = YES; 
+    [StyleHelper styleUserProfilePic:self.profileImageView];
     
     [StyleHelper styleInfoView:self.headerView];
     

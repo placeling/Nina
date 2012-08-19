@@ -40,7 +40,6 @@
     [message release];
     [sender release];
     [receiver release];
-    [place release];
     
     [super dealloc];
 }

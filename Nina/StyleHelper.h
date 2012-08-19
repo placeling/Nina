@@ -26,6 +26,7 @@
 +(void) styleHomePageLabel:(UILabel*)label;
 +(void) styleQuickPickCell:(PlaceSuggestTableViewCell*)cell;
 +(void) styleGenericTableCell:(UITableViewCell*)cell;
++(void) styleUserProfilePic:(UIImageView*)imageView;
 +(void) colourTitleLabel:(UILabel*)label;
 +(void) colourHomePageLabel:(UILabel*)label;
 

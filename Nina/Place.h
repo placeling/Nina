@@ -85,9 +85,9 @@
 @property (nonatomic, assign) BOOL highlighted;
 @property (nonatomic, assign) bool hidden;
 
-@property (nonatomic, assign) NSMutableArray *homePerspectives;
-@property (nonatomic, assign) NSMutableArray *followingPerspectives;
-@property (nonatomic, assign) NSMutableArray *everyonePerspectives;
+@property (nonatomic, retain) NSMutableArray *homePerspectives;
+@property (nonatomic, retain) NSMutableArray *followingPerspectives;
+@property (nonatomic, retain) NSMutableArray *everyonePerspectives;
 @property (nonatomic, retain) NSMutableArray *placemarks;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;

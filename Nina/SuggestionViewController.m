@@ -7,6 +7,9 @@
 //
 
 #import "SuggestionViewController.h"
+#import "FlurryAnalytics.h"
+#import "Place.h"
+#import "UIImageView+WebCache.h"
 
 @interface SuggestionViewController ()
 -(void)contentLoad;
@@ -15,7 +18,7 @@
 
 @implementation SuggestionViewController
 
-@synthesize suggestion, suggestionId;
+@synthesize suggestion, suggestionId, imageView, messageView, placemark, headerTextView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,7 +56,10 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    self.navigationItem.title = @"Suggestion";
+    
     [StyleHelper styleBackgroundView:self.view];
+    [StyleHelper styleUserProfilePic:self.imageView];
 }
 
 #pragma mark - RKObjectLoaderDelegate methods
@@ -78,11 +84,41 @@
     [HUD release];
 }
 
+-(IBAction)placemark:(id)sender{
+    EditPerspectiveViewController *editPerspectiveViewController;
+    
+    if ( self.suggestion.place.bookmarked ){
+        NSMutableArray *perspectives = self.suggestion.place.homePerspectives;
+        Perspective *myPerspective = [perspectives objectAtIndex:0];
+        editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
+    } else {
+        Perspective *newPerspective = [[Perspective alloc] init];
+        newPerspective.notes = self.suggestion.message;
+        newPerspective.place = self.suggestion.place;
+        newPerspective.photos = [[[NSMutableArray alloc] initWithCapacity:0] autorelease];
+        editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:newPerspective];
+        [newPerspective release];
+    }
+    
+    editPerspectiveViewController.delegate = self;
+    
+    [FlurryAnalytics logEvent:@"EDIT_PERSPECTIVE_WRITE"];
+    
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editPerspectiveViewController];
+    [StyleHelper styleNavigationBar:navBar.navigationBar];
+    [self.navigationController presentModalViewController:navBar animated:YES];
+    [navBar release];
+    
+    [editPerspectiveViewController release];
+    
+}
+
 
 -(void)contentLoad{
     
-    
-    
+    self.messageView.text = self.suggestion.message;
+    [self.imageView setImageWithURL:[NSURL URLWithString:self.suggestion.sender.profilePic.thumbUrl] ];
+    self.headerTextView.text = [NSString stringWithFormat:@"%@ has suggested you try %@", self.suggestion.sender.username, self.suggestion.place.name];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -94,6 +130,11 @@
     [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [suggestion release];
     [suggestionId release];
+    [imageView release];
+    [messageView release];
+    [placemark release];
+    [headerTextView release];
+    
     [super dealloc];
 }
 
