@@ -42,21 +42,30 @@
 -(void) updateFromJsonDict:(NSDictionary *)jsonDict{
     mine = [[jsonDict objectForKey:@"mine"] boolValue];
     
-    //RKObjectManager* objectManager = [RKObjectManager sharedManager];
-    //NSObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
-    
-    [self.photos removeAllObjects];
     for (NSDictionary *photoDict in [jsonDict objectForKey:@"photos"]){
+        
+        bool found = false;
+        for (Photo *photo in self.photos){
+            if ( [photo.photoId isEqualToString:[photoDict objectForKey:@"id"]] ){
+               [photo updateFromJsonDict:photoDict];
+                found = true;
+                break;
+            } else if ( !photo.photoId ){
+                [photo updateFromJsonDict:photoDict];
+                found = true;
+            }
+        }
+        
+        if (!found){
+            Photo *newPhoto = [[Photo alloc] init];
+            
+            [newPhoto updateFromJsonDict:photoDict];
+            newPhoto.perspective = self;
+            newPhoto.mine = self.mine;
+            [self.photos addObject:newPhoto];
+            [newPhoto release];
+        }
 
-        //Photo *newPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:managedObjectContext];  
-        
-        Photo *newPhoto = [[Photo alloc] init];
-        
-        [newPhoto updateFromJsonDict:photoDict];
-        newPhoto.perspective = self;
-        newPhoto.mine = self.mine;
-        [self.photos addObject:newPhoto];
-        [newPhoto release];
     }    
     
     self.perspectiveId = [jsonDict objectForKeyNotNull:@"_id"];
