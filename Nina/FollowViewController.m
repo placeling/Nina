@@ -20,7 +20,7 @@
 @implementation FollowViewController
 
 @synthesize user=_user;
-@synthesize place=_place;
+@synthesize place=_place, perspective=_perspective;
 @synthesize users, following;
 
 - (void)didReceiveMemoryWarning{
@@ -44,6 +44,14 @@
     if (self) {
         self.place = place;
         self.following = follow;
+    }
+    return self;
+}
+
+-(id) initWithPerspective:(Perspective*)perspective{
+    self = [super init];
+    if (self) {
+        self.perspective = perspective;
     }
     return self;
 }
@@ -86,6 +94,9 @@
         } else {
             targetURL = [NSString stringWithFormat:@"/v1/places/%@/users?start=%i", self.place.pid, start];
         }        
+    } else if (self.perspective){
+        targetURL = [NSString stringWithFormat:@"/v1/perspectives/%@/likers?start=%i", self.perspective.perspectiveId, start];
+         self.navigationItem.title = @"Likers";
     } else {
         if (self.following){
             targetURL = [NSString stringWithFormat:@"/v1/users/%@/following?start=%i", self.user.username, start];
@@ -107,7 +118,8 @@
     hasMore = true;
         	
     RKObjectManager* objectManager = [RKObjectManager sharedManager];
-    [objectManager loadObjectsAtResourcePath:[self restUrl:0] delegate:self block:^(RKObjectLoader* loader) {        
+    [objectManager loadObjectsAtResourcePath:[self restUrl:0] usingBlock:^(RKObjectLoader* loader) {
+        loader.delegate=self;
         loader.userData = [NSNumber numberWithInt:40]; //use as a tag
     }];
 }
@@ -243,7 +255,8 @@
         
         RKObjectManager* objectManager = [RKObjectManager sharedManager];
         
-        [objectManager loadObjectsAtResourcePath:[self restUrl:[users count]] delegate:self block:^(RKObjectLoader* loader) {        
+        [objectManager loadObjectsAtResourcePath:[self restUrl:[users count]] usingBlock:^(RKObjectLoader* loader) {
+            loader.delegate = self;
             loader.userData = [NSNumber numberWithInt:41]; //use as a tag
         }];
         
@@ -268,6 +281,7 @@
     [users release];
     [_user release];
     [_place release];
+    [_perspective release];
     [super dealloc];
     
 }

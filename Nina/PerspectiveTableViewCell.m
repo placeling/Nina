@@ -294,7 +294,9 @@
 
 -(IBAction) showLikers{
     
-    
+    FollowViewController *followViewController = [[FollowViewController alloc] initWithPerspective:self.perspective];
+    [self.requestDelegate.navigationController pushViewController:followViewController animated:YES];
+    [followViewController release];
 }
 
 -(IBAction) showComments{

@@ -12,6 +12,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <RestKit/RestKit.h>
 #import "Facebook.h"
+#import "FollowViewController.h"
 #import "PerspectiveDisplayProtocol.h"
 
 @interface PerspectiveTableViewCell : UITableViewCell<UIActionSheetDelegate>{
