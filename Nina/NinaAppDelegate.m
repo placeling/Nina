@@ -24,6 +24,7 @@
 #import "FindFacebookFriendsController.h"
 #import "Crittercism.h"
 #import "FacebookRegetViewController.h"
+#import "SuggestionViewController.h"
 #import "Notification.h"
 #import "Activity.h"
 #import "Question.h"
@@ -194,6 +195,14 @@
             [self.navigationController pushViewController:userProfile animated:false];
             [userProfile release];
             
+        } else if ( [[url host] isEqualToString:@"perspectives"] ){
+            NSString *perspectiveId = [[url path] stringByReplacingOccurrencesOfString:@"/" withString:@""];
+            
+            PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] init];
+            placePageViewController.perspective_id = perspectiveId;
+            [self.navigationController pushViewController:placePageViewController animated:false];
+            [placePageViewController release];
+            
         } else if ( [[url host] isEqualToString:@"places"] ){
             NSString *placeId = [[url path] stringByReplacingOccurrencesOfString:@"/" withString:@""];
             
@@ -209,7 +218,15 @@
             //NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/unhighlight", placeId]; //unhilight, so we don't send again
             
             //[[RKClient sharedClient] post:urlText params:nil delegate:nil]; 
-        } else if ( [[url host] isEqualToString:@"facebookfriends"] ){
+        } else if ( [[url host] isEqualToString:@"suggestions"] ){
+            NSString *suggestionId = [[url path] stringByReplacingOccurrencesOfString:@"/" withString:@""];
+            
+            SuggestionViewController *suggestionView = [[SuggestionViewController alloc]init];
+            suggestionView.suggestionId = suggestionId;
+            [self.navigationController pushViewController:suggestionView animated:true];
+            
+            [suggestionView release];
+        }else if ( [[url host] isEqualToString:@"facebookfriends"] ){
             FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
             
             [self.navigationController pushViewController:findFacebookFriendsController animated:true];
