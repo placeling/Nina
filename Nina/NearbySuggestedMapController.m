@@ -523,7 +523,8 @@
     
     if ( self.place_id ){
         NSString *requestUrl = [NSString stringWithFormat:@"/v1/places/%@", self.place_id];
-        [objectManager loadObjectsAtResourcePath:requestUrl delegate:self block:^(RKObjectLoader* loader) {     
+        [objectManager loadObjectsAtResourcePath:requestUrl  usingBlock:^(RKObjectLoader* loader) {
+            loader.delegate = self;
             loader.objectMapping = [Place getObjectMapping];
             loader.userData = [NSNumber numberWithInt:83];
         }];

@@ -59,9 +59,10 @@
     
     
     if ( !self.user ){
-        [objectManager loadObjectsAtResourcePath:targetURL delegate:self block:^(RKObjectLoader* loader) {        
+        [objectManager loadObjectsAtResourcePath:targetURL  usingBlock:^(RKObjectLoader* loader) {
             RKObjectMapping *userMapping = [User getObjectMapping];
             loader.objectMapping = userMapping;
+            loader.delegate = self;
             loader.userData = [NSNumber numberWithInt:110]; //use as a tag
         }];
         self.HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
