@@ -436,8 +436,6 @@
         return;
     } 
     
-    RKObjectManager* objectManager = [RKObjectManager sharedManager];       
-    
     if (self.perspective.starred){
         [self.perspective unstar];
         
@@ -448,8 +446,9 @@
         [self.loveButton setImage:[UIImage imageNamed:@"unliked.png"] forState:UIControlStateNormal];
     } else {            
         [self.perspective star];
-        [objectManager postObject:nil delegate:self.requestDelegate block:^(RKObjectLoader* loader) {  
-            loader.resourcePath = [NSString stringWithFormat:@"/v1/perspectives/%@/star", self.perspective.perspectiveId];
+        NSString *urlText = [NSString stringWithFormat:@"/v1/perspectives/%@/star", self.perspective.perspectiveId];
+        [[RKClient sharedClient] post:urlText usingBlock:^(RKObjectLoader* loader) {
+            loader.delegate = self.requestDelegate;
             loader.userData = [NSNumber numberWithInt:5]; //use as a tag
         }];
         [self.loveButton setImage:[UIImage imageNamed:@"liked.png"] forState:UIControlStateNormal];
