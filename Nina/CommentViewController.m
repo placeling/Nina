@@ -15,7 +15,7 @@
 
 @implementation CommentViewController
 
-@synthesize perspective, tableView=_tableView, containerView, comments;
+@synthesize perspective, tableView=_tableView, containerView, comments, textView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
