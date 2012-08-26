@@ -50,11 +50,11 @@
     self.blocked = [[jsonDict objectForKeyNotNull:@"blocked"] boolValue] ;
     
     for ( NSDictionary *authDict in [jsonDict objectForKey:@"auths"] ){
+        NSDateFormatter *jsonFormatter = [RKObjectMapping preferredDateFormatter];
+        NSString *expiry = [authDict objectForKey:@"expiry"];
         
         if ([[authDict objectForKey:@"provider"] isEqualToString:@"facebook"] ){
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSString *expiry = [authDict objectForKey:@"expiry"];
-            NSDateFormatter *jsonFormatter = [RKObjectMapping preferredDateFormatter];
             
             if ( ![defaults objectForKey:@"FBAccessTokenKey"] ){
                 [defaults setObject:[authDict objectForKey:@"token"] forKey:@"FBAccessTokenKey"];
@@ -67,17 +67,17 @@
                 
                 appDelegate.facebook.accessToken = [authDict objectForKey:@"token"];
                 appDelegate.facebook.expirationDate = [jsonFormatter dateFromString:expiry];
-            } 
-
-            Authentication *auth = [[Authentication alloc] init];
-            auth.provider = [authDict objectForKey:@"provider"];
-            auth.uid = [authDict objectForKey:@"uid"];
-            auth.expiry = [jsonFormatter dateFromString:expiry];
-            auth.token = [authDict objectForKey:@"token"];
-            
-            [self.auths addObject:auth];
-            [auth release];
+            }
         }
+
+        Authentication *auth = [[Authentication alloc] init];
+        auth.provider = [authDict objectForKey:@"provider"];
+        auth.uid = [authDict objectForKey:@"uid"];
+        auth.expiry = [jsonFormatter dateFromString:expiry];
+        auth.token = [authDict objectForKey:@"token"];
+        
+        [self.auths addObject:auth];
+        [auth release];
     }
     
     Photo *photo = [[[Photo alloc] init] autorelease];
