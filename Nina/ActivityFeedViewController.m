@@ -276,7 +276,9 @@
             hasMoreNotifications = false;
         }
         
-    } 
+    }
+                    
+    [self dataSourceDidFinishLoadingNewData];
     
 }
 
