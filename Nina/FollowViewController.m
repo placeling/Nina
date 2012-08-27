@@ -96,7 +96,7 @@
         }        
     } else if (self.perspective){
         targetURL = [NSString stringWithFormat:@"/v1/perspectives/%@/likers?start=%i", self.perspective.perspectiveId, start];
-         self.navigationItem.title = @"Likers";
+         self.navigationItem.title = @"Liked By";
     } else {
         if (self.following){
             targetURL = [NSString stringWithFormat:@"/v1/users/%@/following?start=%i", self.user.username, start];
