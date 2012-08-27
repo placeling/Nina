@@ -82,7 +82,7 @@
 	doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	doneButton.frame = CGRectMake(self.containerView.frame.size.width - 69, 8, 63, 27);
     doneButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
-	[doneButton setTitle:@"Send" forState:UIControlStateNormal];
+	[doneButton setTitle:@"Post" forState:UIControlStateNormal];
     
     [doneButton setTitleShadowColor:[UIColor colorWithWhite:0 alpha:0.4] forState:UIControlStateNormal];
     doneButton.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
@@ -130,6 +130,7 @@
     comment.comment = self.textView.text;
     
     [doneButton setEnabled:false];
+    [self.textView resignFirstResponder];
     
      [[RKObjectManager sharedManager] postObject:comment usingBlock:^(RKObjectLoader *loader){
         loader.delegate = self;
@@ -259,11 +260,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if ( dataLoaded ){
-        return [[self comments] count];
-    } else {
-        return 1;
-    }
+    return MAX([[self comments] count], 1);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -278,6 +275,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *commentCellIdentifier = @"CommentCell";
+    static NSString *infoCellIdentifier = @"infoCell";
     
     PlacemarkComment *comment;
     UITableViewCell *cell;
@@ -294,6 +292,28 @@
             }
         }
         
+    } else if (dataLoaded && [[self comments] count] ==0){
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:infoCellIdentifier] autorelease];
+        
+        UITextView *loginText = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 320, 90)];
+        
+        loginText.text = @"Add the first comment";
+        loginText.textAlignment = UITextAlignmentCenter;
+        
+        loginText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+        loginText.textColor = [UIColor grayColor];
+        loginText.tag = 778;
+        [loginText setBackgroundColor:[UIColor clearColor]];
+        [loginText setUserInteractionEnabled:FALSE];
+        
+        [cell addSubview:loginText];
+        [loginText release];
+        [cell setUserInteractionEnabled:YES];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        [cell setUserInteractionEnabled:true];
+        return cell;
     } else {
         comment = [[self comments] objectAtIndex:indexPath.row];
         
@@ -311,6 +331,10 @@
     }
     
     return cell;
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.textView becomeFirstResponder];
 }
 
 -(void)dealloc{
