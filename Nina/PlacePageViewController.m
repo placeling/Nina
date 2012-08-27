@@ -456,7 +456,7 @@ typedef enum {
         
         MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
         controller.mailComposeDelegate = self;
-        [controller setSubject:[NSString stringWithFormat:@"\"%@\" on Placeling", self.place.name]];
+        [controller setSubject:[NSString stringWithFormat:@"%@ on Placeling", self.place.name]];
         [controller setMessageBody:[NSString stringWithFormat:@"\n\n%@", urlString] isHTML:TRUE];
         
         if (controller) [self presentModalViewController:controller animated:YES];

@@ -364,7 +364,7 @@
         
         MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
         controller.mailComposeDelegate = self.requestDelegate;
-        [controller setSubject:[NSString stringWithFormat:@"\"%@\" on Placeling", self.perspective.place.name]];
+        [controller setSubject:[NSString stringWithFormat:@"%@ on Placeling", self.perspective.place.name]];
         [controller setMessageBody:[NSString stringWithFormat:@"\n\n%@", urlString] isHTML:TRUE];
         
         if (controller) [self.requestDelegate presentModalViewController:controller animated:YES];
