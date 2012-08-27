@@ -328,8 +328,10 @@
 -(void)handleTwitterCredentials:(NSDictionary *)creds{
     [super handleTwitterCredentials:creds];
     twitterEnabled = true;
-    [self.twitterButton setImage:[UIImage imageNamed:@"twitter_selected.png"] forState:UIControlStateNormal];
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.twitterButton setImage:[UIImage imageNamed:@"twitter_selected.png"] forState:UIControlStateNormal];
+    });    
 }
 
 -(IBAction) twitterToggle{
