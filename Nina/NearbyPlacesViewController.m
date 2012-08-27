@@ -392,7 +392,7 @@
 		[jsonDict release];
 	}
     
-    NSString *crumb = [NSString stringWithFormat:@"NearbyPlaces360:%@:%i", self, request.tag];
+    NSString *crumb = [NSString stringWithFormat:@"NearbyPlaces360:%@:%@", self, refreshHeaderView];
     [Crittercism leaveBreadcrumb:crumb];
     [self dataSourceDidFinishLoadingNewData];
 }
