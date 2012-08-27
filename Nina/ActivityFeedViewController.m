@@ -28,7 +28,7 @@
 
 @implementation ActivityFeedViewController
 @synthesize reloading=_reloading;
-@synthesize activityTableView, segmentControl, toolbar;
+@synthesize activityTableView, segmentControl, toolbar, initialIndex;
 
 - (void)didReceiveMemoryWarning{
     // Releases the view if it doesn't have a superview.
@@ -202,7 +202,8 @@
     recentNotifications = [[NSMutableArray alloc] init];
     
     [FlurryAnalytics logEvent:@"ACTIVITY_FEED_VIEW"];
-    [self.segmentControl setSelectedSegmentIndex:0];
+    
+    [self.segmentControl setSelectedSegmentIndex:initialIndex];
     
     self.navigationItem.title = @"Updates";
     

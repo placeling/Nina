@@ -250,12 +250,12 @@
 -(IBAction) activityFeed:(id)sender{
     ActivityFeedViewController *activityFeedViewController = [[ActivityFeedViewController alloc] init];
     
-    [self.navigationController pushViewController:activityFeedViewController animated:true];
     if ( [sender class] == [UIBarButtonItem class] ){
-        activityFeedViewController.segmentControl.selectedSegmentIndex = 0;
+        activityFeedViewController.initialIndex = 0;
     } else {
-        activityFeedViewController.segmentControl.selectedSegmentIndex = 1;
+        activityFeedViewController.initialIndex = 1;
     }
+    [self.navigationController pushViewController:activityFeedViewController animated:true];
     
     [activityFeedViewController release];
 }

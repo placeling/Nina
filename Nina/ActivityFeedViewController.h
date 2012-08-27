@@ -26,12 +26,16 @@
     BOOL hasMoreNotifications;
     BOOL hasMore;
     BOOL _reloading;
+    
+    NSInteger initialIndex;
 }
 
 @property(assign,getter=isReloading) BOOL reloading;
 @property(nonatomic, retain) IBOutlet UITableView *activityTableView;
 @property(nonatomic, retain) IBOutlet UISegmentedControl *segmentControl; 
 @property(nonatomic, retain) IBOutlet UIToolbar *toolbar;
+@property(nonatomic, assign) NSInteger initialIndex;
+
 
 - (void)reloadTableViewDataSource;
 - (void)doneLoadingTableViewData;
