@@ -121,6 +121,21 @@
     self.headerTextView.text = [NSString stringWithFormat:@"%@ has suggested you try %@", self.suggestion.sender.username, self.suggestion.place.name];
 }
 
+
+-(void)requestFailed:(ASIHTTPRequest *)request{
+    [NinaHelper handleBadRequest:request sender:self];
+}
+
+-(void)requestFinished:(ASIHTTPRequest *)request{
+    //[self.navigationController popViewControllerAnimated:true];
+}
+-(void)updatePerspective:(Perspective *)perspective{
+    //[self.navigationController popViewControllerAnimated:true];
+}
+
+
+#pragma mark - Selectors for responding to initial URLs
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

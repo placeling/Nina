@@ -14,7 +14,7 @@
 #import "EditPerspectiveViewController.h"
 #import "Perspective.h"
 
-@interface SuggestionViewController : UIViewController<RKObjectLoaderDelegate, MBProgressHUDDelegate, EditPerspectiveDelegate>{
+@interface SuggestionViewController : UIViewController<RKObjectLoaderDelegate, MBProgressHUDDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate>{
     Suggestion *suggestion;
     NSString *suggestionId;
     bool dataLoaded;
