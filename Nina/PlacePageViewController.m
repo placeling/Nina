@@ -765,6 +765,9 @@ typedef enum {
     
     [self.tagScrollView setContentSize:CGSizeMake(cx, [self.tagScrollView bounds].size.height)];  
     self.place.dirty = false;
+    
+    UIButton *segment = [[self.segmentedControl buttons] objectAtIndex:[self.initialSelectedIndex intValue]];
+    [segment sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
 -(IBAction)editPerspective{

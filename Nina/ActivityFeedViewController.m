@@ -490,19 +490,25 @@
                 PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
                 placeController.perspective_id = activity.subjectId;
                 placeController.referrer = activity.username1;
-                //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
+                if ( ![activity.username1 isEqualToString:currentUser] ){
+                     placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
+                }               
                 viewController = placeController;
             }else if ([activity.activityType isEqualToString:@"NEW_PERSPECTIVE"]){
                 PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
                 placeController.perspective_id = activity.subjectId;
                 placeController.referrer = activity.username1;
-                //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
+                if ( ![activity.username1 isEqualToString:currentUser] ){
+                    placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
+                }
                 viewController = placeController;
             } else if ([activity.activityType isEqualToString:@"STAR_PERSPECTIVE"]){
                 PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
                 placeController.perspective_id = activity.subjectId;
                 placeController.referrer = activity.username1;
-                //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
+                if ( ![activity.username2 isEqualToString:currentUser] ){
+                    placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
+                }
                 viewController = placeController;
             }  else if ([activity.activityType isEqualToString:@"FOLLOW"]){
                 MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];
