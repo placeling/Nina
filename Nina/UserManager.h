@@ -17,5 +17,6 @@
 +(void) setUser:(User*)user;
 
 +(void) updatePerspective:(Perspective*)perspective;
++(void) removePerspective:(Perspective*)perspective;
 
 @end

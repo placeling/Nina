@@ -41,6 +41,8 @@
 
 #import <Twitter/Twitter.h>
 
+#import "UserManager.h"
+
 
 #define kMinCellHeight 60
 
@@ -564,7 +566,7 @@ typedef enum {
                             [self.homePerspectives removeObject:perspective];
                         }
                     }
-                }   
+                }
                         
                 [self.tableView reloadData];
                 break;
@@ -627,6 +629,7 @@ typedef enum {
             [self.place.everyonePerspectives removeObject:p];
         }
     }
+    [UserManager removePerspective:perspective];
     self.place.dirty = true;
     
     [request setRequestMethod:@"DELETE"];

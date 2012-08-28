@@ -52,6 +52,19 @@ static User *sharedMeUser = nil;
     }
 }
 
++(void) removePerspective:(Perspective*)deletedPerspective{
+    if ( sharedMeUser){
+        for ( int i =0; i < [sharedMeUser.perspectives count]; i++){
+            Perspective *perspective  = [sharedMeUser.perspectives objectAtIndex:i];
+            if ( [perspective.perspectiveId isEqualToString:deletedPerspective.perspectiveId] ){
+                [sharedMeUser.perspectives removeObject:perspective];
+            }
+        }
+        sharedMeUser.timestamp = [[NSDate date] timeIntervalSince1970];
+    }
+    
+}
+
 + (id)allocWithZone:(NSZone *)zone {
     return [[self sharedMeUser] retain];
 }
