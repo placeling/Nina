@@ -689,10 +689,11 @@ typedef enum {
     UIButton *button = (UIButton*)sender;
     NSString *searchString = button.titleLabel.text;
     
-    NearbySuggestedPlaceController *suggestedPlaceController = [[NearbySuggestedPlaceController alloc] init];
+    NearbySuggestedMapController *suggestedPlaceController = [[NearbySuggestedMapController alloc] init];
     
     suggestedPlaceController.origin = self.place.location.coordinate;
     suggestedPlaceController.searchTerm = searchString;
+    suggestedPlaceController.initialIndex=2;
     
     [self.navigationController pushViewController:suggestedPlaceController animated:TRUE];
     
