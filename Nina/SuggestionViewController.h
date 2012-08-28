@@ -23,9 +23,10 @@
 
     UIImageView *imageView;
     UITextView *messageView;
-    UITextView *headerTextView;
+    UILabel *senderLabel;
     
     UIButton *placemark;
+    UIButton *placeButton;
 }
 
 @property(nonatomic, retain) Suggestion *suggestion;
@@ -33,9 +34,11 @@
 
 @property(nonatomic, retain) IBOutlet UIImageView *imageView;
 @property(nonatomic, retain) IBOutlet UITextView *messageView;
-@property(nonatomic, retain) IBOutlet UITextView *headerTextView;
+@property(nonatomic, retain) IBOutlet UILabel *senderLabel;
 @property(nonatomic, retain) IBOutlet UIButton *placemark;
+@property(nonatomic, retain) IBOutlet UIButton *placeButton;
 
 -(IBAction)placemark:(id)sender;
+-(IBAction)placeAction:(id)sender;
 
 @end

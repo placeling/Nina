@@ -9,6 +9,7 @@
 #import "SuggestionViewController.h"
 #import "FlurryAnalytics.h"
 #import "Place.h"
+#import "PlacePageViewController.h"
 #import "UIImageView+WebCache.h"
 
 @interface SuggestionViewController ()
@@ -18,7 +19,7 @@
 
 @implementation SuggestionViewController
 
-@synthesize suggestion, suggestionId, imageView, messageView, placemark, headerTextView;
+@synthesize suggestion, suggestionId, imageView, messageView, placemark, senderLabel, placeButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -113,12 +114,25 @@
     
 }
 
+-(IBAction)placeAction:(id)sender{
+    
+    if (self.suggestion && self.suggestion.place){
+        PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:self.suggestion.place];
+        
+        [self.navigationController pushViewController:placePageViewController animated:true];
+        
+        [placePageViewController release];
+    }
+    
+}
+
 
 -(void)contentLoad{
     
     self.messageView.text = self.suggestion.message;
     [self.imageView setImageWithURL:[NSURL URLWithString:self.suggestion.sender.profilePic.thumbUrl] ];
-    self.headerTextView.text = [NSString stringWithFormat:@"%@ has suggested you try %@", self.suggestion.sender.username, self.suggestion.place.name];
+    self.senderLabel.text = self.suggestion.sender.username;
+    [self.placeButton setTitle:self.suggestion.place.name forState:UIControlStateNormal];
 }
 
 
@@ -148,7 +162,8 @@
     [imageView release];
     [messageView release];
     [placemark release];
-    [headerTextView release];
+    [senderLabel release];
+    [placeButton release];
     
     [super dealloc];
 }
