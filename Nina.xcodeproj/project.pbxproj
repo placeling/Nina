@@ -346,6 +346,14 @@
 		28B61943142292E600B0A7E5 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B61942142292E500B0A7E5 /* icon@2x.png */; };
 		28B619451422942300B0A7E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B619441422942200B0A7E5 /* Default.png */; };
 		28B619471422942C00B0A7E5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B619461422942B00B0A7E5 /* Default@2x.png */; };
+		28B9E27215E557BB00E13F0B /* NPSPopupWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B9E27115E557BB00E13F0B /* NPSPopupWindow.m */; };
+		28B9E27C15E55AE300E13F0B /* AFPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B9E27515E55AE300E13F0B /* AFPickerView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		28B9E27D15E55AE300E13F0B /* pickerBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E27615E55AE300E13F0B /* pickerBackground.png */; };
+		28B9E27E15E55AE300E13F0B /* pickerBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E27715E55AE300E13F0B /* pickerBackground@2x.png */; };
+		28B9E27F15E55AE300E13F0B /* pickerGlass.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E27815E55AE300E13F0B /* pickerGlass.png */; };
+		28B9E28015E55AE300E13F0B /* pickerGlass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E27915E55AE300E13F0B /* pickerGlass@2x.png */; };
+		28B9E28115E55AE300E13F0B /* pickerShadows.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E27A15E55AE300E13F0B /* pickerShadows.png */; };
+		28B9E28215E55AE300E13F0B /* pickerShadows@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E27B15E55AE300E13F0B /* pickerShadows@2x.png */; };
 		28BA237113F0925900463234 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28BA237013F0925900463234 /* MessageUI.framework */; };
 		28BFF7CE15D18D340086EBF5 /* QuestionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BFF7CC15D18D340086EBF5 /* QuestionListViewController.m */; };
 		28BFF7CF15D18D340086EBF5 /* QuestionListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28BFF7CD15D18D340086EBF5 /* QuestionListViewController.xib */; };
@@ -1001,6 +1009,16 @@
 		28B61942142292E500B0A7E5 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		28B619441422942200B0A7E5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		28B619461422942B00B0A7E5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		28B9E27015E557BB00E13F0B /* NPSPopupWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPSPopupWindow.h; sourceTree = "<group>"; };
+		28B9E27115E557BB00E13F0B /* NPSPopupWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPSPopupWindow.m; sourceTree = "<group>"; };
+		28B9E27415E55AE300E13F0B /* AFPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPickerView.h; sourceTree = "<group>"; };
+		28B9E27515E55AE300E13F0B /* AFPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFPickerView.m; sourceTree = "<group>"; };
+		28B9E27615E55AE300E13F0B /* pickerBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickerBackground.png; sourceTree = "<group>"; };
+		28B9E27715E55AE300E13F0B /* pickerBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pickerBackground@2x.png"; sourceTree = "<group>"; };
+		28B9E27815E55AE300E13F0B /* pickerGlass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickerGlass.png; sourceTree = "<group>"; };
+		28B9E27915E55AE300E13F0B /* pickerGlass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pickerGlass@2x.png"; sourceTree = "<group>"; };
+		28B9E27A15E55AE300E13F0B /* pickerShadows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickerShadows.png; sourceTree = "<group>"; };
+		28B9E27B15E55AE300E13F0B /* pickerShadows@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pickerShadows@2x.png"; sourceTree = "<group>"; };
 		28BA237013F0925900463234 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		28BFF7CB15D18D340086EBF5 /* QuestionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionListViewController.h; sourceTree = "<group>"; };
 		28BFF7CC15D18D340086EBF5 /* QuestionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionListViewController.m; sourceTree = "<group>"; };
@@ -1601,16 +1619,9 @@
 		2895017713D67896009E1BD7 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				28B9E27315E55AE300E13F0B /* AFPickerView */,
 				28B425ED15DB2EA70025957A /* SSTextView */,
-				28B425E915DB2E9F0025957A /* YIPopupTextView.h */,
-				28B425EA15DB2E9F0025957A /* YIPopupTextView.m */,
 				28B425C415D8AD590025957A /* ABAUTHCORE */,
-				28B4256815D4C72B0025957A /* HPGrowingTextView.h */,
-				28B4256915D4C72B0025957A /* HPGrowingTextView.m */,
-				28B425C115D8AD0F0025957A /* TWSignedRequest.h */,
-				28B425C215D8AD0F0025957A /* TWSignedRequest.m */,
-				28B4256A15D4C72B0025957A /* HPTextViewInternal.h */,
-				28B4256B15D4C72B0025957A /* HPTextViewInternal.m */,
 				281B1CBE15C9AC9E0015ECBB /* FGallery */,
 				2827EF5F15783F7600EB529A /* CrittercismSDK-crashonly */,
 				28EB2654156EB5CC006568E7 /* WBNoticeView */,
@@ -1626,8 +1637,18 @@
 				2895017A13D67896009E1BD7 /* ASIHttpRequest */,
 				287145C913F4789B0047BDB5 /* LocationManagerManager.h */,
 				287145CA13F4789B0047BDB5 /* LocationManagerManager.m */,
+				28B425E915DB2E9F0025957A /* YIPopupTextView.h */,
+				28B425EA15DB2E9F0025957A /* YIPopupTextView.m */,
 				28EB265D156EBA07006568E7 /* MTPopupWindow.h */,
 				28EB265E156EBA07006568E7 /* MTPopupWindow.m */,
+				28B4256815D4C72B0025957A /* HPGrowingTextView.h */,
+				28B4256915D4C72B0025957A /* HPGrowingTextView.m */,
+				28B425C115D8AD0F0025957A /* TWSignedRequest.h */,
+				28B425C215D8AD0F0025957A /* TWSignedRequest.m */,
+				28B4256A15D4C72B0025957A /* HPTextViewInternal.h */,
+				28B4256B15D4C72B0025957A /* HPTextViewInternal.m */,
+				28B9E27015E557BB00E13F0B /* NPSPopupWindow.h */,
+				28B9E27115E557BB00E13F0B /* NPSPopupWindow.m */,
 				28C7312015643B1700E27DCA /* Appirater.h */,
 				28C7312115643B1700E27DCA /* Appirater.m */,
 				285BE74C142CFFF900898FDF /* asyncimageview.h */,
@@ -2096,6 +2117,21 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		28B9E27315E55AE300E13F0B /* AFPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				28B9E27415E55AE300E13F0B /* AFPickerView.h */,
+				28B9E27515E55AE300E13F0B /* AFPickerView.m */,
+				28B9E27615E55AE300E13F0B /* pickerBackground.png */,
+				28B9E27715E55AE300E13F0B /* pickerBackground@2x.png */,
+				28B9E27815E55AE300E13F0B /* pickerGlass.png */,
+				28B9E27915E55AE300E13F0B /* pickerGlass@2x.png */,
+				28B9E27A15E55AE300E13F0B /* pickerShadows.png */,
+				28B9E27B15E55AE300E13F0B /* pickerShadows@2x.png */,
+			);
+			path = AFPickerView;
+			sourceTree = "<group>";
+		};
 		28EB2654156EB5CC006568E7 /* WBNoticeView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2500,6 +2536,12 @@
 				28B425E415DAE0640025957A /* twitter_icon_bw.png in Resources */,
 				28B4260015DC582B0025957A /* CreateSuggestionViewController.xib in Resources */,
 				28B4269E15DF02980025957A /* SuggestionViewController.xib in Resources */,
+				28B9E27D15E55AE300E13F0B /* pickerBackground.png in Resources */,
+				28B9E27E15E55AE300E13F0B /* pickerBackground@2x.png in Resources */,
+				28B9E27F15E55AE300E13F0B /* pickerGlass.png in Resources */,
+				28B9E28015E55AE300E13F0B /* pickerGlass@2x.png in Resources */,
+				28B9E28115E55AE300E13F0B /* pickerShadows.png in Resources */,
+				28B9E28215E55AE300E13F0B /* pickerShadows@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2668,6 +2710,8 @@
 				28B425F415DC500E0025957A /* Suggestion.m in Sources */,
 				28B425FE15DC582B0025957A /* CreateSuggestionViewController.m in Sources */,
 				28B4269C15DF02980025957A /* SuggestionViewController.m in Sources */,
+				28B9E27215E557BB00E13F0B /* NPSPopupWindow.m in Sources */,
+				28B9E27C15E55AE300E13F0B /* AFPickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
