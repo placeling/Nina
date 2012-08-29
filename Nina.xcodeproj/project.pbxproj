@@ -160,8 +160,6 @@
 		2877A09F14183CE400850530 /* EditableTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2877A09E14183CE400850530 /* EditableTableCell.m */; };
 		2877A0A314198C7400850530 /* MemberProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2877A0A214198C7400850530 /* MemberProfileViewController.xib */; };
 		2877A0B8141AAC6200850530 /* ProfileDetailBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2877A0B7141AAC6200850530 /* ProfileDetailBadge.m */; };
-		2878E823140C294500F2A666 /* MyPerspectiveCellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2878E821140C294500F2A666 /* MyPerspectiveCellViewController.m */; };
-		2878E824140C294500F2A666 /* MyPerspectiveCellViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2878E822140C294500F2A666 /* MyPerspectiveCellViewController.xib */; };
 		2878E828140C2A3900F2A666 /* EditPerspectiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2878E826140C2A3900F2A666 /* EditPerspectiveViewController.m */; };
 		2878E829140C2A3900F2A666 /* EditPerspectiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2878E827140C2A3900F2A666 /* EditPerspectiveViewController.xib */; };
 		287CDF9F155471B5007E99D5 /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 287CDF9E155471B5007E99D5 /* ApplicationController.m */; };
@@ -739,9 +737,6 @@
 		2877A0A214198C7400850530 /* MemberProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MemberProfileViewController.xib; sourceTree = "<group>"; };
 		2877A0B6141AAC6200850530 /* ProfileDetailBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileDetailBadge.h; sourceTree = "<group>"; };
 		2877A0B7141AAC6200850530 /* ProfileDetailBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileDetailBadge.m; sourceTree = "<group>"; };
-		2878E820140C294500F2A666 /* MyPerspectiveCellViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPerspectiveCellViewController.h; sourceTree = "<group>"; };
-		2878E821140C294500F2A666 /* MyPerspectiveCellViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPerspectiveCellViewController.m; sourceTree = "<group>"; };
-		2878E822140C294500F2A666 /* MyPerspectiveCellViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPerspectiveCellViewController.xib; sourceTree = "<group>"; };
 		2878E825140C2A3900F2A666 /* EditPerspectiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPerspectiveViewController.h; sourceTree = "<group>"; };
 		2878E826140C2A3900F2A666 /* EditPerspectiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPerspectiveViewController.m; sourceTree = "<group>"; };
 		2878E827140C2A3900F2A666 /* EditPerspectiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditPerspectiveViewController.xib; sourceTree = "<group>"; };
@@ -1824,9 +1819,6 @@
 				284A354B1404574F009C8C28 /* PerspectiveTableViewCell.h */,
 				284A354C1404574F009C8C28 /* PerspectiveTableViewCell.m */,
 				284A354D1404574F009C8C28 /* PerspectiveTableViewCell.xib */,
-				2878E820140C294500F2A666 /* MyPerspectiveCellViewController.h */,
-				2878E821140C294500F2A666 /* MyPerspectiveCellViewController.m */,
-				2878E822140C294500F2A666 /* MyPerspectiveCellViewController.xib */,
 				280EA88314117B080045B296 /* GenericWebViewController.h */,
 				280EA88414117B090045B296 /* GenericWebViewController.m */,
 				280EA88514117B0A0045B296 /* GenericWebViewController.xib */,
@@ -2304,7 +2296,6 @@
 				284A356014048DCD009C8C28 /* BookmarkTableViewCell.xib in Resources */,
 				2822BDAA1406E1200077868C /* PlaceHeaderView.xib in Resources */,
 				2822BDAC1406EE720077868C /* PlaceFooterView.xib in Resources */,
-				2878E824140C294500F2A666 /* MyPerspectiveCellViewController.xib in Resources */,
 				2878E829140C2A3900F2A666 /* EditPerspectiveViewController.xib in Resources */,
 				2833C09B140D66B20076A398 /* twitter.png in Resources */,
 				286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */,
@@ -2632,7 +2623,6 @@
 				284A354E1404574F009C8C28 /* PerspectiveTableViewCell.m in Sources */,
 				284A355F14048DCD009C8C28 /* BookmarkTableViewCell.m in Sources */,
 				28A2EB941405909600122BBF /* MBProgressHUD.m in Sources */,
-				2878E823140C294500F2A666 /* MyPerspectiveCellViewController.m in Sources */,
 				2878E828140C2A3900F2A666 /* EditPerspectiveViewController.m in Sources */,
 				280EA88614117B0B0045B296 /* GenericWebViewController.m in Sources */,
 				28B38E2B14170D5B00D4025F /* SignupController.m in Sources */,

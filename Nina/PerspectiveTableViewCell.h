@@ -33,9 +33,12 @@
     UIButton *loveButton;
     UIButton *showMoreButton;
     
+    UIButton *modifyNotesButton;
+    
     NSIndexPath *indexpath;
     
     bool expanded;
+    bool myPerspectiveView;
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
@@ -50,11 +53,15 @@
 @property(nonatomic,retain) IBOutlet UIButton *showLikeButton;
 @property(nonatomic,retain) IBOutlet UIButton *showCommentsButton;
 
+@property(nonatomic,retain) IBOutlet UIButton *modifyNotesButton;
+
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property(nonatomic,retain) UITapGestureRecognizer *tapGesture;
 @property(nonatomic,retain) IBOutlet UILabel *createdAtLabel;
 @property(nonatomic,retain) NSIndexPath *indexpath;
 @property(nonatomic, assign) bool expanded;
+
+@property(nonatomic, assign) bool myPerspectiveView;
 
 -(IBAction)showActionSheet;
 -(IBAction)toggleFavourite:(id)sender;

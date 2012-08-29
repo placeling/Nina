@@ -24,7 +24,6 @@
 #import "MBProgressHUD.h"
 #import "PerspectiveTableViewCell.h"
 #import "GenericWebViewController.h"
-#import "MyPerspectiveCellViewController.h"
 
 #import "ASIDownloadCache.h"
 
@@ -1072,7 +1071,7 @@ typedef enum {
     }
     
     if (self.perspectiveType == home && self.place.bookmarked == true && [[self perspectives] count] < 2) {
-        if ([MyPerspectiveCellViewController cellHeightForPerspective:perspective] < minTableHeight) {
+        if ([PerspectiveTableViewCell cellHeightForPerspective:perspective] < minTableHeight) {
             return minTableHeight;
         }
     }
@@ -1115,7 +1114,7 @@ typedef enum {
         //loading case
         heightval = 44;
     }else if ( self.perspectiveType == home && perspective.mine){
-        heightval = [MyPerspectiveCellViewController cellHeightForPerspective:perspective];            
+        heightval = [PerspectiveTableViewCell cellHeightForPerspective:perspective];
     } else {
         //a visible perspective row PerspectiveTableViewCell 
         NSMutableSet *expandedIndexPaths = [expandedCells objectAtIndex:self.segmentedControl.selectedSegmentIndex];
@@ -1153,7 +1152,6 @@ typedef enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *perspectiveCellIdentifier = @"PerspectiveCellIdentifier";
-    static NSString *editableCellIdentifier = @"MyPerspectiveCellIdentifier";
     static NSString *spinnerCellIdentifier = @"SpinnerCellIdentifier";
     static NSString *infoCellIdentifier = @"infoCellIdentifier";
     static NSString *bookmarkCellIdentifier = @"bookmarkCellIdentifier";
@@ -1207,11 +1205,7 @@ typedef enum {
      if ( [perspective isKindOfClass:[NSString class]] ){
         cell = [tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
      }else {         
-        if (perspective.mine){
-            cell = [tableView dequeueReusableCellWithIdentifier:editableCellIdentifier];
-        } else {
-            cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
-        }
+        cell = [tableView dequeueReusableCellWithIdentifier:perspectiveCellIdentifier];
     } 
     cell.userInteractionEnabled = true;
    
@@ -1227,35 +1221,30 @@ typedef enum {
             }             
             cell.userInteractionEnabled = false;
         }else {
-            if ( self.perspectiveType == home && perspective.mine){
-                myPerspective = perspective;
-                NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"MyPerspectiveCellViewController" owner:self options:nil];
-                
-                for(id item in objects){
-                    if ( [item isKindOfClass:[UITableViewCell class]]){
-                        MyPerspectiveCellViewController *mCell = (MyPerspectiveCellViewController*) item;                        
-                        [MyPerspectiveCellViewController setupCell:mCell forPerspective:perspective];
-                        mCell.requestDelegate = self;
-                        cell = mCell;
+
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
+            
+            for(id item in objects){
+                if ( [item isKindOfClass:[UITableViewCell class]]){
+                    PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
+                    NSMutableSet *expandedIndexPaths = [expandedCells objectAtIndex:self.segmentedControl.selectedSegmentIndex];
+                    
+                    if( [expandedIndexPaths member:indexPath]){  
+                        pcell.expanded = true;
                     }
-                }
-            } else {
-                NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"PerspectiveTableViewCell" owner:self options:nil];
-                
-                for(id item in objects){
-                    if ( [item isKindOfClass:[UITableViewCell class]]){
-                        PerspectiveTableViewCell *pcell = (PerspectiveTableViewCell *)item;                  
-                        NSMutableSet *expandedIndexPaths = [expandedCells objectAtIndex:self.segmentedControl.selectedSegmentIndex];
-                        
-                        if( [expandedIndexPaths member:indexPath]){  
-                            pcell.expanded = true;
-                        }
-                        pcell.requestDelegate = self;
-                        pcell.indexpath = indexPath;
-                        [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:false];
-                        cell = pcell;
-                        break;
+                    pcell.requestDelegate = self;
+                    pcell.indexpath = indexPath;
+                    
+                    if ( self.perspectiveType == home && perspective.mine){
+                        myPerspective = perspective;
+                        pcell.myPerspectiveView = true;
+                        [pcell.modifyNotesButton addTarget:self action:@selector(editPerspective)
+                    forControlEvents:UIControlEventTouchUpInside];
                     }
+                    
+                    [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:false];
+                    cell = pcell;
+                    break;
                 }
             }
         }

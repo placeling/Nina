@@ -13,7 +13,6 @@
 #import "FollowViewController.h"
 #import "Perspective.h"
 #import "PerspectiveTableViewCell.h"
-#import "MyPerspectiveCellViewController.h"
 #import "PlacePageViewController.h"
 #import "PerspectivesMapViewController.h"
 #import "ASIDownloadCache.h"

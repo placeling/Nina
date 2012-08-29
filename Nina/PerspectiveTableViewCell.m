@@ -27,7 +27,7 @@
 @synthesize perspective, userImage, memoText,titleLabel, scrollView;
 @synthesize tapGesture, requestDelegate, showMoreButton, loveButton, shareSheetButton;
 @synthesize createdAtLabel, expanded, indexpath;
-@synthesize showLikeButton,showCommentsButton;
+@synthesize showLikeButton,showCommentsButton, modifyNotesButton;
 
 
 +(CGFloat) cellHeightUnboundedForPerspective:(Perspective*)perspective{
@@ -113,6 +113,12 @@
         cell.titleLabel.userInteractionEnabled = YES;
         cell.tapGesture = [[[UITapGestureRecognizer alloc] initWithTarget:cell action:@selector(showAuthoringUser)] autorelease];
         [cell.titleLabel addGestureRecognizer:cell.tapGesture];
+    }
+    
+    if ( cell.myPerspectiveView ){
+        cell.modifyNotesButton.hidden = false;        
+    } else {
+        cell.modifyNotesButton.hidden = true;
     }
 
 
@@ -514,6 +520,7 @@
     [createdAtLabel release];
     [showLikeButton release];
     [showCommentsButton release];
+    [modifyNotesButton release];
     
     [super dealloc];
 }
