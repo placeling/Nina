@@ -50,6 +50,8 @@
     NSMutableArray *followingPerspectives;
     NSMutableArray *everyonePerspectives;
     
+    NSMutableArray *attributions;
+    
 }
 
 +(RKObjectMapping*)getObjectMapping;
@@ -89,6 +91,7 @@
 @property (nonatomic, retain) NSMutableArray *followingPerspectives;
 @property (nonatomic, retain) NSMutableArray *everyonePerspectives;
 @property (nonatomic, retain) NSMutableArray *placemarks;
+@property (nonatomic, retain) NSMutableArray *attributions;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;

@@ -30,7 +30,7 @@ typedef enum {
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : ApplicationController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol> {        
+@interface PlacePageViewController : ApplicationController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol, UIWebViewDelegate> {
     NSString *place_id; 
     NSString *perspective_id; 
     NSString *google_ref;
@@ -67,6 +67,8 @@ typedef enum {
     NSDictionary* buttons;
     
     NSArray *expandedCells;
+    
+    UIWebView *attributionView;
 }
 
 @property BOOL dataLoaded;
@@ -99,6 +101,8 @@ typedef enum {
 @property (nonatomic, assign) NSMutableArray *everyonePerspectives;
 
 @property (nonatomic, retain) IBOutlet UIScrollView *tagScrollView;
+
+@property (nonatomic, retain) IBOutlet UIWebView *attributionView;
 
 @property(nonatomic, retain) NSString *referrer;
 

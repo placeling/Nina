@@ -36,7 +36,7 @@
 #import "LoginController.h"
 #import "MemberProfileViewController.h"
 #import "CreateSuggestionViewController.h"
-
+#import "GenericWebViewController.h"
 #import "FlurryAnalytics.h"
 
 #import <Twitter/Twitter.h>
@@ -79,7 +79,7 @@ typedef enum {
 @synthesize segmentedControl, tagScrollView;
 @synthesize mapButtonView, googlePlacesButton, bookmarkButton;
 @synthesize tableHeaderView, tableFooterView, perspectiveType, topofHeaderView;
-@synthesize homePerspectives, followingPerspectives, everyonePerspectives, tableView=_tableView;
+@synthesize homePerspectives, followingPerspectives, everyonePerspectives, tableView=_tableView, attributionView;
 
 - (id) initWithPlace:(Place *)place{
     if(self = [super init]){
@@ -98,6 +98,27 @@ typedef enum {
     } else {
         return everyonePerspectives;
     }
+}
+
+- (BOOL)webView:(UIWebView *)wv shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
+    // Determine if we want the system to handle it.
+    NSURL *url = request.URL;
+    if ( navigationType == UIWebViewNavigationTypeLinkClicked ) {
+        /*
+         if (![url.scheme isEqual:@"http"] && ![url.scheme isEqual:@"https"]) {
+        if ([[UIApplication sharedApplication]canOpenURL:url]) {
+            [[UIApplication sharedApplication]openURL:url];
+            return NO;
+        }*/
+        
+        GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:[url absoluteString]];
+        
+        [self.navigationController pushViewController:genericWebViewController animated:YES];
+        [genericWebViewController release];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - View lifecycle
@@ -167,6 +188,12 @@ typedef enum {
     [StyleHelper styleContactInfoButton:self.googlePlacesButton];
     
     self.navigationController.title = self.place.name;
+    
+    self.attributionView.opaque = NO;
+    self.attributionView.backgroundColor = [UIColor clearColor];
+    
+    self.attributionView.delegate = self;
+    
 }
 
 -(void)updatePerspective:(Perspective *)perspective{
@@ -768,6 +795,10 @@ typedef enum {
     
     UIButton *segment = [[self.segmentedControl buttons] objectAtIndex:[self.initialSelectedIndex intValue]];
     [segment sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
+    if ([self.place.attributions count] > 0){
+        [self.attributionView loadHTMLString:[self.place.attributions componentsJoinedByString:@"<br>"] baseURL:[NSURL URLWithString:@"https://www.placeling.com"]];
+    }
 }
 
 -(IBAction)editPerspective{
@@ -1277,6 +1308,7 @@ typedef enum {
     [topofHeaderView release];
     [expandedCells release];
     [_tableView release];
+    [attributionView release];
     
     [super dealloc];
 }

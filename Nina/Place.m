@@ -18,7 +18,7 @@
 @synthesize lat, lng, usersBookmarking, bookmarked, highlighted;
 @synthesize googleId, phone, googlePlacesUrl, google_ref, thumbUrl, mapUrl, highlightUrl;
 @synthesize categories, icon, tags, hidden, slug;
-@synthesize homePerspectives,followingPerspectives,everyonePerspectives, placemarks;
+@synthesize homePerspectives,followingPerspectives,everyonePerspectives, placemarks, attributions;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict{
     
@@ -57,6 +57,8 @@
     self.mapUrl = [jsonDict objectForKey:@"map_url"];
     self.slug = [jsonDict objectForKey:@"slug"];
     
+    self.attributions = [jsonDict objectForKeyNotNull:@"html_attributions"];
+    
 }
 
 
@@ -92,12 +94,11 @@
      @"highlight_url", @"highlightUrl",
      @"map_url", @"mapUrl",
      @"slug", @"slug",
+     @"html_attributions", @"attributions",
      nil];
     
     [placeMapping mapKeyPath:@"lat" toAttribute:@"lat"];
     [placeMapping mapKeyPath:@"lng" toAttribute:@"lng"];
-    
-    //placeMapping.primaryKeyAttribute = @"pid";
     
     return placeMapping;
 }
@@ -186,6 +187,8 @@
     [followingPerspectives release];
     [everyonePerspectives release];
     [placemarks release];
+    
+    [attributions release];
     
     [super dealloc];
 }
