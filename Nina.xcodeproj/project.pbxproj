@@ -354,6 +354,7 @@
 		28B9E28015E55AE300E13F0B /* pickerGlass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E27915E55AE300E13F0B /* pickerGlass@2x.png */; };
 		28B9E28115E55AE300E13F0B /* pickerShadows.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E27A15E55AE300E13F0B /* pickerShadows.png */; };
 		28B9E28215E55AE300E13F0B /* pickerShadows@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E27B15E55AE300E13F0B /* pickerShadows@2x.png */; };
+		28B9E28815EE9DB300E13F0B /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E28715EE9DB300E13F0B /* style.css */; };
 		28BA237113F0925900463234 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28BA237013F0925900463234 /* MessageUI.framework */; };
 		28BFF7CE15D18D340086EBF5 /* QuestionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BFF7CC15D18D340086EBF5 /* QuestionListViewController.m */; };
 		28BFF7CF15D18D340086EBF5 /* QuestionListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28BFF7CD15D18D340086EBF5 /* QuestionListViewController.xib */; };
@@ -1019,6 +1020,7 @@
 		28B9E27915E55AE300E13F0B /* pickerGlass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pickerGlass@2x.png"; sourceTree = "<group>"; };
 		28B9E27A15E55AE300E13F0B /* pickerShadows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickerShadows.png; sourceTree = "<group>"; };
 		28B9E27B15E55AE300E13F0B /* pickerShadows@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pickerShadows@2x.png"; sourceTree = "<group>"; };
+		28B9E28715EE9DB300E13F0B /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		28BA237013F0925900463234 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		28BFF7CB15D18D340086EBF5 /* QuestionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionListViewController.h; sourceTree = "<group>"; };
 		28BFF7CC15D18D340086EBF5 /* QuestionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionListViewController.m; sourceTree = "<group>"; };
@@ -1592,6 +1594,7 @@
 				28019A7A155ED11900489EAB /* google_place_mapping.json */,
 				2895004A13D64559009E1BD7 /* Nina-Prefix.pch */,
 				2895004B13D64559009E1BD7 /* main.m */,
+				28B9E28715EE9DB300E13F0B /* style.css */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2542,6 +2545,7 @@
 				28B9E28015E55AE300E13F0B /* pickerGlass@2x.png in Resources */,
 				28B9E28115E55AE300E13F0B /* pickerShadows.png in Resources */,
 				28B9E28215E55AE300E13F0B /* pickerShadows@2x.png in Resources */,
+				28B9E28815EE9DB300E13F0B /* style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

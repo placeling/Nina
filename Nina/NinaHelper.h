@@ -165,4 +165,6 @@
 
 +(NSString*) getTwitterSecret;
 
++(NSString*) getHtmlWrapper;
+
 @end

@@ -100,6 +100,7 @@ typedef enum {
     }
 }
 
+
 - (BOOL)webView:(UIWebView *)wv shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
     // Determine if we want the system to handle it.
@@ -115,7 +116,8 @@ typedef enum {
         GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:[url absoluteString]];
         
         [self.navigationController pushViewController:genericWebViewController animated:YES];
-        [genericWebViewController release];
+        [genericWebViewController release];NSString *path = [[NSBundle mainBundle] bundlePath];
+        NSURL *baseURL = [NSURL fileURLWithPath:path];
         return NO;
     }
     return YES;
@@ -797,7 +799,11 @@ typedef enum {
     [segment sendActionsForControlEvents:UIControlEventTouchUpInside];
     
     if ([self.place.attributions count] > 0){
-        [self.attributionView loadHTMLString:[self.place.attributions componentsJoinedByString:@"<br>"] baseURL:[NSURL URLWithString:@"https://www.placeling.com"]];
+        NSString *path = [[NSBundle mainBundle] bundlePath];
+        NSURL *baseURL = [NSURL fileURLWithPath:path];
+        NSString *rawHtml = [NSString stringWithFormat:[NinaHelper getHtmlWrapper],[self.place.attributions componentsJoinedByString:@"<br>" ] ];
+        
+        [self.attributionView loadHTMLString:rawHtml baseURL:baseURL];
     }
 }
 

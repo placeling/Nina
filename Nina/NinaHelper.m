@@ -489,4 +489,8 @@
     return @"23nCVVsBPLfYxjLSnqiR7LML93rv1MVXOUjeJyOWU";
 }
 
++(NSString*) getHtmlWrapper{
+    return @"<html><head><link rel='stylesheet' type='text/css' href='style.css' /></head><body>%@</body></html>";
+}
+
 @end
