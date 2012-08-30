@@ -162,6 +162,16 @@
     }
 }
 
+-(NSString*)likersText{
+    
+    if ( [self.likers count] > 2 ){
+        return [NSString stringWithFormat:@"%@ & %i others", [self.likers objectAtIndex:0], [self.likers count] -1 ];
+    } else {
+        return [self.likers componentsJoinedByString:@" & "];
+    }
+    
+}
+
 #pragma mark Fgallerydelegate
 
 

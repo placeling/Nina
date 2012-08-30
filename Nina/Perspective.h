@@ -58,5 +58,6 @@
 -(void) unstar;
 
 -(NSString*)thumbUrl;
+-(NSString*)likersText;
 
 @end
