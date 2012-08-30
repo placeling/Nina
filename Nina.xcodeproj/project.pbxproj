@@ -17,8 +17,6 @@
 		28086BBC13ECA9B900790404 /* add_photo_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 28086B8613ECA9B900790404 /* add_photo_button.png */; };
 		28086BBD13ECA9B900790404 /* crosshairs.png in Resources */ = {isa = PBXBuildFile; fileRef = 28086B8713ECA9B900790404 /* crosshairs.png */; };
 		28086BBE13ECA9B900790404 /* crosshairs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28086B8813ECA9B900790404 /* crosshairs@2x.png */; };
-		28086BC213ECA9B900790404 /* filter.png in Resources */ = {isa = PBXBuildFile; fileRef = 28086B8C13ECA9B900790404 /* filter.png */; };
-		28086BC313ECA9B900790404 /* filter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28086B8D13ECA9B900790404 /* filter@2x.png */; };
 		28086BC613ECA9B900790404 /* lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 28086B9013ECA9B900790404 /* lock.png */; };
 		28086BC713ECA9B900790404 /* lock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28086B9113ECA9B900790404 /* lock@2x.png */; };
 		28086BD413ECA9B900790404 /* powered-by-google-on-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 28086B9E13ECA9B900790404 /* powered-by-google-on-white.png */; };
@@ -33,7 +31,6 @@
 		280EA87D14114C300045B296 /* NearbyPlacesFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280EA87C14114C300045B296 /* NearbyPlacesFooterView.xib */; };
 		280EA88614117B0B0045B296 /* GenericWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280EA88414117B090045B296 /* GenericWebViewController.m */; };
 		280EA88714117B0B0045B296 /* GenericWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280EA88514117B0A0045B296 /* GenericWebViewController.xib */; };
-		2817988E1423C0D300406E78 /* iphone_connect.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2817988D1423C0D300406E78 /* iphone_connect.jpg */; };
 		281B182B15C748950015ECBB /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 281B182A15C748950015ECBB /* Accounts.framework */; };
 		281B1C0015C8D4EF0015ECBB /* twitter_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1BFC15C8D4EF0015ECBB /* twitter_selected.png */; };
 		281B1C0115C8D4EF0015ECBB /* twitter_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1BFD15C8D4EF0015ECBB /* twitter_selected@2x.png */; };
@@ -74,7 +71,6 @@
 		2827F26714BACB7B002B4B7E /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827F25E14BACB7B002B4B7E /* SBJsonBase.m */; };
 		2827F26814BACB7B002B4B7E /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827F26014BACB7B002B4B7E /* SBJsonParser.m */; };
 		2827F26914BACB7B002B4B7E /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827F26214BACB7B002B4B7E /* SBJsonWriter.m */; };
-		2833C09B140D66B20076A398 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 2833C09A140D66B20076A398 /* twitter.png */; };
 		283FBB511454BD5700F6C50A /* QuickPickButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 283FBB501454BD5700F6C50A /* QuickPickButton.m */; };
 		28417F91148354EA00CA6D4D /* PeopleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417F8F148354EA00CA6D4D /* PeopleIcon.png */; };
 		28417F92148354EA00CA6D4D /* PeopleIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417F90148354EA00CA6D4D /* PeopleIcon@2x.png */; };
@@ -136,8 +132,6 @@
 		286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */; };
 		286FA149143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 286FA147143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m */; };
 		286FA14A143AB5EE00EDAE84 /* NearbySuggestedPlaceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286FA148143AB5EE00EDAE84 /* NearbySuggestedPlaceController.xib */; };
-		286FA151143BD34C00EDAE84 /* suggest.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA14F143BD34C00EDAE84 /* suggest.png */; };
-		286FA152143BD34C00EDAE84 /* suggest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA150143BD34C00EDAE84 /* suggest@2x.png */; };
 		286FA15C143CC67D00EDAE84 /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA15B143CC67D00EDAE84 /* 19-gear.png */; };
 		286FA15F143CC68700EDAE84 /* 30-key.png in Resources */ = {isa = PBXBuildFile; fileRef = 286FA15E143CC68700EDAE84 /* 30-key.png */; };
 		286FA163143CD37500EDAE84 /* PlaceSuggestTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286FA161143CD37400EDAE84 /* PlaceSuggestTableViewCell.m */; };
@@ -385,8 +379,6 @@
 		28EB2665156EBA24006568E7 /* popupCloseBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EB2661156EBA24006568E7 /* popupCloseBtn@2x.png */; };
 		28EB2666156EBA24006568E7 /* popupWindowBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EB2662156EBA24006568E7 /* popupWindowBack.png */; };
 		28EB2667156EBA24006568E7 /* popupWindowBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EB2663156EBA24006568E7 /* popupWindowBack@2x.png */; };
-		28EE54E51433D1EB00E36686 /* leather.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE54E31433D1EB00E36686 /* leather.png */; };
-		28EE54E61433D1EB00E36686 /* leather@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE54E41433D1EB00E36686 /* leather@2x.png */; };
 		28EE54F71434DDC600E36686 /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28EE54F51434DDC600E36686 /* ActivityTableViewCell.m */; };
 		28EE54F81434DDC600E36686 /* ActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28EE54F61434DDC600E36686 /* ActivityTableViewCell.xib */; };
 		28EE550214352BD800E36686 /* feed.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE54FE14352BD800E36686 /* feed.png */; };
@@ -518,8 +510,6 @@
 		28086B8613ECA9B900790404 /* add_photo_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_photo_button.png; sourceTree = "<group>"; };
 		28086B8713ECA9B900790404 /* crosshairs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crosshairs.png; sourceTree = "<group>"; };
 		28086B8813ECA9B900790404 /* crosshairs@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crosshairs@2x.png"; sourceTree = "<group>"; };
-		28086B8C13ECA9B900790404 /* filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filter.png; sourceTree = "<group>"; };
-		28086B8D13ECA9B900790404 /* filter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filter@2x.png"; sourceTree = "<group>"; };
 		28086B9013ECA9B900790404 /* lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock.png; sourceTree = "<group>"; };
 		28086B9113ECA9B900790404 /* lock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock@2x.png"; sourceTree = "<group>"; };
 		28086B9E13ECA9B900790404 /* powered-by-google-on-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "powered-by-google-on-white.png"; sourceTree = "<group>"; };
@@ -537,7 +527,6 @@
 		280EA88314117B080045B296 /* GenericWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericWebViewController.h; sourceTree = "<group>"; };
 		280EA88414117B090045B296 /* GenericWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericWebViewController.m; sourceTree = "<group>"; };
 		280EA88514117B0A0045B296 /* GenericWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericWebViewController.xib; sourceTree = "<group>"; };
-		2817988D1423C0D300406E78 /* iphone_connect.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone_connect.jpg; sourceTree = "<group>"; };
 		281B182A15C748950015ECBB /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		281B1BFC15C8D4EF0015ECBB /* twitter_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter_selected.png; sourceTree = "<group>"; };
 		281B1BFD15C8D4EF0015ECBB /* twitter_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter_selected@2x.png"; sourceTree = "<group>"; };
@@ -628,7 +617,6 @@
 		2827F26014BACB7B002B4B7E /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		2827F26114BACB7B002B4B7E /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		2827F26214BACB7B002B4B7E /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		2833C09A140D66B20076A398 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
 		283FBB4F1454BD5700F6C50A /* QuickPickButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickPickButton.h; sourceTree = "<group>"; };
 		283FBB501454BD5700F6C50A /* QuickPickButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickPickButton.m; sourceTree = "<group>"; };
 		28417F8F148354EA00CA6D4D /* PeopleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PeopleIcon.png; sourceTree = "<group>"; };
@@ -704,8 +692,6 @@
 		286FA146143AB5EE00EDAE84 /* NearbySuggestedPlaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbySuggestedPlaceController.h; sourceTree = "<group>"; };
 		286FA147143AB5EE00EDAE84 /* NearbySuggestedPlaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbySuggestedPlaceController.m; sourceTree = "<group>"; };
 		286FA148143AB5EE00EDAE84 /* NearbySuggestedPlaceController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbySuggestedPlaceController.xib; sourceTree = "<group>"; };
-		286FA14F143BD34C00EDAE84 /* suggest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suggest.png; sourceTree = "<group>"; };
-		286FA150143BD34C00EDAE84 /* suggest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "suggest@2x.png"; sourceTree = "<group>"; };
 		286FA15B143CC67D00EDAE84 /* 19-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear.png"; sourceTree = "<group>"; };
 		286FA15E143CC68700EDAE84 /* 30-key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "30-key.png"; sourceTree = "<group>"; };
 		286FA160143CD37400EDAE84 /* PlaceSuggestTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceSuggestTableViewCell.h; sourceTree = "<group>"; };
@@ -1057,8 +1043,6 @@
 		28EB2661156EBA24006568E7 /* popupCloseBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popupCloseBtn@2x.png"; sourceTree = "<group>"; };
 		28EB2662156EBA24006568E7 /* popupWindowBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popupWindowBack.png; sourceTree = "<group>"; };
 		28EB2663156EBA24006568E7 /* popupWindowBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popupWindowBack@2x.png"; sourceTree = "<group>"; };
-		28EE54E31433D1EB00E36686 /* leather.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leather.png; sourceTree = "<group>"; };
-		28EE54E41433D1EB00E36686 /* leather@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leather@2x.png"; sourceTree = "<group>"; };
 		28EE54F41434DDC600E36686 /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
 		28EE54F51434DDC600E36686 /* ActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableViewCell.m; sourceTree = "<group>"; };
 		28EE54F61434DDC600E36686 /* ActivityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityTableViewCell.xib; sourceTree = "<group>"; };
@@ -1239,7 +1223,6 @@
 				28B17C1C1462215D008C98E8 /* pan_here@2x.png */,
 				286FA15E143CC68700EDAE84 /* 30-key.png */,
 				286FA15B143CC67D00EDAE84 /* 19-gear.png */,
-				2833C09A140D66B20076A398 /* twitter.png */,
 				28086B8613ECA9B900790404 /* add_photo_button.png */,
 				28086B8713ECA9B900790404 /* crosshairs.png */,
 				28086B8813ECA9B900790404 /* crosshairs@2x.png */,
@@ -1247,8 +1230,6 @@
 				6CB5B131144CBEA300A278AC /* gear@2x.png */,
 				6CB5B133144CBF0000A278AC /* key.png */,
 				6CB5B134144CBF0000A278AC /* key@2x.png */,
-				28086B8C13ECA9B900790404 /* filter.png */,
-				28086B8D13ECA9B900790404 /* filter@2x.png */,
 				28086B9013ECA9B900790404 /* lock.png */,
 				28086B9113ECA9B900790404 /* lock@2x.png */,
 				28086B9E13ECA9B900790404 /* powered-by-google-on-white.png */,
@@ -2087,8 +2068,6 @@
 				280A33C014422C6F007ACBDC /* ActiveEverythingPick@2x.png */,
 				286FA16D143D1A6700EDAE84 /* redLeather.png */,
 				6CB5B146144CCFB000A278AC /* background.png */,
-				286FA14F143BD34C00EDAE84 /* suggest.png */,
-				286FA150143BD34C00EDAE84 /* suggest@2x.png */,
 				28EE550B143542FF00E36686 /* profile.png */,
 				28EE550C143542FF00E36686 /* profile@2x.png */,
 				28EE54FE14352BD800E36686 /* feed.png */,
@@ -2097,9 +2076,6 @@
 				28EE550114352BD800E36686 /* mymap@2x.png */,
 				28A437911432E5AF005F192B /* canvas.png */,
 				28A437921432E5AF005F192B /* canvas@2x.png */,
-				28EE54E31433D1EB00E36686 /* leather.png */,
-				28EE54E41433D1EB00E36686 /* leather@2x.png */,
-				2817988D1423C0D300406E78 /* iphone_connect.jpg */,
 				28F4778413D7D02C003477CD /* blackArrow.png */,
 				28F4778513D7D02C003477CD /* blackArrow@2x.png */,
 				28F4778613D7D02C003477CD /* blueArrow.png */,
@@ -2283,8 +2259,6 @@
 				28086BBC13ECA9B900790404 /* add_photo_button.png in Resources */,
 				28086BBD13ECA9B900790404 /* crosshairs.png in Resources */,
 				28086BBE13ECA9B900790404 /* crosshairs@2x.png in Resources */,
-				28086BC213ECA9B900790404 /* filter.png in Resources */,
-				28086BC313ECA9B900790404 /* filter@2x.png in Resources */,
 				28086BC613ECA9B900790404 /* lock.png in Resources */,
 				28086BC713ECA9B900790404 /* lock@2x.png in Resources */,
 				28086BD413ECA9B900790404 /* powered-by-google-on-white.png in Resources */,
@@ -2297,7 +2271,6 @@
 				2822BDAA1406E1200077868C /* PlaceHeaderView.xib in Resources */,
 				2822BDAC1406EE720077868C /* PlaceFooterView.xib in Resources */,
 				2878E829140C2A3900F2A666 /* EditPerspectiveViewController.xib in Resources */,
-				2833C09B140D66B20076A398 /* twitter.png in Resources */,
 				286B15F9140F000A00CFED96 /* SpinnerTableCell.xib in Resources */,
 				280EA87D14114C300045B296 /* NearbyPlacesFooterView.xib in Resources */,
 				280EA88714117B0B0045B296 /* GenericWebViewController.xib in Resources */,
@@ -2308,12 +2281,9 @@
 				28B61943142292E600B0A7E5 /* icon@2x.png in Resources */,
 				28B619451422942300B0A7E5 /* Default.png in Resources */,
 				28B619471422942C00B0A7E5 /* Default@2x.png in Resources */,
-				2817988E1423C0D300406E78 /* iphone_connect.jpg in Resources */,
 				28A4377C14327EFA005F192B /* ActivityFeedViewController.xib in Resources */,
 				28A437931432E5AF005F192B /* canvas.png in Resources */,
 				28A437941432E5AF005F192B /* canvas@2x.png in Resources */,
-				28EE54E51433D1EB00E36686 /* leather.png in Resources */,
-				28EE54E61433D1EB00E36686 /* leather@2x.png in Resources */,
 				28EE54F81434DDC600E36686 /* ActivityTableViewCell.xib in Resources */,
 				28EE550214352BD800E36686 /* feed.png in Resources */,
 				28EE550314352BD800E36686 /* feed@2x.png in Resources */,
@@ -2322,8 +2292,6 @@
 				28EE550D143542FF00E36686 /* profile.png in Resources */,
 				28EE550E143542FF00E36686 /* profile@2x.png in Resources */,
 				286FA14A143AB5EE00EDAE84 /* NearbySuggestedPlaceController.xib in Resources */,
-				286FA151143BD34C00EDAE84 /* suggest.png in Resources */,
-				286FA152143BD34C00EDAE84 /* suggest@2x.png in Resources */,
 				286FA15C143CC67D00EDAE84 /* 19-gear.png in Resources */,
 				286FA15F143CC68700EDAE84 /* 30-key.png in Resources */,
 				286FA164143CD37500EDAE84 /* PlaceSuggestTableViewCell.xib in Resources */,
