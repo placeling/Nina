@@ -19,7 +19,7 @@
 
 @implementation SuggestionViewController
 
-@synthesize suggestion, suggestionId, imageView, messageView, placemark, senderLabel, placeButton;
+@synthesize suggestion, suggestionId, imageView, messageView, placemark, senderLabel, placeButton, alreadyOnLabel, editButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,6 +52,8 @@
     [HUD retain];
     
     dataLoaded = false;
+    
+    [StyleHelper styleHomePageLabel:self.alreadyOnLabel];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -133,6 +135,16 @@
     [self.imageView setImageWithURL:[NSURL URLWithString:self.suggestion.sender.profilePic.thumbUrl] ];
     self.senderLabel.text = self.suggestion.sender.username;
     [self.placeButton setTitle:self.suggestion.place.name forState:UIControlStateNormal];
+
+    if ( self.suggestion.place.bookmarked ){
+        [self.placemark setHidden:true];
+        [self.alreadyOnLabel setHidden:false];
+        [self.editButton setHidden:false];
+    } else {
+        [self.placemark setHidden:false];
+        [self.alreadyOnLabel setHidden:true];
+        [self.editButton setHidden:true];
+    }
 }
 
 
@@ -164,6 +176,8 @@
     [placemark release];
     [senderLabel release];
     [placeButton release];
+    [alreadyOnLabel release];
+    [editButton release];
     
     [super dealloc];
 }

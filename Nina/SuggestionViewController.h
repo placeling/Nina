@@ -27,6 +27,9 @@
     
     UIButton *placemark;
     UIButton *placeButton;
+    
+    UILabel *alreadyOnLabel;
+    UIButton *editButton;
 }
 
 @property(nonatomic, retain) Suggestion *suggestion;
@@ -37,6 +40,9 @@
 @property(nonatomic, retain) IBOutlet UILabel *senderLabel;
 @property(nonatomic, retain) IBOutlet UIButton *placemark;
 @property(nonatomic, retain) IBOutlet UIButton *placeButton;
+
+@property(nonatomic, retain) IBOutlet UILabel *alreadyOnLabel;
+@property(nonatomic, retain) IBOutlet UIButton *editButton;
 
 -(IBAction)placemark:(id)sender;
 -(IBAction)placeAction:(id)sender;
