@@ -27,11 +27,17 @@
 @synthesize perspective, userImage, memoText,titleLabel, scrollView;
 @synthesize tapGesture, requestDelegate, showMoreButton, loveButton, shareSheetButton;
 @synthesize createdAtLabel, expanded, indexpath;
-@synthesize showLikeButton,showCommentsButton, modifyNotesButton;
+@synthesize  showCommentsButton, modifyNotesButton, socialFooter, highlightButton;
 
 
 +(CGFloat) cellHeightUnboundedForPerspective:(Perspective*)perspective{
-    CGFloat heightCalc = 65; //covers header and footer
+    CGFloat heightCalc;
+    
+    if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
+        heightCalc = 60;
+    } else {
+        heightCalc = 60;
+    }
     
     CGSize textAreaSize;
     textAreaSize.height = hardMaxCellHeight;
@@ -62,8 +68,13 @@
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
-    CGFloat heightCalc = 90; //covers header and footer
-    
+    CGFloat heightCalc;
+
+    if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
+        heightCalc = 60;
+    } else {
+        heightCalc = 45;
+    }
     CGSize textAreaSize;
     textAreaSize.height = 140;
     textAreaSize.width = 233;
@@ -104,6 +115,7 @@
     CGFloat verticalCursor = cell.memoText.frame.origin.y;
     cell.perspective = perspective;
     cell.memoText.text = perspective.notes;
+    cell.createdAtLabel.text = [NinaHelper dateDiff:perspective.lastModified];
     BOOL hasContent = FALSE;
     
     if (userSource){
@@ -114,13 +126,6 @@
         cell.tapGesture = [[[UITapGestureRecognizer alloc] initWithTarget:cell action:@selector(showAuthoringUser)] autorelease];
         [cell.titleLabel addGestureRecognizer:cell.tapGesture];
     }
-    
-    if ( cell.myPerspectiveView ){
-        cell.modifyNotesButton.hidden = false;        
-    } else {
-        cell.modifyNotesButton.hidden = true;
-    }
-
 
     //cell.memoText.backgroundColor = [UIColor grayColor];
     CGRect memoFrame = cell.memoText.frame;
@@ -178,13 +183,14 @@
         cell.expanded = true;
     }
     
-    if ( [cell.requestDelegate isKindOfClass:[MemberProfileViewController class]] ){
-        //profile view, don't show images
+    if ( [cell.requestDelegate isKindOfClass:[MemberProfileViewController class]] || cell.myPerspectiveView ){
+        //profile or my perspective view, don't show images
         cell.userImage.hidden = true;
-        [cell.loveButton setFrame:CGRectMake(cell.loveButton.frame.origin.x, 16, cell.loveButton.frame.size.width, cell.loveButton.frame.size.height)];
+        [cell.highlightButton setFrame:CGRectMake(cell.highlightButton.frame.origin.x, 16, cell.highlightButton.frame.size.width, cell.highlightButton.frame.size.height)];
+        [cell.modifyNotesButton setFrame:CGRectMake(cell.modifyNotesButton.frame.origin.x, 60, cell.modifyNotesButton.frame.size.width, cell.modifyNotesButton.frame.size.height)];
     } else { 
         cell.userImage.hidden = false; 
-        [cell.loveButton setFrame:CGRectMake(cell.loveButton.frame.origin.x, 56, cell.loveButton.frame.size.width, cell.loveButton.frame.size.height)];
+        [cell.highlightButton setFrame:CGRectMake(cell.highlightButton.frame.origin.x, 56, cell.highlightButton.frame.size.width, cell.highlightButton.frame.size.height)];
     }
     
     [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"profile.png"]];
@@ -236,42 +242,39 @@
         cell.scrollView.hidden = TRUE; //remove from view
     }
     
+    if ( !hasContent ){
+        //can't star own perspective
+        [cell.socialFooter setHidden:true];
+    } else {
+        [cell.socialFooter setHidden:false];
+    }
+    
     
     if ( perspective.mine ){
-        [cell.loveButton setHidden:false];
-        if (perspective.place && perspective.place.highlighted && cell.userImage.hidden){
-            [cell.loveButton setImage:[UIImage imageNamed:@"SelectedButton.png"] forState:UIControlStateNormal];
+        if ( cell.myPerspectiveView ){
+            cell.modifyNotesButton.hidden = false;
         } else {
-            [cell.loveButton setImage:[UIImage imageNamed:@"unselectedButton.png"] forState:UIControlStateNormal];
+            cell.modifyNotesButton.hidden = true;
         }
-        [cell.loveButton addTarget:cell action:@selector(toggleHighlight:) forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        if ( !hasContent ){
-            //can't star own perspective
-            [cell.shareSheetButton setHidden:true];
-            [cell.loveButton setHidden:true];
+        [cell.highlightButton setHidden:false];
+        
+        if (perspective.place && perspective.place.highlighted ){
+            [cell.highlightButton setImage:[UIImage imageNamed:@"SelectedButton.png"] forState:UIControlStateNormal];
         } else {
-            [cell.loveButton addTarget:cell action:@selector(toggleFavourite:) forControlEvents:UIControlEventTouchUpInside];
-            [cell.shareSheetButton setHidden:false];
-            [cell.loveButton setHidden:false];
-            if(perspective.starred){            
-                [cell.loveButton setImage:[UIImage imageNamed:@"liked.png"] forState:UIControlStateNormal];
-            } else {
-                [cell.loveButton setImage:[UIImage imageNamed:@"unliked.png"] forState:UIControlStateNormal];
-            }
+            [cell.highlightButton setImage:[UIImage imageNamed:@"unselectedButton.png"] forState:UIControlStateNormal];
+        }
+    } else {
+        [cell.modifyNotesButton setHidden:true];
+        [cell.highlightButton setHidden:true];
+        
+        if(perspective.starred){
+            [cell.loveButton setImage:[UIImage imageNamed:@"liked.png"] forState:UIControlStateNormal];
+        } else {
+            [cell.loveButton setImage:[UIImage imageNamed:@"unliked.png"] forState:UIControlStateNormal];
         }
     }
     
-    cell.createdAtLabel.text = [NinaHelper dateDiff:perspective.lastModified];
-    
-    [cell.createdAtLabel setFrame:CGRectMake(cell.createdAtLabel.frame.origin.x, verticalCursor, cell.createdAtLabel.frame.size.width, cell.createdAtLabel.frame.size.height)];
-    
-    verticalCursor += cell.createdAtLabel.frame.size.height;
-    [cell.shareSheetButton setFrame:CGRectMake(cell.shareSheetButton.frame.origin.x, verticalCursor, cell.shareSheetButton.frame.size.width, cell.shareSheetButton.frame.size.height)];
-    
-    [cell.showCommentsButton setFrame:CGRectMake(cell.showCommentsButton.frame.origin.x, verticalCursor, cell.showCommentsButton.frame.size.width, cell.showCommentsButton.frame.size.height)];
-    
-    [cell.showLikeButton setFrame:CGRectMake(cell.showLikeButton.frame.origin.x, verticalCursor, cell.showLikeButton.frame.size.width, cell.showLikeButton.frame.size.height)];
+    [cell.socialFooter setFrame:CGRectMake(cell.socialFooter.frame.origin.x, verticalCursor, cell.socialFooter.frame.size.width, cell.socialFooter.frame.size.height)];
     
     [StyleHelper colourTextLabel:cell.createdAtLabel];
     [StyleHelper colourTextLabel:cell.titleLabel];
@@ -518,9 +521,10 @@
     [tapGesture release];
     [loveButton release];
     [createdAtLabel release];
-    [showLikeButton release];
     [showCommentsButton release];
     [modifyNotesButton release];
+    [socialFooter release];
+    [highlightButton release];
     
     [super dealloc];
 }

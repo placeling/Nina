@@ -19,8 +19,9 @@
     Perspective *perspective;
     UITapGestureRecognizer *tapGesture;
     UIImageView *userImage;
+    
+    UIButton *loveButton;
     UIButton *shareSheetButton;
-    UIButton *showLikeButton;
     UIButton *showCommentsButton;
     
     UILabel *memoText;
@@ -30,9 +31,10 @@
     UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, PerspectiveDisplayProtocol> *requestDelegate;
     UIScrollView *scrollView;
     
-    UIButton *loveButton;
-    UIButton *showMoreButton;
+    UIView *socialFooter;
     
+    UIButton *highlightButton;
+    UIButton *showMoreButton;    
     UIButton *modifyNotesButton;
     
     NSIndexPath *indexpath;
@@ -50,12 +52,15 @@
 @property(nonatomic,retain) IBOutlet UIButton *showMoreButton;
 @property(nonatomic,retain) IBOutlet UIButton *loveButton;
 
-@property(nonatomic,retain) IBOutlet UIButton *showLikeButton;
+@property(nonatomic,retain) IBOutlet UIButton *highlightButton;
 @property(nonatomic,retain) IBOutlet UIButton *showCommentsButton;
 
 @property(nonatomic,retain) IBOutlet UIButton *modifyNotesButton;
 
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
+
+@property(nonatomic,retain) IBOutlet UIView *socialFooter;
+
 @property(nonatomic,retain) UITapGestureRecognizer *tapGesture;
 @property(nonatomic,retain) IBOutlet UILabel *createdAtLabel;
 @property(nonatomic,retain) NSIndexPath *indexpath;
