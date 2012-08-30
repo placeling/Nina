@@ -26,7 +26,7 @@
 
 @synthesize perspective, userImage, memoText,titleLabel, scrollView;
 @synthesize tapGesture, requestDelegate, showMoreButton, loveButton, shareSheetButton;
-@synthesize createdAtLabel, expanded, indexpath;
+@synthesize createdAtLabel, expanded, indexpath, likeFooter, likersLabel, likeTapGesture;
 @synthesize  showCommentsButton, modifyNotesButton, socialFooter, highlightButton;
 
 
@@ -56,7 +56,7 @@
     }
     
     if ( perspective.likers && [perspective.likers count] > 0 ) {
-        heightCalc += 17;
+        heightCalc += 24;
     }
     
     if (perspective.photos && perspective.photos.count > 0){
@@ -100,7 +100,7 @@
     }
     
     if ( perspective.likers && [perspective.likers count] > 0 ) {
-        heightCalc += 17;
+        heightCalc += 24;
     }
     
     if (perspective.photos && perspective.photos.count > 0){
@@ -115,8 +115,14 @@
     CGFloat verticalCursor = cell.memoText.frame.origin.y;
     cell.perspective = perspective;
     cell.memoText.text = perspective.notes;
+    
     cell.createdAtLabel.text = [NinaHelper dateDiff:perspective.lastModified];
     BOOL hasContent = FALSE;
+    
+    cell.likeTapGesture =[[[UITapGestureRecognizer alloc] initWithTarget:cell action:@selector(showLikers)] autorelease];
+    cell.likeFooter.userInteractionEnabled = true;
+    [cell.likeFooter addGestureRecognizer:cell.likeTapGesture];
+    
     
     if (userSource){
         cell.titleLabel.text = perspective.place.name;
@@ -183,7 +189,7 @@
         cell.expanded = true;
     }
     
-    if ( [cell.requestDelegate isKindOfClass:[MemberProfileViewController class]] || cell.myPerspectiveView ){
+    if ( ( [cell.requestDelegate isKindOfClass:[MemberProfileViewController class]] && perspective.mine) || cell.myPerspectiveView ){
         //profile or my perspective view, don't show images
         cell.userImage.hidden = true;
         [cell.highlightButton setFrame:CGRectMake(cell.highlightButton.frame.origin.x, 16, cell.highlightButton.frame.size.width, cell.highlightButton.frame.size.height)];
@@ -249,6 +255,15 @@
         [cell.socialFooter setHidden:false];
     }
     
+    if ( [perspective.likers count] > 0){
+        [cell.likeFooter setHidden:false];
+        [cell.likersLabel setText:perspective.likersText];
+        [cell.likeFooter setFrame:CGRectMake(cell.likeFooter.frame.origin.x, verticalCursor, cell.likeFooter.frame.size.width , cell.likeFooter.frame.size.height)];
+        verticalCursor += cell.likeFooter.frame.size.height;
+    } else {
+        [cell.likeFooter setHidden:true];
+    }
+    
     
     if ( perspective.mine ){
         if ( cell.myPerspectiveView ){
@@ -279,6 +294,7 @@
     [StyleHelper colourTextLabel:cell.createdAtLabel];
     [StyleHelper colourTextLabel:cell.titleLabel];
     [StyleHelper colourTextLabel:cell.memoText];
+    [StyleHelper colourTextLabel:cell.likersLabel];
     
     cell.accessoryView = nil;
     
@@ -525,6 +541,9 @@
     [modifyNotesButton release];
     [socialFooter release];
     [highlightButton release];
+    [likeFooter release];
+    [likeTapGesture release];
+    [likersLabel release];
     
     [super dealloc];
 }

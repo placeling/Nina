@@ -18,6 +18,8 @@
 @interface PerspectiveTableViewCell : UITableViewCell<UIActionSheetDelegate>{
     Perspective *perspective;
     UITapGestureRecognizer *tapGesture;
+    UITapGestureRecognizer *likeTapGesture;
+    
     UIImageView *userImage;
     
     UIButton *loveButton;
@@ -41,6 +43,9 @@
     
     bool expanded;
     bool myPerspectiveView;
+    
+    UIView *likeFooter;
+    UILabel *likersLabel;
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
@@ -60,8 +65,11 @@
 @property(nonatomic,retain) IBOutlet UIScrollView *scrollView;
 
 @property(nonatomic,retain) IBOutlet UIView *socialFooter;
+@property(nonatomic,retain) IBOutlet UIView *likeFooter;
+@property(nonatomic,retain) IBOutlet UILabel *likersLabel;
 
 @property(nonatomic,retain) UITapGestureRecognizer *tapGesture;
+@property(nonatomic,retain) UITapGestureRecognizer *likeTapGesture;
 @property(nonatomic,retain) IBOutlet UILabel *createdAtLabel;
 @property(nonatomic,retain) NSIndexPath *indexpath;
 @property(nonatomic, assign) bool expanded;
