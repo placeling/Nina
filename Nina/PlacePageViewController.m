@@ -162,7 +162,7 @@ typedef enum {
     [self blankLoad];
     
     buttons = 
-    [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"Me", @"Following", @"Popular", nil], @"titles", [NSValue valueWithCGSize:CGSizeMake(106,69)], @"size", @"segmentedBackground.png", @"button-image", @"segmentedSelected.png", @"button-highlight-image", @"red-divider.png", @"divider-image", [NSNumber numberWithFloat:14.0], @"cap-width", nil];
+    [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"me", @"following", @"popular", nil], @"titles", [NSValue valueWithCGSize:CGSizeMake(106,69)], @"size", @"segmentedBackground.png", @"button-image", @"segmentedSelected.png", @"button-highlight-image", @"red-divider.png", @"divider-image", [NSNumber numberWithFloat:14.0], @"cap-width", nil];
     
     // A red segment control with 3 values
     NSDictionary* redSegmentedControlData = buttons;
@@ -416,13 +416,39 @@ typedef enum {
     [buttonLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13.0]];
     
     [button setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(17.0, 0.0, 0.0, 0.0)];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(9.0, 0.0, 0.0, 0.0)];
     
     [button setTitle:[titles objectAtIndex:segmentIndex] forState:UIControlStateNormal];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [button setBackgroundImage:buttonPressedImage forState:UIControlStateHighlighted];
     [button setBackgroundImage:buttonPressedImage forState:UIControlStateSelected];
     button.adjustsImageWhenHighlighted = NO;
+    
+    if (segmentIndex == 0){
+        UIImage *coverImage = [UIImage imageNamed:@"UnselectedMeIcon.png"];
+        UIImageView *coverImageView = [[UIImageView alloc] initWithImage:coverImage];
+        
+        [coverImageView setFrame:CGRectMake(35, 25, coverImageView.frame.size.width, coverImageView.frame.size.height)];
+        coverImageView.tag = 26;
+        [button addSubview:coverImageView];
+        [coverImageView release];
+    } else if (segmentIndex == 1){
+        UIImage *coverImage = [UIImage imageNamed:@"UnselectedNetworkIcon.png"];
+        UIImageView *coverImageView = [[UIImageView alloc] initWithImage:coverImage];
+        
+        [coverImageView setFrame:CGRectMake(27, 25, coverImageView.frame.size.width, coverImageView.frame.size.height)];
+        coverImageView.tag = 26;
+        [button addSubview:coverImageView];
+        [coverImageView release];
+    } else if (segmentIndex == 2){
+        UIImage *coverImage = [UIImage imageNamed:@"UnselectedEveryoneIcon.png"];
+        UIImageView *coverImageView = [[UIImageView alloc] initWithImage:coverImage];
+        
+        [coverImageView setFrame:CGRectMake(35, 25, coverImageView.frame.size.width, coverImageView.frame.size.height )];
+        coverImageView.tag = 26;
+        [button addSubview:coverImageView];
+        [coverImageView release];
+    }
     
     if (segmentIndex == 0)
         button.selected = YES;
@@ -746,10 +772,10 @@ typedef enum {
     
     UIButton *button = [self.segmentedControl.buttons objectAtIndex:1];
     
-    [button setTitle:[NSString stringWithFormat:@"Following (%i)", self.place.followingPerspectiveCount] forState:UIControlStateNormal];
+    [button setTitle:[NSString stringWithFormat:@"following (%i)", self.place.followingPerspectiveCount] forState:UIControlStateNormal];
     
     button = [self.segmentedControl.buttons objectAtIndex:2];
-    [button setTitle:[NSString stringWithFormat:@"Popular (%i)", self.place.perspectiveCount] forState:UIControlStateNormal];
+    [button setTitle:[NSString stringWithFormat:@"popular (%i)", self.place.perspectiveCount] forState:UIControlStateNormal];
     
     CGFloat cx = 7;
     

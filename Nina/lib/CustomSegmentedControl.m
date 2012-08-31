@@ -98,11 +98,33 @@
     {
       button.selected = YES;
       button.highlighted = button.selected ? NO : YES;
+        
+        
+        if ( [buttons indexOfObject:button] == 0 ){
+            UIImageView *iconView = (UIImageView*)[button viewWithTag:26];
+            [iconView setImage:[UIImage imageNamed:@"SelectedMeIcon.png"]];
+        } else if ( [buttons indexOfObject:button] == 1 ){
+            UIImageView *iconView = (UIImageView*)[button viewWithTag:26];
+            [iconView setImage:[UIImage imageNamed:@"SelectedNetworkIcon.png"]];            
+        } else if ( [buttons indexOfObject:button] == 2 ){
+            UIImageView *iconView = (UIImageView*)[button viewWithTag:26];
+            [iconView setImage:[UIImage imageNamed:@"SelectedEveryoneIcon.png"]];
+        }
     }
     else
     {
       button.selected = NO;
       button.highlighted = NO;
+        if ( [buttons indexOfObject:button] == 0 ){
+            UIImageView *iconView = (UIImageView*)[button viewWithTag:26];
+            [iconView setImage:[UIImage imageNamed:@"UnselectedMeIcon.png"]];
+        } else if ( [buttons indexOfObject:button] == 1 ){
+            UIImageView *iconView = (UIImageView*)[button viewWithTag:26];
+            [iconView setImage:[UIImage imageNamed:@"UnselectedNetworkIcon.png"]];
+        } else if ( [buttons indexOfObject:button] == 2 ){
+            UIImageView *iconView = (UIImageView*)[button viewWithTag:26];
+            [iconView setImage:[UIImage imageNamed:@"UnselectedEveryoneIcon.png"]];
+        }
     }
   }
 }
