@@ -272,7 +272,7 @@
                 return 0;
             } 
         }
-        return 72;
+        return 70;
     }
 }
 

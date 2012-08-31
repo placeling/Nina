@@ -73,7 +73,7 @@
 							<object class="IBUILabel" id="960138323">
 								<reference key="NSNextResponder" ref="864568929"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{77, 24}, {227, 21}}</string>
+								<string key="NSFrame">{{77, 26}, {227, 21}}</string>
 								<reference key="NSSuperview" ref="864568929"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="642339748"/>
@@ -100,7 +100,7 @@
 							<object class="IBUILabel" id="642339748">
 								<reference key="NSNextResponder" ref="864568929"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{77, 42}, {133, 21}}</string>
+								<string key="NSFrame">{{77, 46}, {133, 21}}</string>
 								<reference key="NSSuperview" ref="864568929"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1035699456"/>
@@ -120,10 +120,10 @@
 							<object class="IBUILabel" id="1035699456">
 								<reference key="NSNextResponder" ref="864568929"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{124, 42}, {176, 21}}</string>
+								<string key="NSFrame">{{124, 46}, {176, 21}}</string>
 								<reference key="NSSuperview" ref="864568929"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="803585385"/>
+								<reference key="NSNextKeyView" ref="774787607"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -151,10 +151,10 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
-							<object class="IBUIImageView" id="803585385">
+							<object class="IBUIImageView" id="774787607">
 								<reference key="NSNextResponder" ref="864568929"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{0, 70}, {320, 2}}</string>
+								<string key="NSFrame">{{0, 68}, {320, 2}}</string>
 								<reference key="NSSuperview" ref="864568929"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -166,7 +166,7 @@
 								</object>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 71}</string>
+						<string key="NSFrameSize">{320, 69}</string>
 						<reference key="NSSuperview" ref="1023856264"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="746384916"/>
@@ -181,13 +181,13 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 72}</string>
+				<string key="NSFrameSize">{320, 70}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="864568929"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="864568929"/>
-				<real value="72" key="IBUIRowHeight"/>
+				<real value="70" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -261,7 +261,7 @@
 							<reference ref="365439817"/>
 							<reference ref="960138323"/>
 							<reference ref="642339748"/>
-							<reference ref="803585385"/>
+							<reference ref="774787607"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -292,7 +292,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">19</int>
-						<reference key="object" ref="803585385"/>
+						<reference key="object" ref="774787607"/>
 						<reference key="parent" ref="1023856264"/>
 					</object>
 				</array>
