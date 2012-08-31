@@ -428,7 +428,7 @@ typedef enum {
         UIImage *coverImage = [UIImage imageNamed:@"UnselectedMeIcon.png"];
         UIImageView *coverImageView = [[UIImageView alloc] initWithImage:coverImage];
         
-        [coverImageView setFrame:CGRectMake(35, 26, coverImageView.frame.size.width, coverImageView.frame.size.height)];
+        [coverImageView setFrame:CGRectMake(37, 26, coverImageView.frame.size.width, coverImageView.frame.size.height)];
         coverImageView.tag = 26;
         [button addSubview:coverImageView];
         [coverImageView release];
@@ -436,7 +436,7 @@ typedef enum {
         UIImage *coverImage = [UIImage imageNamed:@"UnselectedNetworkIcon.png"];
         UIImageView *coverImageView = [[UIImageView alloc] initWithImage:coverImage];
         
-        [coverImageView setFrame:CGRectMake(27, 26, coverImageView.frame.size.width, coverImageView.frame.size.height)];
+        [coverImageView setFrame:CGRectMake(29, 26, coverImageView.frame.size.width, coverImageView.frame.size.height)];
         coverImageView.tag = 26;
         [button addSubview:coverImageView];
         [coverImageView release];
@@ -444,7 +444,7 @@ typedef enum {
         UIImage *coverImage = [UIImage imageNamed:@"UnselectedEveryoneIcon.png"];
         UIImageView *coverImageView = [[UIImageView alloc] initWithImage:coverImage];
         
-        [coverImageView setFrame:CGRectMake(35, 26, coverImageView.frame.size.width, coverImageView.frame.size.height )];
+        [coverImageView setFrame:CGRectMake(37, 26, coverImageView.frame.size.width, coverImageView.frame.size.height )];
         coverImageView.tag = 26;
         [button addSubview:coverImageView];
         [coverImageView release];
