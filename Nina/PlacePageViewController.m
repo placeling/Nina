@@ -152,8 +152,8 @@ typedef enum {
     if (self.place){
         self.place_id = self.place.pid;
     }
-        
-    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
+    
+    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc] initWithImage:[UIImage imageNamed:@"StandardShare.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showShareSheet)];
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
     
