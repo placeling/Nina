@@ -45,7 +45,7 @@
 
 #define kMinCellHeight 60
 
-#define minTableHeight 160
+#define minTableHeight 162
 
 typedef enum {
     CapLeft          = 0,
