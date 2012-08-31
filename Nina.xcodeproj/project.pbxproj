@@ -98,6 +98,14 @@
 		285B8B0615508C600019426E /* FindFacebookFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 285B8B0415508C600019426E /* FindFacebookFriendsController.m */; };
 		285B8B0715508C600019426E /* FindFacebookFriendsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 285B8B0515508C600019426E /* FindFacebookFriendsController.xib */; };
 		285BE74E142CFFFA00898FDF /* asyncimageview.m in Sources */ = {isa = PBXBuildFile; fileRef = 285BE74D142CFFF900898FDF /* asyncimageview.m */; };
+		2867826C15F0416E004F70EB /* SelectedEveryoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867826415F0416E004F70EB /* SelectedEveryoneIcon.png */; };
+		2867826D15F0416E004F70EB /* SelectedEveryoneIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867826515F0416E004F70EB /* SelectedEveryoneIcon@2x.png */; };
+		2867826E15F0416E004F70EB /* SelectedNetworkIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867826615F0416E004F70EB /* SelectedNetworkIcon.png */; };
+		2867826F15F0416E004F70EB /* SelectedNetworkIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867826715F0416E004F70EB /* SelectedNetworkIcon@2x.png */; };
+		2867827015F0416E004F70EB /* UnselectedEveryoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867826815F0416E004F70EB /* UnselectedEveryoneIcon.png */; };
+		2867827115F0416E004F70EB /* UnselectedEveryoneIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867826915F0416E004F70EB /* UnselectedEveryoneIcon@2x.png */; };
+		2867827215F0416E004F70EB /* UnselectedNetworkIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867826A15F0416E004F70EB /* UnselectedNetworkIcon.png */; };
+		2867827315F0416E004F70EB /* UnselectedNetworkIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867826B15F0416E004F70EB /* UnselectedNetworkIcon@2x.png */; };
 		2867ABC014CE3419003994DB /* ActiveGasPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBB14CE3419003994DB /* ActiveGasPick@2x.png */; };
 		2867ABC114CE3419003994DB /* ActiveServicesPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBC14CE3419003994DB /* ActiveServicesPick.png */; };
 		2867ABC214CE3419003994DB /* ActiveServicesPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBD14CE3419003994DB /* ActiveServicesPick@2x.png */; };
@@ -652,6 +660,14 @@
 		285B8B0515508C600019426E /* FindFacebookFriendsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindFacebookFriendsController.xib; sourceTree = "<group>"; };
 		285BE74C142CFFF900898FDF /* asyncimageview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asyncimageview.h; sourceTree = "<group>"; };
 		285BE74D142CFFF900898FDF /* asyncimageview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = asyncimageview.m; sourceTree = "<group>"; };
+		2867826415F0416E004F70EB /* SelectedEveryoneIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SelectedEveryoneIcon.png; sourceTree = "<group>"; };
+		2867826515F0416E004F70EB /* SelectedEveryoneIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SelectedEveryoneIcon@2x.png"; sourceTree = "<group>"; };
+		2867826615F0416E004F70EB /* SelectedNetworkIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SelectedNetworkIcon.png; sourceTree = "<group>"; };
+		2867826715F0416E004F70EB /* SelectedNetworkIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SelectedNetworkIcon@2x.png"; sourceTree = "<group>"; };
+		2867826815F0416E004F70EB /* UnselectedEveryoneIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnselectedEveryoneIcon.png; sourceTree = "<group>"; };
+		2867826915F0416E004F70EB /* UnselectedEveryoneIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UnselectedEveryoneIcon@2x.png"; sourceTree = "<group>"; };
+		2867826A15F0416E004F70EB /* UnselectedNetworkIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnselectedNetworkIcon.png; sourceTree = "<group>"; };
+		2867826B15F0416E004F70EB /* UnselectedNetworkIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UnselectedNetworkIcon@2x.png"; sourceTree = "<group>"; };
 		2867ABBB14CE3419003994DB /* ActiveGasPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActiveGasPick@2x.png"; sourceTree = "<group>"; };
 		2867ABBC14CE3419003994DB /* ActiveServicesPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ActiveServicesPick.png; sourceTree = "<group>"; };
 		2867ABBD14CE3419003994DB /* ActiveServicesPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActiveServicesPick@2x.png"; sourceTree = "<group>"; };
@@ -1930,6 +1946,14 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				2867826415F0416E004F70EB /* SelectedEveryoneIcon.png */,
+				2867826515F0416E004F70EB /* SelectedEveryoneIcon@2x.png */,
+				2867826615F0416E004F70EB /* SelectedNetworkIcon.png */,
+				2867826715F0416E004F70EB /* SelectedNetworkIcon@2x.png */,
+				2867826815F0416E004F70EB /* UnselectedEveryoneIcon.png */,
+				2867826915F0416E004F70EB /* UnselectedEveryoneIcon@2x.png */,
+				2867826A15F0416E004F70EB /* UnselectedNetworkIcon.png */,
+				2867826B15F0416E004F70EB /* UnselectedNetworkIcon@2x.png */,
 				281B1CDA15CB2F480015ECBB /* QuestionLightbulb.png */,
 				281B1CDB15CB2F480015ECBB /* QuestionLightbulb@2x.png */,
 				28B425DD15DAB51E0025957A /* twitter_icon.png */,
@@ -2505,6 +2529,14 @@
 				28B9E28115E55AE300E13F0B /* pickerShadows.png in Resources */,
 				28B9E28215E55AE300E13F0B /* pickerShadows@2x.png in Resources */,
 				28B9E28815EE9DB300E13F0B /* style.css in Resources */,
+				2867826C15F0416E004F70EB /* SelectedEveryoneIcon.png in Resources */,
+				2867826D15F0416E004F70EB /* SelectedEveryoneIcon@2x.png in Resources */,
+				2867826E15F0416E004F70EB /* SelectedNetworkIcon.png in Resources */,
+				2867826F15F0416E004F70EB /* SelectedNetworkIcon@2x.png in Resources */,
+				2867827015F0416E004F70EB /* UnselectedEveryoneIcon.png in Resources */,
+				2867827115F0416E004F70EB /* UnselectedEveryoneIcon@2x.png in Resources */,
+				2867827215F0416E004F70EB /* UnselectedNetworkIcon.png in Resources */,
+				2867827315F0416E004F70EB /* UnselectedNetworkIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
