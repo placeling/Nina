@@ -139,6 +139,7 @@
     
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
     [StyleHelper styleBackgroundView:self.placesTableView];
+    [self.placesTableView setSeparatorColor:[UIColor clearColor]];
     [self.placesTableView reloadData];
 }
 
@@ -271,7 +272,7 @@
                 return 0;
             } 
         }
-        return 70;        
+        return 72;
     }
 }
 

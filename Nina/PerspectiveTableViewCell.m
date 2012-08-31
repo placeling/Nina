@@ -34,9 +34,9 @@
     CGFloat heightCalc;
     
     if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
-        heightCalc = 60;
+        heightCalc = 63;
     } else {
-        heightCalc = 60;
+        heightCalc = 63;
     }
     
     CGSize textAreaSize;
@@ -71,9 +71,9 @@
     CGFloat heightCalc;
 
     if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
-        heightCalc = 60;
+        heightCalc = 63;
     } else {
-        heightCalc = 45;
+        heightCalc = 48;
     }
     CGSize textAreaSize;
     textAreaSize.height = 140;
@@ -123,6 +123,13 @@
     cell.likeFooter.userInteractionEnabled = true;
     [cell.likeFooter addGestureRecognizer:cell.likeTapGesture];
     
+    if (cell.indexpath.row != 0){
+        UIImageView *dividerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 2)];
+        //verticalCursor += 3;
+        [dividerView setImage:[UIImage imageNamed:@"horizontalDivider.png"]];
+        [cell addSubview:dividerView];
+        [dividerView release];
+    }
     
     if (userSource){
         cell.titleLabel.text = perspective.place.name;
@@ -264,7 +271,6 @@
         [cell.likeFooter setHidden:true];
     }
     
-    
     if ( perspective.mine ){
         if ( cell.myPerspectiveView ){
             cell.modifyNotesButton.hidden = false;
@@ -290,6 +296,7 @@
     }
     
     [cell.socialFooter setFrame:CGRectMake(cell.socialFooter.frame.origin.x, verticalCursor, cell.socialFooter.frame.size.width, cell.socialFooter.frame.size.height)];
+    verticalCursor += cell.socialFooter.frame.size.height;
     
     [StyleHelper colourTextLabel:cell.createdAtLabel];
     [StyleHelper colourTextLabel:cell.titleLabel];

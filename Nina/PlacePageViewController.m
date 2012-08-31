@@ -465,6 +465,7 @@ typedef enum {
     [StyleHelper styleBackgroundView:self.tableHeaderView];
     
     self.tagScrollView.backgroundColor = [UIColor clearColor];
+    [self.tableView setSeparatorColor:[UIColor clearColor]];
     
     self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_script.png"]] autorelease];
     self.navigationItem.title = @"Placeling";
@@ -1261,6 +1262,7 @@ typedef enum {
                     if( [expandedIndexPaths member:indexPath]){  
                         pcell.expanded = true;
                     }
+                    
                     pcell.requestDelegate = self;
                     pcell.indexpath = indexPath;
                     

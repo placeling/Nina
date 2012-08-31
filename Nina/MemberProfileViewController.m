@@ -71,6 +71,8 @@
     
     [StyleHelper styleInfoView:self.headerView];
     
+    [self.tableView setSeparatorColor:[UIColor clearColor]];
+    
     self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_script.png"]] autorelease];
     self.navigationItem.title = @"Placeling";
     
