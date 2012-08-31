@@ -71,6 +71,9 @@
     
     [StyleHelper styleInfoView:self.headerView];
     
+    self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_script.png"]] autorelease];
+    self.navigationItem.title = @"Placeling";
+    
     if ( [self.username isEqualToString:[NinaHelper getUsername] ]){
         self.user = [UserManager sharedMeUser];
         self.perspectives = self.user.perspectives;

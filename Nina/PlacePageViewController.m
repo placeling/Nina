@@ -413,10 +413,10 @@ typedef enum {
     [button setTitleColor:[UIColor colorWithRed:101/255.0 green:79/255.0 blue:42/255.0 alpha:1.0] forState:UIControlStateNormal];
     
     UILabel *buttonLabel = button.titleLabel;
-    [buttonLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13.0]];
+    [buttonLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12.0]];
     
     [button setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(9.0, 0.0, 0.0, 0.0)];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(8.0, 0.0, 0.0, 0.0)];
     
     [button setTitle:[titles objectAtIndex:segmentIndex] forState:UIControlStateNormal];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
@@ -428,7 +428,7 @@ typedef enum {
         UIImage *coverImage = [UIImage imageNamed:@"UnselectedMeIcon.png"];
         UIImageView *coverImageView = [[UIImageView alloc] initWithImage:coverImage];
         
-        [coverImageView setFrame:CGRectMake(35, 25, coverImageView.frame.size.width, coverImageView.frame.size.height)];
+        [coverImageView setFrame:CGRectMake(35, 26, coverImageView.frame.size.width, coverImageView.frame.size.height)];
         coverImageView.tag = 26;
         [button addSubview:coverImageView];
         [coverImageView release];
@@ -436,7 +436,7 @@ typedef enum {
         UIImage *coverImage = [UIImage imageNamed:@"UnselectedNetworkIcon.png"];
         UIImageView *coverImageView = [[UIImageView alloc] initWithImage:coverImage];
         
-        [coverImageView setFrame:CGRectMake(27, 25, coverImageView.frame.size.width, coverImageView.frame.size.height)];
+        [coverImageView setFrame:CGRectMake(27, 26, coverImageView.frame.size.width, coverImageView.frame.size.height)];
         coverImageView.tag = 26;
         [button addSubview:coverImageView];
         [coverImageView release];
@@ -444,7 +444,7 @@ typedef enum {
         UIImage *coverImage = [UIImage imageNamed:@"UnselectedEveryoneIcon.png"];
         UIImageView *coverImageView = [[UIImageView alloc] initWithImage:coverImage];
         
-        [coverImageView setFrame:CGRectMake(35, 25, coverImageView.frame.size.width, coverImageView.frame.size.height )];
+        [coverImageView setFrame:CGRectMake(35, 26, coverImageView.frame.size.width, coverImageView.frame.size.height )];
         coverImageView.tag = 26;
         [button addSubview:coverImageView];
         [coverImageView release];
@@ -465,6 +465,9 @@ typedef enum {
     [StyleHelper styleBackgroundView:self.tableHeaderView];
     
     self.tagScrollView.backgroundColor = [UIColor clearColor];
+    
+    self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_script.png"]] autorelease];
+    self.navigationItem.title = @"Placeling";
         
     if (myPerspective && myPerspective.mine && myPerspective.modified){
         myPerspective.modified = false;
