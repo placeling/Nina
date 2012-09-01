@@ -11,7 +11,6 @@
 
 @interface StyleHelper(Private)
 +(UIColor*) getTintColour;
-+(UIColor*) getTextColour;
 +(UIColor*) getPanelColour;
 +(void) styleFollowButtonCommon:(UIButton*)button;
 @end
@@ -122,17 +121,17 @@
 }
 
 +(void) styleGenericTableCell:(UITableViewCell*)cell{ 
-    cell.textLabel.textColor = [StyleHelper getTextColour];
-    cell.detailTextLabel.textColor = [StyleHelper getTextColour];
+    cell.textLabel.textColor = [StyleHelper basicTextColor];
+    cell.detailTextLabel.textColor = [StyleHelper basicTextColor];
 }
 
 +(void) styleQuickPickCell:(PlaceSuggestTableViewCell*)cell{
     
     [StyleHelper colourHomePageLabel:cell.usersLabel];
     
-    cell.titleLabel.textColor = [StyleHelper getTextColour];
-    cell.addressLabel.textColor = [StyleHelper getTextColour];
-    cell.distanceLabel.textColor = [StyleHelper getTextColour];
+    cell.titleLabel.textColor = [StyleHelper basicTextColor];
+    cell.addressLabel.textColor = [StyleHelper basicTextColor];
+    cell.distanceLabel.textColor = [StyleHelper basicTextColor];
 }
 
 +(void) styleHomePageLabel:(UILabel*)label{
@@ -149,7 +148,7 @@
 }
 
 +(void) colourTextLabel:(UILabel*)label{
-    label.textColor = [StyleHelper getTextColour];
+    label.textColor = [StyleHelper basicTextColor];
 }
 
 +(UIFont*) textFont{
@@ -164,7 +163,7 @@
     return [UIColor colorWithRed:201/255.0 green:181/255.0 blue:111/255.0 alpha:1.0];
 }
 
-+(UIColor*) getTextColour{
++(UIColor*) basicTextColor{
     return [UIColor colorWithRed:104/255.0 green:80/255.0 blue:38/255.0 alpha:1.0];
 }
 

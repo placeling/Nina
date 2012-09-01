@@ -7,22 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TTTAttributedLabel.h"
 #import "PlacemarkComment.h"
 
 @interface CommentTableViewCell : UITableViewCell{
     PlacemarkComment *comment;
     IBOutlet UIImageView *userImage;
-    IBOutlet UITextView *detailText;
-    IBOutlet UILabel *titleLabel;
+    IBOutlet TTTAttributedLabel *titleLabel;
     IBOutlet UILabel *timeAgo;
 }
 
 
 @property(nonatomic,retain) PlacemarkComment *comment;
 @property(nonatomic,retain) IBOutlet UIImageView *userImage;
-@property(nonatomic,retain) IBOutlet UITextView *detailText;
-@property(nonatomic,retain) IBOutlet UILabel *titleLabel;
+@property(nonatomic,retain) IBOutlet TTTAttributedLabel *titleLabel;
 @property(nonatomic,retain) IBOutlet UILabel *timeAgo;
 
 

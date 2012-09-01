@@ -32,6 +32,7 @@
 
 +(void) colourTextLabel:(UILabel*)label;
 +(UIColor*) highlightTextColor;
++(UIColor*) basicTextColor;
 +(UIFont*) textFont;
 
 

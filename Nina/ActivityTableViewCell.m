@@ -160,6 +160,7 @@
     CTFontRef font = CTFontCreateWithName((CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
     if (font) {
         [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)font range:NSMakeRange(0,[titleText length])];
+        [mutableAttributedString addAttribute:(NSString*)kCTForegroundColorAttributeName value:(id)[[StyleHelper basicTextColor] CGColor] range:NSMakeRange(0,[titleText length])];
         
         [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)font range:actorRange];
         [mutableAttributedString addAttribute:(NSString*)kCTForegroundColorAttributeName value:(id)[[StyleHelper highlightTextColor] CGColor] range:actorRange];
@@ -215,6 +216,7 @@
     CTFontRef font = CTFontCreateWithName((CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
     if (font) {
         [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)font range:NSMakeRange(0,[titleText length])];
+        [mutableAttributedString addAttribute:(NSString*)kCTForegroundColorAttributeName value:(id)[[StyleHelper basicTextColor] CGColor] range:NSMakeRange(0,[titleText length])];
         
         [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)font range:boldRange];
         

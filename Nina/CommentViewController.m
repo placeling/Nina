@@ -268,7 +268,12 @@
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 70;
+     if (indexPath.row >= [[self comments] count]){
+        return 70;
+    } else {
+        PlacemarkComment *comment = [comments objectAtIndex:indexPath.row];
+        return [CommentTableViewCell cellHeightForComment:comment];
+    }
 }
 
 
