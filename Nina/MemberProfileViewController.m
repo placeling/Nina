@@ -170,7 +170,8 @@
         [self.tableView reloadData];
     }
 
-    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc] initWithImage:[UIImage imageNamed:@"StandardShare.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showShareSheet)];
+    //UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc] initWithImage:[UIImage imageNamed:@"StandardShare.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showShareSheet)];
+    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showShareSheet)];
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
         
