@@ -529,6 +529,12 @@
                 placeController.referrer = notification.actor.username;
                 //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
                 viewController = placeController;
+            }else if ([notification.notificationType isEqualToString:@"COMMENT_PERSPECTIVE"]){
+                PlacePageViewController *placeController = [[PlacePageViewController alloc]init];
+                placeController.perspective_id = notification.subjectId;
+                placeController.referrer = notification.actor.username;
+                //placeController.initialSelectedIndex = [NSNumber numberWithInt:1];
+                viewController = placeController;                
             }  else if ([notification.notificationType isEqualToString:@"FOLLOW"]){
                 MemberProfileViewController *memberView = [[MemberProfileViewController alloc]init];
                 memberView.user = notification.actor;

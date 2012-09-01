@@ -133,7 +133,11 @@
         titleText = [NSString stringWithFormat:@"%@ favorited your placemark for %@", notification.actor.username, notification.subjectName];
         actorRange = NSMakeRange (0, [notification.actor.username length]);
         subjectRange = NSMakeRange ([titleText length] - [notification.subjectName length], [notification.subjectName length]);
-    }  else if ([notification.notificationType isEqualToString:@"FOLLOW"]){
+    }  else if ([notification.notificationType isEqualToString:@"COMMENT_PERSPECTIVE"]){
+        titleText = [NSString stringWithFormat:@"%@ commented on your placemark for %@", notification.actor.username, notification.subjectName];
+        actorRange = NSMakeRange (0, [notification.actor.username length]);
+        subjectRange = NSMakeRange ([titleText length] - [notification.subjectName length], [notification.subjectName length]);
+    }else if ([notification.notificationType isEqualToString:@"FOLLOW"]){
         titleText = [NSString stringWithFormat:@"%@ started following you", notification.actor.username];
         actorRange = NSMakeRange (0, [notification.actor.username length]);
     } else if ( [notification.notificationType isEqualToString:@"FACEBOOK_FRIEND"] ){
