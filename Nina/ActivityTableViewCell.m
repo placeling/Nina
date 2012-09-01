@@ -126,7 +126,7 @@
 
 +(NSMutableAttributedString*) getTitleTextForNotification:(Notification*)notification{
     NSString *titleText;
-    NSRange actorRange;
+    NSRange actorRange = NSMakeRange (0,0);
     NSRange subjectRange = NSMakeRange (0,0);
     
     if ([notification.notificationType isEqualToString:@"STAR_PERSPECTIVE"]){
@@ -153,7 +153,7 @@
         titleText = @"";
     }
     
-    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:titleText];
+    NSMutableAttributedString *mutableAttributedString = [[[NSMutableAttributedString alloc] initWithString:titleText] autorelease];
 
     UIFont *boldSystemFont = [StyleHelper textFont];
     
@@ -178,27 +178,22 @@
 
 +(NSMutableAttributedString*) getTitleTextForActivity:(Activity *)activity{
     NSString *activityType = activity.activityType;
-    NSRange actorRange;
     NSRange actor2Range = NSMakeRange (0,0);
     NSRange subjectRange = NSMakeRange (0,0);
     NSString *titleText;
     
     if ([activityType isEqualToString:@"UPDATE_PERSPECTIVE"]){
         titleText = [NSString stringWithFormat:@"%@ updated placemark on %@", activity.username1, activity.subjectTitle];
-        actorRange = NSMakeRange (0, [activity.username1 length]);
         subjectRange = NSMakeRange ([titleText length] - [activity.subjectTitle length], [activity.subjectTitle length]);
     }else if ([activityType isEqualToString:@"NEW_PERSPECTIVE"]){
         titleText = [NSString stringWithFormat:@"%@ placemarked %@", activity.username1, activity.subjectTitle];
-        actorRange = NSMakeRange (0, [activity.username1 length]);
         subjectRange = NSMakeRange ([titleText length] - [activity.subjectTitle length], [activity.subjectTitle length]);
     } else if ([activityType isEqualToString:@"STAR_PERSPECTIVE"]){
         titleText = [NSString stringWithFormat:@"%@ favorited %@'s placemark for %@", activity.username1, activity.username2, activity.subjectTitle];
-        actorRange = NSMakeRange (0, [activity.username1 length]);
         actor2Range =  NSMakeRange ([activity.username1 length]+11, [activity.username2 length]);
         subjectRange = NSMakeRange ([titleText length] - [activity.subjectTitle length], [activity.subjectTitle length]);
     }  else if ([activityType isEqualToString:@"FOLLOW"]){
         titleText = [NSString stringWithFormat:@"%@ started following %@", activity.username1, activity.username2];
-        actorRange = NSMakeRange (0, [activity.username1 length]);
         subjectRange = NSMakeRange ([titleText length] - [activity.username2 length], [activity.username2 length]);
         
     } else {
@@ -206,7 +201,7 @@
         titleText = @"";
     }
     
-    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:titleText];
+    NSMutableAttributedString *mutableAttributedString = [[[NSMutableAttributedString alloc] initWithString:titleText] autorelease];
     
     NSRange boldRange = [titleText rangeOfString:activity.username1 options:NSCaseInsensitiveSearch];
     

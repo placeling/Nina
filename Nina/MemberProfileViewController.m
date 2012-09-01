@@ -445,6 +445,7 @@
         
         //Show the tweet sheet!
         [self presentModalViewController:tweetSheet animated:YES];
+        [tweetSheet release];
     } 
 }
 

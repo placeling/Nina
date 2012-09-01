@@ -131,6 +131,7 @@
                                     
                                     
                                     [self handleTwitterCredentials:dict];
+                                    [responseStr release];
                                 }
                             }];
                         }
@@ -138,6 +139,7 @@
                 });
             }
         }];
+        [signedRequest release];
     }    
     
     return true;

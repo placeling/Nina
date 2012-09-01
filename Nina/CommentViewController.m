@@ -73,6 +73,7 @@
     
     // view hierachy
     [self.containerView addSubview:imageView];
+    [imageView release];
     [self.containerView addSubview:self.textView];
     [self.containerView addSubview:entryImageView];    
     
@@ -136,6 +137,7 @@
         loader.delegate = self;
         loader.userData = [NSNumber numberWithInt:131]; //use as a tag
      }];
+    [comment release];
 }
 
 - (void)viewDidUnload

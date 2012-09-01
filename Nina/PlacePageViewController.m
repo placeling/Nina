@@ -115,8 +115,7 @@ typedef enum {
         GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:[url absoluteString]];
         
         [self.navigationController pushViewController:genericWebViewController animated:YES];
-        [genericWebViewController release];NSString *path = [[NSBundle mainBundle] bundlePath];
-        NSURL *baseURL = [NSURL fileURLWithPath:path];
+        [genericWebViewController release];
         return NO;
     }
     return YES;
@@ -571,6 +570,7 @@ typedef enum {
         
         //Show the tweet sheet!
         [self presentModalViewController:tweetSheet animated:YES];
+        [tweetSheet release];
     }
 }
 

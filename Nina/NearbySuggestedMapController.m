@@ -208,7 +208,7 @@
 }
 
 -(NSMutableArray*)visiblePlaces{
-    NSMutableArray *visPlaces = [[NSMutableArray alloc] init];
+    NSMutableArray *visPlaces = [[[NSMutableArray alloc] init] autorelease];
     
     for (PlaceMark *placeMark in [self.mapView annotationsInMapRect:self.mapView.visibleMapRect] ){
         [visPlaces addObject:placeMark.place];

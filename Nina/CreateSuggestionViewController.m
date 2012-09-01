@@ -90,6 +90,7 @@
         // Set determinate mode
         HUD.labelText = @"Sending...";
         [HUD retain];
+        [suggestion release];
         
         
     } else {

@@ -98,6 +98,7 @@
     navSingleTap.numberOfTapsRequired = 1;
     [[self.navigationController.navigationBar.subviews objectAtIndex:1] setUserInteractionEnabled:YES];
     [[self.navigationController.navigationBar.subviews objectAtIndex:1] addGestureRecognizer:navSingleTap];
+    [navSingleTap release];
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocation *location = manager.location;

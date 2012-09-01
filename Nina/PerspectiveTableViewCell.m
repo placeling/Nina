@@ -300,7 +300,7 @@
     }
     
     [cell.socialFooter setFrame:CGRectMake(cell.socialFooter.frame.origin.x, verticalCursor, cell.socialFooter.frame.size.width, cell.socialFooter.frame.size.height)];
-    verticalCursor += cell.socialFooter.frame.size.height;
+    //verticalCursor += cell.socialFooter.frame.size.height;
     
     [StyleHelper colourTextLabel:cell.createdAtLabel];
     [StyleHelper colourTextLabel:cell.titleLabel];
@@ -453,6 +453,7 @@
         
         //Show the tweet sheet!
         [self.requestDelegate presentModalViewController:tweetSheet animated:YES];
+        [tweetSheet release];
     }
 }
 
