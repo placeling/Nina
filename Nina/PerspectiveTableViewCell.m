@@ -52,7 +52,7 @@
     }
     
     if (perspective.url ){
-        heightCalc += 17;
+        heightCalc += 24;
     }
     
     if ( perspective.likers && [perspective.likers count] > 0 ) {
@@ -96,7 +96,7 @@
     }
     
     if (perspective.url || maxTextSize.height > textSize.height ){
-        heightCalc += 17;
+        heightCalc += 24;
     }
     
     if ( perspective.likers && [perspective.likers count] > 0 ) {
@@ -122,6 +122,10 @@
     cell.likeTapGesture =[[[UITapGestureRecognizer alloc] initWithTarget:cell action:@selector(showLikers)] autorelease];
     cell.likeFooter.userInteractionEnabled = true;
     [cell.likeFooter addGestureRecognizer:cell.likeTapGesture];
+    
+    if ([perspective.commentCount intValue]> 0){
+        [cell.showCommentsButton setTitle:[perspective.commentCount stringValue] forState:UIControlStateNormal];
+    }
     
     if (cell.indexpath.row != 0){
         UIImageView *dividerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 2)];
@@ -289,9 +293,9 @@
         [cell.highlightButton setHidden:true];
         
         if(perspective.starred){
-            [cell.loveButton setImage:[UIImage imageNamed:@"liked.png"] forState:UIControlStateNormal];
+            [cell.loveButton setImage:[UIImage imageNamed:@"staticLikeButtonOn.png"] forState:UIControlStateNormal];
         } else {
-            [cell.loveButton setImage:[UIImage imageNamed:@"unliked.png"] forState:UIControlStateNormal];
+            [cell.loveButton setImage:[UIImage imageNamed:@"staticLikeButton.png"] forState:UIControlStateNormal];
         }
     }
     
@@ -477,7 +481,7 @@
         
         [[RKClient sharedClient] post:urlText params:nil delegate:self.requestDelegate]; 
         self.perspective.starred = false;
-        [self.loveButton setImage:[UIImage imageNamed:@"unliked.png"] forState:UIControlStateNormal];
+        [self.loveButton setImage:[UIImage imageNamed:@"staticLikeButton.png"] forState:UIControlStateNormal];
     } else {            
         [self.perspective star];
         NSString *urlText = [NSString stringWithFormat:@"/v1/perspectives/%@/star", self.perspective.perspectiveId];
@@ -485,7 +489,7 @@
             loader.delegate = self.requestDelegate;
             loader.userData = [NSNumber numberWithInt:5]; //use as a tag
         }];
-        [self.loveButton setImage:[UIImage imageNamed:@"liked.png"] forState:UIControlStateNormal];
+        [self.loveButton setImage:[UIImage imageNamed:@"staticLikeButtonOn.png"] forState:UIControlStateNormal];
     }
 }
 

@@ -30,6 +30,8 @@
     
     BOOL modified;
     BOOL hidden;
+    
+    NSNumber *commentCount;
 }
 
 @property (nonatomic, retain) User *user;
@@ -47,6 +49,7 @@
 @property (nonatomic, retain) NSString* perspectiveId;
 @property (nonatomic, retain) NSDate *lastModified;
 @property (nonatomic, retain) NSString *url;
+@property (nonatomic, retain) NSNumber *commentCount;
 
 - (id) initFromJsonDict:(NSDictionary *)jsonDict;
 - (void) updateFromJsonDict:(NSDictionary *)jsonDict;

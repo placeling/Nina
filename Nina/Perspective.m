@@ -12,7 +12,7 @@
 
 @implementation Perspective
 @synthesize user, place, notes, tags, photos, starred, lastModified, likers;
-@synthesize visited, share, mine, perspectiveId, modified, url, hidden;
+@synthesize visited, share, mine, perspectiveId, modified, url, hidden, commentCount;
 
 -(id) initFromJsonDict:(NSDictionary *)jsonDict{
     if(self = [super init]){
@@ -71,6 +71,7 @@
     self.perspectiveId = [jsonDict objectForKeyNotNull:@"_id"];
     self.notes = [jsonDict objectForKeyNotNull:@"memo"];
     self.starred = [[jsonDict objectForKeyNotNull:@"starred"] boolValue];
+    self.commentCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"comment_count"] intValue]];
     
     NSDateFormatter *jsonFormatter = [[RKObjectMapping defaultDateFormatters] objectAtIndex:0];
     self.lastModified = [jsonFormatter dateFromString:[jsonDict objectForKeyNotNull:@"modified_at"]];
@@ -91,6 +92,7 @@
      @"url", @"url",
      @"tags", @"tags",
      @"liking_users", @"likers",
+     @"comment_count", @"commentCount",
      nil];
     
     // perspectiveMapping.dateFormatters = [NSArray arrayWithObjects:[RKObjectMapping preferredDateFormatter], nil];
@@ -205,6 +207,7 @@
     [perspectiveId release];
     [lastModified release];
     [likers release];
+    [commentCount release];
     [super dealloc];
 }
 
