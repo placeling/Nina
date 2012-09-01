@@ -16,7 +16,6 @@
 #import "FriendFindController.h"
 #import "Activity.h"
 #import "Notification.h"
-#import "NotificationTableViewCell.h"
 #import "SuggestionViewController.h"
 
 @interface ActivityFeedViewController (Private)
@@ -223,6 +222,7 @@
     [StyleHelper styleBackgroundView:self.activityTableView];
     [StyleHelper styleBackgroundView:self.view];
     [StyleHelper styleToolBar:self.toolbar];
+    [self.activityTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -331,7 +331,7 @@
             return [ActivityTableViewCell cellHeightForActivity:activity];
         } else {
             Notification *notification = [recentNotifications objectAtIndex:indexPath.row];
-            return [NotificationTableViewCell cellHeightForNotification:notification];            
+            return [ActivityTableViewCell cellHeightForNotification:notification];            
         }
     }
 }
@@ -380,7 +380,8 @@
             
             loginText.text = @"Sign up or log in to check out what people you follow have placemarked lately.\n\nTap here to get started.";
             
-            loginText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+            loginText.font = [StyleHelper textFont];
+            
             
             loginText.tag = 778;
             [loginText setBackgroundColor:[UIColor clearColor]];
@@ -398,7 +399,7 @@
             
             loginText.text = @"Nothing to show you right now";
             
-            loginText.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+            loginText.font = [StyleHelper textFont];
             loginText.tag = 778;
             [loginText setBackgroundColor:[UIColor clearColor]];
             [loginText setUserInteractionEnabled:FALSE];
@@ -448,12 +449,12 @@
             
             Notification *notification = [recentNotifications objectAtIndex:indexPath.row];
             
-            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"NotificationTableViewCell" owner:self options:nil];
+            NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"ActivityTableViewCell" owner:self options:nil];
             
             for(id item in objects){
                 if ( [item isKindOfClass:[UITableViewCell class]]){
-                    NotificationTableViewCell *pcell = (NotificationTableViewCell *)item;                  
-                    [NotificationTableViewCell setupCell:pcell forNotification:notification];
+                    ActivityTableViewCell *pcell = (ActivityTableViewCell *)item;
+                    [ActivityTableViewCell setupCell:pcell forNotification:notification];
                     cell = pcell;
                     break;
                 }

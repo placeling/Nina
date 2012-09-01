@@ -31,6 +31,8 @@
 +(void) colourHomePageLabel:(UILabel*)label;
 
 +(void) colourTextLabel:(UILabel*)label;
++(UIColor*) highlightTextColor;
++(UIFont*) textFont;
 
 
 @end

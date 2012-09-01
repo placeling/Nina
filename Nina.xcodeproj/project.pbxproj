@@ -51,8 +51,6 @@
 		281B1CE115CB323D0015ECBB /* 08-chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1CDF15CB323D0015ECBB /* 08-chat@2x.png */; };
 		281B1CE415CB4AC90015ECBB /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CE315CB4AC90015ECBB /* Notification.m */; };
 		281B1CE715CB52030015ECBB /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CE615CB52030015ECBB /* Activity.m */; };
-		281B1CEB15CB6B900015ECBB /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CE915CB6B8F0015ECBB /* NotificationTableViewCell.m */; };
-		281B1CEC15CB6B900015ECBB /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 281B1CEA15CB6B900015ECBB /* NotificationTableViewCell.xib */; };
 		281B1CF015CC85B50015ECBB /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CEF15CC85B50015ECBB /* Question.m */; };
 		281B1CF315CC85C30015ECBB /* Answer.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CF215CC85C30015ECBB /* Answer.m */; };
 		281B1D0215CDDD4F0015ECBB /* 53-house.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1D0015CDDD4F0015ECBB /* 53-house.png */; };
@@ -113,6 +111,9 @@
 		2867827E15F161AA004F70EB /* StandardShare.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867827C15F161A9004F70EB /* StandardShare.png */; };
 		2867827F15F161AA004F70EB /* StandardShare@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867827D15F161AA004F70EB /* StandardShare@2x.png */; };
 		2867828115F16671004F70EB /* horizontalDivider.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867828015F16670004F70EB /* horizontalDivider.png */; };
+		2867828815F180CA004F70EB /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2867828715F180CA004F70EB /* TTTAttributedLabel.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		2867828915F180CA004F70EB /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2867828715F180CA004F70EB /* TTTAttributedLabel.m */; };
+		2867828B15F183F9004F70EB /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2867828A15F183F9004F70EB /* CoreText.framework */; };
 		2867ABC014CE3419003994DB /* ActiveGasPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBB14CE3419003994DB /* ActiveGasPick@2x.png */; };
 		2867ABC114CE3419003994DB /* ActiveServicesPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBC14CE3419003994DB /* ActiveServicesPick.png */; };
 		2867ABC214CE3419003994DB /* ActiveServicesPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2867ABBD14CE3419003994DB /* ActiveServicesPick@2x.png */; };
@@ -567,9 +568,6 @@
 		281B1CE315CB4AC90015ECBB /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
 		281B1CE515CB52030015ECBB /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
 		281B1CE615CB52030015ECBB /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
-		281B1CE815CB6B8F0015ECBB /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewCell.h; sourceTree = "<group>"; };
-		281B1CE915CB6B8F0015ECBB /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewCell.m; sourceTree = "<group>"; };
-		281B1CEA15CB6B900015ECBB /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		281B1CEE15CC85B40015ECBB /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
 		281B1CEF15CC85B50015ECBB /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
 		281B1CF115CC85C30015ECBB /* Answer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Answer.h; sourceTree = "<group>"; };
@@ -682,6 +680,9 @@
 		2867827C15F161A9004F70EB /* StandardShare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StandardShare.png; sourceTree = "<group>"; };
 		2867827D15F161AA004F70EB /* StandardShare@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "StandardShare@2x.png"; sourceTree = "<group>"; };
 		2867828015F16670004F70EB /* horizontalDivider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = horizontalDivider.png; sourceTree = "<group>"; };
+		2867828615F180CA004F70EB /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		2867828715F180CA004F70EB /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		2867828A15F183F9004F70EB /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		2867ABBB14CE3419003994DB /* ActiveGasPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActiveGasPick@2x.png"; sourceTree = "<group>"; };
 		2867ABBC14CE3419003994DB /* ActiveServicesPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ActiveServicesPick.png; sourceTree = "<group>"; };
 		2867ABBD14CE3419003994DB /* ActiveServicesPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActiveServicesPick@2x.png"; sourceTree = "<group>"; };
@@ -1147,6 +1148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2867828B15F183F9004F70EB /* CoreText.framework in Frameworks */,
 				28B4258B15D4D4EB0025957A /* libRestKit.a in Frameworks */,
 				281B182B15C748950015ECBB /* Accounts.framework in Frameworks */,
 				284D15CA15C73BE400698777 /* Twitter.framework in Frameworks */,
@@ -1494,6 +1496,7 @@
 		2895002F13D64559009E1BD7 = {
 			isa = PBXGroup;
 			children = (
+				2867828A15F183F9004F70EB /* CoreText.framework */,
 				28B619461422942B00B0A7E5 /* Default@2x.png */,
 				28B619441422942200B0A7E5 /* Default.png */,
 				28B61942142292E500B0A7E5 /* icon@2x.png */,
@@ -1650,6 +1653,8 @@
 				28B425EA15DB2E9F0025957A /* YIPopupTextView.m */,
 				28EB265D156EBA07006568E7 /* MTPopupWindow.h */,
 				28EB265E156EBA07006568E7 /* MTPopupWindow.m */,
+				2867828615F180CA004F70EB /* TTTAttributedLabel.h */,
+				2867828715F180CA004F70EB /* TTTAttributedLabel.m */,
 				28B4256815D4C72B0025957A /* HPGrowingTextView.h */,
 				28B4256915D4C72B0025957A /* HPGrowingTextView.m */,
 				28B425C115D8AD0F0025957A /* TWSignedRequest.h */,
@@ -1785,9 +1790,6 @@
 				28EE54F41434DDC600E36686 /* ActivityTableViewCell.h */,
 				28EE54F51434DDC600E36686 /* ActivityTableViewCell.m */,
 				28EE54F61434DDC600E36686 /* ActivityTableViewCell.xib */,
-				281B1CE815CB6B8F0015ECBB /* NotificationTableViewCell.h */,
-				281B1CE915CB6B8F0015ECBB /* NotificationTableViewCell.m */,
-				281B1CEA15CB6B900015ECBB /* NotificationTableViewCell.xib */,
 				28A4377814327EFA005F192B /* ActivityFeedViewController.h */,
 				28A4377914327EFA005F192B /* ActivityFeedViewController.m */,
 				28A4377A14327EFA005F192B /* ActivityFeedViewController.xib */,
@@ -2523,7 +2525,6 @@
 				281B1CDD15CB2F480015ECBB /* QuestionLightbulb@2x.png in Resources */,
 				281B1CE015CB323D0015ECBB /* 08-chat.png in Resources */,
 				281B1CE115CB323D0015ECBB /* 08-chat@2x.png in Resources */,
-				281B1CEC15CB6B900015ECBB /* NotificationTableViewCell.xib in Resources */,
 				281B1D0215CDDD4F0015ECBB /* 53-house.png in Resources */,
 				281B1D0315CDDD4F0015ECBB /* 53-house@2x.png in Resources */,
 				28BFF7CF15D18D340086EBF5 /* QuestionListViewController.xib in Resources */,
@@ -2717,7 +2718,6 @@
 				281B1CCC15C9AC9E0015ECBB /* FGalleryViewController.m in Sources */,
 				281B1CE415CB4AC90015ECBB /* Notification.m in Sources */,
 				281B1CE715CB52030015ECBB /* Activity.m in Sources */,
-				281B1CEB15CB6B900015ECBB /* NotificationTableViewCell.m in Sources */,
 				281B1CF015CC85B50015ECBB /* Question.m in Sources */,
 				281B1CF315CC85C30015ECBB /* Answer.m in Sources */,
 				28BFF7CE15D18D340086EBF5 /* QuestionListViewController.m in Sources */,
@@ -2734,6 +2734,7 @@
 				28B4269C15DF02980025957A /* SuggestionViewController.m in Sources */,
 				28B9E27215E557BB00E13F0B /* NPSPopupWindow.m in Sources */,
 				28B9E27C15E55AE300E13F0B /* AFPickerView.m in Sources */,
+				2867828815F180CA004F70EB /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2750,6 +2751,7 @@
 				28B425F515DC500E0025957A /* Suggestion.m in Sources */,
 				28B425FF15DC582B0025957A /* CreateSuggestionViewController.m in Sources */,
 				28B4269D15DF02980025957A /* SuggestionViewController.m in Sources */,
+				2867828915F180CA004F70EB /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

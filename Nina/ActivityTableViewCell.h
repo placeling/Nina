@@ -9,26 +9,31 @@
 #import <UIKit/UIKit.h>
 
 #import "Activity.h"
+#import "Notification.h"
+#import "TTTAttributedLabel.h"
 
 @interface ActivityTableViewCell : UITableViewCell{
     Activity *activity;
+    Notification *notification;
+    
     IBOutlet UIImageView *userImage;
-    IBOutlet UITextView *detailText;
-    IBOutlet UILabel *titleLabel;
+    TTTAttributedLabel *titleLabel;
     IBOutlet UILabel *timeAgo;
 }
 
 
 @property(nonatomic,retain) Activity *activity;
 @property(nonatomic,retain) IBOutlet UIImageView *userImage;
-@property(nonatomic,retain) IBOutlet UITextView *detailText;
-@property(nonatomic,retain) IBOutlet UILabel *titleLabel;
 @property(nonatomic,retain) IBOutlet UILabel *timeAgo;
+@property(nonatomic,retain) Notification *notification;
+@property(nonatomic,retain) IBOutlet TTTAttributedLabel *titleLabel;
 
 
 //for calculating heights
 +(CGFloat) cellHeightForActivity:(Activity*)activity;
 +(void) setupCell:(ActivityTableViewCell*)cell forActivity:(Activity*)activity;
 
++(CGFloat) cellHeightForNotification:(Notification*)notification;
++(void) setupCell:(ActivityTableViewCell*)cell forNotification:(Notification*)notification;
 
 @end

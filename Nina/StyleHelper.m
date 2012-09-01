@@ -152,6 +152,10 @@
     label.textColor = [StyleHelper getTextColour];
 }
 
++(UIFont*) textFont{
+    return [UIFont fontWithName:@"Helvetica" size:14];
+}
+
 +(UIColor*) getTintColour{
     return [UIColor colorWithRed:0/255.0 green:130/255.0 blue:121/255.0 alpha:1.0];
 }
@@ -164,5 +168,8 @@
     return [UIColor colorWithRed:104/255.0 green:80/255.0 blue:38/255.0 alpha:1.0];
 }
 
++(UIColor*) highlightTextColor{
+    return [UIColor colorWithRed:202/255.0 green:51/255.0 blue:16/255.0 alpha:1.0];
+}
 
 @end
