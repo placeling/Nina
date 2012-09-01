@@ -34,7 +34,7 @@
     CGFloat heightCalc;
     
     if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
-        heightCalc = 63;
+        heightCalc = 69;
     } else {
         heightCalc = 63;
     }
@@ -71,7 +71,7 @@
     CGFloat heightCalc;
 
     if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
-        heightCalc = 63;
+        heightCalc = 69;
     } else {
         heightCalc = 48;
     }
