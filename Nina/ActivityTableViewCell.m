@@ -104,7 +104,7 @@
     cell.timeAgo.text = [NinaHelper dateDiff:activity.updatedAt];
 
     // Here we use the new provided setImageWithURL: method to load the web image
-    [cell.userImage setImageWithURL:[NSURL URLWithString:activity.actor1.profilePic.thumbUrl]
+    [cell.userImage setImageWithURL:[NSURL URLWithString:activity.thumb1]
                    placeholderImage:[UIImage imageNamed:@"profile.png"]];
 
     
