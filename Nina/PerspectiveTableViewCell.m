@@ -27,7 +27,7 @@
 @synthesize perspective, userImage, memoText,titleLabel, scrollView;
 @synthesize tapGesture, requestDelegate, showMoreButton, loveButton, shareSheetButton;
 @synthesize createdAtLabel, expanded, indexpath, likeFooter, likersLabel, likeTapGesture;
-@synthesize  showCommentsButton, modifyNotesButton, socialFooter, highlightButton;
+@synthesize  showCommentsButton, modifyNotesButton, socialFooter, highlightButton, myPerspectiveView;
 
 
 +(CGFloat) cellHeightUnboundedForPerspective:(Perspective*)perspective{

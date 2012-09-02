@@ -1272,6 +1272,8 @@ typedef enum {
                         pcell.myPerspectiveView = true;
                         [pcell.modifyNotesButton addTarget:self action:@selector(editPerspective)
                     forControlEvents:UIControlEventTouchUpInside];
+                    } else {
+                        pcell.myPerspectiveView = false;
                     }
                     
                     [PerspectiveTableViewCell setupCell:pcell forPerspective:perspective userSource:false];

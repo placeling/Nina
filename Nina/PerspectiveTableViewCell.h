@@ -41,8 +41,8 @@
     
     NSIndexPath *indexpath;
     
-    bool expanded;
-    bool myPerspectiveView;
+    BOOL expanded;
+    BOOL myPerspectiveView;
     
     UIView *likeFooter;
     UILabel *likersLabel;
@@ -72,9 +72,9 @@
 @property(nonatomic,retain) UITapGestureRecognizer *likeTapGesture;
 @property(nonatomic,retain) IBOutlet UILabel *createdAtLabel;
 @property(nonatomic,retain) NSIndexPath *indexpath;
-@property(nonatomic, assign) bool expanded;
 
-@property(nonatomic, assign) bool myPerspectiveView;
+@property(nonatomic, assign) BOOL expanded;
+@property(nonatomic, assign) BOOL myPerspectiveView;
 
 -(IBAction)showActionSheet;
 -(IBAction)toggleFavourite:(id)sender;
