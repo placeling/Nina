@@ -55,6 +55,8 @@
     
     [self.cancelButton setHidden:true];
     
+    [StyleHelper styleBackgroundView:self.view];
+    
 }
 
 
@@ -74,6 +76,8 @@
 -(void)send{
     if ( self.user ){
         //sending the place
+        [self.textField resignFirstResponder];
+        [self.textView resignFirstResponder];
         
         Suggestion *suggestion = [[Suggestion alloc] init];
         
