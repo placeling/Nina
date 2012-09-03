@@ -41,7 +41,7 @@
     
     [self.textField becomeFirstResponder];
     [self.textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    [self.textView setPlaceholder:@"Type a message to accompany suggestion"];
+    [self.textView setPlaceholder:@"Why do you suggest this place?"];
     
     self.navigationItem.title = self.place.name;
     
