@@ -31,13 +31,7 @@
 
 
 +(CGFloat) cellHeightUnboundedForPerspective:(Perspective*)perspective{
-    CGFloat heightCalc;
-    
-    if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
-        heightCalc = 69;
-    } else {
-        heightCalc = 63;
-    }
+    CGFloat heightCalc = 32; //covers title until notes start
     
     CGSize textAreaSize;
     textAreaSize.height = hardMaxCellHeight;
@@ -46,13 +40,13 @@
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
     if ( perspective.notes &&  [perspective.notes length] > 0 ){
-        heightCalc += MAX(textSize.height, 36);
+        heightCalc += MAX(textSize.height, 10);
     } else {
         heightCalc += 10;
     }
     
     if (perspective.url ){
-        heightCalc += 24;
+        heightCalc += 17;
     }
     
     if ( perspective.likers && [perspective.likers count] > 0 ) {
@@ -63,18 +57,17 @@
         heightCalc += 160;
     }
     
-    return heightCalc;    
+    if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
+        heightCalc += 38;
+    } 
+    
+    return MAX(heightCalc, 60); //clear the highlight button if nothign else  
 }
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
-    CGFloat heightCalc;
+    CGFloat heightCalc = 32; 
 
-    if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
-        heightCalc = 69;
-    } else {
-        heightCalc = 48;
-    }
     CGSize textAreaSize;
     textAreaSize.height = 140;
     textAreaSize.width = 233;
@@ -89,25 +82,26 @@
     
     CGSize maxTextSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:maxAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    if ( perspective.notes &&  [perspective.notes length] > 0 ){
-        heightCalc += MAX(textSize.height, 36);
-    } else {
-        heightCalc += 10;
-    }
+    heightCalc += MAX(textSize.height, 10);
     
     if (perspective.url || maxTextSize.height > textSize.height ){
-        heightCalc += 24;
-    }
-    
-    if ( perspective.likers && [perspective.likers count] > 0 ) {
-        heightCalc += 24;
+        //heightCalc += 17; I dont' actually have a good reason for commetnign this out
     }
     
     if (perspective.photos && perspective.photos.count > 0){
         heightCalc += 160;
     }
     
-    return heightCalc;
+    if ( perspective.likers && [perspective.likers count] > 0 ) {
+        heightCalc += 24;
+    }
+    
+    if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
+        heightCalc += 38;
+    }
+    
+    
+    return MAX(heightCalc, 60); //clear the highlight button if nothign else
 }
 
 
@@ -162,7 +156,7 @@
             textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:memoSize lineBreakMode:UILineBreakModeWordWrap];
         }
         if ( [perspective.notes length] > 0 ){
-            textSize.height = MAX(textSize.height, 36);
+            textSize.height = MAX(textSize.height, 10);
         } 
         
         [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, textSize.width, textSize.height)];
@@ -183,17 +177,15 @@
     
     if (tempSize.height > cell.memoText.frame.size.height) {
         cell.expanded = false;
-        verticalCursor += 5;
         [cell.showMoreButton setFrame:CGRectMake(cell.showMoreButton.frame.origin.x, verticalCursor, cell.showMoreButton.frame.size.width , cell.showMoreButton.frame.size.height)];
-        verticalCursor += cell.showMoreButton.frame.size.height + 5;
+        verticalCursor += cell.showMoreButton.frame.size.height;
         cell.showMoreButton.hidden = false;
     } else if (perspective.url){
         cell.showMoreButton.hidden = false;
-        verticalCursor += 5;
         [cell.showMoreButton setTitle:@"More on Web" forState:UIControlStateNormal];
         [cell.showMoreButton setFrame:CGRectMake(cell.showMoreButton.frame.origin.x, verticalCursor, cell.showMoreButton.frame.size.width , cell.showMoreButton.frame.size.height)];
         [cell.showMoreButton addTarget:cell action:@selector(onWeb) forControlEvents:UIControlEventTouchUpInside];
-        verticalCursor += cell.showMoreButton.frame.size.height + 5;
+        verticalCursor += cell.showMoreButton.frame.size.height;
         
     } else {
         cell.showMoreButton.hidden = true;
