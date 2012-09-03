@@ -84,8 +84,8 @@
     
     heightCalc += MAX(textSize.height, 10);
     
-    if (perspective.url || maxTextSize.height > textSize.height ){
-        //heightCalc += 17; I dont' actually have a good reason for commetnign this out
+    if (perspective.url){ // || maxTextSize.height > textSize.height ){
+        heightCalc += 17; //I dont' actually have a good reason for commetnign this out
     }
     
     if (perspective.photos && perspective.photos.count > 0){
