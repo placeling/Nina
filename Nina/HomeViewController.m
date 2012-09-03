@@ -28,6 +28,7 @@
 #import "QuestionListViewController.h"
 
 
+
 @interface HomeViewController (Private) 
 - (IBAction) buttonTouchUpInside:(id)sender;
 @end
@@ -114,6 +115,43 @@
     
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    if (customBadge){
+        [customBadge removeFromSuperview];
+        customBadge = nil;
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self refreshNotificationBadge];
+}
+
+-(void)refreshNotificationBadge{
+    User *user = [UserManager sharedMeUserNoGrab];
+    
+    if (user && user.notificationCount && [user.notificationCount intValue] > 0){
+        if (customBadge){
+            [customBadge removeFromSuperview];
+            customBadge = nil;
+        }
+        
+        customBadge = [CustomBadge customBadgeWithString:[user.notificationCount stringValue]
+                                         withStringColor:[UIColor whiteColor]
+                                          withInsetColor:[UIColor redColor]
+                                          withBadgeFrame:YES
+                                     withBadgeFrameColor:[UIColor whiteColor]
+                                               withScale:1.0
+                                             withShining:YES];
+            [customBadge setFrame:CGRectMake(265, 20, customBadge.frame.size.width, customBadge.frame.size.height)];
+        [customBadge setUserInteractionEnabled:NO];
+        [self.navigationController.view addSubview:customBadge];
+        
+    }
+}
+
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:TRUE];    
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
@@ -122,7 +160,7 @@
     [StyleHelper styleHomePageLabel:self.mapLabel];
     [StyleHelper styleHomePageLabel:self.feedLabel];
     [StyleHelper styleHomePageLabel:self.profileLabel];
-    [StyleHelper styleHomePageLabel:self.peopleLabel];
+    [StyleHelper styleHomePageLabel:self.peopleLabel];    
     
     
     if ([NinaHelper getAccessTokenSecret]){

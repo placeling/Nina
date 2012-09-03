@@ -13,6 +13,7 @@
 @interface UserManager : NSObject
 
 + (id)sharedMeUser;
++ (id)sharedMeUserNoGrab;
 
 +(void) setUser:(User*)user;
 

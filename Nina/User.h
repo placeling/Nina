@@ -38,6 +38,7 @@
     NSNumber *follows_you;
     
     NSNumber *highlightedCount;
+    NSNumber *notificationCount;
     
     NSNumber *lat;
     NSNumber *lng;
@@ -63,6 +64,7 @@
 @property (nonatomic, retain) NSNumber *followingCount;
 @property (nonatomic, retain) NSNumber *followerCount;
 @property (nonatomic, retain) NSNumber *highlightedCount;
+@property (nonatomic, retain) NSNumber *notificationCount;
 
 @property (nonatomic, retain) NSNumber *following;
 @property (nonatomic, retain) NSNumber *follows_you;

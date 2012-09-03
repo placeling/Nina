@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "CustomBadge.h"
+
 
 @interface HomeViewController : UIViewController<UIActionSheetDelegate>{
     IBOutlet UIScrollView *pickScroll;
@@ -17,8 +19,11 @@
     UILabel *feedLabel;
     UILabel *profileLabel;
     UILabel *peopleLabel;
-    
+
     UIButton *placemarkButton;
+    
+    CustomBadge *customBadge;
+    
 }
 
 @property (nonatomic, retain) IBOutlet UIScrollView *pickScroll;
@@ -44,5 +49,7 @@
 -(IBAction) questions;
 
 -(IBAction) findFriends;
+
+-(void)refreshNotificationBadge;
 
 @end

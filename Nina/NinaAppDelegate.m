@@ -32,6 +32,7 @@
 #import "PlacemarkComment.h"
 #import "UserManager.h"
 #import "Suggestion.h"
+#import "HomeViewController.h"
 
 
 @implementation NinaAppDelegate
@@ -167,17 +168,6 @@
     }
     
     [Appirater appLaunched:YES];
-    
-    //refresh the local "me" from servers    
-    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/v1/users/me.json" usingBlock:^(RKObjectLoader* loader) {
-        RKObjectMapping *userMapping = [User getObjectMapping];
-        loader.objectMapping = userMapping;
-        [loader setOnDidLoadObjects:^(NSArray *objects){
-            User *user = [objects objectAtIndex:0];
-            [UserManager setUser:user];
-        }];
-    }];
-    
     
     return YES;
 }
@@ -388,7 +378,9 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
      Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
      */
     [Appirater appEnteredForeground:YES];
+    
 }
+
 
 -(void) applicationDidBecomeActive:(UIApplication *) application
 {
@@ -397,6 +389,19 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
         [locationManager stopMonitoringSignificantLocationChanges];
         [locationManager startUpdatingLocation];
         locationManager.delegate = nil;
+        
+        [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/v1/users/me.json" usingBlock:^(RKObjectLoader* loader) {
+            RKObjectMapping *userMapping = [User getObjectMapping];
+            loader.objectMapping = userMapping;
+            [loader setOnDidLoadObjects:^(NSArray *objects){
+                User *user = [objects objectAtIndex:0];
+                [UserManager setUser:user];
+                
+                if ([self.navigationController.topViewController isKindOfClass:[HomeViewController class]]){
+                    [self.navigationController.topViewController refreshNotificationBadge];
+                }                
+            }];
+        }];
     }
     
     NSString *current_user = [NinaHelper getUsername];
@@ -423,6 +428,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
      See also applicationDidEnterBackground:.
      */
 }
+
+#pragma mark - RKObjectLoaderDelegate methods
 
 - (void)dealloc{
     [_window release];

@@ -17,6 +17,7 @@
 #import "Activity.h"
 #import "Notification.h"
 #import "SuggestionViewController.h"
+#import "UserManager.h"
 
 @interface ActivityFeedViewController (Private)
 -(void)dataSourceDidFinishLoadingNewData;
@@ -267,6 +268,9 @@
     } else if ( [(NSNumber*)objectLoader.userData intValue] == 72){
         [recentNotifications removeAllObjects];
         [recentNotifications addObjectsFromArray:objects];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+        User *user = [UserManager sharedMeUser];
+        user.notificationCount = [NSNumber numberWithInt:0];
         [self.activityTableView reloadData];
         
     } else if ( [(NSNumber*)objectLoader.userData intValue] == 73){

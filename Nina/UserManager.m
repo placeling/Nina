@@ -33,6 +33,15 @@ static User *sharedMeUser = nil;
     return sharedMeUser;
 }
 
++ (id)sharedMeUserNoGrab {    
+    @synchronized(self) {
+        if(sharedMeUser == nil){
+            return nil;            
+        }
+    }
+    return sharedMeUser;
+}
+
 +(void) setUser:(User*)user{
     if (sharedMeUser){
         [sharedMeUser release];

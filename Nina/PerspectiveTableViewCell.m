@@ -61,7 +61,7 @@
         heightCalc += 38;
     } 
     
-    return MAX(heightCalc, 60); //clear the highlight button if nothign else  
+    return MAX(heightCalc, 65); //clear the highlight button if nothign else
 }
 
 
@@ -101,7 +101,7 @@
     }
     
     
-    return MAX(heightCalc, 60); //clear the highlight button if nothign else
+    return MAX(heightCalc, 65); //clear the highlight button if nothign else
 }
 
 

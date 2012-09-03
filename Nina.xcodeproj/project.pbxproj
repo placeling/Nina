@@ -57,6 +57,8 @@
 		281B1D0315CDDD4F0015ECBB /* 53-house@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1D0115CDDD4F0015ECBB /* 53-house@2x.png */; };
 		2822BDAA1406E1200077868C /* PlaceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDA91406E11F0077868C /* PlaceHeaderView.xib */; };
 		2822BDAC1406EE720077868C /* PlaceFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDAB1406EE710077868C /* PlaceFooterView.xib */; };
+		2827C94115F43D1F00BE755D /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827C94015F43D1F00BE755D /* CustomBadge.m */; };
+		2827C94215F43D1F00BE755D /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827C94015F43D1F00BE755D /* CustomBadge.m */; };
 		2827EF7E15783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2827EF6415783F7600EB529A /* libCrittercismCrashOnly_v3_1_5.a */; };
 		2827F24A14BAB189002B4B7E /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827F24114BAB189002B4B7E /* Facebook.m */; };
 		2827F24B14BAB189002B4B7E /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2827F24214BAB189002B4B7E /* FBDialog.bundle */; };
@@ -82,6 +84,7 @@
 		28417FC4148CA9AF00CA6D4D /* ActiveGovernmentPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417FBE148CA9AB00CA6D4D /* ActiveGovernmentPick@2x.png */; };
 		28417FC5148CA9AF00CA6D4D /* ActiveShoppingPick.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417FBF148CA9AC00CA6D4D /* ActiveShoppingPick.png */; };
 		28417FC6148CA9AF00CA6D4D /* ActiveShoppingPick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28417FC0148CA9AD00CA6D4D /* ActiveShoppingPick@2x.png */; };
+		28495F8715F2C9C70092A97B /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 28495F8615F2C9C70092A97B /* libxml2.2.dylib */; };
 		284A35321402C48C009C8C28 /* PerspectivesMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A35301402C48C009C8C28 /* PerspectivesMapViewController.m */; };
 		284A35331402C48C009C8C28 /* PerspectivesMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */; };
 		284A35371402D3C3009C8C28 /* PlaceMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A35361402D3C3009C8C28 /* PlaceMark.m */; };
@@ -190,7 +193,6 @@
 		2874839D13D6959C005C11EF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2874839C13D6959C005C11EF /* CoreLocation.framework */; };
 		287483A013D695AF005C11EF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2874839F13D695AF005C11EF /* QuartzCore.framework */; };
 		287483AA13D6980A005C11EF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 287483A213D6980A005C11EF /* InfoPlist.strings */; };
-		287483B913D7596B005C11EF /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 287483B813D7596B005C11EF /* libxml2.2.7.3.dylib */; };
 		287483BE13D762FA005C11EF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 287483BD13D762FA005C11EF /* Reachability.m */; };
 		287483C013D764F4005C11EF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 287483BF13D764F4005C11EF /* MobileCoreServices.framework */; };
 		287483C213D764F9005C11EF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 287483C113D764F9005C11EF /* CFNetwork.framework */; };
@@ -604,6 +606,8 @@
 		281B1D0115CDDD4F0015ECBB /* 53-house@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "53-house@2x.png"; sourceTree = "<group>"; };
 		2822BDA91406E11F0077868C /* PlaceHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceHeaderView.xib; sourceTree = "<group>"; };
 		2822BDAB1406EE710077868C /* PlaceFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceFooterView.xib; sourceTree = "<group>"; };
+		2827C93F15F43D1F00BE755D /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
+		2827C94015F43D1F00BE755D /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
 		2827EF6015783F7600EB529A /* CrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashReporter.h; sourceTree = "<group>"; };
 		2827EF6115783F7600EB529A /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
 		2827EF6215783F7600EB529A /* CrittercismJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismJSONKit.h; sourceTree = "<group>"; };
@@ -672,6 +676,7 @@
 		28417FBE148CA9AB00CA6D4D /* ActiveGovernmentPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActiveGovernmentPick@2x.png"; sourceTree = "<group>"; };
 		28417FBF148CA9AC00CA6D4D /* ActiveShoppingPick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ActiveShoppingPick.png; sourceTree = "<group>"; };
 		28417FC0148CA9AD00CA6D4D /* ActiveShoppingPick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ActiveShoppingPick@2x.png"; sourceTree = "<group>"; };
+		28495F8615F2C9C70092A97B /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		284A352F1402C48C009C8C28 /* PerspectivesMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerspectivesMapViewController.h; sourceTree = "<group>"; };
 		284A35301402C48C009C8C28 /* PerspectivesMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerspectivesMapViewController.m; sourceTree = "<group>"; };
 		284A35311402C48C009C8C28 /* PerspectivesMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PerspectivesMapViewController.xib; sourceTree = "<group>"; };
@@ -784,7 +789,6 @@
 		2874839F13D695AF005C11EF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		287483A313D6980A005C11EF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		287483B313D75931005C11EF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		287483B813D7596B005C11EF /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = usr/lib/libxml2.2.7.3.dylib; sourceTree = SDKROOT; };
 		287483BA13D759AD005C11EF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		287483BC13D762FA005C11EF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		287483BD13D762FA005C11EF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -1190,6 +1194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28495F8715F2C9C70092A97B /* libxml2.2.dylib in Frameworks */,
 				2867828B15F183F9004F70EB /* CoreText.framework in Frameworks */,
 				28B4258B15D4D4EB0025957A /* libRestKit.a in Frameworks */,
 				281B182B15C748950015ECBB /* Accounts.framework in Frameworks */,
@@ -1203,7 +1208,6 @@
 				28B619231421723A00B0A7E5 /* libz.1.1.3.dylib in Frameworks */,
 				28BA237113F0925900463234 /* MessageUI.framework in Frameworks */,
 				28F4779F13D89060003477CD /* MapKit.framework in Frameworks */,
-				287483B913D7596B005C11EF /* libxml2.2.7.3.dylib in Frameworks */,
 				2895004313D64559009E1BD7 /* CoreGraphics.framework in Frameworks */,
 				287483A013D695AF005C11EF /* QuartzCore.framework in Frameworks */,
 				2874839D13D6959C005C11EF /* CoreLocation.framework in Frameworks */,
@@ -1563,6 +1567,7 @@
 		2895003D13D64559009E1BD7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				28495F8615F2C9C70092A97B /* libxml2.2.dylib */,
 				2867828A15F183F9004F70EB /* CoreText.framework */,
 				281B182A15C748950015ECBB /* Accounts.framework */,
 				284D15C915C73BE400698777 /* Twitter.framework */,
@@ -1576,7 +1581,6 @@
 				287483C113D764F9005C11EF /* CFNetwork.framework */,
 				287483BF13D764F4005C11EF /* MobileCoreServices.framework */,
 				287483BA13D759AD005C11EF /* CFNetwork.framework */,
-				287483B813D7596B005C11EF /* libxml2.2.7.3.dylib */,
 				287483B313D75931005C11EF /* CoreGraphics.framework */,
 				2874839F13D695AF005C11EF /* QuartzCore.framework */,
 				2874839C13D6959C005C11EF /* CoreLocation.framework */,
@@ -1693,6 +1697,8 @@
 				287145CA13F4789B0047BDB5 /* LocationManagerManager.m */,
 				28B425E915DB2E9F0025957A /* YIPopupTextView.h */,
 				28B425EA15DB2E9F0025957A /* YIPopupTextView.m */,
+				2827C93F15F43D1F00BE755D /* CustomBadge.h */,
+				2827C94015F43D1F00BE755D /* CustomBadge.m */,
 				28EB265D156EBA07006568E7 /* MTPopupWindow.h */,
 				28EB265E156EBA07006568E7 /* MTPopupWindow.m */,
 				2867828615F180CA004F70EB /* TTTAttributedLabel.h */,
@@ -2819,6 +2825,7 @@
 				28B9E27215E557BB00E13F0B /* NPSPopupWindow.m in Sources */,
 				28B9E27C15E55AE300E13F0B /* AFPickerView.m in Sources */,
 				2867828815F180CA004F70EB /* TTTAttributedLabel.m in Sources */,
+				2827C94115F43D1F00BE755D /* CustomBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2836,6 +2843,7 @@
 				28B425FF15DC582B0025957A /* CreateSuggestionViewController.m in Sources */,
 				28B4269D15DF02980025957A /* SuggestionViewController.m in Sources */,
 				2867828915F180CA004F70EB /* TTTAttributedLabel.m in Sources */,
+				2827C94215F43D1F00BE755D /* CustomBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

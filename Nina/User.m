@@ -18,7 +18,7 @@
 @synthesize followingCount, followerCount, perspectives;
 @synthesize following, follows_you, lat, lng;
 @synthesize email, url; 
-@synthesize auths, location, blocked, timestamp;
+@synthesize auths, location, blocked, timestamp, notificationCount;
 
 - (id) init
 {
@@ -145,6 +145,7 @@
      @"following", @"following",
      @"follows_you", @"follows_you",
      @"blocked", @"blocked",
+     @"notification_count", @"notificationCount",
      nil];
     
     //userMapping.primaryKeyAttribute = @"username";
@@ -192,6 +193,7 @@
     [fullname release];
     [followerCount release];
     [highlightedCount release];
+    [notificationCount release];
     [perspectives release];
     [lat release];
     [lng release];
