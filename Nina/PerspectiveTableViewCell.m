@@ -50,7 +50,7 @@
     }
     
     if ( perspective.likers && [perspective.likers count] > 0 ) {
-        heightCalc += 24;
+        heightCalc += 24 + 3;
     }
     
     if (perspective.photos && perspective.photos.count > 0){
@@ -58,7 +58,7 @@
     }
     
     if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
-        heightCalc += 38;
+        heightCalc += 38 + 3;
     } 
     
     return MAX(heightCalc, 65); //clear the highlight button if nothign else
@@ -93,11 +93,11 @@
     }
     
     if ( perspective.likers && [perspective.likers count] > 0 ) {
-        heightCalc += 24;
+        heightCalc += 24+3;
     }
     
     if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
-        heightCalc += 38;
+        heightCalc += 38 + 3;
     }
     
     
@@ -261,8 +261,8 @@
     if ( [perspective.likers count] > 0){
         [cell.likeFooter setHidden:false];
         [cell.likersLabel setText:perspective.likersText];
-        [cell.likeFooter setFrame:CGRectMake(cell.likeFooter.frame.origin.x, verticalCursor, cell.likeFooter.frame.size.width , cell.likeFooter.frame.size.height)];
-        verticalCursor += cell.likeFooter.frame.size.height;
+        [cell.likeFooter setFrame:CGRectMake(cell.likeFooter.frame.origin.x, verticalCursor+3, cell.likeFooter.frame.size.width , cell.likeFooter.frame.size.height)];
+        verticalCursor += cell.likeFooter.frame.size.height+3;
     } else {
         [cell.likeFooter setHidden:true];
     }
@@ -291,7 +291,7 @@
         }
     }
     
-    [cell.socialFooter setFrame:CGRectMake(cell.socialFooter.frame.origin.x, verticalCursor, cell.socialFooter.frame.size.width, cell.socialFooter.frame.size.height)];
+    [cell.socialFooter setFrame:CGRectMake(cell.socialFooter.frame.origin.x, verticalCursor +3, cell.socialFooter.frame.size.width, cell.socialFooter.frame.size.height)];
     //verticalCursor += cell.socialFooter.frame.size.height;
     
     [StyleHelper colourTextLabel:cell.createdAtLabel];
