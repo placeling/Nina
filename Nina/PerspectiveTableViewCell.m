@@ -475,7 +475,7 @@
         [[RKClient sharedClient] post:urlText params:nil delegate:self.requestDelegate]; 
         self.perspective.starred = false;
         [self.loveButton setImage:[UIImage imageNamed:@"staticLikeButton.png"] forState:UIControlStateNormal];
-    } else {            
+    } else if (! self.perspective.mine ){
         [self.perspective star];
         NSString *urlText = [NSString stringWithFormat:@"/v1/perspectives/%@/star", self.perspective.perspectiveId];
         [[RKClient sharedClient] post:urlText usingBlock:^(RKObjectLoader* loader) {
