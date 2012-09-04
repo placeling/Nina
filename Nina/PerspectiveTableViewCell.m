@@ -58,7 +58,7 @@
     }
     
     if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
-        heightCalc += 38 + 3;
+        heightCalc += 50 + 3;
     } 
     
     return MAX(heightCalc, 65); //clear the highlight button if nothign else
@@ -97,7 +97,7 @@
     }
     
     if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
-        heightCalc += 38 + 3;
+        heightCalc += 50 + 3;
     }
     
     
@@ -116,6 +116,10 @@
     cell.likeTapGesture =[[[UITapGestureRecognizer alloc] initWithTarget:cell action:@selector(showLikers)] autorelease];
     cell.likeFooter.userInteractionEnabled = true;
     [cell.likeFooter addGestureRecognizer:cell.likeTapGesture];
+    
+    cell.socialFooter.backgroundColor= [UIColor colorWithPatternImage:[UIImage imageNamed:@"FooterContainer2.png"]];
+    
+    cell.showCommentsButton.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15];
     
     if ([perspective.commentCount intValue]> 0){
         [cell.showCommentsButton setTitle:[perspective.commentCount stringValue] forState:UIControlStateNormal];
@@ -285,9 +289,9 @@
         [cell.highlightButton setHidden:true];
         
         if(perspective.starred){
-            [cell.loveButton setImage:[UIImage imageNamed:@"staticLikeButtonOn.png"] forState:UIControlStateNormal];
+            [cell.loveButton setImage:[UIImage imageNamed:@"LikedFooterButton.png"] forState:UIControlStateNormal];
         } else {
-            [cell.loveButton setImage:[UIImage imageNamed:@"staticLikeButton.png"] forState:UIControlStateNormal];
+            [cell.loveButton setImage:[UIImage imageNamed:@"LikeButton_Static.png"] forState:UIControlStateNormal];
         }
     }
     
@@ -474,7 +478,7 @@
         
         [[RKClient sharedClient] post:urlText params:nil delegate:self.requestDelegate]; 
         self.perspective.starred = false;
-        [self.loveButton setImage:[UIImage imageNamed:@"staticLikeButton.png"] forState:UIControlStateNormal];
+        [self.loveButton setImage:[UIImage imageNamed:@"LikeButton_Static.png"] forState:UIControlStateNormal];
     } else if (! self.perspective.mine ){
         [self.perspective star];
         NSString *urlText = [NSString stringWithFormat:@"/v1/perspectives/%@/star", self.perspective.perspectiveId];
@@ -482,7 +486,7 @@
             loader.delegate = self.requestDelegate;
             loader.userData = [NSNumber numberWithInt:5]; //use as a tag
         }];
-        [self.loveButton setImage:[UIImage imageNamed:@"staticLikeButtonOn.png"] forState:UIControlStateNormal];
+        [self.loveButton setImage:[UIImage imageNamed:@"LikedFooterButton.png"] forState:UIControlStateNormal];
     }
 }
 
