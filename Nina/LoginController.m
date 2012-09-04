@@ -475,13 +475,6 @@
 	HUD = nil;
 }
 
-- (void)viewDidUnload
-{
-    //[delegate release];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
 
 -(void) dealloc{    
     [NinaHelper clearActiveRequests:110];
