@@ -468,7 +468,6 @@ typedef enum {
     [self.tableView setSeparatorColor:[UIColor clearColor]];
     
     self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_script.png"]] autorelease];
-    self.navigationItem.title = @"Placeling";
         
     if (myPerspective && myPerspective.mine && myPerspective.modified){
         myPerspective.modified = false;
