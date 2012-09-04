@@ -730,11 +730,12 @@ typedef enum {
     [self.mapButtonView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"profilePattern.png@2x"]];
 }
 
--(IBAction)nearbySearch{    
-    NearbySuggestedMapController *nearbySuggestedMapController = [[NearbySuggestedMapController alloc] init];    
+-(IBAction)nearbySearch{
+    NearbySuggestedMapController *nearbySuggestedMapController = [[NearbySuggestedMapController alloc] init];
 
     nearbySuggestedMapController.origin = self.place.location.coordinate;
     nearbySuggestedMapController.initialIndex = 2;
+    nearbySuggestedMapController.place_id = self.place.pid;
     nearbySuggestedMapController.navTitle = [NSString stringWithFormat:@"Near %@",self.place.name];
     nearbySuggestedMapController.title = [NSString stringWithFormat:@"Near %@",self.place.name];
     
