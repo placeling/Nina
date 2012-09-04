@@ -23,6 +23,11 @@
 
 +(void) styleNavigationBar:(UINavigationBar*)navbar{
     navbar.tintColor = [self getTintColour];
+
+    navbar.backgroundColor = [self getTintColour];
+    UIImage *image = [UIImage imageNamed: @"TopBar.png"];
+    //[image drawInRect:CGRectMake(0, 0, navbar.frame.size.width, navbar.frame.size.height)];
+    [navbar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
 }
 
 +(void) styleSearchBar:(UISearchBar*)searchBar{
@@ -156,7 +161,7 @@
 }
 
 +(UIColor*) getTintColour{
-    return [UIColor colorWithRed:0/255.0 green:130/255.0 blue:121/255.0 alpha:1.0];
+    return [UIColor colorWithRed:0/255.0 green:151/255.0 blue:150/255.0 alpha:1.0];
 }
 
 +(UIColor*) getPanelColour{

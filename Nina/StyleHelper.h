@@ -12,6 +12,7 @@
 @interface StyleHelper : NSObject
 
 +(void) styleNavigationBar:(UINavigationBar*)navbar;
+
 +(void) styleBackgroundView:(UIView*)view;
 +(void) styleSearchBar:(UISearchBar*)searchBar;
 +(void) styleToolBar:(UIToolbar *)toolBar;
