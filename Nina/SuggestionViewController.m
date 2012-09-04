@@ -52,8 +52,6 @@
     [HUD retain];
     
     dataLoaded = false;
-    
-    [StyleHelper styleHomePageLabel:self.alreadyOnLabel];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
