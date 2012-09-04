@@ -30,6 +30,7 @@
     
     UILabel *alreadyOnLabel;
     UIButton *editButton;
+    UIView *usernameView;
 }
 
 @property(nonatomic, retain) Suggestion *suggestion;
@@ -43,6 +44,8 @@
 
 @property(nonatomic, retain) IBOutlet UILabel *alreadyOnLabel;
 @property(nonatomic, retain) IBOutlet UIButton *editButton;
+
+@property(nonatomic, retain) IBOutlet UIView *usernameView;
 
 -(IBAction)placemark:(id)sender;
 -(IBAction)placeAction:(id)sender;

@@ -11,15 +11,17 @@
 #import "Place.h"
 #import "PlacePageViewController.h"
 #import "UIImageView+WebCache.h"
+#import "MemberProfileViewController.h"
 
 @interface SuggestionViewController ()
 -(void)contentLoad;
+-(void)showSuggester;
 
 @end
 
 @implementation SuggestionViewController
 
-@synthesize suggestion, suggestionId, imageView, messageView, placemark, senderLabel, placeButton, alreadyOnLabel, editButton;
+@synthesize suggestion, suggestionId, imageView, messageView, placemark, senderLabel, placeButton, alreadyOnLabel, editButton, usernameView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,6 +47,15 @@
         loader.delegate = self;
     }];
     
+    UITapGestureRecognizer *tapGesture =[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showSuggester)] autorelease];
+    
+    UITapGestureRecognizer *tapGesture2 =[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showSuggester)] autorelease];
+    
+    self.imageView.userInteractionEnabled = true;
+    self.usernameView.userInteractionEnabled = true;
+    
+    [self.usernameView addGestureRecognizer:tapGesture];
+    [self.imageView addGestureRecognizer:tapGesture2];
     
     HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     // Set determinate mode
@@ -61,6 +72,15 @@
     
     [StyleHelper styleBackgroundView:self.view];
     [StyleHelper styleUserProfilePic:self.imageView];
+}
+
+-(void)showSuggester{
+    if (self.suggestion){
+        MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];
+        memberProfileViewController.user = self.suggestion.sender;
+        [self.navigationController pushViewController:memberProfileViewController animated:true];
+        [memberProfileViewController release];
+    }
 }
 
 #pragma mark - RKObjectLoaderDelegate methods
@@ -154,7 +174,8 @@
     //[self.navigationController popViewControllerAnimated:true];
 }
 -(void)updatePerspective:(Perspective *)perspective{
-    //[self.navigationController popViewControllerAnimated:true];
+    self.suggestion.place.bookmarked = true;
+    [self contentLoad];
 }
 
 
@@ -176,6 +197,8 @@
     [placeButton release];
     [alreadyOnLabel release];
     [editButton release];
+    
+    [usernameView release];
     
     [super dealloc];
 }
