@@ -18,7 +18,8 @@
 @implementation StyleHelper
 
 +(void) styleBackgroundView:(UIView*)view{
-    view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"canvas.png"] ];
+    view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CanvasBG.png"] ];
+    //view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"DarkerCanvas.png"] ];
 }
 
 +(void) styleNavigationBar:(UINavigationBar*)navbar{
@@ -36,12 +37,17 @@
 
 +(void) styleToolBar:(UIToolbar *)toolBar{
     toolBar.tintColor = [self getTintColour];
+    toolBar.backgroundColor = [self getTintColour];
+    UIImage *image = [UIImage imageNamed: @"TopBar.png"];
+    //[image drawInRect:CGRectMake(0, 0, navbar.frame.size.width, navbar.frame.size.height)];
+    [toolBar setBackgroundImage:image forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
 }
+     
 
 +(void) styleInfoView:(UIView *)view{
-    view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"infoBackground.png"]];    
-    view.opaque =NO;
-    view.layer.opaque = NO;
+    view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"InfoViewBG.png"]];    
+    //view.opaque =NO;
+    //view.layer.opaque = NO;
 }
 
 +(void) styleBookmarkButton:(UIButton*)button{
@@ -173,7 +179,7 @@
 }
 
 +(UIColor*) highlightTextColor{
-    return [UIColor colorWithRed:202/255.0 green:51/255.0 blue:16/255.0 alpha:1.0];
+    return [UIColor colorWithRed:27/255.0 green:134/255.0 blue:133/255.0 alpha:1.0];
 }
 
 @end

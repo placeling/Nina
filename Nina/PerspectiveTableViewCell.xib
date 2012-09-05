@@ -51,10 +51,10 @@
 							<object class="IBUIImageView" id="446988867">
 								<reference key="NSNextResponder" ref="1000671421"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{9, 7}, {43, 43}}</string>
+								<string key="NSFrame">{{7, 11}, {52, 52}}</string>
 								<reference key="NSSuperview" ref="1000671421"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="363764247"/>
+								<reference key="NSNextKeyView" ref="890612785"/>
 								<object class="NSColor" key="IBUIBackgroundColor" id="775410949">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
@@ -64,7 +64,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">profile.png</string>
+									<string key="NSResourceName">DefaultUserPhoto.png</string>
 								</object>
 							</object>
 							<object class="IBUILabel" id="363764247">
@@ -182,8 +182,12 @@
 								<string key="IBUINormalTitle">Show More</string>
 								<reference key="IBUIHighlightedTitleColor" ref="775410949"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+									<int key="NSColorSpace">5</int>
+									<bytes key="NSCMYK">MC43NjMyNjIzMzE1IDAuMDM3ODI3MTM0MTMgMC4yOTgyODMzMzg1IDAuMTM5NzQyOTQwNwA</bytes>
+									<object class="NSColorSpace" key="NSCustomColorSpace" id="689491605">
+										<int key="NSID">3</int>
+									</object>
+									<characters key="NSComponents">0.7632623488 0.03782713413 0.2982833385 0.1397429435 1</characters>
 								</object>
 								<object class="NSColor" key="IBUINormalTitleShadowColor" id="988884755">
 									<int key="NSColorSpace">3</int>
@@ -202,7 +206,7 @@
 							<object class="IBUIButton" id="62859896">
 								<reference key="NSNextResponder" ref="1000671421"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{13, 98}, {38, 38}}</string>
+								<string key="NSFrame">{{14, 116}, {38, 38}}</string>
 								<reference key="NSSuperview" ref="1000671421"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="420384130"/>
@@ -266,9 +270,7 @@
 										<object class="NSColor" key="IBUINormalTitleShadowColor">
 											<int key="NSColorSpace">5</int>
 											<bytes key="NSCMYK">MC4xNDg3Mjk2ODIgMC4xMTczNTcxMzQ4IDAuMTcwNjU2OTE5NSAwLjAzNzY0NDkwNzgzAA</bytes>
-											<object class="NSColorSpace" key="NSCustomColorSpace">
-												<int key="NSID">3</int>
-											</object>
+											<reference key="NSCustomColorSpace" ref="689491605"/>
 											<characters key="NSComponents">0.148729682 0.1173571348 0.1706569195 0.03764490927 1</characters>
 										</object>
 										<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage">
@@ -368,7 +370,7 @@
 							<object class="IBUIButton" id="641272768">
 								<reference key="NSNextResponder" ref="1000671421"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{13, 53}, {38, 37}}</string>
+								<string key="NSFrame">{{14, 71}, {38, 37}}</string>
 								<reference key="NSSuperview" ref="1000671421"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="62859896"/>
@@ -398,7 +400,7 @@
 									<object class="IBUIImageView" id="700467835">
 										<reference key="NSNextResponder" ref="1010715476"/>
 										<int key="NSvFlags">274</int>
-										<string key="NSFrameSize">{24, 24}</string>
+										<string key="NSFrame">{{0, -2}, {24, 24}}</string>
 										<reference key="NSSuperview" ref="1010715476"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="426194344"/>
@@ -407,7 +409,7 @@
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<object class="NSCustomResource" key="IBUIImage">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">liked.png</string>
+											<string key="NSResourceName">LikedGlyph.png</string>
 										</object>
 									</object>
 									<object class="IBUILabel" id="426194344">
@@ -445,6 +447,20 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="700467835"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+							</object>
+							<object class="IBUIView" id="890612785">
+								<reference key="NSNextResponder" ref="1000671421"/>
+								<int key="NSvFlags">-2147483356</int>
+								<string key="NSFrame">{{65, 31}, {232, 1}}</string>
+								<reference key="NSSuperview" ref="1000671421"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="363764247"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<object class="NSColor" key="IBUIBackgroundColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC43NjA3ODQzMTM3IDAuNzQxMTc2NDcwNiAwLjY4NjI3NDUwOTgAA</bytes>
+								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</object>
@@ -667,13 +683,14 @@
 							<reference ref="363764247"/>
 							<reference ref="97723967"/>
 							<reference ref="420384130"/>
-							<reference ref="859949109"/>
-							<reference ref="641272768"/>
 							<reference ref="344597112"/>
 							<reference ref="1010715476"/>
-							<reference ref="62859896"/>
 							<reference ref="465605241"/>
 							<reference ref="446988867"/>
+							<reference ref="641272768"/>
+							<reference ref="62859896"/>
+							<reference ref="890612785"/>
+							<reference ref="859949109"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -766,6 +783,11 @@
 						<reference key="object" ref="426194344"/>
 						<reference key="parent" ref="1010715476"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">65</int>
+						<reference key="object" ref="890612785"/>
+						<reference key="parent" ref="276132897"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -794,6 +816,7 @@
 					<string>6.IBPluginDependency</string>
 					<string>60.IBPluginDependency</string>
 					<string>61.IBPluginDependency</string>
+					<string>65.IBPluginDependency</string>
 					<string>7.IBPluginDependency</string>
 					<string>7.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
 				</object>
@@ -822,6 +845,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<real value="0.0"/>
 				</object>
 			</object>
@@ -837,7 +861,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">63</int>
+			<int key="maxID">66</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1060,26 +1084,26 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>CommentButton_Active.png</string>
 				<string>CommentButton_Static.png</string>
+				<string>DefaultUserPhoto.png</string>
 				<string>LikeButton_Active.png</string>
 				<string>LikeButton_Static.png</string>
+				<string>LikedGlyph.png</string>
 				<string>SelectedButton.png</string>
 				<string>ShareButton_Active.png</string>
 				<string>ShareButton_Static.png</string>
-				<string>liked.png</string>
-				<string>profile.png</string>
 				<string>writer.png</string>
 			</object>
 			<object class="NSArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{75, 36}</string>
 				<string>{75, 34}</string>
+				<string>{96, 96}</string>
 				<string>{76, 35}</string>
 				<string>{76, 34}</string>
+				<string>{21, 18}</string>
 				<string>{53, 53}</string>
 				<string>{75, 34}</string>
 				<string>{75, 34}</string>
-				<string>{34, 34}</string>
-				<string>{89, 89}</string>
 				<string>{50, 50}</string>
 			</object>
 		</object>

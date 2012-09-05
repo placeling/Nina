@@ -70,7 +70,7 @@
         self.HUD.labelText = @"Retrieving Your Profile...";
     } else {
         self.textView.text = self.user.userDescription;
-        [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"profile.png"]];
+        [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultUserPhoto.png"]];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self

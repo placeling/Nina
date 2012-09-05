@@ -797,7 +797,7 @@ typedef enum {
     nearbyButton.frame = rect;
     [nearbyButton setTitle:@"Nearby" forState:UIControlStateNormal];
     [StyleHelper styleTagButton:nearbyButton];
-    nearbyButton.layer.backgroundColor = [UIColor purpleColor].CGColor;
+    nearbyButton.layer.backgroundColor = [UIColor colorWithRed:101/255.0 green:79/255.0 blue:42/255.0 alpha:1.0].CGColor;
     
     [nearbyButton addTarget:self action:@selector(nearbySearch) forControlEvents:UIControlEventTouchUpInside];
     

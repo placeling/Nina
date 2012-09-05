@@ -51,13 +51,18 @@
     [cell.titleLabel setText:commentText afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
         NSRange usernameRange = NSMakeRange(0, [comment.user.username length]);
         
-        UIFont *boldSystemFont = [StyleHelper textFont];
-        CTFontRef font = CTFontCreateWithName((CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+        UIFont *systemFont = [StyleHelper textFont];
+        UIFont *boldSystemFont = [UIFont fontWithName:@"Helvetica-Bold" size:systemFont.pointSize];
+        
+        CTFontRef font = CTFontCreateWithName((CFStringRef)systemFont.fontName, boldSystemFont.pointSize, NULL);
+        
+        CTFontRef boldFont = CTFontCreateWithName((CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
         if (font) {
             [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)font range:NSMakeRange(0,[commentText length])];
             [mutableAttributedString addAttribute:(NSString*)kCTForegroundColorAttributeName value:(id)[[StyleHelper basicTextColor] CGColor] range:NSMakeRange(0,[commentText length])];
             
             [mutableAttributedString addAttribute:(NSString*)kCTForegroundColorAttributeName value:(id)[[StyleHelper highlightTextColor] CGColor] range:usernameRange];
+            [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)boldFont range:usernameRange];
             CFRelease(font);
         }
         
@@ -89,7 +94,7 @@
     if ( comment.user.profilePic.thumbUrl ){
         // Here we use the new provided setImageWithURL: method to load the web image
         [cell.userImage setImageWithURL:[NSURL URLWithString:comment.user.profilePic.thumbUrl ]
-                       placeholderImage:[UIImage imageNamed:@"profile.png"]];
+                       placeholderImage:[UIImage imageNamed:@"DefaultUserPhoto.png"]];
     }
         
     cell.timeAgo.frame = CGRectMake(cell.timeAgo.frame.origin.x, verticalCursor, cell.timeAgo.frame.size.width, cell.timeAgo.frame.size.height);    

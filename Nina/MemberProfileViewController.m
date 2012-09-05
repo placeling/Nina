@@ -83,7 +83,7 @@
 }
 
 -(void) blankLoad{
-    UIImage *profileImage = [UIImage imageNamed:@"profile.png"];
+    UIImage *profileImage = [UIImage imageNamed:@"DefaultUserPhoto.png"];
     self.profileImageView.image = profileImage;
     
     if ( !self.user.username && !self.username ) {
@@ -176,7 +176,7 @@
         
     // Here we use the new provided setImageWithURL: method to load the web image
     
-    [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"profile.png"]];
+    [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultUserPhoto.png"]];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{

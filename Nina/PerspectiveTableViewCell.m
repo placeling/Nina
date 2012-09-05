@@ -31,7 +31,7 @@
 
 
 +(CGFloat) cellHeightUnboundedForPerspective:(Perspective*)perspective{
-    CGFloat heightCalc = 32; //covers title until notes start
+    CGFloat heightCalc = 36; //covers title until notes start
     
     CGSize textAreaSize;
     textAreaSize.height = hardMaxCellHeight;
@@ -40,7 +40,7 @@
     CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
     if ( perspective.notes &&  [perspective.notes length] > 0 ){
-        heightCalc += MAX(textSize.height, 10);
+        heightCalc += MAX(textSize.height+3, 10);
     } else {
         heightCalc += 10;
     }
@@ -61,12 +61,12 @@
         heightCalc += 50 + 3;
     } 
     
-    return MAX(heightCalc, 65); //clear the highlight button if nothign else
+    return MAX(heightCalc, 68); //clear the highlight button if nothign else
 }
 
 
 +(CGFloat) cellHeightForPerspective:(Perspective*)perspective{    
-    CGFloat heightCalc = 32; 
+    CGFloat heightCalc = 36;
 
     CGSize textAreaSize;
     textAreaSize.height = 140;
@@ -82,7 +82,7 @@
     
     CGSize maxTextSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:maxAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    heightCalc += MAX(textSize.height, 10);
+    heightCalc += MAX(textSize.height+3, 10);
     
     if (perspective.url){ // || maxTextSize.height > textSize.height ){
         heightCalc += 17; //I dont' actually have a good reason for commetnign this out
@@ -101,12 +101,12 @@
     }
     
     
-    return MAX(heightCalc, 65); //clear the highlight button if nothign else
+    return MAX(heightCalc, 68); //clear the highlight button if nothign else
 }
 
 
 +(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective userSource:(BOOL)userSource{
-    CGFloat verticalCursor = cell.memoText.frame.origin.y;
+    CGFloat verticalCursor = cell.titleLabel.frame.origin.y + cell.titleLabel.frame.size.height +3;
     cell.perspective = perspective;
     cell.memoText.text = perspective.notes;
     
@@ -163,9 +163,9 @@
             textSize.height = MAX(textSize.height, 10);
         } 
         
-        [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, memoFrame.origin.y, textSize.width, textSize.height)];
+        [cell.memoText setFrame:CGRectMake(memoFrame.origin.x, verticalCursor, textSize.width, textSize.height)];
         
-        verticalCursor += cell.memoText.frame.size.height;
+        verticalCursor += cell.memoText.frame.size.height + 3;
         hasContent = true;
     }else{
         cell.memoText.text = @""; //get rid of hipster lorem
@@ -200,13 +200,13 @@
         //profile or my perspective view, don't show images
         cell.userImage.hidden = true;
         [cell.highlightButton setFrame:CGRectMake(cell.highlightButton.frame.origin.x, 16, cell.highlightButton.frame.size.width, cell.highlightButton.frame.size.height)];
-        [cell.modifyNotesButton setFrame:CGRectMake(cell.modifyNotesButton.frame.origin.x, 60, cell.modifyNotesButton.frame.size.width, cell.modifyNotesButton.frame.size.height)];
+        [cell.modifyNotesButton setFrame:CGRectMake(cell.modifyNotesButton.frame.origin.x, 58, cell.modifyNotesButton.frame.size.width, cell.modifyNotesButton.frame.size.height)];
     } else { 
         cell.userImage.hidden = false; 
-        [cell.highlightButton setFrame:CGRectMake(cell.highlightButton.frame.origin.x, 56, cell.highlightButton.frame.size.width, cell.highlightButton.frame.size.height)];
+        [cell.highlightButton setFrame:CGRectMake(cell.highlightButton.frame.origin.x, 64, cell.highlightButton.frame.size.width, cell.highlightButton.frame.size.height)];
     }
     
-    [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"profile.png"]];
+    [cell.userImage  setImageWithURL:[NSURL URLWithString:perspective.user.profilePic.thumbUrl] placeholderImage:[UIImage imageNamed:@"DefaultUserPhoto.png"]];
     
     [cell.userImage.layer setBorderColor: [[UIColor whiteColor] CGColor]];
     [cell.userImage.layer setBorderWidth: 2.0];
@@ -295,7 +295,7 @@
         }
     }
     
-    [cell.socialFooter setFrame:CGRectMake(cell.socialFooter.frame.origin.x, verticalCursor +3, cell.socialFooter.frame.size.width, cell.socialFooter.frame.size.height)];
+    [cell.socialFooter setFrame:CGRectMake(cell.socialFooter.frame.origin.x, verticalCursor +1, cell.socialFooter.frame.size.width, cell.socialFooter.frame.size.height)];
     //verticalCursor += cell.socialFooter.frame.size.height;
     
     [StyleHelper colourTextLabel:cell.createdAtLabel];

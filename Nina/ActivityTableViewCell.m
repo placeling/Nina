@@ -105,7 +105,7 @@
 
     // Here we use the new provided setImageWithURL: method to load the web image
     [cell.userImage setImageWithURL:[NSURL URLWithString:activity.thumb1]
-                   placeholderImage:[UIImage imageNamed:@"profile.png"]];
+                   placeholderImage:[UIImage imageNamed:@"DefaultUserPhoto.png"]];
 
     
     return [self setupCell:cell];
@@ -118,7 +118,7 @@
     
     // Here we use the new provided setImageWithURL: method to load the web image
     [cell.userImage setImageWithURL:[NSURL URLWithString:notification.actor.profilePic.thumbUrl]
-                   placeholderImage:[UIImage imageNamed:@"profile.png"]];
+                   placeholderImage:[UIImage imageNamed:@"DefaultUserPhoto.png"]];
 
     return [self setupCell:cell];
 }

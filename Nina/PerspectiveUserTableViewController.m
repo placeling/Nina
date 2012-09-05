@@ -212,7 +212,7 @@
         pCell.imageView.contentMode = UIViewContentModeScaleToFill;
         // Here we use the new provided setImageWithURL: method to load the web image
         [pCell.imageView setImageWithURL:[NSURL URLWithString:user.profilePic.thumbUrl]
-                       placeholderImage:[UIImage imageNamed:@"profile.png"]];
+                       placeholderImage:[UIImage imageNamed:@"DefaultUserPhoto.png"]];
         
         [pCell.imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
         [pCell.imageView.layer setBorderWidth: 2.0];
