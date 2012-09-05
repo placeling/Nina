@@ -1145,7 +1145,12 @@ typedef enum {
         //loading case
         heightval = 44;
     }else if ( self.perspectiveType == home && perspective.mine){
-        heightval = MAX(100, [PerspectiveTableViewCell cellHeightForPerspective:perspective]);
+        NSMutableSet *expandedIndexPaths = [expandedCells objectAtIndex:self.segmentedControl.selectedSegmentIndex];
+        if( [expandedIndexPaths member:indexPath]){
+            heightval =  MAX(100, [PerspectiveTableViewCell cellHeightUnboundedForPerspective:perspective]);
+        } else {
+            heightval =  MAX(100, [PerspectiveTableViewCell cellHeightForPerspective:perspective]);
+        }
     } else {
         //a visible perspective row PerspectiveTableViewCell 
         NSMutableSet *expandedIndexPaths = [expandedCells objectAtIndex:self.segmentedControl.selectedSegmentIndex];
