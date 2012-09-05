@@ -450,6 +450,8 @@
 		28F92EED15F6EC5E006A1054 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F92EEC15F6EC5E006A1054 /* CoreMedia.framework */; };
 		28F92EEF15F6EC6B006A1054 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F92EEE15F6EC6B006A1054 /* CoreVideo.framework */; };
 		28F92F0115F7D71D006A1054 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28B4257F15D4D4CB0025957A /* libRestKit.a */; };
+		28F92F0415F7EAF6006A1054 /* profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F92F0215F7EAF6006A1054 /* profile.png */; };
+		28F92F0515F7EAF6006A1054 /* profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F92F0315F7EAF6006A1054 /* profile@2x.png */; };
 		6C1DBA3F1461F93200A725D7 /* segmentedBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBA3E1461F93200A725D7 /* segmentedBackground@2x.png */; };
 		6C1DBA421461F93A00A725D7 /* segmentedSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBA411461F93A00A725D7 /* segmentedSelected@2x.png */; };
 		6C4FADB014608CC400A03E3C /* SignupFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4FADAF14608CC400A03E3C /* SignupFooterView.xib */; };
@@ -1163,6 +1165,8 @@
 		28F92EEA15F6EC50006A1054 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		28F92EEC15F6EC5E006A1054 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		28F92EEE15F6EC6B006A1054 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		28F92F0215F7EAF6006A1054 /* profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile.png; sourceTree = "<group>"; };
+		28F92F0315F7EAF6006A1054 /* profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile@2x.png"; sourceTree = "<group>"; };
 		6C1DBA3E1461F93200A725D7 /* segmentedBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmentedBackground@2x.png"; sourceTree = "<group>"; };
 		6C1DBA411461F93A00A725D7 /* segmentedSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmentedSelected@2x.png"; sourceTree = "<group>"; };
 		6C4FADAF14608CC400A03E3C /* SignupFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupFooterView.xib; sourceTree = "<group>"; };
@@ -2030,6 +2034,8 @@
 		28B619481423177000B0A7E5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				28F92F0215F7EAF6006A1054 /* profile.png */,
+				28F92F0315F7EAF6006A1054 /* profile@2x.png */,
 				28C4E5E815F6C6D700168D03 /* LikedGlyph.png */,
 				28C4E5E915F6C6D700168D03 /* LikedGlyph@2x.png */,
 				28C4E5F015F6C95C00168D03 /* DefaultUserPhoto.png */,
@@ -2680,6 +2686,8 @@
 				28C4E5F315F6C95D00168D03 /* DefaultUserPhoto@2x.png in Resources */,
 				28C4E5F615F6CEDE00168D03 /* CanvasBG.png in Resources */,
 				28C4E5F715F6CEDE00168D03 /* CanvasBG@2x.png in Resources */,
+				28F92F0415F7EAF6006A1054 /* profile.png in Resources */,
+				28F92F0515F7EAF6006A1054 /* profile@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
