@@ -730,33 +730,39 @@ typedef enum {
 }
 
 -(IBAction)nearbySearch{
-    NearbySuggestedMapController *nearbySuggestedMapController = [[NearbySuggestedMapController alloc] init];
+    if (self.place){
+        NearbySuggestedMapController *nearbySuggestedMapController = [[NearbySuggestedMapController alloc] init];
 
-    nearbySuggestedMapController.origin = self.place.location.coordinate;
-    nearbySuggestedMapController.initialIndex = 2;
-    nearbySuggestedMapController.place_id = self.place.pid;
-    nearbySuggestedMapController.navTitle = [NSString stringWithFormat:@"Near %@",self.place.name];
-    nearbySuggestedMapController.title = [NSString stringWithFormat:@"Near %@",self.place.name];
-    
-    [self.navigationController pushViewController:nearbySuggestedMapController animated:TRUE];
-    [nearbySuggestedMapController release];
+        nearbySuggestedMapController.origin = self.place.location.coordinate;
+        nearbySuggestedMapController.initialIndex = 2;
+        
+        nearbySuggestedMapController.place_id = self.place.pid;
+
+        nearbySuggestedMapController.navTitle = [NSString stringWithFormat:@"Near %@",self.place.name];
+        nearbySuggestedMapController.title = [NSString stringWithFormat:@"Near %@",self.place.name];
+        
+        [self.navigationController pushViewController:nearbySuggestedMapController animated:TRUE];
+        [nearbySuggestedMapController release];
+    }
     
 }
 
 -(IBAction)tagSearch:(id)sender{
-    
-    UIButton *button = (UIButton*)sender;
-    NSString *searchString = button.titleLabel.text;
-    
-    NearbySuggestedMapController *suggestedPlaceController = [[NearbySuggestedMapController alloc] init];
-    
-    suggestedPlaceController.origin = self.place.location.coordinate;
-    suggestedPlaceController.searchTerm = searchString;
-    suggestedPlaceController.initialIndex=2;
-    
-    [self.navigationController pushViewController:suggestedPlaceController animated:TRUE];
-    
-    [suggestedPlaceController release];
+    if (self.place){
+        UIButton *button = (UIButton*)sender;
+        NSString *searchString = button.titleLabel.text;
+        
+        NearbySuggestedMapController *suggestedPlaceController = [[NearbySuggestedMapController alloc] init];
+        
+        suggestedPlaceController.origin = self.place.location.coordinate;
+        suggestedPlaceController.place_id = self.place.pid;
+        suggestedPlaceController.searchTerm = searchString;
+        suggestedPlaceController.initialIndex=2;
+        
+        [self.navigationController pushViewController:suggestedPlaceController animated:TRUE];
+        
+        [suggestedPlaceController release];
+    }
     
 }
 
