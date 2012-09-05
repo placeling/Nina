@@ -482,9 +482,9 @@
     } else if (! self.perspective.mine ){
         [self.perspective star];
         NSString *urlText = [NSString stringWithFormat:@"/v1/perspectives/%@/star", self.perspective.perspectiveId];
-        [[RKClient sharedClient] post:urlText usingBlock:^(RKObjectLoader* loader) {
-            loader.delegate = self.requestDelegate;
-            loader.userData = [NSNumber numberWithInt:5]; //use as a tag
+        [[RKClient sharedClient] post:urlText usingBlock:^(RKRequest *request) {
+            request.delegate = self.requestDelegate;
+            request.userData = [NSNumber numberWithInt:5]; //use as a tag
         }];
         [self.loveButton setImage:[UIImage imageNamed:@"LikedFooterButton.png"] forState:UIControlStateNormal];
     }
