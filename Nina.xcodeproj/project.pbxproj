@@ -304,7 +304,6 @@
 		28B4256C15D4C72B0025957A /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B4256915D4C72B0025957A /* HPGrowingTextView.m */; };
 		28B4256D15D4C72B0025957A /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B4256B15D4C72B0025957A /* HPTextViewInternal.m */; };
 		28B4257015D4C9420025957A /* PlacemarkComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B4256F15D4C9420025957A /* PlacemarkComment.m */; };
-		28B4258B15D4D4EB0025957A /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28B4257F15D4D4CB0025957A /* libRestKit.a */; };
 		28B425B615D6DF370025957A /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425B415D6DF370025957A /* CommentTableViewCell.m */; };
 		28B425B715D6DF370025957A /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B425B515D6DF370025957A /* CommentTableViewCell.xib */; };
 		28B425C315D8AD0F0025957A /* TWSignedRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B425C215D8AD0F0025957A /* TWSignedRequest.m */; };
@@ -450,6 +449,7 @@
 		28F92EEB15F6EC50006A1054 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F92EEA15F6EC50006A1054 /* AVFoundation.framework */; };
 		28F92EED15F6EC5E006A1054 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F92EEC15F6EC5E006A1054 /* CoreMedia.framework */; };
 		28F92EEF15F6EC6B006A1054 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F92EEE15F6EC6B006A1054 /* CoreVideo.framework */; };
+		28F92F0115F7D71D006A1054 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28B4257F15D4D4CB0025957A /* libRestKit.a */; };
 		6C1DBA3F1461F93200A725D7 /* segmentedBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBA3E1461F93200A725D7 /* segmentedBackground@2x.png */; };
 		6C1DBA421461F93A00A725D7 /* segmentedSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBA411461F93A00A725D7 /* segmentedSelected@2x.png */; };
 		6C4FADB014608CC400A03E3C /* SignupFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4FADAF14608CC400A03E3C /* SignupFooterView.xib */; };
@@ -1206,13 +1206,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28F92F0115F7D71D006A1054 /* libRestKit.a in Frameworks */,
 				28F92EEF15F6EC6B006A1054 /* CoreVideo.framework in Frameworks */,
 				28F92EED15F6EC5E006A1054 /* CoreMedia.framework in Frameworks */,
 				28F92EEB15F6EC50006A1054 /* AVFoundation.framework in Frameworks */,
 				28C4E5F915F6EB7A00168D03 /* Delight.framework in Frameworks */,
 				28495F8715F2C9C70092A97B /* libxml2.2.dylib in Frameworks */,
 				2867828B15F183F9004F70EB /* CoreText.framework in Frameworks */,
-				28B4258B15D4D4EB0025957A /* libRestKit.a in Frameworks */,
 				281B182B15C748950015ECBB /* Accounts.framework in Frameworks */,
 				284D15CA15C73BE400698777 /* Twitter.framework in Frameworks */,
 				2852B7B2156715AC00D9775E /* AssetsLibrary.framework in Frameworks */,
