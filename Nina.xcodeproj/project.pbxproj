@@ -397,6 +397,7 @@
 		28C4E5F315F6C95D00168D03 /* DefaultUserPhoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C4E5F115F6C95C00168D03 /* DefaultUserPhoto@2x.png */; };
 		28C4E5F615F6CEDE00168D03 /* CanvasBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C4E5F415F6CEDB00168D03 /* CanvasBG.png */; };
 		28C4E5F715F6CEDE00168D03 /* CanvasBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C4E5F515F6CEDD00168D03 /* CanvasBG@2x.png */; };
+		28C4E5F915F6EB7A00168D03 /* Delight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C4E5F815F6EB7700168D03 /* Delight.framework */; };
 		28C4F535144262C700A66F32 /* NSDictionary+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C4F534144262C700A66F32 /* NSDictionary+Utility.m */; };
 		28C7312215643B1700E27DCA /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C7312115643B1700E27DCA /* Appirater.m */; };
 		28CA792B1576BAD60031606E /* cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CA792A1576BAD60031606E /* cloud.png */; };
@@ -446,6 +447,9 @@
 		28F4779213D7D02C003477CD /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F4778A13D7D02C003477CD /* whiteArrow.png */; };
 		28F4779313D7D02C003477CD /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F4778B13D7D02C003477CD /* whiteArrow@2x.png */; };
 		28F4779F13D89060003477CD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F4779E13D89060003477CD /* MapKit.framework */; };
+		28F92EEB15F6EC50006A1054 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F92EEA15F6EC50006A1054 /* AVFoundation.framework */; };
+		28F92EED15F6EC5E006A1054 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F92EEC15F6EC5E006A1054 /* CoreMedia.framework */; };
+		28F92EEF15F6EC6B006A1054 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F92EEE15F6EC6B006A1054 /* CoreVideo.framework */; };
 		6C1DBA3F1461F93200A725D7 /* segmentedBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBA3E1461F93200A725D7 /* segmentedBackground@2x.png */; };
 		6C1DBA421461F93A00A725D7 /* segmentedSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBA411461F93A00A725D7 /* segmentedSelected@2x.png */; };
 		6C4FADB014608CC400A03E3C /* SignupFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4FADAF14608CC400A03E3C /* SignupFooterView.xib */; };
@@ -455,7 +459,6 @@
 		6CB5B136144CBF0000A278AC /* key@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB5B134144CBF0000A278AC /* key@2x.png */; };
 		6CB5B144144CC5D700A278AC /* AboutUsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5B142144CC5D700A278AC /* AboutUsController.m */; };
 		6CB5B145144CC5D700A278AC /* AboutUsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB5B143144CC5D700A278AC /* AboutUsController.xib */; };
-		6CB5B147144CCFB000A278AC /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB5B146144CCFB000A278AC /* background.png */; };
 		6CD8AA6B145F67C30018FCC3 /* MyMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD8AA6A145F67C30018FCC3 /* MyMarker@2x.png */; };
 		6CD8AA71145F752A0018FCC3 /* FriendMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD8AA70145F752A0018FCC3 /* FriendMarker@2x.png */; };
 		6CE4003D145B67BD00101082 /* cloud1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE40033145B67AF00101082 /* cloud1.png */; };
@@ -1096,6 +1099,7 @@
 		28C4E5F115F6C95C00168D03 /* DefaultUserPhoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DefaultUserPhoto@2x.png"; sourceTree = "<group>"; };
 		28C4E5F415F6CEDB00168D03 /* CanvasBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CanvasBG.png; sourceTree = "<group>"; };
 		28C4E5F515F6CEDD00168D03 /* CanvasBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CanvasBG@2x.png"; sourceTree = "<group>"; };
+		28C4E5F815F6EB7700168D03 /* Delight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Delight.framework; path = ios/Delight.framework; sourceTree = "<group>"; };
 		28C4F533144262C700A66F32 /* NSDictionary+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Utility.h"; sourceTree = "<group>"; };
 		28C4F534144262C700A66F32 /* NSDictionary+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Utility.m"; sourceTree = "<group>"; };
 		28C7312015643B1700E27DCA /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
@@ -1156,6 +1160,9 @@
 		28F4778A13D7D02C003477CD /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteArrow.png; path = ../whiteArrow.png; sourceTree = "<group>"; };
 		28F4778B13D7D02C003477CD /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whiteArrow@2x.png"; path = "../whiteArrow@2x.png"; sourceTree = "<group>"; };
 		28F4779E13D89060003477CD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		28F92EEA15F6EC50006A1054 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		28F92EEC15F6EC5E006A1054 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		28F92EEE15F6EC6B006A1054 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		6C1DBA3E1461F93200A725D7 /* segmentedBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmentedBackground@2x.png"; sourceTree = "<group>"; };
 		6C1DBA411461F93A00A725D7 /* segmentedSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmentedSelected@2x.png"; sourceTree = "<group>"; };
 		6C4FADAF14608CC400A03E3C /* SignupFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupFooterView.xib; sourceTree = "<group>"; };
@@ -1166,7 +1173,6 @@
 		6CB5B141144CC5D700A278AC /* AboutUsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsController.h; sourceTree = "<group>"; };
 		6CB5B142144CC5D700A278AC /* AboutUsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsController.m; sourceTree = "<group>"; };
 		6CB5B143144CC5D700A278AC /* AboutUsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutUsController.xib; sourceTree = "<group>"; };
-		6CB5B146144CCFB000A278AC /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		6CD8AA6A145F67C30018FCC3 /* MyMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyMarker@2x.png"; sourceTree = "<group>"; };
 		6CD8AA70145F752A0018FCC3 /* FriendMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FriendMarker@2x.png"; sourceTree = "<group>"; };
 		6CE40033145B67AF00101082 /* cloud1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud1.png; sourceTree = "<group>"; };
@@ -1200,6 +1206,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28F92EEF15F6EC6B006A1054 /* CoreVideo.framework in Frameworks */,
+				28F92EED15F6EC5E006A1054 /* CoreMedia.framework in Frameworks */,
+				28F92EEB15F6EC50006A1054 /* AVFoundation.framework in Frameworks */,
+				28C4E5F915F6EB7A00168D03 /* Delight.framework in Frameworks */,
 				28495F8715F2C9C70092A97B /* libxml2.2.dylib in Frameworks */,
 				2867828B15F183F9004F70EB /* CoreText.framework in Frameworks */,
 				28B4258B15D4D4EB0025957A /* libRestKit.a in Frameworks */,
@@ -1573,6 +1583,10 @@
 		2895003D13D64559009E1BD7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				28F92EEE15F6EC6B006A1054 /* CoreVideo.framework */,
+				28F92EEC15F6EC5E006A1054 /* CoreMedia.framework */,
+				28F92EEA15F6EC50006A1054 /* AVFoundation.framework */,
+				28C4E5F815F6EB7700168D03 /* Delight.framework */,
 				28495F8615F2C9C70092A97B /* libxml2.2.dylib */,
 				2867828A15F183F9004F70EB /* CoreText.framework */,
 				281B182A15C748950015ECBB /* Accounts.framework */,
@@ -2196,7 +2210,6 @@
 				280A33BF14422C6F007ACBDC /* ActiveEverythingPick.png */,
 				280A33C014422C6F007ACBDC /* ActiveEverythingPick@2x.png */,
 				286FA16D143D1A6700EDAE84 /* redLeather.png */,
-				6CB5B146144CCFB000A278AC /* background.png */,
 				28EE54FE14352BD800E36686 /* feed.png */,
 				28EE54FF14352BD800E36686 /* feed@2x.png */,
 				28EE550014352BD800E36686 /* mymap.png */,
@@ -2431,7 +2444,6 @@
 				6CB5B135144CBF0000A278AC /* key.png in Resources */,
 				6CB5B136144CBF0000A278AC /* key@2x.png in Resources */,
 				6CB5B145144CC5D700A278AC /* AboutUsController.xib in Resources */,
-				6CB5B147144CCFB000A278AC /* background.png in Resources */,
 				2887B8D0144F7BE600CBBF1B /* pickBackground.png in Resources */,
 				2887B8D9144F92A800CBBF1B /* ActiveFoodPick@2x.png in Resources */,
 				2887B8DB144F92C100CBBF1B /* ActiveFoodPick.png in Resources */,
@@ -2956,6 +2968,10 @@
 				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ios\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nina/Nina-Prefix.pch";
@@ -2991,6 +3007,10 @@
 				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ios\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nina/Nina-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
