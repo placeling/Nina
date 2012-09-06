@@ -48,6 +48,9 @@
     textAreaSize.height = 500;
     textAreaSize.width = 265;
     
+    if ( [[[self getTitleTextForNotification:notification] string] length] ==0){
+        return 0.0;
+    }
     CGSize textSize = [[[self getTitleTextForNotification:notification] string] sizeWithFont:[StyleHelper textFont] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
     CGFloat heightCalc = 21 + 8;
