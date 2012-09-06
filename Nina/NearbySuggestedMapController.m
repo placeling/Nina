@@ -149,16 +149,6 @@
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     [super objectLoader:objectLoader didLoadObjects:objects];
-        
-    
-    if ( [(NSNumber*)objectLoader.userData intValue] == 83 ){
-        [myPlaces removeAllObjects];
-        for (Place* object in objects){
-            object.placemarks = object.homePerspectives;
-            [myPlaces addObject:object];
-        }
-        [self findNearbyPlaces];
-    }
     
     for ( Place *place in [self places] ){
         bool found = false;
@@ -368,7 +358,12 @@
         } else {
             pinView.image = [UIImage imageNamed:@"FriendMarker.png"];
         }
-        annotation.tag = 0;
+        
+        if ( userFilter || tagFilter){
+            annotation.tag = 0;
+        }else {
+            annotation.tag = 1;
+        }
         
         for (Perspective *perspective in annotation.place.placemarks){
             if ( (!userFilter || [perspective.user.username isEqualToString:userFilter]) && (!tagFilter || [perspective.tags indexOfObject:tagFilter] != NSNotFound ) ){

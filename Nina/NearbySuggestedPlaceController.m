@@ -196,7 +196,11 @@
 -(void)makeFilteredPlaces{
     
     for (Place *place in self.places){
-        place.hidden = true;
+        if (userFilter || tagFilter){
+            place.hidden = true;
+        } else {
+            place.hidden = false;
+        }
         for (Perspective *perspective in place.placemarks){
             if ( (!userFilter || [perspective.user.username isEqualToString:userFilter]) && (!tagFilter || [perspective.tags indexOfObject:tagFilter] != NSNotFound ) ){
                 perspective.hidden = false;
