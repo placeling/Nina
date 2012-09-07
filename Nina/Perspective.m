@@ -68,7 +68,8 @@
 
     }    
     
-    self.perspectiveId = [jsonDict objectForKeyNotNull:@"_id"];
+    self.perspectiveId = [jsonDict objectForKeyNotNull:@"id"];
+    
     self.notes = [jsonDict objectForKeyNotNull:@"memo"];
     self.starred = [[jsonDict objectForKeyNotNull:@"starred"] boolValue];
     self.commentCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"comment_count"] intValue]];
