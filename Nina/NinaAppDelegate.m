@@ -33,7 +33,6 @@
 #import "UserManager.h"
 #import "Suggestion.h"
 #import "HomeViewController.h"
-#import <Delight/Delight.h>
 
 
 @implementation NinaAppDelegate
@@ -169,7 +168,6 @@
     }
     
     [Appirater appLaunched:YES];
-    [Delight startWithAppToken:@"f70b6a4cf3eb8ab3dd189bd9615"];
     
     return YES;
 }

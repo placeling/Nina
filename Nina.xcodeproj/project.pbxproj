@@ -396,7 +396,6 @@
 		28C4E5F315F6C95D00168D03 /* DefaultUserPhoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C4E5F115F6C95C00168D03 /* DefaultUserPhoto@2x.png */; };
 		28C4E5F615F6CEDE00168D03 /* CanvasBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C4E5F415F6CEDB00168D03 /* CanvasBG.png */; };
 		28C4E5F715F6CEDE00168D03 /* CanvasBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C4E5F515F6CEDD00168D03 /* CanvasBG@2x.png */; };
-		28C4E5F915F6EB7A00168D03 /* Delight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C4E5F815F6EB7700168D03 /* Delight.framework */; };
 		28C4F535144262C700A66F32 /* NSDictionary+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C4F534144262C700A66F32 /* NSDictionary+Utility.m */; };
 		28C7312215643B1700E27DCA /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C7312115643B1700E27DCA /* Appirater.m */; };
 		28CA792B1576BAD60031606E /* cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CA792A1576BAD60031606E /* cloud.png */; };
@@ -1214,7 +1213,6 @@
 				28F92EEF15F6EC6B006A1054 /* CoreVideo.framework in Frameworks */,
 				28F92EED15F6EC5E006A1054 /* CoreMedia.framework in Frameworks */,
 				28F92EEB15F6EC50006A1054 /* AVFoundation.framework in Frameworks */,
-				28C4E5F915F6EB7A00168D03 /* Delight.framework in Frameworks */,
 				28495F8715F2C9C70092A97B /* libxml2.2.dylib in Frameworks */,
 				2867828B15F183F9004F70EB /* CoreText.framework in Frameworks */,
 				281B182B15C748950015ECBB /* Accounts.framework in Frameworks */,
