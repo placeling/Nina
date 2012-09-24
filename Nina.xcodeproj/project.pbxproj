@@ -351,7 +351,6 @@
 		28B61943142292E600B0A7E5 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B61942142292E500B0A7E5 /* icon@2x.png */; };
 		28B619451422942300B0A7E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B619441422942200B0A7E5 /* Default.png */; };
 		28B619471422942C00B0A7E5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B619461422942B00B0A7E5 /* Default@2x.png */; };
-		28B9E27215E557BB00E13F0B /* NPSPopupWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B9E27115E557BB00E13F0B /* NPSPopupWindow.m */; };
 		28B9E27C15E55AE300E13F0B /* AFPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B9E27515E55AE300E13F0B /* AFPickerView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		28B9E27D15E55AE300E13F0B /* pickerBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E27615E55AE300E13F0B /* pickerBackground.png */; };
 		28B9E27E15E55AE300E13F0B /* pickerBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B9E27715E55AE300E13F0B /* pickerBackground@2x.png */; };
@@ -1050,8 +1049,6 @@
 		28B61942142292E500B0A7E5 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		28B619441422942200B0A7E5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		28B619461422942B00B0A7E5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		28B9E27015E557BB00E13F0B /* NPSPopupWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPSPopupWindow.h; sourceTree = "<group>"; };
-		28B9E27115E557BB00E13F0B /* NPSPopupWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPSPopupWindow.m; sourceTree = "<group>"; };
 		28B9E27415E55AE300E13F0B /* AFPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPickerView.h; sourceTree = "<group>"; };
 		28B9E27515E55AE300E13F0B /* AFPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFPickerView.m; sourceTree = "<group>"; };
 		28B9E27615E55AE300E13F0B /* pickerBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickerBackground.png; sourceTree = "<group>"; };
@@ -1731,8 +1728,6 @@
 				28B425C215D8AD0F0025957A /* TWSignedRequest.m */,
 				28B4256A15D4C72B0025957A /* HPTextViewInternal.h */,
 				28B4256B15D4C72B0025957A /* HPTextViewInternal.m */,
-				28B9E27015E557BB00E13F0B /* NPSPopupWindow.h */,
-				28B9E27115E557BB00E13F0B /* NPSPopupWindow.m */,
 				28C7312015643B1700E27DCA /* Appirater.h */,
 				28C7312115643B1700E27DCA /* Appirater.m */,
 				285BE74C142CFFF900898FDF /* asyncimageview.h */,
@@ -2852,7 +2847,6 @@
 				28B425F415DC500E0025957A /* Suggestion.m in Sources */,
 				28B425FE15DC582B0025957A /* CreateSuggestionViewController.m in Sources */,
 				28B4269C15DF02980025957A /* SuggestionViewController.m in Sources */,
-				28B9E27215E557BB00E13F0B /* NPSPopupWindow.m in Sources */,
 				28B9E27C15E55AE300E13F0B /* AFPickerView.m in Sources */,
 				2867828815F180CA004F70EB /* TTTAttributedLabel.m in Sources */,
 				2827C94115F43D1F00BE755D /* CustomBadge.m in Sources */,
