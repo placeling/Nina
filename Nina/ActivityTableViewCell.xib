@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">11E2620</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2829</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
+		<string key="IBDocument.SystemVersion">11G56</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
 		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1914</string>
+			<string key="NS.object.0">1926</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -45,7 +45,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{8, 8}, {32, 32}}</string>
 								<reference key="NSSuperview" ref="785948036"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="428917356"/>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -59,22 +58,20 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{88, 69}, {225, 21}}</string>
 								<reference key="NSSuperview" ref="785948036"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<nil key="IBUIHighlightedColor"/>
-								<int key="IBUIBaselineAdjustment">1</int>
-								<float key="IBUIMinimumFontSize">10</float>
 								<string key="IBUIText">Label</string>
 								<object class="NSColor" key="IBUITextColor" id="998714960">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MCAwIDAAA</bytes>
 									<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
 								</object>
+								<nil key="IBUIHighlightedColor"/>
+								<int key="IBUIBaselineAdjustment">1</int>
+								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUITextAlignment">2</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">1</int>
@@ -85,27 +82,25 @@
 									<double key="NSSize">11</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<int key="IBUIAutoshrinkMode">2</int>
 							</object>
 							<object class="IBUILabel" id="428917356">
 								<reference key="NSNextResponder" ref="785948036"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{48, 8}, {265, 21}}</string>
 								<reference key="NSSuperview" ref="785948036"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="505726366"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<string key="IBUIText">Label</string>
+								<reference key="IBUITextColor" ref="998714960"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUINumberOfLines">0</int>
 								<int key="IBUILineBreakMode">0</int>
-								<string key="IBUIText">Label</string>
-								<reference key="IBUITextColor" ref="998714960"/>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">1</int>
 									<double key="pointSize">14</double>
@@ -116,13 +111,11 @@
 									<int key="NSfFlags">16</int>
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-								<int key="IBUIAutoshrinkMode">0</int>
 								<double key="preferredMaxLayoutWidth">265</double>
 							</object>
 						</array>
 						<string key="NSFrameSize">{326, 90}</string>
 						<reference key="NSSuperview" ref="313351792"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="642123939"/>
 						<object class="NSColor" key="IBUIBackgroundColor" id="745851395">
 							<int key="NSColorSpace">3</int>
@@ -137,7 +130,6 @@
 				</array>
 				<string key="NSFrameSize">{326, 91}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="785948036"/>
 				<reference key="IBUIBackgroundColor" ref="745851395"/>
 				<bool key="IBUIOpaque">NO</bool>
@@ -237,83 +229,7 @@
 			<nil key="sourceID"/>
 			<int key="maxID">19</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">ActivityFeedViewController</string>
-					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">toggleType</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">toggleType</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">toggleType</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="activityTableView">UITableView</string>
-						<string key="segmentControl">UISegmentedControl</string>
-						<string key="toolbar">UIToolbar</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="activityTableView">
-							<string key="name">activityTableView</string>
-							<string key="candidateClassName">UITableView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="segmentControl">
-							<string key="name">segmentControl</string>
-							<string key="candidateClassName">UISegmentedControl</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="toolbar">
-							<string key="name">toolbar</string>
-							<string key="candidateClassName">UIToolbar</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ActivityFeedViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">ActivityTableViewCell</string>
-					<string key="superclassName">UITableViewCell</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="timeAgo">UILabel</string>
-						<string key="titleLabel">TTTAttributedLabel</string>
-						<string key="userImage">UIImageView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="timeAgo">
-							<string key="name">timeAgo</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="titleLabel">
-							<string key="name">titleLabel</string>
-							<string key="candidateClassName">TTTAttributedLabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="userImage">
-							<string key="name">userImage</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ActivityTableViewCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">TTTAttributedLabel</string>
-					<string key="superclassName">UILabel</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/TTTAttributedLabel.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
@@ -326,6 +242,6 @@
 			<string key="NS.key.0">DefaultUserPhoto.png</string>
 			<string key="NS.object.0">{96, 96}</string>
 		</object>
-		<string key="IBCocoaTouchPluginVersion">1914</string>
+		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
 </archive>

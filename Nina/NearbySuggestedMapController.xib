@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1296</int>
-		<string key="IBDocument.SystemVersion">11E2620</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
+		<int key="IBDocument.SystemTarget">1536</int>
+		<string key="IBDocument.SystemVersion">11G56</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
 		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1181</string>
+			<string key="NS.object.0">1926</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
+			<string>IBMKMapView</string>
 			<string>IBProxyObject</string>
+			<string>IBUIActivityIndicatorView</string>
 			<string>IBUIBarButtonItem</string>
 			<string>IBUIButton</string>
-			<string>IBUIToolbar</string>
-			<string>IBUIActivityIndicatorView</string>
 			<string>IBUISegmentedControl</string>
-			<string>IBMKMapView</string>
+			<string>IBUIToolbar</string>
 			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -84,7 +84,7 @@
 					</object>
 					<object class="IBMKMapView" id="341782952">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">268</int>
+						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{0, 44}, {325, 328}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
@@ -132,7 +132,7 @@
 					</object>
 					<object class="IBUIToolbar" id="965576721">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">266</int>
+						<int key="NSvFlags">288</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUISegmentedControl" id="10428548">
 								<reference key="NSNextResponder" ref="965576721"/>
@@ -471,41 +471,29 @@
 					<string key="superclassName">SuggestedPlaceController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="changeTab">id</string>
+						<string key="reloadMap">id</string>
 						<string key="showNearbyPlaces">id</string>
-						<string key="showPeople">id</string>
-						<string key="showTags">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="changeTab">
 							<string key="name">changeTab</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="reloadMap">
+							<string key="name">reloadMap</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="showNearbyPlaces">
 							<string key="name">showNearbyPlaces</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="showPeople">
-							<string key="name">showPeople</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showTags">
-							<string key="name">showTags</string>
-							<string key="candidateClassName">id</string>
-						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="bottomToolBar">UIToolbar</string>
 						<string key="mapView">MKMapView</string>
 						<string key="placemarkButton">UIButton</string>
-						<string key="showPeopleButton">UIBarButtonItem</string>
-						<string key="showTagsButton">UIBarButtonItem</string>
 						<string key="spinnerView">UIActivityIndicatorView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="bottomToolBar">
-							<string key="name">bottomToolBar</string>
-							<string key="candidateClassName">UIToolbar</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="mapView">
 							<string key="name">mapView</string>
 							<string key="candidateClassName">MKMapView</string>
@@ -513,14 +501,6 @@
 						<object class="IBToOneOutletInfo" key="placemarkButton">
 							<string key="name">placemarkButton</string>
 							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="showPeopleButton">
-							<string key="name">showPeopleButton</string>
-							<string key="candidateClassName">UIBarButtonItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="showTagsButton">
-							<string key="name">showTagsButton</string>
-							<string key="candidateClassName">UIBarButtonItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="spinnerView">
 							<string key="name">spinnerView</string>
@@ -535,25 +515,48 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SuggestedPlaceController</string>
 					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">toggleMapList</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">toggleMapList</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="showPeople">id</string>
+						<string key="showTags">id</string>
+						<string key="toggleMapList">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="showPeople">
+							<string key="name">showPeople</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showTags">
+							<string key="name">showTags</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleMapList">
 							<string key="name">toggleMapList</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="bottomToolBar">UIToolbar</string>
 						<string key="segmentedControl">UISegmentedControl</string>
+						<string key="showPeopleButton">UIBarButtonItem</string>
+						<string key="showTagsButton">UIBarButtonItem</string>
 						<string key="toolbar">UIToolbar</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="bottomToolBar">
+							<string key="name">bottomToolBar</string>
+							<string key="candidateClassName">UIToolbar</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="segmentedControl">
 							<string key="name">segmentedControl</string>
 							<string key="candidateClassName">UISegmentedControl</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="showPeopleButton">
+							<string key="name">showPeopleButton</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="showTagsButton">
+							<string key="name">showTagsButton</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="toolbar">
 							<string key="name">toolbar</string>
@@ -571,7 +574,7 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
-			<real value="1296" key="NS.object.0"/>
+			<real value="1536" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
@@ -580,6 +583,6 @@
 			<string key="PlaceMarkIt.png">{241, 93}</string>
 			<string key="TagIcon.png">{40, 27}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1181</string>
+		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
 </archive>
