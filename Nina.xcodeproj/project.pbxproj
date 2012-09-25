@@ -55,6 +55,7 @@
 		281B1CF315CC85C30015ECBB /* Answer.m in Sources */ = {isa = PBXBuildFile; fileRef = 281B1CF215CC85C30015ECBB /* Answer.m */; };
 		281B1D0215CDDD4F0015ECBB /* 53-house.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1D0015CDDD4F0015ECBB /* 53-house.png */; };
 		281B1D0315CDDD4F0015ECBB /* 53-house@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281B1D0115CDDD4F0015ECBB /* 53-house@2x.png */; };
+		2820779A16123D6D0048CB8B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2820779916123D6D0048CB8B /* Default-568h@2x.png */; };
 		2822BDAA1406E1200077868C /* PlaceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDA91406E11F0077868C /* PlaceHeaderView.xib */; };
 		2822BDAC1406EE720077868C /* PlaceFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2822BDAB1406EE710077868C /* PlaceFooterView.xib */; };
 		2827C94115F43D1F00BE755D /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2827C94015F43D1F00BE755D /* CustomBadge.m */; };
@@ -603,6 +604,7 @@
 		281B1CF215CC85C30015ECBB /* Answer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Answer.m; sourceTree = "<group>"; };
 		281B1D0015CDDD4F0015ECBB /* 53-house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "53-house.png"; sourceTree = "<group>"; };
 		281B1D0115CDDD4F0015ECBB /* 53-house@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "53-house@2x.png"; sourceTree = "<group>"; };
+		2820779916123D6D0048CB8B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2822BDA91406E11F0077868C /* PlaceHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceHeaderView.xib; sourceTree = "<group>"; };
 		2822BDAB1406EE710077868C /* PlaceFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceFooterView.xib; sourceTree = "<group>"; };
 		2827C93F15F43D1F00BE755D /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
@@ -1557,6 +1559,7 @@
 		2895002F13D64559009E1BD7 = {
 			isa = PBXGroup;
 			children = (
+				2820779916123D6D0048CB8B /* Default-568h@2x.png */,
 				28B619461422942B00B0A7E5 /* Default@2x.png */,
 				28B619441422942200B0A7E5 /* Default.png */,
 				28B61942142292E500B0A7E5 /* icon@2x.png */,
@@ -2681,6 +2684,7 @@
 				28C4E5F715F6CEDE00168D03 /* CanvasBG@2x.png in Resources */,
 				28F92F0415F7EAF6006A1054 /* profile.png in Resources */,
 				28F92F0515F7EAF6006A1054 /* profile@2x.png in Resources */,
+				2820779A16123D6D0048CB8B /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
