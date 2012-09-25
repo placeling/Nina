@@ -15,6 +15,7 @@
 #import "PlacePageViewController.h"
 #import "LoginController.h"
 #import "UserManager.h"
+#import "NearbySuggestedMapController.h"
 
 @interface PerspectivesMapViewController (Private)
 -(void)mapUserPlaces;
@@ -42,20 +43,19 @@
 }
 
 -(IBAction)showMine{
-    PerspectivesMapViewController *userPerspectives = [[PerspectivesMapViewController alloc] init];
     
-    User *currentUser = [UserManager sharedMeUser];
-        
-    userPerspectives.username = currentUser.username;
-    userPerspectives.user = currentUser;
+    NearbySuggestedMapController *myController = [[NearbySuggestedMapController alloc] init];
+            
+    myController.initialIndex = 0;
+    myController.origin = self.mapView.region.center;
     
-    [self.navigationController pushViewController:userPerspectives animated:YES];
+    [self.navigationController pushViewController:myController animated:YES];
     
-    [userPerspectives.mapView setRegion:self.mapView.region];
-    [userPerspectives release];
+    [myController release];
 }
 
--(void)updateMapView{    
+-(void)updateMapView{
+    [self.mapView removeAnnotations:self.mapView.annotations];
     for (Place *place in nearbyMarks){        
         DLog(@"putting on point for: %@", place);
                
