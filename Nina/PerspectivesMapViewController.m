@@ -76,7 +76,9 @@
     MKCoordinateSpan span = self.mapView.region.span;
     region.span = span;
     
-    [self.mapView setRegion:region animated:YES];
+    [self.mapView setRegion:region animated:false];
+    
+    [self refreshMap];
 }
 
 -(void)mapUserPlaces {
