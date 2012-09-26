@@ -319,7 +319,9 @@
     predictivePlaces = [[NSMutableArray alloc] init];    
     
     [self dataSourceDidFinishLoadingNewData];
-    [self.placesTableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.placesTableView reloadData];
+    });
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request{
@@ -388,13 +390,18 @@
             }
         }
         
-		[self.placesTableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:TRUE];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.placesTableView reloadData];
+        });
 		[jsonDict release];
 	}
     
     NSString *crumb = [NSString stringWithFormat:@"NearbyPlaces360:%@:%@", self, refreshHeaderView];
     [Crittercism leaveBreadcrumb:crumb];
-    [self dataSourceDidFinishLoadingNewData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dataSourceDidFinishLoadingNewData];
+    });
+    
 }
 
 
