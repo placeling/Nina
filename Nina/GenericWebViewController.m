@@ -7,7 +7,6 @@
 //
 
 #import "GenericWebViewController.h"
-#import "MBProgressHUD.h"
 
 @implementation GenericWebViewController
 @synthesize webView, url=_url;
@@ -82,16 +81,10 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"Loading";
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-}
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"Can't Load" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
     [alert release];
