@@ -891,6 +891,8 @@ typedef enum {
 - (void) touchUpInsideSegmentIndex:(NSUInteger)segmentIndex{
     NSUInteger index = segmentIndex;
     
+    NSString *currentUser = [NinaHelper getUsername];
+    
     self.initialSelectedIndex = [NSNumber numberWithInt:segmentIndex]; // update in case of reload
     [FlurryAnalytics logEvent:@"PLACE_PAGE_VIEW_TOGGLE" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"CLICK_TO", [NSString stringWithFormat:@"%i", index] , nil]];
     
@@ -911,25 +913,27 @@ typedef enum {
         self.perspectiveType = following;
         if (([self.initialSelectedIndex intValue] == 1 && self.followingPerspectives.count ==0) || (self.place.followingPerspectiveCount > 0 && (self.followingPerspectives.count == 0))){
             
-            //only call if we know something there
-            NSString *urlText;
-            if (self.referrer){
-                urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/following?rf=%@", self.place_id, self.referrer];
-            } else {
-                urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/following", self.place_id];
+            if (currentUser){
+                //only call if we know something there
+                NSString *urlText;
+                if (self.referrer){
+                    urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/following?rf=%@", self.place_id, self.referrer];
+                } else {
+                    urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/following", self.place_id];
+                }
+                
+                // Call url to get profile details                
+                RKObjectManager* objectManager = [RKObjectManager sharedManager];       
+                
+                [objectManager loadObjectsAtResourcePath:urlText usingBlock:^(RKObjectLoader* loader) {
+                    //loader.objectMapping = [Perspective getObjectMapping];
+                    loader.userData = [NSNumber numberWithInt:2]; //use as a tag
+                    loader.delegate = self;
+                }];
+                
+                [followingPerspectives addObject:@"Loading"]; //marker for spinner cell
             }
-            
-            // Call url to get profile details                
-            RKObjectManager* objectManager = [RKObjectManager sharedManager];       
-            
-            [objectManager loadObjectsAtResourcePath:urlText usingBlock:^(RKObjectLoader* loader) {
-                //loader.objectMapping = [Perspective getObjectMapping];
-                loader.userData = [NSNumber numberWithInt:2]; //use as a tag
-                loader.delegate = self;
-            }];
-            
-            [followingPerspectives addObject:@"Loading"]; //marker for spinner cell
-        } 
+        }
     } else if (index == 2){
         self.perspectiveType = everyone;
         if (([self.initialSelectedIndex intValue] == 2 && self.everyonePerspectives.count ==0) || (self.place.perspectiveCount > 0 && (self.everyonePerspectives.count ==0 ) ) ){
