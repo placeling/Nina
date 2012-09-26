@@ -84,7 +84,9 @@
 -(void)mapUserPlaces {
 	CLLocationCoordinate2D coordinate = self.mapView.centerCoordinate;
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/v1/perspectives/nearby", [NinaHelper getHostname]];		
+    RKObjectManager* objectManager = [RKObjectManager sharedManager];
+    
+    NSString *urlString = @"/v1/perspectives/nearby";		
     
     NSString* lat = [NSString stringWithFormat:@"%f", coordinate.latitude];
     NSString* lng = [NSString stringWithFormat:@"%f", coordinate.longitude];
@@ -97,23 +99,17 @@
         urlString = [NSString stringWithFormat:@"%@&username=%@", urlString, self.username]; 
     }
     
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    
-    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-    
-    [request setDelegate:self];
-    [request setTag:50];
-    
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
     [self.spinnerView startAnimating];
+    
+    [objectManager loadObjectsAtResourcePath:urlString usingBlock:^(RKObjectLoader* loader) {
+        loader.userData = [NSNumber numberWithInt:50];;
+        loader.delegate = self;
+    }];
     
 }
 
 - (void)dealloc{
-    //[self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
-    [NinaHelper clearActiveRequests:50];
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [_mapView release];
     [_username release];
     [locationManager release];
@@ -242,46 +238,37 @@
 }
 
 
-#pragma mark ASIhttprequest
+#pragma mark RKObjectLoader
 
-- (void)requestFailed:(ASIHTTPRequest *)request{
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
     [self.spinnerView stopAnimating];
-    //[NinaHelper handleBadRequest:request sender:self];
+    DLog(@"Encountered an error: %@", error);
 }
 
-- (void)requestFinished:(ASIHTTPRequest *)request{
-	// Use when fetching binary data
+
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     [self.spinnerView stopAnimating];
-	int statusCode = [request responseStatusCode];
-	if (200 != statusCode) {
-        [NinaHelper handleBadRequest:request  sender:self];
-    } else {
-        // Store incoming data into a string
-		NSString *jsonString = [request responseString];
-		DLog(@"Got JSON BACK: %@", jsonString);
-		// Create a dictionary from the JSON string
-        
-        NSArray *rawPlaces = [[jsonString JSONValue] objectForKey:@"places"];
-        
-        for (NSDictionary* dict in rawPlaces){
-            
+    
+    if ( [(NSNumber*)objectLoader.userData intValue] == 50 ){
+        for (Place* place in objects){
             BOOL found = false;
-            for (Place *place in nearbyMarks){
-                if ([[dict objectForKey:@"id"] isEqualToString:place.pid]){
+            for (Place *existing in nearbyMarks){
+                if ( [place.pid isEqualToString:existing.pid] ){
                     found = true; //already exists
                 }
             }
             
             if (!found){
-                Place* place = [[Place alloc] initFromJsonDict:dict];
-                [nearbyMarks addObject:place]; 
-                [place release];
+                [nearbyMarks addObject:place];
             }
-        }
+        }        
         
-        [self updateMapView];
-	}
+        [self updateMapView];        
+    }
 }
+
 
 #pragma mark - loginController delegates
 - (void)loadContent {
