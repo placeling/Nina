@@ -45,8 +45,6 @@
 
 #define kMinCellHeight 60
 
-#define minTableHeight 162
-
 typedef enum {
     CapLeft          = 0,
     CapMiddle        = 1,
@@ -67,6 +65,7 @@ typedef enum {
 -(int) paddingRowHeight:(NSIndexPath *)indexPath;
 -(NSMutableArray*)perspectives;
 -(IBAction)nearbySearch;
+-(int) getMinTableHeight;
 @end
 
 @implementation PlacePageViewController
@@ -87,6 +86,21 @@ typedef enum {
         
 	}
 	return self;    
+}
+
+-(int) getMinTableHeight{
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        CGSize result = [[UIScreen mainScreen] bounds].size;
+        if(result.height == 480) {
+            return 162;
+        }
+        if(result.height == 568) {
+            return 250;
+        }
+    }
+    return 162;    
 }
 
 -(NSMutableArray*)perspectives{
@@ -877,6 +891,7 @@ typedef enum {
 - (void) touchUpInsideSegmentIndex:(NSUInteger)segmentIndex{
     NSUInteger index = segmentIndex;
     
+    self.initialSelectedIndex = [NSNumber numberWithInt:segmentIndex]; // update in case of reload
     [FlurryAnalytics logEvent:@"PLACE_PAGE_VIEW_TOGGLE" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"CLICK_TO", [NSString stringWithFormat:@"%i", index] , nil]];
     
     if (index == 0){
@@ -1097,25 +1112,30 @@ typedef enum {
     
     // 1. No perspective at all
     Perspective *perspective;
-    if ([[self perspectives] count] > 0) {
+    if ([[self perspectives] count] > 0 && indexPath.section == 1) {
         perspective = [[self perspectives] objectAtIndex:indexPath.row];
-    } else {
-        return minTableHeight;
+    } else if (indexPath.section == 0 && [[self perspectives] count] > 0){
+        return 0;
+    } else if (indexPath.section==0){
+        return [self getMinTableHeight];
     }
     
     if ([perspective isKindOfClass:[NSString class]]) {
-        return minTableHeight + self.tableView.contentOffset.y; //special case to prevent jerking
+        return [self getMinTableHeight] + self.tableView.contentOffset.y; //special case to prevent jerking
     }
     
-    if (self.perspectiveType == home && self.place.bookmarked == true && [[self perspectives] count] < 2) {
-        if ([PerspectiveTableViewCell cellHeightForPerspective:perspective] < minTableHeight) {
-            return minTableHeight;
+    if ( [[self perspectives] count] < 4 && [[self perspectives] count] == indexPath.row+1) {
+        int totalHeight=0;
+        if ( [self shouldShowSectionView]){
+            totalHeight += 44;
         }
-    }
-
-    if (self.perspectiveType != home && [[self perspectives] count] < 2 && indexPath.section ==1) {
-        if ([PerspectiveTableViewCell cellHeightForPerspective:perspective] < minTableHeight) {
-            return minTableHeight;
+        for( int i=0; i<indexPath.row; i++){
+            NSIndexPath *iPath = [NSIndexPath indexPathForRow:i inSection:indexPath.section];            
+            totalHeight += [self tableView:self.tableView heightForRowAtIndexPath:iPath];
+            
+        }
+        if (totalHeight + [PerspectiveTableViewCell cellHeightForPerspective:perspective] < [self getMinTableHeight]) {
+            return [self getMinTableHeight] - totalHeight;
         }
     }
     
@@ -1168,11 +1188,7 @@ typedef enum {
         }
     }
     
-    if ( ![self shouldShowSectionView] ){
-        return MAX(heightval, [self paddingRowHeight:indexPath]);
-    } else {
-        return heightval;
-    }
+    return MAX(heightval, [self paddingRowHeight:indexPath]);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
