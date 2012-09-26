@@ -12,8 +12,9 @@
 #import "ASIHTTPRequest.h"
 #import "User.h"
 #import "LoginController.h"
+#import <RestKit/RestKit.h>
 
-@interface PerspectivesMapViewController : UIViewController<ASIHTTPRequestDelegate, MKMapViewDelegate, LoginControllerDelegate> {
+@interface PerspectivesMapViewController : UIViewController<RKObjectLoaderDelegate, MKMapViewDelegate, LoginControllerDelegate> {
     IBOutlet MKMapView *_mapView;
     IBOutlet UIToolbar *toolbar;
     NSString *_username;
