@@ -275,7 +275,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *commentCellIdentifier = @"CommentCell";
     static NSString *infoCellIdentifier = @"infoCell";
     
     PlacemarkComment *comment;

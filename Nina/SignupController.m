@@ -153,9 +153,9 @@
         
         for (NSString* token in tokens){
             NSArray *component = [token componentsSeparatedByString:@"="];
-            if ( [[NSString stringWithString:@"oauth_token"] isEqualToString:[component objectAtIndex:0]] ){
+            if ( [@"oauth_token" isEqualToString:[component objectAtIndex:0]] ){
                 [NinaHelper setAccessToken:[component objectAtIndex:1]];
-            } else if ( [[NSString stringWithString:@"oauth_token_secret"] isEqualToString:[component objectAtIndex:0]] ){
+            } else if ( [@"oauth_token_secret" isEqualToString:[component objectAtIndex:0]] ){
                 [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
             }
         } 
