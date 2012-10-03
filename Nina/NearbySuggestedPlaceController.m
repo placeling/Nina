@@ -7,7 +7,7 @@
 //
 
 #import "NearbySuggestedPlaceController.h"
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import "PlacePageViewController.h"
 #import "PlaceSuggestTableViewCell.h"
 #import "Place.h"

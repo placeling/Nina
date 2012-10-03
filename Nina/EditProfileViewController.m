@@ -9,7 +9,7 @@
 #import "EditProfileViewController.h"
 #import "EditableTableCell.h"
 #import "NinaHelper.h"
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import "UIImage+Resize.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIImageView+WebCache.h"
@@ -175,23 +175,6 @@
 
 - (void)hudWasHidden{
     
-}
-
--(void) fbDidLogin{
-    [super fbDidLogin];    
-    
-    Authentication *auth = [[Authentication alloc] init];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    auth.provider = @"facebook";
-    auth.token = [defaults objectForKey:@"FBAccessTokenKey"];
-    auth.expiry = [defaults objectForKey:@"FBExpirationDateKey"];
-    
-    [self.user.auths addObject:auth];
-    [auth release];
-    
-    [self.tableView reloadData];
 }
 
 
@@ -486,27 +469,10 @@
     } else if (indexPath.section == 2 && indexPath.row == 0){
         
         if (self.user.facebook == nil){
-            NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-            Facebook *facebook = appDelegate.facebook;
-            
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            if ([defaults objectForKey:@"FBAccessTokenKey"] 
-                && [defaults objectForKey:@"FBExpirationDateKey"]) {
-                facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
-                facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
-            }
-            
-            if (![facebook isSessionValid]) {
-                NSArray* permissions =  [[NSArray arrayWithObjects:
-                                          @"email", @"publish_stream",@"offline_access", nil] retain];
-                
-                facebook.sessionDelegate = self;
-                [facebook authorize:permissions];
-                
-                [permissions release];
-            } else {
-                [self fbDidLogin]; // for some reason, already have credentials
-            }
+            [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObjects:@"email", @"publish_actions", nil] defaultAudience:FBSessionDefaultAudienceFriends allowLoginUI:TRUE completionHandler:^(FBSession *session,
+                                                                                                                                                                                                                  FBSessionState state, NSError *error) {
+                [NinaHelper updateFacebookCredentials:session forUser:self.user];
+            }];
         }
         
     } else if (indexPath.section == 3 && indexPath.row == 0){

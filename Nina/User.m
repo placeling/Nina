@@ -9,7 +9,6 @@
 #import "User.h"
 #import "NSDictionary+Utility.h"
 #import "NinaAppDelegate.h"
-#import "NinaHelper.h"
 
 @implementation User
 
@@ -52,23 +51,6 @@
     for ( NSDictionary *authDict in [jsonDict objectForKey:@"auths"] ){
         NSDateFormatter *jsonFormatter = [RKObjectMapping preferredDateFormatter];
         NSString *expiry = [authDict objectForKey:@"expiry"];
-        
-        if ([[authDict objectForKey:@"provider"] isEqualToString:@"facebook"] ){
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            
-            if ( ![defaults objectForKey:@"FBAccessTokenKey"] ){
-                [defaults setObject:[authDict objectForKey:@"token"] forKey:@"FBAccessTokenKey"];
-                DLog(@"Parsing Auth Expirty Date %@",[jsonFormatter dateFromString:expiry]);
-                [defaults setObject:[jsonFormatter dateFromString:expiry] forKey:@"FBExpirationDateKey"];
-                [defaults synchronize];
-                NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-                
-                appDelegate.facebook = [[[Facebook alloc] initWithAppId:[NinaHelper getFacebookAppId] andDelegate:appDelegate] autorelease];
-                
-                appDelegate.facebook.accessToken = [authDict objectForKey:@"token"];
-                appDelegate.facebook.expirationDate = [jsonFormatter dateFromString:expiry];
-            }
-        }
 
         Authentication *auth = [[Authentication alloc] init];
         auth.provider = [authDict objectForKey:@"provider"];

@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "NinaHelper.h"
 #import "ASIHTTPRequest.h"
 #import "User.h"
 #import "LoginController.h"
-#import <RestKit/RestKit.h>
 
 @interface PerspectivesMapViewController : UIViewController<RKObjectLoaderDelegate, MKMapViewDelegate, LoginControllerDelegate> {
     IBOutlet MKMapView *_mapView;

@@ -9,7 +9,7 @@
 #import "ConfirmNewPlaceController.h"
 #import "UIImageView+WebCache.h"
 #import "Place.h"
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import "PlacePageViewController.h"
 
 

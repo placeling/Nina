@@ -8,7 +8,7 @@
 
 #import "MemberProfileViewController.h"
 #import "ASIHTTPRequest.h"
-#import "JSON.h"
+#import "SBJson.h"
 #import <QuartzCore/QuartzCore.h>
 #import "FollowViewController.h"
 #import "Perspective.h"
@@ -16,7 +16,6 @@
 #import "PlacePageViewController.h"
 #import "PerspectivesMapViewController.h"
 #import "ASIDownloadCache.h"
-#import "NinaHelper.h"
 #import "LoginController.h"
 #import "UIImageView+WebCache.h"
 #import "NinaAppDelegate.h"
@@ -24,7 +23,6 @@
 #import "UserManager.h"
 #import "NearbyPlacesViewController.h"
 #import <Twitter/Twitter.h>
-#import <RestKit/RestKit.h>
 
 @interface MemberProfileViewController() 
 -(void) blankLoad;
@@ -335,16 +333,16 @@
     UIActionSheet *actionSheet;
     if ([TWTweetComposeViewController canSendTweet]){  
         if ( self.user.blocked ){
-            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Unblock User" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Share on Twitter", nil];  
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Unblock User" otherButtonTitles:@"Share by Email", @"Share on Twitter", nil];  
         } else {
-            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Block User" otherButtonTitles:@"Share by Email", @"Share on Facebook", @"Share on Twitter", nil];
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Block User" otherButtonTitles:@"Share by Email", @"Share on Twitter", nil];
         }
         actionSheet.tag = 0;
     } else {
         if ( self.user.blocked ){
-            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Unblock User" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];  
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Unblock User" otherButtonTitles:@"Share by Email", nil];  
         } else {
-            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Block User" otherButtonTitles:@"Share by Email", @"Share on Facebook", nil];
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Block User" otherButtonTitles:@"Share by Email", nil];
         }
         actionSheet.tag = 1;
     } 
@@ -397,33 +395,7 @@
         [controller release];	
         
         
-    }else if (buttonIndex == 2) {
-        DLog(@"share on facebook");        
-        
-        NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-        Facebook *facebook = appDelegate.facebook;
-        
-        if (![facebook isSessionValid]) {
-            NSArray* permissions =  [[NSArray arrayWithObjects:
-                                      @"email", @"publish_stream",@"offline_access", nil] retain];
-            
-            facebook.sessionDelegate = self;
-            [facebook authorize:permissions];
-            
-            [permissions release];
-        } else {    
-            NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                           [NinaHelper getFacebookAppId], @"app_id",
-                                           urlString, @"link",
-                                           self.user.city ? self.user.city : @"", @"caption",
-                                           self.user.userThumbUrl, @"picture",
-                                           [NSString stringWithFormat:@"%@'s profile on Placeling", self.user.username], @"name",
-                                           self.user.userDescription, @"description",
-                                           nil];
-            
-            [facebook dialog:@"feed" andParams:params andDelegate:self];
-        }
-    } else if (buttonIndex == 3) {
+    } else if (buttonIndex == 2) {
         DLog(@"share on twitter");        
         
         //Create the tweet sheet
@@ -446,22 +418,6 @@
         [self presentModalViewController:tweetSheet animated:YES];
         [tweetSheet release];
     } 
-}
-
--(void) fbDidLogin{
-    [super fbDidLogin];
-    [self actionSheet:nil clickedButtonAtIndex:1];
-    
-}
-
-
-- (void)dialogDidComplete:(FBDialog *)dialog{
-    DLog(@"Share on Facebook Dialog completed %@", dialog)
-    [FlurryAnalytics logEvent:@"FACEBOOK_SHARE_USER"];
-}
-
-- (void)dialogDidNotComplete:(FBDialog *)dialog{
-    DLog(@"Share on Facebook Dialog completed %@", dialog)
 }
 
     

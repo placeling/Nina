@@ -18,7 +18,7 @@
 #import "Photo.h"
 #import "Place.h"
 
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import <CoreLocation/CoreLocation.h>
 
 #import "MBProgressHUD.h"
@@ -498,9 +498,9 @@ typedef enum {
 -(void) showShareSheet{
     UIActionSheet *actionSheet;
     if ([TWTweetComposeViewController canSendTweet]){  
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Suggest It", @"Email It", @"Facebook It", @"Tweet It", nil];
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Suggest It", @"Email It", @"Tweet It", nil];
     } else {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Suggest It", @"Email It", @"Facebook It", nil];
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Suggest It", @"Email It", nil];
     }
     
     [actionSheet showInView:self.view];
@@ -536,33 +536,7 @@ typedef enum {
         [controller release];	
         
         
-    }else if (buttonIndex == 2) {
-        DLog(@"share on facebook");
-        
-        NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-        Facebook *facebook = appDelegate.facebook;
-        
-        if (![facebook isSessionValid]) {
-            NSArray* permissions =  [[NSArray arrayWithObjects:
-                                      @"email", @"publish_stream",@"offline_access", nil] retain];
-            
-            facebook.sessionDelegate = self;
-            [facebook authorize:permissions];
-            
-            [permissions release];
-        } else {    
-            NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                           [NinaHelper getFacebookAppId], @"app_id",
-                                           urlString, @"link",
-                                           self.place.placeThumbUrl, @"picture",
-                                           self.place.name, @"name",
-                                           (self.place.streetAddress && self.place.city) ? [NSString stringWithFormat:@"%@ %@", self.place.streetAddress, self.place.city] : @"", @"caption",
-                                           [NSString stringWithFormat:@"Check out %@ on Placeling!", self.place.name], @"description",
-                                           nil];
-            
-            [facebook dialog:@"feed" andParams:params andDelegate:self];
-        }    
-    } else if (buttonIndex == 3){
+    } else if (buttonIndex == 2){
         DLog(@"share on twitter");        
         
         //Create the tweet sheet
@@ -585,20 +559,6 @@ typedef enum {
         [self presentModalViewController:tweetSheet animated:YES];
         [tweetSheet release];
     }
-}
-
--(void) fbDidLogin{
-    [super fbDidLogin];        
-    [self actionSheet:nil clickedButtonAtIndex:1];
-}
-
-- (void)dialogDidComplete:(FBDialog *)dialog{
-    DLog(@"Share on Facebook Dialog completed %@", dialog)
-    [FlurryAnalytics logEvent:@"FACEBOOK_SHARE_PLACE"];
-}
-
-- (void)dialogDidNotComplete:(FBDialog *)dialog{
-    DLog(@"Share on Facebook Dialog completed %@", dialog)
 }
 
 

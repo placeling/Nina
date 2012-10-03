@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
-#import "NinaHelper.h"
 #import "ApplicationController.h"
 #import "ASIHTTPRequestDelegate.h"
 #import "ProfileDetailBadge.h"
@@ -17,7 +16,7 @@
 #import <RestKit/RestKit.h>
 #import "PerspectiveDisplayProtocol.h"
 
-@interface MemberProfileViewController : ApplicationController<ASIHTTPRequestDelegate, LoginControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol, UIAlertViewDelegate> {
+@interface MemberProfileViewController : ApplicationController<ASIHTTPRequestDelegate, LoginControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol, UIAlertViewDelegate> {
 	NSString *username;
 	User *_user;
     BOOL loadingMore;

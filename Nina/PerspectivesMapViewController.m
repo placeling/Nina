@@ -8,7 +8,7 @@
 
 #import "PerspectivesMapViewController.h"
 
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import "PerspectivePlaceMark.h"
 #import "PlaceMark.h"
 #import "Perspective.h"

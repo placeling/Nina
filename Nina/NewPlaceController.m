@@ -7,8 +7,7 @@
 //
 
 #import "NewPlaceController.h"
-#import "NinaHelper.h"
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import "ConfirmNewPlaceController.h"
 
 @implementation NewPlaceController

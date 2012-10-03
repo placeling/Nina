@@ -6,6 +6,18 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
+
+
+#import <Foundation/Foundation.h>
+#import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
+#import <CoreLocation/CoreLocation.h>
+#import "LocationManagerManager.h"
+#import <QuartzCore/QuartzCore.h>
+#import "User.h"
+
+
+
 //single place to define debugging or not -iMack
 #ifndef DEBUG 
 //#define DEBUG 
@@ -113,17 +125,6 @@
 
 #define standardRowHeight 44
 
-
-
-#import <Foundation/Foundation.h>
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
-#import <CoreLocation/CoreLocation.h>
-#import "LocationManagerManager.h"
-#import "StyleHelper.h"
-#import <RestKit/RestKit.h>
-#import <QuartzCore/QuartzCore.h>
-
 @interface NinaHelper : NSObject 
 
 +(void) handleBadRequest:(ASIHTTPRequest *)request sender:(UIViewController*)sender;
@@ -148,6 +149,7 @@
 +(NSString*) getAccessTokenSecret;
 
 +(void) uploadNotificationToken:(NSString*)notificationToken;
++(void) updateFacebookCredentials:(FBSession*)session forUser:(User*)user;
 
 +(NSString*) getConsumerKey;
 +(NSString*) getConsumerSecret;
@@ -156,8 +158,6 @@
 
 +(NSString*) metersToLocalizedDistance:(float)m;
 +(NSString*) encodeForUrl:(NSString*)string;
-
-+(NSString*) getFacebookAppId;
 
 +(BOOL) twitterEnabled;
 

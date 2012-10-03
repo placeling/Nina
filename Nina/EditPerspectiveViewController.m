@@ -12,7 +12,6 @@
 #import "ASIFormDataRequest+OAuth.h"
 #import "ASIHTTPRequest+OAuth.h"
 #import "Photo.h"
-#import "NSString+SBJSON.h"
 #import "asyncimageview.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AssetsLibrary/ALAssetsLibrary.h>
@@ -202,16 +201,13 @@
     
     [self updateDelayed];
     
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    
     facebookEnabled = false;
     twitterEnabled = false;
     
-    if ( [facebook isSessionValid] ) {
+    if (FBSession.activeSession.isOpen) {
         [self facebookToggle];
     }
-    
+
     User *user = [UserManager sharedMeUser];
     
     if ( user.twitter ){
@@ -358,29 +354,21 @@
         [self.facebookButton setImage:[UIImage imageNamed:@"facebook_unselected.png"] forState:UIControlStateNormal];
         
     } else {
-        NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-        Facebook *facebook = appDelegate.facebook;
-        
-        if ( [facebook isSessionValid] ){
+
+        if (FBSession.activeSession.isOpen) {
             facebookEnabled = true;
             [self.facebookButton setImage:[UIImage imageNamed:@"facebook_selected.png"] forState:UIControlStateNormal];
         } else {
-            NSArray* permissions =  [[NSArray arrayWithObjects:
-                                      @"email", @"publish_stream",@"offline_access", nil] retain];
-            
-            facebook.sessionDelegate = self;
-            [facebook authorize:permissions];
-            
-            [permissions release];            
+            [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObjects:@"email", @"publish_actions", nil] defaultAudience:FBSessionDefaultAudienceFriends allowLoginUI:TRUE completionHandler:^(FBSession *session,
+                                                                                                                                                                                                                  FBSessionState state, NSError *error) {
+                facebookEnabled = false; //will be forced to true
+                [self facebookToggle];
+                User *user = [UserManager sharedMeUser];
+                [NinaHelper updateFacebookCredentials:session forUser:user];
+            }];
         }
     }
     
-}
-
--(void) fbDidLogin{
-    [super fbDidLogin];
-    facebookEnabled = false; //will be forced to true
-    [self facebookToggle];
 }
         
 -(void) refreshImages{

@@ -7,11 +7,9 @@
 //
 
 #import "NearbyPlacesViewController.h"
-#import "NSString+SBJSON.h"
 #import "PlacePageViewController.h"
 #import "ASIHTTPRequest.h"
 #import <CoreLocation/CoreLocation.h>
-#import "NinaHelper.h"
 #import "FlurryAnalytics.h"
 #import "NewPlaceController.h"
 #import "Crittercism.h"

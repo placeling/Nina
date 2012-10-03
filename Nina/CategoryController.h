@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NinaHelper.h"
 
 @protocol CategoryControllerDelegate
 -(void)updateCategory:(NSString *)category;

@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NinaHelper.h"
 #import "ASIHTTPRequest.h"
-#import "Facebook.h"
+#import <FacebookSDK/FacebookSDK.h>
 #import "MBProgressHUD.h"
 
 @protocol LoginControllerDelegate;

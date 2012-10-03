@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "NinaHelper.h"
 #import "ASIHTTPRequest.h"
 #import "MBProgressHUD.h"
 

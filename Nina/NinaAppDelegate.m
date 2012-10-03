@@ -10,8 +10,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "LocationManagerManager.h"
 #import "FlurryAnalytics.h"
-#import "NinaHelper.h"
-#import <RestKit/RestKit.h>
 #import "User.h"
 #import "Place.h"
 #import "Perspective.h"
@@ -34,12 +32,10 @@
 #import "Suggestion.h"
 #import "HomeViewController.h"
 
-
 @implementation NinaAppDelegate
 
 
 @synthesize window=_window;
-@synthesize facebook;
 
 @synthesize navigationController=_navigationController;
 
@@ -139,16 +135,6 @@
         [manager startUpdatingLocation];
     }
     
-    facebook = [[Facebook alloc] initWithAppId:[NinaHelper getFacebookAppId] andDelegate:self];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"FBAccessTokenKey"] 
-        && [defaults objectForKey:@"FBExpirationDateKey"]) {
-        facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
-        facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
-    }
-    
-    
     if ( [NinaHelper getUsername] ){
         [application registerForRemoteNotificationTypes: 
          UIRemoteNotificationTypeBadge |
@@ -176,7 +162,7 @@
     DLog(@"handling open url: %@", url);
     
     if ( [[url scheme] isEqualToString:@"fb280758755284342"] ){    
-        return [facebook handleOpenURL:url]; 
+        return [FBSession.activeSession handleOpenURL:url];
     } else {
         if ( [[url host] isEqualToString:@"users"] ){
             NSString *username = [[url path] stringByReplacingOccurrencesOfString:@"/" withString:@""];
@@ -226,45 +212,6 @@
     }
 }
 
-- (void)fbDidLogin {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
-    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
-    
-    NSString *currentUser = [NinaHelper getUsername];
-    
-    if ( currentUser ){
-        NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/facebook/add", [NinaHelper getHostname]];
-        NSURL *url = [NSURL URLWithString:urlString];
-        
-        ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
-        [request setPostValue:[facebook accessToken] forKey:@"token" ];
-        [request setPostValue:[facebook expirationDate] forKey:@"expiry" ];
-        
-        [NinaHelper signRequest:request];
-        
-        [request startAsynchronous];//fire and forget        
-    }    
-}
-
-- (void)fbDidNotLogin:(BOOL)cancelled{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [FlurryAnalytics logEvent:@"REJECTED_PERMISSIONS"];
-} 
-
-
--(void)fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt{
-    
-}
-
--(void)fbSessionInvalidated{
-    
-}
-
--(void)fbDidLogout{
-    
-}
 
 -(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
@@ -384,31 +331,34 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
 
 -(void) applicationDidBecomeActive:(UIApplication *) application
 {
+    NSString *current_user = [NinaHelper getUsername];
+    
     if ( [UIApplication sharedApplication].applicationState != UIApplicationStateBackground ){
         CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
         [locationManager stopMonitoringSignificantLocationChanges];
         [locationManager startUpdatingLocation];
         locationManager.delegate = nil;
         
-        [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/v1/users/me.json" usingBlock:^(RKObjectLoader* loader) {
-            RKObjectMapping *userMapping = [User getObjectMapping];
-            loader.objectMapping = userMapping;
-            [loader setOnDidLoadObjects:^(NSArray *objects){
-                User *user = [objects objectAtIndex:0];
-                [UserManager setUser:user];
-                
-                if ([self.navigationController.topViewController isKindOfClass:[HomeViewController class]]){
-                    [self.navigationController.topViewController refreshNotificationBadge];
-                }                
-            }];
-        }];
-    }
-    
-    NSString *current_user = [NinaHelper getUsername];
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *_facebook = appDelegate.facebook;
+        if (current_user){
+            [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/v1/users/me.json" usingBlock:^(RKObjectLoader* loader) {
+                RKObjectMapping *userMapping = [User getObjectMapping];
+                loader.objectMapping = userMapping;
+                [loader setOnDidLoadObjects:^(NSArray *objects){
+                    User *user = [objects objectAtIndex:0];
+                    [UserManager setUser:user];                    
 
-    if ( current_user && _facebook.accessToken != nil && ![_facebook isSessionValid] ){
+                    if ([self.navigationController.topViewController isKindOfClass:[HomeViewController class]]){
+                        [self.navigationController.topViewController refreshNotificationBadge];
+                    }                
+                }];
+            }];
+        }
+    }
+
+    [FBSession.activeSession handleDidBecomeActive];
+
+    /*
+    if ( current_user && [FBSession.activeSession expirationDate > [NSDate now ){
         FacebookRegetViewController *regetController = [[FacebookRegetViewController alloc] init];
         
         UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:regetController];
@@ -416,7 +366,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
         [self.navigationController presentModalViewController:navBar animated:YES];
         [navBar release];
         [regetController release];
-    }    
+    } */
     
 }
 
@@ -427,6 +377,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+    [FBSession.activeSession close];
+
 }
 
 #pragma mark - RKObjectLoaderDelegate methods
@@ -434,22 +386,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
 - (void)dealloc{
     [_window release];
     [_navigationController release];
-    [facebook release];
     [super dealloc];
 }
 
-/*
-// Optional UITabBarControllerDelegate method.
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-}
-*/
-
-/*
-// Optional UITabBarControllerDelegate method.
-- (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed
-{
-}
-*/
 
 @end

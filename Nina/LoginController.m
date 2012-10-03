@@ -9,11 +9,9 @@
 #import "LoginController.h"
 #import "ASIFormDataRequest+OAuth.h"
 #import "ASIHTTPRequest+OAuth.h"
-#import "NinaHelper.h"
 #import "SignupController.h"
-#import "Facebook.h"
 #import "NinaAppDelegate.h"
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import "GenericWebViewController.h"
 #import "MBProgressHUD.h"
 #import "FlurryAnalytics.h"
@@ -76,27 +74,104 @@
     [genericWebViewController release];
 }
 
--(IBAction) signupFacebook{
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
+
+-(void) receiveGraphConnection:(FBRequestConnection*)connection
+                userDictionary:(NSDictionary<FBGraphUser>*)user
+                         error:(NSError*)error{
+    [HUD hide:TRUE];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"FBAccessTokenKey"] 
-        && [defaults objectForKey:@"FBExpirationDateKey"]) {
-        facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
-        facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
-    }
-
-    if (![facebook isSessionValid]) {
-        NSArray* permissions =  [[NSArray arrayWithObjects:
-                                  @"email", @"publish_stream",@"offline_access", nil] retain];
-
-        facebook.sessionDelegate = self;
-        [facebook authorize:permissions];
-                                 
-        [permissions release];
-    } else {        
+    DLog(@"got facebook response: %@", user);
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
+    if (![self testAlreadyLoggedInFacebook:user]){
+        SignupController *signupController = [[SignupController alloc ] initWithStyle:UITableViewStyleGrouped];
         
+        signupController.fbDict = user;
+        signupController.delegate = delegate;
+        
+        [self.navigationController pushViewController:signupController animated:true];
+        
+        [signupController release];
+    } else {
+        [self close];
+    }
+    [HUD hide:TRUE];
+}
+
+
+- (void)sessionStateChanged:(FBSession *)session
+                      state:(FBSessionState) state
+                      error:(NSError *)error
+{
+    [HUD hide:TRUE];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    switch (state) {
+        case FBSessionStateOpen: {
+            
+            HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+            [self.navigationController.view addSubview:HUD];
+            
+            HUD.delegate = self;
+            HUD.labelText = @"Authenticating";
+            HUD.detailsLabelText = @"Getting Facebook Stuff";
+            
+            [HUD show:TRUE];
+            
+            [[FBRequest requestForMe] startWithCompletionHandler:
+             ^(FBRequestConnection *connection,
+               NSDictionary<FBGraphUser> *user,
+               NSError *error) {
+                 [self receiveGraphConnection:connection userDictionary:user error:error];
+             }];
+            
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            
+        }
+            break;
+        case FBSessionStateClosed:
+            
+            [FlurryAnalytics logEvent:@"REJECTED_PERMISSIONS"];
+            break;
+        case FBSessionStateClosedLoginFailed:
+           
+            DLog(@"got facebook response: %@", [error localizedDescription]);
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            NSDictionary *details = [error userInfo];
+            
+            [FlurryAnalytics logEvent:@"UNKNOWN_FB_FAIL" withParameters:details];                        
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                            message:@"Facebook returned a credential error, try again"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+            break;
+        default:
+            break;
+    }
+    
+    if (error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Error"
+                                  message:error.localizedDescription
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+
+-(IBAction) signupFacebook{
+    if (!FBSession.activeSession.isOpen) {
+        
+        [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObjects:@"email", @"publish_actions", nil] defaultAudience:FBSessionDefaultAudienceFriends allowLoginUI:TRUE completionHandler:^(FBSession *session,
+                                                                                                                                                                                                              FBSessionState state, NSError *error) {
+            [self sessionStateChanged:session state:state error:error];
+        }];
+    } else {
         HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
         [self.navigationController.view addSubview:HUD];
         
@@ -106,7 +181,12 @@
         
         [HUD show:TRUE];
         
-        [facebook requestWithGraphPath:@"me" andDelegate:self];
+        [[FBRequest requestForMe] startWithCompletionHandler:
+         ^(FBRequestConnection *connection,
+           NSDictionary<FBGraphUser> *user,
+           NSError *error) {
+             [self receiveGraphConnection:connection userDictionary:user error:error];
+         }];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     } 
 }
@@ -117,9 +197,8 @@
     NSURL *url = [NSURL URLWithString:urlString];
     
     ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [request setPostValue:[defaults objectForKey:@"FBAccessTokenKey"] forKey:@"token" ];
-    [request setPostValue:[defaults objectForKey:@"FBExpirationDateKey"] forKey:@"expiry" ];
+    [request setPostValue:[FBSession.activeSession accessToken] forKey:@"token" ];
+    [request setPostValue:[FBSession.activeSession expirationDate] forKey:@"expiry" ];
     [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"uid"];
 
     [NinaHelper signRequest:request];
@@ -163,86 +242,6 @@
     }
 }
 
-- (void)fbDidLogin {
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    facebook.sessionDelegate = appDelegate; //put back where found
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
-    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
-    
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-    
-    HUD.delegate = self;
-    HUD.labelText = @"Authenticating";
-    HUD.detailsLabelText = @"Getting Facebook Stuff";
-    
-    [HUD show:TRUE];
-    
-    [facebook requestWithGraphPath:@"me" andDelegate:self];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-}
-
-- (void)fbDidNotLogin:(BOOL)cancelled{
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    facebook.sessionDelegate = appDelegate; //put back where found
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [FlurryAnalytics logEvent:@"REJECTED_PERMISSIONS"];
-} 
-
-- (void)request:(FBRequest *)request didFailWithError:(NSError *)error{
-    [HUD hide:TRUE];
-    DLog(@"got facebook response: %@", [error localizedDescription]);
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    NSDictionary *details = [error userInfo];
-    
-    [FlurryAnalytics logEvent:@"UNKNOWN_FB_FAIL" withParameters:details];
-
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    
-    facebook.expirationDate = nil;
-    facebook.accessToken = nil;
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:@"FBAccessTokenKey"];
-    [defaults removeObjectForKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
-    
-    
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR" 
-                                                    message:@"Facebook returned a credential error, try again" 
-                                                   delegate:nil 
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
-    [alert release];
-    
-}
-- (void)request:(FBRequest *)request didLoad:(id)result{
-    DLog(@"got facebook response: %@", result);
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
-    NSDictionary *fbDict = (NSDictionary*)result;
-    if (![self testAlreadyLoggedInFacebook:fbDict]){
-        SignupController *signupController = [[SignupController alloc ] initWithStyle:UITableViewStyleGrouped];
-                                              
-        signupController.fbDict = fbDict;
-        signupController.delegate = delegate;
-        
-        [self.navigationController pushViewController:signupController animated:true];
-        
-        [signupController release];
-    } else {
-        [self close];
-    }
-    [HUD hide:TRUE];    
-}
 
 -(IBAction) signupOldSchool{
     
@@ -491,20 +490,6 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-
-
--(void)fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt{
-    
-}
-
--(void)fbSessionInvalidated{
-    
-}
-
--(void)fbDidLogout{
-    
 }
 
 

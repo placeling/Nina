@@ -11,7 +11,6 @@
 #import "ASIFormDataRequest+OAuth.h"
 #import "ASIHTTPRequest+OAuth.h"
 #import "FlurryAnalytics.h"
-#import "NinaAppDelegate.h"
 #import <RestKit/RestKit.h>
 #import "WBNoticeView.h"
 #import "MTPopupWindow.h"
@@ -94,9 +93,7 @@
     
     [defaults synchronize];
     
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    
-    [appDelegate.facebook logout];
+    [FBSession.activeSession closeAndClearTokenInformation];
 
 }
 
@@ -458,6 +455,22 @@
     [request startAsynchronous];    
 }
 
++(void) updateFacebookCredentials:(FBSession*)session forUser:(User*)user{
+    
+    if (FBSession.activeSession.isOpen) {
+            NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/facebook/add", [NinaHelper getHostname]];
+            NSURL *url = [NSURL URLWithString:urlString];
+            
+            ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
+            [request setPostValue:[FBSession.activeSession accessToken] forKey:@"token" ];
+            [request setPostValue:[FBSession.activeSession expirationDate] forKey:@"expiry" ];
+            
+            [NinaHelper signRequest:request];
+            
+            [request startAsynchronous];//fire and forget
+    }
+    
+}
 
 
 
@@ -467,10 +480,6 @@
 
 +(NSString*) getConsumerSecret{
     return @"kODuCtHsB0poBe62J3FfWB2rCEUeyeYQkEWW0R6i";
-}
-
-+(NSString*) getFacebookAppId{
-    return @"280758755284342";
 }
 
 

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NinaHelper.h"
 #import <MapKit/MapKit.h>
 #import "ASIHTTPRequest.h"
 #import "CategoryController.h"

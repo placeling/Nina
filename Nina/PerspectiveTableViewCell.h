@@ -8,10 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Perspective.h"
-#import "NinaHelper.h"
 #import <MessageUI/MFMailComposeViewController.h>
-#import <RestKit/RestKit.h>
-#import "Facebook.h"
 #import "FollowViewController.h"
 #import "PerspectiveDisplayProtocol.h"
 
@@ -30,7 +27,7 @@
     UILabel *titleLabel;
     UILabel *createdAtLabel;
     
-    UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate, PerspectiveDisplayProtocol> *requestDelegate;
+    UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, PerspectiveDisplayProtocol> *requestDelegate;
     UIScrollView *scrollView;
     
     UIView *socialFooter;
@@ -49,7 +46,7 @@
 }
 
 @property(nonatomic,retain) Perspective *perspective; 
-@property(nonatomic,assign) UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate, FBDialogDelegate,PerspectiveDisplayProtocol> *requestDelegate;
+@property(nonatomic,assign) UIViewController<RKObjectLoaderDelegate, MFMailComposeViewControllerDelegate,PerspectiveDisplayProtocol> *requestDelegate;
 @property(nonatomic,retain) IBOutlet UIImageView *userImage;
 @property(nonatomic,retain) IBOutlet UIButton *shareSheetButton;
 @property(nonatomic,retain) IBOutlet UILabel *memoText;

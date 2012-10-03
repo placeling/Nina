@@ -7,9 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NinaHelper.h"
-#import <RestKit/RestKit.h>
-#import "Facebook.h"
 #import "LoginController.h"
 #import "ApplicationController.h"
 #import "Question.h"

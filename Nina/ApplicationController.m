@@ -174,46 +174,7 @@
     
 }
 
-- (void)fbDidLogin {
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    facebook.sessionDelegate = appDelegate; //put back where found
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
-    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
-    [defaults synchronize];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/facebook/add", [NinaHelper getHostname]];
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
-    [request setPostValue:[facebook accessToken] forKey:@"token" ];
-    [request setPostValue:[facebook expirationDate] forKey:@"expiry" ];
-    
-    [NinaHelper signRequest:request];
-    
-    [request startAsynchronous];//fire and forget
-    
-}
 
-- (void)fbDidNotLogin:(BOOL)cancelled{
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    facebook.sessionDelegate = appDelegate; //put back where found
-    [FlurryAnalytics logEvent:@"REJECTED_PERMISSIONS"];
-} 
-
--(void)fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt{
-    
-}
-
--(void)fbSessionInvalidated{
-    
-}
-
--(void)fbDidLogout{
-    
-}
 
 
 @end

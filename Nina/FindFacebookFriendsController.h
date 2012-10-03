@@ -7,11 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <RestKit/RestKit.h>
-#import "NinaHelper.h"
 #import "NinaAppDelegate.h"
 
-@interface FindFacebookFriendsController : UIViewController<UITableViewDelegate, UITableViewDataSource, RKObjectLoaderDelegate, FBDialogDelegate>{    
+@interface FindFacebookFriendsController : UIViewController<UITableViewDelegate, UITableViewDataSource, RKObjectLoaderDelegate>{    
     bool loading;
     NSMutableArray *searchUsers;
     UITableView *_tableView;
@@ -19,7 +17,5 @@
 
 @property(nonatomic, retain) NSMutableArray *facebookFriends; 
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
-
--(IBAction)showFacebookInvite;
 
 @end

@@ -8,10 +8,9 @@
 
 #import "FacebookRegetViewController.h"
 
-#import "NinaHelper.h"
-#import "Facebook.h"
 #import "NinaAppDelegate.h"
 #import "FlurryAnalytics.h"
+#import "UserManager.h"
 
 @interface FacebookRegetViewController ()
 
@@ -29,35 +28,17 @@
 }
 
 -(IBAction) signupFacebook{
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-
-    NSArray* permissions =  [[NSArray arrayWithObjects:
-                              @"email", @"publish_stream",@"offline_access", nil] retain];
-    
-    facebook.sessionDelegate = self;
-    [facebook authorize:permissions];
-    
-    [permissions release];            
-
+    [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObjects:@"email", @"publish_actions", nil] defaultAudience:FBSessionDefaultAudienceFriends allowLoginUI:TRUE completionHandler:^(FBSession *session,
+                                                                                                                                                                                                          FBSessionState state, NSError *error) {
+            User *user = [UserManager sharedMeUser];
+            [NinaHelper updateFacebookCredentials:session forUser:user];
+    }];
 }
-
--(void) fbDidLogin{
-    [super fbDidLogin];
-    [self close];
-}
-
 
 -(IBAction) logout{
     [NinaHelper clearCredentials];
     [self close];
-}
-
-- (void)fbDidNotLogin:(BOOL)cancelled{
-    [super fbDidNotLogin:cancelled];
-    [self logout];
-} 
-   
+}   
 
 - (void)didReceiveMemoryWarning
 {
@@ -76,20 +57,6 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [StyleHelper styleNavigationBar:self.navigationController.navigationBar];
-}
-
-
-
--(void)fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt{
-    
-}
-
--(void)fbSessionInvalidated{
-    
-}
-
--(void)fbDidLogout{
-    
 }
 
 

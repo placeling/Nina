@@ -9,7 +9,7 @@
 #import "PostSignupViewController.h"
 #import "UIImage+Resize.h"
 #import "UIImageView+WebCache.h"
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import "FlurryAnalytics.h"
 
 

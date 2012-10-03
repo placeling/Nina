@@ -8,7 +8,7 @@
 
 #import "FollowViewController.h"
 #import "User.h"
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import "MemberProfileViewController.h"
 #import "UIImageView+WebCache.h"
 #import <QuartzCore/QuartzCore.h>

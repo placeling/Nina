@@ -32,11 +32,6 @@
     self.facebookFriends = [[[NSMutableArray alloc]init] autorelease];
 
     RKObjectManager* objectManager = [RKObjectManager sharedManager];
-    //NSManagedObjectContext *managedObjectContext = objectManager.objectStore.managedObjectContext;
-        
-    UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:self action:@selector(showFacebookInvite)];
-    self.navigationItem.rightBarButtonItem = shareButton;
-    [shareButton release];
     
     NSString *targetURL = [NSString stringWithFormat:@"/v1/auth/facebook/friends"]; 
     
@@ -72,30 +67,6 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-
--(IBAction)showFacebookInvite{
-    NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-    Facebook *facebook = appDelegate.facebook;
-    
-    NSString *username = [NinaHelper getUsername];
-    
-    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [NinaHelper getFacebookAppId], @"app_id",
-                                   @"https://www.placeling.com", @"link",
-                                   [NSString stringWithFormat:@"Join %@ on Placeling", username], @"name",
-                                   nil];
-    
-    [facebook dialog:@"feed" andParams:params andDelegate:self];    
-}
-
-- (void)dialogDidComplete:(FBDialog *)dialog{
-    DLog(@"Share on Facebook Dialog completed %@", dialog)
-}
-
-- (void)dialogDidNotComplete:(FBDialog *)dialog{
-    DLog(@"Share on Facebook Dialog completed %@", dialog)
 }
 
 
@@ -156,7 +127,6 @@
             [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
             cell.textLabel.text = @"None of your Facebook friends are using Placeling.";
             [cell.detailTextLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-            cell.detailTextLabel.text = @"Click to Invite them";
         } else {    
             User *user = [self.facebookFriends objectAtIndex:indexPath.row];
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -227,7 +197,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row ==0 && [self.facebookFriends count] ==0){
-        [self showFacebookInvite];
+        
     } else {
         User *user = [self.facebookFriends objectAtIndex:indexPath.row];
         MemberProfileViewController *memberProfileViewController = [[MemberProfileViewController alloc] init];

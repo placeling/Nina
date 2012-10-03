@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "Photo.h"
-#import <RestKit/RestKit.h>
 #import "Authentication.h"
 #import "FGalleryViewController.h"
 

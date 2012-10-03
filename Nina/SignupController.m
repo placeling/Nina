@@ -9,7 +9,7 @@
 #import "SignupController.h"
 #import "NinaAppDelegate.h"
 #import "EditableTableCell.h"
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import "GenericWebViewController.h"
 #import "LoginController.h"
 #import "PostSignupViewController.h"
@@ -51,8 +51,7 @@
     } else {
         email = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]).textField.text;
         password = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]]).textField.text;
-    }
-    
+    }    
     
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
@@ -70,10 +69,8 @@
     
     
     if (fbDict){
-        NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-        Facebook *facebook = appDelegate.facebook;
-        [request setPostValue:facebook.accessToken forKey:@"facebook_access_token"];
-        [request setPostValue:facebook.expirationDate forKey:@"facebook_expiry_date"];
+        [request setPostValue:[FBSession.activeSession accessToken] forKey:@"facebook_access_token"];
+        [request setPostValue:[FBSession.activeSession expirationDate] forKey:@"facebook_expiry_date"];
         [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"facebook_id"];
     }else{
         [request setPostValue:password forKey:@"password"];
@@ -213,13 +210,14 @@
     self.tableView.tableHeaderView.userInteractionEnabled = TRUE;
     
     [self.tableFooterView setAutoresizingMask:UIViewAutoresizingNone];
+    [self.tableHeaderView setAutoresizingMask:UIViewAutoresizingNone];
     
     self.navigationItem.title = @"Signup";
     
     // Background image
     self.tableView.opaque = NO;
     self.tableView.backgroundView = nil;
-    UIImage *image = [UIImage imageNamed:@"canvas.png"];
+    UIImage *image = [UIImage imageNamed:@"CanvasBG.png"];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:image];
     
     self.tableView.tableFooterView = self.tableFooterView;
@@ -304,90 +302,72 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil) {
 
-        EditableTableCell *eCell = [[[EditableTableCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];   
-        eCell.textField.text = @"";
-        
-        if(fbDict){
-            if (indexPath.row == 0){
-                eCell.textLabel.text = @"username";
-                if ([fbDict objectForKey:@"username"]){
-                    NSString *username = [fbDict objectForKey:@"username"];
-                    
-                    NSCharacterSet *charactersToRemove =
-                    [[ NSCharacterSet alphanumericCharacterSet ] invertedSet ];
-                    
-                    username =
-                    [[ username componentsSeparatedByCharactersInSet:charactersToRemove ]
-                     componentsJoinedByString:@"" ];
-                    
-                    eCell.textField.text = username;
-                    eCell.textField.returnKeyType = UIReturnKeyGo;
-                    eCell.textField.delegate = self;
-                    eCell.textField.tag = 3;
-                    [eCell.textField addTarget:self action:@selector(usernameChanged:) forControlEvents:UIControlEventEditingChanged];
-                    self.urlLabel.text = [NSString stringWithFormat:@"placeling.com/%@", username];
-                }
-                
-                //[eCell.textField becomeFirstResponder];
-            } 
+    EditableTableCell *eCell = [[[EditableTableCell alloc] initWithReuseIdentifier:@"Cell"] autorelease];
+    eCell.textField.text = @"";
+    eCell.userInteractionEnabled = true;
+    
+    if(fbDict){
+        if (indexPath.row == 0){
+            eCell.textLabel.text = @"username";
+            eCell.textField.returnKeyType = UIReturnKeyDefault;
+            eCell.textField.delegate = self;
+            eCell.textField.tag = 1;
             
-            /*
-            else if (indexPath.row == 1){
-                eCell.textLabel.text = @"email";
-                eCell.textField.text = [fbDict objectForKey:@"email"];
-                eCell.textField.enabled = false;
-                eCell.textField.textColor = [UIColor grayColor];
-            } 
-            else if (indexPath.row == 1){
-                eCell.textLabel.text = @"password";
-                eCell.textField.secureTextEntry = true;
-                eCell.textField.tag = 4;
-                eCell.textField.delegate = self;
-                eCell.textField.returnKeyType = UIReturnKeyGo;
-            }*/
-        } else {
-            if (indexPath.row == 0){
-                eCell.textLabel.text = @"username";
-                eCell.textField.returnKeyType = UIReturnKeyDefault;
-                eCell.textField.delegate = self;
-                eCell.textField.tag = 1;
-                [eCell.textField addTarget:self action:@selector(usernameChanged:) forControlEvents:UIControlEventEditingChanged];
+            [eCell.textField addTarget:self action:@selector(usernameChanged:) forControlEvents:UIControlEventEditingChanged];
+            
+            if ([fbDict objectForKey:@"username"]){
+                NSString *username = [fbDict objectForKey:@"username"];
                 
-                //[eCell.textField becomeFirstResponder];
-            } else if (indexPath.row == 1){
-                eCell.textLabel.text = @"email";
-                eCell.textField.returnKeyType = UIReturnKeyDefault;
-                eCell.textField.delegate = self;
-                eCell.textField.tag = 2;
-                eCell.textField.keyboardType = UIKeyboardTypeEmailAddress;
-            }else if (indexPath.row == 2){
-                eCell.textLabel.text = @"password";
-                eCell.textField.secureTextEntry = true;
-                eCell.textField.returnKeyType = UIReturnKeyDefault;
-                eCell.textField.delegate = self;
-                eCell.textField.tag = 3;
-            }else if (indexPath.row == 3){
-                eCell.textLabel.text = @"confirm";
-                eCell.textField.secureTextEntry = true;
-                eCell.textField.tag = 4;
-                eCell.textField.delegate = self;
+                NSCharacterSet *charactersToRemove =
+                [[ NSCharacterSet alphanumericCharacterSet ] invertedSet ];
+                
+                username =
+                [[ username componentsSeparatedByCharactersInSet:charactersToRemove ]
+                 componentsJoinedByString:@"" ];
+                
+                eCell.textField.text = username;
                 eCell.textField.returnKeyType = UIReturnKeyGo;
+                eCell.textField.delegate = self;
+                self.urlLabel.text = [NSString stringWithFormat:@"placeling.com/%@", username];
             }
+        } 
+        
+    } else {
+        if (indexPath.row == 0){
+            eCell.textLabel.text = @"username";
+            eCell.textField.returnKeyType = UIReturnKeyDefault;
+            eCell.textField.delegate = self;
+            eCell.textField.tag = 1;
+            [eCell.textField addTarget:self action:@selector(usernameChanged:) forControlEvents:UIControlEventEditingChanged];
+            
+            [eCell.textField becomeFirstResponder];
+        } else if (indexPath.row == 1){
+            eCell.textLabel.text = @"email";
+            eCell.textField.returnKeyType = UIReturnKeyDefault;
+            eCell.textField.delegate = self;
+            eCell.textField.tag = 2;
+            eCell.textField.keyboardType = UIKeyboardTypeEmailAddress;
+        }else if (indexPath.row == 2){
+            eCell.textLabel.text = @"password";
+            eCell.textField.secureTextEntry = true;
+            eCell.textField.returnKeyType = UIReturnKeyDefault;
+            eCell.textField.delegate = self;
+            eCell.textField.tag = 3;
+        }else if (indexPath.row == 3){
+            eCell.textLabel.text = @"confirm";
+            eCell.textField.secureTextEntry = true;
+            eCell.textField.tag = 4;
+            eCell.textField.delegate = self;
+            eCell.textField.returnKeyType = UIReturnKeyGo;
         }
-
-        cell = eCell;
     }
+
     
     // Configure the cell...
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    eCell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    return cell;
+    return eCell;
 }
 
 

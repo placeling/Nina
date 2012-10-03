@@ -9,7 +9,7 @@
 #import "FriendFindController.h"
 #import "User.h"
 #import "MemberProfileViewController.h"
-#import "JSON.h"
+#import "SBJson.h"
 #import "UIImageView+WebCache.h"
 #import "Photo.h"
 #import "FlurryAnalytics.h"
@@ -162,35 +162,26 @@
         [baseAlert show];
         [baseAlert release];
     } else {
-        NinaAppDelegate *appDelegate = (NinaAppDelegate*)[[UIApplication sharedApplication] delegate];
-        Facebook *facebook = appDelegate.facebook;
         
-        if (![facebook isSessionValid]) {
-            NSArray* permissions =  [[NSArray arrayWithObjects:
-                                      @"email", @"publish_stream",@"offline_access", nil] retain];
-            
-            facebook.sessionDelegate = self;
-            [facebook authorize:permissions];
-            
-            [permissions release];
-        } else {    
+        if (FBSession.activeSession.isOpen) {
             [FlurryAnalytics logEvent:@"Facebook_friend_finder"];
             FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
             
             [self.navigationController pushViewController:findFacebookFriendsController animated:true];
             [findFacebookFriendsController release];
+        } else {
+            [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObjects:@"email", @"publish_actions", nil] defaultAudience:FBSessionDefaultAudienceFriends allowLoginUI:TRUE completionHandler:^(FBSession *session,
+                                                                                                                                                                                                                  FBSessionState state, NSError *error) {
+                FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
+                
+                [self.navigationController pushViewController:findFacebookFriendsController animated:true];
+                [findFacebookFriendsController release];
+                
+            }];
+        
         }    
     }
     
-}
-
--(void)fbDidLogin{
-    [super fbDidLogin];
-    
-    FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
-    
-    [self.navigationController pushViewController:findFacebookFriendsController animated:true];
-    [findFacebookFriendsController release];    
 }
 
 #pragma mark - RKObjectLoaderDelegate methods

@@ -7,7 +7,7 @@
 //
 
 #import "ActivityFeedViewController.h"
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import "PlacePageViewController.h"
 #import "MemberProfileViewController.h"
 #import "User.h"

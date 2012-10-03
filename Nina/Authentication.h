@@ -6,10 +6,6 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <RestKit/RestKit.h>
-#import "NinaHelper.h"
-
 @interface Authentication : NSObject{
     NSString *provider;
     NSString *uid;

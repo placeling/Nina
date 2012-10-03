@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "NSString+SBJSON.h"
+#import "SBJSON.h"
 #import "PerspectivePlaceMark.h"
 #import "PlaceMark.h"
 #import "Perspective.h"

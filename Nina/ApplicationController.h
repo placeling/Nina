@@ -7,13 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NinaHelper.h"
-#import "FBConnect.h"
 
-
-
-
-@interface ApplicationController : UIViewController<FBSessionDelegate>
+@interface ApplicationController : UIViewController
 
 -(BOOL) authorizeTwitter;
 -(void) handleTwitterCredentials:(NSDictionary*)creds;
