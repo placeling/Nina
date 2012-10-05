@@ -2,7 +2,7 @@
 //  CMPopTipView.h
 //
 //  Created by Chris Miles on 18/07/10.
-//  Copyright (c) Chris Miles 2010-2011.
+//  Copyright (c) Chris Miles 2010-2012.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -10,10 +10,10 @@
 //  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 //  copies of the Software, and to permit persons to whom the Software is
 //  furnished to do so, subject to the following conditions:
-//  
+//
 //  The above copyright notice and this permission notice shall be included in
 //  all copies or substantial portions of the Software.
-//  
+//
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,61 +23,66 @@
 //  THE SOFTWARE.
 //
 
+/*
+ Version: 1.2.0
+ */
+
+
 /** \brief	Display a speech bubble-like popup on screen, pointing at the
-			designated view or button.
+ designated view or button.
  
-	A UIView subclass drawn using core graphics. Pops up (optionally animated)
-	a speech bubble-like view on screen, a rounded rectangle with a gradiant
-	fill containing a specified text message, drawn with a pointer dynamically
-	positioned to point at the center of the designated button or view.
+ A UIView subclass drawn using core graphics. Pops up (optionally animated)
+ a speech bubble-like view on screen, a rounded rectangle with a gradiant
+ fill containing a specified text message, drawn with a pointer dynamically
+ positioned to point at the center of the designated button or view.
  
  Example 1 - point at a UIBarButtonItem in a nav bar:
  
-	- (void)showPopTipView {
-		NSString *message = @"Start by adding a waterway to your favourites.";
-		CMPopTipView *popTipView = [[CMPopTipView alloc] initWithMessage:message];
-		popTipView.delegate = self;
-		[popTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
-		
-		self.myPopTipView = popTipView;
-		[popTipView release];
-	}
-
-	- (void)dismissPopTipView {
-		[self.myPopTipView dismissAnimated:NO];
-		self.myPopTipView = nil;
-	}
-
+ - (void)showPopTipView {
+ NSString *message = @"Start by adding a waterway to your favourites.";
+ CMPopTipView *popTipView = [[CMPopTipView alloc] initWithMessage:message];
+ popTipView.delegate = self;
+ [popTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
  
-	#pragma mark CMPopTipViewDelegate methods
-	- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
-		// User can tap CMPopTipView to dismiss it
-		self.myPopTipView = nil;
-	}
-
+ self.myPopTipView = popTipView;
+ [popTipView release];
+ }
+ 
+ - (void)dismissPopTipView {
+ [self.myPopTipView dismissAnimated:NO];
+ self.myPopTipView = nil;
+ }
+ 
+ 
+ #pragma mark CMPopTipViewDelegate methods
+ - (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
+ // User can tap CMPopTipView to dismiss it
+ self.myPopTipView = nil;
+ }
+ 
  Example 2 - pointing at a UIButton:
-
-	- (IBAction)buttonAction:(id)sender {
-		// Toggle popTipView when a standard UIButton is pressed
-		if (nil == self.roundRectButtonPopTipView) {
-			self.roundRectButtonPopTipView = [[[CMPopTipView alloc] initWithMessage:@"My message"] autorelease];
-			self.roundRectButtonPopTipView.delegate = self;
-
-			UIButton *button = (UIButton *)sender;
-			[self.roundRectButtonPopTipView presentPointingAtView:button inView:self.view animated:YES];
-		}
-		else {
-			// Dismiss
-			[self.roundRectButtonPopTipView dismissAnimated:YES];
-			self.roundRectButtonPopTipView = nil;
-		}	
-	}
-
-	#pragma mark CMPopTipViewDelegate methods
-	- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
-		// User can tap CMPopTipView to dismiss it
-		self.roundRectButtonPopTipView = nil;
-	}
+ 
+ - (IBAction)buttonAction:(id)sender {
+ // Toggle popTipView when a standard UIButton is pressed
+ if (nil == self.roundRectButtonPopTipView) {
+ self.roundRectButtonPopTipView = [[[CMPopTipView alloc] initWithMessage:@"My message"] autorelease];
+ self.roundRectButtonPopTipView.delegate = self;
+ 
+ UIButton *button = (UIButton *)sender;
+ [self.roundRectButtonPopTipView presentPointingAtView:button inView:self.view animated:YES];
+ }
+ else {
+ // Dismiss
+ [self.roundRectButtonPopTipView dismissAnimated:YES];
+ self.roundRectButtonPopTipView = nil;
+ }
+ }
+ 
+ #pragma mark CMPopTipViewDelegate methods
+ - (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
+ // User can tap CMPopTipView to dismiss it
+ self.roundRectButtonPopTipView = nil;
+ }
  
  */
 
@@ -104,9 +109,11 @@ typedef enum {
 	id						targetObject;
 	UIColor					*textColor;
 	UIFont					*textFont;
+    UIColor                 *borderColor;
+    CGFloat                 borderWidth;
     CMPopTipAnimation       animation;
-
-	@private
+    
+@private
 	CGSize					bubbleSize;
 	CGFloat					cornerRadius;
 	BOOL					highlight;
@@ -120,12 +127,15 @@ typedef enum {
 @property (nonatomic, retain)			UIColor					*backgroundColor;
 @property (nonatomic, assign)		id<CMPopTipViewDelegate>	delegate;
 @property (nonatomic, assign)			BOOL					disableTapToDismiss;
+@property (nonatomic, assign)			BOOL					dismissTapAnywhere;
 @property (nonatomic, retain)			NSString				*message;
 @property (nonatomic, retain)           UIView	                *customView;
 @property (nonatomic, retain, readonly)	id						targetObject;
 @property (nonatomic, retain)			UIColor					*textColor;
 @property (nonatomic, retain)			UIFont					*textFont;
 @property (nonatomic, assign)			UITextAlignment			textAlignment;
+@property (nonatomic, retain)			UIColor					*borderColor;
+@property (nonatomic, assign)			CGFloat					borderWidth;
 @property (nonatomic, assign)           CMPopTipAnimation       animation;
 @property (nonatomic, assign)           CGFloat                 maxWidth;
 
@@ -136,7 +146,7 @@ typedef enum {
 - (void)presentPointingAtView:(UIView *)targetView inView:(UIView *)containerView animated:(BOOL)animated;
 - (void)presentPointingAtBarButtonItem:(UIBarButtonItem *)barButtonItem animated:(BOOL)animated;
 - (void)dismissAnimated:(BOOL)animated;
-
+- (void)autoDismissAnimated:(BOOL)animated atTimeInterval:(NSTimeInterval)timeInvertal;
 - (PointDirection) getPointDirection;
 
 @end

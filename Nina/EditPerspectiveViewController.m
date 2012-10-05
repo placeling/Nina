@@ -67,7 +67,7 @@
 -(void)updateDelayed{
     if (delayedPost){
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        if ( ![defaults objectForKey:@"delay_perspective_tip"] || [defaults objectForKey:@"delay_perspective_tip"] == false){ 
+        if ( ![defaults objectForKey:@"delay_perspective_tip"] || [defaults objectForKey:@"delay_perspective_tip"] == false){
             CMPopTipView *delayTip = [[CMPopTipView alloc] initWithMessage:@"For privacy, the timer will delay sharing, since you are nearby this place"];
             delayTip.backgroundColor = [UIColor colorWithRed:185/255.0 green:43/255.0 blue:52/255.0 alpha:1.0];
             //delayTip.delegate = self;
@@ -199,8 +199,6 @@
     }
     delayTime = 120; //default minutes to delay a delayed post
     
-    [self updateDelayed];
-    
     facebookEnabled = false;
     twitterEnabled = false;
     
@@ -226,6 +224,8 @@
     [StyleHelper styleSubmitTypeButton:self.takeButton];
     [StyleHelper styleSubmitTypeButton:self.existingButton];
     [self refreshImages];
+    
+    [self updateDelayed];
 }
 
 
