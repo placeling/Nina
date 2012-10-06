@@ -346,10 +346,13 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
                 [loader setOnDidLoadObjects:^(NSArray *objects){
                     User *user = [objects objectAtIndex:0];
                     [UserManager setUser:user];                    
-
-                    if ([self.navigationController.topViewController isKindOfClass:[HomeViewController class]]){
-                        [self.navigationController.topViewController refreshNotificationBadge];
-                    }                
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if ([self.navigationController.topViewController isKindOfClass:[HomeViewController class]]){
+                            [self.navigationController.topViewController refreshNotificationBadge];
+                        }
+                    });
+                    
+           
                 }];
             }];
         }
