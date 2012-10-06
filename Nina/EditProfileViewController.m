@@ -422,8 +422,8 @@
         }   
         [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica" size:12]];
         
-        CLLocationDegrees homeLat = [self.lat doubleValue];
-        CLLocationDegrees homeLng = [self.lng doubleValue];
+        CLLocationDegrees homeLat = [self.user.lat doubleValue];
+        CLLocationDegrees homeLng = [self.user.lng doubleValue];
         CLLocation *homeLocation = [[CLLocation alloc] initWithLatitude:homeLat longitude:homeLng];        
         
         CLLocationDistance distance = [self.currentLocation distanceFromLocation:homeLocation];
