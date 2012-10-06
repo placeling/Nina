@@ -252,6 +252,7 @@
 {
     [super viewWillAppear:animated];
     [StyleHelper styleBackgroundView:self.tableView];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
