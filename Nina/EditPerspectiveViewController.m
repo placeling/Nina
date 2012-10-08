@@ -168,8 +168,8 @@
     if (updatedMemo){ //handles case where this is called again after init (from taking photo)
         self.memoTextView.text = self.updatedMemo;
     } else {
-        if (self.perspective.notes && [self.perspective.notes length] > 0){
-            self.memoTextView.text = self.perspective.notes;
+        if (self.perspective.memo && [self.perspective.memo length] > 0){
+            self.memoTextView.text = self.perspective.memo;
         }else {
             self.memoTextView.placeholder = @"Use #hashtags in your notes to add another way to explore your places.";
         }
@@ -262,36 +262,37 @@
 
 
 -(IBAction)savePerspective{
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives", [NinaHelper getHostname], self.perspective.place.pid];
     
-    NSURL *url = [NSURL URLWithString:urlText];
+    self.perspective.memo = self.memoTextView.text;
+    self.perspective.mine = true;
+
+    NSMutableDictionary *paramDict = [[NSMutableDictionary alloc]init];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:self.memoTextView.text forKey:@"memo"];
+    //we have to set this because doing the loader.param thing overwrites the reverse object mapping
+    [paramDict setObject:self.memoTextView.text forKey:@"memo"];
+    [paramDict setObject:@"true" forKey:@"newpost"];
     
-    if (facebookEnabled){    
-        [request setPostValue:@"true" forKey:@"fb_post"];
+    if (facebookEnabled){
+        [paramDict setObject:@"true" forKey:@"fb_post"];
     }
     
     if (twitterEnabled){
-        [request setPostValue:@"true" forKey:@"twitter_post"];
+        [paramDict setObject:@"true" forKey:@"twitter_post"];
     }
     
     if ( delayedPost ){
-        [request setPostValue:[NSNumber numberWithInt:delayTime] forKey:@"post_delay"];
+        [paramDict setObject:[[NSNumber numberWithInt:delayTime] stringValue] forKey:@"post_delay"];
     }
     
-    self.perspective.notes = self.memoTextView.text;
-    self.perspective.mine = true;
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [objectManager postObject:self.perspective usingBlock:^(RKObjectLoader* loader) {
+        loader.method = RKRequestMethodPOST;
+        loader.params = paramDict;
+        loader.delegate = delegate;
+        loader.userData = [NSNumber numberWithInt:9]; //use as a tag
+    }];
     
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:delegate]; //whatever called this should handle it
-    [request setTag:9]; //this is the perspective modified request tag from placepageviewcontroller -iMack
-    
-    [NinaHelper signRequest:request];
-    [request setUploadProgressDelegate:hud];
-    
-    [request startAsynchronous];
+    [paramDict release];
     
     [delegate updatePerspective:self.perspective];
     [UserManager updatePerspective:self.perspective];

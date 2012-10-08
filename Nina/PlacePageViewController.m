@@ -8,8 +8,6 @@
 
 #import "PlacePageViewController.h"
 #import "NinaAppDelegate.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
 #import "UIButton+WebCache.h"
 
 #import <QuartzCore/QuartzCore.h>
@@ -24,8 +22,6 @@
 #import "MBProgressHUD.h"
 #import "PerspectiveTableViewCell.h"
 #import "GenericWebViewController.h"
-
-#import "ASIDownloadCache.h"
 
 #import "NearbySuggestedPlaceController.h"
 #import "NearbySuggestedMapController.h"
@@ -354,17 +350,55 @@ typedef enum {
         self.place.bookmarked = true;
         [self loadData];
 
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 6){    
+        //deleted perspective
+        if (self.homePerspectives){
+            for (Perspective *perspective in self.homePerspectives){
+                if (perspective.starred){
+                    [self.homePerspectives removeObject:perspective];
+                }
+            }
+        }
+        
+        [self.tableView reloadData];
     } else if ( [(NSNumber*)objectLoader.userData intValue] == 7){
         //flag perspective
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 9){
+        //perspective modified return
+        Perspective *perspective = [objects objectAtIndex:0];    
+        
+        if (myPerspective){
+            myPerspective.memo = perspective.memo;
+            myPerspective.photos = perspective.photos;
+            myPerspective.lastModified = perspective.lastModified;
+        } else {
+            myPerspective = perspective;
+            [homePerspectives insertObject:myPerspective atIndex:0];
+        }
+        
+        //handles updates tags, etc
+        if ( self.place.highlighted ){
+            self.place = perspective.place;
+            self.place.highlighted = true;
+        } else {
+            self.place = perspective.place;
+            self.place.highlighted = false;
+        }
+        
+        myPerspective.place = self.place;
+        
+        self.place.bookmarked = true;
+        [self.tableView reloadData];
+        [self loadData];
     }
-    
+
     [self.tableView reloadData];
     
 }
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
     [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
-    DLog(@"Encountered an error: %@", error); 
+    DLog(@"Encountered an error: %@", error);
 }
 
 
@@ -572,72 +606,6 @@ typedef enum {
 }
 
 
-
-#pragma mark - Selectors for responding to initial URLs
-
--(void)requestFailed:(ASIHTTPRequest *)request{
-    [NinaHelper handleBadRequest:request sender:self];
-}
-
-
-- (void)requestFinished:(ASIHTTPRequest *)request{    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
-    if (200 != [request responseStatusCode]){
-		[NinaHelper handleBadRequest:request sender:self];
-	} else {
-  
-        switch( [request tag] ){
-            case 6:{
-                //deleted perspective
-                NSString *responseString = [request responseString];        
-                DLog(@"%@", responseString);
-                if (self.homePerspectives){
-                    for (Perspective *perspective in self.homePerspectives){
-                        if (perspective.starred){
-                            [self.homePerspectives removeObject:perspective];
-                        }
-                    }
-                }
-                        
-                [self.tableView reloadData];
-                break;
-            }
-            case 9:{
-                //perspective modified return
-                NSString *responseString = [request responseString];        
-                DLog(@"%@", responseString);
-                NSDictionary *jsonString = [responseString JSONValue];
-                
-                if (myPerspective){
-                    [myPerspective updateFromJsonDict:jsonString];
-                } else {
-                    myPerspective = [[Perspective alloc]initFromJsonDict:jsonString];
-                    [homePerspectives insertObject:myPerspective atIndex:0];
-                }
-                
-                //handles updates tags, etc
-                if ( self.place.highlighted ){
-                    [self.place updateFromJsonDict:[jsonString objectForKey:@"place"]];
-                    self.place.highlighted = true;
-                } else {
-                    [self.place updateFromJsonDict:[jsonString objectForKey:@"place"]];
-                    self.place.highlighted = false;
-                }
-                
-                myPerspective.place = self.place;                
-                
-                self.place.bookmarked = true;
-                [self.tableView reloadData];      
-                [self loadData];
-                
-                break;
-            }
-        }
-
-	}
-}
-
 #pragma mark - UIScrollViewDelegate
 
 
@@ -645,14 +613,13 @@ typedef enum {
 
 -(void) deletePerspective:(Perspective*)perspective{
     
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/", [NinaHelper getHostname], perspective.place.pid];
-
-    NSURL *url = [NSURL URLWithString:urlText];
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
-    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-    
-    request.delegate = self;
-    request.tag = 6;
+    [objectManager deleteObject:nil usingBlock:^(RKObjectLoader *loader) {
+        loader.delegate = self;
+        loader.resourcePath = [NSString stringWithFormat:@"/v1/places/%@/perspectives/", perspective.place.pid];
+        loader.userData = [NSNumber numberWithInt:6];
+    }];
     
     self.place.perspectiveCount -=1;
     
@@ -663,10 +630,6 @@ typedef enum {
     }
     [UserManager removePerspective:perspective];
     self.place.dirty = true;
-    
-    [request setRequestMethod:@"DELETE"];
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
 }
 
 -(void) blankLoad{

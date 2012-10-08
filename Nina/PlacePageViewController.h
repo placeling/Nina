@@ -10,7 +10,6 @@
 #import "Perspective.h"
 #import "Place.h"
 #import "User.h"
-#import "ASIHTTPRequestDelegate.h"
 #import "BookmarkTableViewCell.h"
 #import "EditPerspectiveViewController.h"
 #import "CustomSegmentedControl.h"
@@ -27,7 +26,7 @@ typedef enum {
 
 //#import "EditViewController.h"
 
-@interface PlacePageViewController : ApplicationController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, ASIHTTPRequestDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate, MFMailComposeViewControllerDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol, UIWebViewDelegate> {
+@interface PlacePageViewController : ApplicationController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate,BookmarkTableViewDelegate, EditPerspectiveDelegate, CustomSegmentedControlDelegate, LoginControllerDelegate, MFMailComposeViewControllerDelegate, RKObjectLoaderDelegate, PerspectiveDisplayProtocol, UIWebViewDelegate> {
     NSString *place_id; 
     NSString *perspective_id; 
     NSString *google_ref;

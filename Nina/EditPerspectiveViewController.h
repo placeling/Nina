@@ -25,7 +25,7 @@
 
 @interface EditPerspectiveViewController : ApplicationController<UITextViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, ASIHTTPRequestDelegate>{
     Perspective *_perspective;
-    id<EditPerspectiveDelegate> delegate;
+    id<EditPerspectiveDelegate, RKObjectLoaderDelegate> delegate;
     
     IBOutlet UIPlaceHolderTextView *memoTextView;
     UIButton *photoButton;
@@ -68,7 +68,7 @@
 
 @property(nonatomic,retain) NSMutableDictionary *uploadingPics;
 
-@property(nonatomic,assign) id<EditPerspectiveDelegate> delegate;
+@property(nonatomic,assign) id<EditPerspectiveDelegate, RKObjectLoaderDelegate> delegate;
 
 - (id) initWithPerspective:(Perspective *)perspective;
 -(IBAction)savePerspective;

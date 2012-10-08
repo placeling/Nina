@@ -111,8 +111,14 @@
     
     // Now register the mapping with the provider
     [objectManager.mappingProvider setSerializationMapping:suggestionSerializationMapping forClass:[Suggestion class] ];
-    
     [router routeClass:[Suggestion class] toResourcePath:@"/v1/users/:userId/suggestions" forMethod:RKRequestMethodPOST];
+    
+    
+    RKObjectMapping* perspectiveSerializationMapping = [RKObjectMapping mappingForClass:[Perspective class] ];
+    [perspectiveSerializationMapping mapAttributes:@"memo", nil];
+    [objectManager.mappingProvider setSerializationMapping:perspectiveSerializationMapping forClass:[Perspective class] ];
+    
+    [router routeClass:[Perspective class] toResourcePath:@"/v1/places/:placeId/perspectives" forMethod:RKRequestMethodPOST];
     
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     

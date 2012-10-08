@@ -17,7 +17,7 @@
     Place *place;
 
     NSString *perspectiveId;
-    NSString *notes;
+    NSString *memo;
     NSString *url;
     NSArray *tags;
     NSMutableArray *photos; // Array of Photo objects
@@ -36,7 +36,7 @@
 
 @property (nonatomic, retain) User *user;
 @property (nonatomic, retain) Place *place;
-@property (nonatomic, retain) NSString *notes;
+@property (nonatomic, retain) NSString *memo;
 @property (nonatomic, retain) NSArray *tags;
 @property (nonatomic, retain) NSMutableArray *photos;
 @property (nonatomic, assign) BOOL starred;
@@ -60,6 +60,7 @@
 -(void) star;
 -(void) unstar;
 
+-(NSString*)getPlaceId;
 -(NSString*)thumbUrl;
 -(NSString*)likersText;
 

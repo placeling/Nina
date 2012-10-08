@@ -37,9 +37,9 @@
     textAreaSize.height = hardMaxCellHeight;
     textAreaSize.width = 233;
     
-    CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize textSize = [perspective.memo sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    if ( perspective.notes &&  [perspective.notes length] > 0 ){
+    if ( perspective.memo &&  [perspective.memo length] > 0 ){
         heightCalc += MAX(textSize.height+3, 10);
     } else {
         heightCalc += 10;
@@ -57,7 +57,7 @@
         heightCalc += 160;
     }
     
-    if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
+    if ( ( perspective.memo &&  [perspective.memo length] > 0 ) || [perspective.photos count] > 0 ){
         heightCalc += 50 + 3;
     } 
     
@@ -77,10 +77,10 @@
     maxAreaSize.height = hardMaxCellHeight;
     maxAreaSize.width = 233;
     
-    CGSize textSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize textSize = [perspective.memo sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
     
-    CGSize maxTextSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:maxAreaSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize maxTextSize = [perspective.memo sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:maxAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
     heightCalc += MAX(textSize.height+3, 10);
     
@@ -96,7 +96,7 @@
         heightCalc += 24+3;
     }
     
-    if ( ( perspective.notes &&  [perspective.notes length] > 0 ) || [perspective.photos count] > 0 ){
+    if ( ( perspective.memo &&  [perspective.memo length] > 0 ) || [perspective.photos count] > 0 ){
         heightCalc += 50 + 3;
     }
     
@@ -108,7 +108,7 @@
 +(void) setupCell:(PerspectiveTableViewCell*)cell forPerspective:(Perspective*)perspective userSource:(BOOL)userSource{
     CGFloat verticalCursor = cell.titleLabel.frame.origin.y + cell.titleLabel.frame.size.height +3;
     cell.perspective = perspective;
-    cell.memoText.text = perspective.notes;
+    cell.memoText.text = perspective.memo;
     
     cell.createdAtLabel.text = [NinaHelper dateDiff:perspective.lastModified];
     BOOL hasContent = FALSE;
@@ -148,18 +148,18 @@
     memoSize.width = 233;
     memoSize.height = 140;
         
-    if(perspective.notes && perspective.notes.length > 0){
-        cell.memoText.text = perspective.notes;
+    if(perspective.memo && perspective.memo.length > 0){
+        cell.memoText.text = perspective.memo;
         
         CGSize textSize;
         
         if (!cell.expanded){
-            textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:cell.memoText.frame.size lineBreakMode:UILineBreakModeWordWrap];
+            textSize = [perspective.memo sizeWithFont:cell.memoText.font constrainedToSize:cell.memoText.frame.size lineBreakMode:UILineBreakModeWordWrap];
         } else {
             memoSize.height = hardMaxCellHeight;
-            textSize = [perspective.notes sizeWithFont:cell.memoText.font constrainedToSize:memoSize lineBreakMode:UILineBreakModeWordWrap];
+            textSize = [perspective.memo sizeWithFont:cell.memoText.font constrainedToSize:memoSize lineBreakMode:UILineBreakModeWordWrap];
         }
-        if ( [perspective.notes length] > 0 ){
+        if ( [perspective.memo length] > 0 ){
             textSize.height = MAX(textSize.height, 10);
         } 
         
@@ -177,7 +177,7 @@
     textAreaSize.height = hardMaxCellHeight;
     textAreaSize.width = 233;
     
-    CGSize tempSize = [perspective.notes sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize tempSize = [perspective.memo sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
     if (tempSize.height > cell.memoText.frame.size.height) {
         cell.expanded = false;

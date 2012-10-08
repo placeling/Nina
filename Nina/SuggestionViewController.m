@@ -12,6 +12,7 @@
 #import "PlacePageViewController.h"
 #import "UIImageView+WebCache.h"
 #import "MemberProfileViewController.h"
+#import "StyleHelper.h"
 
 @interface SuggestionViewController ()
 -(void)contentLoad;
@@ -114,7 +115,7 @@
         editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:myPerspective];
     } else {
         Perspective *newPerspective = [[Perspective alloc] init];
-        newPerspective.notes = self.suggestion.message;
+        newPerspective.memo = self.suggestion.message;
         newPerspective.place = self.suggestion.place;
         newPerspective.photos = [[[NSMutableArray alloc] initWithCapacity:0] autorelease];
         editPerspectiveViewController = [[EditPerspectiveViewController alloc] initWithPerspective:newPerspective];
