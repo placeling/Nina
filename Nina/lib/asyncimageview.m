@@ -15,7 +15,7 @@
 
 @implementation AsyncImageView
 
-@synthesize photo=_photo;
+@synthesize photo=_photo, networkGallery;
 
 
 - (id) initWithPhoto:(Photo *)photo{
@@ -29,7 +29,8 @@
 	[_request cancel];
     _request.delegate = nil;
 	[_request release];
-	[data release]; 
+	[data release];
+    [networkGallery release];
     [_photo release];
     [super dealloc];
 }
@@ -65,6 +66,33 @@
     [self loadImage];
 }
 
+-(void) handleTrashButtonTouch:(id)sender{    
+    
+    UIAlertView *baseAlert;
+    NSString *alertMessage = @"Are you sure you want to delete this photo?";
+    baseAlert = [[UIAlertView alloc]
+                 initWithTitle:nil message:alertMessage
+                 delegate:self cancelButtonTitle:@"No"
+                 otherButtonTitles:@"Yes", nil];
+    
+    [baseAlert show];
+    [baseAlert release];
+}
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 1){
+        Photo *photo = [self.photo.perspective.photos objectAtIndex:[self.photo.perspective.photos count] - (self.networkGallery.currentIndex +1)];
+        [self.photo.perspective.photos removeObject:photo];
+        [self.networkGallery.navigationController popViewControllerAnimated:true];
+        
+        RKObjectManager *objectManager = [RKObjectManager sharedManager];
+        [objectManager deleteObject:photo usingBlock:^(RKObjectLoader *loader) {
+            
+        }];
+    }
+}
+
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
@@ -72,9 +100,20 @@
     if ([touch view] == self){
         DLog(@"TOUCH ON IMAGEVIEW"); 
         
-        FGalleryViewController *networkGallery = [[FGalleryViewController alloc] initWithPhotoSource:self.photo.perspective];
+        //FGalleryViewController *networkGallery;
+        
+        if ( self.photo.perspective.mine ){
+            UIImage *trashIcon = [UIImage imageNamed:@"photo-gallery-trashcan.png"];
+            
+            UIBarButtonItem *trashButton = [[[UIBarButtonItem alloc] initWithImage:trashIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleTrashButtonTouch:)] autorelease];
+            NSArray *barItems = [NSArray arrayWithObjects:trashButton, nil];            
+            
+            self.networkGallery = [[FGalleryViewController alloc] initWithPhotoSource:self.photo.perspective barItems:barItems];
+        } else {
+            self.networkGallery = [[FGalleryViewController alloc] initWithPhotoSource:self.photo.perspective];
+        }
 
-        networkGallery.startingIndex = [self.photo.perspective.photos count] - [self.photo.perspective.photos indexOfObject:self.photo] -1;
+        self.networkGallery.startingIndex = [self.photo.perspective.photos count] - [self.photo.perspective.photos indexOfObject:self.photo] -1;
         id nextResponder = [self nextResponder];
         while (nextResponder != nil){
             if ([nextResponder isKindOfClass:[UIViewController class]]) {

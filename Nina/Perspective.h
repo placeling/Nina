@@ -57,6 +57,8 @@
 
 +(RKObjectMapping*)getObjectMapping;
 
+-(void)deletePhoto:(Photo*)photo;
+
 -(void) star;
 -(void) unstar;
 

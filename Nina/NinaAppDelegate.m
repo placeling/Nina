@@ -113,6 +113,8 @@
     [objectManager.mappingProvider setSerializationMapping:suggestionSerializationMapping forClass:[Suggestion class] ];
     [router routeClass:[Suggestion class] toResourcePath:@"/v1/users/:userId/suggestions" forMethod:RKRequestMethodPOST];
     
+    [router routeClass:[Photo class] toResourcePath:@"/v1/places/:perspective.place.pid/perspectives/photos/:photoId" forMethod:RKRequestMethodDELETE];
+    
     
     RKObjectMapping* perspectiveSerializationMapping = [RKObjectMapping mappingForClass:[Perspective class] ];
     [perspectiveSerializationMapping mapAttributes:@"memo", nil];
