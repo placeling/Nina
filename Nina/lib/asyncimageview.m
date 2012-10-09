@@ -8,7 +8,6 @@
 //
 
 #import "AsyncImageView.h"
-#import "ASIDownloadCache.h"
 #import "UIImageView+WebCache.h"
 #import "FGalleryViewController.h"
 
@@ -125,33 +124,5 @@
         [networkGallery release];
     }    
 }
-
-
-#pragma mark ASIhttprequest
-
-- (void)requestFailed:(ASIHTTPRequest *)request{
-	[NinaHelper handleBadRequest:request sender:nil];
-}
-
-- (void)requestFinished:(ASIHTTPRequest *)request{
-    
-	if (200 != [request responseStatusCode]){
-		[NinaHelper handleBadRequest:request sender:nil];
-	} else {
-		// Store incoming data into a string
-		NSData *responseData = [request responseData];
-        
-        DLog(@"receive image of size: %i", [responseData length])
-        
-        //make an image view for the image
-        UIImage *picture = [UIImage imageWithData:responseData];
-        
-        self.photo.thumb_image = picture;
-        
-        [self loadImage];
-	}
-    
-}
-
 
 @end

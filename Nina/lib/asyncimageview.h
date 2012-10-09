@@ -9,14 +9,12 @@
 
 #import <UIKit/UIKit.h>
 #import "NinaHelper.h"
-#import "ASIHTTPRequestDelegate.h"
-#import "ASIHTTPRequest.h"
 #import "Photo.h"
 #import "Perspective.h"
 #import "FGalleryViewController.h"
 
 
-@interface AsyncImageView : UIImageView<ASIHTTPRequestDelegate, UIAlertViewDelegate> {
+@interface AsyncImageView : UIImageView<UIAlertViewDelegate> {
 	//could instead be a subclass of UIImageView instead of UIView, depending on what other features you want to to build into this class?
 
 	ASIHTTPRequest *_request; 	
