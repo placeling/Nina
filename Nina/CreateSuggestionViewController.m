@@ -8,6 +8,7 @@
 
 #import "CreateSuggestionViewController.h"
 #import "UIImageView+WebCache.h"
+#import "StyleHelper.h"
 
 @interface CreateSuggestionViewController ()
 -(void)close;

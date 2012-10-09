@@ -12,6 +12,7 @@
 #import "ASIFormDataRequest+OAuth.h"
 #import "ASIHTTPRequest+OAuth.h"
 #import "Photo.h"
+#import "SBJson.h"
 #import "asyncimageview.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AssetsLibrary/ALAssetsLibrary.h>

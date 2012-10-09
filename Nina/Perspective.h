@@ -51,13 +51,7 @@
 @property (nonatomic, retain) NSString *url;
 @property (nonatomic, retain) NSNumber *commentCount;
 
-- (id) initFromJsonDict:(NSDictionary *)jsonDict;
-- (void) updateFromJsonDict:(NSDictionary *)jsonDict;
-
-
 +(RKObjectMapping*)getObjectMapping;
-
--(void)deletePhoto:(Photo*)photo;
 
 -(void) star;
 -(void) unstar;

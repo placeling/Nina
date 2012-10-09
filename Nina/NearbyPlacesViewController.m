@@ -13,6 +13,7 @@
 #import "FlurryAnalytics.h"
 #import "NewPlaceController.h"
 #import "Crittercism.h"
+#import "SBJson.h"
 
 @interface NearbyPlacesViewController ()
     -(void)dataSourceDidFinishLoadingNewData;

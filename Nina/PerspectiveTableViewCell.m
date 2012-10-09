@@ -79,9 +79,6 @@
     
     CGSize textSize = [perspective.memo sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:textAreaSize lineBreakMode:UILineBreakModeWordWrap];
     
-    
-    CGSize maxTextSize = [perspective.memo sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:maxAreaSize lineBreakMode:UILineBreakModeWordWrap];
-    
     heightCalc += MAX(textSize.height+3, 10);
     
     if (perspective.url){ // || maxTextSize.height > textSize.height ){
