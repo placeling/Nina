@@ -9,14 +9,11 @@
 #import "EditProfileViewController.h"
 #import "EditableTableCell.h"
 #import "NinaHelper.h"
-#import "SBJSON.h"
 #import "UIImage+Resize.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIImageView+WebCache.h"
-#import "NinaAppDelegate.h"
 #import "FlurryAnalytics.h"
 #import "UserManager.h"
-#import "ASIFormDataRequest.h"
 
 @interface EditProfileViewController(Private)
 -(IBAction)showActionSheet;
@@ -129,21 +126,12 @@
         [cell.textField resignFirstResponder];
     }
     
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@", [NinaHelper getHostname], self.user.username];
-    
-    NSURL *url = [NSURL URLWithString:urlText];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    NSString *urlText = [NSString stringWithFormat:@"/v1/users/%@", self.user.username];    
+
     
     NSString *user_url = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]]).textField.text;
     NSString *city = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]]).textField.text;
     NSString *description = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]]).textField.text;
-    
-    //[request setPostValue:self.memoTextView.text forKey:@"avatar"];
-    
-    [request setPostValue:description forKey:@"description"];
-    [request setPostValue:city forKey:@"city"];
-    [request setPostValue:user_url forKey:@"url"];
     
     self.user.userDescription = description;
     self.user.url = user_url;
@@ -153,21 +141,27 @@
         photo.thumb_image = uploadingImage;
         self.user.profilePic = photo;
         [photo release];
-        NSData* imgData = UIImageJPEGRepresentation(uploadingImage, 0.5);
-        [request setData:imgData withFileName:@"image.jpg" andContentType:@"image/jpeg"  forKey:@"image"];
-    }
-    [request setTimeOutSeconds:120];
-    [request setPostValue:[NSString stringWithFormat:@"%@", self.lat] forKey:@"user_lat"];
-    [request setPostValue:[NSString stringWithFormat:@"%@", self.lng] forKey:@"user_lng"]; //non-standard key to not conflict with signing tag
+    }    
     
-    [request setRequestMethod:@"PUT"];
-    request.delegate = self;
-    [request setTag:90]; //this is the bookmark request tag from placepageviewcontroller -iMack
-    
-    [NinaHelper signRequest:request];
-    
-    [request startAsynchronous];
-    
+    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:urlText usingBlock:^(RKObjectLoader* loader) {
+        loader.method = RKRequestMethodPUT;
+        RKParams* params = [RKParams params];
+        if (uploadingImage){
+            NSData* imgData = UIImageJPEGRepresentation(uploadingImage, 0.5);
+            [params setData:imgData MIMEType:@"image/jpeg" fileName:@"image.jpg" forParam:@"image"];
+        }
+        [params setValue:description forParam:@"description"];
+        [params setValue:user_url forParam:@"url"];
+        [params setValue:city forParam:@"city"];
+        [params setValue:[NSString stringWithFormat:@"%@", self.lat] forParam:@"user_lat"];
+        [params setValue:[NSString stringWithFormat:@"%@", self.lng] forParam:@"user_lng"];
+        
+        
+        loader.params = params;
+        loader.delegate = self;
+        loader.userData = [NSNumber numberWithInt:90];
+    }];
+
     HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     // Set determinate mode
     HUD.labelText = @"Saving...";
@@ -179,30 +173,18 @@
 }
 
 
--(void)requestFailed:(ASIHTTPRequest *)request{
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
     [HUD hide:TRUE];
-    [NinaHelper handleBadRequest:request sender:self];
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
 }
 
-- (void)requestFinished:(ASIHTTPRequest *)request{    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    [HUD release];
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+    [HUD hide:TRUE];
     
-    if (200 != [request responseStatusCode]){
-		[NinaHelper handleBadRequest:request sender:self];
-	} else {
-        //perspective modified return
-        NSString *responseString = [request responseString];        
-        DLog(@"%@", responseString);
-        NSDictionary *userDict = [responseString JSONValue];
-        
-        [self.user updateFromJsonDict:[userDict objectForKey:@"user"]];
+    [UserManager setUser:[objects objectAtIndex:0]];
+    [self.navigationController dismissModalViewControllerAnimated:TRUE];}
 
-        [UserManager setUser:self.user];
-        [self.navigationController dismissModalViewControllerAnimated:TRUE];
-	}
-}
 
 #pragma mark - View lifecycle
 
@@ -279,7 +261,7 @@
 
 
 -(void) dealloc{
-    [NinaHelper clearActiveRequests:90];
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];    
     [user release];
     [lat release];
     [lng release];

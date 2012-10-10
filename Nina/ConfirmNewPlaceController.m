@@ -189,6 +189,7 @@
 }
 
 -(void) dealloc{
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];    
     [categories release];
     [addressComponents release];
     [placeName release];

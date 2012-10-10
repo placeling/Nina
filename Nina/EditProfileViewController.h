@@ -15,7 +15,7 @@
 #import "YIPopupTextView.h"
 
 
-@interface EditProfileViewController : ApplicationController<UITableViewDelegate, UITableViewDataSource,UIActionSheetDelegate, ASIHTTPRequestDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, MBProgressHUDDelegate,YIPopupTextViewDelegate>{
+@interface EditProfileViewController : ApplicationController<UITableViewDelegate, UITableViewDataSource,UIActionSheetDelegate, RKObjectLoaderDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, MBProgressHUDDelegate,YIPopupTextViewDelegate>{
     
     NSNumber *lat;
     NSNumber *lng;
