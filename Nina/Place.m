@@ -20,48 +20,6 @@
 @synthesize categories, icon, tags, hidden, slug;
 @synthesize homePerspectives,followingPerspectives,everyonePerspectives, placemarks, attributions;
 
-- (id) initFromJsonDict:(NSDictionary *)jsonDict{
-    
-    if(self = [super init]){
-        [self updateFromJsonDict:jsonDict];
-        self.dirty = false;
-	}
-	return self;
-}
-
-
--(void) updateFromJsonDict:(NSDictionary *)jsonDict{
-    self.pid = [jsonDict objectForKeyNotNull:@"_id"];
-    self.name = [jsonDict objectForKeyNotNull:@"name"];
-    self.streetAddress = [jsonDict objectForKeyNotNull:@"street_address"];
-    self.city = [jsonDict objectForKeyNotNull:@"city_data"];
-    self.phone = [jsonDict objectForKeyNotNull:@"phone_number"];
-    
-    self.googleId = [jsonDict objectForKeyNotNull:@"google_id"];
-    self.googlePlacesUrl = [jsonDict objectForKeyNotNull:@"google_url"];
-    self.google_ref = [jsonDict objectForKeyNotNull:@"google_ref"];
-
-    self.lat = [[jsonDict objectForKey:@"location"] objectAtIndex:0];
-    self.lng = [[jsonDict objectForKey:@"location"] objectAtIndex:1]; 
-    
-    self.perspectiveCount = [[jsonDict objectForKeyNotNull:@"perspective_count"] intValue];
-    self.bookmarked = [[jsonDict objectForKeyNotNull:@"bookmarked"] boolValue] ;
-    self.highlighted = [[jsonDict objectForKeyNotNull:@"highlighted"] boolValue] ;
-    self.categories = [jsonDict objectForKeyNotNull:@"venue_types"];
-    
-    self.thumbUrl = [jsonDict objectForKey:@"thumb_url"];
-    
-    self.usersBookmarking = [jsonDict objectForKey:@"users_bookmarking"];        
-    self.followingPerspectiveCount = [[jsonDict objectForKey:@"following_perspective_count"] intValue];
-    self.tags = [jsonDict objectForKeyNotNull:@"tags"];
-    self.mapUrl = [jsonDict objectForKey:@"map_url"];
-    self.slug = [jsonDict objectForKey:@"slug"];
-    
-    self.attributions = [jsonDict objectForKeyNotNull:@"html_attributions"];
-    
-}
-
-
 +(RKObjectMapping*)getObjectMapping{
     RKObjectMapping* placeMapping = [Place getObjectMappingNoPerspectives];     
                                      

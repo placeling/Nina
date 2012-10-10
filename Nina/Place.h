@@ -93,9 +93,6 @@
 @property (nonatomic, retain) NSMutableArray *placemarks;
 @property (nonatomic, retain) NSMutableArray *attributions;
 
-- (id) initFromJsonDict:(NSDictionary *)jsonDict;
-- (void) updateFromJsonDict:(NSDictionary *)jsonDict;
-
 -(NSString*) usersBookmarkingString;
 -(NSString*) tagString;
 -(NSString*) placeThumbUrl;
