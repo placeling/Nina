@@ -7,8 +7,6 @@
 //
 
 #import "LoginController.h"
-#import "ASIFormDataRequest+OAuth.h"
-#import "ASIHTTPRequest+OAuth.h"
 #import "SignupController.h"
 #import "NinaAppDelegate.h"
 #import "SBJSON.h"
@@ -27,31 +25,29 @@
 
 @implementation LoginController
 
-
 @synthesize username, password, submitButton;
 @synthesize forgotPasswordButton, delegate;
 
 -(IBAction) submitLogin{
-    NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
-    NSDictionary *plistData = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/oauth/access_token?newlogin=true", [plistData objectForKey:@"server_url"]];
-    NSURL *url = [NSURL URLWithString:urlString];
     
     [NinaHelper clearCredentials];
+    NSDictionary *authDict = [NSDictionary dictionaryWithKeysAndObjects:
+            @"x_auth_mode", @"client_auth",
+            @"x_auth_username", username.text,
+            @"x_auth_password", password.text,
+            @"newlogin", @"true",
+                              nil];
     
-    ASIFormDataRequest *request =  [[ASIFormDataRequest  alloc]  initWithURL:url];
-    [request setPostValue:@"client_auth" forKey:@"x_auth_mode"];
-    [request setPostValue:username.text forKey:@"x_auth_username"];
-    [request setPostValue:password.text forKey:@"x_auth_password"];
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    
+    [objectManager loadObjectsAtResourcePath:@"/oauth/access_token" usingBlock:^(RKObjectLoader* loader) {
+        loader.delegate = self;
+        loader.method = RKRequestMethodPOST;
+        loader.params = authDict;
+        loader.userData = [NSNumber numberWithInt:110];
+    }];
+
     savedUsername = username.text;
-    request.tag = 110;
-    [request setDelegate:self];
-    
-    [request signRequestWithClientIdentifier:[NinaHelper getConsumerKey] secret:[NinaHelper getConsumerSecret]
-                             tokenIdentifier:nil secret:nil
-                                 usingMethod:ASIOAuthHMAC_SHA1SignatureMethod];
-    [request startAsynchronous];
     
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:HUD];
@@ -243,6 +239,84 @@
 }
 
 
+
+#pragma mark - RKObjectLoaderDelegate methods
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+    [HUD hide:TRUE];
+    if ( [(NSNumber*)objectLoader.userData intValue] == 110){
+        NSString *body = objectLoader.response.bodyAsString;
+        DLog(@"got response back: %@", body);
+        
+        NSDictionary *jsonDict = [body JSONValue];
+        
+        if ( [@"success" isEqualToString:(NSString*)[jsonDict objectForKey:@"status"] ]){
+            NSArray *tokens = [[jsonDict objectForKey:@"token"] componentsSeparatedByString:@"&"];
+            
+            for (NSString* token in tokens){
+                NSArray *component = [token componentsSeparatedByString:@"="];
+                if ( [@"oauth_token" isEqualToString:[component objectAtIndex:0]] ){
+                    [NinaHelper setAccessToken:[component objectAtIndex:1]];
+                } else if ( [@"oauth_token_secret" isEqualToString:[component objectAtIndex:0]] ){
+                    [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
+                }
+            }
+            
+            User *user = [objects objectAtIndex:0];
+            
+            NSString *userName = user.username;
+            [NinaHelper setUsername:userName];
+            [UserManager setUser:user];
+            
+            [user release];
+            [[UIApplication sharedApplication]
+             registerForRemoteNotificationTypes:
+             (UIRemoteNotificationTypeAlert |
+              UIRemoteNotificationTypeBadge |
+              UIRemoteNotificationTypeSound)];
+        }
+        
+        //[delegate viewDidLoad];
+        [self close];
+
+    }
+    
+}
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    [HUD hide:TRUE];
+    DLog(@"Encountered an error: %@", error);
+
+    int statusCode = objectLoader.response.statusCode;
+    NSString *errorString = objectLoader.response.bodyAsString;
+	NSArray *component = [errorString componentsSeparatedByString:@":"];
+    
+    if (statusCode == 401){
+        UIAlertView *alert;
+        
+        if ( [@"unconfirmed" isEqualToString:[[component objectAtIndex:0] lowercaseString] ] ){
+            
+            NSString *alertMessage = @"We can't let you log back in until you confirm your email, would you like to resend the confirmation email?";
+            alert = [[UIAlertView alloc]
+                     initWithTitle:@"Unconfirmed Email" message:alertMessage
+                     delegate:self cancelButtonTitle:@"Not Now"
+                     otherButtonTitles:@"Resend Email", nil];
+            alert.tag = 2;
+        } else {
+            alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Incorrect Username/Password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        }
+        
+        [alert show];
+        [alert release];
+        DLog(@"401 on oauth login request");
+        
+	} else {
+		[NinaHelper handleBadRKRequest:objectLoader.response sender:self];
+    }
+}
+
+
+
 -(IBAction) signupOldSchool{
     
     SignupController *signupController = [[SignupController alloc]initWithStyle:UITableViewStyleGrouped];
@@ -263,107 +337,18 @@
 {
     if (alertView.tag == 2 && buttonIndex == 1) {
         DLog(@"Resending confirmation email to : %@", savedUsername);
-        NSString *actionURL = [NSString stringWithFormat:@"%@/v1/users/resend", [NinaHelper getHostname] ];
         
-        NSURL *url = [NSURL URLWithString:actionURL];
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-        [request setPostValue:savedUsername forKey:@"username"];
-        [request setRequestMethod:@"POST"];
+        NSDictionary *paramDict = [NSDictionary dictionaryWithObject:savedUsername forKey:@"username"];
         
-        [request setCompletionBlock:^{
-            DLog(@"Successfully sent Resend confirmation email");
+        [ [RKClient sharedClient] post:@"/v1/users/resend" usingBlock:^(RKRequest *request){
+            request.params = paramDict;
+            request.onDidFailLoadWithError = ^(NSError* error) {
+                [NinaHelper handleBadRKRequest:request.response sender:self];
+            };
         }];
-        [request setFailedBlock:^{
-            DLog(@"Error on triggering Resend");
-            [NinaHelper handleBadRequest:request sender:self];
-        }];
-        [NinaHelper signRequest:request];
-        [request startAsynchronous];
+        
         
         [self.navigationController dismissModalViewControllerAnimated:TRUE];
-    }
-}
-
-
-#pragma mark ASIhttprequest
-
-- (void)requestFailed:(ASIHTTPRequest *)request{
-	//NSError *error = [request error];
-    [HUD hide:TRUE];
-    
-    int statusCode = [request responseStatusCode];
-    NSString *error = [request responseString];
-	NSArray *component = [error componentsSeparatedByString:@":"];
-    
-    if (statusCode == 401){
-        UIAlertView *alert;
-        
-        if ( [@"unconfirmed" isEqualToString:[[component objectAtIndex:0] lowercaseString] ] ){
-            
-            NSString *alertMessage = @"We can't let you log back in until you confirm your email, would you like to resend the confirmation email?";
-            alert = [[UIAlertView alloc] 
-                     initWithTitle:@"Unconfirmed Email" message:alertMessage 
-                     delegate:self cancelButtonTitle:@"Not Now" 
-                     otherButtonTitles:@"Resend Email", nil];
-            alert.tag = 2;
-        } else {
-            alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Incorrect Username/Password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        }
-        
-        [alert show];
-        [alert release];
-        DLog(@"401 on oauth login request");
-        
-	} else { 
-		[NinaHelper handleBadRequest:request sender:self];
-    }
-    	
-}
-
-- (void)requestFinished:(ASIHTTPRequest *)request{
-    [HUD hide:TRUE];
-	int statusCode = [request responseStatusCode];
-	if (200 != statusCode){
-        NSString *body = [request responseString];
-        
-		DLog(@"got response back: %@", body);
-		DLog(@"request finished with non-200, WTF");
-    }else {
-        NSString *body = [request responseString];
-        DLog(@"got response back: %@", body);
-        
-        
-        NSDictionary *jsonDict = [body JSONValue];  
-        
-        if ( [@"success" isEqualToString:(NSString*)[jsonDict objectForKey:@"status"] ]){
-            NSArray *tokens = [[jsonDict objectForKey:@"token"] componentsSeparatedByString:@"&"];
-            
-            for (NSString* token in tokens){
-                NSArray *component = [token componentsSeparatedByString:@"="];
-                if ( [@"oauth_token" isEqualToString:[component objectAtIndex:0]] ){
-                    [NinaHelper setAccessToken:[component objectAtIndex:1]];
-                } else if ( [@"oauth_token_secret" isEqualToString:[component objectAtIndex:0]] ){
-                    [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
-                }
-            } 
-            
-            User *user = [[User alloc] init];
-            [user updateFromJsonDict:[jsonDict objectForKey:@"user"]];    
-            
-            NSString *userName = user.username;
-            [NinaHelper setUsername:userName];
-            [UserManager setUser:user];
-            
-            [user release];
-            [[UIApplication sharedApplication] 
-             registerForRemoteNotificationTypes:
-             (UIRemoteNotificationTypeAlert | 
-              UIRemoteNotificationTypeBadge | 
-              UIRemoteNotificationTypeSound)];
-        }
-        
-        //[delegate viewDidLoad];
-        [self close];
     }
 }
 

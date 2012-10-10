@@ -71,6 +71,7 @@
     //[[objectManager client] setCacheTimeout:5]; //5 seconds for now
     
     
+    [objectManager.mappingProvider setMapping:[User getObjectMapping] forKeyPath:@"user"];
     [objectManager.mappingProvider setMapping:[User getObjectMapping] forKeyPath:@"users"];
     [objectManager.mappingProvider setMapping:[User getObjectMapping] forKeyPath:@"followers"];
     [objectManager.mappingProvider setMapping:[User getObjectMapping] forKeyPath:@"following"];

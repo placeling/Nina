@@ -7,13 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ASIHTTPRequestDelegate.h"
-#import "ASIHTTPRequest.h"
 #import "MBProgressHUD.h"
 
 @protocol LoginControllerDelegate;
 
-@interface LoginController : UIViewController<UITextFieldDelegate, ASIHTTPRequestDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate, MBProgressHUDDelegate, UIAlertViewDelegate>{
+@interface LoginController : UIViewController<UITextFieldDelegate, RKObjectLoaderDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate, MBProgressHUDDelegate, UIAlertViewDelegate>{
     IBOutlet UITextField *username;
     IBOutlet UITextField *password;
     IBOutlet UIButton *submitButton;
