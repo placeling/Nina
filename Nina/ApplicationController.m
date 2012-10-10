@@ -12,7 +12,6 @@
 #import <Twitter/Twitter.h>
 #import "TWSignedRequest.h"
 #import "OAuth+Additions.h"
-#import "ASIFormDataRequest.h"
 
 #import <Accounts/Accounts.h>
 #import "UserManager.h"
@@ -149,17 +148,6 @@
 
 
 -(void)handleTwitterCredentials:(NSDictionary *)creds{
-    NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/twitter/add", [NinaHelper getHostname]];
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
-    [request setPostValue:[creds objectForKey:@"oauth_token"] forKey:@"token" ];
-    [request setPostValue:[creds objectForKey:@"oauth_token_secret"] forKey:@"secret"];
-    [request setPostValue:[creds objectForKey:@"user_id"] forKey:@"uid"];
-    
-    [NinaHelper signRequest:request];
-    
-    [request startAsynchronous];//fire and forget
     
     User *user = [UserManager sharedMeUser];
     
@@ -167,8 +155,14 @@
     
     auth.uid = [creds objectForKey:@"user_id"];
     auth.token = [creds objectForKey:@"oauth_token"];
+    auth.secret = [creds objectForKey:@"oauth_token_secret"];
     auth.expiry = [NSDate distantFuture];
     auth.provider = @"twitter";
+    
+    [[RKObjectManager sharedManager] postObject:auth usingBlock:^(RKObjectLoader *loader) {
+        
+    }];
+    
     
     [user.auths addObject:auth];
     [auth release];
