@@ -10,12 +10,14 @@
     NSString *provider;
     NSString *uid;
     NSString *token;
+    NSString *secret;
     NSDate *expiry;
 }
 
 @property (nonatomic, retain) NSString *provider; 
 @property (nonatomic, retain) NSString *uid; 
-@property (nonatomic, retain) NSString *token; 
+@property (nonatomic, retain) NSString *token;
+@property (nonatomic, retain) NSString *secret;
 @property (nonatomic, retain) NSDate *expiry; 
 
 +(RKObjectMapping*)getObjectMapping;

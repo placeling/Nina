@@ -11,7 +11,7 @@
 
 @implementation Authentication
 
-@synthesize provider, uid, token, expiry;
+@synthesize provider, uid, token, expiry, secret;
 
 +(RKObjectMapping*)getObjectMapping{
     RKObjectMapping* authMapping = [RKObjectMapping mappingForClass:[Authentication class]];
@@ -20,6 +20,7 @@
      @"uid", @"uid",
      @"token", @"token",
      @"expiry", @"expiry",
+     @"secret", @"secret",
      nil];
         
     return authMapping;
@@ -30,6 +31,7 @@
     [provider release];
     [uid release];
     [token release];
+    [secret release];
     [expiry release];
     
     [super dealloc];

@@ -100,6 +100,15 @@
     
     RKObjectRouter *router = [RKObjectManager sharedManager].router;
     
+    
+    RKObjectMapping* authenticationSerializationMapping = [RKObjectMapping mappingForClass:[Authentication class] ];
+    [authenticationSerializationMapping mapAttributes:@"uid", @"token", @"secret", @"expiry", nil];
+    
+    // Now register the mapping with the provider
+    [objectManager.mappingProvider setSerializationMapping:authenticationSerializationMapping forClass:[Authentication class] ];
+    [router routeClass:[Authentication class] toResourcePath:@"/v1/auth/:provider/add" forMethod:RKRequestMethodPOST];
+    
+    
     RKObjectMapping* commentSerializationMapping = [RKObjectMapping mappingForClass:[PlacemarkComment class] ];
     [commentSerializationMapping mapAttributes:@"comment", nil];
     
