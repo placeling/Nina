@@ -16,6 +16,7 @@
 #import "NinaAppDelegate.h"
 #import "FlurryAnalytics.h"
 #import "UserManager.h"
+#import "ASIFormDataRequest.h"
 
 @interface EditProfileViewController(Private)
 -(IBAction)showActionSheet;

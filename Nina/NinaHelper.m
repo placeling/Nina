@@ -9,6 +9,7 @@
 #import "NinaHelper.h"
 #import "LoginController.h"
 #import "ASIFormDataRequest+OAuth.h"
+#import "ASIFormDataRequest.h"
 #import "ASIHTTPRequest+OAuth.h"
 #import "FlurryAnalytics.h"
 #import <RestKit/RestKit.h>

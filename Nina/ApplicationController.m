@@ -12,6 +12,7 @@
 #import <Twitter/Twitter.h>
 #import "TWSignedRequest.h"
 #import "OAuth+Additions.h"
+#import "ASIFormDataRequest.h"
 
 #import <Accounts/Accounts.h>
 #import "UserManager.h"

@@ -11,6 +11,7 @@
 #import "Place.h"
 #import "SBJSON.h"
 #import "PlacePageViewController.h"
+#import "ASIFormDataRequest.h"
 
 
 @implementation ConfirmNewPlaceController

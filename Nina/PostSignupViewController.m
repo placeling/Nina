@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "SBJSON.h"
 #import "FlurryAnalytics.h"
+#import "ASIFormDataRequest.h"
 
 
 @interface PostSignupViewController(Private)

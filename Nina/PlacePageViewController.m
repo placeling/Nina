@@ -1273,7 +1273,6 @@ typedef enum {
 }
 
 - (void)dealloc{
-    [NinaHelper clearActiveRequests:0];
     [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [perspective_id release];
     [place_id release];

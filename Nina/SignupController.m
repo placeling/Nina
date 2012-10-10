@@ -14,6 +14,7 @@
 #import "LoginController.h"
 #import "PostSignupViewController.h"
 #import "UserManager.h"
+#import "ASIFormDataRequest.h"
 
 @implementation SignupController
 

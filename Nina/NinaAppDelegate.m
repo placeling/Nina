@@ -31,6 +31,7 @@
 #import "UserManager.h"
 #import "Suggestion.h"
 #import "HomeViewController.h"
+#import "ASIFormDataRequest.h"
 
 @implementation NinaAppDelegate
 

@@ -18,8 +18,8 @@
 
 @interface LoginController (Private)
     -(void)close;
-    -(BOOL)testAlreadyLoggedInFacebook:(NSDictionary*)fbDict;
     -(void)dismissKeyboard:(id)sender;
+    -(void)showSignup:(NSDictionary *)user;
 @end
 
 
@@ -79,19 +79,38 @@
     DLog(@"got facebook response: %@", user);
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
-    if (![self testAlreadyLoggedInFacebook:user]){
-        SignupController *signupController = [[SignupController alloc ] initWithStyle:UITableViewStyleGrouped];
+    NSDateFormatter *formatter = (NSDateFormatter*)[RKObjectMapping preferredDateFormatter];
+    
+    NSDictionary *authDict = [NSDictionary dictionaryWithKeysAndObjects:
+                              @"token", [FBSession.activeSession accessToken],
+                              @"expiry", [formatter stringFromDate:[FBSession.activeSession expirationDate]],
+                              @"uid", [user objectForKey:@"id"],
+                              @"newlogin", @"true", nil];
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    
+    [objectManager loadObjectsAtResourcePath:@"/v1/auth/facebook/login" usingBlock:^(RKObjectLoader* loader) {
+        loader.method = RKRequestMethodPOST;
+        loader.params = authDict;
+        loader.userData = [NSNumber numberWithInt:110];
         
-        signupController.fbDict = user;
-        signupController.delegate = delegate;
+        loader.onDidLoadObjects = ^(NSArray *objects) {
+            NSDictionary *jsonDict = [loader.response.bodyAsString JSONValue];
+            
+            if ( [@"success" isEqualToString:(NSString*)[jsonDict objectForKey:@"status"] ]){
+                [self objectLoader:loader didLoadObjects:objects];
+                [self close];
+            } else {
+                [HUD hide:TRUE];
+                [self showSignup:user];
+            }
+        };
         
-        [self.navigationController pushViewController:signupController animated:true];
-        
-        [signupController release];
-    } else {
-        [self close];
-    }
-    [HUD hide:TRUE];
+        loader.onDidFailWithError = ^(NSError *error) {
+            [HUD hide:TRUE];
+            [self showSignup:user];
+        };
+    }];
 }
 
 
@@ -159,6 +178,17 @@
     }
 }
 
+-(void) showSignup:(NSDictionary *)user{
+    SignupController *signupController = [[SignupController alloc ] initWithStyle:UITableViewStyleGrouped];
+    
+    signupController.fbDict = user;
+    signupController.delegate = delegate;
+    
+    [self.navigationController pushViewController:signupController animated:true];
+    
+    [signupController release];
+}
+
 
 -(IBAction) signupFacebook{
     if (!FBSession.activeSession.isOpen) {
@@ -186,58 +216,6 @@
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     } 
 }
-
--(BOOL)testAlreadyLoggedInFacebook:(NSDictionary*)fbDict{
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/facebook/login?newlogin=true", [NinaHelper getHostname]];
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
-    [request setPostValue:[FBSession.activeSession accessToken] forKey:@"token" ];
-    [request setPostValue:[FBSession.activeSession expirationDate] forKey:@"expiry" ];
-    [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"uid"];
-
-    [NinaHelper signRequest:request];
-
-    [request startSynchronous];
-    
-    NSString *body = [request responseString];
-    
-    DLog(@"got response back: %@", body);
-    
-    NSDictionary *jsonDict = [body JSONValue];  
-    
-    if ( [@"success" isEqualToString:(NSString*)[jsonDict objectForKey:@"status"] ]){
-        NSArray *tokens = [[jsonDict objectForKey:@"token"] componentsSeparatedByString:@"&"];
-        
-        for (NSString* token in tokens){
-            NSArray *component = [token componentsSeparatedByString:@"="];
-            if ( [@"oauth_token" isEqualToString:[component objectAtIndex:0]] ){
-                [NinaHelper setAccessToken:[component objectAtIndex:1]];
-            } else if ( [@"oauth_token_secret" isEqualToString:[component objectAtIndex:0]] ){
-                [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
-            }
-        } 
-        
-        User *user = [[User alloc] init];
-        [user updateFromJsonDict:[jsonDict objectForKey:@"user"]];    
-        
-        NSString *userName = user.username;
-        [NinaHelper setUsername:userName];
-        [UserManager setUser:user];
-        
-        [user release];
-        [[UIApplication sharedApplication] 
-         registerForRemoteNotificationTypes:
-         (UIRemoteNotificationTypeAlert | 
-          UIRemoteNotificationTypeBadge | 
-          UIRemoteNotificationTypeSound)];
-        return true;
-    } else {
-        return false;
-    }
-}
-
 
 
 #pragma mark - RKObjectLoaderDelegate methods
@@ -461,7 +439,7 @@
 
 
 -(void) dealloc{    
-    [NinaHelper clearActiveRequests:110];
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [username release];
     [password release];
     [submitButton release];
