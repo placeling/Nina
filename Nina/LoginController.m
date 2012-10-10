@@ -246,7 +246,6 @@
             [NinaHelper setUsername:userName];
             [UserManager setUser:user];
             
-            [user release];
             [[UIApplication sharedApplication]
              registerForRemoteNotificationTypes:
              (UIRemoteNotificationTypeAlert |
