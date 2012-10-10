@@ -9,10 +9,7 @@
 #import "ConfirmNewPlaceController.h"
 #import "UIImageView+WebCache.h"
 #import "Place.h"
-#import "SBJSON.h"
 #import "PlacePageViewController.h"
-#import "ASIFormDataRequest.h"
-
 
 @implementation ConfirmNewPlaceController
 
@@ -117,21 +114,6 @@
 
 -(void) confirmPlace{
     [self dismissKeyboard:nil];
-     
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places", [NinaHelper getHostname]];
-    
-    NSURL *url = [NSURL URLWithString:urlText];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    
-    [request setPostValue:placeName forKey:@"name"];
-    
-    [request setPostValue:self.address.text forKey:@"street_address"];
-    [request setPostValue:self.city.text forKey:@"city_data"];
-    
-    
-    [request setPostValue:[NSString stringWithFormat:@"%f", self.location.latitude] forKey:@"place_lat"];
-    [request setPostValue:[NSString stringWithFormat:@"%f", self.location.longitude] forKey:@"place_lng"];
     
     NSArray *categoryComponents = [self.selectedCategory componentsSeparatedByString:@" - "];
     
@@ -145,15 +127,20 @@
         }
     }
     
-    [request setPostValue:categoryString forKey:@"initial_venue_type"];
-    
-    [request setRequestMethod:@"POST"];
-    request.delegate = self;
-    
-    [NinaHelper signRequest:request];
-    
-    [request startAsynchronous];
-    
+    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/v1/places" usingBlock:^(RKObjectLoader *loader){
+        loader.method = RKRequestMethodPOST;
+        RKParams* params = [RKParams params];
+        [params setValue:placeName forParam:@"name"];
+        [params setValue:self.address.text forParam:@"street_address" ];
+        [params setValue:self.city.text forParam:@"city_data" ];
+        [params setValue:[NSString stringWithFormat:@"%f", self.location.latitude] forParam:@"place_lat" ];
+        [params setValue:[NSString stringWithFormat:@"%f", self.location.longitude] forParam:@"place_lng" ];
+        [params setValue:categoryString forParam:@"initial_venue_type" ];
+        loader.params = params;
+        loader.delegate = self;
+        
+    }];
+
     hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     // Set determinate mode
     hud.labelText = @"Saving Place...";
@@ -164,34 +151,26 @@
     [hud release];
 }
 
--(void)requestFailed:(ASIHTTPRequest *)request{
-    [hud hide:TRUE];
-    [NinaHelper handleBadRequest:request sender:self];
-}
 
-- (void)requestFinished:(ASIHTTPRequest *)request{    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     [hud hide:TRUE];
     
-    if (200 != [request responseStatusCode]){
-		[NinaHelper handleBadRequest:request sender:self];
-	} else {
-        NSString *responseString = [request responseString];        
-        DLog(@"%@", responseString);
-        NSDictionary *userDict = [responseString JSONValue];
-        
-        Place *place = [[Place alloc] initFromJsonDict:[userDict objectForKey:@"place"]];
-        
-        PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:place];
-        [self.navigationController pushViewController:placePageViewController animated:true];
-                
-        NSArray * viewControllers = [self.navigationController viewControllers];
-        NSArray * newViewControllers = [NSArray arrayWithObjects:[viewControllers objectAtIndex:0],placePageViewController,nil];
-        [self.navigationController setViewControllers:newViewControllers];
-        
-        [place release];
-        [placePageViewController release];
-	}
+    Place *place = [objects objectAtIndex:0];
+    
+    PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] initWithPlace:place];
+    [self.navigationController pushViewController:placePageViewController animated:true];
+    
+    NSArray * viewControllers = [self.navigationController viewControllers];
+    NSArray * newViewControllers = [NSArray arrayWithObjects:[viewControllers objectAtIndex:0],placePageViewController,nil];
+    [self.navigationController setViewControllers:newViewControllers];
+    
+    [placePageViewController release];
+
+}
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    [hud hide:TRUE];
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
 }
 
 -(void) viewWillAppear:(BOOL)animated{

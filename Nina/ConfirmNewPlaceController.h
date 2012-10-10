@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "ASIHTTPRequest.h"
 #import "MBProgressHUD.h"
 
-@interface ConfirmNewPlaceController : UIViewController<UIGestureRecognizerDelegate, ASIHTTPRequestDelegate, MBProgressHUDDelegate> {
+@interface ConfirmNewPlaceController : UIViewController<UIGestureRecognizerDelegate, RKObjectLoaderDelegate, MBProgressHUDDelegate> {
     NSDictionary *categories;
     NSDictionary *addressComponents;
     
