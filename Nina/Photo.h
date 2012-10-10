@@ -38,8 +38,6 @@
 @property (nonatomic, assign) BOOL mine;
 @property (nonatomic, assign) Perspective *perspective; //assign to prevent circular ref
 
-- (void) updateFromJsonDict:(NSDictionary *)jsonDict;
-
 +(RKObjectMapping*)getObjectMapping;
 
 @end

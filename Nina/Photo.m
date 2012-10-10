@@ -16,14 +16,6 @@
 @synthesize thumbUrl,iphoneUrl,mainUrl, photoId, mine;
 
 
-- (void) updateFromJsonDict:(NSDictionary *)jsonDict{
-    self.photoId = [jsonDict objectForKey:@"id"];
-    
-    self.iphoneUrl = [jsonDict objectForKeyNotNull:@"iphone_url"];
-    self.mainUrl = [jsonDict objectForKeyNotNull:@"main_url"];
-    self.thumbUrl = [jsonDict objectForKeyNotNull:@"thumb_url"];
-}
-
 +(RKObjectMapping*)getObjectMapping{
     RKObjectMapping* photoMapping = [RKObjectMapping mappingForClass:[Photo class]];
     [photoMapping mapKeyPathsToAttributes:
