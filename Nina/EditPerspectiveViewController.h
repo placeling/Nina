@@ -23,7 +23,7 @@
 -(void)updatePerspective:(Perspective *)perspective;
 @end
 
-@interface EditPerspectiveViewController : ApplicationController<UITextViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, ASIHTTPRequestDelegate>{
+@interface EditPerspectiveViewController : ApplicationController<UITextViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, RKObjectLoaderDelegate>{
     Perspective *_perspective;
     id<EditPerspectiveDelegate, RKObjectLoaderDelegate> delegate;
     

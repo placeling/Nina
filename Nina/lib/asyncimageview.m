@@ -25,9 +25,6 @@
 }
 
 - (void)dealloc {
-	[_request cancel];
-    _request.delegate = nil;
-	[_request release];
 	[data release];
     [networkGallery release];
     [_photo release];
@@ -44,7 +41,6 @@
         if (self.photo.thumbUrl == nil){
             return;
         }
-        if (_request!=nil) { [_request release]; } //in case we are downloading a 2nd image
         
         DLog(@"Downloading photo for %@", self.photo.photoId);
         

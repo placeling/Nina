@@ -9,8 +9,6 @@
 #import "EditPerspectiveViewController.h"
 #import "NinaAppDelegate.h"
 #import "UIImage+Resize.h"
-#import "ASIFormDataRequest+OAuth.h"
-#import "ASIHTTPRequest+OAuth.h"
 #import "Photo.h"
 #import "SBJson.h"
 #import "asyncimageview.h"
@@ -230,36 +228,29 @@
 }
 
 
--(void)requestFailed:(ASIHTTPRequest *)request{
-    [NinaHelper handleBadRequest:request sender:self];
-}
 
+#pragma mark - RKObjectLoaderDelegate methods
 
-- (void)requestFinished:(ASIHTTPRequest *)request{    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
-    if (200 != [request responseStatusCode]){
-		[NinaHelper handleBadRequest:request sender:self];
-	} else {
-        if ([request tag] >= 1000){
-            if ([uploadingPics objectForKey:[NSNumber numberWithInt:request.tag]]){
-                //perspective picture return
-                NSString *responseString = [request responseString];
-                DLog(@"%@", responseString);
-                
-                Photo *photo = [uploadingPics objectForKey:[NSNumber numberWithInt:request.tag]];
-                [photo updateFromJsonDict:[responseString JSONValue]];
-                
-                [uploadingPics removeObjectForKey:[NSNumber numberWithInt:request.tag]];
-                
-            } else {
-                DLog(@"WARNING: request handled with no uploading tag");
-            }
-            [self refreshImages];
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
+    int tag = [objectLoader.userData intValue];
+    if (tag >= 1000){
+        if ([uploadingPics objectForKey:[NSNumber numberWithInt:tag]]){
+            Photo *photo = [uploadingPics objectForKey:[NSNumber numberWithInt:tag]];
+            [uploadingPics removeObjectForKey:[NSNumber numberWithInt:tag]];            
+            
+            [self.perspective.photos addObject:[objects objectAtIndex:0]];
+            [self.perspective.photos removeObject:photo];
+            
+        } else {
+            DLog(@"WARNING: request handled with no uploading tag");
         }
-	}
+        [self refreshImages];
+    }
 }
 
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
+}
 
 
 -(IBAction)savePerspective{
@@ -496,27 +487,19 @@
     
     DLog(@"Got image, shrank main to: %i", [imgData length]); 
     
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/photos", [NinaHelper getHostname], self.perspective.place.pid];
+    NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/photos", self.perspective.place.pid];
     
-    NSURL *url = [NSURL URLWithString:urlText];
+    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:urlText usingBlock:^(RKObjectLoader* loader) {
+        loader.method = RKRequestMethodPOST;        
+        RKParams* params = [RKParams params];        
+        [params setData:imgData MIMEType:@"image/jpeg" fileName:@"image.jpg" forParam:@"image"];
+        [params setValue:@"true" forParam:@"newphoto"];
+        loader.params = params;
+        loader.delegate = self;
+        loader.userData = [NSNumber numberWithInt:(1000+requestCount++)];
+    }];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self]; 
-    [request setTimeOutSeconds:120];
-    
-    [request setTag:(1000+requestCount++)];     
-    
-    [request setData:imgData withFileName:@"image.jpg" andContentType:@"image/jpeg"  forKey:@"image"];
-    
-    //[NinaHelper signRequest:request];
-    [request signRequestWithClientIdentifier:[NinaHelper getConsumerKey] secret:[NinaHelper getConsumerSecret]
-                             tokenIdentifier:[NinaHelper getAccessToken] secret:[NinaHelper getAccessTokenSecret]
-                                 usingMethod:ASIOAuthHMAC_SHA1SignatureMethod];    
-    [[self queue] addOperation:request]; 
-    
-    return [NSNumber numberWithInt:request.tag];
+    return [NSNumber numberWithInt:1000+requestCount];
 }
 
 - (void)imagePickerControllerDidCancel{
@@ -536,12 +519,7 @@
 
 
 -(void)dealloc{
-    if (queue){
-        for (ASIHTTPRequest *request in queue.operations){
-            [request cancel];
-            request.delegate = nil;
-        }
-    }
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];    
     
     [queue release];
     [memoTextView release];
