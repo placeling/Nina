@@ -17,6 +17,8 @@
 #import "NearbySuggestedPlaceController.h"
 #import "NearbySuggestedMapController.h"
 #import "NearbyPlacesViewController.h"
+#import "PerspectiveUserTableViewController.h"
+#import "PerspectiveTagTableViewController.h"
 #import "UserManager.h"
 #import "FlurryAnalytics.h"
 
