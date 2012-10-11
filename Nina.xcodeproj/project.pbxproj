@@ -2790,7 +2790,6 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/ios\"",
 					"\"$(SRCROOT)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2805,12 +2804,9 @@
 				INFOPLIST_FILE = "Nina/Nina-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Nina/lib/facebook-ios-sdk\"/**",
 					"$(inherited)",
 					"\"$(SRCROOT)/Nina/lib/FlurryAnalytics\"",
-					"\"$(SRCROOT)/Nina/lib/CrittercismSDK\"",
 					"\"$(SRCROOT)/Nina/lib/CrittercismSDK-crashonly\"",
-					"\"$(SRCROOT)/Nina/lib/TestFlightSDK1.0\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2834,7 +2830,6 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/ios\"",
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2848,12 +2843,9 @@
 				INFOPLIST_FILE = "Nina/Nina-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Nina/lib/facebook-ios-sdk\"/**",
 					"$(inherited)",
 					"\"$(SRCROOT)/Nina/lib/FlurryAnalytics\"",
-					"\"$(SRCROOT)/Nina/lib/CrittercismSDK\"",
 					"\"$(SRCROOT)/Nina/lib/CrittercismSDK-crashonly\"",
-					"\"$(SRCROOT)/Nina/lib/TestFlightSDK1.0\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
