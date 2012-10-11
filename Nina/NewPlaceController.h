@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "ASIHTTPRequest.h"
 #import "CategoryController.h"
 
 
-@interface NewPlaceController : UIViewController<MKMapViewDelegate, ASIHTTPRequestDelegate, UIGestureRecognizerDelegate, CategoryControllerDelegate>{
+@interface NewPlaceController : UIViewController<MKMapViewDelegate, RKRequestDelegate, UIGestureRecognizerDelegate, CategoryControllerDelegate>{
     NSString *_placeName;
     
     UITextField *placeNameField;

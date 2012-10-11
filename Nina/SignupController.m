@@ -14,7 +14,6 @@
 #import "LoginController.h"
 #import "PostSignupViewController.h"
 #import "UserManager.h"
-#import "ASIFormDataRequest.h"
 
 @implementation SignupController
 
@@ -46,59 +45,56 @@
     
     NSString *email;
     NSString *password;
+    NSString * passwordConfirm;
     
     if (fbDict) {
         email = [fbDict objectForKey:@"email"];
     } else {
         email = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]).textField.text;
         password = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]]).textField.text;
-    }    
+        passwordConfirm = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]]).textField.text;
+        
+        if (![password isEqualToString:passwordConfirm]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Your passwords don't match" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+            return;
+        }
+    }
     
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     CLLocation *location = [manager location];
 	
-	NSString *targetURL = [NSString stringWithFormat:@"%@/v1/users", [NinaHelper getHostname]];
-    
     NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
     NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:targetURL]];
-                
-    [request setPostValue:username forKey:@"username"];
-    [request setPostValue:email forKey:@"email"];
     
-    
-    if (fbDict){
-        [request setPostValue:[FBSession.activeSession accessToken] forKey:@"facebook_access_token"];
-        [request setPostValue:[FBSession.activeSession expirationDate] forKey:@"facebook_expiry_date"];
-        [request setPostValue:[fbDict objectForKey:@"id"] forKey:@"facebook_id"];
-    }else{
-        [request setPostValue:password forKey:@"password"];
-        NSString * passwordConfirm = ((EditableTableCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]]).textField.text;
-        
-        if (![password isEqualToString:passwordConfirm]){
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:@"Your passwords don't match" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-            [alert show];
-            [alert release];	
-            return;
+    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/v1/users" usingBlock:^(RKObjectLoader* loader) {
+        loader.method = RKRequestMethodPOST;
+        RKParams* params = [RKParams params];
+        [params setValue:username forParam:@"username"];
+        [params setValue:email forParam:@"email"];
+        [params setValue:lat forParam:@"lat"];
+        [params setValue:lng forParam:@"lng"];
+        if (fbDict){
+            [params setValue:[FBSession.activeSession accessToken] forParam:@"facebook_access_token"];
+            [params setValue:[FBSession.activeSession expirationDate] forParam:@"facebook_expiry_date"];
+            [params setValue:[fbDict objectForKey:@"id"] forParam:@"facebook_id"];
+        }else{
+            [params setValue:password forParam:@"password"];
+            [params setValue:passwordConfirm forParam:@"password_confirm"];
         }
         
-        [request setPostValue:passwordConfirm forKey:@"password_confirm"];
-    }
-                                   
-    [request setPostValue:lat forKey:@"lat"];
-    [request setPostValue:lng forKey:@"lng"];                                   
-    
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self]; //whatever called this should handle it
-    [request setTag:60];
-    
-    [NinaHelper signRequest:request];
-    
+        
+        loader.params = params;
+        loader.delegate = self;
+        loader.userData = [NSNumber numberWithInt:60];
+    }];
+                                                             
     DLog(@"Sending request");
     [self.view endEditing:TRUE];
-    [request startAsynchronous];
+    
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.HUD.labelText = @"Signing Up...";
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -113,38 +109,13 @@
 }
 
 
+#pragma mark - RKObjectLoaderDelegate methods
 
--(void)requestFailed:(ASIHTTPRequest *)request{
-    [self.HUD hide:true];
-    int statusCode = [request responseStatusCode];
-    NSError *error = [request error];
-    NSString *errorMessage = [error localizedDescription];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Error: %i", statusCode] message:errorMessage
-                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-    [alert show];
-    [alert release];	
-}
-
-
-- (void)requestFinished:(ASIHTTPRequest *)request{    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO]; 
+- (void)objectLoader:(RKObjectLoader*)objectLoader didLoadObjects:(NSArray*)objects {
     [self.HUD hide:true];
     
-    if (request.responseStatusCode != 200){
-        int statusCode = [request responseStatusCode];
-        NSError *error = [request error];
-        NSString *errorMessage = [error localizedDescription];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Error: %i", statusCode] message:errorMessage
-                                                       delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        [alert release];
-        return;
-    }
     
-    NSString *responseString = [request responseString];        
-    DLog(@"%@", responseString);
-    
-    NSDictionary *jsonDict = [responseString JSONValue];  
+    NSDictionary *jsonDict = [objectLoader.response.bodyAsString JSONValue];
     
     if ( [@"success" isEqualToString:(NSString*)[jsonDict objectForKey:@"status"] ]){
         NSArray *tokens = [[jsonDict objectForKey:@"token"] componentsSeparatedByString:@"&"];
@@ -156,10 +127,9 @@
             } else if ( [@"oauth_token_secret" isEqualToString:[component objectAtIndex:0]] ){
                 [NinaHelper setAccessTokenSecret:[component objectAtIndex:1]];
             }
-        } 
+        }
         
-        User *user = [[User alloc] init];
-        [user updateFromJsonDict:[jsonDict objectForKey:@"user"]];    
+        User *user = [objects objectAtIndex:0];
         
         NSString *userName = user.username;
         [NinaHelper setUsername:userName];
@@ -169,30 +139,37 @@
         postSignupViewController.username = userName;
         postSignupViewController.user = user;
         postSignupViewController.delegate = self.delegate;
-        [user release];
+        
         NSArray * newViewControllers = [NSArray arrayWithObjects:postSignupViewController,nil];
         [self.navigationController setViewControllers:newViewControllers];
-  
-    } else {
-        NSDictionary *errors = [jsonDict objectForKey:@"message"];
-        DLog(@"Signup Error: %@",errors );        
         
-        NSString *errorMessage = @"";
-        NSEnumerator *enumerator = [errors keyEnumerator];
-        NSString *key;
-        while ((key = [enumerator nextObject])) {
-            NSArray *keyErrors = [errors objectForKey:key];
-            
-            for (NSString *failure in keyErrors){
-                errorMessage = [NSString stringWithFormat:@"%@%@ %@\n", errorMessage, key, failure];
-            }
+    } 
+
+}
+
+- (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
+    [self.HUD hide:true];
+    [NinaHelper handleBadRKRequest:objectLoader.response sender:self];
+    
+    NSDictionary *jsonDict = [objectLoader.response.bodyAsString JSONValue];
+    
+    NSDictionary *errors = [jsonDict objectForKey:@"message"];
+    DLog(@"Signup Error: %@",errors );
+    
+    NSString *errorMessage = @"";
+    NSEnumerator *enumerator = [errors keyEnumerator];
+    NSString *key;
+    while ((key = [enumerator nextObject])) {
+        NSArray *keyErrors = [errors objectForKey:key];
+        
+        for (NSString *failure in keyErrors){
+            errorMessage = [NSString stringWithFormat:@"%@%@ %@\n", errorMessage, key, failure];
         }
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:errorMessage delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        [alert release];
-        
     }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Whoops" message:errorMessage delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+    [alert show];
+    [alert release];
     
 }
 
@@ -230,7 +207,7 @@
 
 
 -(void)dealloc{
-    [NinaHelper clearActiveRequests:60];
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];    
     [fbDict release];
     [accessKey release];
     [accessSecret release];

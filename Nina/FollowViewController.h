@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "NinaHelper.h"
-#import "ASIHTTPRequest.h"
 #import "User.h"
 #import "Place.h"
 #import "Perspective.h"

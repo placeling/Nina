@@ -24,7 +24,7 @@
 }
 
 -(void) dealloc{
-    [NinaHelper clearActiveRequests:90];
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];    
     [placeNameField release];
     [placeLatLngField release];
     [placeCategoryField release];
@@ -73,18 +73,11 @@
     UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(confirmPlace)];
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
-
-    NSString *urlString = [NSString stringWithFormat:@"%@/admin/categories.json", [NinaHelper getHostname]];		
     
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-    request.tag = 91;
-    [request setDelegate:self];
-    
-    [request startAsynchronous];
-
-    
+    [[RKClient sharedClient] get:@"/admin/categories.json" usingBlock:^(RKRequest *request) {
+        request.delegate = self;
+        request.userData = [NSNumber numberWithInt:91];
+    }];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -174,23 +167,20 @@
     
     NSString *urlString = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?latlng=%@,%@&sensor=false", lat, lng];		
     
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-    request.tag = 90;
-    [request setDelegate:self];
-    
-    [request startAsynchronous];
+    [[RKClient sharedClient] get:urlString usingBlock:^(RKRequest *request) {
+        request.delegate = self;
+        request.userData = [NSNumber numberWithInt:90];
+    }];
 
 }
 
--(void)requestFinished:(ASIHTTPRequest *)request{
-    if (200 != [request responseStatusCode]){
-		[NinaHelper handleBadRequest:request sender:self];
-	} else { 
-        if (request.tag == 90){
+- (void)request:(RKRequest *)request didReceiveResponse:(RKResponse *)response{
+    if (200 != response.statusCode){
+		[NinaHelper handleBadRKRequest:response sender:self];
+	} else {
+        if ([request.userData intValue] == 90){
             // Store incoming data into a string
-            NSString *jsonString = [request responseString];
+            NSString *jsonString = [response bodyAsString];
             DLog(@"Got JSON BACK: %@", jsonString);
             // Create a dictionary from the JSON string
             
@@ -205,7 +195,7 @@
             }
         } else {
             // Store incoming data into a string
-            NSString *jsonString = [request responseString];
+            NSString *jsonString =[response bodyAsString];
             DLog(@"Got JSON BACK: %@", jsonString);
             // Create a dictionary from the JSON string
             
@@ -215,7 +205,13 @@
             }
         }
     }
+    
 }
+
+- (void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error{
+    [NinaHelper handleBadRKRequest:request.response sender:self];
+}
+
 
 // Dismiss keyboard if tap outside text field and not on button/reset password link
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
@@ -230,11 +226,6 @@
 -(void)dismissKeyboard:(id)sender {
     [self.placeCategoryField resignFirstResponder];
     [self.placeNameField resignFirstResponder];
-}
-
-
--(void)requestFailed:(ASIHTTPRequest *)request{
-    //[NinaHelper handleBadRequest:request sender:self];
 }
 
 

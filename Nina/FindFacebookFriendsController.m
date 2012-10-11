@@ -178,16 +178,15 @@
         return;
     
     User *user = [self.facebookFriends objectAtIndex:indexPath.row];
-    
     user.following = [NSNumber numberWithBool:false];
-    NSString *actionURL = [NSString stringWithFormat:@"%@/v1/users/%@/follow", [NinaHelper getHostname], user.username];
-    DLog(@"Follow/unfollow url is: %@", actionURL);
-    NSURL *url = [NSURL URLWithString:actionURL];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setRequestMethod:@"POST"];
     
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
+    NSString *actionURL = [NSString stringWithFormat:@"/v1/users/%@/follow", user.username];
+    DLog(@"Follow/unfollow url is: %@", actionURL);
+    
+    [[RKClient sharedClient] post:actionURL usingBlock:^(RKRequest *request) {
+        
+    }];
+    
     
     [self.tableView cellForRowAtIndexPath:indexPath].accessoryView = nil;
 }

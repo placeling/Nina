@@ -7,7 +7,6 @@
 //
 
 #import "MemberProfileViewController.h"
-#import "ASIHTTPRequest.h"
 #import "SBJson.h"
 #import <QuartzCore/QuartzCore.h>
 #import "FollowViewController.h"
@@ -15,7 +14,6 @@
 #import "PerspectiveTableViewCell.h"
 #import "PlacePageViewController.h"
 #import "PerspectivesMapViewController.h"
-#import "ASIDownloadCache.h"
 #import "LoginController.h"
 #import "UIImageView+WebCache.h"
 #import "NinaAppDelegate.h"
@@ -258,17 +256,17 @@
         if (self.followButton.tag == 0){
             self.user.following = [NSNumber numberWithBool:false];
             [self toggleFollow];
-            NSString *actionURL = [NSString stringWithFormat:@"%@/v1/users/%@/follow", [NinaHelper getHostname], self.user.username];
+            NSString *actionURL = [NSString stringWithFormat:@"/v1/users/%@/follow",self.user.username];
             DLog(@"Follow/unfollow url is: %@", actionURL);
-            NSURL *url = [NSURL URLWithString:actionURL];
-            ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-            [request setRequestMethod:@"POST"];
             
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-            [request setDelegate:self];
-            [request setTag:11];
-            [NinaHelper signRequest:request];
-            [request startAsynchronous];
+            [[RKObjectManager sharedManager] loadObjectsAtResourcePath:actionURL usingBlock:^(RKObjectLoader* loader) {
+                loader.method = RKRequestMethodPOST;
+                loader.delegate = self;
+                loader.onDidLoadResponse =  ^(RKResponse *repsonse){
+                    self.user.following = [NSNumber numberWithBool:true];
+                    [self toggleFollow];
+                };
+            }];
         } else {
             UIAlertView *baseAlert;
             NSString *alertMessage = [NSString stringWithFormat:@"Unfollow %@?", self.user.username];
@@ -311,19 +309,18 @@
         [navBar release];
         [loginController release];
     } else if (alertView.tag == 1 && buttonIndex == 1){
-        NSString *actionURL = [NSString stringWithFormat:@"%@/v1/users/%@/unfollow", [NinaHelper getHostname], self.user.username];
+        NSString *actionURL = [NSString stringWithFormat:@"/v1/users/%@/unfollow", self.user.username];
         DLog(@"Follow/unfollow url is: %@", actionURL);
-        NSURL *url = [NSURL URLWithString:actionURL];
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-        [request setRequestMethod:@"POST"];
-        self.user.following = false;
         [self toggleFollow];
-        
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        [request setDelegate:self];
-        [request setTag:15];
-        [NinaHelper signRequest:request];
-        [request startAsynchronous];
+         
+         [[RKObjectManager sharedManager] loadObjectsAtResourcePath:actionURL usingBlock:^(RKObjectLoader* loader) {
+            loader.method = RKRequestMethodPOST;
+            loader.delegate = self;
+            loader.onDidLoadResponse = ^(RKResponse *repsonse){
+                 self.user.following = false;
+                 [self toggleFollow];
+             };
+         }];
     }
 }
 
@@ -503,42 +500,6 @@
     DLog(@"Encountered an error: %@", error);
 }
 
-#pragma mark ASIHTTPRequest Delegate Methods
-
-- (void)requestFinished:(ASIHTTPRequest *)request{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    loadingMore = false;
-    if (request.responseStatusCode != 200){
-        [NinaHelper handleBadRequest:request sender:self];
-        return;
-    }
-    
-    switch (request.tag){
-        case 11:
-        {
-            self.user.following = [NSNumber numberWithBool:true];
-            [self toggleFollow];
-            break;
-        }
-            
-        case 12:
-        {
-            DLog(@"Image request finished");
-            // Get data and convert to image
-            NSData *responseData = [request responseData];
-            UIImage *newImage = [UIImage imageWithData:responseData];
-            
-            self.profileImageView.image = newImage;
-        }
-        case 15:
-        {
-            self.user.following = false;
-            [self toggleFollow];
-            break;
-        }
-    }
-
-}
 
 -(void) toggleFollow{
     
@@ -562,11 +523,6 @@
         self.followButton.hidden = FALSE;
     }
 }
-
-- (void)requestFailed:(ASIHTTPRequest *)request{
-    [NinaHelper handleBadRequest:request sender:self];
-}
-
 
 
 - (void)expandAtIndexPath:(NSIndexPath*)indexPath{
@@ -813,14 +769,7 @@
 
 -(void) deletePerspective:(Perspective*)perspective{
     
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/places/%@/perspectives/", [NinaHelper getHostname], perspective.place.pid];
-    
-    NSURL *url = [NSURL URLWithString:urlText];
-    
-    ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-    
-    request.delegate = self;
-    request.tag = 6;
+
     
     for (Perspective *p in self.user.perspectives){
         if ( [p.perspectiveId isEqualToString:perspective.perspectiveId] ){
@@ -835,15 +784,16 @@
             break;
         }
     }
+
+    [[RKObjectManager sharedManager] deleteObject:perspective usingBlock:^(RKObjectLoader *loader) {
+        loader.delegate = self;
+        loader.userData = [NSNumber numberWithInt:6];
+    }];
     
-    [request setRequestMethod:@"DELETE"];
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];
 }
 
 
 - (void)dealloc{
-    [NinaHelper clearActiveRequests:10];
     [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
     [username release];
     [_user release];

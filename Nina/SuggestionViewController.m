@@ -166,14 +166,6 @@
     }
 }
 
-
--(void)requestFailed:(ASIHTTPRequest *)request{
-    [NinaHelper handleBadRequest:request sender:self];
-}
-
--(void)requestFinished:(ASIHTTPRequest *)request{
-    //[self.navigationController popViewControllerAnimated:true];
-}
 -(void)updatePerspective:(Perspective *)perspective{
     self.suggestion.place.bookmarked = true;
     [self contentLoad];

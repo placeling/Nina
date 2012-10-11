@@ -8,7 +8,6 @@
 
 #import "NearbyPlacesViewController.h"
 #import "PlacePageViewController.h"
-#import "ASIHTTPRequest.h"
 #import <CoreLocation/CoreLocation.h>
 #import "FlurryAnalytics.h"
 #import "NewPlaceController.h"
@@ -138,34 +137,32 @@
     
     searchTerm  = [NinaHelper encodeForUrl:searchTerm];
     
-    ASIHTTPRequest  *request;
-    
     if ([searchTerm length] > 0){
         float accuracy = accuracy= pow(self.location.horizontalAccuracy,2)  + pow(self.location.verticalAccuracy,2);
         
-        NSString *urlString = [NSString stringWithFormat:@"%@/v1/places/search?lat=%@&lng=%@&accuracy=%@&query=%@", [NinaHelper getHostname], lat, lon,[NSString stringWithFormat:@"%f", accuracy], searchTerm];
+        NSString *urlString = [NSString stringWithFormat:@"/v1/places/search?lat=%@&lng=%@&accuracy=%@&query=%@", lat, lon,[NSString stringWithFormat:@"%f", accuracy], searchTerm];
         
-        NSURL *url = [NSURL URLWithString:urlString];
-        request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-        request.tag = 22;
-        [NinaHelper signRequest:request];
-    } else {
-        NSString *urlString = @"https://maps.googleapis.com/maps/api/place/search/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y";	
+        [[RKClient sharedClient] get:urlString usingBlock:^(RKRequest *request) {
+            request.delegate = self;
+            request.userData = [NSNumber numberWithInt:22];
+        }];
+        
+    } else {      
+        NSString *urlString = @"https://maps.googleapis.com/maps/api/place/search/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y";
         urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f", urlString, lat, lon, accuracy];
-        NSURL *url = [NSURL URLWithString:urlString];
-        request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-        request.tag = 20;
+
+        [[RKClient sharedClient] get:urlString usingBlock:^(RKRequest *request) {
+            request.delegate = self;
+            request.userData = [NSNumber numberWithInt:20];
+        }];
         
     }
     
     loading = true;
-    
-    [request setDelegate:self];
-    [request startAsynchronous];
 }
 
 - (void)dealloc{
-    [NinaHelper clearActiveRequests:20];
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];    
     [placesTableView release];
     [_searchBar release];
     [nearbyPlaces release];
@@ -304,85 +301,61 @@
 
 
 
-#pragma mark ASIhttprequest
-
-- (void)requestFailed:(ASIHTTPRequest *)request{
-    loading = false;
-    promptAdd = false;
-    self.dataLoaded = true;
-    [NinaHelper handleBadRequest:request sender:self];
-    
-    [nearbyPlaces release];
-    nearbyPlaces = [[NSMutableArray alloc] init];
-    [predictivePlaces release];
-    predictivePlaces = [[NSMutableArray alloc] init];    
-    
-    [self dataSourceDidFinishLoadingNewData];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.placesTableView reloadData];
-    });
-}
-
-- (void)requestFinished:(ASIHTTPRequest *)request{
-    loading = false;
-    promptAdd = false;
-    self.placesTableView.tableFooterView = self.tableFooterView;
-    
-	if (200 != [request responseStatusCode]){
-		[NinaHelper handleBadRequest:request sender:self];
-	} else {        
+- (void)request:(RKRequest *)request didReceiveResponse:(RKResponse *)response{
+    if (200 != response.statusCode){
+		[NinaHelper handleBadRKRequest:response sender:self];
+	} else {
         self.dataLoaded = TRUE;
-
-		// Store incoming data into a string
-		NSString *jsonString = [request responseString];
-		DLog(@"Got JSON BACK: %@", jsonString);
-		// Create a dictionary from the JSON string
+        
+        // Store incoming data into a string
+        NSString *jsonString = [response bodyAsString];
+        DLog(@"Got JSON BACK: %@", jsonString);
+        // Create a dictionary from the JSON string
         
         NSDictionary *jsonDict = [[jsonString JSONValue] retain];
-		//nearbyPlaces = [[jsonDict objectForKey:@"places"] retain];
+        //nearbyPlaces = [[jsonDict objectForKey:@"places"] retain];        
         
-        
-        if (request.tag == 20){
+        if ([request.userData intValue] == 20){
             [nearbyPlaces release];
             nearbyPlaces = [[NSMutableArray alloc] init];
-        
+            
             //remove results we don't really care about
             for (NSDictionary *place in [jsonDict objectForKey:@"results"]){
                 NSMutableArray *types = [place objectForKey:@"types"];
                 for (int i=0; i<[types count]; i++){
                     [types replaceObjectAtIndex:i withObject:[(NSString*)[types objectAtIndex:i] lowercaseString]];
                 }
-                if ([types indexOfObject:@"political"] == NSNotFound && 
-                     [types indexOfObject:@"route"] == NSNotFound){
+                if ([types indexOfObject:@"political"] == NSNotFound &&
+                    [types indexOfObject:@"route"] == NSNotFound){
                     
                     [place setValue:[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lat"] forKey:@"lat"];
                     [place setValue:[[[place objectForKey:@"geometry"] objectForKey: @"location" ] objectForKey:@"lng"] forKey:@"lng"];
                     
-                    [nearbyPlaces addObject:place];                
+                    [nearbyPlaces addObject:place];
                 }
             }
-        } else if (request.tag == 21) {
+        } else if ([request.userData intValue] == 21) {
             [predictivePlaces release];
             predictivePlaces = [[NSMutableArray alloc] init];
-                        
+            
             //remove results we don't really care about
             for (NSDictionary *place in [jsonDict objectForKey:@"predictions"]){
                 NSMutableArray *types = [place objectForKey:@"types"];
                 for (int i=0; i<[types count]; i++){
                     [types replaceObjectAtIndex:i withObject:[(NSString*)[types objectAtIndex:i] lowercaseString]];
                 }
-                if ([types indexOfObject:@"political"] == NSNotFound && 
+                if ([types indexOfObject:@"political"] == NSNotFound &&
                     [types indexOfObject:@"route"] == NSNotFound){
-                    [predictivePlaces addObject:place];                
+                    [predictivePlaces addObject:place];
                 }
             }
-        }else if (request.tag == 22) {
+        }else if ([request.userData intValue] == 22) {
             [nearbyPlaces release];
             nearbyPlaces = [[NSMutableArray alloc] init];
             
             //remove results we don't really care about
             for (NSDictionary *place in [jsonDict objectForKey:@"places"]){
-                [nearbyPlaces addObject:place];                
+                [nearbyPlaces addObject:place];
             }
             if ( [NinaHelper getUsername] ){
                 promptAdd = true;
@@ -392,8 +365,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.placesTableView reloadData];
         });
-		[jsonDict release];
-	}
+        [jsonDict release];
+    }
     
     NSString *crumb = [NSString stringWithFormat:@"NearbyPlaces360:%@:%@", self, refreshHeaderView];
     [Crittercism leaveBreadcrumb:crumb];
@@ -403,6 +376,23 @@
     
 }
 
+- (void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error{
+    [NinaHelper handleBadRKRequest:request.response sender:self];
+    
+    loading = false;
+    promptAdd = false;
+    self.dataLoaded = true;
+    
+    [nearbyPlaces release];
+    nearbyPlaces = [[NSMutableArray alloc] init];
+    [predictivePlaces release];
+    predictivePlaces = [[NSMutableArray alloc] init];
+    
+    [self dataSourceDidFinishLoadingNewData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.placesTableView reloadData];
+    });
+}
 
 
 #pragma mark Table view methods
@@ -577,12 +567,12 @@
     
     if ([searchText length] > 0){
         urlString = [NSString stringWithFormat:@"%@&location=%@,%@&input=%@", urlString, lat, lon, searchTerm];
-        NSURL *url = [NSURL URLWithString:urlString];
         
-        ASIHTTPRequest  *request =  [[[ASIHTTPRequest  alloc]  initWithURL:url] autorelease];
-        request.tag = 21;
-        [request setDelegate:self];
-        [request startAsynchronous];
+        [[RKClient sharedClient] get:urlString usingBlock:^(RKRequest *request) {
+            request.delegate = self;
+            request.userData = [NSNumber numberWithInt:21];
+        }];
+        
     } else {
         showPredictive = false;
         [predictivePlaces release];

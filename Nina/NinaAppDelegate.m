@@ -17,7 +17,6 @@
 #import "PlacePageViewController.h"
 #import "MemberProfileViewController.h"
 #import "NearbySuggestedMapController.h"
-#import "ASIHTTPRequest.h"
 #import "Appirater.h"
 #import "FindFacebookFriendsController.h"
 #import "Crittercism.h"
@@ -31,7 +30,6 @@
 #import "UserManager.h"
 #import "Suggestion.h"
 #import "HomeViewController.h"
-#import "ASIFormDataRequest.h"
 
 @implementation NinaAppDelegate
 
@@ -135,6 +133,8 @@
     [objectManager.mappingProvider setSerializationMapping:perspectiveSerializationMapping forClass:[Perspective class] ];
     
     [router routeClass:[Perspective class] toResourcePath:@"/v1/places/:placeId/perspectives" forMethod:RKRequestMethodPOST];
+    [router routeClass:[Perspective class] toResourcePath:@"/v1/places/:placeId/perspectives" forMethod:RKRequestMethodDELETE];
+
     
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     
@@ -277,17 +277,14 @@
     // Note that the expiration handler block simply ends the task. It is important that we always
     // end tasks that we have started.
     DLog(@"ACTIVE - updating server with location: %@", location);
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/v1/ios/update_location", [NinaHelper getHostname]];
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
-    [request setPostValue:[NSString stringWithFormat:@"%f", location.coordinate.latitude] forKey:@"lat" ];
-    [request setPostValue:[NSString stringWithFormat:@"%f", location.coordinate.longitude] forKey:@"lng" ];
-        [request setPostValue:[NSString stringWithFormat:@"%f", location.horizontalAccuracy] forKey:@"accuracy" ];
-    
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];//fire and forget    
+
+    [[RKClient sharedClient] post:@"/v1/ios/update_location" usingBlock:^(RKRequest *request) {
+        RKParams *params = [RKParams params];        
+        [params setValue:[NSString stringWithFormat:@"%f", location.coordinate.latitude] forParam:@"lat" ];
+        [params setValue:[NSString stringWithFormat:@"%f", location.coordinate.longitude] forParam:@"lng" ];
+        [params setValue:[NSString stringWithFormat:@"%f", location.horizontalAccuracy] forParam:@"accuracy" ];
+    }];
+    //fire and forget
     
 }
 

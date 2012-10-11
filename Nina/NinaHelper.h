@@ -9,7 +9,6 @@
 
 
 #import <Foundation/Foundation.h>
-#import "ASIHTTPRequest.h"
 #import <CoreLocation/CoreLocation.h>
 #import "LocationManagerManager.h"
 #import <QuartzCore/QuartzCore.h>
@@ -126,13 +125,9 @@
 
 @interface NinaHelper : NSObject 
 
-+(void) handleBadRequest:(ASIHTTPRequest *)request sender:(UIViewController*)sender;
 +(void) handleBadRKRequest:(RKResponse *)response sender:(UIViewController*)sender;
 
 +(void) handleCoreLocationError:(NSError*)error;
-+(void) signRequest:(ASIHTTPRequest *)request; 
-
-+(void) clearActiveRequests:(NSInteger) range;
 
 +(NSString *)dateDiff:(NSDate *)convertedDate;
 

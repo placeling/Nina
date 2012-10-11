@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ASIHTTPRequest.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "MBProgressHUD.h"
 
 @protocol LoginControllerDelegate;
 
-@interface SignupController : UITableViewController<ASIHTTPRequestDelegate, UITextFieldDelegate>{
+@interface SignupController : UITableViewController<RKObjectLoaderDelegate, UITextFieldDelegate>{
     NSDictionary *fbDict;
     
     NSString *accessKey;

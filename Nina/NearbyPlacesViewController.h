@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "EGORefreshTableHeaderView.h"
-#import "ASIHTTPRequest.h"
 #import "User.h"
 #import "NinaHelper.h"
 #import "MBProgressHUD.h"
 
 
-@interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ASIHTTPRequestDelegate, UISearchBarDelegate, MBProgressHUDDelegate> {
+@interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, RKRequestDelegate, UISearchBarDelegate, MBProgressHUDDelegate> {
     EGORefreshTableHeaderView *refreshHeaderView;
     
     IBOutlet UIView *tableFooterView;

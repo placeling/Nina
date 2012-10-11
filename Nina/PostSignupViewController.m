@@ -11,7 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "SBJSON.h"
 #import "FlurryAnalytics.h"
-#import "ASIFormDataRequest.h"
+#import "UserManager.h"
 
 
 @interface PostSignupViewController(Private)
@@ -104,10 +104,29 @@
 }
 
 -(IBAction)saveUser{
-    NSString *urlText = [NSString stringWithFormat:@"%@/v1/users/%@", [NinaHelper getHostname], self.user.username];
+    NSString *urlText = [NSString stringWithFormat:@"/v1/users/%@", self.user.username];    
     
-    NSURL *url = [NSURL URLWithString:urlText];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    if (self.uploadingImage){
+        Photo *photo = [[Photo alloc] init];
+        photo.thumb_image = uploadingImage;
+        self.user.profilePic = photo;
+        [photo release];
+    }
+    
+    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:urlText usingBlock:^(RKObjectLoader* loader) {
+        loader.method = RKRequestMethodPUT;
+        RKParams* params = [RKParams params];
+        if (self.uploadingImage){
+            NSData* imgData = UIImageJPEGRepresentation(uploadingImage, 0.5);
+            [params setData:imgData MIMEType:@"image/jpeg" fileName:@"image.jpg" forParam:@"image"];
+        }
+        [params setValue:self.textView.text forParam:@"description"];
+        
+        loader.params = params;
+        loader.delegate = self;
+        loader.userData = [NSNumber numberWithInt:90];
+    }];
+
     
     [self.textView resignFirstResponder];
     
@@ -116,22 +135,6 @@
     } else {
         [FlurryAnalytics logEvent:@"NEW_USER_SKIPPED_DESCRIPTION"];
     }
-    
-    [request setPostValue:self.textView.text forKey:@"description"];
-
-    if (self.uploadingImage){
-        NSData* imgData = UIImageJPEGRepresentation(self.uploadingImage, 0.5);
-        [request setData:imgData withFileName:@"image.jpg" andContentType:@"image/jpeg"  forKey:@"image"];
-    }
-    [request setTimeOutSeconds:120];
-    
-    [request setRequestMethod:@"PUT"];
-    request.delegate = self;
-    [request setTag:90]; //this is the bookmark request tag from placepageviewcontroller -iMack
-    
-    [NinaHelper signRequest:request];
-    
-    [request startAsynchronous];
     
     self.HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     // Set determinate mode
@@ -151,7 +154,14 @@
         
         self.textView.text = self.user.userDescription;
         [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profilePic.thumbUrl]];
+    } else if ( [(NSNumber*)objectLoader.userData intValue] == 90){
+        [UserManager setUser:[objects objectAtIndex:0]];
+        self.user = [objects objectAtIndex:0];
+        
+        [self.delegate loadContent];
+        [self.navigationController dismissModalViewControllerAnimated:TRUE];
     }
+    
 }
 
 - (void)objectLoader:(RKObjectLoader*)objectLoader didFailWithError:(NSError*)error {
@@ -236,28 +246,6 @@
     DLog(@"Cancelled image picking");
 }
 
--(void)requestFailed:(ASIHTTPRequest *)request{
-    [self.HUD hide:TRUE];
-    [NinaHelper handleBadRequest:request sender:self];
-}
-
-- (void)requestFinished:(ASIHTTPRequest *)request{    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [self.HUD hide:true];
-    
-    if (200 != [request responseStatusCode]){
-		[NinaHelper handleBadRequest:request sender:self];
-	} else {
-        //perspective modified return
-        NSString *responseString = [request responseString];        
-        DLog(@"%@", responseString);
-        NSDictionary *userDict = [responseString JSONValue];
-        
-        [self.user updateFromJsonDict:[userDict objectForKey:@"user"]]; 
-        [self.delegate loadContent];
-        [self.navigationController dismissModalViewControllerAnimated:TRUE];
-	}
-}
 
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardWasShown:(NSNotification*)aNotification {
@@ -298,7 +286,7 @@
 
 
 -(void) dealloc{
-    [super dealloc];
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];   
     [user release];
     [username release];
     [uploadingImage release];
@@ -307,6 +295,7 @@
     [profileImageView release];
     [HUD release];
     [changeImageButton release];
+    [super dealloc];
 }
 
 

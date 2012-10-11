@@ -10,7 +10,7 @@
 #import "NinaHelper.h"
 #import "ApplicationController.h"
 
-@interface FacebookRegetViewController : ApplicationController<UITextViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate, ASIHTTPRequestDelegate>{
+@interface FacebookRegetViewController : ApplicationController<UITextViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
     
 }    
 -(IBAction) logout;

@@ -183,7 +183,8 @@
     [HUD hide:TRUE];
     
     [UserManager setUser:[objects objectAtIndex:0]];
-    [self.navigationController dismissModalViewControllerAnimated:TRUE];}
+    [self.navigationController dismissModalViewControllerAnimated:TRUE];
+}
 
 
 #pragma mark - View lifecycle

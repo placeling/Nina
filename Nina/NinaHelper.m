@@ -8,9 +8,6 @@
 
 #import "NinaHelper.h"
 #import "LoginController.h"
-#import "ASIFormDataRequest+OAuth.h"
-#import "ASIFormDataRequest.h"
-#import "ASIHTTPRequest+OAuth.h"
 #import "FlurryAnalytics.h"
 #import <RestKit/RestKit.h>
 #import "WBNoticeView.h"
@@ -76,8 +73,6 @@
     [NinaHelper setAccessToken:nil];
     [NinaHelper setAccessTokenSecret:nil];
     [NinaHelper setUsername:nil];
-    [ASIHTTPRequest clearSession];
-    
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     [[objectManager client] setOAuth1AccessToken:nil];
@@ -115,13 +110,6 @@
     NSError *error = response.failureError;
     
     [NinaHelper handleBadRequest:statusCode host:host error:error sender:sender];  
-}
-
-+(void) handleBadRequest:(ASIHTTPRequest *)request sender:(UIViewController*)sender{
-    int statusCode = [request responseStatusCode];
-    NSString *host = [[request url]  host];
-    NSError *error = [request error];
-    [NinaHelper handleBadRequest:statusCode host:host error:error sender:sender];
 }
 
 +(void) handleBadRequest:(int)statusCode host:(NSString*)host error:(NSError *)error sender:(UIViewController*)sender{      
@@ -202,60 +190,6 @@
         [alert release];	
     }
 
-}
-
-
-+(void) signRequest:(ASIHTTPRequest *)request{
-    NSString *userAgent = [NSString stringWithFormat:@"nina-client-%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    [request addRequestHeader:@"User-Agent" value:userAgent];
-    [request setTimeOutSeconds:120];
-    
-    if ([request isKindOfClass:[ASIFormDataRequest class]]){
-        
-        ASIFormDataRequest *formRequest = (ASIFormDataRequest*) request;
-        
-        CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
-        CLLocation *location =  locationManager.location;
-        
-        if (location){
-            NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-            NSString* lng = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
-            float accuracy = pow(location.horizontalAccuracy,2)  + pow(location.verticalAccuracy,2);
-            accuracy = sqrt( accuracy ); //take accuracy as single vector, rather than 2 values -iMack
-            
-            [formRequest setPostValue:lat forKey:@"lat"];
-            [formRequest setPostValue:lng forKey:@"lng"];
-            [formRequest setPostValue:[NSString stringWithFormat:@"%f", accuracy] forKey:@"accuracy"];
-        }
-        
-        //used for testing for null-signiner errors        
-        /*
-        for (NSDictionary* dict in [formRequest postData]){
-            if ([dict objectForKey:@"value"] == nil){
-                DLog(@"ALERT-NULL POST VALUE");
-            }
-        }
-
-        #endif
-         */
-    }
-    
-    [request signRequestWithClientIdentifier:[NinaHelper getConsumerKey] secret:[NinaHelper getConsumerSecret]
-            tokenIdentifier:[NinaHelper getAccessToken] secret:[NinaHelper getAccessTokenSecret]
-                                     usingMethod:ASIOAuthHMAC_SHA1SignatureMethod];    
-
-}
-
-+(void) clearActiveRequests:(NSInteger) range{
-    //for nil'ing out active asi request to prevent exc_bad_acces on their return
-    for (ASIHTTPRequest *req in ASIHTTPRequest.sharedQueue.operations){
-        NSInteger tag = req.tag;
-        
-        if ( range <= tag && tag < range+10 ){
-            [req cancel];
-            [req setDelegate:nil];
-        }
-    }
 }
 
 +(NSString *)dateDiff:(NSDate *)convertedDate {
@@ -437,38 +371,36 @@
 }
 
 +(void) uploadNotificationToken:(NSString*)notificationToken{
-    NSString *urlString = [NSString stringWithFormat:@"%@/v1/ios/update_token", [NinaHelper getHostname]];	
-	NSURL *url = [NSURL URLWithString:urlString];
-    ASIFormDataRequest *request =  [[ASIFormDataRequest  alloc]  initWithURL:url];
-    [request setPostValue:notificationToken forKey:@"ios_notification_token"];
     
-    [request setCompletionBlock:^{
-        // Use when fetching text data
-        NSString *responseString = [request responseString];
-        DLog( @"Got %@ back from token set", responseString );
+    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/v1/ios/update_token" usingBlock:^(RKObjectLoader *loader) {
+        loader.method = RKRequestMethodPOST;
+        RKParams* params = [RKParams params];
+        [params setValue:notificationToken forParam:@"ios_notification_token"];
+        loader.params = params;
+        loader.onDidLoadResponse = ^(RKResponse *response){
+            NSString *responseString = response.bodyAsString;
+            DLog( @"Got %@ back from token set", responseString );
+        };
+        loader.onDidFailWithError = ^(NSError *error){
+            DLog( @"%@", [error localizedDescription] );
+        };
+        
     }];
-    [request setFailedBlock:^{
-        NSError *error = [request error];
-        DLog( @"%@", [error localizedDescription] );
-    }];
-    
-    [NinaHelper signRequest:request];
-    [request startAsynchronous];    
 }
 
 +(void) updateFacebookCredentials:(FBSession*)session forUser:(User*)user{
     
     if (FBSession.activeSession.isOpen) {
-            NSString *urlString = [NSString stringWithFormat:@"%@/v1/auth/facebook/add", [NinaHelper getHostname]];
-            NSURL *url = [NSURL URLWithString:urlString];
+        //don't need to send facebook uid, can be grabbed server-side
+        Authentication *auth = [[Authentication alloc] init];        
+        auth.token = [FBSession.activeSession accessToken];
+        auth.expiry = [FBSession.activeSession expirationDate];
+        auth.provider = @"facebook";
+        
+        [[RKObjectManager sharedManager] postObject:auth usingBlock:^(RKObjectLoader *loader) {
             
-            ASIFormDataRequest *request =  [[[ASIFormDataRequest  alloc]  initWithURL:url] autorelease];
-            [request setPostValue:[FBSession.activeSession accessToken] forKey:@"token" ];
-            [request setPostValue:[FBSession.activeSession expirationDate] forKey:@"expiry" ];
-            
-            [NinaHelper signRequest:request];
-            
-            [request startAsynchronous];//fire and forget
+        }];
+
     }
     
 }
