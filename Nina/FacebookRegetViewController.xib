@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">11E2620</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2829</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
+		<string key="IBDocument.SystemVersion">11G56</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
 		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1914</string>
+			<string key="NS.object.0">1929</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -49,7 +49,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">canvas.png</string>
+							<string key="NSResourceName">CanvasBG.png</string>
 						</object>
 					</object>
 					<object class="IBUIButton" id="828042313">
@@ -110,7 +110,6 @@
 						<string key="NSFrame">{{287, 396}, {33, 20}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -176,13 +175,13 @@
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<bool key="IBUIEditable">NO</bool>
+						<string type="base64-UTF8" key="IBUIText">WW91ciBGYWNlYm9vayBhdXRob3JpemF0aW9uIGhhcyBleHBpcmVkLgoKVGhpcyBpcyBub3JtYWw6IHRh
+cCB0aGUgaWNvbiBiZWxvdyB0byByZW5ldyB5b3VyIGF1dGhvcml6YXRpb24gYW5kIHVzZSBQbGFjZWxp
+bmcuA</string>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<int key="IBUIAutocapitalizationType">2</int>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
-						<string type="base64-UTF8" key="IBUIText">WW91ciBGYWNlYm9vayBhdXRob3JpemF0aW9uIGhhcyBleHBpcmVkLgoKVGhpcyBpcyBub3JtYWw6IHRh
-cCB0aGUgaWNvbiBiZWxvdyB0byByZW5ldyB5b3VyIGF1dGhvcml6YXRpb24gYW5kIHVzZSBQbGFjZWxp
-bmcuA</string>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">1</int>
 							<double key="pointSize">14</double>
@@ -369,7 +368,7 @@ bmcuA</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="canvas.png">{320, 320}</string>
+			<string key="CanvasBG.png">{315, 315}</string>
 			<string key="cloud1.png">{46, 19}</string>
 			<string key="cloud2.png">{33, 20}</string>
 			<string key="cloud3.png">{83, 31}</string>
@@ -377,6 +376,6 @@ bmcuA</string>
 			<string key="cloud5.png">{66, 38}</string>
 			<string key="connect_with_facebook.png">{111, 128}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1914</string>
+		<string key="IBCocoaTouchPluginVersion">1929</string>
 	</data>
 </archive>
