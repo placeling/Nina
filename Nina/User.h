@@ -75,8 +75,6 @@
 @property (nonatomic, assign) BOOL blocked;
 @property (nonatomic, assign) NSTimeInterval timestamp;
 
-- (void) updateFromJsonDict:(NSDictionary *)jsonDict;
-
 -(Authentication*) facebook;
 -(Authentication*) twitter;
 

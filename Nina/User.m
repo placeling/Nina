@@ -25,52 +25,7 @@
         timestamp = [[NSDate date] timeIntervalSince1970];
     }
     return self;
-}
-
--(void) updateFromJsonDict:(NSDictionary *)jsonDict{
-    self.userId = [jsonDict objectForKeyNotNull:@"id"];
-    self.username = [jsonDict objectForKeyNotNull:@"username"];
-    self.fullname = [jsonDict objectForKeyNotNull:@"fullname"];
-    self.city = [jsonDict objectForKeyNotNull:@"city"];
-    self.placeCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"perspectives_count"] intValue]];
-    self.followerCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"follower_count"] intValue]];
-    self.followingCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"following_count"] intValue]];
-    self.highlightedCount = [NSNumber numberWithInt:[[jsonDict objectForKeyNotNull:@"highlighted_count"] intValue]];
-    self.userDescription = [jsonDict objectForKeyNotNull:@"description"];
-    self.url = [jsonDict objectForKeyNotNull:@"url"];
-    self.email = [jsonDict objectForKeyNotNull:@"email"];
-    
-    self.location = [jsonDict objectForKeyNotNull:@"location"];
-    
-    self.following =[NSNumber numberWithBool:[[jsonDict objectForKeyNotNull:@"following"] boolValue]];
-    self.follows_you = [NSNumber numberWithBool:[[jsonDict objectForKeyNotNull:@"follows_you"] boolValue]]; 
-    
-    self.auths = [[[NSMutableArray alloc] init] autorelease];
-    self.blocked = [[jsonDict objectForKeyNotNull:@"blocked"] boolValue] ;
-    
-    for ( NSDictionary *authDict in [jsonDict objectForKey:@"auths"] ){
-        NSDateFormatter *jsonFormatter = [RKObjectMapping preferredDateFormatter];
-        NSString *expiry = [authDict objectForKey:@"expiry"];
-
-        Authentication *auth = [[Authentication alloc] init];
-        auth.provider = [authDict objectForKey:@"provider"];
-        auth.uid = [authDict objectForKey:@"uid"];
-        auth.expiry = [jsonFormatter dateFromString:expiry];
-        auth.token = [authDict objectForKey:@"token"];
-        
-        [self.auths addObject:auth];
-        [auth release];
-    }
-    
-    Photo *photo = [[[Photo alloc] init] autorelease];
-    
-    photo.thumbUrl = [jsonDict objectForKeyNotNull:@"thumb_url"];
-    photo.mainUrl = [jsonDict objectForKeyNotNull:@"main_url"];
-    self.profilePic = photo;
-    
-    //[photo release];
-    
-}
+}       
 
 -(NSString*) userThumbUrl{
     if (self.profilePic && self.profilePic.thumbUrl && [self.profilePic.thumbUrl length] >0){
