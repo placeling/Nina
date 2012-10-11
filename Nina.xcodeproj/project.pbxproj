@@ -406,8 +406,6 @@
 		28EE550414352BD800E36686 /* mymap.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE550014352BD800E36686 /* mymap.png */; };
 		28EE550514352BD800E36686 /* mymap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28EE550114352BD800E36686 /* mymap@2x.png */; };
 		28F189F61427F00F005DE786 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F189F51427F00F005DE786 /* UIImage+Resize.m */; };
-		28F189FC1427F072005DE786 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F189F91427F071005DE786 /* UIImage+Alpha.m */; };
-		28F189FD1427F072005DE786 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F189FB1427F072005DE786 /* UIImage+RoundedCorner.m */; };
 		28F2A6F6159E227600C6F698 /* SelectedButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F2A6F2159E227600C6F698 /* SelectedButton.png */; };
 		28F2A6F7159E227600C6F698 /* SelectedButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F2A6F3159E227600C6F698 /* SelectedButton@2x.png */; };
 		28F2A6F8159E227600C6F698 /* unselectedButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F2A6F4159E227600C6F698 /* unselectedButton.png */; };
@@ -1065,10 +1063,6 @@
 		28EE550114352BD800E36686 /* mymap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mymap@2x.png"; sourceTree = "<group>"; };
 		28F189F41427F00F005DE786 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		28F189F51427F00F005DE786 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		28F189F81427F071005DE786 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
-		28F189F91427F071005DE786 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
-		28F189FA1427F072005DE786 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
-		28F189FB1427F072005DE786 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		28F2A6F2159E227600C6F698 /* SelectedButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SelectedButton.png; sourceTree = "<group>"; };
 		28F2A6F3159E227600C6F698 /* SelectedButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SelectedButton@2x.png"; sourceTree = "<group>"; };
 		28F2A6F4159E227600C6F698 /* unselectedButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselectedButton.png; sourceTree = "<group>"; };
@@ -1656,10 +1650,6 @@
 				28C7312115643B1700E27DCA /* Appirater.m */,
 				285BE74C142CFFF900898FDF /* asyncimageview.h */,
 				285BE74D142CFFF900898FDF /* asyncimageview.m */,
-				28F189F81427F071005DE786 /* UIImage+Alpha.h */,
-				28F189F91427F071005DE786 /* UIImage+Alpha.m */,
-				28F189FA1427F072005DE786 /* UIImage+RoundedCorner.h */,
-				28F189FB1427F072005DE786 /* UIImage+RoundedCorner.m */,
 				28F189F41427F00F005DE786 /* UIImage+Resize.h */,
 				28F189F51427F00F005DE786 /* UIImage+Resize.m */,
 				286B15F8140F000A00CFED96 /* SpinnerTableCell.xib */,
@@ -2585,8 +2575,6 @@
 				28B6191B1421440200B0A7E5 /* NSString+MD5Addition.m in Sources */,
 				28B6191C1421440200B0A7E5 /* UIDevice+IdentifierAddition.m in Sources */,
 				28F189F61427F00F005DE786 /* UIImage+Resize.m in Sources */,
-				28F189FC1427F072005DE786 /* UIImage+Alpha.m in Sources */,
-				28F189FD1427F072005DE786 /* UIImage+RoundedCorner.m in Sources */,
 				285BE74E142CFFFA00898FDF /* asyncimageview.m in Sources */,
 				28A4377B14327EFA005F192B /* ActivityFeedViewController.m in Sources */,
 				28A437891432E1EF005F192B /* StyleHelper.m in Sources */,
