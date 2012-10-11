@@ -94,7 +94,7 @@
         [fileContent release];
     }
     CategoryController *categoryController = [[CategoryController alloc] initWithCategory:self.categories];
-    categoryController.newPlaceController= self;
+    categoryController.addNewPlaceController= self;
     categoryController.delegate = self;
     [self.navigationController pushViewController:categoryController animated:true];
     [categoryController release];

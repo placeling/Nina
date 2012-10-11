@@ -9,7 +9,7 @@
 #import "CategoryController.h"
 
 @implementation CategoryController
-@synthesize categories, delegate, sortedKeys, selectedCategory, newPlaceController;
+@synthesize categories, delegate, sortedKeys, selectedCategory, addNewPlaceController;
 
 -(id)initWithCategory:(NSDictionary*)category {
     self = [super initWithStyle:UITableViewStyleGrouped];
@@ -115,13 +115,13 @@
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         [self.delegate updateCategory:[self.sortedKeys objectAtIndex:indexPath.row]];
-        [self.navigationController popToViewController:newPlaceController animated:true];
+        [self.navigationController popToViewController:addNewPlaceController animated:true];
         
     } else {
         self.selectedCategory = [self.sortedKeys objectAtIndex:indexPath.row];
         CategoryController *categoryController = [[CategoryController alloc] initWithCategory:[self.categories objectForKey:[self.sortedKeys objectAtIndex:indexPath.row]]];
         categoryController.delegate = self;
-        categoryController.newPlaceController = self.newPlaceController;
+        categoryController.addNewPlaceController = self.addNewPlaceController;
         [self.navigationController pushViewController:categoryController animated:true];
         [categoryController release];    
     }

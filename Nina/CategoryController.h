@@ -15,7 +15,7 @@
 
 @interface CategoryController : UITableViewController<CategoryControllerDelegate>{
     id<CategoryControllerDelegate> delegate;
-    UIViewController *newPlaceController;
+    UIViewController *addNewPlaceController;
     NSDictionary *categories;
     NSArray *sortedKeys;
     NSString *selectedCategory;
@@ -23,7 +23,7 @@
 
 @property(nonatomic,retain) NSDictionary *categories;
 @property(nonatomic,assign) id<CategoryControllerDelegate> delegate;
-@property(nonatomic,assign) UIViewController *newPlaceController;
+@property(nonatomic,assign) UIViewController *addNewPlaceController;
 @property(nonatomic,retain) NSArray *sortedKeys;
 @property(nonatomic,retain) NSString *selectedCategory;
 
