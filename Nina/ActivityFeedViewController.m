@@ -255,10 +255,18 @@
     
     if ( [(NSNumber*)objectLoader.userData intValue] == 70){
         [recentActivities removeAllObjects];
-        [recentActivities addObjectsFromArray:objects];
+        for (NSObject* object in objects){
+            if ( [object isKindOfClass:[Activity class]] ){
+                [recentActivities addObject: object];
+            }
+        }
         [self.activityTableView reloadData];
     } else if ( [(NSNumber*)objectLoader.userData intValue] == 71){
-        [recentActivities addObjectsFromArray:objects];
+        for (NSObject* object in objects){
+            if ( [object isKindOfClass:[Activity class]] ){
+                [recentActivities addObject: object];
+            }
+        }
         [self.activityTableView reloadData];
         
         if ( [objects count] == 0 ) {
