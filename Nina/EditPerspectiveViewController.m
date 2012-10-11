@@ -448,10 +448,9 @@
     //scale down image, since we dont' need the whole thing for the app
     if (img.size.width > 160 || img.size.height > 160){
         thumbImage = [img
-                      thumbnailImage:160
-                   transparentBorder:1
-                   cornerRadius:1
-                   interpolationQuality:kCGInterpolationHigh ];
+                      resizedImageWithContentMode:UIViewContentModeScaleAspectFit
+                      bounds:CGSizeMake(160, 160)
+                      interpolationQuality:kCGInterpolationHigh];
     } else {
         thumbImage = img;
     }
