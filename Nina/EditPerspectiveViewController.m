@@ -241,6 +241,9 @@
             [self.perspective.photos addObject:[objects objectAtIndex:0]];
             [self.perspective.photos removeObject:photo];
             
+            [delegate updatePerspective:self.perspective];
+            [UserManager updatePerspective:self.perspective];
+            
         } else {
             DLog(@"WARNING: request handled with no uploading tag");
         }
