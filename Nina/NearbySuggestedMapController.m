@@ -299,7 +299,7 @@
     CLLocationDegrees mLng = center.longitude;
     
     //without dataLoaded, the first time this runs it will get a whole world map
-    if ( (fabs(uLat - mLat) > region.span.latitudeDelta/2 || fabs(uLng - mLng) > region.span.longitudeDelta/2 || region.span.latitudeDelta > 2.5*lastLatSpan || region.span.latitudeDelta < lastLatSpan/2.5) ){
+    if ( (fabs(uLat - mLat) > region.span.latitudeDelta/4 || fabs(uLng - mLng) > region.span.longitudeDelta/4 || region.span.latitudeDelta > 2.5*lastLatSpan || region.span.latitudeDelta < lastLatSpan/2.5) ){
         
         if ( viewLoaded ){        
 
