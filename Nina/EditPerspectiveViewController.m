@@ -484,6 +484,8 @@
     
     NSData* imgData = UIImageJPEGRepresentation(image, 0.5);
     
+    requestCount++;
+    
     DLog(@"Got image, shrank main to: %i", [imgData length]); 
     
     NSString *urlText = [NSString stringWithFormat:@"/v1/places/%@/perspectives/photos", self.perspective.place.pid];
@@ -495,7 +497,7 @@
         [params setValue:@"true" forParam:@"newphoto"];
         loader.params = params;
         loader.delegate = self;
-        loader.userData = [NSNumber numberWithInt:(1000+requestCount++)];
+        loader.userData = [NSNumber numberWithInt:(1000+requestCount)];
     }];
     
     return [NSNumber numberWithInt:1000+requestCount];
