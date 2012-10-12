@@ -2796,6 +2796,7 @@
 					"\"$(SRCROOT)/Nina/lib/FlurryAnalytics\"",
 					"\"$(SRCROOT)/Nina/lib/CrittercismSDK-crashonly\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -2835,6 +2836,7 @@
 					"\"$(SRCROOT)/Nina/lib/FlurryAnalytics\"",
 					"\"$(SRCROOT)/Nina/lib/CrittercismSDK-crashonly\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
