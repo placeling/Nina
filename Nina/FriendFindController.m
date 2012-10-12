@@ -67,10 +67,14 @@
     for (int i=0; i< 3; i++){
         if ([prefs dictionaryForKey:[NSString stringWithFormat:@"recent_search_%i", i]]){
             NSDictionary *jsonDict = [prefs dictionaryForKey:[NSString stringWithFormat:@"recent_search_%i", i]];
-            //User *user = [[User alloc] initWithEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext] insertIntoManagedObjectContext:managedObjectContext];
             User *user = [[User alloc] init];
+            user.username = [jsonDict objectForKey:@"username"];
+            user.userDescription = [jsonDict objectForKey:@"description"];
+            Photo *photo = [[Photo alloc] init];
+            photo.thumbUrl = [jsonDict objectForKey:@"thumb_url"];
+            user.profilePic = photo;
+            [photo release];
             
-            [user updateFromJsonDict:jsonDict];
             [self.recentSearches addObject:user];
             [user release];
         }
