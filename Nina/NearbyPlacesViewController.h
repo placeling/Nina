@@ -38,6 +38,8 @@
     bool searchLogged;
     NSTimer *timer;
     
+    RKClient *googleClient;
+    
     CLLocation *hardLocation;
     NSNumber *hardAccuracy;
 }
@@ -56,6 +58,7 @@
 
 @property(nonatomic, retain) CLLocation *hardLocation;
 @property(nonatomic, retain) NSNumber *hardAccuracy;
+@property(nonatomic, retain) RKClient *googleClient;
 
 @property(nonatomic, assign) BOOL locationEnabled;
 @property(nonatomic, retain) CLLocation *location;

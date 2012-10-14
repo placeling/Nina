@@ -30,7 +30,7 @@
 @synthesize searchBar=_searchBar, toolBar;
 @synthesize tableFooterView, gpsLabel;
 @synthesize dataLoaded, locationEnabled, location=_location;
-@synthesize hardLocation, hardAccuracy;
+@synthesize hardLocation, hardAccuracy, googleClient;
 
 
 -(BOOL) showPredictive{
@@ -148,10 +148,10 @@
         }];
         
     } else {      
-        NSString *urlString = @"https://maps.googleapis.com/maps/api/place/search/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y";
+        NSString *urlString = @"/maps/api/place/search/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y";
         urlString = [NSString stringWithFormat:@"%@&location=%@,%@&radius=%f", urlString, lat, lon, accuracy];
 
-        [[RKClient sharedClient] get:urlString usingBlock:^(RKRequest *request) {
+        [self.googleClient get:urlString usingBlock:^(RKRequest *request) {
             request.delegate = self;
             request.userData = [NSNumber numberWithInt:20];
         }];
@@ -164,6 +164,7 @@
 - (void)dealloc{
     [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];    
     [placesTableView release];
+    [googleClient release];
     [_searchBar release];
     [nearbyPlaces release];
     [predictivePlaces release];
@@ -249,6 +250,8 @@
     
     self.placesTableView.delegate = self;
     
+    self.googleClient = [RKClient clientWithBaseURL:[NSURL URLWithString:@"https://maps.googleapis.com"]];
+    
     if (refreshHeaderView == nil) {
 		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.placesTableView.bounds.size.height, 320.0f, self.placesTableView.bounds.size.height)];
 		refreshHeaderView.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
@@ -301,11 +304,13 @@
 
 
 
-- (void)request:(RKRequest *)request didReceiveResponse:(RKResponse *)response{
+- (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response{
+    loading = false;
     if (200 != response.statusCode){
 		[NinaHelper handleBadRKRequest:response sender:self];
 	} else {
         self.dataLoaded = TRUE;
+        
         
         // Store incoming data into a string
         NSString *jsonString = [response bodyAsString];
@@ -561,14 +566,14 @@
     NSString* lat = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
     NSString* lon = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
     
-    NSString *urlString = @"https://maps.googleapis.com/maps/api/place/autocomplete/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y&";		
+    NSString *urlString = @"/maps/api/place/autocomplete/json?sensor=true&key=AIzaSyAjwCd4DzOM_sQsR7JyXMhA60vEfRXRT-Y&";		
     
     NSString *searchTerm  = [NinaHelper encodeForUrl:searchBar.text];
     
     if ([searchText length] > 0){
         urlString = [NSString stringWithFormat:@"%@&location=%@,%@&input=%@", urlString, lat, lon, searchTerm];
         
-        [[RKClient sharedClient] get:urlString usingBlock:^(RKRequest *request) {
+        [self.googleClient get:urlString usingBlock:^(RKRequest *request) {
             request.delegate = self;
             request.userData = [NSNumber numberWithInt:21];
         }];
