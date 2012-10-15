@@ -259,12 +259,13 @@
             NSString *actionURL = [NSString stringWithFormat:@"/v1/users/%@/follow",self.user.username];
             DLog(@"Follow/unfollow url is: %@", actionURL);
             
-            [[RKObjectManager sharedManager] loadObjectsAtResourcePath:actionURL usingBlock:^(RKObjectLoader* loader) {
-                loader.method = RKRequestMethodPOST;
-                loader.delegate = self;
-                loader.onDidLoadResponse =  ^(RKResponse *repsonse){
+            [[RKClient sharedClient] post:actionURL usingBlock:^(RKRequest* request) {
+                request.onDidLoadResponse = ^(RKResponse *repsonse){
                     self.user.following = [NSNumber numberWithBool:true];
                     [self toggleFollow];
+                };
+                request.onDidFailLoadWithError =  ^(NSError *error) {
+                    [NinaHelper handleBadRKRequest:request.response sender:self];
                 };
             }];
         } else {
@@ -313,12 +314,13 @@
         DLog(@"Follow/unfollow url is: %@", actionURL);
         [self toggleFollow];
          
-         [[RKObjectManager sharedManager] loadObjectsAtResourcePath:actionURL usingBlock:^(RKObjectLoader* loader) {
-            loader.method = RKRequestMethodPOST;
-            loader.delegate = self;
-            loader.onDidLoadResponse = ^(RKResponse *repsonse){
+         [[RKClient sharedClient] post:actionURL usingBlock:^(RKRequest* request) {
+             request.onDidLoadResponse = ^(RKResponse *repsonse){
                  self.user.following = false;
                  [self toggleFollow];
+             };
+             request.onDidFailLoadWithError =  ^(NSError *error) {
+                 [NinaHelper handleBadRKRequest:request.response sender:self];
              };
          }];
     }
