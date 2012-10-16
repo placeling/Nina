@@ -309,8 +309,7 @@
     if (200 != response.statusCode){
 		[NinaHelper handleBadRKRequest:response sender:self];
 	} else {
-        self.dataLoaded = TRUE;
-        
+        self.dataLoaded = TRUE;        
         
         // Store incoming data into a string
         NSString *jsonString = [response bodyAsString];
@@ -412,16 +411,13 @@
     // Return the number of rows in the section.
     DLog(@"%i", self.dataLoaded);
     DLog(@"%i", [nearbyPlaces count]);
-    if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0) {
-        return 1 + promptAdd;
-    } else if (loading){
+    
+    if ( loading ){
         return 1;
-    }else {
-        if ([self showPredictive]){
-            return [predictivePlaces count];
-        } else {
-            return [nearbyPlaces count] + promptAdd;
-        }
+    } else if ([self showPredictive]){
+        return [predictivePlaces count];
+    } else {
+        return MAX(1, [nearbyPlaces count]) + promptAdd;
     }
 }
 
@@ -572,6 +568,7 @@
     
     if ([searchText length] > 0){
         urlString = [NSString stringWithFormat:@"%@&location=%@,%@&input=%@", urlString, lat, lon, searchTerm];
+        showPredictive = true;
         
         [self.googleClient get:urlString usingBlock:^(RKRequest *request) {
             request.delegate = self;
