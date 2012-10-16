@@ -19,7 +19,7 @@
 +(void) styleInfoView:(UIView *)view;
 +(void) styleBookmarkButton:(UIButton*)button;
 +(void) styleMapImage:(UIButton*)button;
-+(void) styleTagButton:(UIButton*)button;
++(void) styleTagButton:(UIButton*)button forText:(NSString*)text;
 +(void) styleContactInfoButton:(UIButton*)button;
 +(void) styleSubmitTypeButton:(UIButton*)button;
 +(void) styleFollowButton:(UIButton*)button;

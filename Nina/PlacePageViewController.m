@@ -734,12 +734,7 @@ typedef enum {
     UIButton *nearbyButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [nearbyButton setTitle:@"Nearby" forState:UIControlStateNormal];
     
-    CGSize textsize = [nearbyButton.titleLabel.text sizeWithFont:nearbyButton.titleLabel.font forWidth:100.0 lineBreakMode: nearbyButton.titleLabel.lineBreakMode];
-    CGRect rect = CGRectMake(cx, 13, textsize.width+4, 26);       
-    
-    nearbyButton.frame = rect;
-    [nearbyButton setTitle:@"Nearby" forState:UIControlStateNormal];
-    [StyleHelper styleTagButton:nearbyButton];
+    [StyleHelper styleTagButton:nearbyButton forText:@"Nearby"];
     nearbyButton.layer.backgroundColor = [UIColor colorWithRed:101/255.0 green:79/255.0 blue:42/255.0 alpha:1.0].CGColor;
     
     [nearbyButton addTarget:self action:@selector(nearbySearch) forControlEvents:UIControlEventTouchUpInside];
@@ -747,16 +742,13 @@ typedef enum {
     [self.tagScrollView addSubview:nearbyButton];        
     cx += nearbyButton.frame.size.width+7;
     
-    
     for ( NSString* tag in self.place.tags ){        
         UIButton *tagButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        CGSize textsize = [tag sizeWithFont:tagButton.titleLabel.font forWidth:100.0 lineBreakMode: tagButton.titleLabel.lineBreakMode];
-        CGRect rect = CGRectMake(cx, 13, textsize.width+4, 26);       
+        CGRect rect = CGRectMake(cx, 13, 1, 1); // 1's will be swapped out in stylehelper call
+        [tagButton setFrame:rect];
         
-        tagButton.frame = rect;
-        [tagButton setTitle:[NSString stringWithFormat:@"#%@", [tag lowercaseString]] forState:UIControlStateNormal];
-        [StyleHelper styleTagButton:tagButton];
+        [StyleHelper styleTagButton:tagButton forText:[NSString stringWithFormat:@"#%@", [tag lowercaseString]]];
         
         [tagButton addTarget:self action:@selector(tagSearch:) forControlEvents:UIControlEventTouchUpInside];
         

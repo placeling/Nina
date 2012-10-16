@@ -62,10 +62,17 @@
     [button.layer setBorderWidth: 3.0];
 }
 
-+(void) styleTagButton:(UIButton*)button{
++(void) styleTagButton:(UIButton*)button forText:(NSString*)text{    
+    
     button.titleLabel.textColor = [UIColor whiteColor];
     [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
     
+    CGSize textsize = [text sizeWithFont:button.titleLabel.font forWidth:100.0 lineBreakMode: button.titleLabel.lineBreakMode];
+    CGRect rect = CGRectMake(button.frame.origin.x, 13, textsize.width+8, 26);
+    [button setFrame:rect];
+    
+    [button setTitle:text forState:UIControlStateNormal];    
+
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = CGRectMake(button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
     [gradient setCornerRadius:4.0];
