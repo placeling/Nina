@@ -400,6 +400,11 @@
         [[RKObjectManager sharedManager] postObject:auth usingBlock:^(RKObjectLoader *loader) {
             
         }];
+        
+        [user.auths addObject:auth];
+        [auth release];
+        
+        [UserManager setUser:user];
 
     }
     
