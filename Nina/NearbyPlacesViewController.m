@@ -339,6 +339,10 @@
                     [nearbyPlaces addObject:place];
                 }
             }
+            
+            if ([nearbyPlaces count] ==0){
+                promptAdd = true;
+            }
         } else if ([request.userData intValue] == 21) {
             [predictivePlaces release];
             predictivePlaces = [[NSMutableArray alloc] init];
@@ -506,7 +510,14 @@
                 aCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:AddPlaceCell] autorelease];
             }
             
-            aCell.detailTextLabel.text = [NSString stringWithFormat:@"Create a new place called \"%@\"", [self.searchBar.text capitalizedString]];
+            
+            
+            if (_searchBar.text == (id)[NSNull null] || _searchBar.text.length == 0) {
+                aCell.detailTextLabel.text = @"Create a new place";
+            } else {
+                aCell.detailTextLabel.text = [NSString stringWithFormat:@"Create a new place called \"%@\"", [self.searchBar.text capitalizedString]];
+            }
+            
             aCell.detailTextLabel.numberOfLines = 2;
             
             [aCell.imageView setImage:[UIImage imageNamed:@"ReMark.png"]];
@@ -659,20 +670,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *place;
-
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ( ! [self showPredictive] && indexPath.row >= [nearbyPlaces count] ) {
+    NSMutableArray *places;
+    
+    if ([self showPredictive]){
+        places = predictivePlaces;
+    } else {
+        places = nearbyPlaces;
+    }
+    
+    if ( indexPath.row >= [places count] ) {
         NewPlaceController *newPlaceController = [[NewPlaceController alloc] initWithName:[self.searchBar.text capitalizedString]];
         [[self navigationController] pushViewController:newPlaceController animated:YES];
         [newPlaceController release];
     } else {
-        
-        if ([self showPredictive]){
-            place = [predictivePlaces objectAtIndex:indexPath.row];
-        } else {
-            place = [nearbyPlaces objectAtIndex:indexPath.row];
-        }
+        place = [places objectAtIndex:indexPath.row];
         
         PlacePageViewController *placePageViewController = [[PlacePageViewController alloc] init];
         
