@@ -46,6 +46,7 @@
     [predictivePlaces release];
     predictivePlaces = [[NSMutableArray alloc] init];
     showPredictive = false;
+    promptAdd = false;
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     
@@ -352,6 +353,10 @@
                     [types indexOfObject:@"route"] == NSNotFound){
                     [predictivePlaces addObject:place];
                 }
+                
+            }
+            if ( [NinaHelper getUsername] && [self.searchBar.text length] >= 3 ){
+                promptAdd = true;
             }
         }else if ([request.userData intValue] == 22) {
             [nearbyPlaces release];
@@ -415,7 +420,7 @@
     if ( loading ){
         return 1;
     } else if ([self showPredictive]){
-        return [predictivePlaces count];
+        return [predictivePlaces count] + promptAdd;
     } else {
         return MAX(1, [nearbyPlaces count]) + promptAdd;
     }
@@ -441,6 +446,13 @@
         CellIdentifier = @"DataCell";
     }
     
+    NSMutableArray *places;
+    
+    if ([self showPredictive]){
+        places = predictivePlaces;
+    } else {
+        places = nearbyPlaces;
+    }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -448,7 +460,8 @@
     }
     
     
-    if (self.dataLoaded && [nearbyPlaces count] == 0 && [predictivePlaces count] ==0 && indexPath.row == 0) {
+    
+    if (self.dataLoaded && [places count] == 0 && ![self showPredictive] && indexPath.row == 0) {
         cell.detailTextLabel.text = @"";
         cell.textLabel.text = @"";
         
@@ -486,10 +499,23 @@
                 if ( [item isKindOfClass:[UITableViewCell class]]){
                     cell = item;
                 }
-            }               
+            }
+        } else if ( indexPath.row >= [places count] ) {
+            UITableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:AddPlaceCell];
+            if (aCell == nil) {
+                aCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:AddPlaceCell] autorelease];
+            }
             
+            aCell.detailTextLabel.text = [NSString stringWithFormat:@"Create a new place called \"%@\"", [self.searchBar.text capitalizedString]];
+            aCell.detailTextLabel.numberOfLines = 2;
+            
+            [aCell.imageView setImage:[UIImage imageNamed:@"ReMark.png"]];
+            [aCell setUserInteractionEnabled:YES];
+            [StyleHelper styleGenericTableCell:aCell];
+            cell = aCell;
+        
         } else if ([self showPredictive]){
-            NSDictionary *place = [predictivePlaces objectAtIndex:indexPath.row];
+            NSDictionary *place = [places objectAtIndex:indexPath.row];
             
             if ( ![place objectForKey:@"terms"] || [[place objectForKey:@"terms"] count] == 0 ){
                 cell.textLabel.text = [place objectForKey:@"description"];
@@ -506,47 +532,31 @@
             [StyleHelper styleGenericTableCell:cell];
             
         }else {
-            if ( indexPath.row >= [nearbyPlaces count] ) {
-                UITableViewCell *aCell = [tableView dequeueReusableCellWithIdentifier:AddPlaceCell];
-                if (aCell == nil) {
-                    aCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:AddPlaceCell] autorelease];
-                }
-                
-                aCell.detailTextLabel.text = [NSString stringWithFormat:@"Create a new place called \"%@\"", [self.searchBar.text capitalizedString]]; 
-                aCell.detailTextLabel.numberOfLines = 2;
-                
-                [aCell.imageView setImage:[UIImage imageNamed:@"ReMark.png"]];
-                [aCell setUserInteractionEnabled:YES];
-                [StyleHelper styleGenericTableCell:aCell];
-                cell = aCell;
-                
-            }else {
-                NSDictionary *place = [nearbyPlaces objectAtIndex:indexPath.row];
-                
-                if ( [place objectForKey:@"name"] != [NSNull null] ){
-                    cell.textLabel.text = [place objectForKey:@"name"];
-                } else {
-                    DLog(@"got a place with no-name: %@", [place objectForKey:@"google_id"]);
-                    cell.textLabel.text = @"n/a";
-                }
-                
-                float lat =   [[place objectForKey:@"lat"] floatValue];
-                float lng =   [[place objectForKey:@"lng"] floatValue];
-                
-                CLLocation *loc = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
-                
-                CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
-                CLLocation *userLocation = manager.location;
-                
-                if (userLocation != nil){ 
-                    float target = [userLocation distanceFromLocation:loc];
-                    cell.detailTextLabel.text = [NinaHelper metersToLocalizedDistance:target];
-                } else {
-                    cell.detailTextLabel.text = @"Can't get location";
-                }
-                [loc release];
-                [StyleHelper styleGenericTableCell:cell];
+            NSDictionary *place = [places objectAtIndex:indexPath.row];
+            
+            if ( [place objectForKey:@"name"] != [NSNull null] ){
+                cell.textLabel.text = [place objectForKey:@"name"];
+            } else {
+                DLog(@"got a place with no-name: %@", [place objectForKey:@"google_id"]);
+                cell.textLabel.text = @"n/a";
             }
+            
+            float lat =   [[place objectForKey:@"lat"] floatValue];
+            float lng =   [[place objectForKey:@"lng"] floatValue];
+            
+            CLLocation *loc = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
+            
+            CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
+            CLLocation *userLocation = manager.location;
+            
+            if (userLocation != nil){ 
+                float target = [userLocation distanceFromLocation:loc];
+                cell.detailTextLabel.text = [NinaHelper metersToLocalizedDistance:target];
+            } else {
+                cell.detailTextLabel.text = @"Can't get location";
+            }
+            [loc release];
+            [StyleHelper styleGenericTableCell:cell];
         }
     }
     
