@@ -13,7 +13,7 @@
 @implementation NewPlaceController
 
 @synthesize placeName=_placeName, placeNameField, placeLatLngField, placeCategoryField;
-@synthesize mapView, crosshairView, categories, addressComponents;
+@synthesize mapView, crosshairView, categories, addressComponents, googleClient;
 
 - (id)initWithName:(NSString *)placeName{
     self = [super init];
@@ -21,15 +21,6 @@
         self.placeName = placeName;
     }
     return self;
-}
-
--(void) dealloc{
-    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];    
-    [placeNameField release];
-    [placeLatLngField release];
-    [placeCategoryField release];
-    
-    [super dealloc];
 }
 
 
@@ -73,6 +64,8 @@
     UIBarButtonItem *shareButton =  [[UIBarButtonItem  alloc]initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(confirmPlace)];
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
+    
+    self.googleClient = [RKClient clientWithBaseURL:[NSURL URLWithString:@"https://maps.googleapis.com"]];
     
     [[RKClient sharedClient] get:@"/admin/categories.json" usingBlock:^(RKRequest *request) {
         request.delegate = self;
@@ -165,17 +158,20 @@
     NSString* lat = [NSString stringWithFormat:@"%f", center.latitude];
     NSString* lng = [NSString stringWithFormat:@"%f", center.longitude];
     
-    NSString *urlString = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?latlng=%@,%@&sensor=false", lat, lng];		
+    self.googleClient = [RKClient clientWithBaseURL:[NSURL URLWithString:@"https://maps.googleapis.com"]];
     
-    [[RKClient sharedClient] get:urlString usingBlock:^(RKRequest *request) {
+    NSString *urlString = [NSString stringWithFormat:@"/maps/api/geocode/json?latlng=%@,%@&sensor=false", lat, lng];		
+    
+    [self.googleClient get:urlString usingBlock:^(RKRequest *request) {
         request.delegate = self;
         request.userData = [NSNumber numberWithInt:90];
     }];
 
 }
 
-- (void)request:(RKRequest *)request didReceiveResponse:(RKResponse *)response{
+- (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response{
     if (200 != response.statusCode){
+        DLog(@"ERROR: got status code: %i", response.statusCode);
 		[NinaHelper handleBadRKRequest:response sender:self];
 	} else {
         if ([request.userData intValue] == 90){
@@ -245,5 +241,16 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+-(void) dealloc{
+    [[[[RKObjectManager sharedManager] client] requestQueue] cancelRequestsWithDelegate:self];
+    [placeNameField release];
+    [placeLatLngField release];
+    [placeCategoryField release];
+    [googleClient release];
+    
+    [super dealloc];
+}
+
 
 @end

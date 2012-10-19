@@ -24,6 +24,8 @@
     
     MKMapView *mapView;
     NSTimer *timer;
+    
+    RKClient *googleClient;
 }
 
 @property(nonatomic,retain) NSString *placeName;
@@ -35,6 +37,8 @@
 @property(nonatomic,retain) IBOutlet UIImageView *crosshairView;
 @property(nonatomic, retain) NSDictionary *categories;
 @property(nonatomic, retain) NSDictionary *addressComponents;
+
+@property(nonatomic, retain) RKClient *googleClient;
 
 - (id)initWithName:(NSString *)placeName;
 -(void)reverseGeocode;
