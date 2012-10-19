@@ -734,6 +734,8 @@ typedef enum {
     UIButton *nearbyButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [nearbyButton setTitle:@"Nearby" forState:UIControlStateNormal];
     
+    [nearbyButton setFrame:CGRectMake(cx, nearbyButton.frame.origin.y, 1, 1)];
+    
     [StyleHelper styleTagButton:nearbyButton forText:@"Nearby"];
     nearbyButton.layer.backgroundColor = [UIColor colorWithRed:101/255.0 green:79/255.0 blue:42/255.0 alpha:1.0].CGColor;
     
