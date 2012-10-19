@@ -402,9 +402,12 @@
         }];
         
         [user.auths addObject:auth];
-        [auth release];
         
+        [user retain]; // need this to help along usermanager
         [UserManager setUser:user];
+        
+        [user release];
+        [auth release];
 
     }
     
