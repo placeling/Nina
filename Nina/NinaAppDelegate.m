@@ -40,7 +40,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
-    DLog(@"Launching with options %@", launchOptions);
+    DLog(@"Launching with options %@", launchOptions);    
     
     //Restkit initialization  
     RKObjectManager* objectManager = [RKObjectManager objectManagerWithBaseURL:[NSURL URLWithString:[NinaHelper getHostname] ] ];
@@ -176,6 +176,13 @@
     }
     
     [Appirater appLaunched:YES];
+    
+     DLog(@"%i", FBSession.activeSession.state);
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded){
+        //re-open the session
+        [FBSession.activeSession openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+        }];
+    } 
     
     return YES;
 }
