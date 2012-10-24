@@ -615,19 +615,20 @@ typedef enum {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
-    [objectManager deleteObject:nil usingBlock:^(RKObjectLoader *loader) {
-        loader.delegate = self;
-        loader.resourcePath = [NSString stringWithFormat:@"/v1/places/%@/perspectives/", perspective.place.pid];
-        loader.userData = [NSNumber numberWithInt:6];
-    }];
-    
     self.place.perspectiveCount -=1;
     
     for (Perspective *p in self.place.everyonePerspectives){
         if ( [p.perspectiveId isEqualToString:perspective.perspectiveId] ){
             [self.place.everyonePerspectives removeObject:p];
+            break;
         }
     }
+    
+    [objectManager deleteObject:perspective usingBlock:^(RKObjectLoader *loader) {
+        loader.delegate = self;
+        loader.userData = [NSNumber numberWithInt:6];
+    }];    
+    
     [UserManager removePerspective:perspective];
     self.place.dirty = true;
 }
