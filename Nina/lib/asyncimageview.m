@@ -10,7 +10,7 @@
 #import "AsyncImageView.h"
 #import "UIImageView+WebCache.h"
 #import "FGalleryViewController.h"
-
+#import "UserManager.h"
 
 @implementation AsyncImageView
 
@@ -79,6 +79,10 @@
     if (buttonIndex == 1){
         Photo *photo = [self.photo.perspective.photos objectAtIndex:[self.photo.perspective.photos count] - (self.networkGallery.currentIndex +1)];
         [self.photo.perspective.photos removeObject:photo];
+        self.photo.perspective.modified = true;
+        
+        [UserManager updatePerspective:self.photo.perspective];
+        
         [self.networkGallery.navigationController popViewControllerAnimated:true];
         
         RKObjectManager *objectManager = [RKObjectManager sharedManager];
