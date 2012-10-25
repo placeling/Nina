@@ -72,9 +72,12 @@
     self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_script.png"]] autorelease];
     
     if ( [self.username isEqualToString:[NinaHelper getUsername] ]){
-        self.user = [UserManager sharedMeUser];
-        self.perspectives = self.user.perspectives;
-        [self.tableView reloadData];
+        User *user = [UserManager sharedMeUserNoGrab];
+        if (user){
+            self.user = user;
+            self.perspectives = self.user.perspectives;
+            [self.tableView reloadData];
+        }
     }
 }
 
