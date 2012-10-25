@@ -56,7 +56,7 @@
         initialIndex = 1;
         quickpick = false;
         self.latitudeDelta = 0.005;
-        User *user = [UserManager sharedMeUser];
+        User *user = [UserManager sharedMeUserNoGrab];
         if (user) {
             self.userTime = user.timestamp;
         }
