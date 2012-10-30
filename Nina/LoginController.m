@@ -74,7 +74,6 @@
 -(void) receiveGraphConnection:(FBRequestConnection*)connection
                 userDictionary:(NSDictionary<FBGraphUser>*)user
                          error:(NSError*)error{
-    [HUD hide:TRUE];
     
     DLog(@"got facebook response: %@", user);
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -96,12 +95,11 @@
         
         loader.onDidLoadObjects = ^(NSArray *objects) {
             NSDictionary *jsonDict = [loader.response.bodyAsString JSONValue];
-            
+            [HUD hide:TRUE];
             if ( [@"success" isEqualToString:(NSString*)[jsonDict objectForKey:@"status"] ]){
                 [self objectLoader:loader didLoadObjects:objects];
                 [self close];
             } else {
-                [HUD hide:TRUE];
                 [self showSignup:user];
             }
         };
