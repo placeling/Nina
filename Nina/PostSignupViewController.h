@@ -14,7 +14,7 @@
 #import "LoginController.h"
 
 
-@interface PostSignupViewController : UIViewController<UIActionSheetDelegate, RKObjectLoaderDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, RKObjectLoaderDelegate> {
+@interface PostSignupViewController : UIViewController<UIActionSheetDelegate, RKObjectLoaderDelegate, UIImagePickerControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, RKObjectLoaderDelegate> {
     id <LoginControllerDelegate> delegate;
     MBProgressHUD *HUD;
     
