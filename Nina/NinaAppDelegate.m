@@ -336,13 +336,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
     // Also you will want to see if location services are enabled at all.
     // All this code is stripped back to the bare bones to show the structure
     // of what is needed.
-    User *user = [UserManager sharedMeUser];
-    
-    if ( [NinaHelper getUsername] && user && [user.highlightedCount intValue] > 0 ){
-        CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
-        [locationManager startMonitoringSignificantLocationChanges];
-        locationManager.delegate = self;
-    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -359,29 +352,22 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
 {
     NSString *current_user = [NinaHelper getUsername];
     
-    if ( [UIApplication sharedApplication].applicationState != UIApplicationStateBackground ){
-        CLLocationManager *locationManager = [LocationManagerManager sharedCLLocationManager];
-        [locationManager stopMonitoringSignificantLocationChanges];
-        [locationManager startUpdatingLocation];
-        locationManager.delegate = nil;
-        
-        if (current_user){
-            [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/v1/users/me.json" usingBlock:^(RKObjectLoader* loader) {
-                RKObjectMapping *userMapping = [User getObjectMapping];
-                loader.objectMapping = userMapping;
-                [loader setOnDidLoadObjects:^(NSArray *objects){
-                    User *user = [objects objectAtIndex:0];
-                    [UserManager setUser:user];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if ([self.navigationController.topViewController isKindOfClass:[HomeViewController class]]){
-                            [(HomeViewController*)self.navigationController.topViewController refreshNotificationBadge];
-                        }
-                    });
-                    
-           
-                }];
+    if (current_user){
+        [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/v1/users/me.json" usingBlock:^(RKObjectLoader* loader) {
+            RKObjectMapping *userMapping = [User getObjectMapping];
+            loader.objectMapping = userMapping;
+            [loader setOnDidLoadObjects:^(NSArray *objects){
+                User *user = [objects objectAtIndex:0];
+                [UserManager setUser:user];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([self.navigationController.topViewController isKindOfClass:[HomeViewController class]]){
+                        [(HomeViewController*)self.navigationController.topViewController refreshNotificationBadge];
+                    }
+                });
+                
+       
             }];
-        }
+        }];
     }
 
     [FBSession.activeSession handleDidBecomeActive];
