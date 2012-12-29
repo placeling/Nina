@@ -14,7 +14,6 @@
 #import "LoginController.h"
 #import "UIImageView+WebCache.h"
 #import "NearbySuggestedMapController.h"
-#import "FlurryAnalytics.h"
 #import "AdTableViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "GenericWebViewController.h"
@@ -113,7 +112,7 @@
     
     self.locationEnabled = TRUE;
     
-    [FlurryAnalytics logEvent:@"QUICK_PICK" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"category", self.category, nil]];
+    [Flurry logEvent:@"QUICK_PICK" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"category", self.category, nil]];
     
     UIImage *mapImage = [UIImage imageNamed:@"103-map.png"];
     UIBarButtonItem *shareButton =  [[UIBarButtonItem alloc] initWithImage:mapImage style:UIBarButtonItemStylePlain target:self action:@selector(toggleMapList)];
@@ -416,7 +415,7 @@
         UIImageView *imageView = [[UIImageView alloc]init];
         
         [imageView setImageWithURL:[NSURL URLWithString:self.ad.imageUrl] ];
-        [FlurryAnalytics logEvent:@"AD_DISPLAY" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"type", self.ad.adType, nil]];
+        [Flurry logEvent:@"AD_DISPLAY" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"type", self.ad.adType, nil]];
         aCell.backgroundView = imageView;   
         [imageView release];                    
         cell = aCell;     
@@ -484,7 +483,7 @@
         [loginController release];
         
     } else if (indexPath.section == 0 && self.ad){
-        [FlurryAnalytics logEvent:@"AD_CLICK" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"type", self.ad.adType, nil]];
+        [Flurry logEvent:@"AD_CLICK" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"type", self.ad.adType, nil]];
         
         GenericWebViewController *webController = [[GenericWebViewController alloc] initWithUrl:self.ad.targetUrl];
         

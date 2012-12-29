@@ -32,7 +32,6 @@
 #import "MemberProfileViewController.h"
 #import "CreateSuggestionViewController.h"
 #import "GenericWebViewController.h"
-#import "FlurryAnalytics.h"
 
 #import <Twitter/Twitter.h>
 
@@ -602,7 +601,7 @@ typedef enum {
 {
 	[self dismissModalViewControllerAnimated:YES];
     
-    [FlurryAnalytics logEvent:@"EMAIL_SHARE_PLACE"];
+    [Flurry logEvent:@"EMAIL_SHARE_PLACE"];
 }
 
 
@@ -710,7 +709,7 @@ typedef enum {
     self.addressLabel.text = self.place.streetAddress;
     self.cityLabel.text = self.place.city;
     
-    [FlurryAnalytics logEvent:@"PLACE_PAGE_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"name", self.place.name, @"city", self.place.city ? self.place.city : @"", nil]];
+    [Flurry logEvent:@"PLACE_PAGE_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"name", self.place.name, @"city", self.place.city ? self.place.city : @"", nil]];
     
     
     if (!mapRequested){
@@ -792,7 +791,7 @@ typedef enum {
     
     editPerspectiveViewController.delegate = self;
     
-    [FlurryAnalytics logEvent:@"EDIT_PERSPECTIVE_WRITE"];
+    [Flurry logEvent:@"EDIT_PERSPECTIVE_WRITE"];
     
     UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editPerspectiveViewController];
     [StyleHelper styleNavigationBar:navBar.navigationBar];
@@ -812,7 +811,7 @@ typedef enum {
     NSString *currentUser = [NinaHelper getUsername];
     
     self.initialSelectedIndex = [NSNumber numberWithInt:segmentIndex]; // update in case of reload
-    [FlurryAnalytics logEvent:@"PLACE_PAGE_VIEW_TOGGLE" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"CLICK_TO", [NSString stringWithFormat:@"%i", index] , nil]];
+    [Flurry logEvent:@"PLACE_PAGE_VIEW_TOGGLE" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"CLICK_TO", [NSString stringWithFormat:@"%i", index] , nil]];
     
     if (index == 0){
         self.perspectiveType = home;
@@ -882,7 +881,7 @@ typedef enum {
 }
 
 -(IBAction) googlePlacePage{    
-    [FlurryAnalytics logEvent:@"GOOGLE_PLACES_CLICK"];
+    [Flurry logEvent:@"GOOGLE_PLACES_CLICK"];
     if (self.place.googlePlacesUrl != nil && ![self.place.googlePlacesUrl isKindOfClass:NSNull.class]){
         GenericWebViewController *genericWebViewController = [[GenericWebViewController alloc] initWithUrl:self.place.googlePlacesUrl];
         

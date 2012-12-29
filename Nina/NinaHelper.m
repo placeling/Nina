@@ -8,7 +8,7 @@
 
 #import "NinaHelper.h"
 #import "LoginController.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import <RestKit/RestKit.h>
 #import "WBNoticeView.h"
 #import "MTPopupWindow.h"
@@ -125,7 +125,7 @@
         
         if (textRange.location == NSNotFound){
             DLog(@"Error for which host isn't a placeling server");
-            [FlurryAnalytics logEvent:@"ERROR_NOT_OUR_FAULT"];
+            [Flurry logEvent:@"ERROR_NOT_OUR_FAULT"];
             //return; //Issue with server we can't really help, likely google
         }
     }
@@ -134,7 +134,7 @@
         DLog(@"Got a 401, with access_token: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]);
         if([[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]){
             //only send event on a hard reset
-            [FlurryAnalytics logEvent:@"401_CREDENTIAL_RESET"];
+            [Flurry logEvent:@"401_CREDENTIAL_RESET"];
         }
         WBNoticeView *nm = [WBNoticeView defaultManager];
         [nm showErrorNoticeInView:sender.view title:@"Unauthorized" message:@"Token fail, please re-login"];
@@ -143,7 +143,7 @@
     }else if (400 <= statusCode && statusCode <= 499){
         //non-401 400 series server error
         NSNumber *code = [NSNumber numberWithInt:statusCode];
-        [FlurryAnalytics logEvent:@"400_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
+        [Flurry logEvent:@"400_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                          code,@"status_code",   errorMessage,@"message", nil]];
         
         NSString *alertMessage = [NSString stringWithFormat:@"%@ Error", code];
@@ -158,7 +158,7 @@
     }else if (500 <= statusCode && statusCode <= 599){
         //500 series server error
         NSNumber *code = [NSNumber numberWithInt:statusCode];
-        [FlurryAnalytics logEvent:@"500_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
+        [Flurry logEvent:@"500_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                         code, @"status_code",  errorMessage,@"message", nil]];
         
         NSString *alertMessage = [NSString stringWithFormat:@"Server Error\n %@", errorMessage];
@@ -168,7 +168,7 @@
         [alert release];	
     } else if ([error code] == 0 || [error code] == 1){
         //can't connect to server
-        [FlurryAnalytics logEvent:@"CONNECT_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
+        [Flurry logEvent:@"CONNECT_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                         errorMessage, @"message", nil]];
         
         WBNoticeView *nm = [WBNoticeView defaultManager];
@@ -176,12 +176,12 @@
         
     } else if ([error code] == 2){
         //timed out
-        [FlurryAnalytics logEvent:@"TIMEOUT" ];
+        [Flurry logEvent:@"TIMEOUT" ];
         WBNoticeView *nm = [WBNoticeView defaultManager];
         [nm showErrorNoticeInView:sender.view title:@"Whoops" message:@"Request Timed Out"];
     } else {
         DLog(@"Untested error: %@", errorMessage );
-        [FlurryAnalytics logEvent:@"UNKNOWN_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
+        [Flurry logEvent:@"UNKNOWN_ERROR" withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                     errorMessage,@"message", nil]];
         NSString *alertMessage = [NSString stringWithFormat:@"Request returned: %@", errorMessage];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMessage

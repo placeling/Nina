@@ -13,7 +13,6 @@
 #import "PlacePageViewController.h"
 #import "LoginController.h"
 #import "NearbySuggestedPlaceController.h"
-#import "FlurryAnalytics.h"
 #import "MBProgressHUD.h"
 #import "UIDevice+IdentifierAddition.h"
 #import "ActivityFeedViewController.h"
@@ -104,12 +103,12 @@
     
 	if (location != nil){ 
         
-        [FlurryAnalytics setLatitude:location.coordinate.latitude            
+        [Flurry setLatitude:location.coordinate.latitude            
                            longitude:location.coordinate.longitude           
                     horizontalAccuracy:location.horizontalAccuracy            verticalAccuracy:location.verticalAccuracy]; 
     }
 
-    [FlurryAnalytics setUserID:[[UIDevice currentDevice]uniqueDeviceIdentifier] ];
+    [Flurry setUserID:[[UIDevice currentDevice]uniqueDeviceIdentifier] ];
     
 }
 
@@ -203,7 +202,7 @@
     LoginController *loginController = [[LoginController alloc] init];
     
     UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:loginController];
-    [FlurryAnalytics logAllPageViews:navBar];
+    [Flurry logAllPageViews:navBar];
     [self.navigationController presentModalViewController:navBar animated:YES];
     [navBar release];
     [loginController release];

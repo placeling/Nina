@@ -9,7 +9,6 @@
 #import "NearbyPlacesViewController.h"
 #import "PlacePageViewController.h"
 #import <CoreLocation/CoreLocation.h>
-#import "FlurryAnalytics.h"
 #import "NewPlaceController.h"
 #import "Crittercism.h"
 #import "SBJson.h"
@@ -65,7 +64,7 @@
         //if the location is more than 5 minutes old, or over 200m in accuracy, wait
         //for an update, to a maximum of "n" seconds
         narrowed = TRUE;
-        [FlurryAnalytics logEvent:@"LOW_ACCURACY_NEARBY"];
+        [Flurry logEvent:@"LOW_ACCURACY_NEARBY"];
         
         //manager.delegate = self;
         [manager startUpdatingLocation]; //should already be going
@@ -119,7 +118,7 @@
     if (!searchTerm){
         searchTerm = @"";
     }
-    [FlurryAnalytics logEvent:@"GOOGLE_PLACES_NEABY_QUERY"];
+    [Flurry logEvent:@"GOOGLE_PLACES_NEABY_QUERY"];
     self.locationEnabled = TRUE;
     float accuracy;
     
@@ -261,7 +260,7 @@
 		[refreshHeaderView release];
 	}
 
-    [FlurryAnalytics logEvent:@"NEARBY_PLACES_VIEW"];
+    [Flurry logEvent:@"NEARBY_PLACES_VIEW"];
     
     self.searchBar.delegate = self;
     [self findNearbyPlaces];
@@ -620,7 +619,7 @@
 	[searchBar setShowsCancelButton:TRUE animated:true];
     
     if (!searchLogged){
-        [FlurryAnalytics logEvent:@"NEARBY_PLACES_VIEW_TEXT_SEARCH"];
+        [Flurry logEvent:@"NEARBY_PLACES_VIEW_TEXT_SEARCH"];
         searchLogged = true;
     }
     

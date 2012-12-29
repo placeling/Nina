@@ -16,7 +16,6 @@
 #import "UserManager.h"
 #import "PlaceMark.h"
 
-#import "FlurryAnalytics.h"
 #import "PerspectiveUserTableViewController.h"
 #import "PerspectiveTagTableViewController.h"
 
@@ -251,7 +250,7 @@
 
 -(IBAction)showPeople{
     [usernameButton dismissAnimated:true];
-    [FlurryAnalytics logEvent:@"QUICKPICK_USER_FILTER"];
+    [Flurry logEvent:@"QUICKPICK_USER_FILTER"];
     userFilter = nil;
     //reset the hiddenness based on tags
     
@@ -287,7 +286,7 @@
 -(IBAction)showTags{
     [hashtagButton dismissAnimated:true];
     tagFilter = nil;
-    [FlurryAnalytics logEvent:@"QUICKPICK_TAG_FILTER"];
+    [Flurry logEvent:@"QUICKPICK_TAG_FILTER"];
     NSMutableArray *visiblePlaces = [[NSMutableArray alloc] init];
     
     for ( Place *place in [self visiblePlaces] ){

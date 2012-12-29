@@ -12,7 +12,7 @@
 #import "SBJSON.h"
 #import "GenericWebViewController.h"
 #import "MBProgressHUD.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import "User.h"
 #import "UserManager.h"
 
@@ -143,7 +143,7 @@
             break;
         case FBSessionStateClosed:
             
-            [FlurryAnalytics logEvent:@"REJECTED_PERMISSIONS"];
+            [Flurry logEvent:@"REJECTED_PERMISSIONS"];
             break;
         case FBSessionStateClosedLoginFailed:
            
@@ -151,7 +151,7 @@
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             NSDictionary *details = [error userInfo];
             
-            [FlurryAnalytics logEvent:@"UNKNOWN_FB_FAIL" withParameters:details];                        
+            [Flurry logEvent:@"UNKNOWN_FB_FAIL" withParameters:details];                        
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
                                                             message:@"Facebook returned a credential error, try again"

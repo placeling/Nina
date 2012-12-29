@@ -12,7 +12,6 @@
 #import "SBJson.h"
 #import "UIImageView+WebCache.h"
 #import "Photo.h"
-#import "FlurryAnalytics.h"
 #import "FindFacebookFriendsController.h"
 
 @interface FriendFindController ()
@@ -60,7 +59,7 @@
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
     
-    [FlurryAnalytics logEvent:@"FIND_FRIEND_VIEW"];
+    [Flurry logEvent:@"FIND_FRIEND_VIEW"];
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
@@ -168,7 +167,7 @@
     } else {
         
         if (FBSession.activeSession.isOpen) {
-            [FlurryAnalytics logEvent:@"Facebook_friend_finder"];
+            [Flurry logEvent:@"Facebook_friend_finder"];
             FindFacebookFriendsController *findFacebookFriendsController = [[FindFacebookFriendsController alloc] init];
             
             [self.navigationController pushViewController:findFacebookFriendsController animated:true];
@@ -255,7 +254,7 @@
 {
 
     if (result == MFMailComposeResultSaved || result == MFMailComposeResultSent){
-        [FlurryAnalytics logEvent:@"MAIL_INVITE_SENT_LINDSAY_RIGHT"];
+        [Flurry logEvent:@"MAIL_INVITE_SENT_LINDSAY_RIGHT"];
     }
 	[self dismissModalViewControllerAnimated:YES];
 }
@@ -406,7 +405,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     User *user;
     
-    [FlurryAnalytics logEvent:@"FIND_FRIEND_VIEW_USER_CLICK"];
+    [Flurry logEvent:@"FIND_FRIEND_VIEW_USER_CLICK"];
     
     if (tableView.numberOfSections==1 && indexPath.section ==0){
         user = [self.searchUsers objectAtIndex:indexPath.row];

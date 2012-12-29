@@ -12,7 +12,7 @@
 #import "UIImage+Resize.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIImageView+WebCache.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import "UserManager.h"
 
 @interface EditProfileViewController(Private)

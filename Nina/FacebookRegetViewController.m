@@ -9,7 +9,6 @@
 #import "FacebookRegetViewController.h"
 
 #import "NinaAppDelegate.h"
-#import "FlurryAnalytics.h"
 #import "UserManager.h"
 
 @interface FacebookRegetViewController ()

@@ -14,7 +14,7 @@
 #import "asyncimageview.h"
 #import "NinaAppDelegate.h"
 #import "GenericWebViewController.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import <Twitter/Twitter.h>
 #import "CommentViewController.h"
 #import "CreateSuggestionViewController.h"
@@ -313,7 +313,7 @@
 -(IBAction)onWeb{
     GenericWebViewController *webController = [[GenericWebViewController alloc] initWithUrl:perspective.url];
     
-    [FlurryAnalytics logEvent:@"ON_WEB_CLICK" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"url", perspective.url, nil]];
+    [Flurry logEvent:@"ON_WEB_CLICK" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"url", perspective.url, nil]];
     
     [self.requestDelegate.navigationController pushViewController:webController animated:true];
     [webController release];

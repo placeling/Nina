@@ -9,7 +9,7 @@
 #import "NinaAppDelegate.h"
 #import <CoreLocation/CoreLocation.h>
 #import "LocationManagerManager.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import "User.h"
 #import "Place.h"
 #import "Perspective.h"
@@ -139,7 +139,7 @@
     DLog(@"RKClient singleton : %@", [RKClient sharedClient]);
     
     if ([NinaHelper isProductionRun]){
-        [FlurryAnalytics startSession:@"TF6YH8QMRQDXBXR9APF9"];
+        [Flurry startSession:@"TF6YH8QMRQDXBXR9APF9"];
     
         [Crittercism initWithAppID: @"4f2892c1b093157f7200076d" andKey:@"4f2892c1b093157f7200076dhknlm6lr" andSecret:@"bdrh0sax6ofnuwjq8zvl47omwirpe9sq"];
     }
@@ -165,7 +165,7 @@
         [Crittercism setUsername:[NinaHelper getUsername]];
     }
     
-    [FlurryAnalytics logAllPageViews:self.navigationController];
+    [Flurry logAllPageViews:self.navigationController];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];    
     

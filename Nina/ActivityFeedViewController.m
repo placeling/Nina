@@ -12,7 +12,7 @@
 #import "MemberProfileViewController.h"
 #import "User.h"
 #import "LoginController.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import "FriendFindController.h"
 #import "Activity.h"
 #import "Notification.h"
@@ -201,7 +201,7 @@
     recentActivities = [[NSMutableArray alloc] init];
     recentNotifications = [[NSMutableArray alloc] init];
     
-    [FlurryAnalytics logEvent:@"ACTIVITY_FEED_VIEW"];
+    [Flurry logEvent:@"ACTIVITY_FEED_VIEW"];
     
     [self.segmentControl setSelectedSegmentIndex:initialIndex];
     

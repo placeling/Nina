@@ -17,7 +17,6 @@
 #import "LoginController.h"
 #import "UIImageView+WebCache.h"
 #import "NinaAppDelegate.h"
-#import "FlurryAnalytics.h"
 #import "UserManager.h"
 #import "NearbyPlacesViewController.h"
 #import <Twitter/Twitter.h>
@@ -151,7 +150,7 @@
     self.placeMarkButton.numberLabel.text = [NSString stringWithFormat:@"%@", self.user.placeCount];
     
     
-    [FlurryAnalytics logEvent:@"PROFILE_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"username", self.username, nil]];
+    [Flurry logEvent:@"PROFILE_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"username", self.username, nil]];
     
     if (perspectives == nil && self.user.placeCount != 0){
         loadingMore = true;
@@ -428,7 +427,7 @@
                         error:(NSError*)error;
 {
 	[self dismissModalViewControllerAnimated:YES];
-    [FlurryAnalytics logEvent:@"EMAIL_SHARE_USER"];
+    [Flurry logEvent:@"EMAIL_SHARE_USER"];
 }
     
 

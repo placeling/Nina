@@ -20,7 +20,6 @@
 #import "PerspectiveUserTableViewController.h"
 #import "PerspectiveTagTableViewController.h"
 #import "UserManager.h"
-#import "FlurryAnalytics.h"
 
 @interface NearbySuggestedMapController (Private)
 -(void)drawMapPlaces;
@@ -251,7 +250,7 @@
         shownPopup = true;
     } else {
         //called on interaction for changing segment
-        [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
+        [Flurry logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
 
         if ( self.segmentedControl.selectedSegmentIndex == 0 && !self.myLoaded ){
             [self.spinnerView startAnimating];
@@ -452,7 +451,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    [FlurryAnalytics logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
+    [Flurry logEvent:@"MAP_VIEW" withParameters:[NSDictionary dictionaryWithKeysAndObjects:@"view", [NSString stringWithFormat:@"%i", self.segmentedControl.selectedSegmentIndex], nil]];
     
     self.locationManager = [LocationManagerManager sharedCLLocationManager];
     self.mapView.showsUserLocation = TRUE;

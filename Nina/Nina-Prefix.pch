@@ -15,4 +15,5 @@
     #import <RestKit/RestKit.h>
     #import "NinaHelper.h"
     #import "StyleHelper.h"
+    #import "Flurry.h"
 #endif

@@ -7,7 +7,6 @@
 //
 
 #import "ApplicationController.h"
-#import "FlurryAnalytics.h"
 #import "NinaAppDelegate.h"
 #import <Twitter/Twitter.h>
 #import "TWSignedRequest.h"

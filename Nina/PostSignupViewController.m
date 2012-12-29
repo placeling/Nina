@@ -10,7 +10,6 @@
 #import "UIImage+Resize.h"
 #import "UIImageView+WebCache.h"
 #import "SBJSON.h"
-#import "FlurryAnalytics.h"
 #import "UserManager.h"
 
 
@@ -131,9 +130,9 @@
     [self.textView resignFirstResponder];
     
     if ( [self.textView.text length] > 0){
-        [FlurryAnalytics logEvent:@"NEW_USER_ADDED_DESCRIPTION"];
+        [Flurry logEvent:@"NEW_USER_ADDED_DESCRIPTION"];
     } else {
-        [FlurryAnalytics logEvent:@"NEW_USER_SKIPPED_DESCRIPTION"];
+        [Flurry logEvent:@"NEW_USER_SKIPPED_DESCRIPTION"];
     }
     
     self.HUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];

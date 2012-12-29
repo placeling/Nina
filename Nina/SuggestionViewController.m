@@ -7,7 +7,6 @@
 //
 
 #import "SuggestionViewController.h"
-#import "FlurryAnalytics.h"
 #import "Place.h"
 #import "PlacePageViewController.h"
 #import "UIImageView+WebCache.h"
@@ -124,7 +123,7 @@
     
     editPerspectiveViewController.delegate = self;
     
-    [FlurryAnalytics logEvent:@"EDIT_PERSPECTIVE_WRITE"];
+    [Flurry logEvent:@"EDIT_PERSPECTIVE_WRITE"];
     
     UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:editPerspectiveViewController];
     [StyleHelper styleNavigationBar:navBar.navigationBar];
