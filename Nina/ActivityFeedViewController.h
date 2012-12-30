@@ -14,8 +14,8 @@
 #import "LoginController.h"
 #import <RestKit/RestKit.h>
 
-@interface ActivityFeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, LoginControllerDelegate, RKObjectLoaderDelegate> {
-    EGORefreshTableHeaderView *refreshHeaderView;
+@interface ActivityFeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, LoginControllerDelegate, RKObjectLoaderDelegate, EGORefreshTableHeaderDelegate> {
+    EGORefreshTableHeaderView *_refreshHeaderView;
     
     UITableView *activityTableView;
     NSMutableArray  *recentActivities;

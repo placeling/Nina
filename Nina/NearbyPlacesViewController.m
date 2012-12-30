@@ -14,7 +14,6 @@
 #import "SBJson.h"
 
 @interface NearbyPlacesViewController ()
-    -(void)dataSourceDidFinishLoadingNewData;
     -(void)findNearbyPlaces;
     -(void)findNearbyPlaces:(NSString*)searchTerm;
     -(void)impatientUser;
@@ -46,6 +45,7 @@
     predictivePlaces = [[NSMutableArray alloc] init];
     showPredictive = false;
     promptAdd = false;
+    _reloading = true;
     
     CLLocationManager *manager = [LocationManagerManager sharedCLLocationManager];
     
@@ -193,43 +193,35 @@
 
 
 - (void)doneLoadingTableViewData{
-	[self dataSourceDidFinishLoadingNewData];
+	_reloading = NO;
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.placesTableView];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
-	if (scrollView.isDragging) {
-		if (refreshHeaderView.state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !_reloading) {
-			[refreshHeaderView setState:EGOOPullRefreshNormal];
-		} else if (refreshHeaderView.state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f && !_reloading) {
-			[refreshHeaderView setState:EGOOPullRefreshPulling];
-		}
-	}
+	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    
-	if (scrollView.contentOffset.y <= - 65.0f && !_reloading && [self dataLoaded]) {
-        _reloading = YES;
-        [self reloadTableViewDataSource];
-        [refreshHeaderView setState:EGOOPullRefreshLoading];
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.2];
-        self.placesTableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
-        [UIView commitAnimations];
-	}
+    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
-- (void)dataSourceDidFinishLoadingNewData{
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
     
-	_reloading = NO;
+	[self reloadTableViewDataSource];
+	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
     
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:.3];
-	[self.placesTableView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
-	[UIView commitAnimations];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
     
-	[refreshHeaderView setState:EGOOPullRefreshNormal];
-	[refreshHeaderView setCurrentDate];  //  should check if data reload was successful 
+	return _reloading; // should return if data source model is reloading
+    
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+    
+	return [NSDate date]; // should return date data source was last changed
+    
 }
 
 
@@ -252,13 +244,18 @@
     
     self.googleClient = [RKClient clientWithBaseURL:[NSURL URLWithString:@"https://maps.googleapis.com"]];
     
-    if (refreshHeaderView == nil) {
-		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.placesTableView.bounds.size.height, 320.0f, self.placesTableView.bounds.size.height)];
-		refreshHeaderView.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
-		[self.placesTableView addSubview:refreshHeaderView];
-		self.placesTableView.showsVerticalScrollIndicator = YES;
-		[refreshHeaderView release];
+	if (_refreshHeaderView == nil) {
+        
+		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.placesTableView.bounds.size.height, self.view.frame.size.width, self.placesTableView.bounds.size.height)];
+		view.delegate = self;
+		[self.placesTableView addSubview:view];
+		_refreshHeaderView = view;
+		[view release];
+        
 	}
+    
+	//  update the last update date
+	[_refreshHeaderView refreshLastUpdatedDate];
 
     [Flurry logEvent:@"NEARBY_PLACES_VIEW"];
     
@@ -380,12 +377,7 @@
         [jsonDict release];
     }
     
-    NSString *crumb = [NSString stringWithFormat:@"NearbyPlaces360:%@:%@", self, refreshHeaderView];
-    [Crittercism leaveBreadcrumb:crumb];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self dataSourceDidFinishLoadingNewData];
-    });
-    
+    [self doneLoadingTableViewData];    
 }
 
 - (void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error{
@@ -400,10 +392,7 @@
     [predictivePlaces release];
     predictivePlaces = [[NSMutableArray alloc] init];
     
-    [self dataSourceDidFinishLoadingNewData];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.placesTableView reloadData];
-    });
+    [self doneLoadingTableViewData];
 }
 
 

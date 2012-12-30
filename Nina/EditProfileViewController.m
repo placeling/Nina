@@ -444,7 +444,7 @@
         YIPopupTextView* popupTextView = [[YIPopupTextView alloc] initWithPlaceHolder:@"input here" maxCount:0];
         popupTextView.delegate = self;
         popupTextView.showCloseButton = YES;
-        popupTextView.caretShiftGestureEnabled = YES;   // default = NO
+        //popupTextView.caretShiftGestureEnabled = YES;   // default = NO
         popupTextView.text = self.user.userDescription;        
         [[self navigationController] setNavigationBarHidden:YES animated:YES];
         [popupTextView showInView:self.view];

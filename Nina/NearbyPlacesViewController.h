@@ -13,8 +13,8 @@
 #import "MBProgressHUD.h"
 
 
-@interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, RKRequestDelegate, UISearchBarDelegate, MBProgressHUDDelegate> {
-    EGORefreshTableHeaderView *refreshHeaderView;
+@interface NearbyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, RKRequestDelegate, UISearchBarDelegate, MBProgressHUDDelegate, EGORefreshTableHeaderDelegate> {
+    EGORefreshTableHeaderView *_refreshHeaderView;
     
     IBOutlet UIView *tableFooterView;
     IBOutlet UITableView *placesTableView;

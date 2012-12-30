@@ -98,6 +98,7 @@
 
 #pragma mark - View lifecycle
 - (void)reloadTableViewDataSource{
+    _reloading = true;
     if ( self.segmentControl.selectedSegmentIndex == 1 ){
         [self getActivities];   
     } else {
@@ -122,13 +123,7 @@
     
     float reload_distance = 10;
     
-	if (scrollView.isDragging) {
-		if (refreshHeaderView.state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !_reloading) {
-			[refreshHeaderView setState:EGOOPullRefreshNormal];
-		} else if (refreshHeaderView.state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f && !_reloading) {
-			[refreshHeaderView setState:EGOOPullRefreshPulling];
-		}
-	}
+	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
     
     if ( self.segmentControl.selectedSegmentIndex ==1 ){
         if(hasMore && y > h + reload_distance && loadingMore == false) {
@@ -163,16 +158,10 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     
-	if (scrollView.contentOffset.y <= - 65.0f && !_reloading) {
-        _reloading = YES;
-        [self reloadTableViewDataSource];
-        [refreshHeaderView setState:EGOOPullRefreshLoading];
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.2];
-        self.activityTableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
-        [UIView commitAnimations];
-	}
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    
 }
+
 
 - (void)dataSourceDidFinishLoadingNewData{
     
@@ -183,8 +172,7 @@
 	[self.activityTableView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
 	[UIView commitAnimations];
     
-	[refreshHeaderView setState:EGOOPullRefreshNormal];
-	[refreshHeaderView setCurrentDate];  //  should check if data reload was successful 
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.activityTableView];
 }
 
 
@@ -207,13 +195,18 @@
     
     self.navigationItem.title = @"Updates";
     
-    if (refreshHeaderView == nil) {
-		refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.activityTableView.bounds.size.height, 320.0f, self.activityTableView.bounds.size.height)];
-		refreshHeaderView.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
-		[self.activityTableView addSubview:refreshHeaderView];
-		self.activityTableView.showsVerticalScrollIndicator = YES;
-		[refreshHeaderView release];
+	if (_refreshHeaderView == nil) {
+        
+		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.activityTableView.bounds.size.height, self.view.frame.size.width, self.activityTableView.bounds.size.height)];
+		view.delegate = self;
+		[self.activityTableView addSubview:view];
+		_refreshHeaderView = view;
+		[view release];
+        
 	}
+    
+	//  update the last update date
+	[_refreshHeaderView refreshLastUpdatedDate];
     
     [self loadContent];
 }
@@ -247,6 +240,28 @@
     [self.activityTableView reloadData];
 }
 
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+    
+	[self reloadTableViewDataSource];
+	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+    
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+    
+	return _reloading; // should return if data source model is reloading
+    
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+    
+	return [NSDate date]; // should return date data source was last changed
+    
+}
 
 #pragma mark - RKObjectLoaderDelegate methods
 

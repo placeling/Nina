@@ -8,3 +8,13 @@ pod 'CrittercismSDK', '3.4.8'
 pod 'CMPopTipView', '~> 1.2.0'
 
 pod 'MBProgressHUD', '0.5'
+
+pod 'EGOTableViewPullRefresh', '~> 0.1.0'
+
+pod 'TDBadgedCell', '2.0'
+
+pod 'HPGrowingTextView', '0.0.1'
+
+pod 'YIPopupTextView', '0.0.1'
+pod 'TTTAttributedLabel', '~> 1.4.1'
+
