@@ -18,3 +18,6 @@ pod 'HPGrowingTextView', '0.0.1'
 pod 'YIPopupTextView', '0.0.1'
 pod 'TTTAttributedLabel', '~> 1.4.1'
 
+pod 'SBJson', '~> 3.1.0'
+
+pod 'SDWebImage', '2.7'

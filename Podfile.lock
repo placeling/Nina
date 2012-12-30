@@ -33,6 +33,10 @@ PODS:
   - JSONKit (>= 1.5pre)
   - RestKit/Network
 - RestKit/UI (0.10.3)
+- SBJson (3.1.1)
+- SDWebImage (2.7):
+  - SDWebImage/Main (= 2.7)
+- SDWebImage/Main (2.7)
 - SOCKit (1.1)
 - TDBadgedCell (2.0)
 - TTTAttributedLabel (1.4.1)
@@ -48,6 +52,8 @@ DEPENDENCIES:
 - HPGrowingTextView (= 0.0.1)
 - MBProgressHUD (= 0.5)
 - RestKit (~> 0.10.3)
+- SBJson (~> 3.1.0)
+- SDWebImage (= 2.7)
 - TDBadgedCell (= 2.0)
 - TTTAttributedLabel (~> 1.4.1)
 - YIPopupTextView (= 0.0.1)
@@ -71,6 +77,9 @@ SPEC CHECKSUMS:
   RestKit/ObjectMapping/CoreData: 1fb57eb941d7d2587648491507a0bcaeb70b67f2
   RestKit/ObjectMapping/JSON: 1fb57eb941d7d2587648491507a0bcaeb70b67f2
   RestKit/UI: 1fb57eb941d7d2587648491507a0bcaeb70b67f2
+  SBJson: d917ef596960a977b6c20235a90810bc306a48f0
+  SDWebImage: c3306b8c68f3569f5c676d585ad77393255887dd
+  SDWebImage/Main: c3306b8c68f3569f5c676d585ad77393255887dd
   SOCKit: 179515c1a621dd5652a60e9be02ea4adcd25bc9b
   TDBadgedCell: 1e010ca042e5f92fbf11ef5b4aa9e14d49705dd4
   TTTAttributedLabel: d4e6d8abb6c91fbdca6d9eb0154d9169515204c2
