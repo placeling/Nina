@@ -576,7 +576,7 @@
     NSString *searchTerm  = [NinaHelper encodeForUrl:searchBar.text];
     
     if ([searchText length] > 0){
-        urlString = [NSString stringWithFormat:@"%@&location=%@,%@&input=%@", urlString, lat, lon, searchTerm];
+        urlString = [NSString stringWithFormat:@"%@&radius=1000&location=%@,%@&input=%@", urlString, lat, lon, searchTerm];
         showPredictive = true;
         
         [self.googleClient get:urlString usingBlock:^(RKRequest *request) {
